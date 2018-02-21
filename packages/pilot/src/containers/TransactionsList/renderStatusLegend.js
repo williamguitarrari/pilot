@@ -1,17 +1,18 @@
 import React from 'react'
-
 import { Legend } from 'former-kit'
 
 import style from './style.css'
 
+import status from '../../models/statusLegends'
+
 const renderStatusLegend = item => (
   <div className={style.centralizedItem}>
     <Legend
-      color={item.status_color}
-      acronym={item.status_acronym}
+      color={status[item.status].color}
+      acronym={status[item.status].acronym}
       hideLabel
     >
-      {item.status}
+      {status[item.status].text}
     </Legend>
   </div>
 )

@@ -1,9 +1,3 @@
-# Vim
-*.swm
-*.swn
-*.swo
-*.swp
-
 # Logs
 logs
 *.log
@@ -65,3 +59,5 @@ typings/
 
 # distribution files
 dist
+
+.vscode
