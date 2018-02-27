@@ -1,0 +1,178 @@
+
+.languageSwitcher {
+  padding-top: 8px;
+}
+
+.container {
+  height: 100vh;
+  background-color: #f9f9f9;
+}
+
+.columnContainer {
+  width: 100%;
+  max-width: 375px;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  height: 80%;
+  min-height: 550px;
+}
+
+@media screen and (width <= 1024px) {
+
+  .columnContainer {
+    height: 80vh;
+  }
+}
+
+.secondaryContent {
+  flex: 1;
+  color: #a0a0a0;
+  justify-content: flex-start;
+}
+
+.primaryContent {
+  color: #ffffff;
+  justify-content: space-around;
+  flex: 1;
+}
+
+.secondaryContent,
+.primaryContent {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.title {
+  padding: 0;
+  font-size: 36px;
+  font-weight: normal;
+  color: #454545;
+  margin: 0 0 13px;
+  width: 100%;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.uppercase {
+  text-transform: uppercase;
+  color: #757575;
+}
+
+.uppercase > p > span {
+  display: block;
+  width: 100%;
+}
+
+.paragraph {
+  line-height: 1.7;
+}
+
+.login .paragraph {
+  text-transform: uppercase;
+}
+
+.logo {
+  width: 100%;
+}
+
+.login,
+.signIn {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  & .paragraph {
+    text-transform: uppercase;
+  }
+}
+
+.hugeButton,
+.hugeButton button {
+  flex: 1;
+  width: 100%;
+  font-size: 16px;
+  height: 44px;
+  color: #ffffff;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: flex-end;
+  align-content: center;
+  justify-content: space-around;
+  padding-top: 45px;
+}
+
+.primaryContent .actions button[role="link"] {
+  padding: 10px 0;
+  text-transform: uppercase;
+  color: #757575;
+  font-size: 12px;
+
+  &:hover,
+  &:focus {
+    color: #bababa;
+  }
+}
+
+.primaryContent .login,
+.primaryContent .signIn {
+
+  & > div {
+    padding-top: 45px;
+  }
+}
+
+.primaryContent .login {
+
+  & input:focus ~ label,
+  & input:hover,
+  & input:focus,
+  & input {
+    border-color: #ffffff;
+    color: #ffffff;
+    caret-color: #ffffff;
+  }
+
+  & input ~ button {
+    color: #ffffff;
+  }
+}
+
+.signInBlock {
+  padding-bottom: 16px;
+
+  & span {
+    line-height: 30px;
+  }
+}
+
+.signInLink {
+  text-transform: uppercase;
+  color: #73dbb8;
+  margin-left: 0.5em;
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: #32b88b;
+  }
+
+  &:visited {
+    color: #2b9e77;
+  }
+}
+
+.confirmation .actions {
+  padding-bottom: 35px;
+}
+
+.confirmationContent {
+  padding-bottom: 33px;
+}
