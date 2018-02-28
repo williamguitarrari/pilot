@@ -1,6 +1,5 @@
-/* eslint-disable */
-
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import {
   Sidebar,
@@ -59,6 +58,15 @@ class SidebarContainer extends React.Component {
       </Sidebar>
     )
   }
+}
+
+SidebarContainer.propTypes = {
+  location: PropTypes.shape({
+    pathname: PropTypes.string,
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
 }
 
 export default withRouter(SidebarContainer)
