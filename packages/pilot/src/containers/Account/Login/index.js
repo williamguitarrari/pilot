@@ -74,10 +74,11 @@ LoginContainer.propTypes = {
   loading: PropTypes.bool,
   onLogin: PropTypes.func.isRequired,
   onPasswordRecovery: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired,
+  t: PropTypes.func,
 }
 
 LoginContainer.defaultProps = {
+  t: t => t,
   errors: null,
   loading: false,
 }
