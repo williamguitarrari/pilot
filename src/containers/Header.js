@@ -14,13 +14,19 @@ import {
   HeaderTitle,
 } from 'former-kit'
 
-const HeaderContainer = ({ avatar, username }) => (
+const HeaderContainer = ({
+  avatar,
+  username,
+  onClickMenu,
+}) => (
   <Header>
     <HeaderTitle>Transactions</HeaderTitle>
     <HeaderContent>
       <HeaderLink icon={<Mail24 />} />
       <HeaderLink icon={<Alert24 />} />
-      <HeaderMenu>
+      <HeaderMenu
+        onClick={onClickMenu}
+      >
         <Avatar
           photo={avatar}
           icon={<User24 />}
@@ -32,6 +38,7 @@ const HeaderContainer = ({ avatar, username }) => (
 )
 
 HeaderContainer.propTypes = {
+  onClickMenu: PropTypes.func.isRequired,
   avatar: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
 }

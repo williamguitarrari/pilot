@@ -12,8 +12,5 @@ export const requestLogout = createAction(LOGOUT_REQUEST)
 export const LOGIN_RECEIVE = 'pilot/account/LOGIN_RECEIVE'
 export const receiveLogin = createAction(LOGIN_RECEIVE)
 
-export const LOGOUT_RECEIVE = 'pilot/account/LOGOUT_RECEIVE'
-export const receiveLogout = createAction(LOGOUT_RECEIVE)
-
 export const ACCOUNT_RECEIVE = 'pilot/account/ACCOUNT_RECEIVE'
 export const receiveAccount = createAction(ACCOUNT_RECEIVE)

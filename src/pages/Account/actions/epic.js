@@ -26,7 +26,12 @@ const accountEpic = action$ =>
   action$
     .ofType(LOGIN_RECEIVE)
     .mergeMap((action) => {
-      const { payload: client } = action
+      const { error, payload: client } = action
+
+      if (error) {
+        return Promise.resolve(action.payload)
+      }
+
       return client.user.current().catch(identity)
     })
     .map(receiveAccount)
