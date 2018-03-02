@@ -16,21 +16,21 @@ import LoggedArea from './LoggedArea'
 
 const enhance = compose(
   withRouter,
-  connect(({ account: { token } }) => ({ token }))
+  connect(({ account: { client, user } }) => ({ client, user }))
 )
 
-function Root ({ token, location }) {
+function Root ({ client, user, location }) {
   const { pathname: path } = location
   return (
     <Fragment>
-      {!token && !path.startsWith('/account')
+      {!client && !path.startsWith('/account')
         ? <Redirect to="/account/login" />
         : <Route path="/account" component={Account} />
       }
-      {token && path.startsWith('/account/login') &&
+      {client && user && path.startsWith('/account/login') &&
         <Redirect to="/" />
       }
-      {token &&
+      {client && user &&
         <LoggedArea />
       }
     </Fragment>
@@ -38,14 +38,16 @@ function Root ({ token, location }) {
 }
 
 Root.propTypes = {
-  token: PropTypes.string,
+  client: PropTypes.object, // eslint-disable-line
+  user: PropTypes.object, // eslint-disable-line
   location: PropTypes.shape({
-    pathnae: PropTypes.string,
+    pathname: PropTypes.string,
   }),
 }
 
 Root.defaultProps = {
-  token: null,
+  client: null,
+  user: null,
   location: {},
 }
 

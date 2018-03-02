@@ -1,31 +1,39 @@
+import pagarme from 'pagarme'
+import { identity } from 'ramda'
 import 'rxjs/add/operator/mergeMap'
 import 'rxjs/add/operator/map'
 
-import { receiveLogin, LOGIN_REQUEST } from '.'
+import { combineEpics } from 'redux-observable'
 
-const headers = {
-  Accept: 'application/json',
-  'Content-Type': 'application/json',
-}
-const method = 'POST'
+import {
+  receiveLogin,
+  receiveAccount,
+  LOGIN_REQUEST,
+  LOGIN_RECEIVE,
+} from '.'
 
-const throwError = body => new Error(body.error)
+const loginEpic = action$ =>
+  action$
+    .ofType(LOGIN_REQUEST)
+    .mergeMap(action => (
+      pagarme.client.connect(action.payload)
+        .catch(identity)
+    ))
+    .map(receiveLogin)
+
 
 const accountEpic = action$ =>
   action$
-    .ofType(LOGIN_REQUEST)
-    .mergeMap(action =>
-      fetch(
-        'https://reqres.in/api/login',
-        { body: JSON.stringify(action.payload), headers, method }
-      )
-        .then((res) => {
-          if (res.ok) return res.json()
-          return res.json().then(throwError)
-        })
-        .catch(body => throwError({ body }))
+    .ofType(LOGIN_RECEIVE)
+    .mergeMap((action) => {
+      const { error, payload: client } = action
 
-    )
-    .map(receiveLogin)
+      if (error) {
+        return Promise.resolve(action.payload)
+      }
 
-export default accountEpic
+      return client.user.current().catch(identity)
+    })
+    .map(receiveAccount)
+
+export default combineEpics(loginEpic, accountEpic)
