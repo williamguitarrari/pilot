@@ -6,21 +6,23 @@ import { connect } from 'react-redux'
 import Header from '../../containers/Header'
 
 const enhance = connect(
-  ({ account: { token: username } }) => ({
-    username,
+  ({ account: { user } }) => ({
+    user,
     avatar: 'https://randomuser.me/api/portraits/thumb/men/12.jpg',
   })
 )
 
-const HeaderContainer = ({ avatar, username }) => (
+const HeaderContainer = ({ avatar, user }) => (
   <Header
     avatar={avatar}
-    username={username}
+    username={user.name}
   />
 )
 
 HeaderContainer.propTypes = {
-  username: PropTypes.string.isRequired,
+  user: PropTypes.shape({
+    name: PropTypes.string,
+  }).isRequired,
   avatar: PropTypes.string,
 }
 
