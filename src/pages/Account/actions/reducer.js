@@ -37,11 +37,16 @@ export default function loginReducer (state = initialState, action) {
       return merge(state, {
         user: action.payload,
         loading: false,
+        errors: null,
       })
     }
 
     case LOGIN_REQUEST: {
-      return merge(state, { loading: true, errors: null })
+      return merge(state, {
+        loading: true,
+        errors: null,
+        user: null,
+      })
     }
 
     case LOGIN_RECEIVE: {
@@ -51,6 +56,7 @@ export default function loginReducer (state = initialState, action) {
           {
             client: undefined,
             errors: createErrors(action.payload),
+            user: null,
           }
         )
       }
@@ -59,7 +65,7 @@ export default function loginReducer (state = initialState, action) {
         state,
         {
           client: action.payload,
-          errors: undefined,
+          errors: null,
           loading: false,
         }
       )
