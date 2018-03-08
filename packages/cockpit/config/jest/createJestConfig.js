@@ -1,11 +1,11 @@
 module.exports = (resolve, rootDir) => {
   const config = {
     collectCoverageFrom: [
-      'lib/**/*.{js}',
+      'src/**/*.{js}',
     ],
     testEnvironment: 'node',
     testMatch: [
-      '<rootDir>/lib/**/?(*.)(spec|test).js?(x)',
+      '<rootDir>/src/**/?(*.)(spec|test).js?(x)',
     ],
     transform: {
       '^.+\\.(js)$': require.resolve('babel-jest'),

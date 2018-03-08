@@ -3,11 +3,12 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 module.exports = {
-  context: path.join(__dirname, '../lib'),
+  context: path.join(__dirname, '../src'),
   entry: './index.js',
   devtool: 'source-map',
   output: {
     path: path.join(__dirname, '../dist'),
+    libraryTarget: 'commonjs2',
     filename: 'cockpit.js',
     sourceMapFilename: 'cockpit.js.map',
   },
