@@ -1,0 +1,41 @@
+{
+  "author": "Pagar.me Pagamentos S/A",
+  "description": "A simple interface to connect the pilot to the outside(Pagar.me API)",
+  "devDependencies": {
+    "babel-cli": "6.26.0",
+    "babel-core": "6.26.0",
+    "babel-jest": "22.4.0",
+    "babel-loader": "7.1.2",
+    "babel-plugin-add-module-exports": "0.2.1",
+    "babel-plugin-ramda": "1.4.3",
+    "babel-plugin-transform-object-rest-spread": "6.26.0",
+    "babel-preset-env": "1.6.1",
+    "bluebird": "3.5.1",
+    "clean-webpack-plugin": "0.1.18",
+    "eslint": "4.18.1",
+    "eslint-config-pagarme-base": "2.0.0",
+    "eslint-loader": "1.9.0",
+    "eslint-plugin-import": "2.7.0",
+    "eslint-plugin-ramda": "2.4.0",
+    "jest": "22.4.0",
+    "jest-cli": "22.4.0",
+    "uglifyjs-webpack-plugin": "1.2.0",
+    "webpack": "3.11.0"
+  },
+  "dependencies": {
+    "ramda": "0.25.0"
+  },
+  "license": "MIT",
+  "main": "dist/cockpit.js",
+  "name": "cockpit",
+  "repository": "git@github.com:pagarme/cockpit.git",
+  "scripts": {
+    "build": "webpack --optimize-minimize --config ./config/webpack.config.js",
+    "build:dev": "webpack --config ./config/webpack.config.js",
+    "lint:watch": "chokidar './src/**/*.{js}' -c 'run-s lint'",
+    "lint": "eslint './src/**/*.js'",
+    "start": "npm run build",
+    "test": "node scripts/test.js"
+  },
+  "version": "0.0.1"
+}
