@@ -1,7 +1,6 @@
 import {
   assocPath,
   assoc,
-  dissoc,
   dissocPath,
   pipe,
   drop,
