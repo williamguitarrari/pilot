@@ -63,6 +63,7 @@ class FilterState extends React.Component {
   }
 }
 
+/* eslint-disable react/no-typos, react/default-props-match-prop-types */
 FilterState.propTypes = {
   datePresets: Filters.propTypes.datePresets.isRequired,
   dates: Filters.propTypes.dates,
@@ -79,5 +80,6 @@ FilterState.defaultProps = {
   search: '',
   values: [],
 }
+/* eslint-enable react/no-typos, react/default-props-match-prop-types */
 
 export default FilterState

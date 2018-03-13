@@ -1,5 +1,5 @@
 import React from 'react'
-import { mount } from 'enzyme'
+import { mount } from 'enzyme' // eslint-disable-line import/no-extraneous-dependencies
 import moment from 'moment'
 
 import {
@@ -140,10 +140,10 @@ const getCheckboxes = component =>
 const getCheckedCheckboxes = component =>
   getCheckboxGroups(component)
     .findWhere(node => (
-        node.length > 0 &&
+      node.length > 0 &&
         node.is('input[type="checkbox"]') &&
         node.props().checked
-      )
+    )
     )
 
 export {

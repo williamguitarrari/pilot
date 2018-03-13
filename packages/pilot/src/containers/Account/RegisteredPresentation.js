@@ -2,9 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
-import {
-  SegmentedSwitch,
-} from 'former-kit'
+import { SegmentedSwitch } from 'former-kit'
 
 import styles from './style.css'
 
