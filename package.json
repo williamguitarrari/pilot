@@ -1,6 +1,11 @@
 {
   "private": true,
   "license": "SEE LICENSE IN LICENSES.md",
+  "engines": {
+    "node": "9.7.0",
+    "npm": "5.6.0",
+    "yarn": "1.5.1"
+  },
   "scripts": {
     "postinstall": "cd packages/cockpit; yarn build"
   },
