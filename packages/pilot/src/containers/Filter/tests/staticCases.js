@@ -1,5 +1,5 @@
 import React from 'react'
-import { mount } from 'enzyme'
+import { mount } from 'enzyme' // eslint-disable-line import/no-extraneous-dependencies
 import moment from 'moment'
 import Filters from '../index'
 import dateSelectorPresets from '../../../models/dateSelectorPresets'
