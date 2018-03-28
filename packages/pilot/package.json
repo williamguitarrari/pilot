@@ -1,6 +1,7 @@
 {
   "name": "pilot",
   "version": "0.1.0",
+  "homepage": ".",
   "private": true,
   "dependencies": {
     "classnames": "2.2.5",
