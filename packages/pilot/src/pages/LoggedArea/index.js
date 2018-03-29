@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { values } from 'ramda'
 import {
   Redirect,
   Route,
@@ -22,7 +22,7 @@ const LoggedArea = () => (
     footer={<Footer />}
   >
     <Switch>
-      {Object.values(routes).map(({ component, path }) => (
+      {values(routes).map(({ component, path }) => (
         <Route
           key={path}
           path={path}
