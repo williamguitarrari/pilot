@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { values } from 'ramda'
 
 import {
   Sidebar,
@@ -45,7 +46,7 @@ class SidebarContainer extends React.Component {
         </SidebarHeader>
 
         <SidebarLinks>
-          {Object.values(routes).map(({ title, path, icon: Icon }) => (
+          {values(routes).map(({ title, path, icon: Icon }) => (
             <SidebarLink
               key={path}
               title={title}
