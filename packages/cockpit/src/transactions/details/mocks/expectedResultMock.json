@@ -35,29 +35,43 @@
     "metadata": {},
     "operations": [
       {
-        "cycle": 1,
-        "date_created": "2018-03-18T13:40:28.579Z",
-        "id": 2,
+        "cycle": 2,
+        "type": "chargeback_refund",
+        "created_at": "2018-03-22T13:40:28.579Z",
         "status": "success",
-        "type": "chargeback_refund"
+        "id": 1
+      },
+      {
+        "cycle": 2,
+        "type": "chargeback",
+        "created_at": "2018-03-20T13:40:28.579Z",
+        "status": "success",
+        "id": 1
       },
       {
         "cycle": 1,
-        "date_created": "2018-03-17T13:40:28.579Z",
-        "id": 1,
+        "type": "chargeback",
+        "created_at": "2018-03-19T13:40:28.579Z",
         "status": "success",
-        "type": "chargeback"
+        "id": 1
+      },
+      {
+        "cycle": 1,
+        "type": "chargeback_refund",
+        "status": "success",
+        "created_at": "2018-03-17T13:40:28.579Z",
+        "id": 2
       },
       {
         "cycle": null,
-        "date_created": "2018-03-15T13:40:28.564Z",
+        "created_at": "2018-03-15T13:40:28.564Z",
         "id": "go_2",
         "status": "success",
         "type": "capture"
       },
       {
         "cycle": null,
-        "date_created": "2018-03-14T13:40:28.579Z",
+        "created_at": "2018-03-14T13:40:28.579Z",
         "id": "go_2",
         "status": "success",
         "type": "authorize"
@@ -82,7 +96,7 @@
               "anticipation": 0,
               "mdr": 3283909
             },
-            "date_created": "2018-03-14T13:40:28.959Z",
+            "created_at": "2018-03-14T13:40:28.959Z",
             "net_amount": 29555175,
             "number": 12,
             "original_payment_date": null,
@@ -95,7 +109,7 @@
               "anticipation": 0,
               "mdr": 3283909
             },
-            "date_created": "2018-03-14T13:40:28.958Z",
+            "created_at": "2018-03-14T13:40:28.958Z",
             "net_amount": 29555175,
             "number": 11,
             "original_payment_date": null,
@@ -108,7 +122,7 @@
               "anticipation": 0,
               "mdr": 3283909
             },
-            "date_created": "2018-03-14T13:40:28.958Z",
+            "created_at": "2018-03-14T13:40:28.958Z",
             "net_amount": 29555175,
             "number": 10,
             "original_payment_date": null,
@@ -121,7 +135,7 @@
               "anticipation": 0,
               "mdr": 3283909
             },
-            "date_created": "2018-03-14T13:40:28.951Z",
+            "created_at": "2018-03-14T13:40:28.951Z",
             "net_amount": 29555175,
             "number": 9,
             "original_payment_date": null,
@@ -134,7 +148,7 @@
               "anticipation": 0,
               "mdr": 3283909
             },
-            "date_created": "2018-03-14T13:40:28.951Z",
+            "created_at": "2018-03-14T13:40:28.951Z",
             "net_amount": 29555175,
             "number": 8,
             "original_payment_date": null,
@@ -147,7 +161,7 @@
               "anticipation": 0,
               "mdr": 3283909
             },
-            "date_created": "2018-03-14T13:40:28.951Z",
+            "created_at": "2018-03-14T13:40:28.951Z",
             "net_amount": 29555175,
             "number": 7,
             "original_payment_date": null,
@@ -160,7 +174,7 @@
               "anticipation": 0,
               "mdr": 3283909
             },
-            "date_created": "2018-03-14T13:40:28.950Z",
+            "created_at": "2018-03-14T13:40:28.950Z",
             "net_amount": 29555175,
             "number": 6,
             "original_payment_date": null,
@@ -173,7 +187,7 @@
               "anticipation": 0,
               "mdr": 3283909
             },
-            "date_created": "2018-03-14T13:40:28.950Z",
+            "created_at": "2018-03-14T13:40:28.950Z",
             "net_amount": 29555175,
             "number": 5,
             "original_payment_date": null,
@@ -186,7 +200,7 @@
               "anticipation": 0,
               "mdr": 3283909
             },
-            "date_created": "2018-03-14T13:40:28.949Z",
+            "created_at": "2018-03-14T13:40:28.949Z",
             "net_amount": 29555175,
             "number": 4,
             "original_payment_date": null,
@@ -199,7 +213,7 @@
               "anticipation": 0,
               "mdr": 3283909
             },
-            "date_created": "2018-03-14T13:40:28.949Z",
+            "created_at": "2018-03-14T13:40:28.949Z",
             "net_amount": 29555175,
             "number": 3,
             "original_payment_date": null,
@@ -212,7 +226,7 @@
               "anticipation": 0,
               "mdr": 3283909
             },
-            "date_created": "2018-03-14T13:40:28.949Z",
+            "created_at": "2018-03-14T13:40:28.949Z",
             "net_amount": 29555175,
             "number": 2,
             "original_payment_date": null,
@@ -225,7 +239,7 @@
               "anticipation": 0,
               "mdr": 3283901
             },
-            "date_created": "2018-03-14T13:40:28.948Z",
+            "created_at": "2018-03-14T13:40:28.948Z",
             "net_amount": 29555174,
             "number": 1,
             "original_payment_date": null,
@@ -249,7 +263,7 @@
               "anticipation": 0,
               "mdr": -3283909
             },
-            "date_created": "2018-03-14T13:40:28.948Z",
+            "created_at": "2018-03-14T13:40:28.948Z",
             "net_amount": -29555175,
             "number": 12,
             "original_payment_date": null,
@@ -262,7 +276,7 @@
               "anticipation": 0,
               "mdr": -3283909
             },
-            "date_created": "2018-03-14T13:40:28.948Z",
+            "created_at": "2018-03-14T13:40:28.948Z",
             "net_amount": -29555175,
             "number": 11,
             "original_payment_date": null,
@@ -275,7 +289,7 @@
               "anticipation": 0,
               "mdr": -3283909
             },
-            "date_created": "2018-03-14T13:40:28.947Z",
+            "created_at": "2018-03-14T13:40:28.947Z",
             "net_amount": -29555175,
             "number": 10,
             "original_payment_date": null,
@@ -288,7 +302,7 @@
               "anticipation": 0,
               "mdr": -3283909
             },
-            "date_created": "2018-03-14T13:40:28.947Z",
+            "created_at": "2018-03-14T13:40:28.947Z",
             "net_amount": -29555175,
             "number": 9,
             "original_payment_date": null,
@@ -301,7 +315,7 @@
               "anticipation": 0,
               "mdr": -3283909
             },
-            "date_created": "2018-03-14T13:40:28.946Z",
+            "created_at": "2018-03-14T13:40:28.946Z",
             "net_amount": -29555175,
             "number": 8,
             "original_payment_date": null,
@@ -314,7 +328,7 @@
               "anticipation": 0,
               "mdr": -3283909
             },
-            "date_created": "2018-03-14T13:40:28.946Z",
+            "created_at": "2018-03-14T13:40:28.946Z",
             "net_amount": -29555175,
             "number": 7,
             "original_payment_date": null,
@@ -327,7 +341,7 @@
               "anticipation": 0,
               "mdr": -3283909
             },
-            "date_created": "2018-03-14T13:40:28.946Z",
+            "created_at": "2018-03-14T13:40:28.946Z",
             "net_amount": -29555175,
             "number": 6,
             "original_payment_date": null,
@@ -340,7 +354,7 @@
               "anticipation": 0,
               "mdr": -3283909
             },
-            "date_created": "2018-03-14T13:40:28.945Z",
+            "created_at": "2018-03-14T13:40:28.945Z",
             "net_amount": -29555175,
             "number": 5,
             "original_payment_date": null,
@@ -353,7 +367,7 @@
               "anticipation": 0,
               "mdr": -3283909
             },
-            "date_created": "2018-03-14T13:40:28.945Z",
+            "created_at": "2018-03-14T13:40:28.945Z",
             "net_amount": -29555175,
             "number": 4,
             "original_payment_date": null,
@@ -366,7 +380,7 @@
               "anticipation": 0,
               "mdr": -3283909
             },
-            "date_created": "2018-03-14T13:40:28.945Z",
+            "created_at": "2018-03-14T13:40:28.945Z",
             "net_amount": -29555175,
             "number": 3,
             "original_payment_date": null,
@@ -379,7 +393,7 @@
               "anticipation": 0,
               "mdr": -3283909
             },
-            "date_created": "2018-03-14T13:40:28.944Z",
+            "created_at": "2018-03-14T13:40:28.944Z",
             "net_amount": -29555175,
             "number": 2,
             "original_payment_date": null,
@@ -392,7 +406,7 @@
               "anticipation": 0,
               "mdr": -3283901
             },
-            "date_created": "2018-03-14T13:40:28.944Z",
+            "created_at": "2018-03-14T13:40:28.944Z",
             "net_amount": -29555175,
             "number": 1,
             "original_payment_date": null,
@@ -416,7 +430,7 @@
               "anticipation": 0,
               "mdr": 0
             },
-            "date_created": "2018-03-14T13:40:28.943Z",
+            "created_at": "2018-03-14T13:40:28.943Z",
             "net_amount": 24629313,
             "number": 12,
             "original_payment_date": null,
@@ -429,7 +443,7 @@
               "anticipation": 0,
               "mdr": 0
             },
-            "date_created": "2018-03-14T13:40:28.943Z",
+            "created_at": "2018-03-14T13:40:28.943Z",
             "net_amount": 24629313,
             "number": 11,
             "original_payment_date": null,
@@ -442,7 +456,7 @@
               "anticipation": 0,
               "mdr": 0
             },
-            "date_created": "2018-03-14T13:40:28.943Z",
+            "created_at": "2018-03-14T13:40:28.943Z",
             "net_amount": 24629313,
             "number": 10,
             "original_payment_date": null,
@@ -455,7 +469,7 @@
               "anticipation": 0,
               "mdr": 0
             },
-            "date_created": "2018-03-14T13:40:28.942Z",
+            "created_at": "2018-03-14T13:40:28.942Z",
             "net_amount": 24629313,
             "number": 9,
             "original_payment_date": null,
@@ -468,7 +482,7 @@
               "anticipation": 0,
               "mdr": 0
             },
-            "date_created": "2018-03-14T13:40:28.942Z",
+            "created_at": "2018-03-14T13:40:28.942Z",
             "net_amount": 24629313,
             "number": 8,
             "original_payment_date": null,
@@ -481,7 +495,7 @@
               "anticipation": 0,
               "mdr": 0
             },
-            "date_created": "2018-03-14T13:40:28.942Z",
+            "created_at": "2018-03-14T13:40:28.942Z",
             "net_amount": 24629313,
             "number": 7,
             "original_payment_date": null,
@@ -494,7 +508,7 @@
               "anticipation": 0,
               "mdr": 0
             },
-            "date_created": "2018-03-14T13:40:28.941Z",
+            "created_at": "2018-03-14T13:40:28.941Z",
             "net_amount": 24629313,
             "number": 6,
             "original_payment_date": null,
@@ -507,7 +521,7 @@
               "anticipation": 0,
               "mdr": 0
             },
-            "date_created": "2018-03-14T13:40:28.941Z",
+            "created_at": "2018-03-14T13:40:28.941Z",
             "net_amount": 24629313,
             "number": 5,
             "original_payment_date": null,
@@ -520,7 +534,7 @@
               "anticipation": 0,
               "mdr": 0
             },
-            "date_created": "2018-03-14T13:40:28.940Z",
+            "created_at": "2018-03-14T13:40:28.940Z",
             "net_amount": 24629313,
             "number": 4,
             "original_payment_date": null,
@@ -533,7 +547,7 @@
               "anticipation": 0,
               "mdr": 0
             },
-            "date_created": "2018-03-14T13:40:28.940Z",
+            "created_at": "2018-03-14T13:40:28.940Z",
             "net_amount": 24629313,
             "number": 3,
             "original_payment_date": null,
@@ -546,7 +560,7 @@
               "anticipation": 0,
               "mdr": 0
             },
-            "date_created": "2018-03-14T13:40:28.940Z",
+            "created_at": "2018-03-14T13:40:28.940Z",
             "net_amount": 24629313,
             "number": 2,
             "original_payment_date": null,
@@ -559,7 +573,7 @@
               "anticipation": 0,
               "mdr": 0
             },
-            "date_created": "2018-03-14T13:40:28.939Z",
+            "created_at": "2018-03-14T13:40:28.939Z",
             "net_amount": 24629307,
             "number": 1,
             "original_payment_date": null,

@@ -8,6 +8,7 @@ import {
   flatten,
   groupBy,
   has,
+  head,
   identity,
   ifElse,
   isEmpty,
@@ -44,11 +45,36 @@ import moment from 'moment'
 
 import { transactionSpec } from '../shared'
 
+const sortByCreatedAt = sort((left, right) => {
+  if (has('created_at', right)) {
+    return moment(right.created_at)
+      .diff(moment(left.created_at), 'milliseconds')
+  }
+
+  return moment(right.date_created)
+    .diff(moment(left.date_created), 'milliseconds')
+})
+
+const normalizeChargebackOps = pipe(
+  groupBy(prop('type')),
+  map(pipe(
+    groupBy(prop('cycle')),
+    map(pipe(sortByCreatedAt, head)),
+  )),
+  values,
+  map(values),
+  flatten
+)
+
 const chooseOperations = ifElse(
   pathEq(['transaction', 'payment_method'], 'boleto'),
   prop('gatewayOperations'),
   pipe(
-    props(['gatewayOperations', 'chargebackOperations']),
+    pick(['gatewayOperations', 'chargebackOperations']),
+    juxt([
+      prop('gatewayOperations'),
+      pipe(prop('chargebackOperations'), normalizeChargebackOps),
+    ]),
     flatten,
     reject(propEq('type', 'conciliate'))
   )
@@ -56,7 +82,7 @@ const chooseOperations = ifElse(
 
 const createOperationObj = applySpec({
   id: prop('id'),
-  date_created: ifElse(
+  created_at: ifElse(
     has('date_created'),
     prop('date_created'),
     prop('created_at')
@@ -74,14 +100,11 @@ const createOperationObj = applySpec({
   ),
 })
 
-const sortByDateCreated = sort((left, right) =>
-  moment(right.date_created).diff(moment(left.date_created), 'milliseconds'))
-
 const buildOperations = applySpec({
   operations: pipe(
     chooseOperations,
     map(createOperationObj),
-    sortByDateCreated
+    sortByCreatedAt
   ),
 })
 
@@ -129,7 +152,7 @@ const mapRecipients = map(applySpec({
   ),
   status: pipe(
     prop('installments'),
-    sortByDateCreated,
+    sortByCreatedAt,
     last,
     prop('status')
   ),
@@ -155,7 +178,7 @@ const mapRecipients = map(applySpec({
       status: prop('status'),
       payment_date: prop('payment_date'),
       original_payment_date: prop('original_payment_date'),
-      date_created: prop('date_created'),
+      created_at: prop('date_created'),
       amount: prop('amount'),
       net_amount: pipe(
         juxt([prop('amount'), sumAllPayableFees]),
@@ -167,7 +190,7 @@ const mapRecipients = map(applySpec({
       },
     })),
     groupBy(prop('number')),
-    map(sortByDateCreated),
+    map(sortByCreatedAt),
     map(reduce(aggregateInstallments, {})),
     values,
     reverse
