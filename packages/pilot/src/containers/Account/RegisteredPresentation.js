@@ -2,15 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
-import { SegmentedSwitch } from 'former-kit'
-
 import styles from './style.css'
 
 const RegisteredPresentationContainer = ({
   onGotoSignup,
-  onLanguageChange,
-  selectedLanguage,
-  availableLanguages,
   t,
 }) => (
   <div className={styles.secondaryContent}>
@@ -21,14 +16,6 @@ const RegisteredPresentationContainer = ({
       <span className={styles.uppercase}>
         {t('landing.subtitle')}
       </span>
-      <div className={styles.languageSwitcher}>
-        <SegmentedSwitch
-          name="language-chooser"
-          items={availableLanguages}
-          selected={selectedLanguage}
-          onChange={onLanguageChange}
-        />
-      </div>
     </div>
     <p className={styles.paragraph}>
       {t('landing.body')}
@@ -53,9 +40,6 @@ const RegisteredPresentationContainer = ({
 
 RegisteredPresentationContainer.propTypes = {
   onGotoSignup: PropTypes.func.isRequired,
-  onLanguageChange: PropTypes.func.isRequired,
-  selectedLanguage: PropTypes.string.isRequired,
-  availableLanguages: PropTypes.arrayOf(PropTypes.string).isRequired,
   t: PropTypes.func,
 }
 

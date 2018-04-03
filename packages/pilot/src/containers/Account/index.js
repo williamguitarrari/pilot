@@ -20,7 +20,7 @@ const Account = ({
     <LandingPrimarySection base={base}>
       <div className={styles.columnContainer}>
         <div className={styles.logo}>
-          <Logo alt={t('landing.logo')} height="200px" />
+          <Logo alt={t('landing.logo')} height="95px" />
         </div>
         {primaryContent}
       </div>

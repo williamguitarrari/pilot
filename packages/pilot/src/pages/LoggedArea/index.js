@@ -1,28 +1,32 @@
 import React from 'react'
-import { values } from 'ramda'
+import PropTypes from 'prop-types'
 import {
   Redirect,
   Route,
   Switch,
   withRouter,
 } from 'react-router-dom'
-
+import { translate } from 'react-i18next'
+import { compose } from 'ramda'
 import { Layout } from 'former-kit'
 
 import Sidebar from './Sidebar'
 import Header from './Header'
-import Footer from './Footer'
 
 import routes from './routes'
 
-const LoggedArea = () => (
+const enhanced = compose(
+  translate(),
+  withRouter
+)
+
+const LoggedArea = ({ t }) => (
   <Layout
-    sidebar={<Sidebar />}
-    header={<Header />}
-    footer={<Footer />}
+    sidebar={<Sidebar t={t} />}
+    header={<Header t={t} />}
   >
     <Switch>
-      {values(routes).map(({ component, path }) => (
+      {Object.values(routes).map(({ component, path }) => (
         <Route
           key={path}
           path={path}
@@ -34,4 +38,8 @@ const LoggedArea = () => (
   </Layout>
 )
 
-export default withRouter(LoggedArea)
+LoggedArea.propTypes = {
+  t: PropTypes.func.isRequired,
+}
+
+export default enhanced(LoggedArea)

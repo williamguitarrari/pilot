@@ -18,30 +18,30 @@ import {
   CardContent,
 } from 'former-kit'
 
-import IconAdd from 'emblematic-icons/svg/AddBox24.svg'
-import IconReverse from 'emblematic-icons/svg/Reverse24.svg'
-import IconReprocess from 'emblematic-icons/svg/Reprocess24.svg'
+// import IconAdd from 'emblematic-icons/svg/AddBox24.svg'
+// import IconReverse from 'emblematic-icons/svg/Reverse24.svg'
+// import IconReprocess from 'emblematic-icons/svg/Reprocess24.svg'
 
 import style from './style.css'
 
 const buttons = [
-  {
-    text: 'Adicionar',
-    icon: <IconAdd width="12px" height="12px" />,
-  },
-  {
-    text: 'Estornar',
-    icon: <IconReverse width="12px" height="12px" />,
-  },
-  {
-    text: 'Reprocessar',
-    icon: <IconReprocess width="12px" height="12px" />,
-  },
+  // {
+  //   text: 'Adicionar',
+  //   icon: <IconAdd width="12px" height="12px" />,
+  // },
+  // {
+  //   text: 'Estornar',
+  //   icon: <IconReverse width="12px" height="12px" />,
+  // },
+  // {
+  //   text: 'Reprocessar',
+  //   icon: <IconReprocess width="12px" height="12px" />,
+  // },
 ]
 
-const renderPlaceholder = (selectedPage) => {
+const renderPlaceholder = (selectedPage, label) => {
   if (selectedPage) {
-    return `${selectedPage.toString()} items per page`
+    return `${selectedPage.toString()} ${label}`
   }
 
   return 'Items per page'
@@ -51,26 +51,7 @@ class TableContainer extends Component {
   constructor (props) {
     super(props)
 
-    this.state = {
-      selectedRows: [],
-      expandedRows: [],
-    }
-
-    this.handleExpandRow = this.handleExpandRow.bind(this)
-    this.handleSelectRow = this.handleSelectRow.bind(this)
     this.handlePageCountChange = this.handlePageCountChange.bind(this)
-  }
-
-  handleSelectRow (selectedRows) {
-    this.setState({
-      selectedRows,
-    })
-  }
-
-  handleExpandRow (expandedRows) {
-    this.setState({
-      expandedRows,
-    })
   }
 
   handlePageCountChange (event) {
@@ -80,25 +61,26 @@ class TableContainer extends Component {
 
   render () {
     const {
-      selectable,
-      expandable,
-      maxColumns,
-      onRowClick,
-      handleOrderChange,
-      orderColumn,
-      order,
       columns,
-      rows,
-      pagination,
+      expandable,
+      handleOrderChange,
       handlePageChange,
+      handleRowClick,
+      itemsPerPageLabel,
       loading,
+      maxColumns,
+      ofLabel,
+      order,
+      orderColumn,
+      pagination,
+      rows,
+      selectable,
       selectedPage,
-    } = this.props
-
-    const {
       expandedRows,
+      handleExpandRow,
+      handleSelectRow,
       selectedRows,
-    } = this.state
+    } = this.props
 
     return (
       <React.Fragment>
@@ -122,11 +104,11 @@ class TableContainer extends Component {
           <div className={style.dropdown}>
             <Dropdown
               options={[15, 30, 60, 100].map(i =>
-                ({ name: `${i} items per page`, value: `${i}` }))
+                ({ name: `${i} ${itemsPerPageLabel}`, value: `${i}` }))
               }
               name="count"
               value={selectedPage.toString()}
-              placeholder={renderPlaceholder(selectedPage)}
+              placeholder={renderPlaceholder(selectedPage, itemsPerPageLabel)}
               onChange={this.handlePageCountChange}
               disabled={loading}
             />
@@ -142,19 +124,19 @@ class TableContainer extends Component {
         <Table
           className={style.table}
           columns={columns}
+          disabled={loading}
+          expandable={expandable}
+          expandedRows={expandedRows}
+          handleRowClick={handleRowClick}
+          maxColumns={maxColumns}
+          onExpandRow={handleExpandRow}
+          onOrderChange={handleOrderChange}
+          onSelectRow={handleSelectRow}
+          orderColumn={orderColumn}
+          orderSequence={order}
           rows={rows}
           selectable={selectable}
-          expandable={expandable}
           selectedRows={selectedRows}
-          expandedRows={expandedRows}
-          maxColumns={maxColumns}
-          onOrderChange={handleOrderChange}
-          onSelectRow={this.handleSelectRow}
-          orderSequence={order}
-          orderColumn={orderColumn}
-          onExpandRow={this.handleExpandRow}
-          onRowClick={onRowClick}
-          disabled={loading}
         />
 
         <CardContent className={style.pagination}>
@@ -163,6 +145,9 @@ class TableContainer extends Component {
             totalPages={pagination.total}
             onPageChange={handlePageChange}
             disabled={loading}
+            strings={{
+              of: ofLabel,
+            }}
           />
         </CardContent>
       </React.Fragment>
@@ -171,35 +156,41 @@ class TableContainer extends Component {
 }
 
 TableContainer.propTypes = {
-  selectable: bool,
+  columns: arrayOf(object), // eslint-disable-line
   expandable: bool,
-  onRowClick: func,
+  handleOrderChange: func.isRequired, // eslint-disable-line
+  handlePageChange: func.isRequired, // eslint-disable-line
+  handlePageCountChange: func.isRequired, // eslint-disable-line
+  handleRowClick: func,
+  loading: bool,
   maxColumns: number,
-  orderColumn: number,
   order: string,
+  orderColumn: number,
   pagination: shape({
     offset: number,
     total: number,
   }).isRequired,
-  loading: bool,
-  selectedPage: number,
-  columns: arrayOf(object), // eslint-disable-line
   rows: arrayOf(object), // eslint-disable-line
-  handlePageChange: func.isRequired, // eslint-disable-line
-  handlePageCountChange: func.isRequired, // eslint-disable-line
-  handleOrderChange: func.isRequired, // eslint-disable-line
+  selectable: bool,
+  selectedPage: number,
+  itemsPerPageLabel: string.isRequired, // eslint-disable-line react/no-typos
+  ofLabel: string.isRequired, // eslint-disable-line react/no-typos
+  expandedRows: arrayOf(number).isRequired,
+  selectedRows: arrayOf(number).isRequired,
+  handleSelectRow: func.isRequired, // eslint-disable-line react/no-typos
+  handleExpandRow: func.isRequired, // eslint-disable-line react/no-typos
 }
 
 TableContainer.defaultProps = {
   columns: [],
+  expandable: false,
+  handleRowClick: () => undefined,
+  loading: false,
+  maxColumns: 7,
+  order: 'ascending',
+  orderColumn: 0,
   rows: [],
   selectable: false,
-  expandable: false,
-  maxColumns: 7,
-  orderColumn: 0,
-  order: 'ascending',
-  onRowClick: () => undefined,
-  loading: false,
   selectedPage: 15,
 }
 

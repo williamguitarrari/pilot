@@ -5,18 +5,22 @@ import {
 } from 'redux'
 
 import { createEpicMiddleware } from 'redux-observable'
+import { save, load } from 'redux-localstorage-simple'
 
 import DevTools from '../DevTools'
 import { rootEpic, rootReducer } from '../pages/actions'
 
+const states = [
+  'account.sessionId',
+]
+
 const enhancer = compose(
-  applyMiddleware(createEpicMiddleware(rootEpic)),
+  applyMiddleware(createEpicMiddleware(rootEpic), save({
+    states,
+  })),
   DevTools.instrument()
 )
 
-export default function configureStore () {
-  return createStore(
-    rootReducer,
-    enhancer
-  )
-}
+const store = createStore(rootReducer, load({ states }), enhancer)
+
+export default store
