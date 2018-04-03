@@ -10,6 +10,13 @@ import { connect } from 'react-redux'
 import Login from '../../../containers/Account/Login'
 import { requestLogin } from '../actions'
 
+const { NODE_ENV, REACT_APP_API_ENVIRONMENT } = process.env
+
+const environment =
+  (NODE_ENV === 'production' || REACT_APP_API_ENVIRONMENT === 'live')
+    ? 'live'
+    : 'sandbox'
+
 const mapStateToProps = (state) => {
   const {
     account: {
@@ -28,7 +35,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => ({
   onLogin: (data) => {
-    dispatch(requestLogin(data))
+    dispatch(requestLogin({ ...data, environment }))
   },
 })
 
