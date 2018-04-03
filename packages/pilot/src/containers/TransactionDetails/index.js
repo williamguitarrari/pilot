@@ -235,12 +235,12 @@ class TransactionDetails extends Component {
       const {
         type,
         status,
-        date_created,
+        created_at,
         cycle,
       } = operation
       const legendStatus = getOperationLegendStatus(operation)
       const number = operations.length - index
-      const date = moment(date_created)
+      const date = moment(created_at)
       const key = `${type}_${status}_${(cycle || 0)}_${index}`
       return (
         <Event
@@ -639,7 +639,7 @@ TransactionDetails.propTypes = {
     }),
     metadata: PropTypes.object, // eslint-disable-line
     operations: PropTypes.arrayOf(PropTypes.shape({
-      date_created: PropTypes.string,
+      created_at: PropTypes.string,
       type: PropTypes.string,
       status: PropTypes.string,
       cycle: PropTypes.number,
@@ -653,7 +653,7 @@ TransactionDetails.propTypes = {
         number: PropTypes.number,
         payment_date: PropTypes.instanceOf(moment),
         original_payment_date: PropTypes.instanceOf(moment),
-        date_created: PropTypes.instanceOf(moment),
+        created_at: PropTypes.instanceOf(moment),
         amount: PropTypes.number,
         net_amount: PropTypes.number,
         costs: PropTypes.shape({
