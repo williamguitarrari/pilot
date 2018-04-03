@@ -86,7 +86,7 @@
     "name": "Nome do cliente",
     "document_number": "CPF/CNPJ",
     "born_at": "Data de nascimento",
-    "gender": "Genero",
+    "gender": "Gênero",
     "phone": "Telefone",
     "email": "E-mail",
     "zip_code": "CEP",
