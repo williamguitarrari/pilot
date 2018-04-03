@@ -263,9 +263,19 @@ const sumAllRecipientsMdrCost = pipe(
   sum
 )
 
+const netAmountLens = lensPath(['transaction', 'payment', 'net_amount'])
+
+const subtractMdrFromNetAmount = pipe(
+  path(['transaction', 'payment']),
+  props(['net_amount', 'mdr_amount']),
+  apply(subtract)
+)
+
 export default pipe(
   buildNewSplitRules,
   mapTransactionToResult,
   juxt([sumAllRecipientsMdrCost, identity]),
-  apply(set(mdrLens))
+  apply(set(mdrLens)),
+  juxt([subtractMdrFromNetAmount, identity]),
+  apply(set(netAmountLens))
 )
