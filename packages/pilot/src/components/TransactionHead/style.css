@@ -3,25 +3,32 @@
 
 .transactionCard {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: space-between;
-  padding: var(--spacing-large) var(--spacing-medium);
-}
 
-.transactionInformation {
-  display: flex;
-  align-items: flex-start;
-
-  & > * {
-    margin-right: var(--spacing-small);
+  & > div + div {
+    margin-left: var(--spacing-small);
   }
 }
 
-.transactionStatus > div {
+.transactionItem {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 14px;
+  & > div {
+    height: var(--spacing-large);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+.transactionStatus {
   display: flex;
   align-items: center;
-  margin-top: calc(var(--spacing-small) + 1px);
-
+  /* margin-top: calc(var(--spacing-small) + 1px); */
   & abbr {
     margin-right: var(--spacing-small);
   }
@@ -30,13 +37,19 @@
 .transactionLabel {
   display: block;
   text-transform: uppercase;
-  margin-bottom: var(--spacing-tiny);
+  padding-bottom: 2px;
 }
 
 .transactionId {
   margin: 0;
   font-size: 28px;
+  line-height: 1;
   color: var(--color-light-steel-100);
+}
+
+.transactionAmount {
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .transactionActions button {

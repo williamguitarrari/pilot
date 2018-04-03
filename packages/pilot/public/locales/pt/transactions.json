@@ -101,10 +101,13 @@
     "title": "HISTÓRICO DA TRANSAÇÃO"
   },
   "header": {
+    "boleto_amount": "VALOR EMITIDO",
+    "card_amount": "VALOR AUTORIZADO",
     "title": "TRANSAÇÃO",
     "status": "STATUS",
-    "installment": "Pagamento à vista",
-    "installment_plural": "Pagamento parcelado"
+    "installment_title": "PAGAMENTO",
+    "installment": "À vista",
+    "installment_plural": "Parcelado {{count}}x"
   },
   "installment": {
     "anticipation": "SERVIÇO DE ANTECIPAÇÃO",

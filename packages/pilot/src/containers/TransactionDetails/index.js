@@ -30,7 +30,8 @@ import {
 } from 'former-kit'
 import IconInfo from 'emblematic-icons/svg/Info32.svg'
 import statusLegends from '../../models/statusLegends'
-import currencyFormatter from '../../formatters/decimalCurrency'
+import decimalCurrencyFormatter from '../../formatters/decimalCurrency'
+import currencyFormatter from '../../formatters/currency'
 import TransactionHead from '../../components/TransactionHead'
 import PaymentCard from '../../components/PaymentCard'
 import PaymentBoleto from '../../components/PaymentBoleto'
@@ -101,6 +102,13 @@ const showStatusAlert = either(
   isChargebackedTransaction,
   isBoletoWaitingPayment
 )
+
+const getHeaderAmountLabel = (transaction, headerLabels) => {
+  if (isBoletoTransaction(transaction)) {
+    return headerLabels.boletoAmountLabel
+  }
+  return headerLabels.cardAmountLabel
+}
 
 class TransactionDetails extends Component {
   constructor (props) {
@@ -271,6 +279,7 @@ class TransactionDetails extends Component {
 
     const {
       acquirer,
+      amount,
       card,
       customer,
       id,
@@ -292,7 +301,7 @@ class TransactionDetails extends Component {
       subscription_id: subscription ? subscription.id : null,
       capture_method: card ? card.capture_method : null,
     }
-    if (isEmpty(this.props.transaction)) {
+    if (isEmpty(transaction)) {
       return (<div />)
     }
 
@@ -308,10 +317,13 @@ class TransactionDetails extends Component {
             <TransactionHead
               id={id}
               status={status}
+              installmentsLabel={headerLabels.installmentsLabel}
               installments={headerLabels.installments}
               actions={[]}
               title={headerLabels.title}
               statusLabel={headerLabels.statusLabel}
+              amountLabel={getHeaderAmountLabel(transaction, headerLabels)}
+              amount={currencyFormatter(amount)}
             />
           </Col>
         </Row>
@@ -420,7 +432,7 @@ class TransactionDetails extends Component {
                       recipients={recipients}
                       statusLabel={recipientsLabels.statusLabel}
                       title={recipientsLabels.title}
-                      total={currencyFormatter(payment.paid_amount)}
+                      total={decimalCurrencyFormatter(payment.paid_amount)}
                       totalRecipientsLabel={recipientsLabels.totalRecipientsLabel}
                       totalTitle={recipientsLabels.totalTitle}
                     />

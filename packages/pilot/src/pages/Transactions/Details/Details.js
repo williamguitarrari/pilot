@@ -214,6 +214,9 @@ class TransactionDetails extends Component {
     }
 
     const headerLabels = {
+      boletoAmountLabel: t('header.boleto_amount'),
+      cardAmountLabel: t('header.card_amount'),
+      installmentsLabel: t('header.installment_title'),
       installments: t('header.installment', {
         count: payment.installments,
       }),
