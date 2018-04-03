@@ -1,0 +1,35 @@
+.titleContainer {
+  padding-bottom: 0;
+}
+
+.title {
+  font-weight: bold;
+}
+
+.total {
+  font-size: 28px;
+  font-weight: bold;
+  text-align: right;
+}
+
+.recipientsLabel {
+  font-size: 14px;
+}
+
+.totals {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.recipients {
+  counter-reset: section;
+}
+
+.subtitle {
+  font-size: 12px;
+}
+
+.recipient + .recipient {
+  margin-top: 24px;
+}

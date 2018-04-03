@@ -6,6 +6,7 @@ import {
   CardContent,
   CardActions,
   CardSection,
+  CardSectionTitle,
   DateInput,
   Input,
   Button,
@@ -153,7 +154,9 @@ class Filters extends Component {
 
   renderToolbar () {
     const {
+      dateLabels,
       datePresets,
+      findByLabel,
     } = this.props
 
     const {
@@ -171,12 +174,13 @@ class Filters extends Component {
           presets={datePresets}
           icon={<Calendar32 width={16} height={16} />}
           disabled={this.props.disabled}
+          strings={dateLabels}
         />
         <Input
           className={style.searchField}
           icon={<Search32 width={16} height={16} />}
           value={this.state.search}
-          placeholder="Filtre por ID, CPF, nome e e-mail."
+          placeholder={findByLabel}
           onChange={this.handleSearchFieldChange}
           active={!!this.state.search}
           disabled={this.props.disabled}
@@ -194,30 +198,32 @@ class Filters extends Component {
     const { options } = this.props
 
     return (
-      <CardSection
-        title={this.cardTitle()}
-        collapsedTitle={this.cardTitle()}
-        collapsed={collapsed}
-        onTitleClick={() => this.setState({ collapsed: !collapsed })}
-      >
-        <CardContent>
-          <Row flex>
-            {options.map(({ name, items, key }) => (
-              <Col key={name}>
-                <h4 className={style.filtersTitle}>{name}</h4>
-                <CheckboxGroup
-                  disabled={this.props.disabled}
-                  columns={items.length > 6 ? 2 : 1}
-                  className={style.checkboxGroup}
-                  options={items}
-                  name={name}
-                  onChange={partial(this.handleFilterChange, [key])}
-                  values={values[key] || []}
-                />
-              </Col>
-            ))}
-          </Row>
-        </CardContent>
+      <CardSection>
+        <CardSectionTitle
+          title={this.cardTitle()}
+          collapsed={collapsed}
+          onClick={() => this.setState({ collapsed: !collapsed })}
+        />
+        {!collapsed &&
+          <CardContent>
+            <Row flex>
+              {options.map(({ name, items, key }) => (
+                <Col key={name}>
+                  <h4 className={style.filtersTitle}>{name}</h4>
+                  <CheckboxGroup
+                    disabled={this.props.disabled}
+                    columns={items.length > 6 ? 2 : 1}
+                    className={style.checkboxGroup}
+                    options={items}
+                    name={name}
+                    onChange={partial(this.handleFilterChange, [key])}
+                    values={values[key] || []}
+                  />
+                </Col>
+              ))}
+            </Row>
+          </CardContent>
+        }
       </CardSection>
     )
   }
@@ -259,6 +265,11 @@ class Filters extends Component {
   }
 
   renderActions () {
+    const {
+      clearLabel,
+      confirmLabel,
+    } = this.props
+
     const originalFilters = {
       search: this.props.search,
       dates: this.props.dates,
@@ -281,7 +292,7 @@ class Filters extends Component {
           fill="outline"
           disabled={this.props.disabled}
         >
-          Limpar filtros
+          {clearLabel}
         </Button>
 
         <Button
@@ -290,20 +301,20 @@ class Filters extends Component {
           type="submit"
           fill="gradient"
         >
-          Filtrar
+          {confirmLabel}
         </Button>
       </CardActions>
     )
   }
 
   render () {
-    const { t } = this.props
+    const { title } = this.props
 
     return (
       <Card className={style.allowOverflow}>
         <form action="/" method="post" onSubmit={this.handleFiltersSubmit}>
           <CardTitle
-            title={t('Filtros')}
+            title={title}
             icon={<Filter32 width={16} height={16} />}
           />
 
@@ -321,7 +332,6 @@ class Filters extends Component {
 }
 
 Filters.propTypes = {
-  t: func,
   options: arrayOf(shape({
     key: string,
     name: string,
@@ -347,10 +357,28 @@ Filters.propTypes = {
   })),
   onChange: func,
   disabled: bool,
+  title: string.isRequired, // eslint-disable-line react/no-typos
+  findByLabel: string.isRequired, // eslint-disable-line react/no-typos
+  clearLabel: string.isRequired, // eslint-disable-line react/no-typos
+  confirmLabel: string.isRequired, // eslint-disable-line react/no-typos
+  dateLabels: arrayOf(shape({
+    anyDate: string,
+    cancel: string,
+    confirmPeriod: string,
+    custom: string,
+    day: string,
+    daySelected: string,
+    daysSelected: string,
+    end: string,
+    noDayOrPeriodSelected: string,
+    period: string,
+    select: string,
+    start: string,
+    today: string,
+  })).isRequired,
 }
 
 Filters.defaultProps = {
-  t: t => t,
   options: [],
   values: {},
   search: '',

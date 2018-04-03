@@ -1,15 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { values } from 'ramda'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+
+import routes from './routes'
 import { requestLogout } from '../Account/actions'
 
 import Header from '../../containers/Header'
-
-const mapStateToProps = ({ account: { user } }) => ({
-  user,
-  avatar: 'https://randomuser.me/api/portraits/thumb/men/12.jpg',
-})
 
 const mapDispatchToProps = dispatch => ({
   onLogout: () => {
@@ -18,32 +17,29 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const enhance = connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )
 
 const HeaderContainer = ({
-  avatar,
-  user,
+  t,
   onLogout,
+  history: { goBack },
 }) => (
   <Header
-    avatar={avatar}
-    username={user.name}
     onClickMenu={onLogout}
+    routes={values(routes)}
+    onBack={goBack}
+    t={t}
   />
 )
 
 HeaderContainer.propTypes = {
-  onLogout: PropTypes.func.isRequired,
-  user: PropTypes.shape({
-    name: PropTypes.string,
+  t: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    goBack: PropTypes.func,
   }).isRequired,
-  avatar: PropTypes.string,
+  onLogout: PropTypes.func.isRequired,
 }
 
-HeaderContainer.defaultProps = {
-  avatar: null,
-}
-
-export default enhance(HeaderContainer)
+export default withRouter(enhance(HeaderContainer))

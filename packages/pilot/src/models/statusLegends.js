@@ -39,6 +39,21 @@ const status = {
     text: 'Chargeback',
     acronym: 'CB',
   },
+  waiting_funds: {
+    color: '#41535b',
+    text: 'Aguardando pagamento',
+    acronym: 'AP',
+  },
+  chargedback_refund: {
+    color: '#bf5316',
+    text: 'Chargeback reapresentado',
+    acronym: 'CBR',
+  },
+  suspended: {
+    color: '#bf5316',
+    text: 'Suspensa',
+    acronym: 'SU',
+  },
 }
 
 export default status

@@ -1,53 +1,67 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-
-import Alert24 from 'emblematic-icons/svg/Alert24.svg'
-import Mail24 from 'emblematic-icons/svg/Mail24.svg'
-import User24 from 'emblematic-icons/svg/User24.svg'
+import {
+  Switch,
+  Route,
+} from 'react-router-dom'
 
 import {
-  Avatar,
   Header,
   HeaderContent,
-  HeaderLink,
   HeaderMenu,
   HeaderTitle,
+  HeaderBackButton,
 } from 'former-kit'
 
-
 const HeaderContainer = ({
-  avatar,
-  username,
   onClickMenu,
+  routes,
+  onBack,
+  t,
 }) => (
   <Header>
-    <HeaderTitle>Transactions</HeaderTitle>
+    <Switch>
+      {
+        routes.map(({
+          title,
+          exact,
+          path,
+          component,
+        }) => (
+          <Route
+            key={path}
+            exact={exact}
+            path={path}
+            render={() => (
+              <Fragment>
+                {!component && <HeaderBackButton onClick={onBack} />}
+                <HeaderTitle>{t(title)}</HeaderTitle>
+              </Fragment>
+              )
+            }
+          />
+        ))
+      }
+    </Switch>
+
     <HeaderContent>
-      <HeaderLink
-        icon={<Mail24 />}
-        onClick={() => {}}
-      />
-      <HeaderLink
-        icon={<Alert24 />}
-        onClick={() => {}}
-      />
-      <HeaderMenu
-        onClick={onClickMenu}
-      >
-        <Avatar
-          photo={avatar}
-          icon={<User24 />}
-        />
-        <span>{username}</span>
+      <HeaderMenu onClick={onClickMenu}>
+        <span>Logout</span>
       </HeaderMenu>
     </HeaderContent>
   </Header>
 )
 
 HeaderContainer.propTypes = {
+  t: PropTypes.func.isRequired,
+  onBack: PropTypes.func.isRequired,
+  routes: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string,
+    path: PropTypes.string,
+    exact: PropTypes.bool,
+    component: PropTypes.func,
+  })).isRequired,
   onClickMenu: PropTypes.func.isRequired,
-  avatar: PropTypes.string.isRequired,
-  username: PropTypes.string.isRequired,
 }
 
 export default HeaderContainer

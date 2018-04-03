@@ -10,6 +10,8 @@ import { connect } from 'react-redux'
 import Login from '../../../containers/Account/Login'
 import { requestLogin } from '../actions'
 
+import environment from '../../../environment'
+
 const mapStateToProps = (state) => {
   const {
     account: {
@@ -28,7 +30,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => ({
   onLogin: (data) => {
-    dispatch(requestLogin(data))
+    dispatch(requestLogin({ ...data, environment }))
   },
 })
 
@@ -42,14 +44,10 @@ const enhanced = compose(
 )
 
 class LoginPage extends PureComponent {
-  constructor (props) {
-    super(props)
-
-    this.handlePasswordRecovery = this.handlePasswordRecovery.bind(this)
-  }
-
-  handlePasswordRecovery () {
-    this.props.history.push('/account/password/recovery')
+  // eslint-disable-next-line class-methods-use-this
+  handlePasswordRecovery (e) {
+    e.preventDefault()
+    window.location = 'https://dashboard.pagar.me/#/forgot_password'
   }
 
   render () {
@@ -71,10 +69,6 @@ LoginPage.propTypes = {
     email: PropTypes.string,
     password: PropTypes.string,
   }),
-  history: PropTypes.shape({
-    push: PropTypes.func,
-    replace: PropTypes.func,
-  }).isRequired,
   loading: PropTypes.bool,
   onLogin: PropTypes.func.isRequired,
 }

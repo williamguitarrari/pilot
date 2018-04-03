@@ -1,12 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Form from 'react-vanilla-form'
+import IconWarning from 'emblematic-icons/svg/Warning32.svg'
 import {
   Button,
   FormInput,
+  Alert,
 } from 'former-kit'
 
 import styles from '../style.css'
+
+const showLoginError = errors => errors && errors.null
 
 const LoginContainer = ({
   errors,
@@ -38,18 +42,24 @@ const LoginContainer = ({
         label={t('password')}
         name="password"
       />
-      <FormInput
-        disabled={loading}
-        label={t('login.token')}
-        name="token"
-      />
     </div>
+    {showLoginError(errors) &&
+      <div className={styles.errorAlert}>
+        <Alert
+          type="error"
+          icon={<IconWarning height={16} width={16} />}
+        >
+          <p>{errors.null}</p>
+        </Alert>
+      </div>
+    }
+
     <div className={styles.actions}>
       <div className={styles.hugeButton}>
         <Button
           type="submit"
           disabled={loading}
-          size="large"
+          size="huge"
           fill="gradient"
         >
           {t('login.login_action')}
