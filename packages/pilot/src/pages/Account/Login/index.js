@@ -42,14 +42,10 @@ const enhanced = compose(
 )
 
 class LoginPage extends PureComponent {
-  constructor (props) {
-    super(props)
-
-    this.handlePasswordRecovery = this.handlePasswordRecovery.bind(this)
-  }
-
-  handlePasswordRecovery () {
-    this.props.history.push('/account/password/recovery')
+  // eslint-disable-next-line class-methods-use-this
+  handlePasswordRecovery (e) {
+    e.preventDefault()
+    window.location = 'https://dashboard.pagar.me/#/forgot_password'
   }
 
   render () {
@@ -71,10 +67,6 @@ LoginPage.propTypes = {
     email: PropTypes.string,
     password: PropTypes.string,
   }),
-  history: PropTypes.shape({
-    push: PropTypes.func,
-    replace: PropTypes.func,
-  }).isRequired,
   loading: PropTypes.bool,
   onLogin: PropTypes.func.isRequired,
 }

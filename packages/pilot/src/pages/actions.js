@@ -1,11 +1,12 @@
 import { combineReducers } from 'redux'
 
 import account, { epic as accountEpic } from './Account/actions'
-import transactions from './Transactions/actions'
+import { reducers as transactionsReducers } from './Transactions'
 
 export const rootEpic = accountEpic
 
 export const rootReducer = combineReducers({
   account,
-  transactions,
+  transactionDetails: transactionsReducers.details,
+  transactions: transactionsReducers.search,
 })

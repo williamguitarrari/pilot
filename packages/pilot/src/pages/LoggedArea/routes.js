@@ -4,7 +4,7 @@ import Transactions from '../Transactions'
 
 export default {
   transactions: {
-    title: 'Transactions',
+    title: 'transactions',
     path: '/transactions',
     component: Transactions,
     icon: Transaction32,

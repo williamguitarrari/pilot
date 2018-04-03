@@ -4,14 +4,12 @@ import theme from 'former-kit-skin-pagarme'
 import { HashRouter } from 'react-router-dom'
 import { Provider as StateProvider } from 'react-redux'
 
-import configureStore from './configureStore'
+import store from './configureStore'
 import Root from './pages/Root'
 
 const DevTools = process.env.NODE_ENV !== 'production'
   ? require('./DevTools').default /* eslint-disable-line global-require */
   : Fragment
-
-const store = configureStore()
 
 const App = () => (
   <ThemeProvider theme={theme}>

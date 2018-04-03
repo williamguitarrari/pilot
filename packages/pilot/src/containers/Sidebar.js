@@ -1,18 +1,25 @@
 import React from 'react'
-
+import PropTypes from 'prop-types'
+import {
+  head,
+  pipe,
+  split,
+} from 'ramda'
 import {
   Sidebar,
   SidebarHeader,
-  SidebarLinks,
   SidebarLink,
+  SidebarLinks,
 } from 'former-kit'
 
 import Menu32 from 'emblematic-icons/svg/Menu32.svg'
-import Transaction32 from 'emblematic-icons/svg/Transaction32.svg'
-import Wallet32 from 'emblematic-icons/svg/Wallet32.svg'
-import Home32 from 'emblematic-icons/svg/Home32.svg'
 
-export default class SidebarContainer extends React.Component {
+const getBasePath = pipe(
+  split('/'),
+  head
+)
+
+class SidebarContainer extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -29,39 +36,48 @@ export default class SidebarContainer extends React.Component {
 
   render () {
     const { collapsed } = this.state
-
+    const {
+      logo: Logo,
+      links,
+      pathName,
+      onLinkClick,
+    } = this.props
     return (
       <Sidebar collapsed={collapsed}>
         <SidebarHeader>
-          {!collapsed &&
-            <h1>FormerKit</h1>
-          }
+          {!collapsed && <Logo width="140" />}
           <button onClick={this.handleToggleSidebar}>
             <Menu32 width={16} height={16} />
           </button>
         </SidebarHeader>
-
         <SidebarLinks>
-          <SidebarLink
-            title="Home"
-            active={false}
-            icon={<Home32 width={16} height={16} />}
-            collapsed={collapsed}
-          />
-          <SidebarLink
-            title="Transactions"
-            active={false}
-            icon={<Transaction32 width={16} height={16} />}
-            collapsed={collapsed}
-          />
-          <SidebarLink
-            title="Extract"
-            active={false}
-            icon={<Wallet32 width={16} height={16} />}
-            collapsed={collapsed}
-          />
+          {links.map(({ title, path, icon: Icon }) => (
+            <SidebarLink
+              key={path}
+              title={title}
+              active={getBasePath(path) === getBasePath(pathName)}
+              icon={<Icon width={16} height={16} />}
+              collapsed={collapsed}
+              onClick={() => onLinkClick(path)}
+            />
+          )
+        )}
         </SidebarLinks>
       </Sidebar>
     )
   }
 }
+
+SidebarContainer.propTypes = {
+  logo: PropTypes.func.isRequired,
+  links: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string,
+    path: PropTypes.string,
+    icon: PropTypes.func,
+    component: PropTypes.func,
+  })).isRequired,
+  onLinkClick: PropTypes.func.isRequired,
+  pathName: PropTypes.string.isRequired,
+}
+
+export default SidebarContainer
