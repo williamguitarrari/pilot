@@ -11,7 +11,6 @@ import {
 } from 'prop-types'
 import moment from 'moment'
 import IconBalance from 'emblematic-icons/svg/Balance32.svg'
-import IconDownload from 'emblematic-icons/svg/Download32.svg'
 import IconChartsBars from 'emblematic-icons/svg/ChartBars32.svg'
 import IconTransactions from 'emblematic-icons/svg/Transaction32.svg'
 import IconInfo from 'emblematic-icons/svg/Info32.svg'
@@ -24,8 +23,7 @@ import {
   CardContent,
   CardTitle,
   CardSection,
-
-  Button,
+  CardSectionTitle,
 } from 'former-kit'
 
 import style from './style.css'
@@ -49,28 +47,51 @@ const renderDateSelected = ({ start, end }) => {
   return `${formatDate(start)} até ${formatDate(end)}`
 }
 
+const renderTableSubtitle = count => (
+  <div className={style.tableButtons}>
+    <span>total de {count} transações</span>
+  </div>
+)
+
 const TransactionsList = ({
+  amount,
+  clearFiltersLabel,
   collapsed,
   columns,
-  dates,
+  count,
+  data,
   dateSelectorPresets,
+  dates,
+  filterConfirmLabel,
   filterOptions,
+  filtersTitle,
+  findByLabel,
+  graphicTittle,
   handleChartsCollapse,
   handleFilterChange,
   handleOrderChange,
+  handlePageChange,
   handlePageCountChange,
+  itemsPerPageLabel,
+  loading,
+  noContentFoundMessage,
+  ofLabel,
   order,
   orderColumn,
+  pagination,
+  periodSummaryLabel,
   rows,
   search,
-  values,
-  count,
-  amount,
-  pagination,
-  handlePageChange,
-  data,
-  loading,
   selectedPage,
+  tableTitle,
+  totalVolumeLabel,
+  transactionsNumberLabel,
+  tryFilterAgainMessage,
+  values,
+  expandedRows,
+  selectedRows,
+  handleExpandRow,
+  handleSelectRow,
 }) => (
   <Grid>
     <Row>
@@ -88,6 +109,10 @@ const TransactionsList = ({
           datePresets={dateSelectorPresets}
           onChange={handleFilterChange}
           disabled={loading}
+          title={filtersTitle}
+          findByLabel={findByLabel}
+          clearLabel={clearFiltersLabel}
+          confirmLabel={filterConfirmLabel}
         />
       </Col>
       <Col
@@ -103,55 +128,41 @@ const TransactionsList = ({
               title={
                 <h2 className={style.customTitle}>
                   <IconTransactions width={16} height={16} />
-                  Resumo de: <strong>{renderDateSelected(dates)}</strong>
+                  {periodSummaryLabel} <strong>{renderDateSelected(dates)}</strong>
                 </h2>
               }
               subtitle={
                 <h3 className={style.customTitle}>
                   <IconChartsBars width={16} height={16} />
-                  Nº transações <strong>{count}</strong>
+                  {transactionsNumberLabel} <strong>{count}</strong>
                   <div className={style.verticalDivider} />
                   <IconBalance width={16} height={16} />
-                  Volume total <strong>{formatCurrency(amount)}</strong>
+                  {totalVolumeLabel} <strong>{formatCurrency(amount)}</strong>
                 </h3>
               }
             />
 
             <CardContent>
-              <CardSection
-                title="GRÁFICO"
-                collapsedTitle="GRÁFICO"
-                collapsed={collapsed}
-                onTitleClick={handleChartsCollapse}
-              >
-                <CardContent>
-                  <Charts data={data} />
-                </CardContent>
+              <CardSection>
+                <CardSectionTitle
+                  title={graphicTittle}
+                  collapsed={collapsed}
+                  onClick={handleChartsCollapse}
+                />
+                {!collapsed &&
+                  <CardContent>
+                    <Charts data={data} />
+                  </CardContent>
+                }
               </CardSection>
             </CardContent>
 
             <CardContent>
-              <CardSection
-                title="TABELA DE TRANSAÇÕES"
-                subtitle={
-                  <div className={style.tableButtons}>
-                    <Button
-                      fill="clean"
-                      disabled={loading}
-                      icon={
-                        <IconDownload
-                          width={16}
-                          height={16}
-                        />
-                      }
-                    >
-                      Exportar
-                    </Button>
-                    <div className={style.separator} />
-                    <span>total de {count} transações</span>
-                  </div>
-                }
-              >
+              <CardSection>
+                <CardSectionTitle
+                  title={tableTitle}
+                  subtitle={renderTableSubtitle(count, loading)}
+                />
                 <Table
                   expandable
                   selectable
@@ -166,6 +177,12 @@ const TransactionsList = ({
                   handlePageCountChange={handlePageCountChange}
                   loading={loading}
                   selectedPage={selectedPage}
+                  itemsPerPageLabel={itemsPerPageLabel}
+                  ofLabel={ofLabel}
+                  expandedRows={expandedRows}
+                  selectedRows={selectedRows}
+                  handleExpandRow={handleExpandRow}
+                  handleSelectRow={handleSelectRow}
                 />
               </CardSection>
             </CardContent>
@@ -180,8 +197,8 @@ const TransactionsList = ({
               icon={<IconInfo height={16} width={16} />}
             >
               <p>
-                <strong>Não foram encontrados resultados para essa busca.</strong>
-                Tente novamente com outros filtros.
+                <strong>{noContentFoundMessage}</strong>
+                {tryFilterAgainMessage}
               </p>
             </Alert>
           </div>
@@ -224,30 +241,49 @@ TransactionsList.propTypes = {
   }),
   order: string,
   orderColumn: number,
-  loading: bool.isRequired, // eslint-disable-line
-  columns: arrayOf(object), // eslint-disable-line
-  rows: arrayOf(object).isRequired, // eslint-disabled-line
-  collapsed: bool.isRequired, // eslint-disable-line
-  handleChartsCollapse: func.isRequired, // eslint-disable-line
-  handleFilterChange: func.isRequired, // eslint-disable-line
-  handleOrderChange: func.isRequired, // eslint-disable-line
-  handlePageChange: func.isRequired, // eslint-disable-line
-  handlePageCountChange: func.isRequired, // eslint-disable-line
+  loading: bool.isRequired, // eslint-disable-line react/no-typos
+  columns: arrayOf(object),
+  rows: arrayOf(object).isRequired, // eslint-disabled-line react/no-typos
+  collapsed: bool.isRequired, // eslint-disable-line react/no-typos
+  handleChartsCollapse: func.isRequired, // eslint-disable-line react/no-typos
+  handleFilterChange: func.isRequired, // eslint-disable-line react/no-typos
+  handleOrderChange: func.isRequired, // eslint-disable-line react/no-typos
+  handlePageChange: func.isRequired, // eslint-disable-line react/no-typos
+  handlePageCountChange: func.isRequired, // eslint-disable-line react/no-typos
   data: arrayOf(object), // eslint-disable-line
+
+  graphicTittle: string.isRequired, // eslint-disable-line react/no-typos
+  tableTitle: string.isRequired, // eslint-disable-line react/no-typos
+  periodSummaryLabel: string.isRequired, // eslint-disable-line react/no-typos
+  transactionsNumberLabel: string.isRequired, // eslint-disable-line react/no-typos
+  totalVolumeLabel: string.isRequired, // eslint-disable-line react/no-typos
+  itemsPerPageLabel: string.isRequired, // eslint-disable-line react/no-typos
+  ofLabel: string.isRequired, // eslint-disable-line react/no-typos
+  filtersTitle: string.isRequired, // eslint-disable-line react/no-typos
+  findByLabel: string.isRequired, // eslint-disable-line react/no-typos
+  clearFiltersLabel: string.isRequired, // eslint-disable-line react/no-typos
+  filterConfirmLabel: string.isRequired, // eslint-disable-line react/no-typos
+  noContentFoundMessage: string.isRequired, // eslint-disable-line react/no-typos
+  tryFilterAgainMessage: string.isRequired, // eslint-disable-line react/no-typos
+  expandedRows: arrayOf(number).isRequired,
+  selectedRows: arrayOf(number).isRequired,
+  handleSelectRow: func.isRequired, // eslint-disable-line react/no-typos
+  handleExpandRow: func.isRequired, // eslint-disable-line react/no-typos
 }
 
 TransactionsList.defaultProps = {
-  values: [],
-  search: '',
-  orderColumn: 0,
-  count: 0,
   amount: 0,
-  order: 'ascending',
+  columns: [],
+  count: 0,
   dates: {
     start: moment(),
     end: moment(),
   },
+  order: 'ascending',
+  orderColumn: 0,
+  search: '',
   selectedPage: 15,
+  values: [],
 }
 
 export default TransactionsList

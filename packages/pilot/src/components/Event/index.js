@@ -1,0 +1,107 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+import React from 'react'
+import PropTypes from 'prop-types'
+import cx from 'classnames'
+import {
+  is,
+  head,
+} from 'ramda'
+import IconChevronUp from 'emblematic-icons/svg/ChevronUp24.svg'
+import IconChevronDown from 'emblematic-icons/svg/ChevronDown24.svg'
+
+import style from './style.css'
+
+const renderIndicatorArrow = (collapsed, active, color) => (
+  <span style={{ color: active ? color : '#fff' }}>
+    {
+      collapsed
+        ? <IconChevronDown width={12} height={12} />
+        : <IconChevronUp width={12} height={12} />
+    }
+  </span>
+)
+
+class Event extends React.Component {
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      collapsed: this.props.collapsed,
+    }
+
+    this.handleCollapse = this.handleCollapse.bind(this)
+  }
+
+  handleCollapse () {
+    this.setState({
+      collapsed: !this.state.collapsed,
+    })
+  }
+
+  render () {
+    const {
+      number,
+      title,
+      children,
+      active,
+      color,
+    } = this.props
+
+    const { collapsed } = this.state
+
+    const childrenIsArray = is(Array, children)
+
+    return (
+      <div
+        role="button"
+        tabIndex="0"
+        onClick={this.handleCollapse}
+        className={cx(style.event, {
+          [style.active]: active,
+          [style.hasEvents]: childrenIsArray,
+        })}
+        style={{ backgroundColor: active ? color : '#fff' }}
+      >
+        <header className={style.header}>
+          <span
+            className={style.number}
+            style={{ color: active ? color : '#fff' }}
+          >
+            {number}
+          </span>
+          <h3 className={style.title}>{title}</h3>
+        </header>
+
+        <div className={style.info}>
+          {
+            collapsed && childrenIsArray
+              ? head(children)
+              : children
+          }
+        </div>
+
+        <div className={style.indicator}>
+          {
+            childrenIsArray && renderIndicatorArrow(collapsed, active, color)
+          }
+        </div>
+      </div>
+    )
+  }
+}
+
+Event.propTypes = {
+  active: PropTypes.bool,
+  color: PropTypes.string.isRequired,
+  number: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  collapsed: PropTypes.bool,
+  children: PropTypes.node.isRequired,
+}
+
+Event.defaultProps = {
+  active: false,
+  collapsed: false,
+}
+
+export default Event

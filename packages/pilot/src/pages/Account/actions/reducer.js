@@ -14,10 +14,12 @@ import {
   LOGIN_REQUEST,
   LOGIN_RECEIVE,
   LOGOUT_REQUEST,
+  LOGIN_FAIL,
 } from '.'
 
 const initialState = {
   loading: false,
+  sessionId: null,
 }
 
 const parseErrorObject = pipe(
@@ -48,15 +50,17 @@ export default function loginReducer (state = initialState, action) {
         user: null,
       })
     }
-
+    case LOGIN_FAIL:
     case LOGIN_RECEIVE: {
       if (action.error) {
         return merge(
           state,
           {
-            client: undefined,
+            client: null,
             errors: createErrors(action.payload),
             user: null,
+            sessionId: null,
+            loading: false,
           }
         )
       }
@@ -65,6 +69,7 @@ export default function loginReducer (state = initialState, action) {
         state,
         {
           client: action.payload,
+          sessionId: action.payload.authentication.session_id,
           errors: null,
           loading: false,
         }

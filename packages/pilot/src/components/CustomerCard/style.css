@@ -1,0 +1,21 @@
+@import "former-kit-skin-pagarme/dist/styles/spacing.css";
+@import "former-kit-skin-pagarme/dist/styles/colors/light.css";
+
+.field {
+  display: block;
+
+  & span {
+    display: block;
+  }
+
+  & p {
+    margin: 0;
+    display: block;
+    color: var(--color-light-steel-100);
+  }
+
+  & p:empty {
+    margin: calc(var(--spacing-small) - 5px) 0;
+    border: 1px solid var(--color-light-steel-50);
+  }
+}

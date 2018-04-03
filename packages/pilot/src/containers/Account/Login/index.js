@@ -38,18 +38,13 @@ const LoginContainer = ({
         label={t('password')}
         name="password"
       />
-      <FormInput
-        disabled={loading}
-        label={t('login.token')}
-        name="token"
-      />
     </div>
     <div className={styles.actions}>
       <div className={styles.hugeButton}>
         <Button
           type="submit"
           disabled={loading}
-          size="large"
+          size="huge"
           fill="gradient"
         >
           {t('login.login_action')}

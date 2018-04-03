@@ -1,0 +1,42 @@
+@import "former-kit-skin-pagarme/dist/styles/spacing.css";
+
+.card {
+  height: 150px;
+
+  & p:not(.cardDueDate) {
+    margin: 0;
+  }
+}
+
+.cardContent {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding:
+    var(--spacing-small)
+    var(--spacing-medium);
+
+  & > * {
+    width: 100%;
+  }
+
+  & > div:first-of-type {
+    padding: 0;
+    height: 18px;
+  }
+}
+
+.cardBarCode svg {
+  margin-right: var(--spacing-tiny);
+  top: 7px;
+  position: relative;
+}
+
+.cardDueDate {
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
