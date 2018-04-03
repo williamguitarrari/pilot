@@ -1,4 +1,14 @@
 {
+  "back_login_action": "Voltar para o login",
+  "cancel": "cancelar",
+  "email": "E-mail",
+  "password": "Senha",
+  "header": {
+    "title": "TRANSAÇÕES",
+    "alerts": "Notificações",
+    "messages": "Mensagens",
+    "exit": "Sair"
+  },
   "landing": {
     "logo": "FormerKit",
     "title": "Bem-vindo ao Pagar.me",
@@ -33,15 +43,6 @@
     "subtitle": "na dashboard FormerKit",
     "title": "crie sua conta"
   },
-  "header": {
-    "title": "TRANSAÇÕES",
-    "alerts": "Notificações",
-    "messages": "Mensagens",
-    "exit": "Sair"
-  },
-  "email": "E-mail",
-  "password": "Senha",
-  "back_login_action": "Voltar para o login",
   "transactions": {
     "list": "TRANSAÇÕES",
     "details": "TRANSAÇÃO"

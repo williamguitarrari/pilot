@@ -60,6 +60,7 @@ const TransactionsList = ({
   columns,
   count,
   data,
+  dateLabels,
   dateSelectorPresets,
   dates,
   filterConfirmLabel,
@@ -102,17 +103,18 @@ const TransactionsList = ({
         tv={12}
       >
         <Filter
-          dates={dates}
-          values={values}
-          search={search}
-          options={filterOptions}
-          datePresets={dateSelectorPresets}
-          onChange={handleFilterChange}
-          disabled={loading}
-          title={filtersTitle}
-          findByLabel={findByLabel}
           clearLabel={clearFiltersLabel}
           confirmLabel={filterConfirmLabel}
+          dateLabels={dateLabels}
+          datePresets={dateSelectorPresets}
+          dates={dates}
+          disabled={loading}
+          findByLabel={findByLabel}
+          onChange={handleFilterChange}
+          options={filterOptions}
+          search={search}
+          title={filtersTitle}
+          values={values}
         />
       </Col>
       <Col
@@ -209,20 +211,31 @@ const TransactionsList = ({
 )
 
 TransactionsList.propTypes = {
-  count: number,
   amount: number,
-  pagination: shape({
-    offset: number,
-    total: number,
-  }).isRequired,
-  filterOptions: arrayOf(shape({
-    key: string,
-    name: string,
-    items: arrayOf(shape({
-      label: string,
-      value: string,
-    })),
+  count: number,
+  clearFiltersLabel: string.isRequired, // eslint-disable-line react/no-typos
+  collapsed: bool.isRequired, // eslint-disable-line react/no-typos
+  columns: arrayOf(object),
+  data: arrayOf(object), // eslint-disable-line
+  dateLabels: arrayOf(shape({
+    anyDate: string,
+    cancel: string,
+    confirmPeriod: string,
+    custom: string,
+    day: string,
+    daySelected: string,
+    daysSelected: string,
+    end: string,
+    noDayOrPeriodSelected: string,
+    period: string,
+    select: string,
+    start: string,
+    today: string,
   })).isRequired,
+  dates: shape({
+    start: instanceOf(moment),
+    end: instanceOf(moment),
+  }),
   dateSelectorPresets: arrayOf(shape({
     key: string,
     title: string,
@@ -232,43 +245,46 @@ TransactionsList.propTypes = {
       date: func,
     })),
   })).isRequired,
-  values: object, // eslint-disable-line
-  search: string,
-  selectedPage: number,
-  dates: shape({
-    start: instanceOf(moment),
-    end: instanceOf(moment),
-  }),
-  order: string,
-  orderColumn: number,
-  loading: bool.isRequired, // eslint-disable-line react/no-typos
-  columns: arrayOf(object),
-  rows: arrayOf(object).isRequired, // eslint-disabled-line react/no-typos
-  collapsed: bool.isRequired, // eslint-disable-line react/no-typos
+  expandedRows: arrayOf(number).isRequired,
+  filterConfirmLabel: string.isRequired, // eslint-disable-line react/no-typos
+  filterOptions: arrayOf(shape({
+    key: string,
+    name: string,
+    items: arrayOf(shape({
+      label: string,
+      value: string,
+    })),
+  })).isRequired,
+  filtersTitle: string.isRequired, // eslint-disable-line react/no-typos
+  findByLabel: string.isRequired, // eslint-disable-line react/no-typos
+  graphicTittle: string.isRequired, // eslint-disable-line react/no-typos
   handleChartsCollapse: func.isRequired, // eslint-disable-line react/no-typos
+  handleExpandRow: func.isRequired, // eslint-disable-line react/no-typos
   handleFilterChange: func.isRequired, // eslint-disable-line react/no-typos
   handleOrderChange: func.isRequired, // eslint-disable-line react/no-typos
   handlePageChange: func.isRequired, // eslint-disable-line react/no-typos
   handlePageCountChange: func.isRequired, // eslint-disable-line react/no-typos
-  data: arrayOf(object), // eslint-disable-line
-
-  graphicTittle: string.isRequired, // eslint-disable-line react/no-typos
-  tableTitle: string.isRequired, // eslint-disable-line react/no-typos
-  periodSummaryLabel: string.isRequired, // eslint-disable-line react/no-typos
-  transactionsNumberLabel: string.isRequired, // eslint-disable-line react/no-typos
-  totalVolumeLabel: string.isRequired, // eslint-disable-line react/no-typos
-  itemsPerPageLabel: string.isRequired, // eslint-disable-line react/no-typos
-  ofLabel: string.isRequired, // eslint-disable-line react/no-typos
-  filtersTitle: string.isRequired, // eslint-disable-line react/no-typos
-  findByLabel: string.isRequired, // eslint-disable-line react/no-typos
-  clearFiltersLabel: string.isRequired, // eslint-disable-line react/no-typos
-  filterConfirmLabel: string.isRequired, // eslint-disable-line react/no-typos
-  noContentFoundMessage: string.isRequired, // eslint-disable-line react/no-typos
-  tryFilterAgainMessage: string.isRequired, // eslint-disable-line react/no-typos
-  expandedRows: arrayOf(number).isRequired,
-  selectedRows: arrayOf(number).isRequired,
   handleSelectRow: func.isRequired, // eslint-disable-line react/no-typos
-  handleExpandRow: func.isRequired, // eslint-disable-line react/no-typos
+  itemsPerPageLabel: string.isRequired, // eslint-disable-line react/no-typos
+  loading: bool.isRequired, // eslint-disable-line react/no-typos
+  noContentFoundMessage: string.isRequired, // eslint-disable-line react/no-typos
+  ofLabel: string.isRequired, // eslint-disable-line react/no-typos
+  order: string,
+  orderColumn: number,
+  pagination: shape({
+    offset: number,
+    total: number,
+  }).isRequired,
+  periodSummaryLabel: string.isRequired, // eslint-disable-line react/no-typos
+  rows: arrayOf(object).isRequired, // eslint-disabled-line react/no-typos
+  search: string,
+  selectedPage: number,
+  selectedRows: arrayOf(number).isRequired,
+  tableTitle: string.isRequired, // eslint-disable-line react/no-typos
+  totalVolumeLabel: string.isRequired, // eslint-disable-line react/no-typos
+  transactionsNumberLabel: string.isRequired, // eslint-disable-line react/no-typos
+  tryFilterAgainMessage: string.isRequired, // eslint-disable-line react/no-typos
+  values: object, // eslint-disable-line
 }
 
 TransactionsList.defaultProps = {

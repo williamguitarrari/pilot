@@ -143,6 +143,22 @@ const parseQueryUrl = pipe(
   mergeAll
 )
 
+const getDateLabels = t => ({
+  anyDate: t('dates.any'),
+  cancel: t('cancel'),
+  confirmPeriod: t('dates.confirm'),
+  custom: t('dates.custom'),
+  day: t('dates.day'),
+  daySelected: t('dates.day_selected'),
+  daysSelected: t('dates.selected'),
+  end: t('dates.end'),
+  noDayOrPeriodSelected: t('dates.no_selected'),
+  period: t('dates.period'),
+  select: t('dates.select'),
+  start: t('dates.start'),
+  today: t('dates.today'),
+})
+
 class TransactionsSearch extends React.Component {
   constructor (props) {
     super(props)
@@ -165,6 +181,7 @@ class TransactionsSearch extends React.Component {
       client: cockpit(props.client),
       columns: translateColumns(columnsDefault),
       collapsed: true,
+      dateLabels: getDateLabels(t),
       filterConfirmLabel: t('confirm_filters'),
       filtersTitle: t('filters'),
       findByLabel: t('find_by'),
@@ -320,14 +337,11 @@ class TransactionsSearch extends React.Component {
 
   render () {
     const {
+      clearFiltersLabel,
       collapsed,
       columns,
-      result: {
-        total,
-        list,
-        chart,
-      },
-      clearFiltersLabel,
+      dateLabels,
+      expandedRows,
       filterConfirmLabel,
       filtersTitle,
       findByLabel,
@@ -336,23 +350,27 @@ class TransactionsSearch extends React.Component {
       noContentFoundMessage,
       ofLabel,
       periodSummaryLabel,
+      result: {
+        total,
+        list,
+        chart,
+      },
+      selectedRows,
       tableTitle,
       totalVolumeLabel,
       transactionsNumberLabel,
       tryFilterAgainMessage,
-      expandedRows,
-      selectedRows,
     } = this.state
 
     const {
       loading,
       query: {
-        search,
+        count,
         dates,
         filters,
-        sort,
-        count,
         offset,
+        search,
+        sort,
       },
     } = this.props
 
@@ -367,45 +385,46 @@ class TransactionsSearch extends React.Component {
 
     return (
       <TransactionsList
-        count={total.count}
         amount={total.payment ? total.payment.paid_amount : 0}
-        search={search}
-        values={filters}
-        dates={dates}
-        filterOptions={filterOptions}
-        dateSelectorPresets={dateSelectorPresets}
+        clearFiltersLabel={clearFiltersLabel}
         collapsed={collapsed}
-        order={sort ? sort.order : ''}
-        rows={list.rows}
         columns={columns}
-        orderColumn={orderColumn}
-        pagination={pagination}
-        handleRowClick={this.handleTableRowClick}
-        handlePageChange={this.handlePageChange}
-        handleOrderChange={this.handleOrderChange}
-        handleFilterChange={this.handleFilterChange}
-        handleChartsCollapse={this.handleChartsCollapse}
-        handlePageCountChange={this.handlePageCountChange}
+        count={total.count}
         data={chart.dataset}
-        loading={loading}
-        selectedPage={count}
-        graphicTittle={graphicTittle}
-        tableTitle={tableTitle}
-        periodSummaryLabel={periodSummaryLabel}
-        transactionsNumberLabel={transactionsNumberLabel}
-        totalVolumeLabel={totalVolumeLabel}
-        itemsPerPageLabel={itemsPerPageLabel}
-        ofLabel={ofLabel}
+        dateLabels={dateLabels}
+        dateSelectorPresets={dateSelectorPresets}
+        dates={dates}
+        expandedRows={expandedRows}
+        filterConfirmLabel={filterConfirmLabel}
+        filterOptions={filterOptions}
         filtersTitle={filtersTitle}
         findByLabel={findByLabel}
-        clearFiltersLabel={clearFiltersLabel}
-        filterConfirmLabel={filterConfirmLabel}
-        noContentFoundMessage={noContentFoundMessage}
-        tryFilterAgainMessage={tryFilterAgainMessage}
-        expandedRows={expandedRows}
-        selectedRows={selectedRows}
+        graphicTittle={graphicTittle}
+        handleChartsCollapse={this.handleChartsCollapse}
         handleExpandRow={this.handleExpandRow}
+        handleFilterChange={this.handleFilterChange}
+        handleOrderChange={this.handleOrderChange}
+        handlePageChange={this.handlePageChange}
+        handlePageCountChange={this.handlePageCountChange}
+        handleRowClick={this.handleTableRowClick}
         handleSelectRow={this.handleSelectRow}
+        itemsPerPageLabel={itemsPerPageLabel}
+        loading={loading}
+        noContentFoundMessage={noContentFoundMessage}
+        ofLabel={ofLabel}
+        order={sort ? sort.order : ''}
+        orderColumn={orderColumn}
+        pagination={pagination}
+        periodSummaryLabel={periodSummaryLabel}
+        rows={list.rows}
+        search={search}
+        selectedPage={count}
+        selectedRows={selectedRows}
+        tableTitle={tableTitle}
+        totalVolumeLabel={totalVolumeLabel}
+        transactionsNumberLabel={transactionsNumberLabel}
+        tryFilterAgainMessage={tryFilterAgainMessage}
+        values={filters}
       />
     )
   }

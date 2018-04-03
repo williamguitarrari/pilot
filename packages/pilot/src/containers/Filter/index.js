@@ -154,6 +154,7 @@ class Filters extends Component {
 
   renderToolbar () {
     const {
+      dateLabels,
       datePresets,
       findByLabel,
     } = this.props
@@ -173,6 +174,7 @@ class Filters extends Component {
           presets={datePresets}
           icon={<Calendar32 width={16} height={16} />}
           disabled={this.props.disabled}
+          strings={dateLabels}
         />
         <Input
           className={style.searchField}
@@ -359,6 +361,21 @@ Filters.propTypes = {
   findByLabel: string.isRequired, // eslint-disable-line react/no-typos
   clearLabel: string.isRequired, // eslint-disable-line react/no-typos
   confirmLabel: string.isRequired, // eslint-disable-line react/no-typos
+  dateLabels: arrayOf(shape({
+    anyDate: string,
+    cancel: string,
+    confirmPeriod: string,
+    custom: string,
+    day: string,
+    daySelected: string,
+    daysSelected: string,
+    end: string,
+    noDayOrPeriodSelected: string,
+    period: string,
+    select: string,
+    start: string,
+    today: string,
+  })).isRequired,
 }
 
 Filters.defaultProps = {

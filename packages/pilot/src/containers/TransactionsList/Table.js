@@ -117,6 +117,9 @@ class TableContainer extends Component {
               totalPages={pagination.total}
               onPageChange={handlePageChange}
               disabled={loading}
+              strings={{
+                of: ofLabel,
+              }}
             />
           </div>
         </CardContent>

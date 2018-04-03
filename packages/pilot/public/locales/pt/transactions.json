@@ -97,6 +97,20 @@
     "city": "Cidade",
     "state": "Estado"
   },
+  "dates" : {
+    "any": "QUALQUER DATA",
+    "confirm": "CONFIRMAR PERÍODO",
+    "custom": "PERSONALIZADO",
+    "day": "DIA",
+    "day_selected": "DIA SELECIONADO",
+    "end": "FIM",
+    "no_selected": "NENHUM DIA SELECIONADO",
+    "period": "PERÍODO",
+    "select": "SELECIONE UM DIA OU PERÍODO",
+    "selected":"DIAS SELECIONADOS",
+    "start": "INÍCIO",
+    "today": "HOJE"
+  },
   "events": {
     "title": "HISTÓRICO DA TRANSAÇÃO"
   },
