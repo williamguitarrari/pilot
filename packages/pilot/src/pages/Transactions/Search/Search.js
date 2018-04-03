@@ -21,6 +21,7 @@ import {
   mergeAll,
   nth,
   objOf,
+  path,
   pipe,
   prop,
   propEq,
@@ -106,30 +107,29 @@ const normalizeQueryStringToDate = pipe(
   objOf('dates')
 )
 
-const convertToNumber = property => pipe(
-  prop(property),
-  unless(
+const normalizeTo = (defaultValue, propPath) => pipe(
+  path(propPath),
+  when(
     either(isNil, isEmpty),
-    Number
+    defaultTo(defaultValue)
   )
 )
 
-const convertPropertiesToNumber = applySpec({
-  offset: convertToNumber('offset'),
-  count: convertToNumber('count'),
-})
-
-const normalizeProp = (propName, defaultValue) => pipe(
-  prop(propName),
-  when(either(isNil, isEmpty), defaultTo(defaultValue))
-)
-
 const normalizeQueryStructure = applySpec({
-  search: normalizeProp('search', ''),
-  filters: normalizeProp('filters', {}),
-  offset: normalizeProp('offset', 1),
-  count: normalizeProp('count', 15),
-  sort: normalizeProp('sort', {}),
+  search: normalizeTo('', ['search']),
+  filters: normalizeTo({}, ['filters']),
+  offset: pipe(
+    normalizeTo(1, ['offset']),
+    Number
+  ),
+  count: pipe(
+    normalizeTo(15, ['count']),
+    Number
+  ),
+  sort: {
+    order: normalizeTo('descending', ['sort', 'order']),
+    field: normalizeTo(['created_at'], ['sort', 'field']),
+  },
 })
 
 const parseQueryUrl = pipe(
@@ -138,7 +138,6 @@ const parseQueryUrl = pipe(
   juxt([
     identity,
     normalizeQueryStringToDate,
-    convertPropertiesToNumber,
     normalizeQueryStructure,
   ]),
   mergeAll

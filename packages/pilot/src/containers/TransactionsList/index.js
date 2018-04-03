@@ -279,7 +279,7 @@ TransactionsList.defaultProps = {
     start: moment(),
     end: moment(),
   },
-  order: 'ascending',
+  order: 'descending',
   orderColumn: 0,
   search: '',
   selectedPage: 15,
