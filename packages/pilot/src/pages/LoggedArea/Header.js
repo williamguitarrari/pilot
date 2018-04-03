@@ -6,11 +6,6 @@ import { requestLogout } from '../Account/actions'
 
 import Header from '../../containers/Header'
 
-const mapStateToProps = ({ account: { user } }) => ({
-  user,
-  avatar: 'https://randomuser.me/api/portraits/thumb/men/12.jpg',
-})
-
 const mapDispatchToProps = dispatch => ({
   onLogout: () => {
     dispatch(requestLogout())
@@ -18,32 +13,23 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const enhance = connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )
 
 const HeaderContainer = ({
-  avatar,
-  user,
   onLogout,
+  t,
 }) => (
   <Header
-    avatar={avatar}
-    username={user.name}
     onClickMenu={onLogout}
+    t={t}
   />
 )
 
 HeaderContainer.propTypes = {
+  t: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
-  user: PropTypes.shape({
-    name: PropTypes.string,
-  }).isRequired,
-  avatar: PropTypes.string,
-}
-
-HeaderContainer.defaultProps = {
-  avatar: null,
 }
 
 export default enhance(HeaderContainer)

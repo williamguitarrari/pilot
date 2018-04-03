@@ -14,3 +14,6 @@ export const receiveLogin = createAction(LOGIN_RECEIVE)
 
 export const ACCOUNT_RECEIVE = 'pilot/account/ACCOUNT_RECEIVE'
 export const receiveAccount = createAction(ACCOUNT_RECEIVE)
+
+export const LOGIN_FAIL = 'pilot/account/LOGIN_FAIL'
+export const failLogin = createAction(LOGIN_FAIL)

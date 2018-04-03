@@ -1,0 +1,10 @@
+.section {
+  padding: 15px;
+  counter-reset: section;
+  background-color: #eeeeee;
+  min-height: 100vh;
+}
+
+.section > h2 {
+  margin: 0 0 15px;
+}

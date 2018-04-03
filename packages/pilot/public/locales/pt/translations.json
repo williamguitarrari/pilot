@@ -1,17 +1,17 @@
 {
   "landing": {
     "logo": "FormerKit",
-    "title": "bem vindo",
-    "subtitle": "a Dashboard do FormerKit",
-    "body": "O FormerKit pode ser quase comparado a outras bibliotecas de UI por aí, mas não exatamente. A filosofia por trás do FormerKit é ser uma biblioteca de componentes React white-label através do desacoplamento dos estilos da estrutura do HTML, permitindo interfaces de usuário altamente customizáveis sem as complicações de construir sempre a mesma estrutura HTML e abstração de componentes React.",
-    "login_call": "use o formulário para entrar em sua conta",
-    "signup_call": "não tem uma conta?",
-    "signup_action": "registre-se"
+    "title": "Bem-vindo ao Pagar.me",
+    "subtitle": "A melhor forma de receber dinheiro online",
+    "body": "Esta é a Dashboard do Pagar.me, o painel de controle da sua operação. Através dela você terá acesso a suas vendas, saldo, extrato, além de poder realizar saques, estornos e outras tarefas cotidianas de sua operação.",
+    "login_call": "use o formulário para entrar em sua conta.",
+    "signup_call": "ainda não tem uma conta?",
+    "signup_action": "registre-se!"
   },
   "login": {
     "token": "Token",
     "login_action": "Acessar",
-    "password_recovery_action": "Redefinir senha"
+    "password_recovery_action": "Esqueci minha senha"
   },
   "password_recovery": {
     "confirmation": "em instantes você receberá um e-mail com as instruções para a redefinição de sua senha",
@@ -33,7 +33,14 @@
     "subtitle": "na dashboard FormerKit",
     "title": "crie sua conta"
   },
+  "header": {
+    "title": "TRANSAÇÕES",
+    "alerts": "Notificações",
+    "messages": "Mensagens",
+    "exit": "Sair"
+  },
   "email": "E-mail",
   "password": "Senha",
-  "back_login_action": "Voltar para o login"
+  "back_login_action": "Voltar para o login",
+  "transactions": "TRANSAÇÕES"
 }
