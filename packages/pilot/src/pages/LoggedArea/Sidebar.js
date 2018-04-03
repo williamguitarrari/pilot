@@ -16,7 +16,7 @@ const SidebarState = ({
 }) => (
   <Sidebar
     logo={Logo}
-    links={Object.values(routes).map(route => ({
+    links={Object.values(routes).filter(r => r.component).map(route => ({
         ...route,
         title: t(route.title),
     }))}

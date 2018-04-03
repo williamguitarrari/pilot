@@ -42,5 +42,8 @@
   "email": "E-mail",
   "password": "Senha",
   "back_login_action": "Voltar para o login",
-  "transactions": "TRANSAÇÕES"
+  "transactions": {
+    "list": "TRANSAÇÕES",
+    "details": "TRANSAÇÃO"
+  }
 }

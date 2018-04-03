@@ -1,20 +1,49 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
+import {
+  Switch,
+  Route,
+} from 'react-router-dom'
 
 import {
   Header,
   HeaderContent,
   HeaderMenu,
   HeaderTitle,
+  HeaderBackButton,
 } from 'former-kit'
-
 
 const HeaderContainer = ({
   onClickMenu,
+  routes,
+  onBack,
   t,
 }) => (
   <Header>
-    <HeaderTitle>{t('header.title')}</HeaderTitle>
+    <Switch>
+      {
+        routes.map(({
+          title,
+          exact,
+          path,
+          component,
+        }) => (
+          <Route
+            key={path}
+            exact={exact}
+            path={path}
+            render={() => (
+              <Fragment>
+                {!component && <HeaderBackButton onClick={onBack} />}
+                <HeaderTitle>{t(title)}</HeaderTitle>
+              </Fragment>
+              )
+            }
+          />
+        ))
+      }
+    </Switch>
+
     <HeaderContent>
       <HeaderMenu onClick={onClickMenu}>
         <span>Logout</span>
@@ -25,6 +54,13 @@ const HeaderContainer = ({
 
 HeaderContainer.propTypes = {
   t: PropTypes.func.isRequired,
+  onBack: PropTypes.func.isRequired,
+  routes: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string,
+    path: PropTypes.string,
+    exact: PropTypes.bool,
+    component: PropTypes.func,
+  })).isRequired,
   onClickMenu: PropTypes.func.isRequired,
 }
 
