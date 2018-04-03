@@ -418,7 +418,12 @@ class TransactionDetails extends Component {
             <Grid>
               {!isEmptyOrNull(recipients) &&
                 <Row>
-                  <Col>
+                  <Col
+                    palm={12}
+                    tablet={12}
+                    desk={12}
+                    tv={12}
+                  >
                     <RecipientList
                       collapseInstallmentTitle={recipientsLabels.collapseInstallmentTitle}
                       expandInstallmentTitle={recipientsLabels.expandInstallmentTitle}
@@ -441,7 +446,12 @@ class TransactionDetails extends Component {
               }
               {!isEmptyOrNull(customer) &&
                 <Row>
-                  <Col>
+                  <Col
+                    palm={12}
+                    tablet={12}
+                    desk={12}
+                    tv={12}
+                  >
                     <CustomerCard
                       contents={customer}
                       labels={customerLabels}
@@ -451,7 +461,12 @@ class TransactionDetails extends Component {
                 </Row>
               }
               <Row>
-                <Col>
+                <Col
+                  palm={12}
+                  tablet={12}
+                  desk={12}
+                  tv={12}
+                >
                   <TransactionDetailsCard
                     title={transactionDetailsLabels.title}
                     labels={transactionDetailsLabels}
