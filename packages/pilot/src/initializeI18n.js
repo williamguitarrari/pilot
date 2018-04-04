@@ -3,6 +3,11 @@ import Backend from 'i18next-xhr-backend'
 import LanguageDetector from 'i18next-browser-languagedetector'
 import { reactI18nextModule } from 'react-i18next'
 
+import moment from 'moment'
+import 'moment/locale/pt-br'
+
+moment.locale('pt-br')
+
 const basePath = process.env.PUBLIC_URL || ''
 
 i18n
