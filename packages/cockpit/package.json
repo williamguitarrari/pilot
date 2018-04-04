@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "bluebird": "3.5.1",
+    "isomorphic-fetch": "2.2.1",
     "moment": "2.22.0",
     "pagarme": "3.4.0",
     "ramda": "0.25.0"

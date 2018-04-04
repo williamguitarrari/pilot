@@ -25,6 +25,8 @@ const getProxyHandler = fallback => ({
       } else if (hasKey(fallback)) {
         return new Proxy(propInTarget, getProxyHandler(fallback[key]))
       }
+
+      return propInTarget
     }
     if (hasKey(fallback)) {
       const propInFallback = fallback[key]
