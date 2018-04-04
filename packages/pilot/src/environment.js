@@ -5,6 +5,4 @@ const environment =
     ? 'live'
     : 'test'
 
-console.log(`Running on environment ${environment}`)
-
 export default environment
