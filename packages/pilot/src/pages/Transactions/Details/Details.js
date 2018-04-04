@@ -14,6 +14,7 @@ import {
   requestDetails,
   receiveDetails,
 } from './actions'
+import { requestLogout } from '../../Account/actions'
 
 import currencyFormatter from '../../../formatters/decimalCurrency'
 import TransactionDetailsContainer from '../../../containers/TransactionDetails'
@@ -32,6 +33,9 @@ const mapDispatchToProps = dispatch => ({
 
   onReceiveDetails: ({ query }) => {
     dispatch(receiveDetails({ query }))
+  },
+  onRequestDetailsFail: (error) => {
+    dispatch(requestLogout(error))
   },
 })
 
@@ -158,6 +162,9 @@ class TransactionDetails extends Component {
       .then((result) => {
         this.setState({ result })
         this.props.onReceiveDetails(result)
+      })
+      .catch((error) => {
+        this.props.onRequestDetailsFail(error)
       })
   }
 
@@ -299,6 +306,7 @@ TransactionDetails.propTypes = {
   }).isRequired,
   onReceiveDetails: PropTypes.func.isRequired,
   onRequestDetails: PropTypes.func.isRequired,
+  onRequestDetailsFail: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
 }
 
