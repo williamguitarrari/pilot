@@ -4236,16 +4236,16 @@ form-data@~2.3.1:
     combined-stream "1.0.6"
     mime-types "^2.1.12"
 
-former-kit-skin-pagarme@0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/former-kit-skin-pagarme/-/former-kit-skin-pagarme-0.3.0.tgz#7231d92ecc06017ae4b58f9ed05ae75bcb6dbef6"
+former-kit-skin-pagarme@0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/former-kit-skin-pagarme/-/former-kit-skin-pagarme-0.4.0.tgz#9e0a7418704ac78e56e7633e6d2c8d8775e5c146"
   dependencies:
     emblematic-icons "0.1.1"
     react-dates "12.7.1"
 
-former-kit@0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/former-kit/-/former-kit-0.3.0.tgz#9432f325603570920e7858ad6ecaa3a9ae7f8fc7"
+former-kit@0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/former-kit/-/former-kit-0.4.0.tgz#732d8ac475fe8822f3ff41505431a9935e4bd025"
   dependencies:
     classnames "2.2.5"
     moment "2.20.1"
