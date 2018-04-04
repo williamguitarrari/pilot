@@ -50,21 +50,19 @@ export default function loginReducer (state = initialState, action) {
         user: null,
       })
     }
-    case LOGIN_FAIL:
+    case LOGIN_FAIL: {
+      return merge(
+        state,
+        {
+          client: null,
+          errors: createErrors(action.payload),
+          user: null,
+          sessionId: null,
+          loading: false,
+        }
+      )
+    }
     case LOGIN_RECEIVE: {
-      if (action.error) {
-        return merge(
-          state,
-          {
-            client: null,
-            errors: createErrors(action.payload),
-            user: null,
-            sessionId: null,
-            loading: false,
-          }
-        )
-      }
-
       return merge(
         state,
         {
