@@ -174,3 +174,13 @@
 .confirmationContent {
   padding-bottom: 33px;
 }
+
+.errorAlert {
+  width: 100%;
+
+  & > * {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
