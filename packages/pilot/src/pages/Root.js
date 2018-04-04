@@ -15,6 +15,8 @@ import { requestLogin } from './Account/actions'
 import Account from './Account'
 import LoggedArea from './LoggedArea'
 
+import environment from '../environment'
+
 const mapStateToProps = ({ account: { client, user, sessionId } }) =>
   ({ client, user, sessionId })
 
@@ -34,7 +36,7 @@ class Root extends Component {
     } = this.props
 
     if (!client && sessionId) {
-      this.props.requestLogin({ session_id: sessionId })
+      this.props.requestLogin({ session_id: sessionId, environment })
     }
   }
 

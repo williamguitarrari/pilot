@@ -10,12 +10,7 @@ import { connect } from 'react-redux'
 import Login from '../../../containers/Account/Login'
 import { requestLogin } from '../actions'
 
-const { NODE_ENV, REACT_APP_API_ENVIRONMENT } = process.env
-
-const environment =
-  (NODE_ENV === 'production' || REACT_APP_API_ENVIRONMENT === 'live')
-    ? 'live'
-    : 'sandbox'
+import environment from '../../../environment'
 
 const mapStateToProps = (state) => {
   const {
