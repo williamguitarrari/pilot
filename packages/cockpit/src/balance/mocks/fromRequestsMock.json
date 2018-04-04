@@ -1,0 +1,337 @@
+{
+  "recipient": {
+    "object": "recipient",
+    "id": "re_cixm61j7e00doin6de8ocgttb",
+    "transfer_enabled": true,
+    "last_transfer": null,
+    "transfer_interval": "weekly",
+    "transfer_day": 5,
+    "automatic_anticipation_enabled": true,
+    "automatic_anticipation_type": "full",
+    "automatic_anticipation_days": null,
+    "automatic_anticipation_1025_delay": 0,
+    "anticipatable_volume_percentage": 85,
+    "date_created": "2017-01-06T18:59:35.936Z",
+    "date_updated": "2017-01-06T18:59:35.936Z",
+    "postback_url": "https://requestb.in/tl0092tl",
+    "status": "active",
+    "status_reason": null,
+    "bank_account": {
+      "object": "bank_account",
+      "id": 17365090,
+      "bank_code": "341",
+      "agencia": "0932",
+      "agencia_dv": "5",
+      "conta": "58054",
+      "conta_dv": "1",
+      "type": "conta_corrente",
+      "document_type": "cpf",
+      "document_number": "26268738888",
+      "legal_name": "API BANK ACCOUNT",
+      "charge_transfer_fees": true,
+      "date_created": "2017-01-06T18:52:22.215Z"
+    }
+  },
+  "per_day": [
+    {
+      "date": "2018-03-13T03:00:00.000Z",
+      "available": {
+        "amount": {
+          "balance": 523577340,
+          "in": 30526017,
+          "out": -1640150
+        },
+        "fee": {
+          "balance": 462441404,
+          "in": 7946652,
+          "out": -145946
+        }
+      }
+    },
+    {
+      "date": "2018-03-14T03:00:00.000Z",
+      "available": {
+        "amount": {
+          "balance": 536419728,
+          "in": 14888180,
+          "out": -2045792
+        },
+        "fee": {
+          "balance": 464911449,
+          "in": 2596798,
+          "out": -126753
+        }
+      }
+    },
+    {
+      "date": "2018-03-15T03:00:00.000Z",
+      "available": {
+        "amount": {
+          "balance": 546164504,
+          "in": 12185375,
+          "out": -2440599
+        },
+        "fee": {
+          "balance": 467275452,
+          "in": 2487257,
+          "out": -123254
+        }
+      }
+    },
+    {
+      "date": "2018-03-16T03:00:00.000Z",
+      "available": {
+        "amount": {
+          "balance": 556412012,
+          "in": 12350369,
+          "out": -2102861
+        },
+        "fee": {
+          "balance": 469670943,
+          "in": 2490177,
+          "out": -94686
+        }
+      }
+    },
+    {
+      "date": "2018-03-17T03:00:00.000Z",
+      "available": {
+        "amount": {
+          "balance": 556084536,
+          "in": 61126,
+          "out": -388602
+        },
+        "fee": {
+          "balance": 469661411,
+          "in": 16518,
+          "out": -26050
+        }
+      }
+    },
+    {
+      "date": "2018-03-18T03:00:00.000Z",
+      "available": {
+        "amount": {
+          "balance": 555679691,
+          "in": 784189,
+          "out": -1189034
+        },
+        "fee": {
+          "balance": 469656494,
+          "in": 4277,
+          "out": -9194
+        }
+      }
+    },
+    {
+      "date": "2018-03-19T03:00:00.000Z",
+      "available": {
+        "amount": {
+          "balance": 566729182,
+          "in": 13052383,
+          "out": -2002892
+        },
+        "fee": {
+          "balance": 472217428,
+          "in": 2786013,
+          "out": -225079
+        }
+      }
+    },
+    {
+      "date": "2018-03-20T03:00:00.000Z",
+      "available": {
+        "amount": {
+          "balance": 596510418,
+          "in": 31473545,
+          "out": -1692309
+        },
+        "fee": {
+          "balance": 480007986,
+          "in": 7997157,
+          "out": -206599
+        }
+      }
+    }
+  ],
+  "balance": {
+    "object": "balance",
+    "waiting_funds": {
+      "amount": 2000
+    },
+    "available": {
+      "amount": 3000
+    },
+    "transferred": {
+      "amount": 4000
+    }
+  },
+  "bulk_anticipations_limit": {
+    "maximum": {
+      "amount": 23000,
+      "anticipation_fee": 1000,
+      "fee": 2633
+    },
+    "minimum": {
+      "amount": 10000,
+      "anticipation_fee": 200,
+      "fee": 1543
+    }
+  },
+  "bulk_anticipations_pending": [
+    {
+      "amount": 600005,
+      "anticipation_fee": 44940,
+      "date_created": "2017-01-06T05:17:54.000Z",
+      "date_updated": "2017-01-06T05:17:54.000Z",
+      "fee": 30025,
+      "id": "ba_cig37i5s6004xor6e5cefsjsp",
+      "object": "bulk_anticipation",
+      "payment_date": "2017-02-13T02:00:00.000Z",
+      "status": "pending",
+      "timeframe": "start",
+      "type": "spot"
+    },
+    {
+      "amount": 406065,
+      "anticipation_fee": 16842,
+      "date_created": "2017-01-06T17:08:41.000Z",
+      "date_updated": "2017-01-06T12:20:51.000Z",
+      "fee": 20313,
+      "id": "ba_cig120jcg000rii6evg415z4w",
+      "object": "bulk_anticipation",
+      "payment_date": "2017-02-16T02:00:00.000Z",
+      "status": "pending",
+      "timeframe": "start",
+      "type": "spot"
+    }
+  ],
+  "operations": [
+    {
+      "object": "balance_operation",
+      "id": 4861,
+      "status": "available",
+      "balance_amount": 3019898,
+      "balance_old_amount": 2920013,
+      "amount": 100000,
+      "fee": 115,
+      "date_created": "2017-03-06T14:00:31.000Z",
+      "movement_object": {
+        "object": "payable",
+        "type": "payable",
+        "id": 1297,
+        "status": "paid",
+        "amount": 100000,
+        "fee": 115,
+        "installment": 1,
+        "transaction_id": 185537,
+        "payment_date": "2017-03-06T03:00:00.000Z",
+        "date_created": "2017-03-06T21:00:31.000Z"
+      }
+    },
+    {
+      "object": "balance_operation",
+      "id": 4852,
+      "status": "available",
+      "balance_amount": 2920013,
+      "balance_old_amount": 2910128,
+      "amount": 10000,
+      "fee": 115,
+      "date_created": "2017-03-06T18:44:42.000Z",
+      "movement_object": {
+        "object": "payable",
+        "type": "payable",
+        "id": 1294,
+        "status": "paid",
+        "amount": 10000,
+        "fee": 115,
+        "installment": 1,
+        "transaction_id": 185507,
+        "payment_date": "2017-03-06T03:00:00.000Z",
+        "date_created": "2017-03-06T18:44:42.000Z"
+      }
+    },
+    {
+      "object": "balance_operation",
+      "id": 4840,
+      "status": "available",
+      "balance_amount": 2910128,
+      "balance_old_amount": 2880243,
+      "amount": 30000,
+      "fee": 115,
+      "date_created": "2017-03-05T19:32:36.000Z",
+      "movement_object": {
+        "object": "payable",
+        "type": "payable",
+        "id": 1290,
+        "status": "paid",
+        "amount": 30000,
+        "fee": 115,
+        "installment": 1,
+        "transaction_id": 185273,
+        "payment_date": "2017-03-05T03:00:00.000Z",
+        "date_created": "2017-03-05T19:32:35.000Z"
+      }
+    },
+    {
+      "object": "balance_operation",
+      "id": 2499868,
+      "status": "available",
+      "balance_amount": 2910128,
+      "balance_old_amount": 2880243,
+      "type": "payable",
+      "amount": 30000,
+      "fee": 115,
+      "date_created": "2017-08-03T18:20:54.464Z",
+      "movement_object": {
+        "object": "payable",
+        "id": 1966185,
+        "status": "paid",
+        "amount": 30000,
+        "fee": 115,
+        "anticipation_fee": 100,
+        "installment": 3,
+        "transaction_id": 1785141,
+        "split_rule_id": null,
+        "bulk_anticipation_id": null,
+        "recipient_id": "re_cj5idth9i00lc8c6elbeiayhs",
+        "payment_date": "2017-03-03T03:00:00.000Z",
+        "original_payment_date": null,
+        "type": "credit",
+        "payment_method": "credit_card",
+        "accrual_date": null,
+        "date_created": "2017-04-03T18:20:54.457Z"
+      }
+    },
+    {
+      "object": "balance_operation",
+      "id": 2499850,
+      "status": "available",
+      "balance_amount": 3019898,
+      "balance_old_amount": 2920013,
+      "type": "payable",
+      "amount": 100000,
+      "fee": 115,
+      "date_created": "2017-08-03T18:20:54.464Z",
+      "movement_object": {
+        "object": "payable",
+        "id": 1966396,
+        "status": "paid",
+        "amount": 100000,
+        "fee": 115,
+        "anticipation_fee": 100,
+        "installment": 1,
+        "transaction_id": 1785151,
+        "split_rule_id": "sr_cj5tws6kk001oij6d6lw8mmi1",
+        "bulk_anticipation_id": null,
+        "recipient_id": "re_cj5idth9i00lc8c6elboaxyhs",
+        "payment_date": "2017-09-03T03:00:00.000Z",
+        "original_payment_date": null,
+        "type": "refund",
+        "payment_method": "credit_card",
+        "accrual_date": null,
+        "date_created": "2017-07-03T18:20:54.457Z"
+      }
+    }
+  ]
+}

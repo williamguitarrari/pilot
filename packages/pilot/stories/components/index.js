@@ -53,7 +53,9 @@ storiesOf('Components', module)
   .add('Operations', () => (
     <Operations />
   ))
-  .add('Balance total display', () => <BalanceTotalDisplay />)
+  .add('Balance total display', () => (
+    <BalanceTotalDisplay />
+  ))
   .add('Balance summary', () => (
     <BalanceSummary />
   ))
