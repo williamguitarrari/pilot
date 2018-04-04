@@ -33,6 +33,7 @@ import {
   requestSearch,
   receiveSearch,
 } from './actions'
+import { requestLogout } from '../../Account/actions'
 
 import dateSelectorPresets from '../../../models/dateSelectorPresets'
 import filterOptions from '../../../models/transactionFilterOptions'
@@ -52,6 +53,9 @@ const mapDispatchToProps = dispatch => ({
 
   onReceiveSearch: ({ query }) => {
     dispatch(receiveSearch({ query }))
+  },
+  onRequestSearchFail: (error) => {
+    dispatch(requestLogout(error))
   },
 })
 
@@ -249,6 +253,9 @@ class TransactionsSearch extends React.Component {
         this.setState(res)
         this.props.onReceiveSearch(res)
       })
+      .catch((error) => {
+        this.props.onRequestSearchFail(error)
+      })
   }
 
   handlePageCountChange (count) {
@@ -441,6 +448,7 @@ TransactionsSearch.propTypes = {
   loading: PropTypes.bool.isRequired,
   onReceiveSearch: PropTypes.func.isRequired,
   onRequestSearch: PropTypes.func.isRequired,
+  onRequestSearchFail: PropTypes.func.isRequired,
   query: PropTypes.shape({
     search: PropTypes.string,
     dates: PropTypes.shape({
