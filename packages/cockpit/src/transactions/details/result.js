@@ -59,7 +59,7 @@ const normalizeChargebackOps = pipe(
   groupBy(prop('type')),
   map(pipe(
     groupBy(prop('cycle')),
-    map(pipe(sortByCreatedAt, head)),
+    map(pipe(sortByCreatedAt, head))
   )),
   values,
   map(values),
