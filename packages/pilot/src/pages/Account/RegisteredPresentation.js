@@ -14,24 +14,18 @@ class RegisteredPresentationPage extends PureComponent {
   constructor (props) {
     super(props)
     this.handleSignup = this.handleSignup.bind(this)
-    this.handleLanguageChange = this.handleLanguageChange.bind(this)
   }
 
-  handleLanguageChange (lang) {
-    this.props.i18n.changeLanguage(lang)
-  }
-
-  handleSignup () {
-    this.props.history.push('/account/signup')
+  // eslint-disable-next-line class-methods-use-this
+  handleSignup (e) {
+    e.preventDefault()
+    window.location = 'https://dashboard.pagar.me/#/signup'
   }
 
   render () {
     return (
       <RegisteredPresentation
         onGotoSignup={this.handleSignup}
-        availableLanguages={['en-US', 'pt']}
-        selectedLanguage={this.props.i18n.language}
-        onLanguageChange={this.handleLanguageChange}
         t={this.props.t}
       />
     )
@@ -40,15 +34,6 @@ class RegisteredPresentationPage extends PureComponent {
 
 RegisteredPresentationPage.propTypes = {
   t: PropTypes.func.isRequired,
-  i18n: PropTypes.shape({
-    changeLanguage: PropTypes.func,
-    language: PropTypes.string,
-    languages: PropTypes.arrayOf(PropTypes.string),
-  }).isRequired,
-  history: PropTypes.shape({
-    push: PropTypes.func,
-    replace: PropTypes.func,
-  }).isRequired,
 }
 
 export default enhanced(RegisteredPresentationPage)

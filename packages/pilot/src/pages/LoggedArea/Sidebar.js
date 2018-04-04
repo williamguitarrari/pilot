@@ -1,74 +1,38 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { values } from 'ramda'
-
-import {
-  Sidebar,
-  SidebarHeader,
-  SidebarLinks,
-  SidebarLink,
-} from 'former-kit'
 
 import { withRouter } from 'react-router-dom'
 
-import Menu32 from 'emblematic-icons/svg/Menu32.svg'
+import Sidebar from '../../containers/Sidebar'
 
 import routes from './routes'
 
-class SidebarContainer extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      collapsed: false,
-    }
+import Logo from '../logo.svg'
 
-    this.handleToggleSidebar = this.handleToggleSidebar.bind(this)
-  }
+const SidebarState = ({
+  location: { pathname },
+  history,
+  t,
+}) => (
+  <Sidebar
+    logo={Logo}
+    links={Object.values(routes).filter(r => r.component).map(route => ({
+        ...route,
+        title: t(route.title),
+    }))}
+    onLinkClick={history.push}
+    pathName={pathname}
+  />
+)
 
-  handleToggleSidebar () {
-    const { collapsed } = this.state
-    this.setState({ collapsed: !collapsed })
-  }
-
-  render () {
-    const { collapsed } = this.state
-    const { location: { pathname }, history } = this.props
-
-    return (
-      <Sidebar collapsed={collapsed}>
-        <SidebarHeader>
-          {!collapsed &&
-            <h1>FormerKit</h1>
-          }
-          <button onClick={this.handleToggleSidebar}>
-            <Menu32 width={16} height={16} />
-          </button>
-        </SidebarHeader>
-
-        <SidebarLinks>
-          {values(routes).map(({ title, path, icon: Icon }) => (
-            <SidebarLink
-              key={path}
-              title={title}
-              active={path === pathname}
-              icon={<Icon width={16} height={16} />}
-              collapsed={collapsed}
-              onClick={() => history.push(path)}
-            />
-          ))}
-        </SidebarLinks>
-      </Sidebar>
-    )
-  }
-}
-
-SidebarContainer.propTypes = {
+SidebarState.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string,
   }).isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
+  t: PropTypes.func.isRequired,
 }
 
-export default withRouter(SidebarContainer)
+export default withRouter(SidebarState)

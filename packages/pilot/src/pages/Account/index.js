@@ -26,6 +26,8 @@ import SignUp from './SignUp'
 import SignUpConfirmation from './SignUp/Confirmation'
 import RegisteredPresentation from './RegisteredPresentation'
 
+import Logo from '../logo.svg'
+
 const getBaseByPath = ifElse(
   anyPass([
     contains('account/login'),
@@ -43,15 +45,7 @@ const enhance = compose(
 const AccountArea = ({ t, history: { location } }) => (
   <Account
     t={t}
-    logo={props => (
-      <a href="https://openclipart.org/detail/270878/datacubes">
-        <img //eslint-disable-line
-          src="https://openclipart.org/download/270878/Datacubes.svg"
-          height="160px"
-          {...props}
-        />
-      </a>
-    )}
+    logo={Logo}
     base={getBaseByPath(location.pathname)}
     primaryContent={
       <Switch>
