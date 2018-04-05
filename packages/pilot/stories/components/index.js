@@ -11,6 +11,7 @@ import RecipientSectionState from './RecipientSection'
 import TotalDisplay from './TotalDisplay'
 import TransactionDetailsCard from './TransactionDetailsCard'
 import TreeView from './TreeView'
+import PendingRequests from './PendingRequests'
 
 storiesOf('Components', module)
   .add('Copy button', () => (
@@ -42,5 +43,8 @@ storiesOf('Components', module)
   ))
   .add('Property', () => (
     <Property />
+  ))
+  .add('Pending Requests', () => (
+    <PendingRequests />
   ))
 
