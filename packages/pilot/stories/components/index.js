@@ -10,6 +10,7 @@ import RecipientSectionState from './RecipientSection'
 import TotalDisplay from './TotalDisplay'
 import TransactionDetailsCard from './TransactionDetailsCard'
 import TreeView from './TreeView'
+import PendingRequests from './PendingRequests'
 
 storiesOf('Components', module)
   .add('Details head', () => <DetailsHead />)
@@ -36,5 +37,8 @@ storiesOf('Components', module)
   ))
   .add('Property', () => (
     <Property />
+  ))
+  .add('Pending Requests', () => (
+    <PendingRequests />
   ))
 
