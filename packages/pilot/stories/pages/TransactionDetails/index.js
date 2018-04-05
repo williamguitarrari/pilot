@@ -1,13 +1,14 @@
 import React from 'react'
+import moment from 'moment'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
-import moment from 'moment'
 
 import { Layout } from 'former-kit'
-import TransactionDetails from '../../../src/containers/TransactionDetails'
+
 import currencyFormatter from '../../../src/formatters/decimalCurrency'
 import getColumnFormatter from '../../../src/formatters/columnTranslator'
 import installmentColumns from '../../../src/components/RecipientSection/installmentTableColumns'
+import TransactionDetails from '../../../src/containers/TransactionDetails'
 import transactionMock from './transactionMock'
 
 const t = tr => tr
@@ -21,20 +22,20 @@ const alertLabels = {
 }
 
 const customerLabels = {
-  name: 'Nome do cliente',
-  document_number: 'CPF/CNPJ',
   born_at: 'Data de nascimento',
-  gender: 'Genero',
-  phone: 'Telefone',
-  email: 'E-mail',
-  zip_code: 'CEP',
-  street: 'Rua',
-  number: 'N',
-  complement: 'Complemento',
-  neighborhood: 'Bairro',
   city: 'Cidade',
+  complement: 'Complemento',
+  document_number: 'CPF/CNPJ',
+  email: 'E-mail',
+  gender: 'Genero',
+  name: 'Nome do cliente',
+  neighborhood: 'Bairro',
+  number: 'N',
+  phone: 'Telefone',
   state: 'Estado',
+  street: 'Rua',
   title: 'DETALHES DO CLIENTE',
+  zip_code: 'CEP',
 }
 
 const eventsLabels = {
@@ -42,9 +43,12 @@ const eventsLabels = {
 }
 
 const headerLabels = {
-  installments: 'Pagamento à vista',
-  title: 'Transação',
-  statusLabel: 'status',
+  boletoAmountLabel: 'VALOR EMITIDO',
+  cardAmountLabel: 'VALOR AUTORIZADO',
+  installments: 'Parcelado 12x',
+  installmentsLabel: 'PAGAMENTO',
+  statusLabel: 'STATUS',
+  title: 'TRANSAÇÃO',
 }
 
 const paymentBoletoLabels = {
@@ -113,8 +117,9 @@ storiesOf('Pages', module)
         eventsLabels={eventsLabels}
         headerLabels={headerLabels}
         installmentColumns={formatColumns(installmentColumns)}
-        onDismissAlert={action('dismiss alert')}
+        metadataTitle="Metadata"
         onCopyBoletoUrl={action('copy boleto')}
+        onDismissAlert={action('dismiss alert')}
         onShowBoleto={action('show boleto')}
         paymentBoletoLabels={paymentBoletoLabels}
         paymentCardLabels={paymentCardLabels}
@@ -122,7 +127,6 @@ storiesOf('Pages', module)
         totalDisplayLabels={totalDisplayLabels}
         transaction={transactionMock}
         transactionDetailsLabels={transactionDetailsLabels}
-        metadataTitle="Metadata"
       />
     </Layout>
   ))

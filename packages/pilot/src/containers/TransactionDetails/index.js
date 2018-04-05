@@ -27,20 +27,23 @@ import {
   Col,
   Grid,
   Row,
+  Legend,
 } from 'former-kit'
 import IconInfo from 'emblematic-icons/svg/Info32.svg'
-import statusLegends from '../../models/statusLegends'
-import decimalCurrencyFormatter from '../../formatters/decimalCurrency'
+
 import currencyFormatter from '../../formatters/currency'
-import TransactionHead from '../../components/TransactionHead'
-import PaymentCard from '../../components/PaymentCard'
-import PaymentBoleto from '../../components/PaymentBoleto'
-import TotalDisplay from '../../components/TotalDisplay'
-import Event from '../../components/Event'
-import RecipientList from '../../containers/RecipientList'
 import CustomerCard from '../../components/CustomerCard'
+import decimalCurrencyFormatter from '../../formatters/decimalCurrency'
+import DetailsHead from '../../components/DetailsHead'
+import Event from '../../components/Event'
+import PaymentBoleto from '../../components/PaymentBoleto'
+import PaymentCard from '../../components/PaymentCard'
+import RecipientList from '../../containers/RecipientList'
+import statusLegends from '../../models/statusLegends'
+import TotalDisplay from '../../components/TotalDisplay'
 import TransactionDetailsCard from '../../components/TransactionDetailsCard'
 import TreeView from '../../components/TreeView'
+
 import style from './style.css'
 
 const isZeroOrNegative = value => value <= 0
@@ -109,6 +112,16 @@ const getHeaderAmountLabel = (transaction, headerLabels) => {
   }
   return headerLabels.cardAmountLabel
 }
+
+const renderLegend = status => (
+  <Legend
+    color={statusLegends[status].color}
+    acronym={statusLegends[status].text}
+    hideLabel
+  >
+    { statusLegends[status].acronym }
+  </Legend>
+)
 
 class TransactionDetails extends Component {
   constructor (props) {
@@ -314,16 +327,23 @@ class TransactionDetails extends Component {
             tablet={12}
             palm={12}
           >
-            <TransactionHead
-              id={id}
-              status={status}
-              installmentsLabel={headerLabels.installmentsLabel}
-              installments={headerLabels.installments}
-              actions={[]}
+            <DetailsHead
+              identifier={`#${id}`}
+              properties={[
+                {
+                  children: renderLegend(status),
+                  title: headerLabels.statusLabel,
+                },
+                {
+                  children: headerLabels.installments,
+                  title: headerLabels.installmentsLabel,
+                },
+                {
+                  children: currencyFormatter(amount),
+                  title: getHeaderAmountLabel(transaction, headerLabels),
+                },
+              ]}
               title={headerLabels.title}
-              statusLabel={headerLabels.statusLabel}
-              amountLabel={getHeaderAmountLabel(transaction, headerLabels)}
-              amount={currencyFormatter(amount)}
             />
           </Col>
         </Row>
@@ -331,17 +351,17 @@ class TransactionDetails extends Component {
         <Row stretch>
           <Col
             desk={3}
-            tv={3}
-            tablet={6}
             palm={12}
+            tablet={6}
+            tv={3}
           >
             { this.renderPayment() }
           </Col>
           <Col
             desk={3}
-            tv={3}
-            tablet={6}
             palm={12}
+            tablet={6}
+            tv={3}
           >
             <TotalDisplay
               amount={payment.paid_amount}
@@ -353,9 +373,9 @@ class TransactionDetails extends Component {
           </Col>
           <Col
             desk={3}
-            tv={3}
-            tablet={6}
             palm={12}
+            tablet={6}
+            tv={3}
           >
             <TotalDisplay
               amount={
@@ -373,9 +393,9 @@ class TransactionDetails extends Component {
           </Col>
           <Col
             desk={3}
-            tv={3}
-            tablet={6}
             palm={12}
+            tablet={6}
+            tv={3}
           >
             <TotalDisplay
               amount={payment.net_amount}
@@ -391,15 +411,15 @@ class TransactionDetails extends Component {
           <Row stretch>
             <Col
               desk={12}
-              tv={12}
-              tablet={12}
               palm={12}
+              tablet={12}
+              tv={12}
             >
               <div className={style.statusAlert}>
                 <Alert
-                  type="info"
                   action={alertLabels.resubmit}
                   icon={<IconInfo height={16} width={16} />}
+                  type="info"
                 >
                   {this.renderAlertInfo()}
                 </Alert>
@@ -411,24 +431,24 @@ class TransactionDetails extends Component {
         <Row>
           <Col
             desk={9}
-            tv={9}
-            tablet={12}
             palm={12}
+            tablet={12}
+            tv={9}
           >
             <Grid>
               {!isEmptyOrNull(recipients) &&
                 <Row>
                   <Col
+                    desk={12}
                     palm={12}
                     tablet={12}
-                    desk={12}
                     tv={12}
                   >
                     <RecipientList
                       collapseInstallmentTitle={recipientsLabels.collapseInstallmentTitle}
                       expandInstallmentTitle={recipientsLabels.expandInstallmentTitle}
-                      installmentTotalLabel={recipientsLabels.installmentTotalLabel}
                       installmentsTableColumns={installmentColumns}
+                      installmentTotalLabel={recipientsLabels.installmentTotalLabel}
                       liabilitiesLabel={recipientsLabels.liabilitiesLabel}
                       netAmountLabel={recipientsLabels.netAmountLabel}
                       noRecipientLabel={recipientsLabels.noRecipientLabel}
@@ -447,9 +467,9 @@ class TransactionDetails extends Component {
               {!isEmptyOrNull(customer) &&
                 <Row>
                   <Col
+                    desk={12}
                     palm={12}
                     tablet={12}
-                    desk={12}
                     tv={12}
                   >
                     <CustomerCard
@@ -462,29 +482,29 @@ class TransactionDetails extends Component {
               }
               <Row>
                 <Col
+                  desk={12}
                   palm={12}
                   tablet={12}
-                  desk={12}
                   tv={12}
                 >
                   <TransactionDetailsCard
-                    title={transactionDetailsLabels.title}
-                    labels={transactionDetailsLabels}
                     contents={transactionDetailsContent}
+                    labels={transactionDetailsLabels}
+                    title={transactionDetailsLabels.title}
                   />
                 </Col>
               </Row>
               {!isEmptyOrNull(metadata) &&
                 <Row>
                   <Col
+                    desk={12}
                     palm={12}
                     tablet={12}
-                    desk={12}
                     tv={12}
                   >
                     <TreeView
-                      title={metadataTitle}
                       data={metadata}
+                      title={metadataTitle}
                     />
                   </Col>
                 </Row>
@@ -493,9 +513,9 @@ class TransactionDetails extends Component {
           </Col>
           <Col
             desk={3}
-            tv={3}
-            tablet={12}
             palm={12}
+            tablet={12}
+            tv={3}
           >
             <Card>
               <CardTitle title={eventsLabels.title} />
@@ -544,20 +564,20 @@ TransactionDetails.propTypes = {
     title: PropTypes.string,
   }).isRequired,
   installmentColumns: PropTypes.arrayOf(PropTypes.shape({
-    number: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    status: PropTypes.string,
-    payment_date: PropTypes.instanceOf(moment),
-    original_payment_date: PropTypes.instanceOf(moment),
-    net_amount: PropTypes.number,
     costs: PropTypes.shape({
       mdr: PropTypes.number,
       anticipation: PropTypes.number,
       chargeback: PropTypes.number,
       refund: PropTypes.number,
     }),
+    net_amount: PropTypes.number,
+    number: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    original_payment_date: PropTypes.instanceOf(moment),
+    payment_date: PropTypes.instanceOf(moment),
+    status: PropTypes.string,
   })).isRequired,
-  onDismissAlert: PropTypes.func, // eslint-disable-line react/no-unused-prop-types
   onCopyBoletoUrl: PropTypes.func,
+  onDismissAlert: PropTypes.func, // eslint-disable-line react/no-unused-prop-types
   onShowBoleto: PropTypes.func,
   paymentBoletoLabels: PropTypes.shape({
     copy: PropTypes.string,
@@ -594,17 +614,17 @@ TransactionDetails.propTypes = {
   }).isRequired,
   transaction: PropTypes.shape({
     id: PropTypes.number,
+    boleto: PropTypes.shape({
+      barcode: PropTypes.string,
+      due_date: PropTypes.instanceOf(moment),
+      url: PropTypes.string,
+    }),
     created_at: PropTypes.string,
     updated_at: PropTypes.string,
     soft_descriptor: PropTypes.string,
     external_id: PropTypes.string,
     status: PropTypes.string,
     status_reason: PropTypes.string,
-    boleto: PropTypes.shape({
-      barcode: PropTypes.string,
-      due_date: PropTypes.instanceOf(moment),
-      url: PropTypes.string,
-    }),
     payment: PropTypes.shape({
       method: PropTypes.string,
       paid_amount: PropTypes.number,
@@ -678,8 +698,8 @@ TransactionDetails.propTypes = {
 }
 
 TransactionDetails.defaultProps = {
-  onDismissAlert: null,
   onCopyBoletoUrl: null,
+  onDismissAlert: null,
   onShowBoleto: null,
 }
 
