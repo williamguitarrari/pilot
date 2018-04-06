@@ -8,7 +8,7 @@ import {
 import {
   Header,
   HeaderContent,
-  HeaderMenu,
+  HeaderLink,
   HeaderTitle,
   HeaderBackButton,
 } from 'former-kit'
@@ -45,9 +45,9 @@ const HeaderContainer = ({
     </Switch>
 
     <HeaderContent>
-      <HeaderMenu onClick={onClickMenu}>
+      <HeaderLink onClick={onClickMenu}>
         <span>Logout</span>
-      </HeaderMenu>
+      </HeaderLink>
     </HeaderContent>
   </Header>
 )
