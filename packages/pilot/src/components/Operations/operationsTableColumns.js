@@ -130,7 +130,7 @@ const getColumns = labels => ([
   {
     accessor: ['payment_date', 'actual'],
     align: 'center',
-    orderable: true,
+    orderable: false,
     title: 'operation.payment_date',
     // eslint-disable-next-line camelcase
     renderer: ({ payment_date }) => renderPaymentDate(payment_date),
@@ -138,34 +138,34 @@ const getColumns = labels => ([
   {
     accessor: ['id'],
     align: 'center',
-    orderable: true,
+    orderable: false,
     title: 'operation.id',
   },
   {
     accessor: ['type'],
     align: 'start',
-    orderable: true,
+    orderable: false,
     title: 'operation.description',
     renderer: operation => renderDescription(operation, labels),
   },
   {
     accessor: ['outcoming', 'amount'],
     align: 'end',
-    orderable: true,
+    orderable: false,
     title: 'operation.outcoming',
     renderer: ({ outcoming }) => renderOutcoming(outcoming, labels),
   },
   {
     accessor: ['outgoing', 'amount'],
     align: 'end',
-    orderable: true,
+    orderable: false,
     title: 'operation.outgoing',
     renderer: ({ outgoing }) => renderOutgoing(outgoing, labels),
   },
   {
     accessor: ['net'],
     align: 'end',
-    orderable: true,
+    orderable: false,
     title: 'operation.net',
     renderer: ({ net }) => renderNet(net),
   },

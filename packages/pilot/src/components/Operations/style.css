@@ -9,6 +9,21 @@
   color: var(--color-light-greenish-100);
 }
 
+.container {
+  border-radius: 3px;
+
+  & > div .pagination.paginationBottom {
+    padding-top: var(--spacing-medium);
+  }
+}
+
+.head {
+  border: solid 1px var(--color-light-iron-50);
+  border-bottom: none;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
 .negative {
   color: var(--color-light-salmon-100);
 }
@@ -22,18 +37,21 @@
 }
 
 .pagination {
-  display: flex;
   align-items: center;
+  display: flex;
   justify-content: flex-end;
 }
 
 .paginationBottom {
-  margin-top: var(--spacing-medium);
+  border: solid 1px var(--color-light-iron-50);
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-top: none;
 }
 
 .paymentColumn {
-  display: flex;
   align-items: center;
+  display: flex;
   justify-content: center;
 }
 

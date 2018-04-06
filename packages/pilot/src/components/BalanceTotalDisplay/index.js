@@ -13,13 +13,13 @@ const BalanceTotalDisplay = ({
   action,
   amount,
   detail,
-  title,
   disabled,
+  title,
 }) => (
   <Card>
     <CardTitle
-      title={title}
       className={style.title}
+      title={title}
     />
     <CardContent>
       <h2 className={style.amount}>{amount}</h2>
@@ -29,10 +29,10 @@ const BalanceTotalDisplay = ({
       {
         action &&
         <Button
-          size="default"
+          disabled={disabled}
           fill="gradient"
           onClick={action.onClick}
-          disabled={disabled}
+          size="default"
         >
           {action.title}
         </Button>
@@ -48,8 +48,8 @@ BalanceTotalDisplay.propTypes = {
   }),
   amount: PropTypes.string.isRequired,
   detail: PropTypes.node.isRequired,
-  title: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
+  title: PropTypes.string.isRequired,
 }
 
 BalanceTotalDisplay.defaultProps = {
