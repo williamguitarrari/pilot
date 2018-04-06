@@ -7,6 +7,7 @@ import DetailsHead from './DetailsHead'
 import EventList from './EventList'
 import PaymentCards from './PaymentCards'
 import Property from './Property'
+import Operations from './Operations'
 import RecipientSectionState from './RecipientSection'
 import TotalDisplay from './TotalDisplay'
 import TransactionDetailsCard from './TransactionDetailsCard'
@@ -47,4 +48,6 @@ storiesOf('Components', module)
   .add('Pending Requests', () => (
     <PendingRequests />
   ))
-
+  .add('Operations', () => (
+    <Operations />
+  ))

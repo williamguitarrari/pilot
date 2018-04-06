@@ -8974,7 +8974,11 @@ react-test-renderer@^16.0.0-0:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
+<<<<<<< HEAD
 react-textfit@1.1.0:
+=======
+react-textfit@^1.1.0:
+>>>>>>> a1b9051... details-head: refactor transactions-head component
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/react-textfit/-/react-textfit-1.1.0.tgz#088855580f2e7aad269efc81b734bf636877d0e1"
   dependencies:
