@@ -45,9 +45,10 @@
   }
 
   & h3 {
-    margin: 0;
-    font-size: 28px;
     color: var(--color-light-steel-100);
+    font-size: 28px;
+    margin-top: var(--spacing-small);
+    margin-bottom: var(--spacing-small);
   }
 }
 

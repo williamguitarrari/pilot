@@ -45,6 +45,7 @@ const DetailsHead = ({
             key={action.title}
             onClick={action.onClick}
             size="default"
+            disabled={action.disabled}
           >
             {action.title}
           </Button>
@@ -59,6 +60,7 @@ DetailsHead.propTypes = {
     icon: PropTypes.element,
     onClick: PropTypes.func.isRequired,
     title: PropTypes.string.isRequired,
+    disabled: PropTypes.bool,
   })),
   identifier: PropTypes.string.isRequired,
   properties: PropTypes.arrayOf(PropTypes.shape({
