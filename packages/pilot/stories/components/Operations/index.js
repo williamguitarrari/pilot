@@ -102,7 +102,7 @@ class OperationsState extends Component {
       <Operations
         columns={columns}
         exportLabel="Export"
-        offset={offset}
+        currentPage={offset}
         ofLabel="of"
         onExport={() => null}
         onOrderChange={this.handleOrderChange}

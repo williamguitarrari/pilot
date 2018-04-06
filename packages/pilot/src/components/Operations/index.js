@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import {
-  Card,
   CardContent,
   CardGraphic,
   CardSection,
@@ -36,47 +35,43 @@ class Operations extends PureComponent {
     const {
       columns,
       loading,
-      offset,
+      currentPage,
       ofLabel,
-      onOrderChange,
       onPageChange,
-      order,
-      orderColumnIndex,
       rows,
       title,
       totalPages,
     } = this.props
     return (
-      <Card>
+      <div className={style.container}>
         <CardSection>
-          <CardSectionTitle
-            title={title}
-            subtitle={this.renderSubTitle()}
-          />
-          <CardContent className={style.pagination}>
-            <Pagination
-              currentPage={offset}
-              disabled={loading}
-              onPageChange={onPageChange}
-              strings={{
-                of: ofLabel,
-              }}
-              totalPages={totalPages}
+          <div className={style.head}>
+            <CardSectionTitle
+              title={title}
+              subtitle={this.renderSubTitle()}
             />
-          </CardContent>
+            <CardContent className={style.pagination}>
+              <Pagination
+                currentPage={currentPage}
+                disabled={loading}
+                onPageChange={onPageChange}
+                strings={{
+                  of: ofLabel,
+                }}
+                totalPages={totalPages}
+              />
+            </CardContent>
+          </div>
           <CardGraphic>
             <Table
               columns={columns}
               disabled={loading}
-              onOrderChange={onOrderChange}
-              orderColumn={orderColumnIndex}
-              orderSequence={order}
               rows={rows}
             />
           </CardGraphic>
           <CardContent className={classNames(style.paginationBottom, style.pagination)}>
             <Pagination
-              currentPage={offset}
+              currentPage={currentPage}
               disabled={loading}
               onPageChange={onPageChange}
               strings={{
@@ -86,7 +81,7 @@ class Operations extends PureComponent {
             />
           </CardContent>
         </CardSection>
-      </Card>
+      </div>
     )
   }
 }
@@ -104,12 +99,9 @@ Operations.propTypes = {
     title: PropTypes.string.isRequired,
   })).isRequired,
   loading: PropTypes.bool,
-  offset: PropTypes.number.isRequired,
+  currentPage: PropTypes.number.isRequired,
   ofLabel: PropTypes.string.isRequired,
-  onOrderChange: PropTypes.func.isRequired,
   onPageChange: PropTypes.func.isRequired,
-  order: PropTypes.string,
-  orderColumnIndex: PropTypes.number,
   rows: PropTypes.arrayOf(PropTypes.shape({
     description: PropTypes.string,
     id: PropTypes.oneOfType([
@@ -132,8 +124,6 @@ Operations.propTypes = {
 
 Operations.defaultProps = {
   loading: false,
-  order: 'ascending',
-  orderColumnIndex: null,
 }
 
 export default Operations
