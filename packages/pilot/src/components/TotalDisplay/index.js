@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import decimalCurrency from '../../formatters/decimalCurrency'
 import style from './style.css'
 
