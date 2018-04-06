@@ -25,11 +25,11 @@ const renderValue = (amount, color) => (
 )
 
 const TotalDisplay = ({
-  title,
   amount,
   color,
   subtitle,
   unit,
+  title,
 }) => (
   <div className={style.content}>
     <div className={style.title}>
@@ -46,11 +46,11 @@ const TotalDisplay = ({
 )
 
 TotalDisplay.propTypes = {
-  title: PropTypes.string.isRequired,
   amount: PropTypes.number.isRequired,
   color: PropTypes.string.isRequired,
   unit: PropTypes.string,
   subtitle: PropTypes.node,
+  title: PropTypes.string.isRequired,
 }
 
 TotalDisplay.defaultProps = {

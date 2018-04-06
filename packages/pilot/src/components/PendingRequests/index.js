@@ -23,7 +23,7 @@ const renderRequests = (requests, onCancelHandler) => requests.map((
   <tr
     key={`${created_at}_${requestTitle}_${amount}`} // eslint-disable-line camelcase
   >
-    <td className={style.createdAt}>{created_at}</td> {/* eslint-disable-line camelcase */}
+    <td className={style.createdAt}>{created_at}</td>{/* eslint-disable-line camelcase */}
     <td>{requestTitle}</td>
     <td className={style.amount}>{amount}</td>
     {onCancelHandler &&
@@ -49,7 +49,9 @@ const PendingRequests = ({
     <CardContent>
       { !isEmpty(requests) &&
         <table className={style.table}>
-          {renderRequests(requests, onCancel)}
+          <tbody>
+            {renderRequests(requests, onCancel)}
+          </tbody>
         </table>
       }
     </CardContent>
