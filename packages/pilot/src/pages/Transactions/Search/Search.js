@@ -152,7 +152,7 @@ const parseQueryUrl = pipe(
 
 const getDateLabels = t => ({
   anyDate: t('dates.any'),
-  cancel: t('cancel'),
+  cancel: t('dates.cancel'),
   confirmPeriod: t('dates.confirm'),
   custom: t('dates.custom'),
   day: t('dates.day'),
