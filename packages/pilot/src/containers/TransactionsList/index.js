@@ -168,7 +168,6 @@ const TransactionsList = ({
                 />
                 <Table
                   expandable
-                  selectable
                   maxColumns={7}
                   rows={rows}
                   columns={columns}
