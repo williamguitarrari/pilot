@@ -1,5 +1,4 @@
 import {
-  F,
   T,
   allPass,
   always,
@@ -24,11 +23,7 @@ import {
   when,
 } from 'ramda'
 
-const isInternational = ifElse(
-  complement(equals('BRAZIL')),
-  T,
-  F
-)
+const isInternational = complement(equals)('BRAZIL')
 
 const isAntifraudScoreNil = pipe(
   prop('antifraud_score'),
