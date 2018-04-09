@@ -235,6 +235,11 @@ class TransactionsSearch extends React.Component {
   }
 
   updateQuery (query) {
+    this.setState({
+      expandedRows: [],
+      selectedRows: [],
+    })
+
     const buildSearchQuery = pipe(
       normalizeQueryDatesToString,
       assoc('dates', __, query),
@@ -310,11 +315,6 @@ class TransactionsSearch extends React.Component {
       ...this.props.query,
       offset: page,
     }
-
-    this.setState({
-      expandedRows: [],
-      selectedRows: [],
-    })
 
     this.updateQuery(query)
   }
