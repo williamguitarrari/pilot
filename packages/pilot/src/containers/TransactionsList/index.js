@@ -36,12 +36,12 @@ import formatCurrency from '../../formatters/currency'
 import formatDate from '../../formatters/longDate'
 
 const renderDateSelected = ({ start, end }) => {
-  if (moment(start).isSame(end)) {
-    return 'Hoje'
-  }
-
   if (!start && !end) {
     return 'todo o período'
+  }
+
+  if (moment(start).isSame(end, 'days')) {
+    return 'Hoje'
   }
 
   return `${formatDate(start)} até ${formatDate(end)}`
