@@ -130,9 +130,9 @@ class TableContainer extends Component {
           disabled={loading}
           expandable={expandable}
           expandedRows={expandedRows}
-          handleRowClick={handleRowClick}
           maxColumns={maxColumns}
           onExpandRow={handleExpandRow}
+          onRowClick={handleRowClick}
           onOrderChange={handleOrderChange}
           onSelectRow={handleSelectRow}
           orderColumn={orderColumn}
