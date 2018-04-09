@@ -52,28 +52,48 @@ jobs:
       - run: |
           cd packages/cockpit
           yarn build
-
+ 
       - run: |
           cd packages
-          cp -rf pilot pilot-latest
-          cp -rf pilot pilot-${CIRCLE_TAG}
-          cd pilot-latest
+          cp -rf pilot pilot-latest-live
+          cp -rf pilot pilot-${CIRCLE_TAG}-live
+          cp -rf pilot pilot-latest-sandbox
+          cp -rf pilot pilot-${CIRCLE_TAG}-sandbox
+          cd pilot-latest-live
           export PUBLIC_URL_REGEX='https:\/\/beta.dashboard.stg.pagarme.net\/latest'
           export PUBLIC_URL='https://beta.dashboard.stg.pagarme.net/latest'
+          export REACT_APP_API_ENVIRONMENT='live'
           sed -e 's/\".\"/"'$PUBLIC_URL_REGEX'\"/g' package.json > package.json.bak
           cp package.json.bak package.json
           yarn build
-          cd ../pilot-${CIRCLE_TAG}
+          cd ../pilot-latest-sandbox
+          export PUBLIC_URL_REGEX='https:\/\/beta.dashboard.sandbox.stg.pagarme.net\/latest'
+          export PUBLIC_URL='https://beta.dashboard.sandbox.stg.pagarme.net/latest'
+          export REACT_APP_API_ENVIRONMENT='sandbox'
+          sed -e 's/\".\"/"'$PUBLIC_URL_REGEX'\"/g' package.json > package.json.bak
+          cp package.json.bak package.json
+          yarn build
+          cd ../pilot-${CIRCLE_TAG}-live
           export PUBLIC_URL_REGEX='https:\/\/beta.dashboard.stg.pagarme.net\/versions\/'${CIRCLE_TAG}
           export PUBLIC_URL='https://beta.dashboard.stg.pagarme.net/versions/'${CIRCLE_TAG}
+          export REACT_APP_API_ENVIRONMENT='live'
+          sed -e 's/\".\"/"'$PUBLIC_URL_REGEX'\"/g' package.json > package.json.bak
+          cp package.json.bak package.json
+          yarn build
+          cd ../pilot-${CIRCLE_TAG}-sandbox
+          export PUBLIC_URL_REGEX='https:\/\/beta.dashboard.sandbox.stg.pagarme.net\/versions\/'${CIRCLE_TAG}
+          export PUBLIC_URL='https://beta.dashboard.sandbox.stg.pagarme.net/versions/'${CIRCLE_TAG}
+          export REACT_APP_API_ENVIRONMENT='sandbox'
           sed -e 's/\".\"/"'$PUBLIC_URL_REGEX'\"/g' package.json > package.json.bak
           cp package.json.bak package.json
           yarn build
       - run: |
          cd packages
          mkdir builds
-         mv pilot-latest/build builds/pilot-latest
-         mv pilot-${CIRCLE_TAG}/build builds/pilot-${CIRCLE_TAG}
+         mv pilot-latest-live/build builds/pilot-latest-live
+         mv pilot-${CIRCLE_TAG}-live/build builds/pilot-${CIRCLE_TAG}-live
+         mv pilot-latest-sandbox/build builds/pilot-latest-sandbox
+         mv pilot-${CIRCLE_TAG}-sandbox/build builds/pilot-${CIRCLE_TAG}-sandbox
       - persist_to_workspace:
           root: packages
           paths:
@@ -99,16 +119,32 @@ jobs:
           yarn build
 
       - run: |
-          cd packages/pilot
+          cd packages
+          cp -rf pilot pilot-live
+          cp -rf pilot pilot-sandbox
+          cd pilot-live
           export PUBLIC_URL_REGEX='https:\/\/beta.dashboard.pagar.me'
           export PUBLIC_URL='https://beta.dashboard.pagar.me'
+          export REACT_APP_API_ENVIRONMENT='live'
           sed -e 's/\".\"/"'$PUBLIC_URL_REGEX'\"/g' package.json > package.json.bak
           cp package.json.bak package.json
           yarn build
+          cd ../pilot-sandbox
+          export PUBLIC_URL_REGEX='https:\/\/beta.dashboard.sandbox.pagar.me'
+          export PUBLIC_URL='https://beta.dashboard.sandbox.pagar.me'
+          export REACT_APP_API_ENVIRONMENT='sandbox'
+          sed -e 's/\".\"/"'$PUBLIC_URL_REGEX'\"/g' package.json > package.json.bak
+          cp package.json.bak package.json
+          yarn build
+      - run: |
+         cd packages
+         mkdir builds
+         mv pilot-live/build builds/pilot-live
+         mv pilot-sandbox/build builds/pilot-sandbox
       - persist_to_workspace:
           root: packages
           paths:
-            - pilot/build
+            - builds
   deploy_stg:
     machine:
         enabled: true
@@ -118,14 +154,23 @@ jobs:
       - attach_workspace:
           at: ~/repo
       - run:
-          name: Deploy to S3 files of version for stg
+          name: Deploy to S3 files of version for stg (live)
           command: |
-            cd builds
-            mv pilot-latest latest
-            mkdir -p versions
-            mv pilot-${CIRCLE_TAG} versions/${CIRCLE_TAG}
-            aws s3 sync . s3://beta.dashboard.stg.pagarme.net
+            mkdir -p live/versions
+            mv builds/pilot-latest-live live/latest
+            mv builds/pilot-${CIRCLE_TAG}-live live/versions/${CIRCLE_TAG}
+            aws s3 sync --delete ./live/latest s3://beta.dashboard.stg.pagarme.net/latest
+            aws s3 sync ./live/versions s3://beta.dashboard.stg.pagarme.net/versions
             aws cloudfront create-invalidation --distribution-id $CDN_DISTRIBUTION_ID --paths "/latest/*"
+      - run:
+          name: Deploy to S3 files of version for stg (sandbox)
+          command: |
+            mkdir -p sandbox/versions
+            mv builds/pilot-latest-sandbox sandbox/latest
+            mv builds/pilot-${CIRCLE_TAG}-sandbox sandbox/versions/${CIRCLE_TAG}
+            aws s3 sync --delete ./sandbox/latest s3://beta.sandbox.dashboard.stg.pagarme.net/latest
+            aws s3 sync ./sandbox/versions s3://beta.dashboard.sandbox.stg.pagarme.net/versions
+            aws cloudfront create-invalidation --distribution-id $CDN_DISTRIBUTION_ID_SANDBOX --paths "/latest/*"
   deploy_prd:
     machine:
         enabled: true
@@ -135,11 +180,14 @@ jobs:
       - attach_workspace:
           at: ~/repo/
       - run:
-          name: Deploy to S3 files of version fo prod
+          name: Deploy to S3 files of version fo prod (live)
           command: |
-            cd pilot/build
-            AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_PRD AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_PRD aws s3 sync . s3://beta.dashboard.prd.pagarme.net
+            cd builds/pilot-live
+            AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_PRD AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_PRD aws s3 sync . --delete s3://beta.dashboard.prd.pagarme.net
             AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_PRD AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_PRD aws cloudfront create-invalidation --distribution-id $PRD_CDN_DISTRIBUTION_ID --paths "/*"
+            cd ../../builds/pilot-sandbox
+            AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_PRD AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_PRD aws s3 sync . --delete s3://beta.dashboard.sandbox.prd.pagarme.net
+            AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_PRD AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_PRD aws cloudfront create-invalidation --distribution-id $PRD_CDN_DISTRIBUTION_ID_SANDBOX --paths "/*"
 workflows:
   version: 2
   build-and-deploy:
