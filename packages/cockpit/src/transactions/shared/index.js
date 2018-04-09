@@ -119,13 +119,13 @@ const transactionSpec = {
     prop('status_reason')
   ),
   boleto: ifElse(
-    propEq('boleto_url', null),
-    always(null),
+    propEq('payment_method', 'boleto'),
     applySpec({
       barcode: prop('boleto_barcode'),
       due_date: prop('boleto_expiration_date'),
       url: prop('boleto_url'),
-    })
+    }),
+    always(null)
   ),
   payment: {
     method: prop('payment_method'),
