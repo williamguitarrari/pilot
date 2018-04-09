@@ -348,7 +348,7 @@ class TransactionDetails extends Component {
               color="#37cc9a"
               subtitle={totalDisplayLabels.captured_at}
               title={totalDisplayLabels.paid_amount}
-              unity={totalDisplayLabels.currency_symbol}
+              unit={totalDisplayLabels.currency_symbol}
             />
           </Col>
           <Col
@@ -368,7 +368,7 @@ class TransactionDetails extends Component {
               color="#ff796f"
               subtitle={this.renderOutAmountSubTitle()}
               title={totalDisplayLabels.out_amount}
-              unity={totalDisplayLabels.currency_symbol}
+              unit={totalDisplayLabels.currency_symbol}
             />
           </Col>
           <Col
@@ -382,7 +382,7 @@ class TransactionDetails extends Component {
               color="#4ca9d7"
               subtitle={totalDisplayLabels.receive_date}
               title={totalDisplayLabels.net_amount}
-              unity={totalDisplayLabels.currency_symbol}
+              unit={totalDisplayLabels.currency_symbol}
             />
           </Col>
         </Row>

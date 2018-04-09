@@ -34,13 +34,13 @@ const TotalDisplay = ({
   amount,
   color,
   subtitle,
-  unity,
+  unit,
 }) => (
   <Card>
     <CardContent className={style.content}>
       <div className={style.title}>
         <h2 style={{ color }}>{title}</h2>
-        <span>({unity})</span>
+        <span>({unit})</span>
       </div>
 
       { renderValue(amount, color) }
@@ -56,12 +56,13 @@ TotalDisplay.propTypes = {
   title: PropTypes.string.isRequired,
   amount: PropTypes.number.isRequired,
   color: PropTypes.string.isRequired,
-  unity: PropTypes.string.isRequired,
+  unit: PropTypes.string,
   subtitle: PropTypes.node,
 }
 
 TotalDisplay.defaultProps = {
   subtitle: null,
+  unit: '',
 }
 
 export default TotalDisplay
