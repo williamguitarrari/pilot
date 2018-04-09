@@ -99,6 +99,7 @@
   },
   "dates" : {
     "any": "QUALQUER DATA",
+    "cancel": "Cancelar",
     "confirm": "CONFIRMAR PERÍODO",
     "custom": "PERSONALIZADO",
     "day": "DIA",
