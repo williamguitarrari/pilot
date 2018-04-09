@@ -5,7 +5,7 @@ import {
   CardContent,
 } from 'former-kit'
 
-import currencyFormatter from '../../formatters/currency'
+import decimalCurrency from '../../formatters/decimalCurrency'
 import style from './style.css'
 
 const renderSymbol = (value) => {
@@ -19,6 +19,15 @@ const renderSymbol = (value) => {
 
   return null
 }
+
+const renderValue = (amount, color) => (
+  <div className={style.amount}>
+    <small style={{ color }}>
+      {renderSymbol(amount)}
+    </small>
+    <h3>{ decimalCurrency(amount < 0 ? -amount : amount) }</h3>
+  </div>
+)
 
 const TotalDisplay = ({
   title,
@@ -34,12 +43,7 @@ const TotalDisplay = ({
         <span>({unity})</span>
       </div>
 
-      <div className={style.amount}>
-        <small style={{ color }}>
-          {renderSymbol(amount)}
-        </small>
-        <h3>{currencyFormatter(amount).replace('R$', '').replace('-', '')}</h3>
-      </div>
+      { renderValue(amount, color) }
 
       <div className={style.subtitle}>
         {subtitle}
