@@ -8,9 +8,11 @@ import { translate } from 'react-i18next'
 import qs from 'qs'
 import {
   __,
+  append,
   applySpec,
   assoc,
   compose,
+  contains,
   defaultTo,
   either,
   findIndex,
@@ -27,6 +29,7 @@ import {
   propEq,
   tail,
   unless,
+  without,
   when,
 } from 'ramda'
 import {
@@ -149,7 +152,7 @@ const parseQueryUrl = pipe(
 
 const getDateLabels = t => ({
   anyDate: t('dates.any'),
-  cancel: t('cancel'),
+  cancel: t('dates.cancel'),
   confirmPeriod: t('dates.confirm'),
   custom: t('dates.custom'),
   day: t('dates.day'),
@@ -172,13 +175,14 @@ class TransactionsSearch extends React.Component {
     this.handleOrderChange = this.handleOrderChange.bind(this)
     this.handlePageChange = this.handlePageChange.bind(this)
     this.handlePageCountChange = this.handlePageCountChange.bind(this)
-    this.handleTableRowClick = this.handleTableRowClick.bind(this)
+    this.handleRowDetailsClick = this.handleRowDetailsClick.bind(this)
+    this.handleRowClick = this.handleRowClick.bind(this)
     this.requestData = this.requestData.bind(this)
     this.handleExpandRow = this.handleExpandRow.bind(this)
     this.handleSelectRow = this.handleSelectRow.bind(this)
 
     const translateColumns = getColumnTranslator(t)
-    const columnsDefault = getDefaultTransactionColumns(this.handleTableRowClick)
+    const columnsDefault = getDefaultTransactionColumns(this.handleRowDetailsClick)
 
     this.state = {
       clearFiltersLabel: t('clear_filters'),
@@ -323,11 +327,20 @@ class TransactionsSearch extends React.Component {
     })
   }
 
-  handleTableRowClick (rowIndex) {
+  handleRowDetailsClick (rowIndex) {
     const { history } = this.props
     const rowData = nth(rowIndex, this.state.result.list.rows)
     const { id } = rowData
     history.push(`/transactions/${id}`)
+  }
+
+  handleRowClick (index) {
+    const { expandedRows } = this.state
+    this.setState({
+      expandedRows: contains(index, expandedRows)
+        ? without([index], expandedRows)
+        : append(index, expandedRows),
+    })
   }
 
   handleExpandRow (expandedRows) {
@@ -413,7 +426,7 @@ class TransactionsSearch extends React.Component {
         handleOrderChange={this.handleOrderChange}
         handlePageChange={this.handlePageChange}
         handlePageCountChange={this.handlePageCountChange}
-        handleRowClick={this.handleTableRowClick}
+        handleRowClick={this.handleRowClick}
         handleSelectRow={this.handleSelectRow}
         itemsPerPageLabel={itemsPerPageLabel}
         loading={loading}

@@ -133,7 +133,6 @@
   & input:hover,
   & input:focus,
   & input {
-    border-color: #ffffff;
     color: #ffffff;
     caret-color: #ffffff;
   }

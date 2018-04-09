@@ -68,6 +68,7 @@ const TransactionsList = ({
   filtersTitle,
   findByLabel,
   graphicTittle,
+  handleRowClick,
   handleChartsCollapse,
   handleFilterChange,
   handleOrderChange,
@@ -167,13 +168,13 @@ const TransactionsList = ({
                 />
                 <Table
                   expandable
-                  selectable
                   maxColumns={7}
                   rows={rows}
                   columns={columns}
                   order={order}
                   orderColumn={orderColumn}
                   pagination={pagination}
+                  handleRowClick={handleRowClick}
                   handleOrderChange={handleOrderChange}
                   handlePageChange={handlePageChange}
                   handlePageCountChange={handlePageCountChange}
@@ -260,6 +261,7 @@ TransactionsList.propTypes = {
   graphicTittle: string.isRequired, // eslint-disable-line react/no-typos
   handleChartsCollapse: func.isRequired, // eslint-disable-line react/no-typos
   handleExpandRow: func.isRequired, // eslint-disable-line react/no-typos
+  handleRowClick: func.isRequired, // eslint-disable-line react/no-typos
   handleFilterChange: func.isRequired, // eslint-disable-line react/no-typos
   handleOrderChange: func.isRequired, // eslint-disable-line react/no-typos
   handlePageChange: func.isRequired, // eslint-disable-line react/no-typos
