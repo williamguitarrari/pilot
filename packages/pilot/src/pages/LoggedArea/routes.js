@@ -1,18 +1,27 @@
 import Transaction32 from 'emblematic-icons/svg/Transaction32.svg'
+import Balance32 from 'emblematic-icons/svg/Extract32.svg'
 
 import Transactions from '../Transactions'
+import { Balance } from '../Balance'
 
 export default {
-  transactions: {
-    title: 'transactions.list',
-    path: '/transactions',
-    component: Transactions,
-    icon: Transaction32,
+  balance: {
+    component: Balance,
+    icon: Balance32,
     exact: true,
+    path: '/balance/:id',
+    title: 'balance.title',
+  },
+  transactions: {
+    component: Transactions,
+    exact: true,
+    icon: Transaction32,
+    path: '/transactions',
+    title: 'transactions.list',
   },
   transactionsDetails: {
-    title: 'transactions.details',
-    path: '/transactions/:id',
     exact: true,
+    path: '/transactions/:id',
+    title: 'transactions.details',
   },
 }

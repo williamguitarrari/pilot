@@ -101,6 +101,7 @@ class OperationsState extends Component {
     return (
       <Operations
         columns={columns}
+        emptyMessage="No items found"
         exportLabel="Export"
         currentPage={offset}
         ofLabel="of"

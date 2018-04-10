@@ -19,6 +19,8 @@
   }
 
   & > span {
+    color: var(--color-light-chromium-100);
+    font-size: 16px;
     margin-bottom: var(--spacing-tiny);
     text-transform: uppercase;
   }

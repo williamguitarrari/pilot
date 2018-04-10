@@ -7,7 +7,8 @@ import {
   propSatisfies,
 } from 'ramda'
 import classNames from 'classnames'
-import IconAnticipation from 'emblematic-icons/svg/ArrowUp24.svg'
+import { Tooltip } from 'former-kit'
+import IconAnticipation from 'emblematic-icons/svg/Undo24.svg'
 import currencyFormatter from '../../formatters/currency'
 import style from './style.css'
 import dateFormatter from '../../../src/formatters/longDate'
@@ -17,21 +18,23 @@ const isPayable = equals('payable')
 const getValueClass = (value) => {
   if (value > 0) {
     return style.positive
-  } else if (value < 0) {
+  }
+  if (value < 0) {
     return style.negative
   }
 
   return style.zero
 }
 
-const getValueOperator = (value) => {
+const renderValueAndOperator = (value) => {
   if (value > 0) {
     return (
       <span className={classNames(style.operator, style.positive)}>
         +
       </span>
     )
-  } else if (value < 0) {
+  }
+  if (value < 0) {
     return (
       <span className={classNames(style.operator, style.negative)}>
         -
@@ -64,16 +67,19 @@ const renderDescription = ({ description, type }, labels) => (
   </div>
 )
 
+const getAbsoluteValue = Math.abs
+
 const renderNet = net => ( // eslint-disable-line react/prop-types
   <span className={classNames(style.net, getValueClass(net))}>
-    {getValueOperator(net)}
-    {currencyFormatter(net < 0 ? -(net) : net)}
+    {renderValueAndOperator(net)}
+    {currencyFormatter(getAbsoluteValue(net))}
   </span>
 )
 
 // eslint-disable-next-line react/prop-types
 const renderOperationAmount = (labels, isNegative) => ({ amount, type }) => {
-  const outAmount = currencyFormatter(amount)
+  const absoluteAmount = getAbsoluteValue(amount)
+  const outAmount = currencyFormatter(absoluteAmount)
   const outType = getTypeLabel(type, labels)
   return (
     <div
@@ -83,7 +89,7 @@ const renderOperationAmount = (labels, isNegative) => ({ amount, type }) => {
       {outType
         && <span>({ outType })</span>
       }
-      {getValueOperator(isNegative ? (-amount) : amount)}
+      {renderValueAndOperator(isNegative ? (-absoluteAmount) : absoluteAmount)}
       <span>
         {outAmount}
       </span>
@@ -107,22 +113,27 @@ const renderOutcoming = (amounts, labels) => renderOperationAmounts(amounts, lab
 
 const renderOutgoing = (amounts, labels) => renderOperationAmounts(amounts, labels, true)
 
-const renderPaymentDate = (paymentDate) => { // eslint-disable-line react/prop-types, camelcase
+const renderPaymentDate = (paymentDate, toolTipText) => {
   if (isNotAnticipation(paymentDate)) {
     return dateFormatter(paymentDate.actual)
   }
   return (
-    <div className={style.paymentColumn}>
-      <div>
-        <div className={style.anticipationDate}>
-          {dateFormatter(paymentDate.actual)}
+    <Tooltip
+      content={toolTipText}
+      placement="rightMiddle"
+    >
+      <div className={style.payment}>
+        <div>
+          <div className={style.anticipationDate}>
+            {dateFormatter(paymentDate.actual)}
+          </div>
+          <div>{dateFormatter(paymentDate.original)}</div>
         </div>
-        <div>{dateFormatter(paymentDate.original)}</div>
+        <span className={style.anticipationIcon}>
+          <IconAnticipation width={12} height={12} />
+        </span>
       </div>
-      <span className={style.anticipationIcon}>
-        <IconAnticipation />
-      </span>
-    </div>
+    </Tooltip>
   )
 }
 
@@ -131,43 +142,44 @@ const getColumns = labels => ([
     accessor: ['payment_date', 'actual'],
     align: 'center',
     orderable: false,
-    title: 'operation.payment_date',
     // eslint-disable-next-line camelcase
-    renderer: ({ payment_date }) => renderPaymentDate(payment_date),
+    renderer: ({ payment_date }) =>
+      renderPaymentDate(payment_date, labels.anticipationMessage),
+    title: 'operations.payment_date',
   },
   {
     accessor: ['id'],
     align: 'center',
     orderable: false,
-    title: 'operation.id',
+    title: 'operations.id',
   },
   {
     accessor: ['type'],
     align: 'start',
     orderable: false,
-    title: 'operation.description',
     renderer: operation => renderDescription(operation, labels),
+    title: 'operations.description',
   },
   {
     accessor: ['outcoming', 'amount'],
     align: 'end',
     orderable: false,
-    title: 'operation.outcoming',
     renderer: ({ outcoming }) => renderOutcoming(outcoming, labels),
+    title: 'operations.outcoming',
   },
   {
     accessor: ['outgoing', 'amount'],
     align: 'end',
     orderable: false,
-    title: 'operation.outgoing',
     renderer: ({ outgoing }) => renderOutgoing(outgoing, labels),
+    title: 'operations.outgoing',
   },
   {
     accessor: ['net'],
     align: 'end',
     orderable: false,
-    title: 'operation.net',
     renderer: ({ net }) => renderNet(net),
+    title: 'operations.net',
   },
 ])
 
