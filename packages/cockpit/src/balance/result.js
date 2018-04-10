@@ -10,6 +10,7 @@ import {
   isNil,
   join,
   juxt,
+  last,
   map,
   negate,
   path,
@@ -20,6 +21,7 @@ import {
   reduce,
   subtract,
   sum,
+  unless,
   when,
 } from 'ramda'
 
@@ -28,7 +30,7 @@ const getWithDv = propName => pipe(
     path(['bank_account', propName]),
     path(['bank_account', `${propName}_dv`]),
   ]),
-  join('-')
+  unless(pipe(last, isNil), join('-'))
 )
 
 const buildRecipient = pipe(
@@ -98,8 +100,18 @@ const buildSearchTotal = applySpec({
   outgoing: getOutgoing,
 })
 
-const getOperationDate = dateType => pipe(
-  path(['movement_object', dateType]),
+const isInvalidOperationDate = type => pipe(
+  prop(type),
+  isNil
+)
+
+const getOperationDate = (dateType, fallbackDateType) => pipe(
+  prop('movement_object'),
+  ifElse(
+    isInvalidOperationDate(dateType),
+    prop(fallbackDateType),
+    prop(dateType)
+  ),
   when(
     either(isNil, isEmpty),
     always(null)
@@ -109,6 +121,7 @@ const getOperationDate = dateType => pipe(
 const transformMovementTypePropTo = (propName, to = propName) => pipe(
   path(['movement_object', propName]),
   when(either(isNil, isEmpty), always(0)),
+  Math.abs,
   assoc('amount', __, { type: to })
 )
 
@@ -148,12 +161,28 @@ const buildOperationsRows = pipe(
     outcoming: buildOperationOutcoming,
     outgoing: buildOperationOutgoing,
     payment_date: {
-      actual: getOperationDate('payment_date'),
+      actual: getOperationDate('payment_date', 'date_created'),
       original: getOperationDate('original_payment_date'),
     },
     type: path(['movement_object', 'type']),
   }))
 )
+
+const buildOperationsCount = query => (result) => {
+  if (query.count > result.operations.length) {
+    return 1
+  }
+
+  return 100
+}
+
+const buildOperationsTotal = query => (result) => {
+  if (query.count > result.operations.length) {
+    return result.operations.length
+  }
+
+  return 1000
+}
 
 const buildResult = query => applySpec({
   query: always(query),
@@ -163,10 +192,10 @@ const buildResult = query => applySpec({
     requests: buildRequests,
     search: {
       operations: {
-        count: always(100),
+        count: buildOperationsCount(query),
         offset: always(0),
         rows: buildOperationsRows,
-        total: always(1000),
+        total: buildOperationsTotal(query),
       },
       total: buildSearchTotal,
     },

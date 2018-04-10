@@ -2,7 +2,10 @@ import React from 'react'
 import moment from 'moment'
 import PropTypes from 'prop-types'
 import { keys } from 'ramda'
-import { CardSection } from 'former-kit'
+import {
+  CardContent,
+  CardSection,
+} from 'former-kit'
 import IconForward from 'emblematic-icons/svg/ArrowForward24.svg'
 
 import TotalDisplay from '../TotalDisplay'
@@ -26,48 +29,43 @@ const colors = {
 }
 
 const BalanceSummary = ({ amount, dates }) => (
-  <div className={style.content}>
-    <CardSection>
-      <div className={style.dates}>
-        { renderDate(dates.start) }
-        <IconForward className={style.icon} />
-        { renderDate(dates.end) }
+  <CardSection>
+    <CardContent>
+      <div className={style.content}>
+        <div className={style.dates}>
+          { renderDate(dates.start) }
+          <IconForward className={style.icon} />
+          { renderDate(dates.end) }
+        </div>
+        <div className={style.amount}>
+          {
+            keys(amount).map(type => (
+              <TotalDisplay
+                amount={amount[type].value}
+                color={colors[type]}
+                key={type}
+                title={amount[type].title}
+                unit={amount[type].unit}
+              />
+            ))
+          }
+        </div>
       </div>
-
-      <div className={style.amount}>
-        {
-          keys(amount).map(type => (
-            <TotalDisplay
-              key={type}
-              title={amount[type].title}
-              amount={amount[type].value}
-              color={colors[type]}
-              unity={amount[type].unity}
-            />
-          ))
-        }
-      </div>
-    </CardSection>
-  </div>
+    </CardContent>
+  </CardSection>
 )
+
+const totalShape = PropTypes.shape({
+  title: PropTypes.string.isRequired,
+  unit: PropTypes.string,
+  value: PropTypes.number.isRequired,
+})
 
 BalanceSummary.propTypes = {
   amount: PropTypes.shape({
-    net: PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      value: PropTypes.number.isRequired,
-      unity: PropTypes.string,
-    }).isRequired,
-    outcoming: PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      value: PropTypes.number.isRequired,
-      unity: PropTypes.string,
-    }).isRequired,
-    outgoing: PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      value: PropTypes.number.isRequired,
-      unity: PropTypes.string,
-    }).isRequired,
+    net: totalShape.isRequired,
+    outcoming: totalShape.isRequired,
+    outgoing: totalShape.isRequired,
   }).isRequired,
   dates: PropTypes.shape({
     end: PropTypes.instanceOf(moment).isRequired,

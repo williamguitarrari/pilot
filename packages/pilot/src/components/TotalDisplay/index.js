@@ -39,9 +39,11 @@ const TotalDisplay = ({
 
     { renderValue(amount, color) }
 
-    <div className={style.subtitle}>
-      {subtitle}
-    </div>
+    {subtitle &&
+      <div className={style.subtitle}>
+        {subtitle}
+      </div>
+    }
   </div>
 )
 

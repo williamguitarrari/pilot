@@ -1,12 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import { withRouter } from 'react-router-dom'
-
 import Sidebar from '../../containers/Sidebar'
-
 import routes from './routes'
-
 import Logo from '../logo.svg'
 
 const SidebarState = ({

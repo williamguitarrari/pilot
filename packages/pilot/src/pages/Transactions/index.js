@@ -21,6 +21,7 @@ const TransactionsRouter = () => (
     />
     <Route
       path="/transactions"
+      exact
       component={TransactionsSearch}
     />
   </Switch>
