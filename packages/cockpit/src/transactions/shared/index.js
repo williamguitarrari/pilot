@@ -20,8 +20,11 @@ import {
   props,
   subtract,
   sum,
+  unless,
   when,
 } from 'ramda'
+
+import moment from 'moment'
 
 const isInternational = complement(equals)('BRAZIL')
 
@@ -82,7 +85,7 @@ const getCustomerProp = ifElse(
     document_number: getCustomerSubProp('document_number'),
     document_type: getCustomerSubProp('document_type'),
     email: getCustomerSubProp('email'),
-    birth_date: getCustomerSubProp('birthday'),
+    birth_date: pipe(getCustomerSubProp('birthday'), unless(isNil, moment.utc)),
     country: getCustomerSubProp('country'),
     phones: getCustomerSubProp('phone_numbers'),
   })
@@ -104,8 +107,8 @@ const buildCard = when(
 const transactionSpec = {
   id: prop('id'),
   amount: prop('amount'),
-  created_at: prop('date_created'),
-  updated_at: prop('date_updated'),
+  created_at: pipe(prop('date_created'), unless(isNil, moment)),
+  updated_at: pipe(prop('date_updated'), unless(isNil, moment)),
   soft_descriptor: prop('soft_descriptor'),
   external_id: ifElse(
     has('reference_key'),
@@ -122,7 +125,7 @@ const transactionSpec = {
     propEq('payment_method', 'boleto'),
     applySpec({
       barcode: prop('boleto_barcode'),
-      due_date: prop('boleto_expiration_date'),
+      due_date: pipe(prop('boleto_expiration_date'), unless(isNil, moment)),
       url: prop('boleto_url'),
     }),
     always(null)

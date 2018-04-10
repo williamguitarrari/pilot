@@ -729,7 +729,7 @@ describe('Transactions to dashboard', () => {
   it('should work when transactions are returned', () => {
     const result = buildResultToDashboard(requestResultMock)
 
-    expect(result).toEqual(mock)
+    expect(result).toBeJsonEqual(mock)
   })
 
   it('should work when hits is empty', () => {
@@ -770,6 +770,6 @@ describe('Transactions to dashboard', () => {
         },
       },
     }
-    expect(result).toEqual(expectedResult)
+    expect(result).toBeJsonEqual(expectedResult)
   })
 })
