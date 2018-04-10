@@ -7,6 +7,7 @@
 
 .anticipationIcon {
   color: var(--color-light-greenish-100);
+  padding-left: var(--spacing-tiny);
 }
 
 .container {
@@ -18,8 +19,6 @@
 }
 
 .head {
-  border: solid 1px var(--color-light-iron-50);
-  border-bottom: none;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
 }
@@ -43,13 +42,12 @@
 }
 
 .paginationBottom {
-  border: solid 1px var(--color-light-iron-50);
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
   border-top: none;
 }
 
-.paymentColumn {
+.payment {
   align-items: center;
   display: flex;
   justify-content: center;
@@ -57,6 +55,13 @@
 
 .positive {
   color: var(--color-light-greenish-100);
+}
+
+.subtitle > h3 {
+  color: var(--color-light-steel-100);
+  font-size: 14px;
+  font-weight: normal;
+  margin-right: var(--spacing-small);
 }
 
 .type {

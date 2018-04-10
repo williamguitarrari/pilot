@@ -21,6 +21,19 @@ const getBulkAnticipationsLimits = (client, recipientId) => {
     .then(client.bulkAnticipations.limits)
 }
 
+const defaultBulkAnticipationLimits = {
+  maximum: {
+    amount: 0,
+    anticipation_fee: 0,
+    fee: 0,
+  },
+  minimum: {
+    amount: 0,
+    anticipation_fee: 0,
+    fee: 0,
+  },
+}
+
 const balance = client => (recipientId, {
   count,
   dates: {
@@ -32,32 +45,45 @@ const balance = client => (recipientId, {
 } = {}) =>
   Promise.props({
     balance: client.balance.find({ recipientId }),
-    bulk_anticipations_limit: getBulkAnticipationsLimits(client, recipientId),
+    bulk_anticipations_limit: getBulkAnticipationsLimits(client, recipientId)
+      .catch((error) => {
+        if (error.response) {
+          const err = error.response.errors[0]
+          if (err && err.type === 'action_forbidden') {
+            return defaultBulkAnticipationLimits
+          }
+        }
+
+        throw error
+      }),
     bulk_anticipations_pending: client.bulkAnticipations.find({
       recipientId,
       status: 'pending',
     }),
     operations: client.balanceOperations.find({
       count,
-      end_date: endDate,
+      end_date: moment(endDate).valueOf(),
       page,
       recipientId,
-      start_date: startDate,
+      start_date: moment(startDate).valueOf(),
     }),
     per_day: client.balanceOperations.days({
-      end_date: endDate,
+      end_date: moment(endDate).valueOf(),
       recipient_id: recipientId,
-      start_date: startDate,
+      start_date: moment(startDate).valueOf(),
       status,
     }),
     recipient: client.recipients.find({ id: recipientId }),
   })
     .then(buildResult({
       count,
-      end_date: endDate,
+      dates: {
+        end: endDate,
+        start: startDate,
+      },
       page,
-      start_date: startDate,
       status,
     }))
+
 
 export default balance

@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
+  defaultTo,
+  filter,
   head,
   pipe,
   split,
-  filter,
-  defaultTo,
 } from 'ramda'
 import {
   Sidebar,
@@ -59,12 +59,12 @@ class SidebarContainer extends React.Component {
         <SidebarLinks>
           {links.map(({ title, path, icon: Icon }) => (
             <SidebarLink
-              key={path}
-              title={title}
               active={getBasePath(path) === getBasePath(pathName)}
-              icon={<Icon width={16} height={16} />}
               collapsed={collapsed}
+              icon={<Icon width={16} height={16} />}
+              key={path}
               onClick={() => onLinkClick(path)}
+              title={title}
             />
           )
         )}
@@ -75,13 +75,13 @@ class SidebarContainer extends React.Component {
 }
 
 SidebarContainer.propTypes = {
-  logo: PropTypes.func.isRequired,
   links: PropTypes.arrayOf(PropTypes.shape({
-    title: PropTypes.string,
-    path: PropTypes.string,
-    icon: PropTypes.func,
     component: PropTypes.func,
+    icon: PropTypes.func,
+    path: PropTypes.string,
+    title: PropTypes.string,
   })).isRequired,
+  logo: PropTypes.func.isRequired,
   onLinkClick: PropTypes.func.isRequired,
   pathName: PropTypes.string.isRequired,
 }
