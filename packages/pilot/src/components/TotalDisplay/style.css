@@ -12,7 +12,11 @@
   height: 100%;
   align-items: center;
   flex-direction: column;
-  justify-content: space-between;
+  padding: 0 var(--spacing-small);
+}
+
+.content:last-of-type {
+  padding-right: 0;
 }
 
 .amount,

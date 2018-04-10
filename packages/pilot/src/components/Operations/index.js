@@ -3,9 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import {
   CardContent,
-  CardGraphic,
-  CardSection,
-  CardSectionTitle,
+  CardTitle,
   Pagination,
   Table,
 } from 'former-kit'
@@ -21,12 +19,26 @@ class Operations extends PureComponent {
 
   renderSubTitle () {
     const {
+      currentPage,
+      loading,
+      ofLabel,
+      onPageChange,
       subtitle,
+      totalPages,
     } = this.props
 
     return (
       <div className={style.subtitle}>
-        <small>{subtitle}</small>
+        <h3>{subtitle}</h3>
+        <Pagination
+          currentPage={currentPage}
+          disabled={loading}
+          onPageChange={onPageChange}
+          strings={{
+            of: ofLabel,
+          }}
+          totalPages={totalPages}
+        />
       </div>
     )
   }
@@ -34,53 +46,44 @@ class Operations extends PureComponent {
   render () {
     const {
       columns,
-      loading,
       currentPage,
+      emptyMessage,
+      loading,
       ofLabel,
       onPageChange,
       rows,
       title,
       totalPages,
     } = this.props
+
     return (
       <div className={style.container}>
-        <CardSection>
-          <div className={style.head}>
-            <CardSectionTitle
-              title={title}
-              subtitle={this.renderSubTitle()}
-            />
-            <CardContent className={style.pagination}>
-              <Pagination
-                currentPage={currentPage}
-                disabled={loading}
-                onPageChange={onPageChange}
-                strings={{
-                  of: ofLabel,
-                }}
-                totalPages={totalPages}
-              />
-            </CardContent>
-          </div>
-          <CardGraphic>
-            <Table
-              columns={columns}
-              disabled={loading}
-              rows={rows}
-            />
-          </CardGraphic>
-          <CardContent className={classNames(style.paginationBottom, style.pagination)}>
-            <Pagination
-              currentPage={currentPage}
-              disabled={loading}
-              onPageChange={onPageChange}
-              strings={{
-                of: ofLabel,
-              }}
-              totalPages={totalPages}
-            />
-          </CardContent>
-        </CardSection>
+        <div className={style.head}>
+          <CardTitle
+            subtitle={this.renderSubTitle()}
+            title={title}
+          />
+        </div>
+        <CardContent>
+          <Table
+            columns={columns}
+            disabled={loading}
+            emptyMessage={emptyMessage}
+            maxColumns={6}
+            rows={rows}
+          />
+        </CardContent>
+        <CardContent className={classNames(style.paginationBottom, style.pagination)}>
+          <Pagination
+            currentPage={currentPage}
+            disabled={loading}
+            onPageChange={onPageChange}
+            strings={{
+              of: ofLabel,
+            }}
+            totalPages={totalPages}
+          />
+        </CardContent>
       </div>
     )
   }
@@ -98,8 +101,9 @@ Operations.propTypes = {
     renderer: PropTypes.func,
     title: PropTypes.string.isRequired,
   })).isRequired,
-  loading: PropTypes.bool,
   currentPage: PropTypes.number.isRequired,
+  emptyMessage: PropTypes.string.isRequired,
+  loading: PropTypes.bool,
   ofLabel: PropTypes.string.isRequired,
   onPageChange: PropTypes.func.isRequired,
   rows: PropTypes.arrayOf(PropTypes.shape({

@@ -39,24 +39,26 @@ const balance = client => (recipientId, {
     }),
     operations: client.balanceOperations.find({
       count,
-      end_date: endDate,
+      end_date: moment(endDate).valueOf(),
       page,
       recipientId,
-      start_date: startDate,
+      start_date: moment(startDate).valueOf(),
     }),
     per_day: client.balanceOperations.days({
-      end_date: endDate,
+      end_date: moment(endDate).valueOf(),
       recipient_id: recipientId,
-      start_date: startDate,
+      start_date: moment(startDate).valueOf(),
       status,
     }),
     recipient: client.recipients.find({ id: recipientId }),
   })
     .then(buildResult({
       count,
-      end_date: endDate,
+      dates: {
+        end: endDate,
+        start: startDate,
+      },
       page,
-      start_date: startDate,
       status,
     }))
 
