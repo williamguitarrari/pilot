@@ -19,7 +19,7 @@ const TotalDisplayExample = () => (
             title="Valor Capturado"
             amount={1000000000}
             color="#37cc9a"
-            unity="R$"
+            unit="R$"
             subtitle={
               <span>
                 Capturado em 10/03/2018 às 14:15h
@@ -33,7 +33,7 @@ const TotalDisplayExample = () => (
             title="Total de Saídas"
             amount={-500000}
             color="#ff796f"
-            unity="R$"
+            unit="R$"
             subtitle={
               <span>
                 MDR: R$ 6,00 | Valor estornado: R$ 15,00 <br />
@@ -48,7 +48,7 @@ const TotalDisplayExample = () => (
             title="Valor Líquido"
             amount={9995000000}
             color="#4ca9d7"
-            unity="R$"
+            unit="R$"
             subtitle={
               <span>
                 Data a receber: 20/03/2018

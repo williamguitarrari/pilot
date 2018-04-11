@@ -11,6 +11,7 @@ import {
   head,
   identity,
   ifElse,
+  is,
   isEmpty,
   isNil,
   juxt,
@@ -18,7 +19,7 @@ import {
   lensPath,
   map,
   mergeAll,
-  mergeDeepWithKey,
+  mergeWithKey,
   objOf,
   path,
   pathEq,
@@ -82,10 +83,13 @@ const chooseOperations = ifElse(
 
 const createOperationObj = applySpec({
   id: prop('id'),
-  created_at: ifElse(
-    has('date_created'),
-    prop('date_created'),
-    prop('created_at')
+  created_at: pipe(
+    ifElse(
+      has('date_created'),
+      prop('date_created'),
+      prop('created_at')
+    ),
+    unless(isNil, moment)
   ),
   type: prop('type'),
   status: ifElse(
@@ -133,12 +137,26 @@ const mergeInstallment = (key, left, right) => {
     case 'anticipation':
       return left + right
     default:
-      return right
+      break
   }
+
+  if (is(moment, right) && is(moment, left)) {
+    return right
+  }
+
+  if (is(Array, left) && is(Array, right)) {
+    return right
+  }
+
+  if (is(Object, left) && is(Object, right)) {
+    return mergeWithKey(mergeInstallment, left, right)
+  }
+
+  return right
 }
 
 const aggregateInstallments = (acc, installment) =>
-  mergeDeepWithKey(mergeInstallment, acc, installment)
+  mergeWithKey(mergeInstallment, acc, installment)
 
 const mapRecipients = map(applySpec({
   name: path(['recipient', 'bank_account', 'legal_name']),
@@ -176,9 +194,18 @@ const mapRecipients = map(applySpec({
     map(applySpec({
       number: prop('installment'),
       status: prop('status'),
-      payment_date: prop('payment_date'),
-      original_payment_date: prop('original_payment_date'),
-      created_at: prop('date_created'),
+      payment_date: pipe(
+        prop('payment_date'),
+        unless(isNil, moment)
+      ),
+      original_payment_date: pipe(
+        prop('original_payment_date'),
+        unless(isNil, moment)
+      ),
+      created_at: pipe(
+        prop('date_created'),
+        unless(isNil, moment)
+      ),
       amount: prop('amount'),
       net_amount: pipe(
         juxt([prop('amount'), sumAllPayableFees]),

@@ -1,5 +1,4 @@
 import {
-  F,
   T,
   allPass,
   always,
@@ -21,14 +20,13 @@ import {
   props,
   subtract,
   sum,
+  unless,
   when,
 } from 'ramda'
 
-const isInternational = ifElse(
-  complement(equals('BRAZIL')),
-  T,
-  F
-)
+import moment from 'moment'
+
+const isInternational = complement(equals)('BRAZIL')
 
 const isAntifraudScoreNil = pipe(
   prop('antifraud_score'),
@@ -87,7 +85,7 @@ const getCustomerProp = ifElse(
     document_number: getCustomerSubProp('document_number'),
     document_type: getCustomerSubProp('document_type'),
     email: getCustomerSubProp('email'),
-    birth_date: getCustomerSubProp('birthday'),
+    birth_date: pipe(getCustomerSubProp('birthday'), unless(isNil, moment.utc)),
     country: getCustomerSubProp('country'),
     phones: getCustomerSubProp('phone_numbers'),
   })
@@ -109,8 +107,8 @@ const buildCard = when(
 const transactionSpec = {
   id: prop('id'),
   amount: prop('amount'),
-  created_at: prop('date_created'),
-  updated_at: prop('date_updated'),
+  created_at: pipe(prop('date_created'), unless(isNil, moment)),
+  updated_at: pipe(prop('date_updated'), unless(isNil, moment)),
   soft_descriptor: prop('soft_descriptor'),
   external_id: ifElse(
     has('reference_key'),
@@ -124,13 +122,13 @@ const transactionSpec = {
     prop('status_reason')
   ),
   boleto: ifElse(
-    propEq('boleto_url', null),
-    always(null),
+    propEq('payment_method', 'boleto'),
     applySpec({
       barcode: prop('boleto_barcode'),
-      due_date: prop('boleto_expiration_date'),
+      due_date: pipe(prop('boleto_expiration_date'), unless(isNil, moment)),
       url: prop('boleto_url'),
-    })
+    }),
+    always(null)
   ),
   payment: {
     method: prop('payment_method'),
@@ -152,8 +150,8 @@ const transactionSpec = {
   acquirer: {
     name: prop('acquirer_name'),
     response_code: prop('acquirer_response_code'),
-    sequence_number: prop('nsu'),
-    transaction_id: prop('tid'),
+    sequence_number: unless(isNil, pipe(prop('nsu'), String)),
+    transaction_id: unless(isNil, pipe(prop('tid'), String)),
   },
   antifraud: getAntifraudProp,
   customer: getCustomerProp,

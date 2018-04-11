@@ -5,7 +5,7 @@ import {
   CardContent,
 } from 'former-kit'
 
-import currencyFormatter from '../../formatters/currency'
+import decimalCurrency from '../../formatters/decimalCurrency'
 import style from './style.css'
 
 const renderSymbol = (value) => {
@@ -20,26 +20,30 @@ const renderSymbol = (value) => {
   return null
 }
 
+const renderValue = (amount, color) => (
+  <div className={style.amount}>
+    <small style={{ color }}>
+      {renderSymbol(amount)}
+    </small>
+    <h3>{ decimalCurrency(amount < 0 ? -amount : amount) }</h3>
+  </div>
+)
+
 const TotalDisplay = ({
   title,
   amount,
   color,
   subtitle,
-  unity,
+  unit,
 }) => (
   <Card>
     <CardContent className={style.content}>
       <div className={style.title}>
         <h2 style={{ color }}>{title}</h2>
-        <span>({unity})</span>
+        <span>({unit})</span>
       </div>
 
-      <div className={style.amount}>
-        <small style={{ color }}>
-          {renderSymbol(amount)}
-        </small>
-        <h3>{currencyFormatter(amount).replace('R$', '').replace('-', '')}</h3>
-      </div>
+      { renderValue(amount, color) }
 
       <div className={style.subtitle}>
         {subtitle}
@@ -52,12 +56,13 @@ TotalDisplay.propTypes = {
   title: PropTypes.string.isRequired,
   amount: PropTypes.number.isRequired,
   color: PropTypes.string.isRequired,
-  unity: PropTypes.string.isRequired,
+  unit: PropTypes.string,
   subtitle: PropTypes.node,
 }
 
 TotalDisplay.defaultProps = {
   subtitle: null,
+  unit: '',
 }
 
 export default TotalDisplay

@@ -85,8 +85,8 @@ const mock = {
           acquirer: {
             name: 'pagarme',
             response_code: '0000',
-            sequence_number: 1565115,
-            transaction_id: 1565115,
+            sequence_number: '1565115',
+            transaction_id: '1565115',
           },
           antifraud: null,
           amount: 2000,
@@ -120,8 +120,8 @@ const mock = {
           acquirer: {
             name: 'pagarme',
             response_code: '0000',
-            sequence_number: 1301999,
-            transaction_id: 1301999,
+            sequence_number: '1301999',
+            transaction_id: '1301999',
           },
           metadata: {},
           soft_descriptor: null,
@@ -164,8 +164,8 @@ const mock = {
           acquirer: {
             name: 'pagarme',
             response_code: '0000',
-            sequence_number: 1301925,
-            transaction_id: 1301925,
+            sequence_number: '1301925',
+            transaction_id: '1301925',
           },
           metadata: {},
           soft_descriptor: null,
@@ -204,8 +204,8 @@ const mock = {
           acquirer: {
             name: 'pagarme',
             response_code: '0000',
-            sequence_number: 1280667,
-            transaction_id: 1280667,
+            sequence_number: '1280667',
+            transaction_id: '1280667',
           },
           status: 'refused',
           status_reason: 'capture_timeout',
@@ -247,8 +247,8 @@ const mock = {
           acquirer: {
             name: 'pagarme',
             response_code: '5000',
-            sequence_number: 1280910,
-            transaction_id: 1280910,
+            sequence_number: '1280910',
+            transaction_id: '1280910',
           },
           metadata: {},
           soft_descriptor: null,
@@ -278,8 +278,8 @@ const mock = {
           acquirer: {
             name: 'pagarme',
             response_code: '5000',
-            sequence_number: 1732031,
-            transaction_id: 1732031,
+            sequence_number: '1732031',
+            transaction_id: '1732031',
           },
           status: 'paid',
           status_reason: 'acquirer',
@@ -333,8 +333,8 @@ const mock = {
           acquirer: {
             name: 'pagarme',
             response_code: '0000',
-            sequence_number: 1761390,
-            transaction_id: 1761390,
+            sequence_number: '1761390',
+            transaction_id: '1761390',
           },
           status: 'paid',
           status_reason: 'acquirer',
@@ -378,8 +378,8 @@ const mock = {
           acquirer: {
             name: 'pagarme',
             response_code: '0000',
-            sequence_number: 1761674,
-            transaction_id: 1761674,
+            sequence_number: '1761674',
+            transaction_id: '1761674',
           },
           status: 'paid',
           status_reason: 'acquirer',
@@ -423,8 +423,8 @@ const mock = {
           acquirer: {
             name: 'pagarme',
             response_code: '0000',
-            sequence_number: 1815318,
-            transaction_id: 1815318,
+            sequence_number: '1815318',
+            transaction_id: '1815318',
           },
           status: 'paid',
           status_reason: 'acquirer',
@@ -468,8 +468,8 @@ const mock = {
           acquirer: {
             name: 'pagarme',
             response_code: '0000',
-            sequence_number: 2956651,
-            transaction_id: 2956651,
+            sequence_number: '2956651',
+            transaction_id: '2956651',
           },
           status: 'refunded',
           status_reason: 'acquirer',
@@ -505,8 +505,8 @@ const mock = {
           acquirer: {
             name: 'pagarme',
             response_code: '0000',
-            sequence_number: 2956649,
-            transaction_id: 2956649,
+            sequence_number: '2956649',
+            transaction_id: '2956649',
           },
           status: 'paid',
           status_reason: 'acquirer',
@@ -550,8 +550,8 @@ const mock = {
           acquirer: {
             name: 'pagarme',
             response_code: '5000',
-            sequence_number: 2956657,
-            transaction_id: 2956657,
+            sequence_number: '2956657',
+            transaction_id: '2956657',
           },
           payment: {
             method: 'credit_card',
@@ -595,8 +595,8 @@ const mock = {
           acquirer: {
             name: 'pagarme',
             response_code: '5000',
-            sequence_number: 2956655,
-            transaction_id: 2956655,
+            sequence_number: '2956655',
+            transaction_id: '2956655',
           },
           amount: 4567,
           antifraud: null,
@@ -621,8 +621,8 @@ const mock = {
           acquirer: {
             name: 'pagarme',
             response_code: '0000',
-            sequence_number: 2956647,
-            transaction_id: 2956647,
+            sequence_number: '2956647',
+            transaction_id: '2956647',
           },
           created_at: '2018-02-22T20:53:10.779Z',
           updated_at: '2018-02-22T20:53:11.403Z',
@@ -658,8 +658,8 @@ const mock = {
           acquirer: {
             name: 'pagarme',
             response_code: '0000',
-            sequence_number: 2956654,
-            transaction_id: 2956654,
+            sequence_number: '2956654',
+            transaction_id: '2956654',
           },
           created_at: '2018-02-22T20:54:32.543Z',
           updated_at: '2018-02-22T20:54:49.589Z',
@@ -729,7 +729,7 @@ describe('Transactions to dashboard', () => {
   it('should work when transactions are returned', () => {
     const result = buildResultToDashboard(requestResultMock)
 
-    expect(result).toEqual(mock)
+    expect(result).toBeJsonEqual(mock)
   })
 
   it('should work when hits is empty', () => {
@@ -770,6 +770,6 @@ describe('Transactions to dashboard', () => {
         },
       },
     }
-    expect(result).toEqual(expectedResult)
+    expect(result).toBeJsonEqual(expectedResult)
   })
 })

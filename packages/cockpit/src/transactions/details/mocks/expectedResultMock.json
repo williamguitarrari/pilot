@@ -3,8 +3,8 @@
     "acquirer": {
       "name": "pagarme",
       "response_code": "0000",
-      "sequence_number": 3082517,
-      "transaction_id": 123456
+      "sequence_number": "3082517",
+      "transaction_id": "123456"
     },
     "antifraud": null,
     "boleto": null,
@@ -19,7 +19,7 @@
     },
     "created_at": "2018-03-14T13:40:28.465Z",
     "customer": {
-      "birth_date": "1999-01-01",
+      "birth_date": "1999-01-01T00:00:00.000Z",
       "country": "us",
       "document_number": null,
       "document_type": "cpf",
