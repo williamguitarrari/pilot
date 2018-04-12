@@ -4,6 +4,8 @@ import {
   head,
   pipe,
   split,
+  filter,
+  defaultTo,
 } from 'ramda'
 import {
   Sidebar,
@@ -14,9 +16,13 @@ import {
 
 import Menu32 from 'emblematic-icons/svg/Menu32.svg'
 
+const defaultToEmptyStr = defaultTo('')
 const getBasePath = pipe(
+  defaultToEmptyStr,
   split('/'),
-  head
+  filter(Boolean),
+  head,
+  defaultToEmptyStr
 )
 
 class SidebarContainer extends React.Component {
