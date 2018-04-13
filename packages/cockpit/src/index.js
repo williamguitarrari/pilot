@@ -1,8 +1,9 @@
 import { applySpec } from 'ramda'
 import transactions from './transactions'
+import proxy from './proxy'
 
-const client = applySpec({
+const cockpit = applySpec({
   transactions,
 })
 
-export default client
+export default proxy(cockpit)

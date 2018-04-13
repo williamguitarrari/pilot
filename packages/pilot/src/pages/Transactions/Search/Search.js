@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
-import cockpit from 'cockpit'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { translate } from 'react-i18next'
@@ -186,7 +185,6 @@ class TransactionsSearch extends React.Component {
 
     this.state = {
       clearFiltersLabel: t('clear_filters'),
-      client: cockpit(props.client),
       columns: translateColumns(columnsDefault),
       collapsed: true,
       dateLabels: getDateLabels(t),
@@ -255,7 +253,7 @@ class TransactionsSearch extends React.Component {
   requestData (query) {
     this.props.onRequestSearch({ query })
 
-    return this.state.client
+    return this.props.client
       .transactions
       .search(query)
       .then((res) => {
@@ -451,7 +449,11 @@ class TransactionsSearch extends React.Component {
 }
 
 TransactionsSearch.propTypes = {
-  client: PropTypes.shape({}).isRequired,
+  client: PropTypes.shape({
+    transactions: PropTypes.shape({
+      search: PropTypes.func.isRequired,
+    }).isRequired,
+  }).isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
     location: PropTypes.shape({
