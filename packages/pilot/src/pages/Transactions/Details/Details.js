@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { translate } from 'react-i18next'
-import cockpit from 'cockpit'
 import {
   compose,
   isNil,
@@ -110,13 +109,9 @@ const getPaymentCardLabels = t => ({
 class TransactionDetails extends Component {
   constructor (props) {
     super(props)
-    const {
-      client,
-      t,
-    } = this.props
+    const { t } = this.props
     const formatColumns = getColumnFormatter(t)
     this.state = {
-      client: cockpit(client),
       customerLabels: getCustomerLabels(t),
       eventsLabels: getEventsLabels(t),
       installmentColumns: formatColumns(installmentTableColumns),
@@ -156,7 +151,7 @@ class TransactionDetails extends Component {
   requestData (query) {
     this.props.onRequestDetails({ query })
 
-    return this.state.client
+    return this.props.client
       .transactions
       .details(query)
       .then((result) => {

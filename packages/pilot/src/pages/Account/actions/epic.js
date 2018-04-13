@@ -3,6 +3,7 @@ import { identity } from 'ramda'
 import 'rxjs/add/operator/mergeMap'
 import 'rxjs/add/operator/map'
 import { combineEpics } from 'redux-observable'
+import cockpit from 'cockpit'
 
 import {
   receiveLogin,
@@ -17,6 +18,7 @@ const loginEpic = action$ =>
     .ofType(LOGIN_REQUEST)
     .mergeMap(action => (
       pagarme.client.connect(action.payload)
+        .then(cockpit)
         .then(receiveLogin)
         .catch((error) => {
           try {
