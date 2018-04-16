@@ -1,20 +1,21 @@
 import {
   apply,
-  objOf,
+  map,
   merge,
   mergeAll,
-  pipe,
-  map,
+  objOf,
   path,
+  pipe,
   props,
 } from 'ramda'
 
 import {
   ACCOUNT_RECEIVE,
-  LOGIN_REQUEST,
-  LOGIN_RECEIVE,
-  LOGOUT_REQUEST,
+  COMPANY_RECEIVE,
   LOGIN_FAIL,
+  LOGIN_RECEIVE,
+  LOGIN_REQUEST,
+  LOGOUT_REQUEST,
 } from '.'
 
 const initialState = {
@@ -37,16 +38,23 @@ export default function loginReducer (state = initialState, action) {
   switch (action.type) {
     case ACCOUNT_RECEIVE: {
       return merge(state, {
-        user: action.payload,
-        loading: false,
         errors: null,
+        user: action.payload,
+      })
+    }
+
+    case COMPANY_RECEIVE: {
+      return merge(state, {
+        company: action.payload,
+        errors: null,
+        loading: false,
       })
     }
 
     case LOGIN_REQUEST: {
       return merge(state, {
-        loading: true,
         errors: null,
+        loading: true,
         user: null,
       })
     }
@@ -56,9 +64,9 @@ export default function loginReducer (state = initialState, action) {
         {
           client: null,
           errors: createErrors(action.payload),
-          user: null,
-          sessionId: null,
           loading: false,
+          sessionId: null,
+          user: null,
         }
       )
     }
@@ -67,9 +75,9 @@ export default function loginReducer (state = initialState, action) {
         state,
         {
           client: action.payload,
-          sessionId: action.payload.authentication.session_id,
           errors: null,
           loading: false,
+          sessionId: action.payload.authentication.session_id,
         }
       )
     }

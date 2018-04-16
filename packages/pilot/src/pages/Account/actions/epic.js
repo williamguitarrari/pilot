@@ -8,7 +8,9 @@ import cockpit from 'cockpit'
 import {
   receiveLogin,
   receiveAccount,
+  receiveCompany,
   failLogin,
+  ACCOUNT_RECEIVE,
   LOGIN_REQUEST,
   LOGIN_RECEIVE,
 } from '.'
@@ -44,4 +46,16 @@ const accountEpic = action$ =>
     })
     .map(receiveAccount)
 
-export default combineEpics(loginEpic, accountEpic)
+const companyEpic = (action$, store) =>
+  action$
+    .ofType(ACCOUNT_RECEIVE)
+    .mergeMap(({ error, payload }) => {
+      const { account: { client } } = store.getState()
+      if (error) {
+        return Promise.resolve(payload)
+      }
+      return client.company.current().catch(identity)
+    })
+    .map(receiveCompany)
+
+export default combineEpics(loginEpic, accountEpic, companyEpic)

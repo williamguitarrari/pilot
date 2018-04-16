@@ -17,8 +17,20 @@ import LoggedArea from './LoggedArea'
 
 import environment from '../environment'
 
-const mapStateToProps = ({ account: { client, user, sessionId } }) =>
-  ({ client, user, sessionId })
+const mapStateToProps = ({
+  account: {
+    client,
+    company,
+    sessionId,
+    user,
+  },
+}) =>
+  ({
+    client,
+    company,
+    sessionId,
+    user,
+  })
 
 const mapDispatchToProps = {
   requestLogin,
@@ -43,9 +55,10 @@ class Root extends Component {
   render () {
     const {
       client,
-      user,
+      company,
       location: { pathname: path },
       sessionId,
+      user,
     } = this.props
 
     if (!client && sessionId) {
@@ -61,7 +74,7 @@ class Root extends Component {
         {client && user && path.startsWith('/account/login') &&
           <Redirect to="/" />
         }
-        {client && user &&
+        {client && company && user &&
           <LoggedArea />
         }
       </Fragment>
@@ -71,19 +84,21 @@ class Root extends Component {
 
 Root.propTypes = {
   client: PropTypes.object, // eslint-disable-line
-  user: PropTypes.object, // eslint-disable-line
-  sessionId: PropTypes.string,
+  company: PropTypes.object, // eslint-disable-line
   location: PropTypes.shape({
     pathname: PropTypes.string,
   }),
   requestLogin: PropTypes.func.isRequired,
+  sessionId: PropTypes.string,
+  user: PropTypes.object, // eslint-disable-line
 }
 
 Root.defaultProps = {
   client: null,
-  user: null,
-  sessionId: null,
+  company: null,
   location: {},
+  sessionId: null,
+  user: null,
 }
 
 export default enhance(Root)
