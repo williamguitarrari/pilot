@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import {
+  __,
   always,
   anyPass,
   both,
@@ -11,9 +12,11 @@ import {
   equals,
   isEmpty,
   isNil,
+  juxt,
   map,
   negate,
   path,
+  pathOr,
   pipe,
   prop,
   sum,
@@ -31,7 +34,7 @@ import {
   Legend,
 } from 'former-kit'
 import IconInfo from 'emblematic-icons/svg/Info32.svg'
-
+import transactionOperationTypes from '../../models/transactionOperationTypes'
 import currencyFormatter from '../../formatters/currency'
 import CustomerCard from '../../components/CustomerCard'
 import decimalCurrencyFormatter from '../../formatters/decimalCurrency'
@@ -63,17 +66,14 @@ const getOutAmount = pipe(
   )
 )
 
-const getOperationLegendStatus = ({ type }) => {
-  if (contains('chargeback', type)) {
-    return statusLegends.chargedback
-  }
-
-  if (contains('authorize', type)) {
-    return statusLegends.authorized
-  }
-
-  return statusLegends.paid
-}
+const getOperationLegendStatus = pipe(
+  juxt([
+    prop('type'),
+    always('status'),
+    prop('status'),
+  ]),
+  pathOr({}, __, transactionOperationTypes)
+)
 
 const isEmptyOrNull = anyPass([isEmpty, isNil])
 
@@ -260,7 +260,7 @@ class TransactionDetails extends Component {
         <Event
           key={key}
           number={number}
-          title={legendStatus.text}
+          title={legendStatus.title}
           color={legendStatus.color}
           active={index === 0}
           collapsed={index !== 0}
