@@ -1,5 +1,6 @@
 import pagarme from 'pagarme'
 import { identity } from 'ramda'
+import 'rxjs/add/operator/do'
 import 'rxjs/add/operator/mergeMap'
 import 'rxjs/add/operator/map'
 import { combineEpics } from 'redux-observable'
@@ -45,6 +46,12 @@ const accountEpic = action$ =>
       return client.user.current().catch(identity)
     })
     .map(receiveAccount)
+    .do(({ error, payload }) => {
+      if (error || typeof window.FS === 'undefined') {
+        return
+      }
+      window.FS.identify(payload.id, { email_str: payload.email })
+    })
 
 const companyEpic = (action$, store) =>
   action$
@@ -57,5 +64,14 @@ const companyEpic = (action$, store) =>
       return client.company.current().catch(identity)
     })
     .map(receiveCompany)
+    .do(({ error, payload }) => {
+      if (error || typeof window.FS === 'undefined') {
+        return
+      }
+      window.FS.setUserVars({
+        companyName_str: payload.name,
+        companyId_str: payload.id,
+      })
+    })
 
 export default combineEpics(loginEpic, accountEpic, companyEpic)
