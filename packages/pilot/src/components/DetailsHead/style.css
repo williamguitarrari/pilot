@@ -1,0 +1,48 @@
+@import "former-kit-skin-pagarme/dist/styles/spacing.css";
+@import "former-kit-skin-pagarme/dist/styles/colors/light.css";
+
+.content {
+  align-items: stretch;
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: var(--spacing-small);
+  padding-top: var(--spacing-small);
+}
+
+.item {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  &:not(:first-of-type) {
+    margin-left: var(--spacing-medium);
+  }
+
+  & > span {
+    margin-bottom: var(--spacing-tiny);
+    text-transform: uppercase;
+  }
+
+  & > div {
+    align-items: center;
+    display: flex;
+    height: 30px;
+  }
+}
+
+.identifier {
+  color: var(--color-light-steel-100);
+  font-size: 28px;
+  line-height: 1;
+  margin: 0;
+  max-width: 300px;
+}
+
+.actions {
+  align-items: center;
+  display: flex;
+
+  & > button:not(:first-of-type) {
+    margin-left: var(--spacing-medium);
+  }
+}

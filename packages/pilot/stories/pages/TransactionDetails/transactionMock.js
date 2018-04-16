@@ -2,6 +2,7 @@
 import moment from 'moment'
 
 const transaction = {
+  "amount": 985172498,  
   "id": 3082517,
   "created_at": "2018-03-14T13:40:28.465Z",
   "updated_at": "2018-03-14T16:11:52.057Z",
