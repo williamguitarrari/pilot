@@ -67,18 +67,34 @@ const normalizeChargebackOps = pipe(
   flatten
 )
 
-const chooseOperations = ifElse(
-  pathEq(['transaction', 'payment_method'], 'boleto'),
-  prop('gatewayOperations'),
-  pipe(
-    pick(['gatewayOperations', 'chargebackOperations']),
-    juxt([
-      prop('gatewayOperations'),
-      pipe(prop('chargebackOperations'), normalizeChargebackOps),
-    ]),
-    flatten,
-    reject(propEq('type', 'conciliate'))
-  )
+const sortGatewayOperations = (operations) => {
+  const lastOperation = operations.find(propEq('next_group_id', null))
+  let list = [lastOperation]
+
+  operations.forEach((operation) => {
+    if (head(list).group_id === operation.next_group_id) {
+      list = [operation, ...list]
+    }
+  })
+
+  return list
+}
+
+const chooseOperations = pipe(
+  ifElse(
+    pathEq(['transaction', 'payment_method'], 'boleto'),
+    pipe(prop('gatewayOperations'), sortGatewayOperations),
+    pipe(
+      pick(['gatewayOperations', 'chargebackOperations']),
+      juxt([
+        pipe(prop('gatewayOperations'), sortGatewayOperations),
+        pipe(prop('chargebackOperations'), normalizeChargebackOps),
+      ]),
+      flatten,
+      reject(propEq('type', 'conciliate'))
+    )
+  ),
+  reverse
 )
 
 const createOperationObj = applySpec({
@@ -107,8 +123,7 @@ const createOperationObj = applySpec({
 const buildOperations = applySpec({
   operations: pipe(
     chooseOperations,
-    map(createOperationObj),
-    sortByCreatedAt
+    map(createOperationObj)
   ),
 })
 
