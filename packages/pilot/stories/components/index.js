@@ -1,10 +1,11 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 
-import DetailsHead from './DetailsHead'
 import CustomerCard from './CustomerCard'
+import DetailsHead from './DetailsHead'
 import EventList from './EventList'
 import PaymentCards from './PaymentCards'
+import Property from './Property'
 import RecipientSectionState from './RecipientSection'
 import TotalDisplay from './TotalDisplay'
 import TransactionDetailsCard from './TransactionDetailsCard'
@@ -32,5 +33,8 @@ storiesOf('Components', module)
   ))
   .add('TreeView', () => (
     <TreeView />
+  ))
+  .add('Property', () => (
+    <Property />
   ))
 
