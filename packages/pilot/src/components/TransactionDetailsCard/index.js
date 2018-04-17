@@ -16,14 +16,14 @@ import {
   splitEvery,
 } from 'ramda'
 
-import style from './style.css'
+import Property from '../Property'
 
 const objectFields = (labels, contents) => (
   mapObjIndexed((content, key) => (
-    <div className={style.item}>
-      <span>{labels[key]}</span>
-      <p>{content}</p>
-    </div>
+    <Property
+      title={labels[key]}
+      value={content}
+    />
   ), contents)
 )
 
