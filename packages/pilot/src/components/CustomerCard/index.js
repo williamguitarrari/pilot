@@ -12,13 +12,13 @@ import {
 
 import { mapObjIndexed } from 'ramda'
 
-import style from './style.css'
+import Property from '../Property'
 
 const fields = (labels, contents) => mapObjIndexed((label, key) => (
-  <div className={style.field}>
-    <span>{label}</span>
-    <p>{contents[key]}</p>
-  </div>
+  <Property
+    title={label}
+    value={contents[key]}
+  />
 ), labels)
 
 const CustomerCard = ({ title, labels, contents }) => {
