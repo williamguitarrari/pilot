@@ -87,5 +87,5 @@ See [LICENSES](LICENSES.md).
 [milestones]: https://github.com/pagarme/pilot/milestones
 [dashboard-pagarme]: https://dashboard.pagar.me
 [react-styleguide]: https://github.com/pagarme/react-style-guide
-[react-styleguide]: https://github.com/pagarme/git-style-guide
+[git-styleguide]: https://github.com/pagarme/git-style-guide
 [storybook]: https://github.com/storybooks/storybook
