@@ -23,6 +23,7 @@ import {
 import {
   Alert,
   Card,
+  CardContent,
   CardTitle,
   Col,
   Grid,
@@ -363,13 +364,17 @@ class TransactionDetails extends Component {
             tablet={6}
             tv={3}
           >
-            <TotalDisplay
-              amount={payment.paid_amount}
-              color="#37cc9a"
-              subtitle={totalDisplayLabels.captured_at}
-              title={totalDisplayLabels.paid_amount}
-              unit={totalDisplayLabels.currency_symbol}
-            />
+            <Card>
+              <CardContent className={style.content}>
+                <TotalDisplay
+                  amount={payment.paid_amount}
+                  color="#37cc9a"
+                  subtitle={totalDisplayLabels.captured_at}
+                  title={totalDisplayLabels.paid_amount}
+                  unit={totalDisplayLabels.currency_symbol}
+                />
+              </CardContent>
+            </Card>
           </Col>
           <Col
             desk={3}
@@ -377,19 +382,23 @@ class TransactionDetails extends Component {
             tablet={6}
             tv={3}
           >
-            <TotalDisplay
-              amount={
-                getOutAmount([
-                  payment.refund_amount,
-                  payment.cost_amount,
-                  payment.mdr_amount,
-                ])
-              }
-              color="#ff796f"
-              subtitle={this.renderOutAmountSubTitle()}
-              title={totalDisplayLabels.out_amount}
-              unit={totalDisplayLabels.currency_symbol}
-            />
+            <Card>
+              <CardContent className={style.content}>
+                <TotalDisplay
+                  amount={
+                    getOutAmount([
+                      payment.refund_amount,
+                      payment.cost_amount,
+                      payment.mdr_amount,
+                    ])
+                  }
+                  color="#ff796f"
+                  subtitle={this.renderOutAmountSubTitle()}
+                  title={totalDisplayLabels.out_amount}
+                  unit={totalDisplayLabels.currency_symbol}
+                />
+              </CardContent>
+            </Card>
           </Col>
           <Col
             desk={3}
@@ -397,13 +406,17 @@ class TransactionDetails extends Component {
             tablet={6}
             tv={3}
           >
-            <TotalDisplay
-              amount={payment.net_amount}
-              color="#4ca9d7"
-              subtitle={totalDisplayLabels.receive_date}
-              title={totalDisplayLabels.net_amount}
-              unit={totalDisplayLabels.currency_symbol}
-            />
+            <Card>
+              <CardContent className={style.content}>
+                <TotalDisplay
+                  amount={payment.net_amount}
+                  color="#4ca9d7"
+                  subtitle={totalDisplayLabels.receive_date}
+                  title={totalDisplayLabels.net_amount}
+                  unit={totalDisplayLabels.currency_symbol}
+                />
+              </CardContent>
+            </Card>
           </Col>
         </Row>
 
