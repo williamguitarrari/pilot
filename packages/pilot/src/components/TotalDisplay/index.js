@@ -1,9 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {
-  Card,
-  CardContent,
-} from 'former-kit'
 
 import decimalCurrency from '../../formatters/decimalCurrency'
 import style from './style.css'
@@ -36,20 +32,18 @@ const TotalDisplay = ({
   subtitle,
   unit,
 }) => (
-  <Card>
-    <CardContent className={style.content}>
-      <div className={style.title}>
-        <h2 style={{ color }}>{title}</h2>
-        <span>({unit})</span>
-      </div>
+  <div className={style.content}>
+    <div className={style.title}>
+      <h2 style={{ color }}>{title}</h2>
+      <span>({unit})</span>
+    </div>
 
-      { renderValue(amount, color) }
+    { renderValue(amount, color) }
 
-      <div className={style.subtitle}>
-        {subtitle}
-      </div>
-    </CardContent>
-  </Card>
+    <div className={style.subtitle}>
+      {subtitle}
+    </div>
+  </div>
 )
 
 TotalDisplay.propTypes = {
