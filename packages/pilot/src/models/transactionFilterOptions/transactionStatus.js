@@ -12,7 +12,7 @@ export default {
     },
     {
       label: 'Estornada',
-      value: 'reversed',
+      value: 'refunded',
     },
     {
       label: 'Estorno pendente',
