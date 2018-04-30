@@ -10,8 +10,6 @@ import {
   number,
 } from 'prop-types'
 import moment from 'moment'
-import IconBalance from 'emblematic-icons/svg/Balance32.svg'
-import IconChartsBars from 'emblematic-icons/svg/ChartBars32.svg'
 import IconTransactions from 'emblematic-icons/svg/Transaction32.svg'
 import IconInfo from 'emblematic-icons/svg/Info32.svg'
 import {
@@ -136,10 +134,8 @@ const TransactionsList = ({
               }
               subtitle={
                 <h3 className={style.customTitle}>
-                  <IconChartsBars width={16} height={16} />
                   {transactionsNumberLabel} <strong>{count}</strong>
                   <div className={style.verticalDivider} />
-                  <IconBalance width={16} height={16} />
                   {totalVolumeLabel} <strong>{formatCurrency(amount)}</strong>
                 </h3>
               }
