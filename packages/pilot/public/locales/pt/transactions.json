@@ -20,9 +20,9 @@
   "period_summary": "Resumo de:",
   "receive_date": "Data a receber: {{date}}",
   "received_at": "Recebido em: {{date}}",
-  "total_volume": "Volume total",
+  "total_volume": "Volume total:",
   "transactions": "TRANSAÇÕES",
-  "transactions_number": "Nº transações",
+  "transactions_number": "Nº de transações:",
   "try_filter_again": "Tente novamente com outros filtros.",
   "alert": {
     "chargeback_reason": "Motivo do chargeback: {{reason}}",

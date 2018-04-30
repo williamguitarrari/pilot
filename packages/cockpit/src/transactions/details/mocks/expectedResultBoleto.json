@@ -54,16 +54,16 @@
     },
     "operations": [
       {
-        "id": "go_cjfa2cil80tmsbe3ttistuhwq",
-        "created_at": "2018-03-27T19:37:37.820Z",
-        "type": "authorize",
+        "id": "go_cjfa2cil20tmqbe3t3w32ktqb",
+        "created_at": "2018-03-27T19:37:37.814Z",
+        "type": "issue",
         "status": "success",
         "cycle": null
       },
       {
-        "id": "go_cjfa2cil20tmqbe3t3w32ktqb",
-        "created_at": "2018-03-27T19:37:37.814Z",
-        "type": "issue",
+        "id": "go_cjfa2cil80tmsbe3ttistuhwq",
+        "created_at": "2018-03-27T19:37:37.820Z",
+        "type": "authorize",
         "status": "success",
         "cycle": null
       }
