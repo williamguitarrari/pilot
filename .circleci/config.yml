@@ -183,10 +183,10 @@ jobs:
           name: Deploy to S3 files of version fo prod (live)
           command: |
             cd builds/pilot-live
-            AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_PRD AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_PRD aws s3 sync . --delete s3://beta.dashboard.prd.pagarme.net
+            AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_PRD AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_PRD aws s3 sync --delete . s3://beta.dashboard.prd.pagarme.net
             AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_PRD AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_PRD aws cloudfront create-invalidation --distribution-id $PRD_CDN_DISTRIBUTION_ID --paths "/*"
             cd ../../builds/pilot-sandbox
-            AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_PRD AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_PRD aws s3 sync . --delete s3://beta.dashboard.sandbox.prd.pagarme.net
+            AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_PRD AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_PRD aws s3 sync --delete . s3://beta.dashboard.sandbox.prd.pagarme.net
             AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_PRD AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_PRD aws cloudfront create-invalidation --distribution-id $PRD_CDN_DISTRIBUTION_ID_SANDBOX --paths "/*"
 workflows:
   version: 2
