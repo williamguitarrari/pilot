@@ -1,6 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 
+import CopyButton from './CopyButton'
 import CustomerCard from './CustomerCard'
 import DetailsHead from './DetailsHead'
 import EventList from './EventList'
@@ -12,9 +13,14 @@ import TransactionDetailsCard from './TransactionDetailsCard'
 import TreeView from './TreeView'
 
 storiesOf('Components', module)
-  .add('Details head', () => <DetailsHead />)
+  .add('Copy button', () => (
+    <CopyButton />
+  ))
   .add('Customer card', () => (
     <CustomerCard />
+  ))
+  .add('Details head', () => (
+    <DetailsHead />
   ))
   .add('Recipient section', () => (
     <RecipientSectionState />
