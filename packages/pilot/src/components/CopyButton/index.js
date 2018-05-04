@@ -1,5 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import IconCopy from 'emblematic-icons/svg/Copy32.svg'
+import { Button } from 'former-kit'
+import { merge } from 'ramda'
+
+const mergeDefaultProps = merge({
+  icon: <IconCopy height={16} width={16} />,
+})
 
 class CopyButton extends React.Component {
   constructor (props) {
@@ -20,7 +27,8 @@ class CopyButton extends React.Component {
       title,
     } = this.props
 
-    if (onClick()) {
+    if (this.state.text === title) {
+      onClick()
       this.setState({
         text: feedbackText,
       }, () => setTimeout(() => {
@@ -35,18 +43,27 @@ class CopyButton extends React.Component {
     const {
       text,
     } = this.state
+    const {
+      feedbackText,
+      feedbackTimeout,
+      onClick,
+      title,
+      ...props
+    } = this.props
+    const mergedProps = mergeDefaultProps(props)
 
     return (
-      this.props.children({
-        onClick: this.handleFeedback,
-        title: text,
-      })
+      <Button
+        {...mergedProps}
+        onClick={this.handleFeedback}
+      >
+        {text}
+      </Button>
     )
   }
 }
 
 CopyButton.propTypes = {
-  children: PropTypes.func.isRequired,
   feedbackText: PropTypes.string.isRequired,
   feedbackTimeout: PropTypes.number.isRequired,
   onClick: PropTypes.func.isRequired,

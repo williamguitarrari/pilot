@@ -1,6 +1,4 @@
 import React from 'react'
-import { Button } from 'former-kit'
-import IconCopy from 'emblematic-icons/svg/Copy32.svg'
 
 import Section from '../../Section'
 import CopyButton from '../../../src/components/CopyButton'
@@ -28,19 +26,7 @@ const CopyButtonExample = () => (
       feedbackTimeout={2000}
       onClick={() => handleCopy('hello world!')}
       title="Copiar"
-    >
-      {
-        ({ onClick, title }) => (
-          <Button
-            fill="gradient"
-            onClick={onClick}
-            icon={<IconCopy width={16} height={16} />}
-          >
-            { title }
-          </Button>
-        )
-      }
-    </CopyButton>
+    />
   </Section>
 )
 
