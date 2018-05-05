@@ -1,6 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 
+import DataDisplay from './DataDisplay'
 import CopyButton from './CopyButton'
 import CustomerCard from './CustomerCard'
 import DetailsHead from './DetailsHead'
@@ -30,6 +31,9 @@ storiesOf('Components', module)
   ))
   .add('Event list', () => (
     <EventList />
+  ))
+  .add('DataDisplay', () => (
+    <DataDisplay />
   ))
   .add('TotalDisplay', () => (
     <TotalDisplay />
