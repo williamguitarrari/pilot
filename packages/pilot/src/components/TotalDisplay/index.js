@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 
+import DataDisplay from '../DataDisplay'
 import decimalCurrency from '../../formatters/decimalCurrency'
 import style from './style.css'
 
@@ -16,13 +17,28 @@ const renderSymbol = (value) => {
   return null
 }
 
-const renderValue = (amount, color) => (
-  <div className={style.amount}>
-    <small style={{ color }}>
-      {renderSymbol(amount)}
-    </small>
-    <h3>{ decimalCurrency(amount < 0 ? -amount : amount) }</h3>
-  </div>
+const renderValue = (amount, color) => {
+  const formattedValue = decimalCurrency(Math.abs(amount))
+
+  return (
+    <div className={style.amount}>
+      <small style={{ color }}>
+        {renderSymbol(amount)}
+      </small>
+      {
+        formattedValue === 'NaN'
+          ? <div className={style.empty} />
+          : <h3>{formattedValue}</h3>
+      }
+    </div>
+  )
+}
+
+const renderTitle = (color, unit, title) => (
+  <Fragment>
+    <h2 style={{ color }}>{title}</h2>
+    <span>({unit})</span>
+  </Fragment>
 )
 
 const TotalDisplay = ({
@@ -32,18 +48,13 @@ const TotalDisplay = ({
   subtitle,
   unit,
 }) => (
-  <div className={style.content}>
-    <div className={style.title}>
-      <h2 style={{ color }}>{title}</h2>
-      <span>({unit})</span>
-    </div>
-
-    { renderValue(amount, color) }
-
-    <div className={style.subtitle}>
-      {subtitle}
-    </div>
-  </div>
+  <DataDisplay
+    title={renderTitle(color, unit, title)}
+    color={color}
+    subtitle={subtitle}
+  >
+    {renderValue(amount, color)}
+  </DataDisplay>
 )
 
 TotalDisplay.propTypes = {
