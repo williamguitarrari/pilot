@@ -26,6 +26,8 @@ jobs:
       - run: |
           cd packages/pilot
           yarn build
+          yarn build-storybook
+          yarn percy; true
 
       - save_cache:
           paths:
