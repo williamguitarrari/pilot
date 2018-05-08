@@ -1,29 +1,25 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import qs from 'qs'
 import {
-  __,
   always,
   anyPass,
   applySpec,
-  assoc,
   complement,
   compose,
   defaultTo,
   either,
-  equals,
   identity,
+  invoker,
   isEmpty,
   isNil,
   juxt,
   merge,
   mergeAll,
-  objOf,
   path,
   pipe,
   prop,
-  sum,
   tail,
   test,
   uncurryN,
@@ -39,7 +35,6 @@ import {
   requestBalance,
   receiveBalance,
 } from './actions'
-import { requestLogout } from '../Account/actions'
 import BalanceContainer from '../../containers/Balance'
 import env from '../../environment'
 
@@ -49,9 +44,14 @@ const mapStateToProps = ({
     company,
     sessionId,
   },
-  balance: { loading, query },
+  balance: {
+    error,
+    loading,
+    query,
+  },
 }) => ({
   client,
+  error,
   company,
   loading,
   query,
@@ -66,7 +66,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(receiveBalance({ query }))
   },
   onRequestBalanceFail: (error) => {
-    dispatch(requestLogout(error))
+    dispatch(receiveBalance(error))
   },
 })
 
@@ -78,40 +78,32 @@ const enhanced = compose(
   ),
   withRouter
 )
+
 const isNilOrEmpty = anyPass([isNil, isEmpty])
 
-const momentToString = momentObj => momentObj.toISOString()
-
-const normalizeDateToString = property => pipe(
-  prop(property),
-  unless(
-    either(isNil, isEmpty),
-    pipe(momentToString, objOf(property))
-  )
+const momentToISOString = unless(
+  isNilOrEmpty,
+  pipe(moment, invoker(0, 'toISOString'))
 )
 
-const normalizeQueryDatesToString = pipe(
-  prop('dates'),
-  juxt([normalizeDateToString('start'), normalizeDateToString('end')]),
-  mergeAll
+const stringToMoment = unless(
+  isNilOrEmpty,
+  moment
 )
 
-const stringToMoment = str => moment(str)
+const queryDatesToISOString = applySpec({
+  dates: {
+    start: pipe(path(['dates', 'start']), momentToISOString),
+    end: pipe(path(['dates', 'end']), momentToISOString),
+  },
+})
 
-const normalizeStringToDate = property => pipe(
-  prop(property),
-  unless(
-    either(isNil, isEmpty),
-    pipe(stringToMoment, objOf(property))
-  )
-)
-
-const normalizeQueryStringToDate = pipe(
-  prop('dates'),
-  juxt([normalizeStringToDate('start'), normalizeStringToDate('end')]),
-  mergeAll,
-  objOf('dates')
-)
+const queryDatesToMoment = applySpec({
+  dates: {
+    start: pipe(path(['dates', 'start']), stringToMoment),
+    end: pipe(path(['dates', 'end']), stringToMoment),
+  },
+})
 
 const normalizeTo = (defaultValue, propPath) => pipe(
   path(propPath),
@@ -137,21 +129,20 @@ const parseQueryUrl = pipe(
   qs.parse,
   juxt([
     identity,
-    normalizeQueryStringToDate,
+    queryDatesToMoment,
     normalizeQueryStructure,
   ]),
   mergeAll
 )
 
-const parseQueryUrlDates = unless(
-  pipe(
-    qs.parse,
-    isNilOrEmpty
-  ),
-  pipe(
-    qs.parse,
-    normalizeQueryStringToDate,
-    prop('dates')
+const parseQueryUrlDates = pipe(
+  qs.parse,
+  unless(
+    isNilOrEmpty,
+    pipe(
+      queryDatesToMoment,
+      prop('dates')
+    )
   )
 )
 
@@ -163,7 +154,7 @@ const getValidId = uncurryN(2, defaultId => unless(
   complement(
     anyPass([
       isNil,
-      isNaN, // eslint-disable-line no-restricted-globals
+      Number.isNaN,
       isEmpty,
       isNotRecipientId,
     ])
@@ -171,28 +162,12 @@ const getValidId = uncurryN(2, defaultId => unless(
   always(defaultId)
 ))
 
-const compareMomentDate = date => comparableDate =>
-  date.diff(comparableDate, 'days')
-
-const compareMomentDates = uncurryN(2, dates => pipe(
-  juxt([
-    pipe(prop('end'), compareMomentDate(dates.end)),
-    pipe(prop('start'), compareMomentDate(dates.start)),
-  ]),
-  sum,
-  equals(0)
-))
-
 class Balance extends Component {
   constructor (props) {
     super(props)
-    const {
-      client,
-      company,
-    } = this.props
+    const { company } = this.props
 
     this.state = {
-      client,
       query: {
         count: 10,
         dates: {
@@ -250,22 +225,26 @@ class Balance extends Component {
 
   updateQuery (query, id) {
     const buildBalanceQuery = pipe(
-      normalizeQueryDatesToString,
-      assoc('dates', __, query),
+      queryDatesToISOString,
+      merge(query),
       qs.stringify
     )
+
     const {
       query: stateQuery,
       recipientId,
     } = this.state
+
     const queryObject = isNilOrEmpty(query) ? stateQuery : query
     const pathId = getValidId(recipientId, id)
+
     const {
       history,
       match: {
         params,
       },
     } = this.props
+
     if (pathId) {
       history.replace({
         pathname: `${pathId}`,
@@ -279,7 +258,7 @@ class Balance extends Component {
   requestData (id, searchQuery) {
     this.props.onRequestBalance({ searchQuery })
 
-    return this.state.client
+    return this.props.client
       .balance(id, searchQuery)
       .then(({ query, result }) => {
         this.setState({
@@ -312,16 +291,18 @@ class Balance extends Component {
     })
   }
 
-  handleFilterClick () {
+  handleFilterClick (dates) {
     const {
       query,
     } = this.props
-    const updatedQuery = {
+
+    const nextQuery = {
       ...query,
       ...this.state.query,
+      dates,
     }
 
-    this.updateQuery(updatedQuery)
+    this.updateQuery(nextQuery)
   }
 
   handlePageChange (page) {
@@ -341,10 +322,12 @@ class Balance extends Component {
   render () {
     const {
       company,
+      error,
       loading,
       location,
       t,
     } = this.props
+
     const {
       result: {
         balance,
@@ -355,57 +338,80 @@ class Balance extends Component {
       query,
       recipientId,
     } = this.state
+
     const searchDates = parseQueryUrlDates(location.search)
-    const dates = isNilOrEmpty(searchDates)
-      ? query.dates
-      : searchDates
-    const isFirstRender = isNilOrEmpty(this.state.result)
+    const dates = isNilOrEmpty(searchDates) ? query.dates : searchDates
+
+    const isEmptyResult = isNilOrEmpty(this.state.result)
     const hasDefaultRecipient = !isNilOrEmpty(recipientId)
 
-    return (
-      <Fragment>
-        {!isFirstRender
-          && hasDefaultRecipient
-          && (
-            <BalanceContainer
-              balance={balance}
-              company={company}
-              currentPage={query.page}
-              dates={dates}
-              filterDisable={compareMomentDates(query.dates, dates)}
-              loading={loading}
-              // onAnticipationClick={this.handleAnticipation}
-              // onCancelRequestClick={this.handleCancelRequest}
-              onDateChange={this.handleDateChange}
-              onFilterClick={this.handleFilterClick}
-              onPageChange={this.handlePageChange}
-              // onWithdrawClick={this.handleWithdraw}
-              queryDates={query.dates}
-              recipient={recipient}
-              requests={requests}
-              search={search}
-              t={t}
-            />
-          )
-        }
-        {!hasDefaultRecipient
-          && (
-            <Alert
-              icon={<IconInfo height={16} width={16} />}
-              type="info"
-            >
-              <span>{t('balance.invalid_recipient')}</span>
-            </Alert>
-          )
-        }
-      </Fragment>
-    )
+    if (error) {
+      return (
+        <Alert
+          icon={<IconInfo height={16} width={16} />}
+          type="info"
+        >
+          <span>
+            {path(['errors', 0, 'message'], error)
+              || t('balance.unknown_error')
+            }
+          </span>
+        </Alert>
+      )
+    }
+
+    if (!hasDefaultRecipient) {
+      return (
+        <Alert
+          icon={<IconInfo height={16} width={16} />}
+          type="info"
+        >
+          <span>{t('balance.invalid_recipient')}</span>
+        </Alert>
+      )
+    }
+
+    if (!isEmptyResult) {
+      return (
+        <BalanceContainer
+          balance={balance}
+          company={company}
+          currentPage={query.page}
+          dates={dates}
+          disabled={loading}
+          // onAnticipationClick={this.handleAnticipation}
+          // onCancelRequestClick={this.handleCancelRequest}
+          onFilterClick={this.handleFilterClick}
+          onPageChange={this.handlePageChange}
+          // onWithdrawClick={this.handleWithdraw}
+          queryDates={query.dates}
+          recipient={recipient}
+          requests={requests}
+          search={search}
+          t={t}
+        />
+      )
+    }
+
+    return null
   }
 }
 
 Balance.propTypes = {
-  client: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
-  company: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  client: PropTypes.shape({
+    balance: PropTypes.func.isRequired,
+  }).isRequired,
+  company: PropTypes.shape({
+    default_recipient_id: PropTypes.shape({
+      live: PropTypes.string.isRequired,
+      test: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
+  error: PropTypes.shape({
+    errors: PropTypes.arrayOf(PropTypes.shape({
+      message: PropTypes.string,
+    })),
+  }),
   history: PropTypes.shape({
     location: PropTypes.shape({
       search: PropTypes.string,
@@ -418,16 +424,24 @@ Balance.propTypes = {
     search: PropTypes.string.isRequired,
   }).isRequired,
   match: PropTypes.shape({
-    params: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }).isRequired,
   }).isRequired,
   onReceiveBalance: PropTypes.func.isRequired,
   onRequestBalance: PropTypes.func.isRequired,
   onRequestBalanceFail: PropTypes.func.isRequired,
-  query: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  query: PropTypes.shape({
+    dates: {
+      start: PropTypes.string,
+      end: PropTypes.string,
+    },
+  }),
   t: PropTypes.func.isRequired,
 }
 
 Balance.defaultProps = {
+  error: null,
   query: null,
 }
 

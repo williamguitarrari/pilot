@@ -27,6 +27,7 @@ const mergeMomentAware = (a, b) => {
 }
 
 const initialState = {
+  error: null,
   loading: true,
   query: null,
 }
@@ -41,6 +42,7 @@ export default function balanceReducer (state = initialState, action) {
       } = action
 
       return mergeMomentAware(state, {
+        error: null,
         loading: true,
         query,
       })
@@ -48,12 +50,23 @@ export default function balanceReducer (state = initialState, action) {
 
     case BALANCE_RECEIVE: {
       const {
+        error,
+        payload,
         payload: {
           query,
         },
       } = action
 
+      if (error) {
+        return mergeMomentAware(state, {
+          error: payload.response || {},
+          loading: false,
+          query,
+        })
+      }
+
       return mergeMomentAware(state, {
+        error: null,
         loading: false,
         query,
       })
