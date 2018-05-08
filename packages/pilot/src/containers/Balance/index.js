@@ -50,6 +50,17 @@ const getDateLabels = t => ({
   today: t('dates.today'),
 })
 
+const datesEqual = (left, right) => {
+  if (left.start === right.start && left.end === right.end) {
+    return true
+  }
+
+  return (
+    moment(left.start).diff(moment(right.start), 'days') === 0
+    && moment(right.end).diff(moment(right.end), 'days') === 0
+  )
+}
+
 class Balance extends Component {
   constructor (props) {
     super(props)
@@ -59,18 +70,18 @@ class Balance extends Component {
     this.getPendingRequest = this.getPendingRequest.bind(this)
     this.getPendingRequests = this.getPendingRequests.bind(this)
     this.getSummaryTotal = this.getSummaryTotal.bind(this)
-    this.getTypeLabels = this.getTypeLabels.bind(this)
+    this.handleFilterClick = this.handleFilterClick.bind(this)
     this.handleAnticipationClick = this.handleAnticipationClick.bind(this)
     this.handleDatesChange = this.handleDatesChange.bind(this)
     this.handleOperationsPageChange = this.handleOperationsPageChange.bind(this)
     this.handleRequestCancelClick = this.handleRequestCancelClick.bind(this)
     this.handleWithdrawalClick = this.handleWithdrawalClick.bind(this)
 
-    const typesLabels = map(this.getTypeLabels, operationsTypesLabels)
-    const translateColumns = getColumnsTranslator(this.props.t)
     this.state = {
-      dateLabels: getDateLabels(this.props.t),
-      operationsColumns: translateColumns(getColumns(typesLabels)),
+      dates: {
+        start: props.dates.start,
+        end: props.dates.end,
+      },
     }
   }
 
@@ -153,6 +164,7 @@ class Balance extends Component {
 
   getSummaryTotal () {
     const {
+      disabled,
       search: { total },
       t,
     } = this.props
@@ -160,24 +172,19 @@ class Balance extends Component {
       outcoming: {
         title: t('balance.total.outcoming'),
         unit: t('currency'),
-        value: total.outcoming,
+        value: disabled ? null : total.outcoming,
       },
       outgoing: {
         title: t('balance.total.outgoing'),
         unit: t('currency'),
-        value: -total.outgoing,
+        value: disabled ? null : -total.outgoing,
       },
       net: {
         title: t('balance.total.net'),
         unit: t('currency'),
-        value: total.net,
+        value: disabled ? null : total.net,
       },
     }
-  }
-
-  getTypeLabels (label) {
-    const { t } = this.props
-    return t(label)
   }
 
   handleAnticipationClick () {
@@ -190,8 +197,11 @@ class Balance extends Component {
   }
 
   handleDatesChange (dates) {
-    const { onDateChange } = this.props
-    onDateChange(dates)
+    this.setState({ dates })
+  }
+
+  handleFilterClick () {
+    this.props.onFilterClick(this.state.dates)
   }
 
   handleOperationsPageChange (pageIndex) {
@@ -230,30 +240,32 @@ class Balance extends Component {
       company,
       currentPage,
       dates,
-      filterDisable,
-      loading,
+      disabled,
       onAnticipationClick,
       onCancelRequestClick,
-      onFilterClick,
       onWithdrawClick,
-      queryDates,
       search: {
         operations,
       },
       t,
     } = this.props
 
+    const translateColumns = getColumnsTranslator(t)
+    const typesLabels = map(t, operationsTypesLabels)
+
     const anticipationAction = {
-      disabled: loading,
+      disabled,
       onClick: this.handleAnticipationClick,
       title: t('balance.anticipation'),
     }
 
     const withdrawalAction = {
-      disabled: loading,
+      disabled,
       onClick: this.handleWithdrawalClick,
       title: t('balance.withdraw'),
     }
+
+    const filterDatesEqualCurrent = datesEqual(this.state.dates, dates)
 
     return (
       <Grid>
@@ -287,7 +299,7 @@ class Balance extends Component {
                   <strong> {currencyFormatter(withdrawal)} </strong>
                 </span>
               }
-              disabled={loading}
+              disabled={disabled}
               title={t('balance.withdrawal_title')}
             />
           </Col>
@@ -306,7 +318,7 @@ class Balance extends Component {
                   <strong> {currencyFormatter(anticipation)} </strong>
                 </span>
               }
-              disabled={loading}
+              disabled={disabled}
               title={t('balance.anticipation_title')}
             />
           </Col>
@@ -318,7 +330,7 @@ class Balance extends Component {
           >
             <PendingRequests
               emptyMessage={t('balance.pending_requests_empty_message')}
-              loading={loading}
+              loading={disabled}
               onCancel={isNil(onCancelRequestClick) ? null : this.handleRequestCancelClick}
               requests={this.getPendingRequests()}
               title={t('balance.pending_requests_title')}
@@ -336,19 +348,19 @@ class Balance extends Component {
               <CardContent>
                 <div className={style.filter}>
                   <DateInput
-                    active={queryDates.start && queryDates.end && true}
-                    dates={queryDates}
-                    disabled={loading}
+                    active={filterDatesEqualCurrent}
+                    dates={this.state.dates}
+                    disabled={disabled}
                     icon={<IconCalendar width={16} height={16} />}
                     limits={dateLimits}
                     onChange={this.handleDatesChange}
                     presets={datePresets}
-                    strings={this.state.dateLabels}
+                    strings={getDateLabels(this.props.t)}
                   />
                   <Button
-                    disabled={loading || filterDisable}
+                    disabled={filterDatesEqualCurrent}
                     fill="gradient"
-                    onClick={onFilterClick}
+                    onClick={this.handleFilterClick}
                     size="default"
                   >
                     {t('filter_action')}
@@ -371,24 +383,26 @@ class Balance extends Component {
             tablet={12}
             tv={12}
           >
-            <Card>
-              <Operations
-                columns={this.state.operationsColumns}
-                currentPage={currentPage}
-                emptyMessage={t('operations.empty_message')}
-                exportLabel={t('operations.export')}
-                loading={loading}
-                ofLabel={t('of')}
-                onExport={() => null}
-                onPageChange={this.handleOperationsPageChange}
-                rows={operations.rows}
-                subtitle={
-                  t('operations.subtitle', { total: operations.total })
-                }
-                title={t('operations.title')}
-                totalPages={operations.count}
-              />
-            </Card>
+            {!disabled &&
+              <Card>
+                <Operations
+                  columns={translateColumns(getColumns(typesLabels))}
+                  currentPage={currentPage}
+                  emptyMessage={t('operations.empty_message')}
+                  exportLabel={t('operations.export')}
+                  loading={disabled}
+                  ofLabel={t('of')}
+                  onExport={() => null}
+                  onPageChange={this.handleOperationsPageChange}
+                  rows={operations.rows}
+                  subtitle={
+                    t('operations.subtitle', { total: operations.total })
+                  }
+                  title={t('operations.title')}
+                  totalPages={operations.count}
+                />
+              </Card>
+            }
           </Col>
         </Row>
       </Grid>
@@ -428,15 +442,12 @@ Balance.propTypes = {
   }).isRequired,
   currentPage: PropTypes.number.isRequired,
   dates: datesShape.isRequired, // eslint-disable-line react/no-typos
-  filterDisable: PropTypes.bool.isRequired,
-  loading: PropTypes.bool,
+  disabled: PropTypes.bool.isRequired,
   onAnticipationClick: PropTypes.func,
   onCancelRequestClick: PropTypes.func,
-  onDateChange: PropTypes.func.isRequired,
   onFilterClick: PropTypes.func.isRequired,
   onPageChange: PropTypes.func.isRequired,
   onWithdrawClick: PropTypes.func,
-  queryDates: datesShape.isRequired, // eslint-disable-line react/no-typos
   recipient: PropTypes.shape({
     bank_account: PropTypes.shape({
       account: PropTypes.string.isRequired,
@@ -483,7 +494,6 @@ Balance.propTypes = {
 }
 
 Balance.defaultProps = {
-  loading: false,
   onAnticipationClick: null,
   onCancelRequestClick: null,
   onWithdrawClick: null,
