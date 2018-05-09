@@ -82,6 +82,9 @@
     "recipients": [
       {
         "amount": 394068999,
+        "charge_remainder": false,
+        "created_at": "2018-03-14T13:40:28.475Z",
+        "id": "re_1",
         "installments": [
           {
             "amount": 32839084,
@@ -245,10 +248,16 @@
         ],
         "name": "JONATHAN",
         "net_amount": 354662099,
-        "status": "waiting_funds"
+        "percentage": "40",
+        "split_rule_id": "sr_1",
+        "status": "waiting_funds",
+        "updated_at": "2018-03-14T13:40:28.475Z"
       },
       {
         "amount": -394069000,
+        "charge_remainder": false,
+        "created_at": "2018-03-14T13:40:28.475Z",
+        "id": "re_2",
         "installments": [
           {
             "amount": -32839084,
@@ -412,10 +421,16 @@
         ],
         "name": "JONATHAN",
         "net_amount": -354662100,
-        "status": "suspended"
+        "percentage": "30",
+        "split_rule_id": "sr_2",
+        "status": "suspended",
+        "updated_at": "2018-03-14T13:40:28.475Z"
       },
       {
         "amount": 295551750,
+        "charge_remainder": true,
+        "created_at": "2018-03-14T13:40:28.475Z",
+        "id": "re_3",
         "installments": [
           {
             "amount": 24629313,
@@ -577,7 +592,10 @@
         "liabilities": [],
         "name": "Marceneiro",
         "net_amount": 295551750,
-        "status": "waiting_funds"
+        "percentage": "30",
+        "split_rule_id": "sr_3",
+        "status": "waiting_funds",
+        "updated_at": "2018-03-14T13:40:28.475Z"
       }
     ],
     "soft_descriptor": null,
