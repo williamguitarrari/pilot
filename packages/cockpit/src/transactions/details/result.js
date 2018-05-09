@@ -1,10 +1,13 @@
 import {
+  __,
   always,
   apply,
   applySpec,
   assoc,
   complement,
+  contains,
   either,
+  find,
   flatten,
   groupBy,
   has,
@@ -67,18 +70,35 @@ const normalizeChargebackOps = pipe(
   flatten
 )
 
+const findPreviousOperation = (groupId, operations) =>
+  find(propEq('next_group_id', groupId), operations)
+
 const sortGatewayOperations = (operations) => {
   const lastOperation = operations.find(propEq('next_group_id', null))
   let list = [lastOperation]
-
-  operations.forEach((operation) => {
-    if (head(list).group_id === operation.next_group_id) {
-      list = [operation, ...list]
+  operations.forEach(() => {
+    const res = findPreviousOperation(head(list).group_id, operations)
+    if (res) {
+      list = [res, ...list]
     }
   })
 
   return list
 }
+
+const operationsTypesBlackList = ['conciliate']
+const operationsStatusBlackList = ['dropped']
+
+const rejectInvalidOperations = pipe(
+  reject(pipe(
+    prop('type'),
+    contains(__, operationsTypesBlackList)
+  )),
+  reject(pipe(
+    prop('status'),
+    contains(__, operationsStatusBlackList)
+  ))
+)
 
 const chooseOperations = pipe(
   ifElse(
@@ -91,7 +111,7 @@ const chooseOperations = pipe(
         pipe(prop('chargebackOperations'), normalizeChargebackOps),
       ]),
       flatten,
-      reject(propEq('type', 'conciliate'))
+      rejectInvalidOperations
     )
   ),
   reverse
@@ -189,6 +209,12 @@ const mapRecipients = map(applySpec({
     last,
     prop('status')
   ),
+  created_at: prop('date_created'),
+  updated_at: prop('date_updated'),
+  percentage: pipe(prop('percentage'), String),
+  id: prop('recipient_id'),
+  charge_remainder: prop('charge_remainder'),
+  split_rule_id: prop('id'),
   liabilities: pipe(
     juxt([
       ifElse(
@@ -286,6 +312,7 @@ const mapTransactionToResult = applySpec({
       ),
       pipe(prop('split_rules'), buildRecipients),
       pipe(prop('chargebackOperations'), buildReasonCode),
+      pick(['capabilities']),
     ]),
     mergeAll
   ),
