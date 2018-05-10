@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import {
-  Area,
-  AreaChart,
+  Bar,
+  BarChart,
   CartesianGrid,
   Legend,
   ResponsiveContainer,
@@ -18,7 +18,7 @@ import formatDate from '../../formatters/longDate'
 
 const Charts = ({ data }) => (
   <ResponsiveContainer width="100%" height={500}>
-    <AreaChart
+    <BarChart
       width={600}
       height={300}
       data={data}
@@ -51,7 +51,7 @@ const Charts = ({ data }) => (
       />
       {
         Object.keys(statusLegends).map(legend => (
-          <Area
+          <Bar
             type="monotone"
             key={legend}
             name={statusLegends[legend].text}
@@ -62,7 +62,7 @@ const Charts = ({ data }) => (
           />
         ))
       }
-    </AreaChart>
+    </BarChart>
   </ResponsiveContainer>
 )
 
