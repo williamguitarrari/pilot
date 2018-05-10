@@ -1,0 +1,15 @@
+.reportFilter {
+    overflow: initial;
+}
+
+.filterContent {
+    display: flex;
+}
+
+.filterContent > *:child {
+    margin-top: unset;
+}
+
+.searchField {
+    flex: 1;
+}
