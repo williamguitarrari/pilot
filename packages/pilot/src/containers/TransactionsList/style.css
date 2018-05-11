@@ -73,3 +73,12 @@
     box-sizing: border-box;
   }
 }
+
+.legend {
+  margin-left: 4px;
+}
+
+.legendContainer {
+  display: flex;
+  justify-content: space-between;
+}
