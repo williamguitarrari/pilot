@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import {
   Bar,
   BarChart,
@@ -11,25 +10,44 @@ import {
   XAxis,
   YAxis,
 } from 'recharts'
-
-import statusLegends from '../../models/statusLegends'
+import { Legend as FormerLegend } from 'former-kit'
 import formatCurrency from '../../formatters/currency'
 import formatDate from '../../formatters/longDate'
+import statusLegends from '../../models/statusLegends'
+import style from './style.css'
+
+const renderLegend = ({
+  dataKey, // eslint-disable-line
+  inactive, // eslint-disable-line
+}) => {
+  const status = statusLegends[dataKey]
+  return (
+    <span className={style.legend}>
+      <FormerLegend
+        acronym={status.acronym}
+        color={status.color}
+        outline={inactive}
+      >
+        {status.text}
+      </FormerLegend>
+    </span>
+  )
+}
 
 const Charts = ({ data }) => (
   <ResponsiveContainer width="100%" height={500}>
     <BarChart
-      width={600}
-      height={300}
       data={data}
+      height={300}
       maxBarSize={17}
+      width={600}
     >
       <XAxis
-        dataKey="name"
         axisLine={false}
-        tickMargin={10}
+        dataKey="name"
         tick={{ fontSize: 11 }}
         tickFormatter={formatDate}
+        tickMargin={10}
       />
       <YAxis
         axisLine={false}
@@ -46,19 +64,23 @@ const Charts = ({ data }) => (
         labelFormatter={formatDate}
       />
       <Legend
-        iconType="square"
-        iconSize={19}
+        content={({ payload }) => (
+          <span className={style.legendContainer}>
+            { payload.map(renderLegend) }
+          </span>
+        )}
       />
       {
         Object.keys(statusLegends).map(legend => (
           <Bar
-            type="monotone"
-            key={legend}
-            name={statusLegends[legend].text}
             dataKey={legend}
-            stackId="a"
             fill={statusLegends[legend].color}
+            key={legend}
+            minPointSize="3"
+            name={statusLegends[legend].text}
+            stackId="a"
             stroke={statusLegends[legend].color}
+            type="monotone"
           />
         ))
       }
