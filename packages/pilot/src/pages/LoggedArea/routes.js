@@ -2,12 +2,14 @@ import Balance32 from 'emblematic-icons/svg/Extract32.svg'
 import Configuration32 from 'emblematic-icons/svg/Configuration32.svg'
 import Transaction32 from 'emblematic-icons/svg/Transaction32.svg'
 import Withdraw32 from 'emblematic-icons/svg/Withdraw32.svg'
+import Report32 from 'emblematic-icons/svg/Report32.svg'
 
 import { Balance } from '../Balance'
 import CompanySettings from '../CompanySettings'
 import Transactions from '../Transactions'
 import UserSettings from '../UserSettings'
 import Withdraw from '../Withdraw'
+import Report from '../Report'
 
 export default {
   balance: {
@@ -54,5 +56,12 @@ export default {
     component: CompanySettings,
     icon: Configuration32,
     exact: true,
+  },
+  report: {
+    component: Report,
+    icon: Report32,
+    path: '/report',
+    exact: true,
+    title: 'pages.report.title',
   },
 }
