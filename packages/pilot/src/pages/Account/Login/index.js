@@ -10,19 +10,21 @@ import { connect } from 'react-redux'
 import Login from '../../../containers/Account/Login'
 import { requestLogin } from '../actions'
 
+import buildParamErrors from './buildParamErrors'
+
 import environment from '../../../environment'
 
 const mapStateToProps = (state) => {
   const {
     account: {
-      errors,
+      error,
       loading,
       token,
     },
   } = state
 
   return {
-    errors,
+    error,
     loading,
     token,
   }
@@ -54,7 +56,7 @@ class LoginPage extends PureComponent {
     return (
       <Login
         t={this.props.t}
-        errors={this.props.errors}
+        errors={buildParamErrors(this.props.error)}
         loading={this.props.loading}
         onLogin={this.props.onLogin}
         onPasswordRecovery={this.handlePasswordRecovery}
@@ -65,16 +67,13 @@ class LoginPage extends PureComponent {
 
 LoginPage.propTypes = {
   t: PropTypes.func.isRequired,
-  errors: PropTypes.shape({
-    email: PropTypes.string,
-    password: PropTypes.string,
-  }),
+  error: PropTypes.instanceOf(Error),
   loading: PropTypes.bool,
   onLogin: PropTypes.func.isRequired,
 }
 
 LoginPage.defaultProps = {
-  errors: {},
+  error: null,
   loading: false,
 }
 

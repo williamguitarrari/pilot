@@ -1,13 +1,4 @@
-import {
-  apply,
-  map,
-  merge,
-  mergeAll,
-  objOf,
-  path,
-  pipe,
-  props,
-} from 'ramda'
+import { merge } from 'ramda'
 
 import {
   ACCOUNT_RECEIVE,
@@ -23,22 +14,11 @@ const initialState = {
   sessionId: null,
 }
 
-const parseErrorObject = pipe(
-  props(['parameter_name', 'message']),
-  apply(objOf)
-)
-
-const createErrors = pipe(
-  path(['response', 'errors']),
-  map(parseErrorObject),
-  mergeAll
-)
-
 export default function loginReducer (state = initialState, action) {
   switch (action.type) {
     case ACCOUNT_RECEIVE: {
       return merge(state, {
-        errors: null,
+        error: null,
         user: action.payload,
       })
     }
@@ -46,14 +26,14 @@ export default function loginReducer (state = initialState, action) {
     case COMPANY_RECEIVE: {
       return merge(state, {
         company: action.payload,
-        errors: null,
+        error: null,
         loading: false,
       })
     }
 
     case LOGIN_REQUEST: {
       return merge(state, {
-        errors: null,
+        error: null,
         loading: true,
         user: null,
       })
@@ -63,7 +43,7 @@ export default function loginReducer (state = initialState, action) {
         state,
         {
           client: null,
-          errors: createErrors(action.payload),
+          error: action.payload,
           loading: false,
           sessionId: null,
           user: null,
@@ -75,7 +55,7 @@ export default function loginReducer (state = initialState, action) {
         state,
         {
           client: action.payload,
-          errors: null,
+          error: null,
           loading: false,
           sessionId: action.payload.authentication.session_id,
         }
