@@ -21,7 +21,8 @@
   "login": {
     "token": "Token",
     "login_action": "Acessar",
-    "password_recovery_action": "Esqueci minha senha"
+    "password_recovery_action": "Esqueci minha senha",
+    "network_error": "Falha de comunicação com o Pagar.me. Verifique seu acesso a internet."
   },
   "password_recovery": {
     "confirmation": "em instantes você receberá um e-mail com as instruções para a redefinição de sua senha",
