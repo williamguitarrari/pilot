@@ -23,7 +23,8 @@
   & h3 {
     margin: 0;
     font-size: 28px;
-    color: var(--color-light-steel-100);
+    margin-top: 0;
+    margin-bottom: 0;
   }
 }
 
