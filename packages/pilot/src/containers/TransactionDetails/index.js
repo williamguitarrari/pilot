@@ -329,24 +329,26 @@ class TransactionDetails extends Component {
             palm={12}
           >
             <Card>
-              <DetailsHead
-                identifier={`#${id}`}
-                properties={[
-                  {
-                    children: renderLegend(status),
-                    title: headerLabels.statusLabel,
-                  },
-                  {
-                    children: headerLabels.installments,
-                    title: headerLabels.installmentsLabel,
-                  },
-                  {
-                    children: currencyFormatter(amount),
-                    title: getHeaderAmountLabel(transaction, headerLabels),
-                  },
-                ]}
-                title={headerLabels.title}
-              />
+              <CardContent>
+                <DetailsHead
+                  identifier={`#${id}`}
+                  properties={[
+                    {
+                      children: renderLegend(status),
+                      title: headerLabels.statusLabel,
+                    },
+                    {
+                      children: headerLabels.installments,
+                      title: headerLabels.installmentsLabel,
+                    },
+                    {
+                      children: currencyFormatter(amount),
+                      title: getHeaderAmountLabel(transaction, headerLabels),
+                    },
+                  ]}
+                  title={headerLabels.title}
+                />
+              </CardContent>
             </Card>
           </Col>
         </Row>
