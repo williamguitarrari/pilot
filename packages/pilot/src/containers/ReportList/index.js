@@ -1,9 +1,29 @@
 import React from 'react'
+import {
+  Card,
+  CardTitle,
+  CardContent,
+  CardSection,
+  CardSectionDoubleLineTitle,
+} from 'former-kit'
 
 
 const ReportList = () => (
   <div>
-    teste
+    <Card>
+      <CardTitle
+        title="Relatórios - Total de 75"
+      />
+      <CardContent>
+        <CardSection>
+          <CardSectionDoubleLineTitle
+            title="Carta"
+            subtitle="Verifique ou edite as informações da sua empresa"
+            collapsed="false"
+          />
+        </CardSection>
+      </CardContent>
+    </Card>
   </div>
 )
 
