@@ -1,11 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {
-  Button,
-  CardContent,
-} from 'former-kit'
+import { Button } from 'former-kit'
 import { Textfit } from 'react-textfit'
-
 import style from './style.css'
 
 const DetailsHead = ({
@@ -14,7 +10,7 @@ const DetailsHead = ({
   properties,
   title,
 }) => (
-  <CardContent className={style.content}>
+  <div className={style.content}>
     <div>
       <div className={style.item}>
         <span>{title}</span>
@@ -48,7 +44,7 @@ const DetailsHead = ({
         </Button>
       ))}
     </div>
-  </CardContent>
+  </div>
 )
 
 DetailsHead.propTypes = {
