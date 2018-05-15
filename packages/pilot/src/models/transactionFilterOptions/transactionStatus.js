@@ -34,5 +34,9 @@ export default {
       label: 'Autorizada',
       value: 'authorized',
     },
+    {
+      label: 'Revisão pendente',
+      value: 'pending_review',
+    },
   ],
 }
