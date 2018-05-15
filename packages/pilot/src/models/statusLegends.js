@@ -1,11 +1,11 @@
 const status = {
   paid: {
-    color: '#53be76',
+    color: '#17c9b2',
     text: 'Paga',
     acronym: 'P',
   },
   authorized: {
-    color: '#fcb20a',
+    color: '#b6ca2d',
     text: 'Autorizada',
     acronym: 'A',
   },
@@ -15,42 +15,42 @@ const status = {
     acronym: 'RP',
   },
   pending_refund: {
-    color: '#8c68d4',
+    color: '#33206c',
     text: 'Estorno pendente',
     acronym: 'EP',
   },
   processing: {
-    color: '#951d3c',
+    color: '#561e6a',
     text: 'Processando',
     acronym: 'PR',
   },
   waiting_payment: {
-    color: '#41535b',
+    color: '#0b6e69',
     text: 'Aguardando pagamento',
     acronym: 'AP',
   },
   refused: {
-    color: '#e00403',
+    color: '#da272c',
     text: 'Recusada',
     acronym: 'R',
   },
   refunded: {
-    color: '#5b2886',
+    color: '#613fc7',
     text: 'Estornada',
     acronym: 'E',
   },
   chargedback: {
-    color: '#f16518',
+    color: '#f16f27',
     text: 'Chargeback',
     acronym: 'CB',
   },
   waiting_funds: {
-    color: '#41535b',
+    color: '#0b6e69',
     text: 'Aguardando pagamento',
     acronym: 'AP',
   },
   chargedback_refund: {
-    color: '#bf5316',
+    color: '#ac4e19',
     text: 'Chargeback reapresentado',
     acronym: 'CBR',
   },
