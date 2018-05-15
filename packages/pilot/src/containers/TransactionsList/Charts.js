@@ -21,8 +21,12 @@ const renderLegend = ({
   inactive, // eslint-disable-line
 }) => {
   const status = statusLegends[dataKey]
+
   return (
-    <span className={style.legend}>
+    <span
+      key={dataKey}
+      className={style.legend}
+    >
       <FormerLegend
         acronym={status.acronym}
         color={status.color}
@@ -76,7 +80,6 @@ const Charts = ({ data }) => (
             dataKey={legend}
             fill={statusLegends[legend].color}
             key={legend}
-            minPointSize="3"
             name={statusLegends[legend].text}
             stackId="a"
             stroke={statusLegends[legend].color}
