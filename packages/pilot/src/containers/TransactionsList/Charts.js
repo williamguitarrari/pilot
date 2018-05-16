@@ -43,10 +43,10 @@ const renderLegend = (legendKey) => {
 
 const Charts = ({ data, legendsTitle }) => (
   <Fragment>
-    <ResponsiveContainer width="100%" height={500}>
+    <ResponsiveContainer width="100%" height={380}>
       <BarChart
         data={data}
-        height={300}
+        height={380}
         maxBarSize={17}
         width={600}
       >
