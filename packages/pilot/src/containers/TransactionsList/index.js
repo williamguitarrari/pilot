@@ -65,6 +65,7 @@ const TransactionsList = ({
   filterOptions,
   filtersTitle,
   findByLabel,
+  graphicLegendsTittle,
   graphicTittle,
   handleRowClick,
   handleChartsCollapse,
@@ -150,7 +151,10 @@ const TransactionsList = ({
                 />
                 {!collapsed &&
                   <CardContent>
-                    <Charts data={data} />
+                    <Charts
+                      data={data}
+                      legendsTitle={graphicLegendsTittle}
+                    />
                   </CardContent>
                 }
               </CardSection>
@@ -254,6 +258,7 @@ TransactionsList.propTypes = {
   })).isRequired,
   filtersTitle: string.isRequired, // eslint-disable-line react/no-typos
   findByLabel: string.isRequired, // eslint-disable-line react/no-typos
+  graphicLegendsTittle: string.isRequired, // eslint-disable-line react/no-typos
   graphicTittle: string.isRequired, // eslint-disable-line react/no-typos
   handleChartsCollapse: func.isRequired, // eslint-disable-line react/no-typos
   handleExpandRow: func.isRequired, // eslint-disable-line react/no-typos

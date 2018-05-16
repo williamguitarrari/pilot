@@ -9,6 +9,7 @@
   "filters": "FILTROS",
   "find_by": "Filtre por ID, CPF, nome e e-mail",
   "graphic": "GRÁFICO",
+  "graphic_legends": "Legendas",
   "items_per_page": "itens por página",
   "metadata": "METADATA",
   "net_amount": "VALOR LÍQUIDO",

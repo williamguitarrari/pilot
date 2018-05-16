@@ -191,6 +191,7 @@ class TransactionsSearch extends React.Component {
       filterConfirmLabel: t('confirm_filters'),
       filtersTitle: t('filters'),
       findByLabel: t('find_by'),
+      graphicLegendsTittle: t('graphic_legends'),
       graphicTittle: t('graphic'),
       itemsPerPageLabel: t('items_per_page'),
       noContentFoundMessage: t('no_content_found'),
@@ -363,6 +364,7 @@ class TransactionsSearch extends React.Component {
       filterConfirmLabel,
       filtersTitle,
       findByLabel,
+      graphicLegendsTittle,
       graphicTittle,
       itemsPerPageLabel,
       noContentFoundMessage,
@@ -417,6 +419,7 @@ class TransactionsSearch extends React.Component {
         filterOptions={filterOptions}
         filtersTitle={filtersTitle}
         findByLabel={findByLabel}
+        graphicLegendsTittle={graphicLegendsTittle}
         graphicTittle={graphicTittle}
         handleChartsCollapse={this.handleChartsCollapse}
         handleExpandRow={this.handleExpandRow}
