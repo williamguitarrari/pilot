@@ -1,7 +1,10 @@
+@import "former-kit-skin-pagarme/dist/styles/colors/light.css";
+@import "former-kit-skin-pagarme/dist/styles/spacing.css";
+
 .capitalize {
-  text-transform: capitalize;
-  display: flex;
   align-items: center;
+  display: flex;
+  text-transform: capitalize;
 }
 
 .centralizedItem {
@@ -16,7 +19,7 @@
   justify-content: space-between;
 
   & > div:first-of-type button:not(:first-of-type) {
-    margin-left: 16px;
+    margin-left: var(--spacing-small);
   }
 }
 
@@ -24,35 +27,35 @@
   display: flex;
 
   & > :not(:first-of-type) {
-    margin-left: 16px;
+    margin-left: var(--spacing-small);
   }
 }
 
 .pagination {
-  display: flex;
-  margin-top: 16px;
   align-items: center;
+  display: flex;
   justify-content: flex-end;
+  margin-top: var(--spacing-small);
 }
 
 .customTitle {
   white-space: pre;
 
   & strong {
-    color: #ff796f;
+    color: var(--color-light-salmon-100);
   }
 }
 
 .verticalDivider {
-  height: 20px;
   border: 1px dotted #aaaaaa;
-  width: auto;
+  height: 20px;
   margin: 0 8px;
+  width: auto;
 }
 
 .tableButtons {
-  display: flex;
   align-items: stretch;
+  display: flex;
 }
 
 .tableButtons span {
@@ -60,25 +63,31 @@
 }
 
 .separator {
-  width: 1px;
+  border-left: 1px solid var(--color-light-steel-50);
   margin: 0 10px;
-  border-left: 1px solid #bababa;
+  width: 1px;
 }
 
 .noResultAlert {
   flex: 1;
 
   & > * {
-    width: 100%;
     box-sizing: border-box;
+    width: 100%;
   }
-}
-
-.legend {
-  margin-left: 4px;
 }
 
 .legendContainer {
   display: flex;
   justify-content: space-between;
+}
+
+.legendTitle {
+  align-items: center;
+  display: flex;
+  padding-right: var(--spacing-small);
+}
+
+.stretch {
+  flex: 1;
 }
