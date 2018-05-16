@@ -80,12 +80,17 @@
 .legendContainer {
   display: flex;
   justify-content: space-between;
+  padding-top: var(--spacing-medium);
 }
 
 .legendTitle {
-  align-items: center;
+  align-items: flex-start;
+  color: var(--color-light-steel-100);
   display: flex;
-  padding-right: var(--spacing-small);
+  font-size: 13px;
+  font-weight: bold;
+  padding-right: 20px;
+  text-transform: uppercase;
 }
 
 .stretch {
