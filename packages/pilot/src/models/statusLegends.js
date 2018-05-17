@@ -9,6 +9,11 @@ const status = {
     text: 'Autorizada',
     acronym: 'A',
   },
+  pending_review: {
+    color: '#fbbb27',
+    text: 'Revisão pendente',
+    acronym: 'RP',
+  },
   pending_refund: {
     color: '#8c68d4',
     text: 'Estorno pendente',
