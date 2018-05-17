@@ -90,7 +90,7 @@ const sortGatewayOperations = (operations) => {
 }
 
 const operationsTypesBlackList = ['conciliate']
-const operationsStatusBlackList = ['dropped']
+const operationsStatusBlackList = ['dropped', 'waiting']
 
 const rejectInvalidOperations = reject(either(
   propSatisfies(contains(__, operationsTypesBlackList), 'type'),
