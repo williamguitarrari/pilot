@@ -1,17 +1,33 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import {
   Button,
   Card,
+  CardActions,
   CardTitle,
   CardContent,
   CardSection,
   CardSectionDoubleLineTitle,
   Legend,
+  Popover,
+  PopoverMenu,
 } from 'former-kit'
 import reportStatus from './reportStatus.js'
 import reportStatusLegend from './reportStatusLegend.js'
 import TrashIcon from 'emblematic-icons/svg/Trash32.svg'
 import DownloadIcon from 'emblematic-icons/svg/Download32.svg'
+import { action } from '@storybook/addon-actions'
+import moment from 'moment'
+
+const items = [
+  {
+    title: 'Minha Conta',
+    action: () => action('account'),
+  },
+  {
+    title: 'Logout',
+    action: () => action('logout'),
+  },
+]
 
 const reports = [
   {
@@ -108,7 +124,7 @@ console.log(reportStatus.items[0].label)
 export default class ReportListState extends React.Component {
   constructor() {
     super()
-    this.state = { collapsed: false }
+    this.state = { collapsed: true }
   }
 
   render() {
@@ -117,26 +133,48 @@ export default class ReportListState extends React.Component {
         <CardTitle
           title="Relatórios - Total de 75"
         />
-        <CardContent>
-          <CardSection >
-            <CardSectionDoubleLineTitle
-              title="Carta"
-              subtitle="Verifique ou edite as informações da sua empresa"
-              collapsed={this.state.collapsed}
-              icon={<Legend color="#4ca9d7" acronym="ZK"></Legend>}
-              onClick={
-                collapsed => this.setState({ collapsed: !collapsed })
-              }
-              children={<Button fill='outline' icon={<TrashIcon width={12} height={12} />} />}              
-            />
+        {reports.map(report => (
+          <CardContent>
 
-            {!this.state.collapsed &&
-              <CardContent>
-                asdfgbasdigasdgasdgb
-                </CardContent>
-            }
-          </CardSection>
-        </CardContent>
+            <CardSection >
+              <CardSectionDoubleLineTitle
+                title={report.type}
+                subtitle={`Data: ${moment(report.data.created_at).format('DD/MM/YYYY')} até ${moment(report.data.updated_at).format('DD/MM/YYYY')} | Criado: ${moment(report.created_at).format('DD/MM/YYYY')}`}
+                collapsed={this.state.collapsed}
+                icon={<Legend color="#4ca9d7" acronym="ZK" hideLabel>Teste</Legend>}
+                onClick={
+                  collapsed => this.setState({ collapsed: !collapsed })
+                }
+              />
+
+              {!this.state.collapsed &&
+                <Fragment>
+                  <CardContent>
+                    Status: {report.status}
+                  {/* <Popover
+                    placement="bottomEnd"
+                    content={
+                      <Fragment>
+                        <div>
+                          <strong>teste@email.com</strong>
+                          <small>Administrador</small>
+                        </div>
+                        <PopoverMenu items={items} />
+                      </Fragment>
+                    }
+                  >
+                    <Button>Click Me</Button>
+                  </Popover> */}
+                  </CardContent>
+
+                  <CardActions>
+                    <Button  fill='outline' icon={<DownloadIcon width={12} height={12} />}>Exportar</Button>
+                  </CardActions>
+                </Fragment>
+              }
+            </CardSection>
+          </CardContent>
+        ))}
       </Card>
     )
   }
