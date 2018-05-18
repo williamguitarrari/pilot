@@ -176,9 +176,10 @@ class TransactionsSearch extends React.Component {
     this.handlePageCountChange = this.handlePageCountChange.bind(this)
     this.handleRowDetailsClick = this.handleRowDetailsClick.bind(this)
     this.handleRowClick = this.handleRowClick.bind(this)
-    this.requestData = this.requestData.bind(this)
     this.handleExpandRow = this.handleExpandRow.bind(this)
     this.handleSelectRow = this.handleSelectRow.bind(this)
+    this.requestData = this.requestData.bind(this)
+    this.requestPendingReviewsCount = this.requestPendingReviewsCount.bind(this)
 
     const translateColumns = getColumnTranslator(t)
     const columnsDefault = getDefaultTransactionColumns(this.handleRowDetailsClick)
@@ -217,11 +218,14 @@ class TransactionsSearch extends React.Component {
 
   componentDidMount () {
     const urlSearchQuery = this.props.history.location.search
+
     if (isEmpty(urlSearchQuery)) {
       this.updateQuery(this.props.query)
     } else {
       this.requestData(parseQueryUrl(urlSearchQuery))
     }
+
+    this.requestPendingReviewsCount()
   }
 
   componentWillReceiveProps (nextProps) {
@@ -231,6 +235,19 @@ class TransactionsSearch extends React.Component {
     if (search !== location.search) {
       this.requestData(parseQueryUrl(location.search))
     }
+  }
+
+  requestPendingReviewsCount () {
+    const { client } = this.props
+
+    return client
+      .transactions
+      .countPendingReviews()
+      .then(({ count }) => {
+        this.setState({
+          pendingReviewsCount: count,
+        })
+      })
   }
 
   updateQuery (query) {
@@ -369,6 +386,7 @@ class TransactionsSearch extends React.Component {
       itemsPerPageLabel,
       noContentFoundMessage,
       ofLabel,
+      pendingReviewsCount,
       periodSummaryLabel,
       result: {
         total,
@@ -392,6 +410,7 @@ class TransactionsSearch extends React.Component {
         search,
         sort,
       },
+      t,
     } = this.props
 
     const orderColumn = getOrderColumn(sort.field, columns)
@@ -436,11 +455,13 @@ class TransactionsSearch extends React.Component {
         order={sort ? sort.order : ''}
         orderColumn={orderColumn}
         pagination={pagination}
+        pendingReviewsCount={pendingReviewsCount}
         periodSummaryLabel={periodSummaryLabel}
         rows={list.rows}
         search={search}
         selectedPage={count}
         selectedRows={selectedRows}
+        t={t}
         tableTitle={tableTitle}
         totalVolumeLabel={totalVolumeLabel}
         transactionsNumberLabel={transactionsNumberLabel}
@@ -455,6 +476,7 @@ TransactionsSearch.propTypes = {
   client: PropTypes.shape({
     transactions: PropTypes.shape({
       search: PropTypes.func.isRequired,
+      countPendingReviews: PropTypes.func.isRequired,
     }).isRequired,
   }).isRequired,
   history: PropTypes.shape({
