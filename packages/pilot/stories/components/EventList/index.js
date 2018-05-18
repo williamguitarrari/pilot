@@ -50,23 +50,6 @@ const EventList = () => (
             Captura <br />
             16/10/17 às 21h12
           </section>
-
-          <section>
-            <strong>Total</strong><br />
-            <p>R$ 40,00</p>
-
-            <strong>Desconto MDR</strong><br />
-            <p>- R$ 6,00</p>
-          </section>
-
-          <section>
-            <strong>Responsável</strong><br />
-            <p>Loja do João</p>
-            <p>R$ 10,00</p>
-
-            <span>Loja do Pedro</span><br />
-            <p>R$ 10,00</p>
-          </section>
         </Event>
 
         <Event
@@ -78,23 +61,6 @@ const EventList = () => (
           <section>
             Regras de aprovação<br />
             01/02/2018 às 21h12
-          </section>
-
-          <section>
-            <strong>Total</strong><br />
-            <p>R$ 40,00</p>
-
-            <strong>Desconto MDR</strong><br />
-            <p>- R$ 6,00</p>
-          </section>
-
-          <section>
-            <strong>Responsável</strong><br />
-            <p>Loja do João</p>
-            <p>R$ 10,00</p>
-
-            <span>Loja do Pedro</span><br />
-            <p>R$ 10,00</p>
           </section>
         </Event>
 
