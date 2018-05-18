@@ -18,17 +18,6 @@ import DownloadIcon from 'emblematic-icons/svg/Download32.svg'
 import { action } from '@storybook/addon-actions'
 import moment from 'moment'
 
-const items = [
-  {
-    title: 'Minha Conta',
-    action: () => action('account'),
-  },
-  {
-    title: 'Logout',
-    action: () => action('logout'),
-  },
-]
-
 const reports = [
   {
     "object": "report",
@@ -102,22 +91,16 @@ const reports = [
   }
 ]
 
-// changeStatus = () => {
-//   if (reportStatus.items[0].value = 'waiting') {
-//     console.log('to esperando')
-//     return <span> teste </span>
-
-//   } else if (reportStatus.items[1].value = 'processing') {
-//     console.log('to processando')
-
-//   } else if (reportStatus.items[2].value = 'ready') {
-//     console.log('to pronto')
-
-//   } else if (reportStatus.items[3].value = 'canceled') {
-//     console.log('fui cancelado :(')
-
-//   }
-// }
+const items = [
+  {
+    title: 'Minha Conta',
+    action: () => action('account'),
+  },
+  {
+    title: 'Logout',
+    action: () => action('logout'),
+  },
+]
 
 console.log(reportStatus.items[0].label)
 
@@ -127,7 +110,13 @@ export default class ReportListState extends React.Component {
     this.state = { collapsed: true }
   }
 
+  //header title, colocar os botoes no title do
+  // function nas action handeractions
+
   render() {
+    // console.log('oi')
+    // console.log(Popover)
+    // console.log(Legend)
     return (
       <Card>
         <CardTitle
@@ -135,42 +124,42 @@ export default class ReportListState extends React.Component {
         />
         {reports.map(report => (
           <CardContent>
-
             <CardSection >
               <CardSectionDoubleLineTitle
                 title={report.type}
+                // title='Testando'
+                // actions={}
                 subtitle={`Data: ${moment(report.data.created_at).format('DD/MM/YYYY')} até ${moment(report.data.updated_at).format('DD/MM/YYYY')} | Criado: ${moment(report.created_at).format('DD/MM/YYYY')}`}
+                // subtitle={'Teste'}
                 collapsed={this.state.collapsed}
                 icon={<Legend color="#4ca9d7" acronym="ZK" hideLabel>Teste</Legend>}
                 onClick={
                   collapsed => this.setState({ collapsed: !collapsed })
                 }
               />
-
               {!this.state.collapsed &&
-                <Fragment>
+                <div>
                   <CardContent>
                     Status: {report.status}
-                  {/* <Popover
-                    placement="bottomEnd"
-                    content={
-                      <Fragment>
-                        <div>
-                          <strong>teste@email.com</strong>
-                          <small>Administrador</small>
-                        </div>
-                        <PopoverMenu items={items} />
-                      </Fragment>
-                    }
-                  >
-                    <Button>Click Me</Button>
-                  </Popover> */}
+                    {/* Status: status */}
                   </CardContent>
-
                   <CardActions>
-                    <Button  fill='outline' icon={<DownloadIcon width={12} height={12} />}>Exportar</Button>
+                    <Popover
+                      placement="bottomEnd"
+                      content={
+                        <Fragment>
+                          <div>
+                            <strong>teste@email.com</strong>
+                            <small>Administrador</small>
+                          </div>
+                          <PopoverMenu items={items} />
+                        </Fragment>
+                      }
+                    >
+                      <Button fill='outline' icon={<DownloadIcon width={12} height={12} />}>Exportar</Button>
+                    </Popover>
                   </CardActions>
-                </Fragment>
+                </div>
               }
             </CardSection>
           </CardContent>
@@ -179,31 +168,4 @@ export default class ReportListState extends React.Component {
     )
   }
 }
-
-// const ReportListState = () => (
-//   <div>
-//     <Card>
-//       <CardTitle
-//         title="Relatórios - Total de 75"
-//       />
-//       <CardContent>
-//         <CardSection >
-//           <CardSectionDoubleLineTitle
-//             title="Carta"
-//             subtitle="Verifique ou edite as informações da sua empresa"
-//             collapsed={false}          
-//             icon={<Legend color="#4ca9d7" acronym="ZK"></Legend>}
-
-//           >
-//           <CardContent children="asfgerghhethrtrtjrjrtjrjwj">
-//           </CardContent>
-
-//           </CardSectionDoubleLineTitle>          
-//         </CardSection>
-//       </CardContent>
-//     </Card>
-//   </div>
-// )
-
-// export default ReportListState
 
