@@ -123,19 +123,43 @@ const types = {
     status: {
       deferred: {
         color: '#41535b',
-        title: 'Análise de risco pendente',
+        title: 'Processando análise do antifraude',
       },
       failed: {
         color: '#e00403',
-        title: 'Análise de risco falhou',
+        title: 'Análise do antifraude falhou',
       },
       processing: {
         color: '#951d3c',
-        title: 'Análise de risco em processamento',
+        title: 'Processando análise do antifraude',
       },
-      success: {
+      approved: {
         color: '#4ca9d7',
-        title: 'Análise de risco aprovada',
+        title: 'Aprovada na análise do antifraude',
+      },
+      refused: {
+        color: '#e00403',
+        title: 'Recusada na análise do antifraude',
+      },
+    },
+  },
+  manual_review: {
+    status: {
+      pending: {
+        color: '#41535b',
+        title: 'Revisão pendente',
+      },
+      approved: {
+        color: '#4ca9d7',
+        title: 'Aprovada por revisão manual',
+      },
+      refused: {
+        color: '#e00403',
+        title: 'Recusada por revisão manual',
+      },
+      timeout: {
+        color: '#e00403',
+        title: 'Revisão manual expirada',
       },
     },
   },
