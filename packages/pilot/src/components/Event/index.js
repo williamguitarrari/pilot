@@ -40,11 +40,11 @@ class Event extends React.Component {
 
   render () {
     const {
+      active,
+      children,
+      color,
       number,
       title,
-      children,
-      active,
-      color,
     } = this.props
 
     const { collapsed } = this.state
@@ -53,14 +53,14 @@ class Event extends React.Component {
 
     return (
       <div
-        role="button"
-        tabIndex="0"
-        onClick={this.handleCollapse}
         className={cx(style.event, {
           [style.active]: active,
           [style.hasEvents]: childrenIsArray,
         })}
+        onClick={this.handleCollapse}
+        role="button"
         style={{ backgroundColor: active ? color : '#fff' }}
+        tabIndex="0"
       >
         <header className={style.header}>
           <span
@@ -92,11 +92,11 @@ class Event extends React.Component {
 
 Event.propTypes = {
   active: PropTypes.bool,
+  children: PropTypes.node.isRequired,
+  collapsed: PropTypes.bool,
   color: PropTypes.string.isRequired,
   number: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
-  collapsed: PropTypes.bool,
-  children: PropTypes.node.isRequired,
 }
 
 Event.defaultProps = {
