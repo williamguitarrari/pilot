@@ -108,6 +108,10 @@ const transactionDetailsLabels = {
   title: 'DETALHES DA TRANSAÇÃO',
 }
 
+const riskLevelsLabels = {
+  moderated: 'Risco: moderado',
+}
+
 storiesOf('Pages', module)
   .add('Transaction details', () => (
     <Layout>
@@ -124,6 +128,7 @@ storiesOf('Pages', module)
         paymentBoletoLabels={paymentBoletoLabels}
         paymentCardLabels={paymentCardLabels}
         recipientsLabels={recipientsLabels}
+        riskLevelsLabels={riskLevelsLabels}
         totalDisplayLabels={totalDisplayLabels}
         transaction={transactionMock}
         transactionDetailsLabels={transactionDetailsLabels}
