@@ -106,6 +106,14 @@ const getPaymentCardLabels = t => ({
   title: t('credit_card'),
 })
 
+const getRiskLevelsLabels = t => ({
+  very_low: t('transaction.risk_level.very_low'),
+  low: t('transaction.risk_level.low'),
+  moderated: t('transaction.risk_level.moderated'),
+  high: t('transaction.risk_level.high'),
+  very_high: t('transaction.risk_level.very_high'),
+})
+
 class TransactionDetails extends Component {
   constructor (props) {
     super(props)
@@ -117,6 +125,7 @@ class TransactionDetails extends Component {
       installmentColumns: formatColumns(installmentTableColumns),
       paymentBoletoLabels: getPaymentBoletoLabels(t),
       paymentCardLabels: getPaymentCardLabels(t),
+      riskLevelsLabels: getRiskLevelsLabels(t),
       transactionDetailsLabels: getTransactionDetailsLabels(t),
       result: {
         transaction: {},
@@ -192,12 +201,13 @@ class TransactionDetails extends Component {
     const {
       customerLabels,
       eventsLabels,
+      installmentColumns,
       paymentBoletoLabels,
       paymentCardLabels,
-      installmentColumns,
       result: {
         transaction,
       },
+      riskLevelsLabels,
       transactionDetailsLabels,
     } = this.state
 
@@ -273,16 +283,17 @@ class TransactionDetails extends Component {
         eventsLabels={eventsLabels}
         headerLabels={headerLabels}
         installmentColumns={installmentColumns}
-        onDismissAlert={this.handleAlertDismiss}
+        metadataTitle={t('metadata')}
         onCopyBoletoUrl={this.handleCopyBoletoUrlClick}
+        onDismissAlert={this.handleAlertDismiss}
         onShowBoleto={this.handleShowBoletoClick}
         paymentBoletoLabels={paymentBoletoLabels}
         paymentCardLabels={paymentCardLabels}
         recipientsLabels={recipientsLabels}
+        riskLevelsLabels={riskLevelsLabels}
         totalDisplayLabels={totalDisplayLabels}
         transaction={transaction}
         transactionDetailsLabels={transactionDetailsLabels}
-        metadataTitle={t('metadata')}
       />
     )
   }
