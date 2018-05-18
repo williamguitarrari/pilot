@@ -1,5 +1,4 @@
 import {
-  T,
   allPass,
   always,
   apply,
@@ -17,9 +16,11 @@ import {
   pipe,
   prop,
   propEq,
+  propOr,
   props,
   subtract,
   sum,
+  T,
   unless,
   when,
 } from 'ramda'
@@ -105,22 +106,14 @@ const buildCard = when(
 )
 
 const transactionSpec = {
-  id: prop('id'),
+  acquirer: {
+    name: prop('acquirer_name'),
+    response_code: prop('acquirer_response_code'),
+    sequence_number: unless(isNil, pipe(prop('nsu'), String)),
+    transaction_id: unless(isNil, pipe(prop('tid'), String)),
+  },
   amount: prop('amount'),
-  created_at: pipe(prop('date_created'), unless(isNil, moment)),
-  updated_at: pipe(prop('date_updated'), unless(isNil, moment)),
-  soft_descriptor: prop('soft_descriptor'),
-  external_id: ifElse(
-    has('reference_key'),
-    prop('reference_key'),
-    always(null)
-  ),
-  status: prop('status'),
-  status_reason: ifElse(
-    propEq('status', 'refused'),
-    prop('refuse_reason'),
-    prop('status_reason')
-  ),
+  antifraud: getAntifraudProp,
   boleto: ifElse(
     propEq('payment_method', 'boleto'),
     applySpec({
@@ -130,9 +123,16 @@ const transactionSpec = {
     }),
     always(null)
   ),
+  card: buildCard,
+  created_at: pipe(prop('date_created'), unless(isNil, moment)),
+  customer: getCustomerProp,
+  external_id: propOr(null, 'reference_key'),
+  id: prop('id'),
+  metadata: prop('metadata'),
   payment: {
+    cost_amount: prop('cost'),
+    installments: prop('installments'),
     method: prop('payment_method'),
-    paid_amount: prop('paid_amount'),
     net_amount: pipe(
       juxt([
         prop('paid_amount'),
@@ -143,20 +143,18 @@ const transactionSpec = {
       ]),
       apply(subtract)
     ),
-    cost_amount: prop('cost'),
+    paid_amount: prop('paid_amount'),
     refund_amount: prop('refunded_amount'),
-    installments: prop('installments'),
   },
-  acquirer: {
-    name: prop('acquirer_name'),
-    response_code: prop('acquirer_response_code'),
-    sequence_number: unless(isNil, pipe(prop('nsu'), String)),
-    transaction_id: unless(isNil, pipe(prop('tid'), String)),
-  },
-  antifraud: getAntifraudProp,
-  customer: getCustomerProp,
-  card: buildCard,
-  metadata: prop('metadata'),
+  risk_level: prop('risk_level'),
+  soft_descriptor: prop('soft_descriptor'),
+  status: prop('status'),
+  status_reason: ifElse(
+    propEq('status', 'refused'),
+    prop('refuse_reason'),
+    prop('status_reason')
+  ),
+  updated_at: pipe(prop('date_updated'), unless(isNil, moment)),
 }
 
 export {

@@ -556,7 +556,8 @@ const transaction = {
         }
       ]
     }
-  ]
+  ],
+  "risk_level": "moderated",
 }
 
 
