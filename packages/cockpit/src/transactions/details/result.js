@@ -4,6 +4,7 @@ import {
   apply,
   applySpec,
   assoc,
+  both,
   complement,
   contains,
   either,
@@ -97,19 +98,84 @@ const rejectInvalidOperations = reject(either(
   propSatisfies(contains(__, operationsStatusBlackList), 'status')
 ))
 
+const manualReviewTimeout = both(
+  propEq('status', 'refused'),
+  propEq('refuse_reason', 'manual_review_timeout')
+)
+
+const getStatus = (transaction, manualReviewAnalysis) => {
+  if (transaction.status === 'pending_review') {
+    return 'pending'
+  }
+
+  if (manualReviewTimeout(transaction)) {
+    return 'timeout'
+  }
+
+  return manualReviewAnalysis.status
+}
+
+const buildCreditCardOperations = ({
+  transaction,
+  gatewayOperations,
+  chargebackOperations,
+  antifraudAnalyses,
+}) => {
+  const sortedGatewayOps = sortGatewayOperations(gatewayOperations)
+  const filteredGatewayOps = rejectInvalidOperations(sortedGatewayOps)
+  const normalizedChargebackOps = normalizeChargebackOps(chargebackOperations)
+
+  const addAntifraudOperations = (operations, operation) => {
+    if (operation.type !== 'analyze') {
+      return operations.concat([operation])
+    }
+
+    const pagarmeAnalysis = find(
+      propEq('name', 'pagarme'),
+      antifraudAnalyses
+    )
+
+    const manualReviewAnalysis = find(
+      propEq('name', 'manual_review'),
+      antifraudAnalyses
+    )
+
+    const hasManualReview =
+      transaction.status === 'pending_review' ||
+      manualReviewTimeout(transaction) ||
+      manualReviewAnalysis
+
+    const antifraudOperation = {
+      created_at: operation.date_created,
+      id: operation.id,
+      status: pagarmeAnalysis.status,
+      type: operation.type,
+    }
+
+    if (hasManualReview) {
+      const manualReviewOperation = {
+        created_at: operation.date_updated,
+        id: operation.id,
+        status: getStatus(transaction, manualReviewAnalysis),
+        type: 'manual_review',
+      }
+
+      return operations.concat([antifraudOperation, manualReviewOperation])
+    }
+
+    return operations.concat([antifraudOperation])
+  }
+
+  return filteredGatewayOps
+    .reduce(addAntifraudOperations, [])
+    .concat(normalizedChargebackOps)
+}
+
 const chooseOperations = pipe(
   ifElse(
     pathEq(['transaction', 'payment_method'], 'boleto'),
     pipe(prop('gatewayOperations'), sortGatewayOperations),
-    pipe(
-      pick(['gatewayOperations', 'chargebackOperations']),
-      juxt([
-        pipe(prop('gatewayOperations'), sortGatewayOperations),
-        pipe(prop('chargebackOperations'), normalizeChargebackOps),
-      ]),
-      flatten,
-      rejectInvalidOperations
-    )
+    buildCreditCardOperations
   ),
   reverse
 )
@@ -303,6 +369,7 @@ const mapTransactionToResult = applySpec({
         pick([
           'gatewayOperations',
           'chargebackOperations',
+          'antifraudAnalyses',
           'transaction',
         ]),
         buildOperations
