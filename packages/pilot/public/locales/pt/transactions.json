@@ -189,5 +189,6 @@
     "subscription_id": "Id da assinatura",
     "tid": "TID (ID da transação)",
     "title": "Detalhes da transação"
-  }
+  },
+  "view_transactions": "Ver Transações"
 }
