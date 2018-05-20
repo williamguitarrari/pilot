@@ -47,5 +47,49 @@
   "transactions": {
     "list": "TRANSAÇÕES",
     "details": "TRANSAÇÃO"
+  },
+  "pages": {
+    "manual_review": {
+      "approve_action": "Aprovar transação",
+      "legal_warning_approves_approve": "aprovação.",
+      "legal_warning_approves_part_1": "Por se tratar de uma revisão manual",
+      "legal_warning_approves_part_2": "da sua operação",
+      "legal_warning_approves_part_3": ", o Pagar.me é isento de responsabilidade sobre esta",
+      "legal_warning_approves_refuse": "recusa.",
+      "model_approve_title": "Aprovar transação",
+      "model_refuse_title": "Recusar transação",
+      "password_invalid_error": "Senha inválida",
+      "password_password_label": "Digite sua senha",
+      "question_action_approve": "aprovar",
+      "question_action_refuse": "recusar",
+      "question_part_1": "Deseja ",
+      "question_part_2": "a transação",
+      "question_part_3": "pelo serviço de antifraude com risco alto?",
+      "refuse_action": "Recusar transação",
+      "result_error_is_not_pending_review": "Transação não está aguardando revisão manual.",
+      "result_error_message": "Erro ao tentar {{action}} a transação.",
+      "result_error_try_again": "Tentar novamente",
+      "result_prefix_message": "Transação",
+      "result_success_view_transaction": "Visualizar transação",
+      "result_suffix_message": "com sucesso",
+      "step_title_confirmation": "Confirmação",
+      "step_title_result": "Conclusão",
+      "legal_warning_approves_part_1": "Por se tratar de uma revisão manual",
+      "legal_warning_approves_part_2": "da sua operação",
+      "legal_warning_approves_part_3": ", o Pagar.me é isento de responsabilidade sobre esta",
+      "legal_warning_approves_approve": "aprovação.",
+      "legal_warning_approves_refuse": "recusa.",
+      "password_invalid_error": "Senha inválida"
+    }
+  },
+  "models": {
+    "antifraud_analyses": {
+      "status": {
+        "approve": "aprovar",
+        "refuse": "reprovar",
+        "approved": "aprovada",
+        "refused": "reprovada"
+      }
+    }
   }
 }
