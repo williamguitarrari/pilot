@@ -74,6 +74,7 @@ const TransactionsList = ({
   handleOrderChange,
   handlePageChange,
   handlePageCountChange,
+  handlePendingReviewsFilter,
   itemsPerPageLabel,
   loading,
   noContentFoundMessage,
@@ -109,7 +110,9 @@ const TransactionsList = ({
           >
             <div className={style.parentWidth}>
               <Alert
+                action={t('view_transactions')}
                 icon={<IconWarning height={16} width={16} />}
+                onDismiss={handlePendingReviewsFilter}
                 type="warning"
               >
                 <p>
@@ -295,6 +298,7 @@ TransactionsList.propTypes = {
   handleOrderChange: func.isRequired, // eslint-disable-line react/no-typos
   handlePageChange: func.isRequired, // eslint-disable-line react/no-typos
   handlePageCountChange: func.isRequired, // eslint-disable-line react/no-typos
+  handlePendingReviewsFilter: func.isRequired, // eslint-disable-line react/no-typos
   handleSelectRow: func.isRequired, // eslint-disable-line react/no-typos
   itemsPerPageLabel: string.isRequired, // eslint-disable-line react/no-typos
   loading: bool.isRequired, // eslint-disable-line react/no-typos

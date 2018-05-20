@@ -177,6 +177,7 @@ class TransactionsSearch extends React.Component {
     this.handleRowDetailsClick = this.handleRowDetailsClick.bind(this)
     this.handleRowClick = this.handleRowClick.bind(this)
     this.handleExpandRow = this.handleExpandRow.bind(this)
+    this.handlePendingReviewsFilter = this.handlePendingReviewsFilter.bind(this)
     this.handleSelectRow = this.handleSelectRow.bind(this)
     this.requestData = this.requestData.bind(this)
     this.requestPendingReviewsCount = this.requestPendingReviewsCount.bind(this)
@@ -248,6 +249,16 @@ class TransactionsSearch extends React.Component {
           pendingReviewsCount: count,
         })
       })
+  }
+
+  handlePendingReviewsFilter () {
+    return this.handleFilterChange({
+      dates: {},
+      search: '',
+      values: {
+        status: ['pending_review'],
+      },
+    })
   }
 
   updateQuery (query) {
@@ -448,6 +459,7 @@ class TransactionsSearch extends React.Component {
         handlePageCountChange={this.handlePageCountChange}
         handleRowClick={this.handleRowClick}
         handleSelectRow={this.handleSelectRow}
+        handlePendingReviewsFilter={this.handlePendingReviewsFilter}
         itemsPerPageLabel={itemsPerPageLabel}
         loading={loading}
         noContentFoundMessage={noContentFoundMessage}
@@ -475,8 +487,8 @@ class TransactionsSearch extends React.Component {
 TransactionsSearch.propTypes = {
   client: PropTypes.shape({
     transactions: PropTypes.shape({
-      search: PropTypes.func.isRequired,
       countPendingReviews: PropTypes.func.isRequired,
+      search: PropTypes.func.isRequired,
     }).isRequired,
   }).isRequired,
   history: PropTypes.shape({
