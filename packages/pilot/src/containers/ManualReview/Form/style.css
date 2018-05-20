@@ -1,0 +1,14 @@
+@import "former-kit-skin-pagarme/dist/styles/colors/light.css";
+
+.instructionMessage {
+  text-align: center;
+}
+
+.textHighlight {
+  color: var(--color-light-steel-100);
+}
+
+.legalWarning {
+  color: var(--color-light-steel-100);
+  font-size: 12px;
+}

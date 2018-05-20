@@ -146,16 +146,20 @@ class TransactionDetails extends Component {
     const {
       transaction,
       headerLabels,
+      onManualReviewRefuse,
+      onManualReviewApprove,
     } = this.props
 
     if (isPendingReviewTransaction(transaction)) {
       return [
         {
           icon: <IconClearClose width={12} height={12} />,
+          onClick: onManualReviewRefuse,
           title: headerLabels.refuseLabel,
         },
         {
           icon: <IconCheck width={12} height={12} />,
+          onClick: onManualReviewApprove,
           title: headerLabels.approveLabel,
         },
       ]
@@ -384,7 +388,6 @@ class TransactionDetails extends Component {
                 actions={this.getHeaderActions()}
                 identifier={`#${id}`}
                 properties={detailsHeadProperties}
-                actions={getHeaderActions(transaction, headerLabels)}
                 title={headerLabels.title}
               />
             </Card>
@@ -633,6 +636,8 @@ TransactionDetails.propTypes = {
   })).isRequired,
   onCopyBoletoUrl: PropTypes.func,
   onDismissAlert: PropTypes.func, // eslint-disable-line react/no-unused-prop-types
+  onManualReviewApprove: PropTypes.func,
+  onManualReviewRefuse: PropTypes.func,
   onShowBoleto: PropTypes.func,
   paymentBoletoLabels: PropTypes.shape({
     copy: PropTypes.string,
@@ -762,6 +767,8 @@ TransactionDetails.propTypes = {
 TransactionDetails.defaultProps = {
   onCopyBoletoUrl: null,
   onDismissAlert: null,
+  onManualReviewApprove: null,
+  onManualReviewRefuse: null,
   onShowBoleto: null,
 }
 
