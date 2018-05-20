@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -19,6 +19,7 @@ import currencyFormatter from '../../../formatters/decimalCurrency'
 import TransactionDetailsContainer from '../../../containers/TransactionDetails'
 import installmentTableColumns from '../../../components/RecipientSection/installmentTableColumns'
 import getColumnFormatter from '../../../formatters/columnTranslator'
+import ManualReview from '../../ManualReview'
 
 const mapStateToProps = ({
   account: { client },
@@ -130,10 +131,15 @@ class TransactionDetails extends Component {
       result: {
         transaction: {},
       },
+      showManualReview: false,
+      manualReviewAction: null,
     }
 
     this.handleAlertDismiss = this.handleAlertDismiss.bind(this)
+    this.handleCloseManualReview = this.handleCloseManualReview.bind(this)
     this.handleCopyBoletoUrlClick = this.handleCopyBoletoUrlClick.bind(this)
+    this.handleManualReviewApprove = this.handleManualReviewApprove.bind(this)
+    this.handleManualReviewRefuse = this.handleManualReviewRefuse.bind(this)
     this.handleShowBoletoClick = this.handleShowBoletoClick.bind(this)
     this.handleUpdate = this.handleUpdate.bind(this)
     this.requestData = this.requestData.bind(this)
@@ -187,6 +193,24 @@ class TransactionDetails extends Component {
     // TODO: add a confirmation alert HERE !!!
   }
 
+  handleManualReviewApprove () {
+    this.setState({
+      showManualReview: true,
+      manualReviewAction: 'approve',
+    })
+  }
+
+  handleManualReviewRefuse () {
+    this.setState({
+      showManualReview: true,
+      manualReviewAction: 'refuse',
+    })
+  }
+
+  handleCloseManualReview () {
+    this.setState({ showManualReview: false })
+  }
+
   handleShowBoletoClick () {
     const {
       transaction: {
@@ -209,6 +233,8 @@ class TransactionDetails extends Component {
       },
       riskLevelsLabels,
       transactionDetailsLabels,
+      showManualReview,
+      manualReviewAction,
     } = this.state
 
     const {
@@ -277,26 +303,39 @@ class TransactionDetails extends Component {
     }
 
     return (
-      <TransactionDetailsContainer
-        alertLabels={alertLabels}
-        atLabel={t('at')}
-        boletoWarningMessage={t('boleto.waiting_payment_warning')}
-        customerLabels={customerLabels}
-        eventsLabels={eventsLabels}
-        headerLabels={headerLabels}
-        installmentColumns={installmentColumns}
-        metadataTitle={t('metadata')}
-        onCopyBoletoUrl={this.handleCopyBoletoUrlClick}
-        onDismissAlert={this.handleAlertDismiss}
-        onShowBoleto={this.handleShowBoletoClick}
-        paymentBoletoLabels={paymentBoletoLabels}
-        paymentCardLabels={paymentCardLabels}
-        recipientsLabels={recipientsLabels}
-        riskLevelsLabels={riskLevelsLabels}
-        totalDisplayLabels={totalDisplayLabels}
-        transaction={transaction}
-        transactionDetailsLabels={transactionDetailsLabels}
-      />
+      <Fragment>
+        <TransactionDetailsContainer
+          alertLabels={alertLabels}
+          atLabel={t('at')}
+          boletoWarningMessage={t('boleto.waiting_payment_warning')}
+          customerLabels={customerLabels}
+          eventsLabels={eventsLabels}
+          headerLabels={headerLabels}
+          installmentColumns={installmentColumns}
+          metadataTitle={t('metadata')}
+          onCopyBoletoUrl={this.handleCopyBoletoUrlClick}
+          onManualReviewApprove={this.handleManualReviewApprove}
+          onManualReviewRefuse={this.handleManualReviewRefuse}
+          onDismissAlert={this.handleAlertDismiss}
+          onShowBoleto={this.handleShowBoletoClick}
+          paymentBoletoLabels={paymentBoletoLabels}
+          paymentCardLabels={paymentCardLabels}
+          recipientsLabels={recipientsLabels}
+          riskLevelsLabels={riskLevelsLabels}
+          totalDisplayLabels={totalDisplayLabels}
+          transaction={transaction}
+          transactionDetailsLabels={transactionDetailsLabels}
+        />
+        {showManualReview &&
+          <ManualReview
+            action={manualReviewAction}
+            isOpen={showManualReview}
+            onClose={this.handleCloseManualReview}
+            onFinish={() => { this.handleUpdate(transaction.id) }}
+            t={t}
+            transactionId={transaction.id}
+          />}
+      </Fragment>
     )
   }
 }
