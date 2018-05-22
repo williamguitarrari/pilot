@@ -23,6 +23,16 @@
   }
 }
 
+.toolBar {
+
+  & > * {
+    margin-left: var(--spacing-small);
+  }
+  & > *:first-child {
+    margin-left: unset;
+  }
+}
+
 .dropdown {
   display: flex;
 
@@ -43,11 +53,12 @@
 
   & strong {
     color: var(--color-light-salmon-100);
+    font-weight: bold;
   }
 }
 
 .verticalDivider {
-  border: 1px dotted #aaaaaa;
+  border-left: 1px solid var(--color-light-iron-50);
   height: 20px;
   margin: 0 8px;
   width: auto;

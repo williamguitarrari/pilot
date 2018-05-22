@@ -46,10 +46,12 @@ const LoginContainer = ({
           type="error"
           icon={<IconWarning height={16} width={16} />}
         >
-          {errors.null
-            ? errors.null
-            : t('login.network_error')
-          }
+          <span>
+            {errors.null
+              ? errors.null
+              : t('login.network_error')
+            }
+          </span>
         </Alert>
       </div>
     }

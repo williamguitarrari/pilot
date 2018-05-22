@@ -11,6 +11,7 @@ import {
   Row,
   Col,
   CheckboxGroup,
+  Spacing,
 } from 'former-kit'
 
 import Form from 'react-vanilla-form'
@@ -70,9 +71,10 @@ class Filters extends Component {
     this.setState({ query })
   }
 
-  renderChildrenInput (input) {
+  renderChildrenInput (input, index) {
     return React.cloneElement(input, {
       disabled: this.props.disabled,
+      key: `${input.props.name}-${index}`,
     })
   }
 
@@ -107,17 +109,17 @@ class Filters extends Component {
             }
             onClick={this.handleToogeMoreFilters}
           >
-            {t('pages.filter.more')}
+            {t('components.filter.more')}
           </Button>
         }
-        <div className={style.spacer} />
+        <Spacing size="large" />
         <Button
           relevance={filtersChanged ? 'normal' : 'low'}
           onClick={onClear}
           fill="outline"
           disabled={this.props.disabled}
         >
-          {t('pages.filter.reset')}
+          {t('components.filter.reset')}
         </Button>
 
         <Button
@@ -126,7 +128,7 @@ class Filters extends Component {
           type="submit"
           fill="gradient"
         >
-          {t('pages.filter.apply')}
+          {t('components.filter.apply')}
         </Button>
       </CardActions>
     )
@@ -194,7 +196,7 @@ class Filters extends Component {
     return (
       <CardContent className={style.selectedOptionsTags}>
         <span className={style.selectedOptionsTitle}>
-          {t('pages.filter.filtering_by')}&nbsp;
+          {t('components.filter.filtering_by')}&nbsp;
         </span>
         {tags.map(({ key, name, items }) => (
           !isNilOrEmpty(items) &&
