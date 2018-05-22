@@ -7,7 +7,9 @@ import {
   CardContent,
   CardSection,
   CardSectionDoubleLineTitle,
+  Dropdown,
   Legend,
+  Pagination,
   Popover,
   PopoverMenu,
 } from 'former-kit'
@@ -31,12 +33,45 @@ const items = [
   },
 ]
 
+const options = [
+  {
+    name: 'Github',
+    value: 'github',
+  },
+  {
+    name: 'Open Source',
+    value: 'open-source',
+  },
+  {
+    name: 'Pilot',
+    value: 'pilot',
+  },
+]
+
+console.log(Dropdown)
+
 export default class ReportListState extends React.Component {
-  constructor() {
-    super()
-    this.state = { expandedCard: [] }
+  constructor(props) {
+    super(props)
+
+    //Dropdown
+    const { value } = this.props
+
+    //Pagination
+    const {
+      currentPage,
+      totalPages,
+    } = props
+
+    this.state = {
+      expandedCard: [],
+      selected: value,
+      currentPage: currentPage || 1,
+      totalPages: totalPages || 10,
+    }
 
     this.handleClick = this.handleClick.bind(this)
+    this.pageChanged = this.pageChanged.bind(this)
   }
 
   handleClick(id) {
@@ -51,12 +86,42 @@ export default class ReportListState extends React.Component {
     }
   }
 
+  pageChanged(page) {
+    this.setState({
+      currentPage: page,
+    })
+  }
+
   render() {
+    // const para Paginator
+    const { currentPage, totalPages } = this.state
+    const { disabled } = this.props
+    const error = totalPages < currentPage || currentPage === 0
+
     return (
       <Card>
         <CardTitle
           title="Relatórios - Total de 75"
         />
+        <Button size="tiny" relevance="low" fill="outline" icon={<DownloadIcon width={12} height={12} />}>Novo Relatório</Button>
+        <Dropdown
+          name={'dropdown'}
+          options={options}
+          onChange={event => this.setState({ selected: event.target.value })}
+          value={this.state.selected}
+          placeholder={'Itens por página'}
+          error={''}
+        />
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={this.pageChanged}
+          strings={this.props.strings}
+          disabled={disabled}
+        />
+        {error &&
+          <p>Epic fail!</p>
+        }
         {reports.reports.map(report => (
           <CardContent key={report.id}>
             <CardSection>
