@@ -334,6 +334,7 @@
       "card_brand": "Bandeira",
       "created_date": "Data da transação",
       "customer_name": "Nome do cliente",
+      "details": "Detalhes da transação",
       "document": "CPF / CNPJ",
       "email": "E-mail",
       "id": "ID da Transação",
@@ -623,7 +624,24 @@
           }
         }
       }
+    },
+    "transaction": {
+      "title": "Detalhes da Transação"
+    },
+    "transactions": {
+      "title": "Transações",
+      "count": "transações",
+      "total_amount": "total de",
+      "text_search_placeholder": "ID, número do documento, nome ou e-mail do cliente",
+      "period_full": "Todo período",
+      "period_today": "Hoje",
+      "period": "{{start}} - {{end}}",
+      "items_per_page": "{{count}} item por página",
+      "items_per_page_plural": "{{count}} itens por página",
+      "no_results": "Nenhum resultado.",
+      "try_again": "Tente novamente com outros filtros."
     }
+    
   },
   "components": {
     "date_input": {

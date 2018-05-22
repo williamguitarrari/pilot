@@ -18,14 +18,14 @@ export default {
     title: 'pages.balance.title',
   },
   transactions: {
-    title: 'transactions.list',
+    title: 'pages.transactions.title',
     path: '/transactions',
     component: Transactions,
     icon: Transaction32,
     exact: true,
   },
   transactionsDetails: {
-    title: 'transactions.details',
+    title: 'pages.transaction.title',
     path: '/transactions/:id',
     exact: true,
     hidden: true,
@@ -41,7 +41,7 @@ export default {
     path: '/withdraw/:id?',
   },
   accountSettings: {
-    title: 'settings.user.menu',
+    title: 'pages.settings.user.menu',
     path: '/account/settings',
     component: UserSettings,
     icon: Configuration32,
@@ -49,7 +49,7 @@ export default {
     hidden: true,
   },
   companySettings: {
-    title: 'settings.company.menu',
+    title: 'pages.settings.company.menu',
     path: '/settings',
     component: CompanySettings,
     icon: Configuration32,
