@@ -64,10 +64,16 @@ class Root extends Component {
     const {
       client,
       company,
-      location: { pathname: path },
+      location: {
+        pathname: path,
+        search: queryString,
+      },
       sessionId,
       user,
     } = this.props
+
+    const parsedQueryString = parseQueryString(queryString)
+    const redirect = parsedQueryString.redirect || '/'
 
     if (!client && sessionId) {
       return null
@@ -80,7 +86,7 @@ class Root extends Component {
           : <Route path="/account" component={Account} />
         }
         {client && user && path.startsWith('/account/login') &&
-          <Redirect to="/" />
+          <Redirect to={redirect} />
         }
         {client && company && user &&
           <LoggedArea />
