@@ -120,13 +120,15 @@
     "title": "HISTÓRICO DA TRANSAÇÃO"
   },
   "header": {
+    "approve": "Aprovar",
     "boleto_amount": "VALOR EMITIDO",
     "card_amount": "VALOR AUTORIZADO",
-    "title": "TRANSAÇÃO",
-    "status": "STATUS",
-    "installment_title": "PAGAMENTO",
     "installment": "À vista",
-    "installment_plural": "Parcelado {{count}}x"
+    "installment_plural": "Parcelado {{count}}x",
+    "installment_title": "PAGAMENTO",
+    "refuse": "Recusar",
+    "status": "STATUS",
+    "title": "TRANSAÇÃO"
   },
   "installment": {
     "anticipation": "SERVIÇO DE ANTECIPAÇÃO",

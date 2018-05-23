@@ -49,6 +49,8 @@ const headerLabels = {
   installmentsLabel: 'PAGAMENTO',
   statusLabel: 'STATUS',
   title: 'TRANSAÇÃO',
+  approveLabel: 'Aprovar',
+  refuseLabel: 'Reprovar',
 }
 
 const paymentBoletoLabels = {

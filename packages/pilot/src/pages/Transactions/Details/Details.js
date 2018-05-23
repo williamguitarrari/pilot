@@ -234,6 +234,8 @@ class TransactionDetails extends Component {
       }),
       title: t('header.title'),
       statusLabel: t('header.status'),
+      approveLabel: t('header.approve'),
+      refuseLabel: t('header.refuse'),
     }
 
     const recipientsLabels = {
