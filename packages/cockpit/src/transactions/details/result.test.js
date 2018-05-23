@@ -3,6 +3,8 @@ import fromRequest from './mocks/fromRequests.json'
 import expectedResult from './mocks/expectedResultMock.json'
 import fromRequestBoleto from './mocks/fromRequestsBoleto.json'
 import expectedResultBoleto from './mocks/expectedResultBoleto.json'
+import fromRequestAntifraud from './mocks/fromRequestsAntifraud.json'
+import expectedResultAntifraud from './mocks/expectedResultAntifraud.json'
 
 describe('Transaction details', () => {
   it('should work when transaction, gatewayOperations, chargebackOperations, payables, company and status are returned', () => {
@@ -11,5 +13,10 @@ describe('Transaction details', () => {
 
   it('should work when boleto has no payable', () => {
     expect(buildResult(fromRequestBoleto)).toBeJsonEqual(expectedResultBoleto)
+  })
+
+  it('should build result when pending manual review', () => {
+    expect(buildResult(fromRequestAntifraud))
+      .toBeJsonEqual(expectedResultAntifraud)
   })
 })
