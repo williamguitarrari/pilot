@@ -1,0 +1,49 @@
+@import "former-kit-skin-pagarme/dist/styles/spacing.css";
+
+.reportFilter {
+    overflow: initial;
+}
+
+.filterContent {
+    display: flex; 
+    justify-content: space-between
+}
+
+.inputs {
+    display: flex;
+    justify-content: space-between;
+    flex-grow: 3;
+}
+
+.inputs > * {
+    margin-left: 16px;
+}
+
+.inputs > *:first-child {
+    margin-left: unset;
+}
+
+.dateField {
+}
+
+.searchField {
+    flex: 2;
+}
+
+.statusField {
+   flex: 1;
+}
+
+.buttons {
+    display: flex;
+    margin-left: 48px;  
+}
+
+.buttons > * {
+    margin-left: 16px;
+    flex: 0;
+}
+
+.buttons > *:first-child {
+    margin-left: unset;
+}
