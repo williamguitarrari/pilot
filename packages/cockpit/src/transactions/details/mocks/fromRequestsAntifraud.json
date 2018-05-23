@@ -1,0 +1,269 @@
+{
+  "transaction": {
+    "object": "transaction",
+    "status": "pending_review",
+    "refuse_reason": null,
+    "status_reason": "antifraud",
+    "acquirer_response_code": "0000",
+    "acquirer_name": "pagarme",
+    "acquirer_id": "5925cd5bb0fdbdd02ce290b1",
+    "authorization_code": "517887",
+    "soft_descriptor": null,
+    "tid": 3514521,
+    "nsu": 3514521,
+    "date_created": "2018-05-17T17:28:26.998Z",
+    "date_updated": "2018-05-17T17:28:27.872Z",
+    "amount": 21050,
+    "authorized_amount": 21050,
+    "paid_amount": 0,
+    "refunded_amount": 0,
+    "installments": 1,
+    "id": 3514521,
+    "cost": 70,
+    "card_holder_name": "Mateus Noguez Moog",
+    "card_last_digits": "1111",
+    "card_first_digits": "411111",
+    "card_brand": "visa",
+    "card_pin_mode": null,
+    "postback_url": null,
+    "payment_method": "credit_card",
+    "capture_method": "ecommerce",
+    "antifraud_score": null,
+    "boleto_url": null,
+    "boleto_barcode": null,
+    "boleto_expiration_date": null,
+    "referer": "api_key",
+    "ip": "201.48.106.225",
+    "subscription_id": null,
+    "phone": null,
+    "address": null,
+    "customer": {
+      "object": "customer",
+      "id": 591949,
+      "external_id": "#591949",
+      "type": "individual",
+      "country": "br",
+      "document_number": null,
+      "document_type": "cpf",
+      "name": "Morpheus Fishburne",
+      "email": "mateusmoog@yahoo.com",
+      "phone_numbers": [
+        "+5511999998888",
+        "+5511888889999"
+      ],
+      "born_at": null,
+      "birthday": "1965-01-01",
+      "gender": null,
+      "date_created": "2018-05-17T17:28:26.801Z",
+      "documents": [
+        {
+          "object": "document",
+          "id": "doc_cjhat6tvg028l2g6dj90jasof",
+          "type": "cpf",
+          "number": "44444444444"
+        }
+      ]
+    },
+    "billing": {
+      "address": {
+        "object": "address",
+        "street": "Rua Matrix",
+        "complementary": null,
+        "street_number": "9999",
+        "neighborhood": "Rio Cotia",
+        "city": "Cotia",
+        "state": "sp",
+        "zipcode": "06714360",
+        "country": "br",
+        "id": 366361
+      },
+      "object": "billing",
+      "id": 57316,
+      "name": "Trinity Moss"
+    },
+    "shipping": {
+      "address": {
+        "object": "address",
+        "street": "Rua Matrix",
+        "complementary": null,
+        "street_number": "9999",
+        "neighborhood": "Rio Cotia",
+        "city": "Cotia",
+        "state": "sp",
+        "zipcode": "06714360",
+        "country": "br",
+        "id": 366362
+      },
+      "object": "shipping",
+      "id": 26081,
+      "name": "Neo Reeves",
+      "fee": 1000,
+      "delivery_date": "2000-12-21",
+      "expedited": true
+    },
+    "items": [
+      {
+        "object": "item",
+        "id": "b123",
+        "title": "Blue pill",
+        "unit_price": 10000,
+        "quantity": 1,
+        "category": null,
+        "tangible": true,
+        "venue": null,
+        "date": null
+      },
+      {
+        "object": "item",
+        "id": "r123",
+        "title": "Red pill",
+        "unit_price": 10000,
+        "quantity": 1,
+        "category": null,
+        "tangible": true,
+        "venue": null,
+        "date": null
+      }
+    ],
+    "card": {
+      "object": "card",
+      "id": "card_cjhat6u0e028m2g6dzpfobzjc",
+      "date_created": "2018-05-17T17:28:26.990Z",
+      "date_updated": "2018-05-17T17:28:27.944Z",
+      "brand": "visa",
+      "holder_name": "Mateus Noguez Moog",
+      "first_digits": "411111",
+      "last_digits": "1111",
+      "country": "UNITED STATES",
+      "fingerprint": "cj5bw4cio00000j23jx5l60cq",
+      "valid": false,
+      "expiration_date": "0922"
+    },
+    "split_rules": null,
+    "metadata": {},
+    "antifraud_metadata": {},
+    "reference_key": null,
+    "device": null,
+    "local_transaction_id": null,
+    "local_time": null,
+    "fraud_covered": true,
+    "order_id": null,
+    "risk_level": "high",
+    "receipt_url": null,
+    "payment": null
+  },
+  "gatewayOperations": [
+    {
+      "id": "go_cjhat6u280bjc5y3tiul1p0rq",
+      "date_created": "2018-05-17T17:28:27.056Z",
+      "date_updated": "2018-05-17T17:28:27.056Z",
+      "status": "waiting",
+      "fail_reason": null,
+      "type": "capture",
+      "rollbacked": false,
+      "model": "transaction",
+      "model_id": "3514521",
+      "group_id": "gog_cjhat6u280bjd5y3tiow89saw",
+      "next_group_id": null,
+      "request_id": "gr_cjhat6u1y0bjb5y3tb2bgkckg",
+      "started_at": null,
+      "ended_at": null,
+      "processor": null,
+      "processor_response_code": null,
+      "metadata": {
+        "environment": {}
+      }
+    },
+    {
+      "id": "go_cjhat6u2e0bje5y3tcngama5q",
+      "date_created": "2018-05-17T17:28:27.062Z",
+      "date_updated": "2018-05-17T17:28:27.778Z",
+      "status": "deferred",
+      "fail_reason": null,
+      "type": "analyze",
+      "rollbacked": false,
+      "model": "transaction",
+      "model_id": "3514521",
+      "group_id": "gog_cjhat6u2e0bjf5y3tmsm589i0",
+      "next_group_id": "gog_cjhat6u280bjd5y3tiow89saw",
+      "request_id": "gr_cjhat6u1y0bjb5y3tb2bgkckg",
+      "started_at": 1526578107180,
+      "ended_at": null,
+      "processor": "antifraud",
+      "processor_response_code": null,
+      "metadata": {
+        "environment": {},
+        "kind": "rule",
+        "antifraud_analysis_id": 834113,
+        "decision_maker": "konduto"
+      }
+    },
+    {
+      "id": "go_cjhat6u2j0bjg5y3tmszihqc7",
+      "date_created": "2018-05-17T17:28:27.067Z",
+      "date_updated": "2018-05-17T17:28:27.175Z",
+      "status": "success",
+      "fail_reason": null,
+      "type": "authorize",
+      "rollbacked": false,
+      "model": "transaction",
+      "model_id": "3514521",
+      "group_id": "gog_cjhat6u2j0bjh5y3t79lbt9vb",
+      "next_group_id": "gog_cjhat6u2e0bjf5y3tmsm589i0",
+      "request_id": "gr_cjhat6u1y0bjb5y3tb2bgkckg",
+      "started_at": 1526578107083,
+      "ended_at": 1526578107175,
+      "processor": "pagarme",
+      "processor_response_code": "0000",
+      "metadata": {
+        "environment": {
+          "response_code": "0000",
+          "authorization_code": "517887",
+          "authorized_amount": 21050,
+          "tid": "3514521",
+          "nsu": "3514521"
+        }
+      }
+    },
+    {
+      "id": "go_cjhat6u650bjl5y3tfw6tixiv",
+      "date_created": "2018-05-17T17:28:27.198Z",
+      "date_updated": "2018-05-17T17:28:27.248Z",
+      "status": "success",
+      "fail_reason": null,
+      "type": "analyze",
+      "rollbacked": false,
+      "model": "transaction",
+      "model_id": "3514521",
+      "group_id": "gog_cjhat6u2e0bjf5y3tmsm589i0",
+      "next_group_id": "gog_cjhat6u280bjd5y3tiow89saw",
+      "request_id": "gr_cjhat6u1y0bjb5y3tb2bgkckg",
+      "started_at": 1526578107196,
+      "ended_at": 1526578107248,
+      "processor": "development",
+      "processor_response_code": null,
+      "metadata": {
+        "environment": {
+          "score": 19
+        },
+        "kind": "analyze",
+        "antifraud_analysis_id": 834114
+      }
+    }
+  ],
+  "chargebackOperations": [],
+  "payables": [],
+  "split_rules": [],
+  "antifraudAnalyses": [
+    {
+      "object": "antifraud_analysis",
+      "name": "pagarme",
+      "score": null,
+      "cost": 70,
+      "status": "refused",
+      "date_created": "2018-05-17T17:28:27.186Z",
+      "date_updated": "2018-05-17T17:28:27.770Z",
+      "id": 834113
+    }
+  ]
+}

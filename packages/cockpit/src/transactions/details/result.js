@@ -1,10 +1,14 @@
 import {
+  __,
   always,
   apply,
   applySpec,
   assoc,
+  both,
   complement,
+  contains,
   either,
+  find,
   flatten,
   groupBy,
   has,
@@ -67,12 +71,18 @@ const normalizeChargebackOps = pipe(
   flatten
 )
 
+const findPreviousOperation = (groupId, operations) => (
+  find(propEq('next_group_id', groupId), operations)
+)
+
 const sortGatewayOperations = (operations) => {
   const lastOperation = operations.find(propEq('next_group_id', null))
   let list = [lastOperation]
 
-  operations.forEach((operation) => {
-    if (head(list).group_id === operation.next_group_id) {
+  operations.forEach(() => {
+    const operation = findPreviousOperation(head(list).group_id, operations)
+
+    if (operation) {
       list = [operation, ...list]
     }
   })
@@ -80,19 +90,92 @@ const sortGatewayOperations = (operations) => {
   return list
 }
 
+const operationsTypesBlackList = ['conciliate']
+const operationsStatusBlackList = ['dropped', 'waiting']
+
+const rejectInvalidOperations = reject(either(
+  propSatisfies(contains(__, operationsTypesBlackList), 'type'),
+  propSatisfies(contains(__, operationsStatusBlackList), 'status')
+))
+
+const manualReviewTimeout = both(
+  propEq('status', 'refused'),
+  propEq('refuse_reason', 'manual_review_timeout')
+)
+
+const getStatus = (transaction, manualReviewAnalysis) => {
+  if (transaction.status === 'pending_review') {
+    return 'pending'
+  }
+
+  if (manualReviewTimeout(transaction)) {
+    return 'timeout'
+  }
+
+  return manualReviewAnalysis.status
+}
+
+const buildCreditCardOperations = ({
+  transaction,
+  gatewayOperations,
+  chargebackOperations,
+  antifraudAnalyses,
+}) => {
+  const sortedGatewayOps = sortGatewayOperations(gatewayOperations)
+  const filteredGatewayOps = rejectInvalidOperations(sortedGatewayOps)
+  const normalizedChargebackOps = normalizeChargebackOps(chargebackOperations)
+
+  const addAntifraudOperations = (operations, operation) => {
+    if (operation.type !== 'analyze') {
+      return operations.concat([operation])
+    }
+
+    const pagarmeAnalysis = find(
+      propEq('name', 'pagarme'),
+      antifraudAnalyses
+    )
+
+    const manualReviewAnalysis = find(
+      propEq('name', 'manual_review'),
+      antifraudAnalyses
+    )
+
+    const hasManualReview =
+      transaction.status === 'pending_review' ||
+      manualReviewTimeout(transaction) ||
+      manualReviewAnalysis
+
+    const antifraudOperation = {
+      created_at: operation.date_created,
+      id: operation.id,
+      status: pagarmeAnalysis.status,
+      type: operation.type,
+    }
+
+    if (hasManualReview) {
+      const manualReviewOperation = {
+        created_at: operation.date_updated,
+        id: operation.id,
+        status: getStatus(transaction, manualReviewAnalysis),
+        type: 'manual_review',
+      }
+
+      return operations.concat([antifraudOperation, manualReviewOperation])
+    }
+
+    return operations.concat([antifraudOperation])
+  }
+
+  return filteredGatewayOps
+    .reduce(addAntifraudOperations, [])
+    .concat(normalizedChargebackOps)
+}
+
 const chooseOperations = pipe(
   ifElse(
     pathEq(['transaction', 'payment_method'], 'boleto'),
     pipe(prop('gatewayOperations'), sortGatewayOperations),
-    pipe(
-      pick(['gatewayOperations', 'chargebackOperations']),
-      juxt([
-        pipe(prop('gatewayOperations'), sortGatewayOperations),
-        pipe(prop('chargebackOperations'), normalizeChargebackOps),
-      ]),
-      flatten,
-      reject(propEq('type', 'conciliate'))
-    )
+    buildCreditCardOperations
   ),
   reverse
 )
@@ -174,36 +257,10 @@ const aggregateInstallments = (acc, installment) =>
   mergeWithKey(mergeInstallment, acc, installment)
 
 const mapRecipients = map(applySpec({
-  name: path(['recipient', 'bank_account', 'legal_name']),
   amount: sumInstallmentsAmount,
-  net_amount: pipe(
-    juxt([
-      sumInstallmentsAmount,
-      sumInstallmentsCostAmount,
-    ]),
-    apply(subtract)
-  ),
-  status: pipe(
-    prop('installments'),
-    sortByCreatedAt,
-    last,
-    prop('status')
-  ),
-  liabilities: pipe(
-    juxt([
-      ifElse(
-        propEq('charge_processing_fee', true),
-        always('mdr'),
-        always(null)
-      ),
-      ifElse(
-        propEq('liable', true),
-        always('chargeback'),
-        always(null)
-      ),
-    ]),
-    reject(isNil)
-  ),
+  charge_remainder: prop('charge_remainder'),
+  created_at: prop('date_created'),
+  id: prop('recipient_id'),
   installments: pipe(
     prop('installments'),
     map(applySpec({
@@ -237,6 +294,38 @@ const mapRecipients = map(applySpec({
     values,
     reverse
   ),
+  liabilities: pipe(
+    juxt([
+      ifElse(
+        propEq('charge_processing_fee', true),
+        always('mdr'),
+        always(null)
+      ),
+      ifElse(
+        propEq('liable', true),
+        always('chargeback'),
+        always(null)
+      ),
+    ]),
+    reject(isNil)
+  ),
+  name: path(['recipient', 'bank_account', 'legal_name']),
+  net_amount: pipe(
+    juxt([
+      sumInstallmentsAmount,
+      sumInstallmentsCostAmount,
+    ]),
+    apply(subtract)
+  ),
+  percentage: pipe(prop('percentage'), String),
+  split_rule_id: prop('id'),
+  status: pipe(
+    prop('installments'),
+    sortByCreatedAt,
+    last,
+    prop('status')
+  ),
+  updated_at: prop('date_updated'),
 }))
 
 const buildRecipients = applySpec({
@@ -280,6 +369,7 @@ const mapTransactionToResult = applySpec({
         pick([
           'gatewayOperations',
           'chargebackOperations',
+          'antifraudAnalyses',
           'transaction',
         ]),
         buildOperations
