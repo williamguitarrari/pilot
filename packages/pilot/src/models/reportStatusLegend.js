@@ -12,3 +12,4 @@ export default {
     color: '#fcb20a',
   },
 }
+

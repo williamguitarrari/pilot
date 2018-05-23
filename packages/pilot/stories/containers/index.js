@@ -1,5 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
+import { action } from '@storybook/addon-actions'
 
 import AnticipationForm from './Anticipation/Form'
 import BoletoForm from './Refund/BoletoForm'

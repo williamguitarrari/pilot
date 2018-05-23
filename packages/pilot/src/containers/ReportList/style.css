@@ -1,0 +1,11 @@
+.cardComponent {
+    display: flex;
+}
+
+.cardComponent > * {
+  margin-left: 17px;
+}
+  
+.cardComponent > *:first-child {
+  margin-left: unset;
+}

@@ -19,7 +19,6 @@ const renderSymbol = (value) => {
 
 const renderValue = (amount, color) => {
   const formattedValue = decimalCurrency(Math.abs(amount))
-
   return (
     <div className={style.amount}>
       <small style={{ color }}>
