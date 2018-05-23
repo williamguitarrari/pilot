@@ -1,5 +1,6 @@
 import React, { Fragment, Component } from 'react'
 import PropTypes from 'prop-types'
+import qs from 'qs'
 
 import {
   Route,
@@ -8,7 +9,7 @@ import {
 } from 'react-router-dom'
 
 import { connect } from 'react-redux'
-import { compose } from 'ramda'
+import { compose, pipe, tail } from 'ramda'
 
 import { requestLogin } from './Account/actions'
 
@@ -39,13 +40,20 @@ const enhance = compose(
   withRouter,
   connect(mapStateToProps, mapDispatchToProps)
 )
+const parseQueryString = pipe(tail, qs.parse)
+
+const getSessionId = (props, queryString) =>
+  props.sessionId || queryString.session_id
 
 class Root extends Component {
   componentDidMount () {
     const {
       client,
-      sessionId,
+      location: { search: queryString },
     } = this.props
+
+    const parsedQueryString = parseQueryString(queryString)
+    const sessionId = getSessionId(this.props, parsedQueryString)
 
     if (!client && sessionId) {
       this.props.requestLogin({ session_id: sessionId, environment })
@@ -87,6 +95,7 @@ Root.propTypes = {
   company: PropTypes.object, // eslint-disable-line
   location: PropTypes.shape({
     pathname: PropTypes.string,
+    search: PropTypes.string,
   }),
   requestLogin: PropTypes.func.isRequired,
   sessionId: PropTypes.string,
