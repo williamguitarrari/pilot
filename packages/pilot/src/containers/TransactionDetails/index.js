@@ -19,6 +19,7 @@ import {
   pathOr,
   pipe,
   prop,
+  propEq,
   sum,
   unless,
   when,
@@ -34,6 +35,8 @@ import {
   Legend,
 } from 'former-kit'
 import IconInfo from 'emblematic-icons/svg/Info32.svg'
+import IconCheck from 'emblematic-icons/svg/Check24.svg'
+import IconClearClose from 'emblematic-icons/svg/ClearClose24.svg'
 import currencyFormatter from '../../formatters/currency'
 import CustomerCard from '../../components/CustomerCard'
 import decimalCurrencyFormatter from '../../formatters/decimalCurrency'
@@ -103,6 +106,8 @@ const isBoletoWaitingPayment = both(
   isWaitingPaymentTransaction
 )
 
+const isPendingReviewTransaction = propEq('status', 'pending_review')
+
 const showStatusAlert = either(
   isChargebackedTransaction,
   isBoletoWaitingPayment
@@ -135,6 +140,28 @@ class TransactionDetails extends Component {
     this.renderOutAmountSubTitle = this.renderOutAmountSubTitle.bind(this)
     this.renderPayment = this.renderPayment.bind(this)
     this.renderPaymentCard = this.renderPaymentCard.bind(this)
+  }
+
+  getHeaderActions () {
+    const {
+      transaction,
+      headerLabels,
+    } = this.props
+
+    if (isPendingReviewTransaction(transaction)) {
+      return [
+        {
+          icon: <IconClearClose width={12} height={12} />,
+          title: headerLabels.refuseLabel,
+        },
+        {
+          icon: <IconCheck width={12} height={12} />,
+          title: headerLabels.approveLabel,
+        },
+      ]
+    }
+
+    return []
   }
 
   renderAlertInfo () {
@@ -354,8 +381,10 @@ class TransactionDetails extends Component {
           >
             <Card>
               <DetailsHead
+                actions={this.getHeaderActions()}
                 identifier={`#${id}`}
                 properties={detailsHeadProperties}
+                actions={getHeaderActions(transaction, headerLabels)}
                 title={headerLabels.title}
               />
             </Card>
