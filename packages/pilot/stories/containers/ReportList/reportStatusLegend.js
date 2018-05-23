@@ -1,4 +1,4 @@
-const status = {
+export default {
   ready: {
     color: '#17c9b2',
     text: 'Disponível',
