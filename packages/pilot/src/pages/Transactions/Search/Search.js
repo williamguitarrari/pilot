@@ -252,11 +252,15 @@ class TransactionsSearch extends React.Component {
   }
 
   handlePendingReviewsFilter () {
-    return this.handleFilterChange({
+    this.handleFilterChange({
       dates: {},
       search: '',
       values: {
         status: ['pending_review'],
+      },
+      sort: {
+        field: ['created_at'],
+        order: 'ascending',
       },
     })
   }
@@ -326,11 +330,14 @@ class TransactionsSearch extends React.Component {
       values,
     } = filters
 
+    const sort = filters.sort || this.props.query.sort
+
     const query = {
       ...this.props.query,
       search,
       dates,
       filters: values,
+      sort,
       offset: 1,
     }
 
