@@ -26,6 +26,7 @@ import BalanceTotalDisplay from './BalanceTotalDisplay'
 import BalanceSummary from './BalanceSummary'
 import SidebarSections from './SidebarSections'
 import SidebarSummary from './SidebarSummary'
+import ReportCardState from './ReportCard'
 
 storiesOf('Components', module)
   .add('Copy button', () => (
@@ -103,3 +104,7 @@ storiesOf('Components', module)
   .add('Transfer Error', () => (
     <TransferError />
   ))
+  .add('Report card', () => (
+    <ReportCardState />
+  ))
+

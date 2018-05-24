@@ -382,6 +382,20 @@
       "subscription_id": "Id da assinatura",
       "tid": "TID (ID da transação)"
     },
+    "report": {
+      "status_of": {
+        "canceled": "Cancelado",
+        "processing": "Processando",
+        "ready": "Disponível",
+        "waiting": "Aguardando processamento",
+      },
+      "status_acronym_of": {
+        "canceled": "C",
+        "processingy": "P",
+        "ready": "D", 
+        "waiting": "A",
+      }
+    },
     "user": {
       "permission": {
         "admin": "Administrador",
@@ -545,6 +559,30 @@
       "try_again": "Tentar novamente",
       "view_transaction": "Visualizar transação",
       "wrong_password": "Senha inválida"
+    },
+    "report": {
+      "at": "às",
+      "clear_filters": "Limpar filtros",
+      "confirm_filters": "Filtrar",
+      "find_by": "Filtre pelo nome do relatório",
+      "items_per_page": "itens por página",
+      "no_content_found": "Não foram encontrados resultados para essa busca.",
+      "of": "de",
+      "new_report": "Novo relatório",
+      "period_summary": "Resumo de:",
+      "reports_number": "Nº de relatórios:",
+      "title": "Relatórios", 
+      "try_filter_again": "Tente novamente com outros filtros.",
+      "created_at": "Criado em",
+      "export_to": "Exportar para",
+      "filters": "Filtros",
+      "id": "ID (ID do relatório)",
+      "status": "Status",
+      "type_files": {
+        "csv":"CSV",
+        "excel": "Excel",
+        "pdf":"PDF",
+      }
     },
     "reprocess": {
       "submit": "Reprocessar transação",
