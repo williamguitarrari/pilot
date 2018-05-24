@@ -174,10 +174,17 @@
     "paid_amount": "VALOR CAPTURADO",
     "payment_method": "FORMA DE PAGAMENTO",
     "refuse_reason": "MOTIVO DA RECUSA",
+    "risk_level": {
+      "high": "Risco: alto",
+      "low": "Risco: baixo",
+      "moderated": "Risco: moderado",
+      "very_high": "Risco: muito alto",
+      "very_low": "Risco: muito baixo"
+    },
     "soft_descriptor": "Descrição na fatura",
     "status": "STATUS",
     "subscription_id": "Id da assinatura",
     "tid": "TID (ID da transação)",
-    "title": "DETALHES DA TRANSAÇÃO"
+    "title": "Detalhes da transação"
   }
 }

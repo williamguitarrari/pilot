@@ -68,6 +68,7 @@
     },
     "reason_code": null,
     "recipients": [],
+    "risk_level": "high",
     "soft_descriptor": null,
     "status": "pending_review",
     "status_reason": "antifraud",
