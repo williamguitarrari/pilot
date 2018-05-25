@@ -27,8 +27,11 @@
   "try_filter_again": "Tente novamente com outros filtros.",
   "alert": {
     "chargeback_reason": "Motivo do chargeback: {{reason}}",
+    "pending_review": "Existe {{count}} transação pendente de revisão.",
+    "pending_review_plural": "Existem {{count}} transações pendentes de revisão.",
     "reason_code": "Código {{code}}",
-    "resubmit": "REAPRESENTAR CHARGEBACK"
+    "resubmit": "Reapresentar chargeback",
+    "warning": "Atenção"
   },
   "boleto": {
     "title": "BOLETO",
@@ -186,5 +189,6 @@
     "subscription_id": "Id da assinatura",
     "tid": "TID (ID da transação)",
     "title": "Detalhes da transação"
-  }
+  },
+  "view_transactions": "Ver Transações"
 }

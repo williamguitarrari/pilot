@@ -68,7 +68,7 @@
   width: 1px;
 }
 
-.noResultAlert {
+.parentWidth {
   flex: 1;
 
   & > * {

@@ -176,9 +176,11 @@ class TransactionsSearch extends React.Component {
     this.handlePageCountChange = this.handlePageCountChange.bind(this)
     this.handleRowDetailsClick = this.handleRowDetailsClick.bind(this)
     this.handleRowClick = this.handleRowClick.bind(this)
-    this.requestData = this.requestData.bind(this)
     this.handleExpandRow = this.handleExpandRow.bind(this)
+    this.handlePendingReviewsFilter = this.handlePendingReviewsFilter.bind(this)
     this.handleSelectRow = this.handleSelectRow.bind(this)
+    this.requestData = this.requestData.bind(this)
+    this.requestPendingReviewsCount = this.requestPendingReviewsCount.bind(this)
 
     const translateColumns = getColumnTranslator(t)
     const columnsDefault = getDefaultTransactionColumns(this.handleRowDetailsClick)
@@ -217,11 +219,14 @@ class TransactionsSearch extends React.Component {
 
   componentDidMount () {
     const urlSearchQuery = this.props.history.location.search
+
     if (isEmpty(urlSearchQuery)) {
       this.updateQuery(this.props.query)
     } else {
       this.requestData(parseQueryUrl(urlSearchQuery))
     }
+
+    this.requestPendingReviewsCount()
   }
 
   componentWillReceiveProps (nextProps) {
@@ -231,6 +236,33 @@ class TransactionsSearch extends React.Component {
     if (search !== location.search) {
       this.requestData(parseQueryUrl(location.search))
     }
+  }
+
+  requestPendingReviewsCount () {
+    const { client } = this.props
+
+    return client
+      .transactions
+      .countPendingReviews()
+      .then(({ count }) => {
+        this.setState({
+          pendingReviewsCount: count,
+        })
+      })
+  }
+
+  handlePendingReviewsFilter () {
+    this.handleFilterChange({
+      dates: {},
+      search: '',
+      values: {
+        status: ['pending_review'],
+      },
+      sort: {
+        field: ['created_at'],
+        order: 'ascending',
+      },
+    })
   }
 
   updateQuery (query) {
@@ -298,11 +330,14 @@ class TransactionsSearch extends React.Component {
       values,
     } = filters
 
+    const sort = filters.sort || this.props.query.sort
+
     const query = {
       ...this.props.query,
       search,
       dates,
       filters: values,
+      sort,
       offset: 1,
     }
 
@@ -369,6 +404,7 @@ class TransactionsSearch extends React.Component {
       itemsPerPageLabel,
       noContentFoundMessage,
       ofLabel,
+      pendingReviewsCount,
       periodSummaryLabel,
       result: {
         total,
@@ -392,6 +428,7 @@ class TransactionsSearch extends React.Component {
         search,
         sort,
       },
+      t,
     } = this.props
 
     const orderColumn = getOrderColumn(sort.field, columns)
@@ -429,6 +466,7 @@ class TransactionsSearch extends React.Component {
         handlePageCountChange={this.handlePageCountChange}
         handleRowClick={this.handleRowClick}
         handleSelectRow={this.handleSelectRow}
+        handlePendingReviewsFilter={this.handlePendingReviewsFilter}
         itemsPerPageLabel={itemsPerPageLabel}
         loading={loading}
         noContentFoundMessage={noContentFoundMessage}
@@ -436,11 +474,13 @@ class TransactionsSearch extends React.Component {
         order={sort ? sort.order : ''}
         orderColumn={orderColumn}
         pagination={pagination}
+        pendingReviewsCount={pendingReviewsCount}
         periodSummaryLabel={periodSummaryLabel}
         rows={list.rows}
         search={search}
         selectedPage={count}
         selectedRows={selectedRows}
+        t={t}
         tableTitle={tableTitle}
         totalVolumeLabel={totalVolumeLabel}
         transactionsNumberLabel={transactionsNumberLabel}
@@ -454,6 +494,7 @@ class TransactionsSearch extends React.Component {
 TransactionsSearch.propTypes = {
   client: PropTypes.shape({
     transactions: PropTypes.shape({
+      countPendingReviews: PropTypes.func.isRequired,
       search: PropTypes.func.isRequired,
     }).isRequired,
   }).isRequired,
