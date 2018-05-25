@@ -7683,9 +7683,9 @@ pagarme@3.4.0:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/pagarme/-/pagarme-3.4.0.tgz#8a47b6b19565be5c79a9ee32ccc303a699ba33a5"
 
-pagarme@3.7.0:
-  version "3.7.0"
-  resolved "https://registry.yarnpkg.com/pagarme/-/pagarme-3.7.0.tgz#f4f301b1fa6f8f98e3a7479abc6fd11f15806aa1"
+pagarme@3.7.3:
+  version "3.7.3"
+  resolved "https://registry.yarnpkg.com/pagarme/-/pagarme-3.7.3.tgz#c95f390d498ad1f3dbe220f83adc724ef1b4c776"
 
 pako@~1.0.5:
   version "1.0.6"
