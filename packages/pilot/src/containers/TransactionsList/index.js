@@ -116,7 +116,7 @@ const TransactionsList = ({
                 type="warning"
               >
                 <p>
-                  <strong>{t('alert.warning')}!</strong>
+                  <strong>{t('alert.warning')}!</strong>&nbsp;
                   {
                     t('alert.pending_review', { count: pendingReviewsCount })
                   }
