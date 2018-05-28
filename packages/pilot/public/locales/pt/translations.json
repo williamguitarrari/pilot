@@ -73,13 +73,7 @@
       "result_success_view_transaction": "Visualizar transação",
       "result_suffix_message": "com sucesso",
       "step_title_confirmation": "Confirmação",
-      "step_title_result": "Conclusão",
-      "legal_warning_approves_part_1": "Por se tratar de uma revisão manual",
-      "legal_warning_approves_part_2": "da sua operação",
-      "legal_warning_approves_part_3": ", o Pagar.me é isento de responsabilidade sobre esta",
-      "legal_warning_approves_approve": "aprovação.",
-      "legal_warning_approves_refuse": "recusa.",
-      "password_invalid_error": "Senha inválida"
+      "step_title_result": "Conclusão"
     }
   },
   "models": {
