@@ -336,7 +336,7 @@ class TransactionDetails extends Component {
       },
     ]
 
-    if (transaction.riskLevel !== 'unknown') {
+    if (transaction.risk_level !== 'unknown') {
       detailsHeadProperties.push({
         children: <RiskLevel level={transaction.risk_level} />,
         title: riskLevelsLabels[transaction.risk_level],
