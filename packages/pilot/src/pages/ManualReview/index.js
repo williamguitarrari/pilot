@@ -46,6 +46,7 @@ class ManualReview extends Component {
       },
     }
 
+    this.handleTryAgain = this.handleTryAgain.bind(this)
     this.transactionAnalyzed = this.transactionAnalyzed.bind(this)
     this.handleConfirm = this.handleConfirm.bind(this)
     this.handleClose = this.handleClose.bind(this)
@@ -61,6 +62,16 @@ class ManualReview extends Component {
 
   transactionAnalyzed () {
     return this.state.stepStatus.result === 'current'
+  }
+
+  handleTryAgain () {
+    this.setState({
+      errorMessage: null,
+      stepStatus: {
+        confirmation: 'current',
+        result: 'pending',
+      },
+    })
   }
 
   handleConfirm (password) {
@@ -148,7 +159,7 @@ class ManualReview extends Component {
         isOpen={isOpen}
         onCancel={this.handleClose}
         onConfirm={this.handleConfirm}
-        onRetry={() => { console.log('onRetry') }}
+        onRetry={this.handleTryAgain}
         onViewTransaction={this.handleClose}
         stepStatus={stepStatus}
         t={t}

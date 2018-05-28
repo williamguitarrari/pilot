@@ -75,7 +75,7 @@ const Result = ({
             fill="outline"
             onClick={onRetry}
           >
-            {t('try_again')}
+            {t('pages.manual_review.result_error_try_again')}
           </Button>
         :
           <Fragment>
