@@ -8,7 +8,10 @@ import CardConfirmation from './Refund/CardConfirmation'
 import CardForm from './Refund/CardForm'
 import CardResult from './Refund/CardResult'
 import RecipientListState from './RecipientList'
-import { ManualReviewApproveForm, ManualReviewRefuseForm } from './ManualReview/Form'
+import {
+  ManualReviewApproveForm,
+  ManualReviewRefuseForm,
+} from './ManualReview/Form'
 import {
   ManualReviewApproveResult,
   ManualReviewRefuseResult,
@@ -21,6 +24,10 @@ import {
   ManualReviewStepRefuseResult,
   ManualReviewStepResultError,
 } from './ManualReview'
+import {
+  BoletoRefund,
+  CreditCardRefund,
+} from './Refund'
 
 storiesOf('Containers', module)
   .add('Recipient list', () => (
@@ -74,3 +81,10 @@ storiesOf('Containers', module)
   .add('Card refund form', () => (
     <CardForm />
   ))
+  .add('Boleto transaction refund', () => (
+    <BoletoRefund />
+  ))
+  .add('Card transaction refund', () => (
+    <CreditCardRefund />
+  ))
+
