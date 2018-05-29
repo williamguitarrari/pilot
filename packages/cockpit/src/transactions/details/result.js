@@ -376,6 +376,7 @@ const mapTransactionToResult = applySpec({
       ),
       pipe(prop('split_rules'), buildRecipients),
       pipe(prop('chargebackOperations'), buildReasonCode),
+      pick(['capabilities']),
     ]),
     mergeAll
   ),
