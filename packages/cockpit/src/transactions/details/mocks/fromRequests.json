@@ -34,6 +34,16 @@
     "card_last_digits": "123456",
     "card_pin_mode": null,
     "cost": 0,
+    "phone": {
+      "ddd": "42",
+      "ddi": "55",
+      "id": 136016,
+      "number": "36243958",
+      "object": "phone"
+    },
+    "address": {
+      "street": "Gomes de Carvalho"
+    },
     "customer": {
       "birthday": "1999-01-01",
       "born_at": null,
