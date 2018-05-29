@@ -4,6 +4,7 @@ import { storiesOf } from '@storybook/react'
 import BoletoRefundDetails from './BoletoRefundDetails'
 import CopyButton from './CopyButton'
 import CurrencyInput from './CurrencyInput'
+import CreditCardRefundDetails from './CreditCardRefundDetails'
 import CustomerCard from './CustomerCard'
 import DataDisplay from './DataDisplay'
 import DetailsHead from './DetailsHead'
@@ -58,5 +59,8 @@ storiesOf('Components', module)
   ))
   .add('Boleto Refund Details', () => (
     <BoletoRefundDetails />
+  ))
+  .add('CreditCardRefundDetails', () => (
+    <CreditCardRefundDetails />
   ))
 
