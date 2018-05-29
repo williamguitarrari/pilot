@@ -1,0 +1,24 @@
+@import "former-kit-skin-pagarme/dist/styles/spacing.css";
+
+.agencyAccountFields {
+  display: flex;
+  flex-direction: row;
+}
+
+.amountGrid {
+  padding-top: var(--spacing-medium);
+}
+
+.legalName {
+  width: 100%;
+}
+
+.refundAmount {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.separator {
+  align-self: start;
+  margin-top: 18px;
+}

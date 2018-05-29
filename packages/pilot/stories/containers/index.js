@@ -1,6 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 
+import BoletoForm from './Refund/BoletoForm'
 import RecipientListState from './RecipientList'
 import { ManualReviewApproveForm, ManualReviewRefuseForm } from './ManualReview/Form'
 import {
@@ -49,4 +50,7 @@ storiesOf('Containers', module)
   ))
   .add('Manual review step result error', () => (
     <ManualReviewStepResultError />
+  ))
+  .add('Boleto form', () => (
+    <BoletoForm />
   ))
