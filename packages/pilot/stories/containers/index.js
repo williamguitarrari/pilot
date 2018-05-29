@@ -6,6 +6,7 @@ import BoletoRefundConfirm from './Refund/BoletoConfirmation'
 import BoletoRefundResult from './Refund/BoletoResult'
 import CardConfirmation from './Refund/CardConfirmation'
 import CardForm from './Refund/CardForm'
+import CardResult from './Refund/CardResult'
 import RecipientListState from './RecipientList'
 import { ManualReviewApproveForm, ManualReviewRefuseForm } from './ManualReview/Form'
 import {
@@ -66,6 +67,9 @@ storiesOf('Containers', module)
   ))
   .add('Card refund confirmation', () => (
     <CardConfirmation />
+  ))
+  .add('Card refund result', () => (
+    <CardResult />
   ))
   .add('Card refund form', () => (
     <CardForm />
