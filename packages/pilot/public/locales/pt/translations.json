@@ -55,7 +55,8 @@
         "refuse": "reprovar",
         "approved": "aprovada",
         "refused": "reprovada"
-      },
+      }
+    },
     "account_type": {
       "conta_corrente": "Conta corrente",
       "conta_corrente_conjunta": "Conta corrente conjunta",
@@ -234,7 +235,7 @@
       "installments": "Número de parcelas"
     }
   },
-  "pages" : {
+  "pages": {
     "manual_review": {
       "approve_action": "Aprovar transação",
       "legal_warning_approves_approve": "aprovação.",

@@ -11,6 +11,10 @@ const transaction = {
   "status": "chargedback",
   "status_reason": "acquirer",
   "boleto": null,
+  "capabilities": {
+    "refundable": true,
+    "reprocessable": true,
+  },
   "payment": {
     "method": "credit_card",
     "paid_amount": 985172498,

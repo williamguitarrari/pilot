@@ -20,6 +20,7 @@ import getColumnFormatter from '../../../formatters/columnTranslator'
 import installmentTableColumns from '../../../components/RecipientSection/installmentTableColumns'
 import ManualReview from '../../ManualReview'
 import TransactionDetailsContainer from '../../../containers/TransactionDetails'
+import Refund from '../../Refund'
 
 const mapStateToProps = ({
   account: {
@@ -144,6 +145,7 @@ class TransactionDetails extends Component {
       },
       showManualReview: false,
       manualReviewAction: null,
+      showRefund: false,
     }
 
     this.handleAlertDismiss = this.handleAlertDismiss.bind(this)
@@ -151,6 +153,10 @@ class TransactionDetails extends Component {
     this.handleCopyBoletoUrlClick = this.handleCopyBoletoUrlClick.bind(this)
     this.handleManualReviewApprove = this.handleManualReviewApprove.bind(this)
     this.handleManualReviewRefuse = this.handleManualReviewRefuse.bind(this)
+    this.handleAlertDismiss = this.handleAlertDismiss.bind(this)
+    this.handleCloseRefund = this.handleCloseRefund.bind(this)
+    this.handleCopyBoletoUrlClick = this.handleCopyBoletoUrlClick.bind(this)
+    this.handleRefund = this.handleRefund.bind(this)
     this.handleShowBoletoClick = this.handleShowBoletoClick.bind(this)
     this.handleUpdate = this.handleUpdate.bind(this)
     this.requestData = this.requestData.bind(this)
@@ -221,6 +227,14 @@ class TransactionDetails extends Component {
     this.setState({ showManualReview: false })
   }
 
+  handleRefund () {
+    this.setState({ showRefund: true })
+  }
+
+  handleCloseRefund () {
+    this.setState({ showRefund: false })
+  }
+
   handleShowBoletoClick () {
     const {
       transaction: {
@@ -245,6 +259,7 @@ class TransactionDetails extends Component {
       transactionDetailsLabels,
       showManualReview,
       manualReviewAction,
+      showRefund,
     } = this.state
 
     const {
@@ -308,7 +323,7 @@ class TransactionDetails extends Component {
       paid_amount: t('paid_amount'),
       // receive_date: t('received_at', { date: '01/01/1970' }),
       refund: t('payment.refund',
-        { value: currencyFormatter(payment.refund || 0) }
+        { value: currencyFormatter(payment.refund_amount || 0) }
       ),
     }
 
@@ -324,9 +339,11 @@ class TransactionDetails extends Component {
           installmentColumns={installmentColumns}
           metadataTitle={t('metadata')}
           onCopyBoletoUrl={this.handleCopyBoletoUrlClick}
+          onDismissAlert={this.handleAlertDismiss}
           onManualReviewApprove={this.handleManualReviewApprove}
           onManualReviewRefuse={this.handleManualReviewRefuse}
-          onDismissAlert={this.handleAlertDismiss}
+          onRefund={this.handleRefund}
+          onReprocess={() => {}}
           onShowBoleto={this.handleShowBoletoClick}
           paymentBoletoLabels={paymentBoletoLabels}
           paymentCardLabels={paymentCardLabels}
@@ -347,7 +364,16 @@ class TransactionDetails extends Component {
             onFinish={() => { this.handleUpdate(transaction.id) }}
             t={t}
             transactionId={transaction.id}
-          />}
+          />
+        }
+        {showRefund &&
+          <Refund
+            isOpen={showRefund}
+            onClose={this.handleCloseRefund}
+            onSuccess={this.handleUpdate}
+            transaction={transaction}
+          />
+        }
       </Fragment>
     )
   }
