@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react'
 
 import BoletoForm from './Refund/BoletoForm'
 import BoletoRefundConfirm from './Refund/BoletoConfirmation'
+import BoletoRefundResult from './Refund/BoletoResult'
 import RecipientListState from './RecipientList'
 import { ManualReviewApproveForm, ManualReviewRefuseForm } from './ManualReview/Form'
 import {
@@ -57,4 +58,7 @@ storiesOf('Containers', module)
   ))
   .add('Boleto refund confirm', () => (
     <BoletoRefundConfirm />
+  ))
+  .add('Boleto refund result', () => (
+    <BoletoRefundResult />
   ))
