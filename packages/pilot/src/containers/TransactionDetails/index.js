@@ -10,6 +10,8 @@ import {
   contains,
   either,
   equals,
+  flatten,
+  ifElse,
   isEmpty,
   isNil,
   juxt,
@@ -20,6 +22,7 @@ import {
   pipe,
   prop,
   propEq,
+  reject,
   sum,
   unless,
   when,
@@ -37,6 +40,8 @@ import {
 import IconInfo from 'emblematic-icons/svg/Info32.svg'
 import IconCheck from 'emblematic-icons/svg/Check24.svg'
 import IconClearClose from 'emblematic-icons/svg/ClearClose24.svg'
+import IconReverse from 'emblematic-icons/svg/Reverse24.svg'
+import ReprocessIcon from 'emblematic-icons/svg/Reprocess24.svg'
 import currencyFormatter from '../../formatters/currency'
 import CustomerCard from '../../components/CustomerCard'
 import decimalCurrencyFormatter from '../../formatters/decimalCurrency'
@@ -134,6 +139,7 @@ class TransactionDetails extends Component {
   constructor (props) {
     super(props)
 
+    this.getActions = this.getActions.bind(this)
     this.renderAlertInfo = this.renderAlertInfo.bind(this)
     this.renderBoleto = this.renderBoleto.bind(this)
     this.renderEvents = this.renderEvents.bind(this)
@@ -142,31 +148,70 @@ class TransactionDetails extends Component {
     this.renderPaymentCard = this.renderPaymentCard.bind(this)
   }
 
-  getHeaderActions () {
+
+  getActions () {
     const {
       transaction,
       headerLabels,
       onManualReviewRefuse,
       onManualReviewApprove,
       permissions,
+      onRefund,
+      onReprocess,
+      transaction: {
+        capabilities,
+      },
     } = this.props
 
-    if (isPendingReviewTransaction(transaction) && permissions.manualReview) {
-      return [
-        {
-          icon: <IconClearClose width={12} height={12} />,
-          onClick: onManualReviewRefuse,
-          title: headerLabels.refuseLabel,
-        },
-        {
-          icon: <IconCheck width={12} height={12} />,
-          onClick: onManualReviewApprove,
-          title: headerLabels.approveLabel,
-        },
-      ]
+    const onReprocessAction = {
+      icon: <ReprocessIcon width={12} height={12} />,
+      onClick: onReprocess,
+      title: 'Reprocessar',
     }
 
-    return []
+    const onRefundAction = {
+      icon: <IconReverse width={12} height={12} />,
+      onClick: onRefund,
+      title: 'Estornar',
+    }
+
+    const getManualReviewTransactionActions = (trx) => {
+      if (isPendingReviewTransaction(trx) && permissions.manualReview) {
+        return [
+          {
+            icon: <IconClearClose width={12} height={12} />,
+            onClick: onManualReviewRefuse,
+            title: headerLabels.refuseLabel,
+          },
+          {
+            icon: <IconCheck width={12} height={12} />,
+            onClick: onManualReviewApprove,
+            title: headerLabels.approveLabel,
+          },
+        ]
+      }
+      return []
+    }
+
+    const detailsHeadActions = pipe(
+      juxt([
+        ifElse(
+          propEq('reprocessable', true),
+          always(onReprocessAction),
+          always(null)
+        ),
+        ifElse(
+          propEq('refundable', true),
+          always(onRefundAction),
+          always(null)
+        ),
+        always(getManualReviewTransactionActions(transaction)),
+      ]),
+      flatten,
+      reject(isNil)
+    )
+
+    return detailsHeadActions(capabilities)
   }
 
   renderAlertInfo () {
@@ -341,15 +386,16 @@ class TransactionDetails extends Component {
     } = transaction
 
     const transactionDetailsContent = {
-      tid: id,
       acquirer_name: acquirer ? acquirer.name : null,
       acquirer_response_code: acquirer ? acquirer.response_code : null,
       authorization_code: acquirer ? acquirer.response_code : null,
+      capture_method: card ? card.capture_method : null,
       nsu: acquirer ? acquirer.sequence_number : null,
       soft_descriptor,
       subscription_id: subscription ? subscription.id : null,
-      capture_method: card ? card.capture_method : null,
+      tid: id,
     }
+
     if (isEmpty(transaction)) {
       return (<div />)
     }
@@ -388,7 +434,7 @@ class TransactionDetails extends Component {
             <Card>
               <CardContent>
                 <DetailsHead
-                  actions={this.getHeaderActions()}
+                  actions={this.getActions()}
                   identifier={`#${id}`}
                   properties={detailsHeadProperties}
                   title={headerLabels.title}
@@ -642,6 +688,8 @@ TransactionDetails.propTypes = {
   onDismissAlert: PropTypes.func, // eslint-disable-line react/no-unused-prop-types
   onManualReviewApprove: PropTypes.func,
   onManualReviewRefuse: PropTypes.func,
+  onRefund: PropTypes.func,
+  onReprocess: PropTypes.func.isRequired,
   onShowBoleto: PropTypes.func,
   paymentBoletoLabels: PropTypes.shape({
     copy: PropTypes.string,
@@ -654,7 +702,7 @@ TransactionDetails.propTypes = {
     title: PropTypes.string,
   }).isRequired,
   permissions: PropTypes.shape({
-    manualReview: PropTypes.string.isRequired,
+    manualReview: PropTypes.bool.isRequired,
   }).isRequired,
   riskLevelsLabels: PropTypes.shape({
     very_low: PropTypes.string,
@@ -688,16 +736,20 @@ TransactionDetails.propTypes = {
     refund: PropTypes.string,
   }).isRequired,
   transaction: PropTypes.shape({
-    id: PropTypes.number,
     boleto: PropTypes.shape({
       barcode: PropTypes.string,
       due_date: PropTypes.instanceOf(moment),
       url: PropTypes.string,
     }),
+    capabilities: PropTypes.shape({
+      refundable: PropTypes.bool,
+      reprocessable: PropTypes.bool,
+    }),
     created_at: PropTypes.string,
+    external_id: PropTypes.string,
+    id: PropTypes.number,
     updated_at: PropTypes.string,
     soft_descriptor: PropTypes.string,
-    external_id: PropTypes.string,
     status: PropTypes.string,
     status_reason: PropTypes.string,
     payment: PropTypes.shape({
@@ -778,6 +830,7 @@ TransactionDetails.defaultProps = {
   onManualReviewApprove: null,
   onManualReviewRefuse: null,
   onShowBoleto: null,
+  onRefund: null,
 }
 
 export default TransactionDetails
