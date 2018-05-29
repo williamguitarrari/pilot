@@ -119,6 +119,8 @@ storiesOf('Pages', module)
     <Layout>
       <TransactionDetails
         alertLabels={alertLabels}
+        atLabel="at Label"
+        boletoWarningMessage="boleto warning message"
         customerLabels={customerLabels}
         eventsLabels={eventsLabels}
         headerLabels={headerLabels}
@@ -126,6 +128,7 @@ storiesOf('Pages', module)
         metadataTitle="Metadata"
         onCopyBoletoUrl={action('copy boleto')}
         onDismissAlert={action('dismiss alert')}
+        onReprocess={action('reprocess')}
         onShowBoleto={action('show boleto')}
         paymentBoletoLabels={paymentBoletoLabels}
         paymentCardLabels={paymentCardLabels}
