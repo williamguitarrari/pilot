@@ -22,9 +22,19 @@ import getColumnFormatter from '../../../formatters/columnTranslator'
 import ManualReview from '../../ManualReview'
 
 const mapStateToProps = ({
-  account: { client },
+  account: {
+    client,
+    user: {
+      permission,
+    },
+  },
   transactions: { loading, query },
-}) => ({ client, loading, query })
+}) => ({
+  client,
+  loading,
+  permission,
+  query,
+})
 
 const mapDispatchToProps = dispatch => ({
   onRequestDetails: (query) => {
@@ -221,7 +231,7 @@ class TransactionDetails extends Component {
   }
 
   render () {
-    const { t } = this.props
+    const { permission, t } = this.props
     const {
       customerLabels,
       eventsLabels,
@@ -320,6 +330,9 @@ class TransactionDetails extends Component {
           onShowBoleto={this.handleShowBoletoClick}
           paymentBoletoLabels={paymentBoletoLabels}
           paymentCardLabels={paymentCardLabels}
+          permissions={{
+            manualReview: permission !== 'read_only',
+          }}
           recipientsLabels={recipientsLabels}
           riskLevelsLabels={riskLevelsLabels}
           totalDisplayLabels={totalDisplayLabels}
@@ -354,6 +367,7 @@ TransactionDetails.propTypes = {
   onReceiveDetails: PropTypes.func.isRequired,
   onRequestDetails: PropTypes.func.isRequired,
   onRequestDetailsFail: PropTypes.func.isRequired,
+  permission: PropTypes.string.isRequired,
   t: PropTypes.func.isRequired,
 }
 
