@@ -148,9 +148,10 @@ class TransactionDetails extends Component {
       headerLabels,
       onManualReviewRefuse,
       onManualReviewApprove,
+      permissions,
     } = this.props
 
-    if (isPendingReviewTransaction(transaction)) {
+    if (isPendingReviewTransaction(transaction) && permissions.manualReview) {
       return [
         {
           icon: <IconClearClose width={12} height={12} />,
@@ -647,6 +648,9 @@ TransactionDetails.propTypes = {
   }).isRequired,
   paymentCardLabels: PropTypes.shape({
     title: PropTypes.string,
+  }).isRequired,
+  permissions: PropTypes.shape({
+    manualReview: PropTypes.string.isRequired,
   }).isRequired,
   riskLevelsLabels: PropTypes.shape({
     very_low: PropTypes.string,
