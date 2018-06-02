@@ -9,6 +9,7 @@ import EventList from './EventList'
 import PaymentCards from './PaymentCards'
 import Property from './Property'
 import RecipientSectionState from './RecipientSection'
+import RiskLevel from './RiskLevel'
 import TotalDisplay from './TotalDisplay'
 import TransactionDetailsCard from './TransactionDetailsCard'
 import TreeView from './TreeView'
@@ -40,6 +41,9 @@ storiesOf('Components', module)
   ))
   .add('Payment card', () => (
     <PaymentCards />
+  ))
+  .add('RiskLevel', () => (
+    <RiskLevel />
   ))
   .add('TreeView', () => (
     <TreeView />

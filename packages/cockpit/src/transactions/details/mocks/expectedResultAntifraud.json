@@ -1,0 +1,77 @@
+{
+  "transaction": {
+    "acquirer": {
+      "name": "pagarme",
+      "response_code": "0000",
+      "sequence_number": "3514521",
+      "transaction_id": "3514521"
+    },
+    "amount": 21050,
+    "antifraud": null,
+    "boleto": null,
+    "card": {
+      "brand_name": "visa",
+      "capture_method": null,
+      "first_digits": "411111",
+      "holder_name": "Mateus Noguez Moog",
+      "international": true,
+      "last_digits": "1111",
+      "pin_mode": null
+    },
+    "created_at": "2018-05-17T17:28:26.998Z",
+    "customer": {
+      "birth_date": "1965-01-01T00:00:00.000Z",
+      "country": "br",
+      "document_number": null,
+      "document_type": "cpf",
+      "email": "mateusmoog@yahoo.com",
+      "name": "Morpheus Fishburne",
+      "phones": [
+        "+5511999998888",
+        "+5511888889999"
+      ]
+    },
+    "external_id": null,
+    "id": 3514521,
+    "metadata": {},
+    "operations": [
+      {
+        "created_at": "2018-05-17T17:28:27.778Z",
+        "cycle": null,
+        "id": "go_cjhat6u2e0bje5y3tcngama5q",
+        "status": "pending",
+        "type": "manual_review"
+      },
+      {
+        "created_at": "2018-05-17T17:28:27.062Z",
+        "cycle": null,
+        "id": "go_cjhat6u2e0bje5y3tcngama5q",
+        "status": "refused",
+        "type": "analyze"
+      },
+      {
+        "created_at": "2018-05-17T17:28:27.067Z",
+        "cycle": null,
+        "id": "go_cjhat6u2j0bjg5y3tmszihqc7",
+        "status": "success",
+        "type": "authorize"
+      }
+    ],
+    "payment": {
+      "cost_amount": 70,
+      "installments": 1,
+      "mdr_amount": 0,
+      "method": "credit_card",
+      "net_amount": -70,
+      "paid_amount": 0,
+      "refund_amount": 0
+    },
+    "reason_code": null,
+    "recipients": [],
+    "risk_level": "high",
+    "soft_descriptor": null,
+    "status": "pending_review",
+    "status_reason": "antifraud",
+    "updated_at": "2018-05-17T17:28:27.872Z"
+  }
+}

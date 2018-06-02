@@ -2,7 +2,7 @@
 import moment from 'moment'
 
 const transaction = {
-  "amount": 985172498,  
+  "amount": 985172498,
   "id": 3082517,
   "created_at": "2018-03-14T13:40:28.465Z",
   "updated_at": "2018-03-14T16:11:52.057Z",
@@ -73,6 +73,20 @@ const transaction = {
       "date_created": "2018-03-14T13:40:28.564Z",
       "type": "capture",
       "status": "success"
+    },
+    {
+      "created_at": "2018-03-14T13:40:28.579Z",
+      "cycle": null,
+      "id": "go_cjhat6u2e0bje5y3tcngama5p",
+      "status": "approved",
+      "type": "manual_review"
+    },
+    {
+      "created_at": "2018-03-14T13:40:28.579Z",
+      "cycle": null,
+      "id": "go_cjhat6u2e0bje5y3tcngama5q",
+      "status": "refused",
+      "type": "analyze"
     },
     {
       "id": "go_cjer4v50j5rag493sjr317z7v",
@@ -542,7 +556,8 @@ const transaction = {
         }
       ]
     }
-  ]
+  ],
+  "risk_level": "moderated",
 }
 
 

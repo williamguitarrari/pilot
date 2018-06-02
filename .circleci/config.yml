@@ -190,6 +190,17 @@ jobs:
             cd ../../builds/pilot-sandbox
             AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_PRD AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_PRD aws s3 sync --delete . s3://beta.dashboard.sandbox.prd.pagarme.net
             AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_PRD AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_PRD aws cloudfront create-invalidation --distribution-id $PRD_CDN_DISTRIBUTION_ID_SANDBOX --paths "/*"
+  pre_hold:
+    machine:
+          enabled: true
+    working_directory: ~/repo
+    steps:
+      - run:
+          name: Call the team for holded process
+          command: |
+            pip install slack-webhook-cli
+            slack "upgrade do seu jaeger está pronto, certifique que a versão $CIRCLE_TAG está correto em $CIRCLE_BUILD_URL"
+            
 workflows:
   version: 2
   build-and-deploy:
@@ -214,10 +225,18 @@ workflows:
             ignore: /.*/
           tags:
             only: /^v([0-9]+).([0-9]+).([0-9]+).*$/
+    - pre_hold:
+        requires:
+          - deploy_stg
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^v([0-9]+).([0-9]+).([0-9]+)$/
     - hold:
         type: approval
         requires:
-          - deploy_stg
+          - pre_hold
         filters:
           branches:
             ignore: /.*/

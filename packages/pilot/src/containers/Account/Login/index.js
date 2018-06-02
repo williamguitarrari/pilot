@@ -10,8 +10,6 @@ import {
 
 import styles from '../style.css'
 
-const showLoginError = errors => errors && errors.null
-
 const LoginContainer = ({
   errors,
   loading,
@@ -23,7 +21,6 @@ const LoginContainer = ({
     data={{
       email: '',
       password: '',
-      token: '',
     }}
     errors={errors}
     customErrorProp="error"
@@ -43,13 +40,16 @@ const LoginContainer = ({
         name="password"
       />
     </div>
-    {showLoginError(errors) &&
+    {errors &&
       <div className={styles.errorAlert}>
         <Alert
           type="error"
           icon={<IconWarning height={16} width={16} />}
         >
-          <p>{errors.null}</p>
+          {errors.null
+            ? errors.null
+            : t('login.network_error')
+          }
         </Alert>
       </div>
     }
@@ -77,10 +77,13 @@ const LoginContainer = ({
 )
 
 LoginContainer.propTypes = {
-  errors: PropTypes.shape({
-    email: PropTypes.string,
-    password: PropTypes.string,
-  }),
+  errors: PropTypes.oneOfType([
+    PropTypes.shape({
+      email: PropTypes.string,
+      password: PropTypes.string,
+    }),
+    PropTypes.instanceOf(Error),
+  ]),
   loading: PropTypes.bool,
   onLogin: PropTypes.func.isRequired,
   onPasswordRecovery: PropTypes.func.isRequired,

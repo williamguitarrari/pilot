@@ -9,6 +9,7 @@
   "filters": "FILTROS",
   "find_by": "Filtre por ID, CPF, nome e e-mail",
   "graphic": "GRÁFICO",
+  "graphic_legends": "Legendas",
   "items_per_page": "itens por página",
   "metadata": "METADATA",
   "net_amount": "VALOR LÍQUIDO",
@@ -26,8 +27,11 @@
   "try_filter_again": "Tente novamente com outros filtros.",
   "alert": {
     "chargeback_reason": "Motivo do chargeback: {{reason}}",
+    "pending_review": "Existe {{count}} transação pendente de revisão.",
+    "pending_review_plural": "Existem {{count}} transações pendentes de revisão.",
     "reason_code": "Código {{code}}",
-    "resubmit": "REAPRESENTAR CHARGEBACK"
+    "resubmit": "Reapresentar chargeback",
+    "warning": "Atenção"
   },
   "boleto": {
     "title": "BOLETO",
@@ -116,13 +120,15 @@
     "title": "HISTÓRICO DA TRANSAÇÃO"
   },
   "header": {
+    "approve": "Aprovar",
     "boleto_amount": "VALOR EMITIDO",
     "card_amount": "VALOR AUTORIZADO",
-    "title": "TRANSAÇÃO",
-    "status": "STATUS",
-    "installment_title": "PAGAMENTO",
     "installment": "À vista",
-    "installment_plural": "Parcelado {{count}}x"
+    "installment_plural": "Parcelado {{count}}x",
+    "installment_title": "PAGAMENTO",
+    "refuse": "Recusar",
+    "status": "STATUS",
+    "title": "TRANSAÇÃO"
   },
   "installment": {
     "anticipation": "SERVIÇO DE ANTECIPAÇÃO",
@@ -173,10 +179,18 @@
     "paid_amount": "VALOR CAPTURADO",
     "payment_method": "FORMA DE PAGAMENTO",
     "refuse_reason": "MOTIVO DA RECUSA",
+    "risk_level": {
+      "high": "Risco: alto",
+      "low": "Risco: baixo",
+      "moderated": "Risco: moderado",
+      "very_high": "Risco: muito alto",
+      "very_low": "Risco: muito baixo"
+    },
     "soft_descriptor": "Descrição na fatura",
     "status": "STATUS",
     "subscription_id": "Id da assinatura",
     "tid": "TID (ID da transação)",
-    "title": "DETALHES DA TRANSAÇÃO"
-  }
+    "title": "Detalhes da transação"
+  },
+  "view_transactions": "Ver Transações"
 }

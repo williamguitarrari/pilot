@@ -60,10 +60,11 @@ const fetchRecipients = uncurryN(2, client =>
 
 const details = client => transactionId =>
   props({
-    transaction: client.transactions.find({ id: transactionId }),
-    gatewayOperations: client.gatewayOperations.find({ transactionId }),
+    antifraudAnalyses: client.antifraudAnalyses.find({ transactionId }),
     chargebackOperations: client.chargebackOperations.find({ transactionId }),
+    gatewayOperations: client.gatewayOperations.find({ transactionId }),
     payables: client.payables.find({ transactionId }),
+    transaction: client.transactions.find({ id: transactionId }),
   })
     .then(data => fetchRecipients(client, data)
       .then(assoc('split_rules', __, data)))

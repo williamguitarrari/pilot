@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -19,11 +19,22 @@ import currencyFormatter from '../../../formatters/decimalCurrency'
 import TransactionDetailsContainer from '../../../containers/TransactionDetails'
 import installmentTableColumns from '../../../components/RecipientSection/installmentTableColumns'
 import getColumnFormatter from '../../../formatters/columnTranslator'
+import ManualReview from '../../ManualReview'
 
 const mapStateToProps = ({
-  account: { client },
+  account: {
+    client,
+    user: {
+      permission,
+    },
+  },
   transactions: { loading, query },
-}) => ({ client, loading, query })
+}) => ({
+  client,
+  loading,
+  permission,
+  query,
+})
 
 const mapDispatchToProps = dispatch => ({
   onRequestDetails: (query) => {
@@ -106,6 +117,14 @@ const getPaymentCardLabels = t => ({
   title: t('credit_card'),
 })
 
+const getRiskLevelsLabels = t => ({
+  very_low: t('transaction.risk_level.very_low'),
+  low: t('transaction.risk_level.low'),
+  moderated: t('transaction.risk_level.moderated'),
+  high: t('transaction.risk_level.high'),
+  very_high: t('transaction.risk_level.very_high'),
+})
+
 class TransactionDetails extends Component {
   constructor (props) {
     super(props)
@@ -117,14 +136,20 @@ class TransactionDetails extends Component {
       installmentColumns: formatColumns(installmentTableColumns),
       paymentBoletoLabels: getPaymentBoletoLabels(t),
       paymentCardLabels: getPaymentCardLabels(t),
+      riskLevelsLabels: getRiskLevelsLabels(t),
       transactionDetailsLabels: getTransactionDetailsLabels(t),
       result: {
         transaction: {},
       },
+      showManualReview: false,
+      manualReviewAction: null,
     }
 
     this.handleAlertDismiss = this.handleAlertDismiss.bind(this)
+    this.handleCloseManualReview = this.handleCloseManualReview.bind(this)
     this.handleCopyBoletoUrlClick = this.handleCopyBoletoUrlClick.bind(this)
+    this.handleManualReviewApprove = this.handleManualReviewApprove.bind(this)
+    this.handleManualReviewRefuse = this.handleManualReviewRefuse.bind(this)
     this.handleShowBoletoClick = this.handleShowBoletoClick.bind(this)
     this.handleUpdate = this.handleUpdate.bind(this)
     this.requestData = this.requestData.bind(this)
@@ -178,6 +203,24 @@ class TransactionDetails extends Component {
     // TODO: add a confirmation alert HERE !!!
   }
 
+  handleManualReviewApprove () {
+    this.setState({
+      showManualReview: true,
+      manualReviewAction: 'approve',
+    })
+  }
+
+  handleManualReviewRefuse () {
+    this.setState({
+      showManualReview: true,
+      manualReviewAction: 'refuse',
+    })
+  }
+
+  handleCloseManualReview () {
+    this.setState({ showManualReview: false })
+  }
+
   handleShowBoletoClick () {
     const {
       transaction: {
@@ -188,17 +231,20 @@ class TransactionDetails extends Component {
   }
 
   render () {
-    const { t } = this.props
+    const { permission, t } = this.props
     const {
       customerLabels,
       eventsLabels,
+      installmentColumns,
       paymentBoletoLabels,
       paymentCardLabels,
-      installmentColumns,
       result: {
         transaction,
       },
+      riskLevelsLabels,
       transactionDetailsLabels,
+      showManualReview,
+      manualReviewAction,
     } = this.state
 
     const {
@@ -224,6 +270,8 @@ class TransactionDetails extends Component {
       }),
       title: t('header.title'),
       statusLabel: t('header.status'),
+      approveLabel: t('header.approve'),
+      refuseLabel: t('header.refuse'),
     }
 
     const recipientsLabels = {
@@ -265,25 +313,42 @@ class TransactionDetails extends Component {
     }
 
     return (
-      <TransactionDetailsContainer
-        alertLabels={alertLabels}
-        atLabel={t('at')}
-        boletoWarningMessage={t('boleto.waiting_payment_warning')}
-        customerLabels={customerLabels}
-        eventsLabels={eventsLabels}
-        headerLabels={headerLabels}
-        installmentColumns={installmentColumns}
-        onDismissAlert={this.handleAlertDismiss}
-        onCopyBoletoUrl={this.handleCopyBoletoUrlClick}
-        onShowBoleto={this.handleShowBoletoClick}
-        paymentBoletoLabels={paymentBoletoLabels}
-        paymentCardLabels={paymentCardLabels}
-        recipientsLabels={recipientsLabels}
-        totalDisplayLabels={totalDisplayLabels}
-        transaction={transaction}
-        transactionDetailsLabels={transactionDetailsLabels}
-        metadataTitle={t('metadata')}
-      />
+      <Fragment>
+        <TransactionDetailsContainer
+          alertLabels={alertLabels}
+          atLabel={t('at')}
+          boletoWarningMessage={t('boleto.waiting_payment_warning')}
+          customerLabels={customerLabels}
+          eventsLabels={eventsLabels}
+          headerLabels={headerLabels}
+          installmentColumns={installmentColumns}
+          metadataTitle={t('metadata')}
+          onCopyBoletoUrl={this.handleCopyBoletoUrlClick}
+          onManualReviewApprove={this.handleManualReviewApprove}
+          onManualReviewRefuse={this.handleManualReviewRefuse}
+          onDismissAlert={this.handleAlertDismiss}
+          onShowBoleto={this.handleShowBoletoClick}
+          paymentBoletoLabels={paymentBoletoLabels}
+          paymentCardLabels={paymentCardLabels}
+          permissions={{
+            manualReview: permission !== 'read_only',
+          }}
+          recipientsLabels={recipientsLabels}
+          riskLevelsLabels={riskLevelsLabels}
+          totalDisplayLabels={totalDisplayLabels}
+          transaction={transaction}
+          transactionDetailsLabels={transactionDetailsLabels}
+        />
+        {showManualReview &&
+          <ManualReview
+            action={manualReviewAction}
+            isOpen={showManualReview}
+            onClose={this.handleCloseManualReview}
+            onFinish={() => { this.handleUpdate(transaction.id) }}
+            t={t}
+            transactionId={transaction.id}
+          />}
+      </Fragment>
     )
   }
 }
@@ -302,6 +367,7 @@ TransactionDetails.propTypes = {
   onReceiveDetails: PropTypes.func.isRequired,
   onRequestDetails: PropTypes.func.isRequired,
   onRequestDetailsFail: PropTypes.func.isRequired,
+  permission: PropTypes.string.isRequired,
   t: PropTypes.func.isRequired,
 }
 

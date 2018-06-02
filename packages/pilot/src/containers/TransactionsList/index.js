@@ -12,6 +12,7 @@ import {
 import moment from 'moment'
 import IconTransactions from 'emblematic-icons/svg/Transaction32.svg'
 import IconInfo from 'emblematic-icons/svg/Info32.svg'
+import IconWarning from 'emblematic-icons/svg/Warning32.svg'
 import {
   Alert,
   Grid,
@@ -65,6 +66,7 @@ const TransactionsList = ({
   filterOptions,
   filtersTitle,
   findByLabel,
+  graphicLegendsTittle,
   graphicTittle,
   handleRowClick,
   handleChartsCollapse,
@@ -72,6 +74,7 @@ const TransactionsList = ({
   handleOrderChange,
   handlePageChange,
   handlePageCountChange,
+  handlePendingReviewsFilter,
   itemsPerPageLabel,
   loading,
   noContentFoundMessage,
@@ -79,10 +82,12 @@ const TransactionsList = ({
   order,
   orderColumn,
   pagination,
+  pendingReviewsCount,
   periodSummaryLabel,
   rows,
   search,
   selectedPage,
+  t,
   tableTitle,
   totalVolumeLabel,
   transactionsNumberLabel,
@@ -94,6 +99,33 @@ const TransactionsList = ({
   handleSelectRow,
 }) => (
   <Grid>
+    {
+      pendingReviewsCount > 0 &&
+        <Row>
+          <Col
+            desk={12}
+            palm={12}
+            tablet={12}
+            tv={12}
+          >
+            <div className={style.parentWidth}>
+              <Alert
+                action={t('view_transactions')}
+                icon={<IconWarning height={16} width={16} />}
+                onDismiss={handlePendingReviewsFilter}
+                type="warning"
+              >
+                <p>
+                  <strong>{t('alert.warning')}!</strong>&nbsp;
+                  {
+                    t('alert.pending_review', { count: pendingReviewsCount })
+                  }
+                </p>
+              </Alert>
+            </div>
+          </Col>
+        </Row>
+    }
     <Row>
       <Col
         palm={12}
@@ -150,7 +182,10 @@ const TransactionsList = ({
                 />
                 {!collapsed &&
                   <CardContent>
-                    <Charts data={data} />
+                    <Charts
+                      data={data}
+                      legendsTitle={graphicLegendsTittle}
+                    />
                   </CardContent>
                 }
               </CardSection>
@@ -190,7 +225,7 @@ const TransactionsList = ({
         {
           rows.length <= 0 &&
           !loading &&
-          <div className={style.noResultAlert}>
+          <div className={style.parentWidth}>
             <Alert
               type="info"
               icon={<IconInfo height={16} width={16} />}
@@ -254,6 +289,7 @@ TransactionsList.propTypes = {
   })).isRequired,
   filtersTitle: string.isRequired, // eslint-disable-line react/no-typos
   findByLabel: string.isRequired, // eslint-disable-line react/no-typos
+  graphicLegendsTittle: string.isRequired, // eslint-disable-line react/no-typos
   graphicTittle: string.isRequired, // eslint-disable-line react/no-typos
   handleChartsCollapse: func.isRequired, // eslint-disable-line react/no-typos
   handleExpandRow: func.isRequired, // eslint-disable-line react/no-typos
@@ -262,6 +298,7 @@ TransactionsList.propTypes = {
   handleOrderChange: func.isRequired, // eslint-disable-line react/no-typos
   handlePageChange: func.isRequired, // eslint-disable-line react/no-typos
   handlePageCountChange: func.isRequired, // eslint-disable-line react/no-typos
+  handlePendingReviewsFilter: func.isRequired, // eslint-disable-line react/no-typos
   handleSelectRow: func.isRequired, // eslint-disable-line react/no-typos
   itemsPerPageLabel: string.isRequired, // eslint-disable-line react/no-typos
   loading: bool.isRequired, // eslint-disable-line react/no-typos
@@ -273,11 +310,13 @@ TransactionsList.propTypes = {
     offset: number,
     total: number,
   }).isRequired,
+  pendingReviewsCount: number.isRequired, // eslint-disable-line react/no-typos
   periodSummaryLabel: string.isRequired, // eslint-disable-line react/no-typos
   rows: arrayOf(object).isRequired, // eslint-disabled-line react/no-typos
   search: string,
   selectedPage: number,
   selectedRows: arrayOf(number).isRequired,
+  t: func.isRequired, // eslint-disable-line react/no-typos
   tableTitle: string.isRequired, // eslint-disable-line react/no-typos
   totalVolumeLabel: string.isRequired, // eslint-disable-line react/no-typos
   transactionsNumberLabel: string.isRequired, // eslint-disable-line react/no-typos

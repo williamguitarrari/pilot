@@ -19,6 +19,7 @@ import {
   pathOr,
   pipe,
   prop,
+  propEq,
   sum,
   unless,
   when,
@@ -34,7 +35,8 @@ import {
   Legend,
 } from 'former-kit'
 import IconInfo from 'emblematic-icons/svg/Info32.svg'
-import transactionOperationTypes from '../../models/transactionOperationTypes'
+import IconCheck from 'emblematic-icons/svg/Check24.svg'
+import IconClearClose from 'emblematic-icons/svg/ClearClose24.svg'
 import currencyFormatter from '../../formatters/currency'
 import CustomerCard from '../../components/CustomerCard'
 import decimalCurrencyFormatter from '../../formatters/decimalCurrency'
@@ -43,9 +45,11 @@ import Event from '../../components/Event'
 import PaymentBoleto from '../../components/PaymentBoleto'
 import PaymentCard from '../../components/PaymentCard'
 import RecipientList from '../../containers/RecipientList'
+import RiskLevel from '../../components/RiskLevel'
 import statusLegends from '../../models/statusLegends'
 import TotalDisplay from '../../components/TotalDisplay'
 import TransactionDetailsCard from '../../components/TransactionDetailsCard'
+import transactionOperationTypes from '../../models/transactionOperationTypes'
 import TreeView from '../../components/TreeView'
 
 import style from './style.css'
@@ -102,6 +106,8 @@ const isBoletoWaitingPayment = both(
   isWaitingPaymentTransaction
 )
 
+const isPendingReviewTransaction = propEq('status', 'pending_review')
+
 const showStatusAlert = either(
   isChargebackedTransaction,
   isBoletoWaitingPayment
@@ -134,6 +140,33 @@ class TransactionDetails extends Component {
     this.renderOutAmountSubTitle = this.renderOutAmountSubTitle.bind(this)
     this.renderPayment = this.renderPayment.bind(this)
     this.renderPaymentCard = this.renderPaymentCard.bind(this)
+  }
+
+  getHeaderActions () {
+    const {
+      transaction,
+      headerLabels,
+      onManualReviewRefuse,
+      onManualReviewApprove,
+      permissions,
+    } = this.props
+
+    if (isPendingReviewTransaction(transaction) && permissions.manualReview) {
+      return [
+        {
+          icon: <IconClearClose width={12} height={12} />,
+          onClick: onManualReviewRefuse,
+          title: headerLabels.refuseLabel,
+        },
+        {
+          icon: <IconCheck width={12} height={12} />,
+          onClick: onManualReviewApprove,
+          title: headerLabels.approveLabel,
+        },
+      ]
+    }
+
+    return []
   }
 
   renderAlertInfo () {
@@ -286,6 +319,7 @@ class TransactionDetails extends Component {
       installmentColumns,
       metadataTitle,
       recipientsLabels,
+      riskLevelsLabels,
       totalDisplayLabels,
       transaction,
       transactionDetailsLabels,
@@ -319,6 +353,28 @@ class TransactionDetails extends Component {
       return (<div />)
     }
 
+    const detailsHeadProperties = [
+      {
+        children: renderLegend(status),
+        title: headerLabels.statusLabel,
+      },
+      {
+        children: headerLabels.installments,
+        title: headerLabels.installmentsLabel,
+      },
+      {
+        children: currencyFormatter(amount),
+        title: getHeaderAmountLabel(transaction, headerLabels),
+      },
+    ]
+
+    if (transaction.risk_level !== 'unknown') {
+      detailsHeadProperties.push({
+        children: <RiskLevel level={transaction.risk_level} />,
+        title: riskLevelsLabels[transaction.risk_level],
+      })
+    }
+
     return (
       <Grid>
         <Row stretch>
@@ -331,21 +387,9 @@ class TransactionDetails extends Component {
             <Card>
               <CardContent>
                 <DetailsHead
+                  actions={this.getHeaderActions()}
                   identifier={`#${id}`}
-                  properties={[
-                    {
-                      children: renderLegend(status),
-                      title: headerLabels.statusLabel,
-                    },
-                    {
-                      children: headerLabels.installments,
-                      title: headerLabels.installmentsLabel,
-                    },
-                    {
-                      children: currencyFormatter(amount),
-                      title: getHeaderAmountLabel(transaction, headerLabels),
-                    },
-                  ]}
+                  properties={detailsHeadProperties}
                   title={headerLabels.title}
                 />
               </CardContent>
@@ -595,6 +639,8 @@ TransactionDetails.propTypes = {
   })).isRequired,
   onCopyBoletoUrl: PropTypes.func,
   onDismissAlert: PropTypes.func, // eslint-disable-line react/no-unused-prop-types
+  onManualReviewApprove: PropTypes.func,
+  onManualReviewRefuse: PropTypes.func,
   onShowBoleto: PropTypes.func,
   paymentBoletoLabels: PropTypes.shape({
     copy: PropTypes.string,
@@ -604,6 +650,16 @@ TransactionDetails.propTypes = {
   }).isRequired,
   paymentCardLabels: PropTypes.shape({
     title: PropTypes.string,
+  }).isRequired,
+  permissions: PropTypes.shape({
+    manualReview: PropTypes.string.isRequired,
+  }).isRequired,
+  riskLevelsLabels: PropTypes.shape({
+    very_low: PropTypes.string,
+    low: PropTypes.string,
+    moderated: PropTypes.string,
+    high: PropTypes.string,
+    very_high: PropTypes.string,
   }).isRequired,
   recipientsLabels: PropTypes.shape({
     collapseInstallmentTitle: PropTypes.string,
@@ -717,6 +773,8 @@ TransactionDetails.propTypes = {
 TransactionDetails.defaultProps = {
   onCopyBoletoUrl: null,
   onDismissAlert: null,
+  onManualReviewApprove: null,
+  onManualReviewRefuse: null,
   onShowBoleto: null,
 }
 
