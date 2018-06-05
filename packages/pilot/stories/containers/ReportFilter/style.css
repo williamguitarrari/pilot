@@ -5,7 +5,7 @@
 }
 
 .filterContent {
-    display: flex; 
+    display: flex;
     justify-content: space-between
 }
 
@@ -23,9 +23,6 @@
     margin-left: unset;
 }
 
-.dateField {
-}
-
 .searchField {
     flex: 2;
 }
@@ -36,7 +33,7 @@
 
 .buttons {
     display: flex;
-    margin-left: 48px;  
+    margin-left: 48px;
 }
 
 .buttons > * {
