@@ -51,10 +51,10 @@ class ReportFilter extends Component {
     super(props)
 
     this.state = {
-      // dates: {
-      //   start: props.start,
-      //   end: props.end,
-      // },
+      dates: {
+        start: props.dates.start,
+        end: props.dates.end,
+      },
     }
 
     this.datePresets = [
@@ -91,9 +91,9 @@ class ReportFilter extends Component {
     // this.handleReset = this.handleReset.bind(this)
   }
 
-  componentWillReceiveProps ({ start, end }) {
-    this.setState({ dates: { start, end } })
-  }
+  // componentWillReceiveProps ({ start, end }) {
+  //   this.setState({ dates: { start, end } })
+  // }
 
   // O reset seria o Cancel?
   // handleReset () {
@@ -124,6 +124,7 @@ class ReportFilter extends Component {
                 upper: moment('01-01-2025', 'DD-MM-YYYY'),
                 }}
                 icon={<Calendar32 width={16} height={16} />}
+                // strings={strings}
               />
               <Input
                 className={style.searchField}
@@ -162,16 +163,20 @@ class ReportFilter extends Component {
   }
 }
 
-// ReportFilter.propTypes = {
-//   dates: PropTypes.shape({
-//     start: PropTypes.instanceOf(moment),
-//     end: PropTypes.instanceOf(moment),
-//   })
-// }
+ReportFilter.propTypes = {
+  dates: PropTypes.shape({
+    start: PropTypes.instanceOf(moment),
+    end: PropTypes.instanceOf(moment),
+  }),
+}
 
-// ReportFilter.defaultProps = {
-//     start: '',
-//     end: '',
-// }
+ReportFilter.defaultProps = {
+  // atentar-se a maneira como estão vindo os objetos
+  // se trago dentro de dates, recebo dentro de dates
+  dates: {
+    start: '',
+    end: '',
+  },
+}
 
 export default ReportFilter
