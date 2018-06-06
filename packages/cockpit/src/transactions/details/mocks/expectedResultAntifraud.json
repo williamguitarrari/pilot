@@ -46,10 +46,9 @@
       "individual": null,
       "name": "Morpheus Fishburne",
       "object": "customer",
-      "phone": null,
       "phones": [
-        "+5511999998888",
-        "+5511888889999"
+        "+55 (11) 99999-8888",
+        "+55 (11) 88888-9999"
       ]
     },
     "external_id": null,

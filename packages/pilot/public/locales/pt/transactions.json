@@ -93,6 +93,7 @@
     "born_at": "Data de nascimento",
     "gender": "Gênero",
     "phone": "Telefone",
+    "phone_plural": "Telefones",
     "email": "E-mail",
     "zip_code": "CEP",
     "street": "Rua",

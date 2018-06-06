@@ -5,8 +5,17 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { translate } from 'react-i18next'
 import {
+  always,
+  complement,
   compose,
+  either,
+  ifElse,
+  is,
   isNil,
+  length,
+  pipe,
+  prop,
+  slice,
 } from 'ramda'
 import moment from 'moment'
 import {
@@ -79,12 +88,21 @@ const getTransactionDetailsLabels = t => ({
   title: t('transaction.title'),
 })
 
-const getCustomerLabels = t => ({
+const countCustomerPhones = pipe(
+  prop('phones'),
+  ifElse(
+    either(isNil, complement(is(Array))),
+    always(0),
+    length
+  )
+)
+
+const getCustomerLabels = (customer, t) => ({
   name: t('customer.name'),
   document_number: t('customer.document_number'),
   born_at: t('customer.born_at'),
   gender: t('customer.gender'),
-  phone: t('customer.phone'),
+  phones: t('customer.phone', { count: countCustomerPhones(customer) }),
   email: t('customer.email'),
   zip_code: t('customer.zip_code'),
   street: t('customer.street'),
@@ -120,13 +138,28 @@ const getRiskLevelsLabels = t => ({
   very_high: t('transaction.risk_level.very_high'),
 })
 
+// TODO: Remove this function and it usage when the this issue is solved
+//
+const removeCustomerUnusedPhones = (transaction) => {
+  if (!transaction.customer) {
+    return transaction
+  }
+  const { phones, ...customer } = transaction.customer
+  return {
+    ...transaction,
+    customer: {
+      ...customer,
+      phones: phones ? slice(0, 1, phones) : [],
+    },
+  }
+}
+
 class TransactionDetails extends Component {
   constructor (props) {
     super(props)
     const { t } = this.props
     const formatColumns = getColumnFormatter(t)
     this.state = {
-      customerLabels: getCustomerLabels(t),
       eventsLabels: getEventsLabels(t),
       installmentColumns: formatColumns(installmentTableColumns),
       manualReviewAction: null,
@@ -288,25 +321,25 @@ class TransactionDetails extends Component {
       t,
     } = this.props
     const {
-      customerLabels,
       eventsLabels,
       installmentColumns,
       nextId,
       paymentBoletoLabels,
       paymentCardLabels,
-      result: {
-        transaction,
-      },
       riskLevelsLabels,
       showReprocess,
+      result,
       transactionDetailsLabels,
       showManualReview,
       manualReviewAction,
       showRefund,
     } = this.state
 
+    const transaction = removeCustomerUnusedPhones(result.transaction)
+
     const {
       captured_at,
+      customer,
       payment = { installments: [] },
       reason_code,
       recipients = [],
@@ -318,6 +351,8 @@ class TransactionDetails extends Component {
       reason_code: t('alert.reason_code', { code: reason_code || '-' }),
       resubmit: t('alert.resubmit'),
     }
+
+    const customerLabels = getCustomerLabels(customer, t)
 
     const headerLabels = {
       boletoAmountLabel: t('header.boleto_amount'),

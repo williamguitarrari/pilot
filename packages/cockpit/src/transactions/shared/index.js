@@ -7,6 +7,7 @@ import {
   cond,
   either,
   equals,
+  flatten,
   has,
   head,
   ifElse,
@@ -17,6 +18,8 @@ import {
   juxt,
   last,
   length,
+  map,
+  of,
   path,
   pathSatisfies,
   pipe,
@@ -25,6 +28,8 @@ import {
   propOr,
   propSatisfies,
   props,
+  reject,
+  replace,
   splitAt,
   subtract,
   sum,
@@ -89,7 +94,7 @@ const getCustomerSubProp = subProp => ifElse(
 const formatPhoneNumber = (number) => {
   if (!number) return ''
   const len = length(number) - 4
-  return join(' - ', splitAt(len, number))
+  return join('-', splitAt(len, number))
 }
 
 const formatPhoneProp = pipe(
@@ -116,6 +121,36 @@ const getPhoneProp = pipe(
   )
 )
 
+const phoneGroupsRegex = /(\+\d{2})(\d{2})(\d{4,5})(\d{4})/
+
+const formatPhone = (phone) => {
+  if (!phone) {
+    return null
+  }
+
+  return replace(phoneGroupsRegex, '$1 ($2) $3-$4', phone)
+}
+
+const getFormatedPhones = pipe(
+  getCustomerSubProp('phone_numbers'),
+  unless(
+    isNil,
+    map(formatPhone)
+  )
+)
+
+const getPhones = pipe(
+  juxt([
+    pipe(
+      getPhoneProp,
+      of
+    ),
+    getFormatedPhones,
+  ]),
+  flatten,
+  reject(isNil)
+)
+
 const getCustomerProp = ifElse(
   pipe(prop('customer'), isNil),
   always(null),
@@ -135,8 +170,7 @@ const getCustomerProp = ifElse(
     individual: getCustomerSubProp('individual'),
     name: getCustomerSubProp('name'),
     object: getCustomerSubProp('object'),
-    phone: getPhoneProp,
-    phones: getCustomerSubProp('phone_numbers'),
+    phones: getPhones,
   })
 )
 
