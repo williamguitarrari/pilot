@@ -28,18 +28,18 @@
       "country": "us",
       "document_number": null,
       "document_type": "cpf",
-      "email": "markzuckerberg@gmail.com",
       "name": "Lalala",
-      "phone": "(42) 3624 - 3958",
-      "phones": [
-        "+5599993333"
-      ],
       "address": {
         "street": "Gomes de Carvalho"
       },
       "born_at": null,
       "created_at": "2018-03-14T13:40:28.431Z",
       "documents": [],
+      "email": "markzuckerberg@gmail.com",
+      "phones": [
+        "(42) 3624-3958",
+        "+55 (42) 9999-3333"
+      ],
       "external_id": "#4433",
       "gender": null,
       "id": 517958,
@@ -87,14 +87,7 @@
         "type": "capture"
       },
       {
-        "cycle": null,
         "created_at": "2018-03-14T13:40:28.579Z",
-        "id": "go_2",
-        "status": "success",
-        "type": "authorize"
-      },
-      {
-      "created_at": "2018-03-14T13:40:28.579Z",
         "cycle": null,
         "id": "go_2",
         "status": "success",

@@ -123,33 +123,6 @@
       "started_at": 1521034828598,
       "status": "success",
       "type": "authorize"
-    },
-    {
-      "date_created": "2018-03-14T13:40:28.579Z",
-      "date_updated": "2018-03-14T13:40:28.729Z",
-      "ended_at": 1521034828729,
-      "fail_reason": null,
-      "group_id": "gog_2",
-      "id": "go_2",
-      "metadata": {
-        "environment": {
-          "authorization_code": "41115",
-          "authorized_amount": 985172498,
-          "nsu": "3082517",
-          "response_code": "0000",
-          "tid": "3082517"
-        }
-      },
-      "model": "transaction",
-      "model_id": "123456",
-      "next_group_id": "gog_1",
-      "processor": "pagarme",
-      "processor_response_code": "0000",
-      "request_id": "gr_4",
-      "rollbacked": false,
-      "started_at": 1521034828598,
-      "status": "waiting",
-      "type": "authorize"
     }
   ],
   "payables": [
@@ -1266,7 +1239,7 @@
       "name": "Lalala",
       "object": "customer",
       "phone_numbers": [
-        "+5599993333"
+        "+554299993333"
       ],
       "type": "individual"
     },
