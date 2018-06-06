@@ -8,8 +8,8 @@ const currency = (value) => {
   }
 
   const formatter = new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
     currency: 'BRL',
+    style: 'currency',
   })
 
   return formatter.format(Number(value) / 100)

@@ -1,9 +1,10 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 
-import DataDisplay from './DataDisplay'
 import CopyButton from './CopyButton'
+import CurrencyInput from './CurrencyInput'
 import CustomerCard from './CustomerCard'
+import DataDisplay from './DataDisplay'
 import DetailsHead from './DetailsHead'
 import EventList from './EventList'
 import PaymentCards from './PaymentCards'
@@ -17,6 +18,9 @@ import TreeView from './TreeView'
 storiesOf('Components', module)
   .add('Copy button', () => (
     <CopyButton />
+  ))
+  .add('Currency Input', () => (
+    <CurrencyInput />
   ))
   .add('Customer card', () => (
     <CustomerCard />
