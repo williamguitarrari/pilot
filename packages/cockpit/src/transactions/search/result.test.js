@@ -93,21 +93,24 @@ const mock = {
           amount: 2000,
           customer: {
             name: 'Test',
-            document_number: '02105421016',
             email: 'test@test.com',
             birth_date: null,
-            document_type: 'cpf',
             country: null,
             address: null,
             born_at: null,
             created_at: '2017-02-15T15:56:48.842Z',
-            documents: null,
-            phones: [],
+            documents: [
+              {
+                number: '02105421016',
+                type: 'cpf',
+              },
+            ],
             external_id: null,
             gender: null,
             id: 152287,
             individual: null,
             object: 'customer',
+            phones: [],
           },
           card: {
             holder_name: 'Test',
@@ -151,11 +154,9 @@ const mock = {
           antifraud: null,
           customer: {
             name: 'Test',
-            document_number: '02105421016',
             email: 'test@test.com',
             birth_date: null,
             country: null,
-            document_type: 'cpf',
             phones: ['(51) 99873-3526'],
             address: {
               city: 'Porto Alegre',
@@ -171,7 +172,12 @@ const mock = {
             },
             born_at: null,
             created_at: '2017-02-15T15:56:48.842Z',
-            documents: null,
+            documents: [
+              {
+                number: '02105421016',
+                type: 'cpf',
+              },
+            ],
             external_id: null,
             gender: null,
             id: 152287,
@@ -218,11 +224,9 @@ const mock = {
           antifraud: null,
           customer: {
             name: 'Test',
-            document_number: '02105421016',
             email: 'test@test.com',
             birth_date: null,
             country: null,
-            document_type: 'cpf',
             phones: ['(51) 99873-3526'],
             address: {
               city: 'Porto Alegre',
@@ -238,7 +242,12 @@ const mock = {
             },
             born_at: null,
             created_at: '2017-02-15T15:56:48.842Z',
-            documents: null,
+            documents: [
+              {
+                number: '02105421016',
+                type: 'cpf',
+              },
+            ],
             external_id: null,
             gender: null,
             id: 152287,
@@ -373,11 +382,9 @@ const mock = {
           amount: 1000,
           customer: {
             name: 'Aardvark da Silva',
-            document_number: '18152564000105',
             email: 'aardvark.silva@gmail.com',
             birth_date: null,
             country: null,
-            document_type: 'cnpj',
             phones: ['(11) 98765-4321'],
             address: {
               city: 'São Paulo',
@@ -393,7 +400,12 @@ const mock = {
             },
             born_at: null,
             created_at: '2017-04-24T17:13:37.868Z',
-            documents: [],
+            documents: [
+              {
+                number: '18152564000105',
+                type: 'cnpj',
+              },
+            ],
             external_id: null,
             gender: null,
             id: 177887,
@@ -440,11 +452,9 @@ const mock = {
           antifraud: null,
           customer: {
             name: 'Test',
-            document_number: '27814318505',
             email: 'test@test.com',
             birth_date: null,
             country: null,
-            document_type: 'cpf',
             phones: ['(42) 3624-3958'],
             address: {
               city: 'São Paulo',
@@ -460,7 +470,12 @@ const mock = {
             },
             born_at: null,
             created_at: '2017-07-26T15:16:26.049Z',
-            documents: [],
+            documents: [
+              {
+                number: '27814318505',
+                type: 'cpf',
+              },
+            ],
             external_id: null,
             gender: null,
             id: 221602,
@@ -510,17 +525,20 @@ const mock = {
             email: 'test@test.com',
             birth_date: null,
             country: null,
-            document_type: 'cpf',
             phones: ['(42) 3624-3958'],
             born_at: null,
             created_at: '2017-07-26T15:56:54.099Z',
-            documents: [],
+            documents: [
+              {
+                number: '95557289682',
+                type: 'cpf',
+              },
+            ],
             external_id: null,
             gender: null,
             id: 221667,
             individual: null,
             object: 'customer',
-            document_number: '95557289682',
             address: {
               city: 'São Paulo',
               complementary: null,
@@ -574,16 +592,19 @@ const mock = {
           antifraud: null,
           customer: {
             name: 'Test',
-            document_number: '08724362921',
             email: 'test@test.com',
             birth_date: null,
             country: null,
-            document_type: 'cpf',
             phones: [],
             address: null,
             born_at: null,
             created_at: '2017-02-15T17:22:42.412Z',
-            documents: null,
+            documents: [
+              {
+                number: '08724362921',
+                type: 'cpf',
+              },
+            ],
             external_id: null,
             gender: null,
             id: 152332,

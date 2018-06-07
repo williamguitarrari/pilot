@@ -29,8 +29,11 @@
       "born_at": null,
       "country": "br",
       "created_at": "2018-05-17T17:28:26.801Z",
-      "document_number": null,
       "documents": [
+        {
+          "number": null,
+          "type": "cpf"
+        },
         {
           "id": "doc_cjhat6tvg028l2g6dj90jasof",
           "number": "44444444444",
@@ -38,7 +41,6 @@
           "type": "cpf"
         }
       ],
-      "document_type": "cpf",
       "email": "mateusmoog@yahoo.com",
       "external_id": "#591949",
       "gender": null,

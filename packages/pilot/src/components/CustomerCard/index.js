@@ -10,7 +10,14 @@ import {
   Col,
 } from 'former-kit'
 
-import { mapObjIndexed } from 'ramda'
+import {
+  head,
+  isNil,
+  mapObjIndexed,
+  pipe,
+  prop,
+  unless,
+} from 'ramda'
 
 import Property from '../Property'
 
@@ -21,8 +28,20 @@ const fields = (labels, contents) => mapObjIndexed((label, key) => (
   />
 ), labels)
 
+const getDefaultDocumentNumber = pipe(
+  prop('documents'),
+  unless(
+    isNil,
+    pipe(
+      head,
+      prop('number')
+    )
+  )
+)
+
 const CustomerCard = ({ title, labels, contents }) => {
   const customer = fields(labels, contents)
+  const documentNumber = getDefaultDocumentNumber(contents)
 
   return (
     <Card>
@@ -35,7 +54,10 @@ const CustomerCard = ({ title, labels, contents }) => {
             </Col>
 
             <Col palm={12} tablet={6} desk={4} tv={4}>
-              {customer.document_number}
+              <Property
+                title={labels.documents}
+                value={documentNumber}
+              />
             </Col>
 
             <Col palm={12} tablet={6} desk={4} tv={4}>
