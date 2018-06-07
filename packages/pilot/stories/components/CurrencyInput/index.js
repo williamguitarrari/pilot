@@ -11,7 +11,7 @@ const CurrencyInputExample = () => (
   <Section>
     <FormInput
       label="Currency Input"
-      renderer={({ renderer, ...props }) => (
+      renderer={props => (
         <CurrencyInput
           {...props}
         />

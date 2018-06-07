@@ -7,9 +7,16 @@ import {
 
 import currencyFormatter from '../../formatters/currency'
 
+const removeNonDigits = replace(/\D+/g, '')
+
 const formatter = pipe(
-  replace(/\D+/g, ''),
+  removeNonDigits,
   currencyFormatter
+)
+
+const normalize = pipe(
+  removeNonDigits,
+  Number
 )
 
 class CurrencyInput extends Component {
@@ -27,13 +34,14 @@ class CurrencyInput extends Component {
     const { value } = event.target
     const { currencyCode } = this.props
     const formattedValue = formatter(value, currencyCode)
+    const normalizedValue = normalize(value)
 
     this.setState({
       value: formattedValue,
     })
 
     if (this.props.onChange) {
-      this.props.onChange(event, formattedValue)
+      this.props.onChange(event, normalizedValue, formattedValue)
     }
   }
 
