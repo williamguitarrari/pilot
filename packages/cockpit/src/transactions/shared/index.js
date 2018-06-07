@@ -151,6 +151,22 @@ const getPhones = pipe(
   reject(isNil)
 )
 
+const getDocuments = pipe(
+  prop('customer'),
+  juxt([
+    pipe(
+      applySpec({
+        number: prop('document_number'),
+        type: prop('document_type'),
+      }),
+      of
+    ),
+    prop('documents'),
+  ]),
+  flatten,
+  reject(isNil)
+)
+
 const getCustomerProp = ifElse(
   pipe(prop('customer'), isNil),
   always(null),
@@ -160,9 +176,7 @@ const getCustomerProp = ifElse(
     born_at: getCustomerSubProp('born_at'),
     country: getCustomerSubProp('country'),
     created_at: getCustomerSubProp('date_created'),
-    document_number: getCustomerSubProp('document_number'),
-    document_type: getCustomerSubProp('document_type'),
-    documents: getCustomerSubProp('documents'),
+    documents: getDocuments,
     email: getCustomerSubProp('email'),
     external_id: getCustomerSubProp('external_id'),
     gender: getCustomerSubProp('gender'),

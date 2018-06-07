@@ -99,7 +99,7 @@ const countCustomerPhones = pipe(
 
 const getCustomerLabels = (customer, t) => ({
   name: t('customer.name'),
-  document_number: t('customer.document_number'),
+  documents: t('customer.document_number'),
   born_at: t('customer.born_at'),
   gender: t('customer.gender'),
   phones: t('customer.phone', { count: countCustomerPhones(customer) }),
@@ -139,7 +139,7 @@ const getRiskLevelsLabels = t => ({
 })
 
 // TODO: Remove this function and it usage when the this issue is solved
-//
+// https://github.com/pagarme/pilot/issues/681
 const removeCustomerUnusedPhones = (transaction) => {
   if (!transaction.customer) {
     return transaction

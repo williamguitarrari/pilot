@@ -24,22 +24,25 @@
     },
     "created_at": "2018-03-14T13:40:28.465Z",
     "customer": {
-      "birth_date": "1999-01-01",
-      "country": "us",
-      "document_number": null,
-      "document_type": "cpf",
-      "name": "Lalala",
       "address": {
         "street": "Gomes de Carvalho"
       },
+      "birth_date": "1999-01-01",
       "born_at": null,
-      "created_at": "2018-03-14T13:40:28.431Z",
-      "documents": [],
+      "country": "us",
+      "documents": [
+        {
+          "number": "123456789",
+          "type": "cpf"
+        }
+      ],
       "email": "markzuckerberg@gmail.com",
+      "name": "Lalala",
       "phones": [
         "(42) 3624-3958",
         "+55 (42) 9999-3333"
       ],
+      "created_at": "2018-03-14T13:40:28.431Z",
       "external_id": "#4433",
       "gender": null,
       "id": 517958,

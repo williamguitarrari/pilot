@@ -5,6 +5,7 @@ import moment from 'moment'
 import {
   __,
   always,
+  applySpec,
   anyPass,
   both,
   contains,
@@ -57,6 +58,7 @@ import TransactionDetailsCard from '../../components/TransactionDetailsCard'
 import transactionOperationTypes from '../../models/transactionOperationTypes'
 import TreeView from '../../components/TreeView'
 import style from './style.css'
+import formatCpfCnpj from '../../formatters/cpfCnpj'
 
 const isZeroOrNegative = value => value <= 0
 
@@ -116,6 +118,24 @@ const showStatusAlert = either(
   isChargebackedTransaction,
   isBoletoWaitingPayment
 )
+
+const formatDocument = applySpec({
+  type: prop('type'),
+  number: pipe(
+    prop('number'),
+    formatCpfCnpj
+  ),
+})
+
+const formatCustomerDocuments = (customer) => {
+  if (customer.documents) {
+    return {
+      ...customer,
+      documents: map(formatDocument, customer.documents),
+    }
+  }
+  return customer
+}
 
 const getHeaderAmountLabel = (transaction, headerLabels) => {
   if (isBoletoTransaction(transaction)) {
@@ -706,7 +726,7 @@ class TransactionDetails extends Component {
                     tv={12}
                   >
                     <CustomerCard
-                      contents={customer}
+                      contents={formatCustomerDocuments(customer)}
                       labels={customerLabels}
                       title={customerLabels.title}
                     />

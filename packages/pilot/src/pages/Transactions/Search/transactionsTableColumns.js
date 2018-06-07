@@ -38,7 +38,7 @@ const getDefaultColumns = detailsClick => ([
   },
   {
     title: 'transaction.document',
-    accessor: ['customer', 'document_number'],
+    accessor: ['customer', 'documents'],
     renderer: pipe(
       path(['customer', 'documents']),
       unless(
