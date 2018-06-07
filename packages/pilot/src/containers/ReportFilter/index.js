@@ -11,28 +11,29 @@ import {
 import moment from 'moment'
 import Calendar32 from 'emblematic-icons/svg/Calendar32.svg'
 import Search32 from 'emblematic-icons/svg/Search32.svg'
+import reportStatus from '../../../src/models/reportStatus'
 import style from './style.css'
 
 const findByLabel = 'Filtre pelo nome do relatório'
 
-const options = [
-  {
-    value: '00',
-    name: 'Todos os status',
-  },
-  {
-    value: '01',
-    name: 'teste1',
-  },
-  {
-    value: '02',
-    name: 'teste2',
-  },
-  {
-    value: '03',
-    name: 'teste3',
-  },
-]
+// const options = [
+//   {
+//     value: '00',
+//     name: 'Todos os status',
+//   },
+//   {
+//     value: '01',
+//     name: 'teste1',
+//   },
+//   {
+//     value: '02',
+//     name: 'teste2',
+//   },
+//   {
+//     value: '03',
+//     name: 'teste3',
+//   },
+// ]
 
 // const statusLabel = 'Selecione um status'
 
@@ -45,6 +46,7 @@ const options = [
 // renderCard() {
 //   return()
 // }
+
 
 class ReportFilter extends Component {
   constructor (props) {
@@ -108,6 +110,9 @@ class ReportFilter extends Component {
   render () {
     const { dates } = this.state
 
+
+    console.log(reportStatus)
+
     return (
       <Card className={style.reportFilter}>
         <form action="/" method="post">
@@ -138,7 +143,7 @@ class ReportFilter extends Component {
               />
               <Dropdown
                 className={style.statusField}
-                options={options}
+                options={reportStatus.items}
                 value="teste2"
               />
             </div>
