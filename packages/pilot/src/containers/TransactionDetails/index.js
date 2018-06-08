@@ -12,6 +12,7 @@ import {
   either,
   equals,
   flatten,
+  head,
   ifElse,
   isEmpty,
   isNil,
@@ -130,18 +131,26 @@ const formatDocument = applySpec({
 
 const formatCustomerBirthDay = customer => ({
   ...customer,
-  born_at: !isNil(customer.born_at) ? formatDate(customer.born_at) : null,
+  birthday: !isNil(customer.birthday) ? formatDate(customer.birthday) : null,
 })
 
-const formatCustomerDocuments = (customer) => {
-  if (customer.documents) {
-    return {
-      ...customer,
-      documents: map(formatDocument, customer.documents),
-    }
-  }
-  return customer
-}
+const getDefaultDocumentNumber = pipe(
+  prop('documents'),
+  ifElse(
+    either(isNil, isEmpty),
+    always(null),
+    pipe(
+      head,
+      formatDocument,
+      prop('number')
+    )
+  )
+)
+
+const formatCustomerDocuments = customer => ({
+  ...customer,
+  document_number: getDefaultDocumentNumber(customer),
+})
 
 const formatCustomerData = pipe(
   formatCustomerBirthDay,
@@ -804,7 +813,7 @@ TransactionDetails.propTypes = {
   atLabel: PropTypes.string.isRequired,
   boletoWarningMessage: PropTypes.string.isRequired,
   customerLabels: PropTypes.shape({
-    born_at: PropTypes.string,
+    birthday: PropTypes.string,
     city: PropTypes.string,
     complement: PropTypes.string,
     document_number: PropTypes.string,
