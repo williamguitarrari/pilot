@@ -5,8 +5,6 @@ import { action } from '@storybook/addon-actions'
 import Section from '../../Section'
 import CurrencyInput from '../../../src/components/CurrencyInput'
 
-const handleChange = (event, value) => action(value)
-
 const CurrencyInputExample = () => (
   <Section>
     <FormInput
@@ -16,7 +14,7 @@ const CurrencyInputExample = () => (
           {...props}
         />
       )}
-      onChange={handleChange}
+      onChange={action('handleChange')}
       value="100"
     />
   </Section>

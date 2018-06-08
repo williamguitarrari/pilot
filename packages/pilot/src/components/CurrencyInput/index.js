@@ -41,7 +41,7 @@ class CurrencyInput extends Component {
     })
 
     if (this.props.onChange) {
-      this.props.onChange(event, normalizedValue, formattedValue)
+      this.props.onChange(normalizedValue, formattedValue)
     }
   }
 
