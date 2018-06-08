@@ -249,7 +249,7 @@ TransactionsList.propTypes = {
   collapsed: bool.isRequired, // eslint-disable-line react/no-typos
   columns: arrayOf(object),
   data: arrayOf(object), // eslint-disable-line
-  dateLabels: arrayOf(shape({
+  dateLabels: shape({
     anyDate: string,
     cancel: string,
     confirmPeriod: string,
@@ -263,7 +263,7 @@ TransactionsList.propTypes = {
     select: string,
     start: string,
     today: string,
-  })).isRequired,
+  }).isRequired,
   dates: shape({
     start: instanceOf(moment),
     end: instanceOf(moment),

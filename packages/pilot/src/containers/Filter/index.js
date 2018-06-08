@@ -361,7 +361,7 @@ Filters.propTypes = {
   findByLabel: string.isRequired, // eslint-disable-line react/no-typos
   clearLabel: string.isRequired, // eslint-disable-line react/no-typos
   confirmLabel: string.isRequired, // eslint-disable-line react/no-typos
-  dateLabels: arrayOf(shape({
+  dateLabels: shape({
     anyDate: string,
     cancel: string,
     confirmPeriod: string,
@@ -375,7 +375,7 @@ Filters.propTypes = {
     select: string,
     start: string,
     today: string,
-  })).isRequired,
+  }).isRequired,
 }
 
 Filters.defaultProps = {
