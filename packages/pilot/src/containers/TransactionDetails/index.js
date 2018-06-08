@@ -59,6 +59,7 @@ import transactionOperationTypes from '../../models/transactionOperationTypes'
 import TreeView from '../../components/TreeView'
 import style from './style.css'
 import formatCpfCnpj from '../../formatters/cpfCnpj'
+import formatDate from '../../formatters/longDate'
 
 const isZeroOrNegative = value => value <= 0
 
@@ -127,6 +128,11 @@ const formatDocument = applySpec({
   ),
 })
 
+const formatCustomerBirthDay = customer => ({
+  ...customer,
+  born_at: !isNil(customer.born_at) ? formatDate(customer.born_at) : null,
+})
+
 const formatCustomerDocuments = (customer) => {
   if (customer.documents) {
     return {
@@ -136,6 +142,11 @@ const formatCustomerDocuments = (customer) => {
   }
   return customer
 }
+
+const formatCustomerData = pipe(
+  formatCustomerBirthDay,
+  formatCustomerDocuments
+)
 
 const getHeaderAmountLabel = (transaction, headerLabels) => {
   if (isBoletoTransaction(transaction)) {
@@ -726,7 +737,7 @@ class TransactionDetails extends Component {
                     tv={12}
                   >
                     <CustomerCard
-                      contents={formatCustomerDocuments(customer)}
+                      contents={formatCustomerData(customer)}
                       labels={customerLabels}
                       title={customerLabels.title}
                     />

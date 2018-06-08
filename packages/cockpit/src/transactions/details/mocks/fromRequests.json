@@ -1225,7 +1225,7 @@
     "card_pin_mode": null,
     "cost": 0,
     "customer": {
-      "birthday": "1999-01-01",
+      "birthday": "1999-01-01T00:00:00.000Z",
       "born_at": null,
       "country": "us",
       "date_created": "2018-03-14T13:40:28.431Z",

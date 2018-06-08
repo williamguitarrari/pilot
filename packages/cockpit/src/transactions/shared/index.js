@@ -52,6 +52,11 @@ const isRefuseReasonNil = pipe(
   isNil
 )
 
+const stringToMoment = unless(
+  isNil,
+  moment
+)
+
 const getCardProp = subProp => cond([
   [
     pipe(
@@ -89,6 +94,11 @@ const getCustomerSubProp = subProp => ifElse(
   pathSatisfies(complement(isNil), ['customer', subProp]),
   path(['customer', subProp]),
   always(null)
+)
+
+const isEmptyCustomerProp = propName => pipe(
+  getCustomerSubProp(propName),
+  isNil
 )
 
 const formatPhoneNumber = (number) => {
@@ -172,8 +182,14 @@ const getCustomerProp = ifElse(
   always(null),
   applySpec({
     address: prop('address'),
-    birth_date: getCustomerSubProp('birthday'),
-    born_at: getCustomerSubProp('born_at'),
+    born_at: pipe(
+      ifElse(
+        isEmptyCustomerProp('born_at'),
+        getCustomerSubProp('birthday'),
+        getCustomerSubProp('born_at')
+      ),
+      stringToMoment
+    ),
     country: getCustomerSubProp('country'),
     created_at: getCustomerSubProp('date_created'),
     documents: getDocuments,
@@ -218,13 +234,13 @@ const transactionSpec = {
     propEq('payment_method', 'boleto'),
     applySpec({
       barcode: prop('boleto_barcode'),
-      due_date: pipe(prop('boleto_expiration_date'), unless(isNil, moment)),
+      due_date: pipe(prop('boleto_expiration_date'), stringToMoment),
       url: prop('boleto_url'),
     }),
     always(null)
   ),
   card: buildCard,
-  created_at: pipe(prop('date_created'), unless(isNil, moment)),
+  created_at: pipe(prop('date_created'), stringToMoment),
   customer: getCustomerProp,
   external_id: propOr(null, 'reference_key'),
   id: prop('id'),
