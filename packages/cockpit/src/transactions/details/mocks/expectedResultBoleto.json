@@ -19,7 +19,7 @@
     },
     "card": {
       "brand_name": null,
-      "capture_method": null,
+      "capture_method": "ecommerce",
       "first_digits": null,
       "holder_name": null,
       "international": true,

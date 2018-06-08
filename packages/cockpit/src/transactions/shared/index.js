@@ -210,11 +210,20 @@ const getCustomerProp = ifElse(
   })
 )
 
+const getCaptureMethod = ifElse(
+  pipe(
+    getCardProp('capture_method'),
+    isNil
+  ),
+  prop('capture_method'),
+  getCardProp('capture_method')
+)
+
 const buildCard = when(
   has('card_holder_name'),
   applySpec({
     brand_name: getCardProp('brand'),
-    capture_method: getCardProp('capture_method'),
+    capture_method: getCaptureMethod,
     first_digits: getCardProp('first_digits'),
     holder_name: getCardProp('holder_name'),
     international: pipe(getCardProp('country'), isInternational),
