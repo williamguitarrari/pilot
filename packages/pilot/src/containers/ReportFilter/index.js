@@ -11,29 +11,9 @@ import {
 import moment from 'moment'
 import Calendar32 from 'emblematic-icons/svg/Calendar32.svg'
 import Search32 from 'emblematic-icons/svg/Search32.svg'
-import reportStatus from '../../../src/models/reportStatus'
 import style from './style.css'
 
 const findByLabel = 'Filtre pelo nome do relatório'
-
-// const options = [
-//   {
-//     value: '00',
-//     name: 'Todos os status',
-//   },
-//   {
-//     value: '01',
-//     name: 'teste1',
-//   },
-//   {
-//     value: '02',
-//     name: 'teste2',
-//   },
-//   {
-//     value: '03',
-//     name: 'teste3',
-//   },
-// ]
 
 // const statusLabel = 'Selecione um status'
 
@@ -51,14 +31,21 @@ const findByLabel = 'Filtre pelo nome do relatório'
 class ReportFilter extends Component {
   constructor (props) {
     super(props)
-
+    // const {
+    //   label,
+    //   value,
+    // } = props
     this.state = {
       dates: {
         start: props.dates.start,
         end: props.dates.end,
       },
+      selected: 'waiting',
+      items: {
+        label: props.reportStatus.items.label,
+        value: props.reportStatus.items.value,
+      },
     }
-
     this.datePresets = [
       {
         title: 'Últimos:',
@@ -107,11 +94,12 @@ class ReportFilter extends Component {
     this.setState({ dates })
   }
 
+  handleOptionsChange (items) {
+    this.setState({ items })
+  }
+
   render () {
-    const { dates } = this.state
-
-
-    console.log(reportStatus)
+    const { dates, items } = this.state
 
     return (
       <Card className={style.reportFilter}>
@@ -143,8 +131,9 @@ class ReportFilter extends Component {
               />
               <Dropdown
                 className={style.statusField}
-                options={reportStatus.items}
-                value="teste2"
+                onChange={event => this.setState({ selected: event.target.value })}
+                options={this.state.label}
+                value={this.state.value}
               />
             </div>
             <div className={style.buttons}>
@@ -173,6 +162,12 @@ ReportFilter.propTypes = {
     start: PropTypes.instanceOf(moment),
     end: PropTypes.instanceOf(moment),
   }),
+  reportStatus: PropTypes.shape({
+    items: PropTypes.shape({
+      label: PropTypes.string,
+      value: PropTypes.string,
+    }),
+  }),
 }
 
 ReportFilter.defaultProps = {
@@ -182,6 +177,12 @@ ReportFilter.defaultProps = {
     start: '',
     end: '',
   },
+  reportStatus: PropTypes.shape({
+    items: {
+      label: '',
+      value: '',
+    },
+  }),
 }
 
 export default ReportFilter
