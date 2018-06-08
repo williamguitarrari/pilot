@@ -92,10 +92,10 @@ const mock = {
           antifraud: null,
           amount: 2000,
           customer: {
+            address: null,
             name: 'Test',
             email: 'test@test.com',
             country: null,
-            address: null,
             birthday: null,
             created_at: '2017-02-15T15:56:48.842Z',
             documents: [
@@ -152,10 +152,6 @@ const mock = {
           amount: 5490,
           antifraud: null,
           customer: {
-            name: 'Test',
-            email: 'test@test.com',
-            country: null,
-            phones: ['(51) 99873-3526'],
             address: {
               city: 'Porto Alegre',
               complementary: 'Zelador',
@@ -168,6 +164,10 @@ const mock = {
               street_number: '373',
               zipcode: '90420180',
             },
+            name: 'Test',
+            email: 'test@test.com',
+            country: null,
+            phones: ['(51) 99873-3526'],
             birthday: null,
             created_at: '2017-02-15T15:56:48.842Z',
             documents: [
@@ -221,10 +221,6 @@ const mock = {
           amount: 5490,
           antifraud: null,
           customer: {
-            name: 'Test',
-            email: 'test@test.com',
-            country: null,
-            phones: ['(51) 99873-3526'],
             address: {
               city: 'Porto Alegre',
               complementary: 'Zelador',
@@ -237,6 +233,10 @@ const mock = {
               street_number: '373',
               zipcode: '90420180',
             },
+            name: 'Test',
+            email: 'test@test.com',
+            country: null,
+            phones: ['(51) 99873-3526'],
             birthday: null,
             created_at: '2017-02-15T15:56:48.842Z',
             documents: [
@@ -378,10 +378,6 @@ const mock = {
           antifraud: null,
           amount: 1000,
           customer: {
-            name: 'Aardvark da Silva',
-            email: 'aardvark.silva@gmail.com',
-            country: null,
-            phones: ['(11) 98765-4321'],
             address: {
               city: 'São Paulo',
               complementary: null,
@@ -394,6 +390,10 @@ const mock = {
               street_number: '240',
               zipcode: '04571020',
             },
+            name: 'Aardvark da Silva',
+            email: 'aardvark.silva@gmail.com',
+            country: null,
+            phones: ['(11) 98765-4321'],
             birthday: null,
             created_at: '2017-04-24T17:13:37.868Z',
             documents: [
@@ -447,10 +447,6 @@ const mock = {
           amount: 1000,
           antifraud: null,
           customer: {
-            name: 'Test',
-            email: 'test@test.com',
-            country: null,
-            phones: ['(42) 3624-3958'],
             address: {
               city: 'São Paulo',
               complementary: null,
@@ -463,6 +459,10 @@ const mock = {
               street_number: 'Apartment 33b',
               zipcode: '04023000',
             },
+            name: 'Test',
+            email: 'test@test.com',
+            country: null,
+            phones: ['(42) 3624-3958'],
             birthday: null,
             created_at: '2017-07-26T15:16:26.049Z',
             documents: [
@@ -516,6 +516,18 @@ const mock = {
           amount: 48521,
           antifraud: null,
           customer: {
+            address: {
+              city: 'São Paulo',
+              complementary: null,
+              country: 'Brasil',
+              id: 139154,
+              neighborhood: 'Vila Clementino',
+              object: 'address',
+              state: 'SP',
+              street: 'Rua Gandavo',
+              street_number: 'Apartment 33b',
+              zipcode: '04023000',
+            },
             name: 'Test',
             email: 'test@test.com',
             country: null,
@@ -533,18 +545,6 @@ const mock = {
             id: 221667,
             individual: null,
             object: 'customer',
-            address: {
-              city: 'São Paulo',
-              complementary: null,
-              country: 'Brasil',
-              id: 139154,
-              neighborhood: 'Vila Clementino',
-              object: 'address',
-              state: 'SP',
-              street: 'Rua Gandavo',
-              street_number: 'Apartment 33b',
-              zipcode: '04023000',
-            },
           },
           card: {
             holder_name: 'Test',
@@ -585,11 +585,11 @@ const mock = {
           amount: 20000,
           antifraud: null,
           customer: {
+            address: null,
             name: 'Test',
             email: 'test@test.com',
             country: null,
             phones: [],
-            address: null,
             birthday: null,
             created_at: '2017-02-15T17:22:42.412Z',
             documents: [
