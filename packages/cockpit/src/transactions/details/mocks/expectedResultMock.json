@@ -15,7 +15,7 @@
     },
     "card": {
       "brand_name": "visa",
-      "capture_method": null,
+      "capture_method": "ecommerce",
       "first_digits": "987654",
       "holder_name": "Derek",
       "international": true,
