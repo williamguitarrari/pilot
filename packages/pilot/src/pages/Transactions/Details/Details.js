@@ -98,21 +98,22 @@ const countCustomerPhones = pipe(
   )
 )
 
+
 const getCustomerLabels = (customer, t) => ({
-  name: t('customer.name'),
-  document_number: t('customer.document_number'),
   birthday: t('customer.birthday'),
-  gender: t('customer.gender'),
-  phones: t('customer.phone', { count: countCustomerPhones(customer) }),
-  email: t('customer.email'),
-  zip_code: t('customer.zip_code'),
-  street: t('customer.street'),
-  number: t('customer.number'),
-  complement: t('customer.complement'),
-  neighborhood: t('customer.neighborhood'),
   city: t('customer.city'),
+  complementary: t('customer.complement'),
+  document_number: t('customer.document_number'),
+  email: t('customer.email'),
+  gender: t('customer.gender'),
+  name: t('customer.name'),
+  neighborhood: t('customer.neighborhood'),
+  phones: t('customer.phone', { count: countCustomerPhones(customer) }),
   state: t('customer.state'),
+  street_number: t('customer.number'),
+  street: t('customer.street'),
   title: t('customer.title'),
+  zipcode: t('customer.zip_code'),
 })
 
 const getEventsLabels = t => ({

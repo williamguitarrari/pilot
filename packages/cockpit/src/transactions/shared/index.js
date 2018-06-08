@@ -177,11 +177,17 @@ const getDocuments = pipe(
   reject(isNil)
 )
 
+const getAddress = ifElse(
+  pipe(prop('address'), isNil),
+  getCustomerSubProp('address'),
+  prop('address')
+)
+
 const getCustomerProp = ifElse(
-  pipe(prop('customer'), isNil),
+  pipe(prop('customer'), either(isNil, isEmpty)),
   always(null),
   applySpec({
-    address: prop('address'),
+    address: getAddress,
     birthday: pipe(
       ifElse(
         isEmptyCustomerProp('born_at'),

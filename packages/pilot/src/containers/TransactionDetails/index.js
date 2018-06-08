@@ -147,6 +147,19 @@ const getDefaultDocumentNumber = pipe(
   )
 )
 
+const formatCustomerAddress = (customer) => {
+  if (!customer.address) {
+    return customer
+  }
+
+  const { id, ...address } = customer.address
+
+  return {
+    ...address,
+    ...customer,
+  }
+}
+
 const formatCustomerDocuments = customer => ({
   ...customer,
   document_number: getDefaultDocumentNumber(customer),
@@ -154,7 +167,8 @@ const formatCustomerDocuments = customer => ({
 
 const formatCustomerData = pipe(
   formatCustomerBirthDay,
-  formatCustomerDocuments
+  formatCustomerDocuments,
+  formatCustomerAddress
 )
 
 const getHeaderAmountLabel = (transaction, headerLabels) => {
