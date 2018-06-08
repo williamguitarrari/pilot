@@ -40,11 +40,11 @@ class ReportFilter extends Component {
         start: props.dates.start,
         end: props.dates.end,
       },
-      selected: 'waiting',
-      items: {
-        label: props.reportStatus.items.label,
-        value: props.reportStatus.items.value,
-      },
+      // selected: 'waiting',
+      // items: {
+      //   label: props.reportStatus.items.label,
+      //   value: props.reportStatus.items.value,
+      // },
     }
     this.datePresets = [
       {
@@ -94,12 +94,12 @@ class ReportFilter extends Component {
     this.setState({ dates })
   }
 
-  handleOptionsChange (items) {
-    this.setState({ items })
-  }
+  // handleOptionsChange (items) {
+  //   this.setState({ items })
+  // }
 
   render () {
-    const { dates, items } = this.state
+    const { dates } = this.state
 
     return (
       <Card className={style.reportFilter}>
@@ -131,7 +131,7 @@ class ReportFilter extends Component {
               />
               <Dropdown
                 className={style.statusField}
-                onChange={event => this.setState({ selected: event.target.value })}
+                // onChange={event => this.setState({ selected: event.target.value })}
                 options={this.state.label}
                 value={this.state.value}
               />
@@ -162,12 +162,12 @@ ReportFilter.propTypes = {
     start: PropTypes.instanceOf(moment),
     end: PropTypes.instanceOf(moment),
   }),
-  reportStatus: PropTypes.shape({
-    items: PropTypes.shape({
-      label: PropTypes.string,
-      value: PropTypes.string,
-    }),
-  }),
+  // reportStatus: PropTypes.shape({
+  //   items: PropTypes.shape({
+  //     label: PropTypes.string,
+  //     value: PropTypes.string,
+  //   }),
+  // }),
 }
 
 ReportFilter.defaultProps = {
@@ -177,12 +177,12 @@ ReportFilter.defaultProps = {
     start: '',
     end: '',
   },
-  reportStatus: PropTypes.shape({
-    items: {
-      label: '',
-      value: '',
-    },
-  }),
+  // reportStatus: PropTypes.shape({
+  //   items: {
+  //     label: '',
+  //     value: '',
+  //   },
+  // }),
 }
 
 export default ReportFilter
