@@ -182,7 +182,7 @@ const getCustomerProp = ifElse(
   always(null),
   applySpec({
     address: prop('address'),
-    born_at: pipe(
+    birthday: pipe(
       ifElse(
         isEmptyCustomerProp('born_at'),
         getCustomerSubProp('birthday'),
