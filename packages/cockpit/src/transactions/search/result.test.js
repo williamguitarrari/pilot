@@ -92,12 +92,11 @@ const mock = {
           antifraud: null,
           amount: 2000,
           customer: {
+            born_at: null,
             name: 'Test',
             email: 'test@test.com',
-            birth_date: null,
             country: null,
             address: null,
-            born_at: null,
             created_at: '2017-02-15T15:56:48.842Z',
             documents: [
               {
@@ -153,9 +152,9 @@ const mock = {
           amount: 5490,
           antifraud: null,
           customer: {
+            born_at: null,
             name: 'Test',
             email: 'test@test.com',
-            birth_date: null,
             country: null,
             phones: ['(51) 99873-3526'],
             address: {
@@ -170,7 +169,6 @@ const mock = {
               street_number: '373',
               zipcode: '90420180',
             },
-            born_at: null,
             created_at: '2017-02-15T15:56:48.842Z',
             documents: [
               {
@@ -223,9 +221,9 @@ const mock = {
           amount: 5490,
           antifraud: null,
           customer: {
+            born_at: null,
             name: 'Test',
             email: 'test@test.com',
-            birth_date: null,
             country: null,
             phones: ['(51) 99873-3526'],
             address: {
@@ -240,7 +238,6 @@ const mock = {
               street_number: '373',
               zipcode: '90420180',
             },
-            born_at: null,
             created_at: '2017-02-15T15:56:48.842Z',
             documents: [
               {
@@ -381,9 +378,9 @@ const mock = {
           antifraud: null,
           amount: 1000,
           customer: {
+            born_at: null,
             name: 'Aardvark da Silva',
             email: 'aardvark.silva@gmail.com',
-            birth_date: null,
             country: null,
             phones: ['(11) 98765-4321'],
             address: {
@@ -398,7 +395,6 @@ const mock = {
               street_number: '240',
               zipcode: '04571020',
             },
-            born_at: null,
             created_at: '2017-04-24T17:13:37.868Z',
             documents: [
               {
@@ -451,9 +447,9 @@ const mock = {
           amount: 1000,
           antifraud: null,
           customer: {
+            born_at: null,
             name: 'Test',
             email: 'test@test.com',
-            birth_date: null,
             country: null,
             phones: ['(42) 3624-3958'],
             address: {
@@ -468,7 +464,6 @@ const mock = {
               street_number: 'Apartment 33b',
               zipcode: '04023000',
             },
-            born_at: null,
             created_at: '2017-07-26T15:16:26.049Z',
             documents: [
               {
@@ -521,12 +516,11 @@ const mock = {
           amount: 48521,
           antifraud: null,
           customer: {
+            born_at: null,
             name: 'Test',
             email: 'test@test.com',
-            birth_date: null,
             country: null,
             phones: ['(42) 3624-3958'],
-            born_at: null,
             created_at: '2017-07-26T15:56:54.099Z',
             documents: [
               {
@@ -591,13 +585,12 @@ const mock = {
           amount: 20000,
           antifraud: null,
           customer: {
+            born_at: null,
             name: 'Test',
             email: 'test@test.com',
-            birth_date: null,
             country: null,
             phones: [],
             address: null,
-            born_at: null,
             created_at: '2017-02-15T17:22:42.412Z',
             documents: [
               {
