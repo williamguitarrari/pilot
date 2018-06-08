@@ -25,7 +25,7 @@
     "created_at": "2018-05-17T17:28:26.998Z",
     "customer": {
       "address": null,
-      "born_at": "1965-01-01T00:00:00.000Z",
+      "birthday": "1965-01-01T00:00:00.000Z",
       "country": "br",
       "created_at": "2018-05-17T17:28:26.801Z",
       "documents": [
