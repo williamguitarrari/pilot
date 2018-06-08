@@ -90,7 +90,7 @@
     "title": "DETALHES DO CLIENTE",
     "name": "Nome do cliente",
     "document_number": "CPF/CNPJ",
-    "born_at": "Data de nascimento",
+    "birthday": "Data de nascimento",
     "gender": "Gênero",
     "phone": "Telefone",
     "phone_plural": "Telefones",

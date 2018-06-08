@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import {
   Card,
   CardTitle,
@@ -9,16 +8,7 @@ import {
   Row,
   Col,
 } from 'former-kit'
-
-import {
-  head,
-  isNil,
-  mapObjIndexed,
-  pipe,
-  prop,
-  unless,
-} from 'ramda'
-
+import { mapObjIndexed } from 'ramda'
 import Property from '../Property'
 
 const fields = (labels, contents) => mapObjIndexed((label, key) => (
@@ -28,20 +18,9 @@ const fields = (labels, contents) => mapObjIndexed((label, key) => (
   />
 ), labels)
 
-const getDefaultDocumentNumber = pipe(
-  prop('documents'),
-  unless(
-    isNil,
-    pipe(
-      head,
-      prop('number')
-    )
-  )
-)
 
 const CustomerCard = ({ title, labels, contents }) => {
   const customer = fields(labels, contents)
-  const documentNumber = getDefaultDocumentNumber(contents)
 
   return (
     <Card>
@@ -54,14 +33,11 @@ const CustomerCard = ({ title, labels, contents }) => {
             </Col>
 
             <Col palm={12} tablet={6} desk={4} tv={4}>
-              <Property
-                title={labels.documents}
-                value={documentNumber}
-              />
+              { customer.document_number }
             </Col>
 
             <Col palm={12} tablet={6} desk={4} tv={4}>
-              {customer.born_at}
+              {customer.birthday}
             </Col>
 
             <Col palm={12} tablet={6} desk={4} tv={4}>
@@ -112,8 +88,8 @@ const CustomerCard = ({ title, labels, contents }) => {
 
 const shape = {
   name: PropTypes.string,
-  document_number: PropTypes.string,
-  born_at: PropTypes.string,
+  document_nuber: PropTypes.string,
+  birthday: PropTypes.string,
   gender: PropTypes.string,
   phones: PropTypes.string,
   email: PropTypes.string,

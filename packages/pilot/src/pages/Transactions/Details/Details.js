@@ -9,13 +9,14 @@ import {
   complement,
   compose,
   either,
+  head,
   ifElse,
   is,
+  isEmpty,
   isNil,
   length,
   pipe,
   prop,
-  slice,
 } from 'ramda'
 import moment from 'moment'
 import {
@@ -99,8 +100,8 @@ const countCustomerPhones = pipe(
 
 const getCustomerLabels = (customer, t) => ({
   name: t('customer.name'),
-  documents: t('customer.document_number'),
-  born_at: t('customer.born_at'),
+  document_number: t('customer.document_number'),
+  birthday: t('customer.birthday'),
   gender: t('customer.gender'),
   phones: t('customer.phone', { count: countCustomerPhones(customer) }),
   email: t('customer.email'),
@@ -145,11 +146,18 @@ const removeCustomerUnusedPhones = (transaction) => {
     return transaction
   }
   const { phones, ...customer } = transaction.customer
+
+  const getDefaultPhone = ifElse(
+    either(isNil, isEmpty),
+    always(null),
+    head
+  )
+
   return {
     ...transaction,
     customer: {
       ...customer,
-      phones: phones ? slice(0, 1, phones) : [],
+      phones: getDefaultPhone(phones),
     },
   }
 }
