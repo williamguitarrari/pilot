@@ -26,8 +26,8 @@ import {
   prop,
   propEq,
   propOr,
-  propSatisfies,
   props,
+  propSatisfies,
   reject,
   replace,
   splitAt,
@@ -178,7 +178,7 @@ const getDocuments = pipe(
 )
 
 const getAddress = ifElse(
-  pipe(prop('address'), isNil),
+  propSatisfies(isNil, 'address'),
   getCustomerSubProp('address'),
   prop('address')
 )
