@@ -3,19 +3,23 @@ export default {
   name: 'Status de relatório',
   items: [
     {
-      label: 'Aguardando processamento',
+      name: 'Todos os Status',
+      value: 'all',
+    },
+    {
+      name: 'Aguardando processamento',
       value: 'waiting',
     },
     {
-      label: 'Processando',
+      name: 'Processando',
       value: 'processing',
     },
     {
-      label: 'Disponível',
+      name: 'Disponível',
       value: 'ready',
     },
     {
-      label: 'Cancelado',
+      name: 'Cancelado',
       value: 'canceled',
     },
   ],

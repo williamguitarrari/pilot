@@ -27,24 +27,29 @@ const findByLabel = 'Filtre pelo nome do relatório'
 //   return()
 // }
 
+// props, quando você está recebendo valores, parametros
+// state, quando você enviar valores, parametros
+// Quando um component tem os dois é pq este component
+// envia e recebe valores e parametros
 
 class ReportFilter extends Component {
   constructor (props) {
     super(props)
+    // Se começo a receber muitas props, monto a estrutura abaixo
+    // São os valores que receberei através da props
     // const {
     //   label,
     //   value,
     // } = props
+    // Que ai não preciso escrever props.statusSelected e etc
     this.state = {
       dates: {
         start: props.dates.start,
         end: props.dates.end,
       },
-      // selected: 'waiting',
-      // items: {
-      //   label: props.reportStatus.items.label,
-      //   value: props.reportStatus.items.value,
-      // },
+      // name (label) quem me da o name é o dropdown
+      statusSelected: props.statusSelected,
+      inputWrited: props.inputWrited,
     }
     this.datePresets = [
       {
@@ -94,10 +99,6 @@ class ReportFilter extends Component {
     this.setState({ dates })
   }
 
-  // handleOptionsChange (items) {
-  //   this.setState({ items })
-  // }
-
   render () {
     const { dates } = this.state
 
@@ -117,7 +118,7 @@ class ReportFilter extends Component {
                 upper: moment('01-01-2025', 'DD-MM-YYYY'),
                 }}
                 icon={<Calendar32 width={16} height={16} />}
-                // strings={strings}
+                strings={this.props.strings}
               />
               <Input
                 className={style.searchField}
@@ -127,13 +128,25 @@ class ReportFilter extends Component {
                     height={16}
                   />
                 }
+                onChange={e => this.setState({
+                  inputWrited: e.target.value,
+                  })}
+                value={this.state.inputWrited}
                 placeholder={findByLabel}
               />
               <Dropdown
                 className={style.statusField}
-                // onChange={event => this.setState({ selected: event.target.value })}
-                options={this.state.label}
-                value={this.state.value}
+                name="filterDropdown"
+                onChange={event => this.setState({
+                  statusSelected: event.target.value,
+                  })}
+                // o value é a variável
+                options={this.props.items} // pro options lista
+                value={this.state.statusSelected}
+                // this state pois estou enviando esse dado para recebê-lo
+                // novamente e mudar o state da app
+                // componente burro sem state interno
+                // normalmente state só em containers e pages
               />
             </div>
             <div className={style.buttons}>
@@ -162,12 +175,14 @@ ReportFilter.propTypes = {
     start: PropTypes.instanceOf(moment),
     end: PropTypes.instanceOf(moment),
   }),
-  // reportStatus: PropTypes.shape({
-  //   items: PropTypes.shape({
-  //     label: PropTypes.string,
-  //     value: PropTypes.string,
-  //   }),
-  // }),
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired, // atneção todos all
+      value: PropTypes.string.isRequired,
+    })).isRequired,
+  statusSelected: PropTypes.string,
+  inputWrited: PropTypes.string,
+  strings: PropTypes.string,
 }
 
 ReportFilter.defaultProps = {
@@ -177,12 +192,9 @@ ReportFilter.defaultProps = {
     start: '',
     end: '',
   },
-  // reportStatus: PropTypes.shape({
-  //   items: {
-  //     label: '',
-  //     value: '',
-  //   },
-  // }),
+  statusSelected: '',
+  inputWrited: '',
+  strings: '',
 }
 
 export default ReportFilter
