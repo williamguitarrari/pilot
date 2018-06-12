@@ -11,10 +11,13 @@ import {
 import IconCopy from 'emblematic-icons/svg/Copy24.svg'
 import IconBarCode from 'emblematic-icons/svg/BarCode24.svg'
 
+import CopyButton from '../CopyButton'
+
 import style from './style.css'
 
 const PaymentBoleto = ({
   barcode,
+  copyBarcodeFeedback,
   copyBarcodeLabel,
   dueDate,
   dueDateLabel,
@@ -45,14 +48,15 @@ const PaymentBoleto = ({
 
       <div className={style.cardDueDate}>
         <p>{dueDateLabel} {dueDate}</p>
-        <Button
+        <CopyButton
+          feedbackText={copyBarcodeFeedback}
+          feedbackTimeout={3000}
           fill="clean"
-          size="tiny"
           icon={<IconCopy width="12px" height="12px" />}
           onClick={() => onCopy(barcode)}
-        >
-          {copyBarcodeLabel}
-        </Button>
+          size="tiny"
+          title={copyBarcodeLabel}
+        />
       </div>
     </CardContent>
   </Card>
@@ -60,12 +64,13 @@ const PaymentBoleto = ({
 
 PaymentBoleto.propTypes = {
   barcode: PropTypes.string.isRequired,
-  dueDate: PropTypes.string.isRequired,
-  onShow: PropTypes.func.isRequired,
-  onCopy: PropTypes.func.isRequired,
-  dueDateLabel: PropTypes.string.isRequired,
-  showBoletoLabel: PropTypes.string.isRequired,
+  copyBarcodeFeedback: PropTypes.string.isRequired,
   copyBarcodeLabel: PropTypes.string.isRequired,
+  dueDate: PropTypes.string.isRequired,
+  dueDateLabel: PropTypes.string.isRequired,
+  onCopy: PropTypes.func.isRequired,
+  onShow: PropTypes.func.isRequired,
+  showBoletoLabel: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
 }
 

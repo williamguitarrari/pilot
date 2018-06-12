@@ -16,10 +16,10 @@ import {
 import { requestLogout } from '../../Account/actions'
 
 import currencyFormatter from '../../../formatters/decimalCurrency'
-import TransactionDetailsContainer from '../../../containers/TransactionDetails'
-import installmentTableColumns from '../../../components/RecipientSection/installmentTableColumns'
 import getColumnFormatter from '../../../formatters/columnTranslator'
+import installmentTableColumns from '../../../components/RecipientSection/installmentTableColumns'
 import ManualReview from '../../ManualReview'
+import TransactionDetailsContainer from '../../../containers/TransactionDetails'
 
 const mapStateToProps = ({
   account: {
@@ -109,6 +109,7 @@ const getEventsLabels = t => ({
 const getPaymentBoletoLabels = t => ({
   copy: t('copy'),
   due_date: t('boleto.due_date'),
+  feedback: t('boleto.feedback'),
   show: t('boleto.show'),
   title: t('boleto.title'),
 })
@@ -200,7 +201,6 @@ class TransactionDetails extends Component {
       },
     } = this.state.result
     copyToClipBoard(boleto.barcode)
-    // TODO: add a confirmation alert HERE !!!
   }
 
   handleManualReviewApprove () {
