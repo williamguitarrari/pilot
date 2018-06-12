@@ -3,30 +3,35 @@ import PropTypes from 'prop-types'
 import {
   Switch,
   Route,
+  HashRouter,
 } from 'react-router-dom'
 
 import {
+  Avatar,
   Header,
   HeaderContent,
-  HeaderLink,
+  HeaderMenu,
   HeaderTitle,
   HeaderBackButton,
+  PopoverMenu,
 } from 'former-kit'
 
 const HeaderContainer = ({
-  onClickMenu,
-  routes,
+  onSettings,
+  onLogout,
   onBack,
+  routes,
   t,
+  user,
 }) => (
   <Header>
-    <Switch>
-      {
-        routes.map(({
+    <HashRouter>
+      <Switch>
+        {routes.map(({
+          icon: Icon,
           title,
           exact,
           path,
-          component,
         }) => (
           <Route
             key={path}
@@ -34,20 +39,40 @@ const HeaderContainer = ({
             path={path}
             render={() => (
               <Fragment>
-                {!component && <HeaderBackButton onClick={onBack} />}
+                {!Icon && <HeaderBackButton onClick={onBack} />}
+                {Icon && <Icon width={16} height={16} />}
                 <HeaderTitle>{t(title)}</HeaderTitle>
               </Fragment>
-              )
-            }
+            )}
           />
-        ))
-      }
-    </Switch>
+        ))}
+      </Switch>
+    </HashRouter>
 
     <HeaderContent>
-      <HeaderLink onClick={onClickMenu}>
-        <span>{t('header.exit')}</span>
-      </HeaderLink>
+      <HeaderMenu
+        title={
+          <Fragment>
+            <Avatar />
+            <span>{user.name}</span>
+          </Fragment>
+        }
+      >
+        <div>
+          <strong>
+            {user.name}
+          </strong>
+          <small>
+            {t(`models.user.permission.${user.permission}`)}
+          </small>
+        </div>
+        <PopoverMenu
+          items={[
+            { title: t('header.account.settings'), action: onSettings },
+            { title: t('header.account.logout'), action: onLogout },
+          ]}
+        />
+      </HeaderMenu>
     </HeaderContent>
   </Header>
 )
@@ -61,7 +86,12 @@ HeaderContainer.propTypes = {
     exact: PropTypes.bool,
     component: PropTypes.func,
   })).isRequired,
-  onClickMenu: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    name: PropTypes.string,
+    email: PropTypes.string,
+  }).isRequired,
+  onSettings: PropTypes.func.isRequired,
+  onLogout: PropTypes.func.isRequired,
 }
 
 export default HeaderContainer
