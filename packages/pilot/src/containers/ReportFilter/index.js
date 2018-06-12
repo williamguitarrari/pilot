@@ -17,37 +17,14 @@ const findByLabel = 'Filtre pelo nome do relatório'
 
 // const statusLabel = 'Selecione um status'
 
-// const ReportFilter = () => (
-// Isso é uma função pura.
-// )
-
-// Renderizando componentes
-// Não esquecer do return()
-// renderCard() {
-//   return()
-// }
-
-// props, quando você está recebendo valores, parametros
-// state, quando você enviar valores, parametros
-// Quando um component tem os dois é pq este component
-// envia e recebe valores e parametros
-
 class ReportFilter extends Component {
   constructor (props) {
     super(props)
-    // Se começo a receber muitas props, monto a estrutura abaixo
-    // São os valores que receberei através da props
-    // const {
-    //   label,
-    //   value,
-    // } = props
-    // Que ai não preciso escrever props.statusSelected e etc
     this.state = {
       dates: {
         start: props.dates.start,
         end: props.dates.end,
       },
-      // name (label) quem me da o name é o dropdown
       statusSelected: props.statusSelected,
       inputWrited: props.inputWrited,
     }
@@ -146,13 +123,8 @@ class ReportFilter extends Component {
                 onChange={event => this.setState({
                   statusSelected: event.target.value,
                   })}
-                // o value é a variável
-                options={this.props.items} // pro options lista
+                options={this.props.items}
                 value={this.state.statusSelected}
-                // this state pois estou enviando esse dado para recebê-lo
-                // novamente e mudar o state da app
-                // componente burro sem state interno
-                // normalmente state só em containers e pages
               />
             </div>
             <div className={style.buttons}>
@@ -183,7 +155,7 @@ ReportFilter.propTypes = {
   }),
   items: PropTypes.arrayOf(
     PropTypes.shape({
-      name: PropTypes.string.isRequired, // atneção todos all
+      name: PropTypes.string.isRequired,
       value: PropTypes.string.isRequired,
     })).isRequired,
   statusSelected: PropTypes.string,
@@ -203,8 +175,6 @@ ReportFilter.propTypes = {
 }
 
 ReportFilter.defaultProps = {
-  // atentar-se a maneira como estão vindo os objetos
-  // se trago dentro de dates, recebo dentro de dates
   dates: {
     start: '',
     end: '',
