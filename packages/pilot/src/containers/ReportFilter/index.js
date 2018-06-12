@@ -26,6 +26,7 @@ class ReportFilter extends Component {
         end: props.dates.end,
       },
       statusSelected: props.statusSelected,
+      // statusSelected: 'all',
       inputWrited: props.inputWrited,
     }
     this.datePresets = [
@@ -60,7 +61,7 @@ class ReportFilter extends Component {
 
     // Precisamos de um reset?
     // this.handleReset = this.handleReset.bind(this)
-
+    this.handleCleanFilter = this.handleCleanFilter.bind(this)
     this.somethingWithButton = this.somethingWithButton.bind(this)
   }
 
@@ -76,6 +77,13 @@ class ReportFilter extends Component {
 
   handleDatesChange (dates) {
     this.setState({ dates })
+  }
+
+  handleCleanFilter (dates, statusSelected) {
+    this.setState({
+      dates,
+      statusSelected,
+    })
   }
 
   somethingWithButton (dates) {
@@ -123,14 +131,15 @@ class ReportFilter extends Component {
                 onChange={event => this.setState({
                   statusSelected: event.target.value,
                   })}
-                options={this.props.items}
                 value={this.state.statusSelected}
+                options={this.props.items}
+
               />
             </div>
             <div className={style.buttons}>
               <Button
                 fill="outline"
-                onClick={this.somethingWithButton}
+                onClick={this.handleCleanFilter}
               >
                 Limpar Filtros
               </Button>
@@ -191,7 +200,7 @@ ReportFilter.defaultProps = {
     separator: '',
     start: '',
   },
-  statusSelected: '',
+  statusSelected: 'all',
   inputWrited: '',
 }
 
