@@ -210,6 +210,7 @@ class TransactionDetails extends Component {
     return (
       <PaymentBoleto
         barcode={barcode}
+        copyBarcodeFeedback={paymentBoletoLabels.feedback}
         copyBarcodeLabel={paymentBoletoLabels.copy}
         dueDate={moment(due_date).format('L')}
         dueDateLabel={paymentBoletoLabels.due_date}
@@ -647,6 +648,7 @@ TransactionDetails.propTypes = {
     due_date: PropTypes.string,
     show: PropTypes.string,
     title: PropTypes.string,
+    feedback: PropTypes.string,
   }).isRequired,
   paymentCardLabels: PropTypes.shape({
     title: PropTypes.string,
