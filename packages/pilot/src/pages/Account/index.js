@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
+  Redirect,
   Route,
   Switch,
   withRouter,
@@ -89,6 +90,7 @@ const AccountArea = ({ t, history: { location } }) => (
           path="/account/signup"
           component={UnregisteredPresentation}
         />
+        <Redirect to="/account/login" />
       </Switch>
     }
   />
