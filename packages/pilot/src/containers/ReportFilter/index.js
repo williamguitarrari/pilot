@@ -83,6 +83,8 @@ class ReportFilter extends Component {
 
     // Precisamos de um reset?
     // this.handleReset = this.handleReset.bind(this)
+
+    this.somethingWithButton = this.somethingWithButton.bind(this)
   }
 
   // componentWillReceiveProps ({ start, end }) {
@@ -96,6 +98,10 @@ class ReportFilter extends Component {
   // }
 
   handleDatesChange (dates) {
+    this.setState({ dates })
+  }
+
+  somethingWithButton (dates) {
     this.setState({ dates })
   }
 
@@ -152,13 +158,13 @@ class ReportFilter extends Component {
             <div className={style.buttons}>
               <Button
                 fill="outline"
-                onClick=""
+                onClick={this.somethingWithButton}
               >
                 Limpar Filtros
               </Button>
               <Button
                 fill="gradient"
-                onClick=""
+                onClick={this.somethingWithButton}
               >
                 Filtrar
               </Button>
@@ -182,7 +188,18 @@ ReportFilter.propTypes = {
     })).isRequired,
   statusSelected: PropTypes.string,
   inputWrited: PropTypes.string,
-  strings: PropTypes.string,
+  strings: PropTypes.arrayOf(PropTypes.shape({
+    active: PropTypes.string,
+    dateInput: PropTypes.string,
+    dateSelector: PropTypes.string,
+    end: PropTypes.string,
+    error: PropTypes.string,
+    focused: PropTypes.string,
+    icon: PropTypes.string,
+    input: PropTypes.string,
+    separator: PropTypes.string,
+    start: PropTypes.string,
+  })),
 }
 
 ReportFilter.defaultProps = {
@@ -192,9 +209,20 @@ ReportFilter.defaultProps = {
     start: '',
     end: '',
   },
+  strings: {
+    active: '',
+    dateInput: '',
+    dateSelector: '',
+    end: '',
+    error: '',
+    focused: '',
+    icon: '',
+    input: '',
+    separator: '',
+    start: '',
+  },
   statusSelected: '',
   inputWrited: '',
-  strings: '',
 }
 
 export default ReportFilter
