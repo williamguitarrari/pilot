@@ -1,15 +1,14 @@
-import React, { Fragment, Component } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import qs from 'qs'
 
 import {
   Route,
-  Redirect,
   withRouter,
 } from 'react-router-dom'
 
 import { connect } from 'react-redux'
-import { compose, pipe, tail } from 'ramda'
+import { compose, pipe, startsWith, tail } from 'ramda'
 
 import { requestLogin } from './Account/actions'
 
@@ -68,6 +67,7 @@ class Root extends Component {
         pathname: path,
         search: queryString,
       },
+      history,
       sessionId,
       user,
     } = this.props
@@ -79,20 +79,25 @@ class Root extends Component {
       return null
     }
 
-    return (
-      <Fragment>
-        {!client && !path.startsWith('/account')
-          ? <Redirect to="/account/login" />
-          : <Route path="/account" component={Account} />
-        }
-        {client && user && path.startsWith('/account/login') &&
-          <Redirect to={redirect} />
-        }
-        {client && company && user &&
-          <LoggedArea />
-        }
-      </Fragment>
-    )
+    if (!client && !startsWith('/account', path)) {
+      history.replace('/account/login')
+      return null
+    }
+
+    if (!client) {
+      return <Route path="/account" component={Account} />
+    }
+
+    if (user && startsWith('/account/login', path)) {
+      history.replace(redirect)
+      return null
+    }
+
+    if (!user && !company) {
+      return null
+    }
+
+    return <LoggedArea />
   }
 }
 
@@ -102,7 +107,10 @@ Root.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string,
     search: PropTypes.string,
-  }),
+  }).isRequired,
+  history: PropTypes.shape({
+    replace: PropTypes.func,
+  }).isRequired,
   requestLogin: PropTypes.func.isRequired,
   sessionId: PropTypes.string,
   user: PropTypes.object, // eslint-disable-line
@@ -111,7 +119,6 @@ Root.propTypes = {
 Root.defaultProps = {
   client: null,
   company: null,
-  location: {},
   sessionId: null,
   user: null,
 }
