@@ -52,8 +52,8 @@
     "title": "crie sua conta"
   },
   "transactions": {
-    "list": "TRANSAÇÕES",
-    "details": "TRANSAÇÃO"
+    "list": "Transações",
+    "details": "Detalhes da transação"
   },
   "models": {
     "antifraud_analyses": {
@@ -305,6 +305,26 @@
     }
   },
   "settings": {
+    "user": {
+      "menu": "Minha conta",
+      "card": {
+        "header": "Dados pessoais",
+        "access": {
+          "title": "Alterar senha",
+          "subtitle": "Recomendamos que use uma senha forte e diferente das demais que costuma utilizar.",
+          "currentPassword": "Senha",
+          "newPassword": "Nova senha",
+          "matchNewPassword": "Confirme a nova senha",
+          "buttonSubmit": "Salvar alterações",
+          "buttonCancel": "Cancelar",
+          "fieldRequired": "Esse campo é obrigatório",
+          "passwordEqual": "As senhas não conferem",
+          "alert": {
+            "success": "Senha atualizada com sucesso."
+          }
+        }
+      }
+    },
     "company": {
       "menu": "Configurações",
       "tab": {

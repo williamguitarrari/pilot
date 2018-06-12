@@ -33,7 +33,7 @@ const enhance = compose(
 )
 
 const Header = ({
-  history: { goBack },
+  history: { goBack, push },
   onLogout,
   t,
   user,
@@ -41,7 +41,7 @@ const Header = ({
   <HeaderContainer
     onBack={goBack}
     onLogout={onLogout}
-    onSettings={() => undefined}
+    onSettings={() => push(routes.accountSettings.path)}
     routes={values(routes)}
     t={t}
     user={user}
@@ -52,6 +52,7 @@ Header.propTypes = {
   t: PropTypes.func.isRequired,
   history: PropTypes.shape({
     goBack: PropTypes.func,
+    push: PropTypes.func,
   }).isRequired,
   user: PropTypes.shape({
     name: PropTypes.string,
