@@ -37,6 +37,7 @@
     "title": "BOLETO",
     "show": "ver boleto",
     "due_date": "Vencimento:",
+    "feedback": "Copiado!",
     "waiting_payment_warning": "O demonstrativo de parcelas fica disponível após o pagamento do boleto."
   },
   "chargeback" : {

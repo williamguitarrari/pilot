@@ -41,6 +41,7 @@ const PaymentCards = () => (
         <Col palm={12} tablet={6} desk={3}>
           <PaymentBoleto
             barcode="23791.22928 50000.673934 58000.04902 3 72110000030000"
+            copyBarcodeFeedback="Copiado!"
             copyBarcodeLabel="copiar"
             dueDate="20/03/2018"
             dueDateLabel="Vencimento"
