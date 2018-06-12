@@ -41,6 +41,10 @@ const renderLegend = (legendKey) => {
   )
 }
 
+const tooltipFormatter = (amount, label, { unit }) =>
+  formatCurrency(amount, unit)
+
+
 const Charts = ({ data, legendsTitle }) => (
   <Fragment>
     <ResponsiveContainer width="100%" height={380}>
@@ -54,7 +58,7 @@ const Charts = ({ data, legendsTitle }) => (
           axisLine={false}
           dataKey="name"
           tick={{ fontSize: 11 }}
-          tickFormatter={formatDate}
+          tickFormatter={formatCurrency}
           tickMargin={10}
         />
         <YAxis
@@ -68,7 +72,7 @@ const Charts = ({ data, legendsTitle }) => (
           vertical={false}
         />
         <Tooltip
-          formatter={formatCurrency}
+          formatter={tooltipFormatter}
           labelFormatter={formatDate}
         />
         {
