@@ -4,7 +4,11 @@
   "email": "E-mail",
   "password": "Senha",
   "header": {
-    "title": "TRANSAÇÕES",
+    "account": {
+      "settings": "Configurações da conta",
+      "logout": "Encerrar sessão"
+    },
+    "title": "Transações",
     "alerts": "Notificações",
     "messages": "Mensagens",
     "exit": "Sair"
@@ -23,6 +27,9 @@
     "login_action": "Acessar",
     "password_recovery_action": "Esqueci minha senha",
     "network_error": "Falha de comunicação com o Pagar.me. Verifique seu acesso a internet."
+  },
+  "validations": {
+    "isEmail": "Não é um e-mail válido"
   },
   "password_recovery": {
     "confirmation": "em instantes você receberá um e-mail com as instruções para a redefinição de sua senha",
@@ -233,6 +240,13 @@
       "installments_count_plural": "{{count}}x",
       "installments_count": "à  vista",
       "installments": "Número de parcelas"
+    },
+    "user": {
+      "permission": {
+        "admin": "Administrador",
+        "read_only": "Somente leitura",
+        "read_write": "Leitura e escrita"
+      }
     }
   },
   "pages": {
@@ -288,6 +302,131 @@
       "try_again": "Tentar novamente",
       "view_transaction": "Visualizar transação",
       "wrong_password": "Senha inválida"
+    }
+  },
+  "settings": {
+    "company": {
+      "menu": "Configurações",
+      "tab": {
+        "general": "Geral",
+        "product": "Produtos",
+        "team": "Equipe",
+        "personalization": "Personalização",
+        "register": "Cadastro"
+      },
+      "card": {
+        "general": {
+          "title": {
+            "rate": "Taxas e serviços",
+            "api": "Chaves da API e criptografia"
+          },
+          "subtitle": {
+            "rate": "Taxas e serviços negociados durante a ativação da sua conta.",
+            "api": "Responsáveis pela autenticação da API do Pagar.me e pela autorização de transações."
+          },
+          "headline": {
+            "rate": "Para solicitar renegociação das taxas, entre em contato conosco.",
+            "api": "É extremamente importante mantê-las em sigilo para a segurança de seus dados."
+          },
+          "rate": {
+            "gateway": "Gateway",
+            "transfers": "Transferências",
+            "psp": "PSP",
+            "credit_card": "Cartão de crédito",
+            "debit_card": "Cartão de débito",
+            "boleto": "Boleto",
+            "antifraud_cost": "Antifraude",
+            "mdrs": "MDRS",
+            "anticipation": "Antecipação",
+            "credito_em_conta": "Crédito de conta",
+            "doc": "DOC",
+            "ted": "TED",
+            "minimum_monthly_payment": "Mínimo pago mensalmente"
+          },
+          "api_key": {
+            "live": "Live",
+            "test": "Test"
+
+          }
+        },
+        "product": {
+          "title": {
+            "boleto": "Boleto",
+            "subscriptions": "Recorrência"
+          },
+          "subtitle": {
+            "boleto": "Configurações globais de seus boletos.",
+            "subscriptions": "Configurações globais de suas assinaturas recorrentes."
+          }
+        },
+        "team": {
+          "title": {
+            "management": "Gerenciamento de equipe"
+          },
+          "subtitle": {
+            "management": "Gerencie os usuários com acesso à sua conta Pagar.me."
+          },
+          "table": {
+            "user": "{{count}} Usuário",
+            "user_plural": "{{count}} Usuários",
+            "addUser": "Adicionar usuário"
+          },
+          "modal": {
+            "title": "Adicionar usuário",
+            "success": "E-mail de convite enviado para {{ email }}",
+            "access_level": "Nível de acesso",
+            "identification": "Identificação"
+          },
+          "deleteUser" : {
+            "success": "Usuario deletado com sucesso."
+          }
+        },
+        "register": {
+          "cardTitle": "As alterações dos dados da empresa estão sujeitas à análise. Se tiver alguma dúvida, entre em contato conosco.",
+          "cardCompany": "Dados da empresa",
+          "accountManager": "Contato responsável",
+          "title": {
+            "company": "Informações da empresa",
+            "address": "Endereço",
+            "documents": "Documentos",
+            "managingPartner": "Informações pessoais",
+            "bank": "Informações da conta"
+          },
+          "subtitle": {
+            "company": "Verifique ou edite informações da sua empresa.",
+            "address": "Verifique ou edite informações do endereço da sua empresa.",
+            "documents": "Visualize os documentos vinculados à sua conta.",
+            "managingPartner": "Verifique ou edite informações do sócio administrador.",
+            "bank": "Verifique ou adicione novas contas que você utilizará para realizar os saques da sua conta Pagar.me."
+          },
+          "general": {
+            "form": {
+              "name": "Nome",
+              "fullName": "Nome completo",
+              "cnpj": "CNPJ",
+              "siteUrl": "Site Url"
+            }
+          },
+          "address": {
+            "form": {
+              "street": "Rua",
+              "complementary": "Complemento",
+              "streetNumber": "Número",
+              "neighborhood": "Bairro",
+              "city": "Cidade",
+              "state": "Estado",
+              "zipcode": "CEP"
+            }
+          },
+          "managingPartner": {
+            "form": {
+              "name": "Nome",
+              "cpf": "CPF",
+              "phone": "Telefone"
+            }
+          }
+        }
+      }
     }
   }
 }
