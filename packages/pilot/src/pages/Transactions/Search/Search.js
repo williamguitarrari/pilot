@@ -198,6 +198,7 @@ class TransactionsSearch extends React.Component {
       itemsPerPageLabel: t('items_per_page'),
       noContentFoundMessage: t('no_content_found'),
       ofLabel: t('of'),
+      pendingReviewsCount: 0,
       periodSummaryLabel: t('period_summary'),
       result: {
         total: {},
