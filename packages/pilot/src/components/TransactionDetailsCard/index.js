@@ -64,7 +64,10 @@ const TransactionDetailsCard = ({ title, labels, contents }) => (
 )
 
 const shape = {
-  tid: PropTypes.string,
+  tid: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
   acquirer_name: PropTypes.string,
   authorization_code: PropTypes.string,
   acquirer_response_code: PropTypes.string,
