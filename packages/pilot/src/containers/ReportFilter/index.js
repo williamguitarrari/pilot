@@ -169,18 +169,19 @@ ReportFilter.propTypes = {
     })).isRequired,
   statusSelected: PropTypes.string,
   inputWrited: PropTypes.string,
-  strings: PropTypes.arrayOf(PropTypes.shape({
-    active: PropTypes.string,
-    dateInput: PropTypes.string,
-    dateSelector: PropTypes.string,
-    end: PropTypes.string,
-    error: PropTypes.string,
-    focused: PropTypes.string,
-    icon: PropTypes.string,
-    input: PropTypes.string,
-    separator: PropTypes.string,
-    start: PropTypes.string,
-  })),
+  strings: PropTypes.arrayOf(
+    PropTypes.shape({
+      active: PropTypes.string,
+      dateInput: PropTypes.string,
+      dateSelector: PropTypes.string,
+      end: PropTypes.string,
+      error: PropTypes.string,
+      focused: PropTypes.string,
+      icon: PropTypes.string,
+      input: PropTypes.string,
+      separator: PropTypes.string,
+      start: PropTypes.string,
+    })),
 }
 
 ReportFilter.defaultProps = {
@@ -198,7 +199,7 @@ ReportFilter.defaultProps = {
     icon: '',
     input: '',
     separator: '',
-    start: '',
+    start: 'Escolha uma Data',
   },
   statusSelected: 'all',
   inputWrited: '',
