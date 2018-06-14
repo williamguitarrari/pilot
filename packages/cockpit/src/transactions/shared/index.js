@@ -21,7 +21,7 @@ import {
   map,
   of,
   path,
-  pathSatisfies,
+  pathOr,
   pipe,
   prop,
   propEq,
@@ -90,11 +90,7 @@ const getAntifraudProp = ifElse(
   })
 )
 
-const getCustomerSubProp = subProp => ifElse(
-  pathSatisfies(complement(isNil), ['customer', subProp]),
-  path(['customer', subProp]),
-  always(null)
-)
+const getCustomerSubProp = subProp => pathOr(null, ['customer', subProp])
 
 const isEmptyCustomerProp = propName => pipe(
   getCustomerSubProp(propName),
