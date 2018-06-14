@@ -142,17 +142,19 @@ const getRiskLevelsLabels = t => ({
 
 // TODO: Remove this function and it usage when the this issue is solved
 // https://github.com/pagarme/pilot/issues/681
+const getDefaultPhone = ifElse(
+  either(isNil, isEmpty),
+  always(null),
+  head
+)
+
+// TODO: Remove this function and it usage when the this issue is solved
+// https://github.com/pagarme/pilot/issues/681
 const removeCustomerUnusedPhones = (transaction) => {
   if (!transaction.customer) {
     return transaction
   }
   const { phones, ...customer } = transaction.customer
-
-  const getDefaultPhone = ifElse(
-    either(isNil, isEmpty),
-    always(null),
-    head
-  )
 
   return {
     ...transaction,

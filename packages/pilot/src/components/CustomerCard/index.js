@@ -29,11 +29,11 @@ const CustomerCard = ({ title, labels, contents }) => {
         <Grid>
           <Row>
             <Col palm={12} tablet={6} desk={4} tv={4}>
-              { customer.name }
+              {customer.name}
             </Col>
 
             <Col palm={12} tablet={6} desk={4} tv={4}>
-              { customer.document_number }
+              {customer.document_number}
             </Col>
 
             <Col palm={12} tablet={6} desk={4} tv={4}>
