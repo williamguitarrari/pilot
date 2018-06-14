@@ -87,25 +87,25 @@ const CustomerCard = ({ title, labels, contents }) => {
 }
 
 const shape = {
-  name: PropTypes.string,
-  document_nuber: PropTypes.string,
   birthday: PropTypes.string,
-  gender: PropTypes.string,
-  phones: PropTypes.string,
-  email: PropTypes.string,
-  zip_code: PropTypes.string,
-  street: PropTypes.string,
-  number: PropTypes.string,
-  complement: PropTypes.string,
-  neighborhood: PropTypes.string,
   city: PropTypes.string,
+  complementary: PropTypes.string,
+  document_number: PropTypes.string,
+  email: PropTypes.string,
+  gender: PropTypes.string,
+  name: PropTypes.string,
+  neighborhood: PropTypes.string,
+  phones: PropTypes.string,
   state: PropTypes.string,
+  street_number: PropTypes.string,
+  street: PropTypes.string,
+  zipcode: PropTypes.string,
 }
 
 CustomerCard.propTypes = {
-  title: PropTypes.string.isRequired,
-  labels: PropTypes.shape(shape).isRequired,
   contents: PropTypes.shape(shape).isRequired,
+  labels: PropTypes.shape(shape).isRequired,
+  title: PropTypes.string.isRequired,
 }
 
 export default CustomerCard
