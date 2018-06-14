@@ -45,7 +45,7 @@ const CustomerCard = ({ title, labels, contents }) => {
             </Col>
 
             <Col palm={12} tablet={6} desk={4} tv={4}>
-              {customer.phones}
+              {customer.phone}
             </Col>
 
             <Col palm={12} tablet={6} desk={4} tv={4}>
@@ -95,7 +95,7 @@ const shape = {
   gender: PropTypes.string,
   name: PropTypes.string,
   neighborhood: PropTypes.string,
-  phones: PropTypes.string,
+  phone: PropTypes.string,
   state: PropTypes.string,
   street_number: PropTypes.string,
   street: PropTypes.string,
