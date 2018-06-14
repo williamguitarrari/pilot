@@ -1,13 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
+
 import { join } from 'ramda'
 import {
   CardContent,
-  Col,
-  Grid,
   Legend,
-  Row,
 } from 'former-kit'
 
 import numberFormat from '../../formatters/decimalCurrency'
@@ -28,85 +25,35 @@ const RecipientCard = ({
 }) => (
   <CardContent>
     <div className={style.recipient}>
-      <Grid >
-        <Row
-          flex
-          className={style.row}
-        >
-          <Col
-            align="start"
-            className={style.description}
+      <div>
+        <span className={style.title}>{name}</span>
+        <span>{`${liabilitiesLabel}: ${join(', ', liabilities)}`}</span>
+
+        <div>
+          <span className={style.statusLabel}>{statusLabel}</span>
+          <Legend
+            color={legendStatus[status].color}
+            acronym={legendStatus[status].acronym}
+            hideLabel
           >
-            <span className={style.title}>{name}</span>
-          </Col>
-          <Col
-            align="end"
-            className={style.summary}
-          >
-            <span>
-              {totalLabel}
-            </span>
-            <span className={classNames(
-                style.total,
-                style.amount
-              )}
-            >
-              {numberFormat(totalAmount)}
-            </span>
-          </Col>
-        </Row>
-        <Row
-          flex
-          className={style.row}
-        >
-          <Col
-            align="start"
-            className={style.description}
-          >
-            { `${liabilitiesLabel}: ${join(', ', liabilities)}` }
-          </Col>
-          <Col
-            align="end"
-            className={style.summary}
-          >
-            <span>
-              {outAmountLabel}
-            </span>
-            <span className={style.amount}>
-              { numberFormat(netAmount - totalAmount) }
-            </span>
-          </Col>
-        </Row>
-        <Row
-          flex
-          className={style.row}
-        >
-          <Col
-            align="start"
-            className={style.description}
-          >
-            <span className={style.statusLabel}>{statusLabel}</span>
-            <Legend
-              color={legendStatus[status].color}
-              acronym={legendStatus[status].acronym}
-              hideLabel
-            >
-              {legendStatus[status].text}
-            </Legend>
-          </Col>
-          <Col
-            align="end"
-            className={style.summary}
-          >
-            <span>
-              {netAmountLabel}
-            </span>
-            <span className={style.amount}>
-              { numberFormat(netAmount) }
-            </span>
-          </Col>
-        </Row>
-      </Grid>
+            {legendStatus[status].text}
+          </Legend>
+        </div>
+      </div>
+
+      <div>
+        <div className={style.description}>
+          <span>{totalLabel}</span>
+          <span>{outAmountLabel}</span>
+          <span>{netAmountLabel}</span>
+        </div>
+
+        <div>
+          <strong className={style.total}>{numberFormat(totalAmount)}</strong>
+          <strong>{numberFormat(netAmount - totalAmount)}</strong>
+          <strong>{numberFormat(netAmount)}</strong>
+        </div>
+      </div>
     </div>
   </CardContent>
 )
