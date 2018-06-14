@@ -108,7 +108,7 @@ const getCustomerLabels = (customer, t) => ({
   gender: t('customer.gender'),
   name: t('customer.name'),
   neighborhood: t('customer.neighborhood'),
-  phones: t('customer.phone', { count: countCustomerPhones(customer) }),
+  phone: t('customer.phone', { count: countCustomerPhones(customer) }),
   state: t('customer.state'),
   street_number: t('customer.number'),
   street: t('customer.street'),
@@ -160,7 +160,7 @@ const removeCustomerUnusedPhones = (transaction) => {
     ...transaction,
     customer: {
       ...customer,
-      phones: getDefaultPhone(phones),
+      phone: getDefaultPhone(phones),
     },
   }
 }
