@@ -7,6 +7,7 @@ import BoletoRefundResult from './Refund/BoletoResult'
 import CardConfirmation from './Refund/CardConfirmation'
 import CardForm from './Refund/CardForm'
 import CardResult from './Refund/CardResult'
+import Balance from './Balance'
 import RecipientListState from './RecipientList'
 import {
   ManualReviewApproveForm,
@@ -87,4 +88,6 @@ storiesOf('Containers', module)
   .add('Card transaction refund', () => (
     <CreditCardRefund />
   ))
-
+  .add('Balance', () => (
+    <Balance />
+  ))
