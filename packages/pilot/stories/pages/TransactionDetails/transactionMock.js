@@ -563,6 +563,7 @@ const transaction = {
       "status": "cancelled",
     }
   ],
+  "risk_level": "moderated",
   "soft_descriptor": null,
   "status_reason": "acquirer",
   "status": "chargedback",
