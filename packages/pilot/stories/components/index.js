@@ -14,6 +14,7 @@ import Property from './Property'
 import Operations from './Operations'
 import RecipientSectionState from './RecipientSection'
 import RiskLevel from './RiskLevel'
+import ReprocessDetails from './ReprocessDetails'
 import TotalDisplay from './TotalDisplay'
 import TransactionDetailsCard from './TransactionDetailsCard'
 import TreeView from './TreeView'
@@ -46,6 +47,9 @@ storiesOf('Components', module)
   ))
   .add('DataDisplay', () => (
     <DataDisplay />
+  ))
+  .add('Reprocess details', () => (
+    <ReprocessDetails />
   ))
   .add('TotalDisplay', () => (
     <TotalDisplay />
