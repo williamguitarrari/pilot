@@ -29,6 +29,7 @@ import {
   BoletoRefund,
   CreditCardRefund,
 } from './Refund'
+import Reprocess from './Reprocess'
 import ReprocessForm from './Reprocess/Form'
 import ReprocessResult from './Reprocess/Result'
 
@@ -99,4 +100,30 @@ storiesOf('Containers', module)
   .add('Reprocess result', () => (
     <ReprocessResult />
   ))
-
+  .add('Reprocess step confirmation', () => (
+    <Reprocess
+      statusMessage=""
+      stepStatus={{
+        confirmation: 'current',
+        result: null,
+      }}
+    />
+  ))
+  .add('Reprocess step result', () => (
+    <Reprocess
+      statusMessage="Success!"
+      stepStatus={{
+        confirmation: 'success',
+        result: 'current',
+      }}
+    />
+  ))
+  .add('Reprocess step result error', () => (
+    <Reprocess
+      statusMessage="Internal server error"
+      stepStatus={{
+        confirmation: 'success',
+        result: 'error',
+      }}
+    />
+  ))
