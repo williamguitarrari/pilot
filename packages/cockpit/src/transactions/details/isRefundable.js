@@ -39,7 +39,7 @@ const isRefundable = (transaction) => {
       allPass([
         isCreditOrDebit,
         isRedeAcquirer,
-        always(moment(transaction.date_created).endOf('day').isAfter(now)),
+        always(now.isBefore(moment(transaction.date_created).endOf('day'))),
       ]),
       T,
     ],
