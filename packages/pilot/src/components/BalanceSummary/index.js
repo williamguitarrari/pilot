@@ -58,7 +58,7 @@ const BalanceSummary = ({ amount, dates }) => (
 const totalShape = PropTypes.shape({
   title: PropTypes.string.isRequired,
   unit: PropTypes.string,
-  value: PropTypes.number.isRequired,
+  value: PropTypes.number,
 })
 
 BalanceSummary.propTypes = {

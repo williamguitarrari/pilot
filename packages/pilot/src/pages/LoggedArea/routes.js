@@ -1,12 +1,20 @@
-import Transaction32 from 'emblematic-icons/svg/Transaction32.svg'
+import Balance32 from 'emblematic-icons/svg/Extract32.svg'
 import Configuration32 from 'emblematic-icons/svg/Configuration32.svg'
+import Transaction32 from 'emblematic-icons/svg/Transaction32.svg'
 
+import { Balance } from '../Balance'
+import CompanySettings from '../CompanySettings'
 import Transactions from '../Transactions'
 import UserSettings from '../UserSettings'
-import CompanySettings from '../CompanySettings'
-
 
 export default {
+  balance: {
+    component: Balance,
+    icon: Balance32,
+    exact: true,
+    path: '/balance/:id?',
+    title: 'pages.balance.title',
+  },
   transactions: {
     title: 'transactions.list',
     path: '/transactions',

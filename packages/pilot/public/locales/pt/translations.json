@@ -16,29 +16,6 @@
   "of": "de",
   "password": "Senha",
   "recipient": "Recebedor",
-  "balance": {
-    "anticipation": "Antecipação",
-    "account": "Conta",
-    "agency": "Agência",
-    "anticipation_title": "A receber",
-    "available_anticipation": "Liberado para antecipação",
-    "available_withdrawal": "Liberado para saque",
-    "bank_code": "Banco",
-    "id": "id do recebedor",
-    "invalid_recipient": "Você não possui um recebedor padrão configurado para este ambiente",
-    "pending_requests_title": "Solicitações recentes",
-    "pending_requests_empty_message": "Nenhuma solicitação disponível",
-    "recipient": "Recebedor",
-    "title": "Extrato",
-    "total": {
-      "outcoming": "Total de entradas",
-      "outgoing": "Total de saídas",
-      "net": "Total líquido"
-    },
-    "type": "Tipo de conta",
-    "withdraw": "Sacar",
-    "withdrawal_title": "Saldo atual"
-  },
   "bank_code": {
     "000": "Não informado",
     "001": "Banco do Brasil S.A.",
@@ -236,31 +213,7 @@
   "validations": {
     "isEmail": "Não é um e-mail válido"
   },
-  "operations": {
-    "anticipation": "Antecipação",
-    "anticipation_message": "Antecipação efetuada",
-    "boleto": "Boleto",
-    "chargeback": "Chargeback",
-    "credit": "Cartão de crédito",
-    "dates_title": "Selecione um dia ou período",
-    "debit": "Boleto",
-    "description": "Descrição",
-    "details_title": "Detalhes do extrato",
-    "empty_message": "Não foram encontrados lançamentos neste período",
-    "export": "Exportar tudo",
-    "gateway_service": "Serviços de gateway",
-    "id": "id",
-    "mdr": "MDR",
-    "net": "total",
-    "outcoming": "entradas",
-    "outgoing": "saídas",
-    "payment_date": "data",
-    "refund": "Estorno",
-    "subtitle": "Total de {{total}} lançamentos",
-    "title": "Lançamentos do período",
-    "transfer": "Saque",
-    "withdraw": "Saque"
-  },
+
   "password_recovery": {
     "confirmation": "em instantes você receberá um e-mail com as instruções para a redefinição de sua senha",
     "confirmation_emphasis": "pronto",
@@ -476,6 +429,29 @@
     "customer": {
       "email": "E-mail"
     },
+    "operations": {
+      "anticipation": "Antecipação",
+      "anticipation_message": "Antecipação efetuada",
+      "boleto": "Boleto",
+      "chargeback": "Chargeback",
+      "credit": "Cartão de crédito",
+      "dates_title": "Selecione um dia ou período",
+      "debit": "Boleto",
+      "description": "Descrição",
+      "details_title": "Detalhes do extrato",
+      "empty_message": "Não foram encontrados lançamentos neste período",
+      "export": "Exportar tudo",
+      "gateway_service": "Serviços de gateway",
+      "id": "id",
+      "mdr": "MDR",
+      "net": "total",
+      "outcoming": "entradas",
+      "outgoing": "saídas",
+      "payment_date": "data",
+      "refund": "Estorno",
+      "transfer": "Saque",
+      "withdraw": "Saque"
+    },
     "transaction": {
       "amount": "Valor da transação",
       "installments_count_plural": "{{count}}x",
@@ -491,6 +467,33 @@
     }
   },
   "pages": {
+    "balance": {
+      "account": "Conta",
+      "agency": "Agência",
+      "anticipation_title": "A receber",
+      "anticipation": "Antecipação",
+      "available_anticipation": "Liberado para antecipação",
+      "available_withdrawal": "Liberado para saque",
+      "bank_code": "Banco",
+      "id": "id do recebedor",
+      "invalid_recipient": "Você não possui um recebedor padrão configurado para este ambiente",
+      "operations_title": "Lançamentos do período",
+      "pending_requests_empty_message": "Nenhuma solicitação disponível",
+      "pending_requests_title": "Solicitações recentes",
+      "recipient": "Recebedor",
+      "releases": "lançamentos",
+      "title": "Extrato",
+      "total": {
+        "outcoming": "Total de entradas",
+        "outgoing": "Total de saídas",
+        "net": "Total líquido",
+        "of": "Total de"
+      },
+      "type": "Tipo de conta",
+      "withdraw": "Sacar",
+      "withdrawal_title": "Saldo atual",
+      "unknown_error": "Erro desconhecido"
+    },
     "manual_review": {
       "approve_action": "Aprovar transação",
       "legal_warning_approves_approve": "aprovação.",
