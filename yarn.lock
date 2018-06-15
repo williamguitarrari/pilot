@@ -3555,9 +3555,9 @@ emblematic-icons@0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/emblematic-icons/-/emblematic-icons-0.1.1.tgz#697010326b33da9e499286f570c7fabe2aa54fcb"
 
-emblematic-icons@0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/emblematic-icons/-/emblematic-icons-0.2.0.tgz#f4851d1ac098752d0cdfb8d91f81e67629374076"
+emblematic-icons@0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/emblematic-icons/-/emblematic-icons-0.3.1.tgz#85b9bf81228a4166c27fe4423683b4d69cab7afe"
 
 emoji-regex@^6.1.0:
   version "6.5.1"
@@ -5846,7 +5846,7 @@ isobject@^3.0.0, isobject@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
 
-isomorphic-fetch@^2.1.1:
+isomorphic-fetch@2.2.1, isomorphic-fetch@^2.1.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/isomorphic-fetch/-/isomorphic-fetch-2.2.1.tgz#611ae1acf14f5e81f729507472819fe9733558a9"
   dependencies:
@@ -7389,10 +7389,6 @@ moment@2.20.1:
   version "2.20.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.20.1.tgz#d6eb1a46cbcc14a2b2f9434112c1ff8907f313fd"
 
-moment@2.22.0:
-  version "2.22.0"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.22.0.tgz#7921ade01017dd45186e7fee5f424f0b8663a730"
-
 moment@>=1.6.0:
   version "2.22.2"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.22.2.tgz#3c257f9839fc0e93ff53149632239eb90783ff66"
@@ -7971,9 +7967,9 @@ package-json@^4.0.0:
     registry-url "^3.0.3"
     semver "^5.1.0"
 
-pagarme@3.4.0:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/pagarme/-/pagarme-3.4.0.tgz#8a47b6b19565be5c79a9ee32ccc303a699ba33a5"
+pagarme@3.7.1:
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/pagarme/-/pagarme-3.7.1.tgz#63d80d2348ca3f856f6b037d34963a2ffd28f844"
 
 pagarme@3.7.3:
   version "3.7.3"

@@ -11,6 +11,7 @@ import DetailsHead from './DetailsHead'
 import EventList from './EventList'
 import PaymentCards from './PaymentCards'
 import Property from './Property'
+import Operations from './Operations'
 import RecipientSectionState from './RecipientSection'
 import RiskLevel from './RiskLevel'
 import TotalDisplay from './TotalDisplay'
@@ -66,4 +67,7 @@ storiesOf('Components', module)
   ))
   .add('ApiKey', () => (
     <ApiKeySection />
+  ))
+  .add('Operations', () => (
+    <Operations />
   ))
