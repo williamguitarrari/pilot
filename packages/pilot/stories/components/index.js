@@ -20,6 +20,7 @@ import TreeView from './TreeView'
 import ApiKeySection from './ApiKey'
 import PendingRequests from './PendingRequests'
 import BalanceTotalDisplay from './BalanceTotalDisplay'
+import BalanceSummary from './BalanceSummary'
 
 storiesOf('Components', module)
   .add('Copy button', () => (
@@ -78,4 +79,7 @@ storiesOf('Components', module)
   ))
   .add('Balance total display', () => (
     <BalanceTotalDisplay />
+  ))
+  .add('Balance summary', () => (
+    <BalanceSummary />
   ))
