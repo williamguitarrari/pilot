@@ -7,7 +7,7 @@ import isRefundable from './isRefundable'
 import { transaction as transactionMock } from './mocks/fromRequests.json'
 
 describe('isRefundable', () => {
-  it('should return false if status is processing', () => {
+  it('should return false if status is neither paid nor authorized', () => {
     const transaction = assoc('status', 'processing', transactionMock)
     expect(isRefundable(transaction)).toBe(false)
   })

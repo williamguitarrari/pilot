@@ -32,6 +32,7 @@ import {
   pluck,
   prop,
   propEq,
+  propOr,
   propSatisfies,
   props,
   reduce,
@@ -196,11 +197,7 @@ const createOperationObj = applySpec({
     prop('status'),
     always('success')
   ),
-  cycle: ifElse(
-    has('cycle'),
-    prop('cycle'),
-    always(null)
-  ),
+  cycle: propOr(null, 'cycle'),
 })
 
 const buildOperations = applySpec({
