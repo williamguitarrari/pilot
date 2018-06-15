@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "classnames": "2.2.5",
+    "clipboard-copy": "2.0.0",
     "cockpit": "0.0.1",
     "cpf_cnpj": "0.2.0",
     "emblematic-icons": "0.3.1",
