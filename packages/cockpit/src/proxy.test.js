@@ -44,6 +44,18 @@ describe('proxy', () => {
     expect(proxied.math.add()).toEqual(target().math.add())
   })
 
+  it('should return a function when the function exists in the target and fallback is an empty object', () => {
+    const target = () => ({
+      math: {
+        add: () => 'add',
+      },
+    })
+
+    const fallback = {}
+    const proxied = proxy(target)(fallback)
+    expect(proxied.math.add()).toEqual(target().math.add())
+  })
+
   it('should return a function when the function doesnt exists in the target but exists in fallback', () => {
     const target = () => ({
       math: {
