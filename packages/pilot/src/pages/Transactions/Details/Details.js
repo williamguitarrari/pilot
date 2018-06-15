@@ -14,7 +14,7 @@ import {
   receiveDetails,
 } from './actions'
 import { requestLogout } from '../../Account/actions'
-
+import Reprocess from '../../Reprocess'
 import currencyFormatter from '../../../formatters/decimalCurrency'
 import getColumnFormatter from '../../../formatters/columnTranslator'
 import installmentTableColumns from '../../../components/RecipientSection/installmentTableColumns'
@@ -37,17 +37,10 @@ const mapStateToProps = ({
   query,
 })
 
-const mapDispatchToProps = dispatch => ({
-  onRequestDetails: (query) => {
-    dispatch(requestDetails(query))
-  },
-
-  onReceiveDetails: ({ query }) => {
-    dispatch(receiveDetails({ query }))
-  },
-  onRequestDetailsFail: (error) => {
-    dispatch(requestLogout(error))
-  },
+const mapDispatchToProps = ({
+  onReceiveDetails: receiveDetails,
+  onRequestDetailsFail: requestLogout,
+  onRequestDetails: requestDetails,
 })
 
 const enhanced = compose(
@@ -136,27 +129,33 @@ class TransactionDetails extends Component {
       customerLabels: getCustomerLabels(t),
       eventsLabels: getEventsLabels(t),
       installmentColumns: formatColumns(installmentTableColumns),
+      manualReviewAction: null,
+      nextId: null,
       paymentBoletoLabels: getPaymentBoletoLabels(t),
       paymentCardLabels: getPaymentCardLabels(t),
-      riskLevelsLabels: getRiskLevelsLabels(t),
-      transactionDetailsLabels: getTransactionDetailsLabels(t),
       result: {
         transaction: {},
       },
+      riskLevelsLabels: getRiskLevelsLabels(t),
       showManualReview: false,
-      manualReviewAction: null,
       showRefund: false,
+      showReprocess: false,
+      transactionDetailsLabels: getTransactionDetailsLabels(t),
     }
 
     this.handleAlertDismiss = this.handleAlertDismiss.bind(this)
+    this.handleAlertDismiss = this.handleAlertDismiss.bind(this)
     this.handleCloseManualReview = this.handleCloseManualReview.bind(this)
+    this.handleCloseRefund = this.handleCloseRefund.bind(this)
+    this.handleCopyBoletoUrlClick = this.handleCopyBoletoUrlClick.bind(this)
     this.handleCopyBoletoUrlClick = this.handleCopyBoletoUrlClick.bind(this)
     this.handleManualReviewApprove = this.handleManualReviewApprove.bind(this)
     this.handleManualReviewRefuse = this.handleManualReviewRefuse.bind(this)
-    this.handleAlertDismiss = this.handleAlertDismiss.bind(this)
-    this.handleCloseRefund = this.handleCloseRefund.bind(this)
-    this.handleCopyBoletoUrlClick = this.handleCopyBoletoUrlClick.bind(this)
+    this.handleNextTransactionRedirect = this.handleNextTransactionRedirect.bind(this)
+    this.handlePreviousTransactionRedirect = this.handlePreviousTransactionRedirect.bind(this)
     this.handleRefund = this.handleRefund.bind(this)
+    this.handleReprocessClose = this.handleReprocessClose.bind(this)
+    this.handleReprocessOpen = this.handleReprocessOpen.bind(this)
     this.handleShowBoletoClick = this.handleShowBoletoClick.bind(this)
     this.handleUpdate = this.handleUpdate.bind(this)
     this.requestData = this.requestData.bind(this)
@@ -235,6 +234,44 @@ class TransactionDetails extends Component {
     this.setState({ showRefund: false })
   }
 
+  handleNextTransactionRedirect () {
+    const {
+      result: {
+        transaction,
+      },
+      nextId,
+    } = this.state
+    const nextTransactionId = transaction.nextId || nextId
+    const { history } = this.props
+    history.push(`/transactions/${nextTransactionId}`)
+  }
+
+  handlePreviousTransactionRedirect () {
+    const {
+      result: {
+        transaction: {
+          previousId,
+        },
+      },
+    } = this.state
+    const { history } = this.props
+
+    history.push(`/transactions/${previousId}`)
+  }
+
+  handleReprocessClose (nextId) {
+    this.setState({
+      nextId,
+      showReprocess: false,
+    })
+  }
+
+  handleReprocessOpen () {
+    this.setState({
+      showReprocess: true,
+    })
+  }
+
   handleShowBoletoClick () {
     const {
       transaction: {
@@ -245,17 +282,23 @@ class TransactionDetails extends Component {
   }
 
   render () {
-    const { permission, t } = this.props
+    const {
+      match: { params: { id } },
+      permission,
+      t,
+    } = this.props
     const {
       customerLabels,
       eventsLabels,
       installmentColumns,
+      nextId,
       paymentBoletoLabels,
       paymentCardLabels,
       result: {
         transaction,
       },
       riskLevelsLabels,
+      showReprocess,
       transactionDetailsLabels,
       showManualReview,
       manualReviewAction,
@@ -307,10 +350,17 @@ class TransactionDetails extends Component {
       totalTitle: t('recipients.total_amount'),
     }
 
+    const reprocessLabels = {
+      previousAlert: t('reprocess.previous'),
+      nextAlert: t('reprocess.next'),
+      showPrevious: t('reprocess.showPrevious'),
+      showNext: t('reprocess.showNext'),
+    }
+
     const totalDisplayLabels = {
-      captured_at: t('captured_at',
-        { date: moment(captured_at).format('L') }
-      ),
+      captured_at: captured_at
+        ? t('captured_at', { date: moment(captured_at).format('L') })
+        : t('not_captured'),
       currency_symbol: t('currency_symbol'),
       mdr: t('payment.mdr',
         { value: currencyFormatter(payment.mdr_amount || 0) }
@@ -327,6 +377,8 @@ class TransactionDetails extends Component {
       ),
     }
 
+    const nextTransactionId = transaction.nextId || nextId
+
     return (
       <Fragment>
         <TransactionDetailsContainer
@@ -338,20 +390,26 @@ class TransactionDetails extends Component {
           headerLabels={headerLabels}
           installmentColumns={installmentColumns}
           metadataTitle={t('metadata')}
+          nextTransactionId={nextTransactionId}
           onCopyBoletoUrl={this.handleCopyBoletoUrlClick}
           onDismissAlert={this.handleAlertDismiss}
           onManualReviewApprove={this.handleManualReviewApprove}
           onManualReviewRefuse={this.handleManualReviewRefuse}
           onRefund={this.handleRefund}
-          onReprocess={() => {}}
+          onNextTransactionRedirect={this.handleNextTransactionRedirect}
+          onPreviousTransactionRedirect={this.handlePreviousTransactionRedirect}
+          onReprocess={this.handleReprocessOpen}
           onShowBoleto={this.handleShowBoletoClick}
           paymentBoletoLabels={paymentBoletoLabels}
           paymentCardLabels={paymentCardLabels}
           permissions={{
             manualReview: permission !== 'read_only',
+            refund: permission !== 'read_only',
+            reprocess: permission !== 'read_only',
           }}
           recipientsLabels={recipientsLabels}
           riskLevelsLabels={riskLevelsLabels}
+          reprocessLabels={reprocessLabels}
           totalDisplayLabels={totalDisplayLabels}
           transaction={transaction}
           transactionDetailsLabels={transactionDetailsLabels}
@@ -371,6 +429,12 @@ class TransactionDetails extends Component {
             isOpen={showRefund}
             onClose={this.handleCloseRefund}
             onSuccess={this.handleUpdate}
+            transaction={transaction}
+          />}
+        {showReprocess &&
+          <Reprocess
+            onClose={this.handleReprocessClose}
+            transactionId={id}
             transaction={transaction}
           />
         }
