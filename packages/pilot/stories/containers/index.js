@@ -29,6 +29,7 @@ import {
   BoletoRefund,
   CreditCardRefund,
 } from './Refund'
+import ReprocessForm from './Reprocess/Form'
 
 storiesOf('Containers', module)
   .add('Recipient list', () => (
@@ -91,3 +92,7 @@ storiesOf('Containers', module)
   .add('Balance', () => (
     <Balance />
   ))
+  .add('Reprocess form', () => (
+    <ReprocessForm />
+  ))
+
