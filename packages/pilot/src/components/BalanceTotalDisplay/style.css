@@ -3,14 +3,14 @@
 
 .amount {
   color: var(--color-light-steel-100);
-  margin: 0;
   font-size: 28px;
   font-weight: 900;
+  margin: 0;
 }
 
 .detail {
-  margin-top: var(--spacing-tiny);
   margin-bottom: var(--spacing-medium);
+  margin-top: var(--spacing-tiny);
 
   & strong {
     color: var(--color-light-steel-100);
