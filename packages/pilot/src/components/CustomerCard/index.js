@@ -56,19 +56,19 @@ const CustomerCard = ({ title, labels, contents }) => {
               {customer.street}
             </Col>
 
-            <Col palm={12} tablet={2} desk={1} tv={1}>
+            <Col palm={12} tablet={6} desk={1} tv={1}>
               {customer.street_number}
             </Col>
 
-            <Col palm={12} tablet={10} desk={3} tv={3}>
+            <Col palm={12} tablet={6} desk={3} tv={3}>
               {customer.complementary}
             </Col>
 
-            <Col palm={12} tablet={8} desk={4} tv={4}>
+            <Col palm={12} tablet={6} desk={4} tv={4}>
               {customer.neighborhood}
             </Col>
 
-            <Col palm={12} tablet={4} desk={4} tv={4}>
+            <Col palm={12} tablet={6} desk={4} tv={4}>
               {customer.city}
             </Col>
 
