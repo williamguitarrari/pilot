@@ -121,7 +121,7 @@ Operations.propTypes = {
     }).isRequired,
     type: PropTypes.string.isRequired,
   })).isRequired,
-  subtitle: PropTypes.string.isRequired,
+  subtitle: PropTypes.node.isRequired,
   title: PropTypes.string.isRequired,
   totalPages: PropTypes.number.isRequired,
 }

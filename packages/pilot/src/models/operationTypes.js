@@ -1,16 +1,16 @@
 const types = {
-  anticipation: 'operations.anticipation',
-  anticipationMessage: 'operations.anticipation_message',
-  boleto: 'operations.boleto',
-  chargeback: 'operations.chargeback',
-  credit: 'operations.credit',
-  debit: 'operations.debit',
-  gateway: 'operations.gateway_service',
-  mdr: 'operations.mdr',
-  refund: 'operations.refund',
-  ted: 'operations.transfer',
-  transfer: 'operations.transfer',
-  withdraw: 'operations.withdraw',
+  anticipation: 'models.operations.anticipation',
+  anticipationMessage: 'models.operations.anticipation_message',
+  boleto: 'models.operations.boleto',
+  chargeback: 'models.operations.chargeback',
+  credit: 'models.operations.credit',
+  debit: 'models.operations.debit',
+  gateway: 'models.operations.gateway_service',
+  mdr: 'models.operations.mdr',
+  refund: 'models.operations.refund',
+  ted: 'models.operations.transfer',
+  transfer: 'models.operations.transfer',
+  withdraw: 'models.operations.withdraw',
 }
 
 export default types

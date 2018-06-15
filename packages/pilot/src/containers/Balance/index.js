@@ -125,7 +125,7 @@ class Balance extends Component {
 
     return ({
       children: <span>{getTranslatedChild()}</span>,
-      title: t(`balance.${key}`),
+      title: t(`pages.balance.${key}`),
     })
   }
 
@@ -186,17 +186,17 @@ class Balance extends Component {
     } = this.props
     return {
       outcoming: {
-        title: t('balance.total.outcoming'),
+        title: t('pages.balance.total.outcoming'),
         unit: t('currency'),
         value: disabled ? null : total.outcoming,
       },
       outgoing: {
-        title: t('balance.total.outgoing'),
+        title: t('pages.balance.total.outgoing'),
         unit: t('currency'),
         value: disabled ? null : -total.outgoing,
       },
       net: {
-        title: t('balance.total.net'),
+        title: t('pages.balance.total.net'),
         unit: t('currency'),
         value: disabled ? null : total.net,
       },
@@ -276,13 +276,13 @@ class Balance extends Component {
     const anticipationAction = {
       disabled,
       onClick: this.handleAnticipationClick,
-      title: t('balance.anticipation'),
+      title: t('pages.balance.anticipation'),
     }
 
     const withdrawalAction = {
       disabled,
       onClick: this.handleWithdrawalClick,
-      title: t('balance.withdraw'),
+      title: t('pages.balance.withdraw'),
     }
 
     const filterDatesEqualCurrent = datesEqual(this.state.dates, dates)
@@ -301,7 +301,7 @@ class Balance extends Component {
                 <DetailsHead
                   identifier={company.name}
                   properties={this.getHeadProperties()}
-                  title={t('balance.recipient')}
+                  title={t('pages.balance.recipient')}
                 />
               </CardContent>
             </Card>
@@ -319,12 +319,12 @@ class Balance extends Component {
               amount={currencyFormatter(amount)}
               detail={
                 <span>
-                  {t('balance.available_withdrawal')}
+                  {t('pages.balance.available_withdrawal')}
                   <strong> {currencyFormatter(withdrawal)} </strong>
                 </span>
               }
               disabled={disabled}
-              title={t('balance.withdrawal_title')}
+              title={t('pages.balance.withdrawal_title')}
             />
           </Col>
           <Col
@@ -338,12 +338,12 @@ class Balance extends Component {
               amount={currencyFormatter(outcoming)}
               detail={
                 <span>
-                  {t('balance.available_anticipation')}
+                  {t('pages.balance.available_anticipation')}
                   <strong> {currencyFormatter(anticipation)} </strong>
                 </span>
               }
               disabled={disabled}
-              title={t('balance.anticipation_title')}
+              title={t('pages.balance.anticipation_title')}
             />
           </Col>
           <Col
@@ -353,11 +353,11 @@ class Balance extends Component {
             tv={4}
           >
             <PendingRequests
-              emptyMessage={t('balance.pending_requests_empty_message')}
+              emptyMessage={t('pages.balance.pending_requests_empty_message')}
               loading={disabled}
               onCancel={isNil(onCancelRequestClick) ? null : this.handleRequestCancelClick}
               requests={this.getPendingRequests()}
-              title={t('balance.pending_requests_title')}
+              title={t('pages.balance.pending_requests_title')}
             />
           </Col>
         </Row>
@@ -412,17 +412,21 @@ class Balance extends Component {
                 columns={translateColumns(getColumns(typesLabels))}
                 currentPage={currentPage}
                 disabled={disabled}
-                emptyMessage={t('operations.empty_message')}
-                exportLabel={t('operations.export')}
+                emptyMessage={t('models.operations.empty_message')}
+                exportLabel={t('models.operations.export')}
                 loading={disabled}
                 ofLabel={t('of')}
                 onExport={() => null}
                 onPageChange={this.handleOperationsPageChange}
                 rows={operations.rows}
                 subtitle={
-                  t('operations.subtitle', { total: operations.total })
+                  <span>
+                    {t('pages.balance.total.of')}
+                    <strong> {operations.total} </strong>
+                    {t('pages.balance.releases')}
+                  </span>
                 }
-                title={t('operations.title')}
+                title={t('pages.balance.operations_title')}
                 totalPages={operations.count}
               />
             </Card>

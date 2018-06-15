@@ -142,41 +142,41 @@ const getColumns = labels => ([
     // eslint-disable-next-line camelcase
     renderer: ({ payment_date }) =>
       renderPaymentDate(payment_date, labels.anticipationMessage),
-    title: 'operations.payment_date',
+    title: 'models.operations.payment_date',
   },
   {
     accessor: ['id'],
     align: 'center',
     orderable: false,
-    title: 'operations.id',
+    title: 'models.operations.id',
   },
   {
     accessor: ['type'],
     align: 'start',
     orderable: false,
     renderer: operation => renderDescription(operation, labels),
-    title: 'operations.description',
+    title: 'models.operations.description',
   },
   {
     accessor: ['outcoming', 'amount'],
     align: 'end',
     orderable: false,
     renderer: ({ outcoming }) => renderOutcoming(outcoming, labels),
-    title: 'operations.outcoming',
+    title: 'models.operations.outcoming',
   },
   {
     accessor: ['outgoing', 'amount'],
     align: 'end',
     orderable: false,
     renderer: ({ outgoing }) => renderOutgoing(outgoing, labels),
-    title: 'operations.outgoing',
+    title: 'models.operations.outgoing',
   },
   {
     accessor: ['net'],
     align: 'end',
     orderable: false,
     renderer: ({ net }) => renderNet(net),
-    title: 'operations.net',
+    title: 'models.operations.net',
   },
 ])
 
