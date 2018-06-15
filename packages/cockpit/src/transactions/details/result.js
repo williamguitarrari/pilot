@@ -27,6 +27,7 @@ import {
   objOf,
   path,
   pathEq,
+  pathOr,
   pick,
   pipe,
   pluck,
@@ -46,10 +47,12 @@ import {
   values,
   when,
 } from 'ramda'
-
 import moment from 'moment'
-
+import isReprocessable from './isReprocessable'
+import isRefundable from './isRefundable'
 import { transactionSpec } from '../shared'
+
+const isNilOrEmpty = either(isNil, isEmpty)
 
 const sortByCreatedAt = sort((left, right) => {
   if (has('created_at', right)) {
@@ -255,9 +258,9 @@ const aggregateInstallments = (acc, installment) =>
 
 const mapRecipients = map(applySpec({
   amount: sumInstallmentsAmount,
-  charge_remainder: prop('charge_remainder'),
   created_at: prop('date_created'),
   id: prop('recipient_id'),
+  charge_remainder: prop('charge_remainder'),
   installments: pipe(
     prop('installments'),
     map(applySpec({
@@ -348,7 +351,7 @@ const buildNewSplitRules = when(
 
 const buildReasonCode = pipe(
   ifElse(
-    either(isNil, isEmpty),
+    isNilOrEmpty,
     always(null),
     pipe(
       last,
@@ -357,6 +360,25 @@ const buildReasonCode = pipe(
   ),
   objOf('reason_code')
 )
+
+const getOriginalId = pathOr(
+  null,
+  ['transaction', 'metadata', 'pagarme_original_transaction_id']
+)
+
+const getReprocessedId = pathOr(null, ['reprocessed', 0, 'id'])
+
+const buildReprocessIds = applySpec({
+  nextId: getReprocessedId,
+  previousId: getOriginalId,
+})
+
+const buildCapabilities = ({ transaction, reprocessed }) => ({
+  capabilities: {
+    refundable: isRefundable(transaction),
+    reprocessable: isReprocessable(transaction, reprocessed),
+  },
+})
 
 const mapTransactionToResult = applySpec({
   transaction: pipe(
@@ -371,6 +393,8 @@ const mapTransactionToResult = applySpec({
         ]),
         buildOperations
       ),
+      buildCapabilities,
+      buildReprocessIds,
       pipe(prop('split_rules'), buildRecipients),
       pipe(prop('chargebackOperations'), buildReasonCode),
       pick(['capabilities']),

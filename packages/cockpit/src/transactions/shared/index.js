@@ -5,19 +5,27 @@ import {
   applySpec,
   complement,
   cond,
+  either,
   equals,
   has,
+  head,
   ifElse,
   is,
+  isEmpty,
   isNil,
+  join,
   juxt,
+  last,
+  length,
   path,
   pathSatisfies,
   pipe,
   prop,
   propEq,
   propOr,
+  propSatisfies,
   props,
+  splitAt,
   subtract,
   sum,
   T,
@@ -78,16 +86,56 @@ const getCustomerSubProp = subProp => ifElse(
   always(null)
 )
 
+const formatPhoneNumber = (number) => {
+  if (!number) return ''
+  const len = length(number) - 4
+  return join(' - ', splitAt(len, number))
+}
+
+const formatPhoneProp = pipe(
+  props(['ddd', 'number']),
+  juxt([
+    pipe(
+      head,
+      h => `(${h})`
+    ),
+    pipe(
+      last,
+      formatPhoneNumber
+    ),
+  ]),
+  join(' ')
+)
+
+const getPhoneProp = pipe(
+  prop('phone'),
+  ifElse(
+    either(isNil, isEmpty),
+    always(null),
+    formatPhoneProp
+  )
+)
+
 const getCustomerProp = ifElse(
   pipe(prop('customer'), isNil),
   always(null),
   applySpec({
-    name: getCustomerSubProp('name'),
+    address: prop('address'),
+    birth_date: getCustomerSubProp('birthday'),
+    born_at: getCustomerSubProp('born_at'),
+    country: getCustomerSubProp('country'),
+    created_at: getCustomerSubProp('date_created'),
     document_number: getCustomerSubProp('document_number'),
     document_type: getCustomerSubProp('document_type'),
+    documents: getCustomerSubProp('documents'),
     email: getCustomerSubProp('email'),
-    birth_date: pipe(getCustomerSubProp('birthday'), unless(isNil, moment.utc)),
-    country: getCustomerSubProp('country'),
+    external_id: getCustomerSubProp('external_id'),
+    gender: getCustomerSubProp('gender'),
+    id: getCustomerSubProp('id'),
+    individual: getCustomerSubProp('individual'),
+    name: getCustomerSubProp('name'),
+    object: getCustomerSubProp('object'),
+    phone: getPhoneProp,
     phones: getCustomerSubProp('phone_numbers'),
   })
 )
@@ -104,6 +152,10 @@ const buildCard = when(
     pin_mode: getCardProp('pin_mode'),
   })
 )
+
+const getSubscription = applySpec({
+  id: propOr(null, 'subscription_id'),
+})
 
 const transactionSpec = {
   acquirer: {
@@ -146,6 +198,11 @@ const transactionSpec = {
     paid_amount: prop('paid_amount'),
     refund_amount: prop('refunded_amount'),
   },
+  postback_url: ifElse(
+    propSatisfies(either(isNil, isEmpty), 'postback_url'),
+    always(null),
+    prop('postback_url')
+  ),
   risk_level: prop('risk_level'),
   soft_descriptor: prop('soft_descriptor'),
   status: prop('status'),
@@ -153,6 +210,11 @@ const transactionSpec = {
     propEq('status', 'refused'),
     prop('refuse_reason'),
     prop('status_reason')
+  ),
+  subscription: ifElse(
+    propSatisfies(complement(isNil), 'subscription_id'),
+    getSubscription,
+    always(null)
   ),
   updated_at: pipe(prop('date_updated'), unless(isNil, moment)),
 }
