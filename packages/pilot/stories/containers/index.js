@@ -30,6 +30,7 @@ import {
   CreditCardRefund,
 } from './Refund'
 import ReprocessForm from './Reprocess/Form'
+import ReprocessResult from './Reprocess/Result'
 
 storiesOf('Containers', module)
   .add('Recipient list', () => (
@@ -94,5 +95,8 @@ storiesOf('Containers', module)
   ))
   .add('Reprocess form', () => (
     <ReprocessForm />
+  ))
+  .add('Reprocess result', () => (
+    <ReprocessResult />
   ))
 
