@@ -1,21 +1,7 @@
 {
+  "amount": "Valor",
   "back_login_action": "Voltar para o login",
   "bank": "Banco",
-  "cancel": "cancelar",
-  "conta_corrente": "Corrente",
-  "conta_corrente_conjunta": "Corrente conjunta",
-  "conta_poupanca": "Poupança",
-  "conta_poupança_conjunta": "Poupança conjunta",
-  "currency": "R$",
-  "email": "E-mail",
-  "export": "Exportar",
-  "error": "Erro",
-  "filter_action": "Filtrar",
-  "go_back": "voltar",
-  "invalid_recipient": "Recebedor inválido",
-  "of": "de",
-  "password": "Senha",
-  "recipient": "Recebedor",
   "bank_code": {
     "000": "Não informado",
     "001": "Banco do Brasil S.A.",
@@ -170,6 +156,17 @@
     "anticipation": "Antecipação",
     "withdraw": "Saque"
   },
+  "cancel": "cancelar",
+  "card_number": "Número do cartão",
+  "confirmation": "Confirmação",
+  "conta_corrente": "Corrente",
+  "conta_corrente_conjunta": "Corrente conjunta",
+  "conta_poupanca": "Poupança",
+  "conta_poupança_conjunta": "Poupança conjunta",
+  "copied_to_clipboard": "Copiado!",
+  "copy_id": "Copiar id",
+  "currency_symbol": "R$",
+  "currency": "R$",
   "dates" : {
     "any": "Qualquer data",
     "cancel": "Cancelar",
@@ -185,6 +182,24 @@
     "start": "Início",
     "today": "Hoje"
   },
+  "email": "E-mail",
+  "empty_password": "Senha não informada",
+  "enter_password": "Digite sua senha",
+  "error": "Erro",
+  "export": "Exportar",
+  "filter_action": "Filtrar",
+  "go_back": "voltar",
+  "holder_name": "Portador do cartão",
+  "installment": "À vista",
+  "installment_plural": "{{count}}x",
+  "installments": "Quantidade de Parcelas",
+  "invalid_password": "Senha inválida",
+  "invalid_recipient": "Recebedor inválido",
+  "of": "de",
+  "password": "Senha",
+  "recipient": "Recebedor",
+  "try_again": "Tentar novamente",
+  "view_transaction": "Visualizar transação",
   "header": {
     "account": {
       "settings": "Configurações da conta",
@@ -546,6 +561,13 @@
       "try_again": "Tentar novamente",
       "view_transaction": "Visualizar transação",
       "wrong_password": "Senha inválida"
+    },
+    "reprocess": {
+      "submit": "Reprocessar transação",
+      "confirmation": "Confirmação",
+      "result": "Conclusão",
+      "success": "A transação foi reprocessada com sucesso",
+      "title": "Reprocessar transação"
     }
   },
   "settings": {
