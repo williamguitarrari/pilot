@@ -26,7 +26,7 @@
   "transactions_number": "Nº de transações:",
   "try_filter_again": "Tente novamente com outros filtros.",
   "alert": {
-    "chargeback_reason": "Motivo do chargeback: {{reason}}",
+    "chargeback_reason": "Motivo do chargeback:",
     "pending_review": "Existe {{count}} transação pendente de revisão.",
     "pending_review_plural": "Existem {{count}} transações pendentes de revisão.",
     "reason_code": "Código {{code}}",
@@ -160,6 +160,12 @@
     "total_recipient": "{{count}} RECEBEDOR",
     "total_recipient_plural": "{{count}} RECEBEDORES",
     "out_amount": "TOTAL DE SAÍDAS ({{symbol}})"
+  },
+  "reprocess": {
+    "next": "Esta transação foi reprocessadada gerando a transação",
+    "previous": "Esta transação foi criada através do reprocessamento da transação",
+    "showNext": "Visualizar transação",
+    "showPrevious": "Visualizar transação original"
   },
   "transaction": {
     "acquirer_name": "Operadora do cartão",
