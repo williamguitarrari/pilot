@@ -10,6 +10,10 @@ const transaction = {
   "external_id": null,
   "status": "chargedback",
   "status_reason": "acquirer",
+  "capabilities": {
+    "refundable": true,
+    "reprocessable": true,
+  },
   "boleto": null,
   "capabilities": {
     "refundable": true,
