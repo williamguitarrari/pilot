@@ -59,6 +59,11 @@ const status = {
     text: 'Suspensa',
     acronym: 'SU',
   },
+  cancelled: {
+    color: '#da272c',
+    text: 'Cancelada',
+    acronym: 'CA',
+  },
 }
 
 export default status

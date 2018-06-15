@@ -2,6 +2,7 @@ import React, { PureComponent, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import classNames from 'classnames'
+import { isEmpty } from 'ramda'
 import {
   Card,
   CardSection,
@@ -51,6 +52,7 @@ class RecipientSection extends PureComponent {
     const {
       collapsed,
       collapsedTitle,
+      installments,
       liabilities,
       liabilitiesLabel,
       name,
@@ -64,6 +66,9 @@ class RecipientSection extends PureComponent {
       totalAmount,
       totalLabel,
     } = this.props
+
+    const hasInstallments = !isEmpty(installments)
+
     return (
       <Fragment>
         <RecipientCard
@@ -78,14 +83,16 @@ class RecipientSection extends PureComponent {
           totalAmount={totalAmount}
           totalLabel={totalLabel}
         />
-        <CardSection>
-          {this.renderInstallmentsTable()}
-          <CardSectionTitle
-            collapsed={collapsed}
-            title={collapsed ? collapsedTitle : title}
-            onClick={onDetailsClick}
-          />
-        </CardSection>
+        {hasInstallments &&
+          <CardSection>
+            {this.renderInstallmentsTable()}
+            <CardSectionTitle
+              collapsed={collapsed}
+              title={collapsed ? collapsedTitle : title}
+              onClick={onDetailsClick}
+            />
+          </CardSection>
+        }
       </Fragment>
     )
   }
@@ -169,7 +176,7 @@ RecipientSection.defaultProps = {
   statusLabel: '',
   title: '',
   totalLabel: '',
-  status: 'chargedback', // TODO: Change this to required when the model is fixed with the correct status
+  status: '',
 }
 
 export default RecipientSection
