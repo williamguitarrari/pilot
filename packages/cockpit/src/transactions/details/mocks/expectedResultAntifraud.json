@@ -9,6 +9,10 @@
     "amount": 21050,
     "antifraud": null,
     "boleto": null,
+    "capabilities": {
+      "refundable": false,
+      "reprocessable": false
+    },
     "card": {
       "brand_name": "visa",
       "capture_method": null,
@@ -20,12 +24,29 @@
     },
     "created_at": "2018-05-17T17:28:26.998Z",
     "customer": {
+      "address": null,
       "birth_date": "1965-01-01T00:00:00.000Z",
+      "born_at": null,
       "country": "br",
+      "created_at": "2018-05-17T17:28:26.801Z",
       "document_number": null,
+      "documents": [
+        {
+          "id": "doc_cjhat6tvg028l2g6dj90jasof",
+          "number": "44444444444",
+          "object": "document",
+          "type": "cpf"
+        }
+      ],
       "document_type": "cpf",
       "email": "mateusmoog@yahoo.com",
+      "external_id": "#591949",
+      "gender": null,
+      "id": 591949,
+      "individual": null,
       "name": "Morpheus Fishburne",
+      "object": "customer",
+      "phone": null,
       "phones": [
         "+5511999998888",
         "+5511888889999"
@@ -34,6 +55,7 @@
     "external_id": null,
     "id": 3514521,
     "metadata": {},
+    "nextId": null,
     "operations": [
       {
         "created_at": "2018-05-17T17:28:27.778Z",
@@ -66,12 +88,15 @@
       "paid_amount": 0,
       "refund_amount": 0
     },
+    "postback_url": null,
+    "previousId": null,
     "reason_code": null,
     "recipients": [],
     "risk_level": "high",
     "soft_descriptor": null,
     "status": "pending_review",
     "status_reason": "antifraud",
+    "subscription": null,
     "updated_at": "2018-05-17T17:28:27.872Z"
   }
 }

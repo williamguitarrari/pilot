@@ -39,9 +39,9 @@ const payableToRecipient = ifElse(
     head,
     pick(['recipient_id']),
     merge({
-      liable: true,
       charge_processing_fee: true,
       id: null,
+      liable: true,
     }),
     of
   )
@@ -88,6 +88,12 @@ const details = client => transactionId =>
     chargebackOperations: client.chargebackOperations.find({ transactionId }),
     gatewayOperations: client.gatewayOperations.find({ transactionId }),
     payables: client.payables.find({ transactionId }),
+    reprocessed: client.transactions
+      .find({
+        metadata: {
+          pagarme_original_transaction_id: transactionId,
+        },
+      }),
     transaction: client.transactions.find({ id: transactionId }),
   })
     .then(data => fetchRecipients(client, data)
