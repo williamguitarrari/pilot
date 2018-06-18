@@ -34,6 +34,8 @@ import ReprocessForm from './Reprocess/Form'
 import ReprocessResult from './Reprocess/Result'
 import WithdrawConfirmation from './Withdraw/Confirmation'
 import WithdrawForm from './Withdraw/Form'
+import WithdrawResultSuccess from './Withdraw/Result/Success'
+import WithdrawResultError from './Withdraw/Result/Error'
 import WithdrawSummary from './Withdraw/Summary'
 
 storiesOf('Containers', module)
@@ -135,6 +137,12 @@ storiesOf('Containers', module)
   ))
   .add('WithdrawForm', () => (
     <WithdrawForm />
+  ))
+  .add('Withdraw Result Success', () => (
+    <WithdrawResultSuccess />
+  ))
+  .add('Withdraw Result Error', () => (
+    <WithdrawResultError />
   ))
   .add('Withdraw Summary', () => (
     <WithdrawSummary />
