@@ -12,7 +12,7 @@ import {
 const formatCpfCnpj = cond([
   [doc => CPF.isValid(doc), doc => CPF.format(doc)],
   [doc => CNPJ.isValid(doc), doc => CNPJ.format(doc)],
-  [T, always(null)],
+  [T, always([])],
 ])
 
 export default formatCpfCnpj
