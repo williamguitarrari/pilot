@@ -280,12 +280,13 @@
       "conta_poupanca_conjunta": "Conta poupança conjunta"
     },
     "bank_account": {
-      "account_type": "Tipo de conta",
       "account": "Conta",
+      "account_type": "Tipo de conta",
       "agency": "Agência",
       "bank": "Banco",
       "document": "CPF/CNPJ",
       "dv": "DV",
+      "legal_name": "Nome/Razão social do favorecido",
       "type": {
         "conta_corrente": "Conta corrente",
         "conta_corrente_conjunta": "Conta corrente conjunta",
@@ -573,6 +574,41 @@
       "result": "Conclusão",
       "success": "A transação foi reprocessada com sucesso",
       "title": "Reprocessar transação"
+    },
+    "withdraw": {
+      "balance": "Saldo disponível",
+      "cancel": "Cancelar",
+      "confirm": "Confirmar",
+      "confirmation": "Confirmação",
+      "confirmation_advise": "Confira os dados para confirmar seu saque",
+      "continue": "Continuar",
+      "currency_symbol": "R$",
+      "data": "Dados",
+      "date": "Data de saída",
+      "form_message": "Digite o valor que deseja sacar",
+      "max_value_to_be": "Valor máximo a ser",
+      "negative_transfer_value": "Valor de transferência negativo",
+      "password": "Senha",
+      "requested_required": "Campo obrigatório",
+      "requested_value": "Valor solicitado",
+      "requested_value_greater_max": "Valor maior que o permitido",
+      "result": "Resultado",
+      "result_advise": "O dinheiro será depositado no próximo dia útil a partir das 16h, em sua conta bancária",
+      "result_error": "Algo inesperado aconteceu, mas seu dinheiro continua seguro com a gente",
+      "result_information": "Em caso de dúvidas, consulte as perguntas frequentes na FAQ. Você também pode entrar em contato conosco através do email relacionamento@pagar.me, ou ligando para 4004-1330 (capitais e regioes metropolitanas) / (11) 2129-3170 (demais localidades).",
+      "return": "Voltar",
+      "title": "Saque",
+      "transfer_cost": "Custo da transferência",
+      "transferred": "transferido",
+      "try_again": "Tentar novamente",
+      "type_password": "Digite sua senha para confirmar",
+      "type_value": "Digite o valor",
+      "value_to_transfer": "Valor a ser transferido",
+      "view_statement": "Visualizar no extrato",
+      "withdraw_error": "Erro ao tentar sacar",
+      "withdraw_success": "Saque realizado com sucesso!",
+      "withdraw_value": "Valor do saque (R$)",
+      "wrong_pass": "Senha inválida"
     }
   },
   "settings": {
@@ -637,7 +673,6 @@
           "api_key": {
             "live": "Live",
             "test": "Test"
-
           }
         },
         "product": {
