@@ -32,6 +32,7 @@ import {
 import Reprocess from './Reprocess'
 import ReprocessForm from './Reprocess/Form'
 import ReprocessResult from './Reprocess/Result'
+import WithdrawSummary from './Withdraw/Summary'
 
 storiesOf('Containers', module)
   .add('Recipient list', () => (
@@ -126,4 +127,7 @@ storiesOf('Containers', module)
         result: 'error',
       }}
     />
+  ))
+  .add('Withdraw Summary', () => (
+    <WithdrawSummary />
   ))
