@@ -31,12 +31,59 @@ class Pricing extends React.Component {
 
     this.handleSectionTitleClick = this.handleSectionTitleClick.bind(this)
     this.renderContent = this.renderContent.bind(this)
+    this.renderPricing = this.renderPricing.bind(this)
   }
 
   handleSectionTitleClick () {
     this.setState({
       pricingCollapsed: !this.state.pricingCollapsed,
     })
+  }
+
+  renderPricing () {
+    const {
+      pricing,
+      t,
+    } = this.props
+
+    /* eslint-disable react/no-array-index-key */
+    return pricing.map(({ mainTitle, subItems }, index) => (
+      <Col
+        key={`${mainTitle}-${index}`}
+        palm={12}
+        tablet={12}
+        desk={sectionColumns[mainTitle] || 12}
+        tv={sectionColumns[mainTitle] || 12}
+      >
+        <p>
+          <strong>
+            {t(`settings.company.card.general.rate.${mainTitle}`)}
+          </strong>
+        </p>
+        <Grid>
+          <Row flex>
+            {subItems.map(({ prices, title: serviceTitle }) => (
+              <Col key={serviceTitle} tablet={6} palm={12}>
+                <span>
+                  {t(`settings.company.card.general.rate.${serviceTitle}`)}
+                </span>
+                <strong>
+                  {intersperse(' + ',
+                    prices.map(({ unit, value }) => (
+                      <span key={`${unit}:${value}`}>
+                        {unit === 'real' && formatCurrency(value)}
+                        {unit === 'percentage' && `${value}%`}
+                      </span>
+                    ))
+                  )}
+                </strong>
+              </Col>
+            ))}
+          </Row>
+        </Grid>
+      </Col>
+    ))
+    /* eslint-enable react/no-array-index-key */
   }
 
   renderContent () {
@@ -52,41 +99,7 @@ class Pricing extends React.Component {
         </span>
         <Grid>
           <Row>
-            {pricing && pricing.map(({ mainTitle, subItems }) => (
-              <Col
-                palm={12}
-                tablet={12}
-                desk={sectionColumns[mainTitle] || 12}
-                tv={sectionColumns[mainTitle] || 12}
-              >
-                <p>
-                  <strong>
-                    {t(`settings.company.card.general.rate.${mainTitle}`)}
-                  </strong>
-                </p>
-                <Grid>
-                  <Row flex>
-                    {subItems.map(({ prices, title: serviceTitle }) => (
-                      <Col key={serviceTitle} tablet={6} palm={12}>
-                        <span>
-                          {t(`settings.company.card.general.rate.${serviceTitle}`)}
-                        </span>
-                        <strong>
-                          {intersperse(' + ',
-                            prices.map(({ unit, value }) => (
-                              <span key={`${unit}:${value}`}>
-                                {unit === 'real' && formatCurrency(value)}
-                                {unit === 'percentage' && `${value}%`}
-                              </span>
-                            ))
-                          )}
-                        </strong>
-                      </Col>
-                    ))}
-                  </Row>
-                </Grid>
-              </Col>
-            ))}
+            {pricing && this.renderPricing()}
           </Row>
         </Grid>
       </CardContent>
