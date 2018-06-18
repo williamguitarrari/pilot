@@ -286,7 +286,12 @@
       "bank": "Banco",
       "document": "CPF/CNPJ",
       "dv": "DV",
-      "legal_name": "Nome/Razão social do favorecido"
+      "type": {
+        "conta_corrente": "Conta corrente",
+        "conta_corrente_conjunta": "Conta corrente conjunta",
+        "conta_poupanca": "Conta poupança",
+        "conta_poupanca_conjunta": "Conta poupança conjunta"
+      }
     },
     "bank_code": {
       "001": "001 - Banco do Brasil S.A.",
