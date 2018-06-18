@@ -32,6 +32,7 @@ import {
 import Reprocess from './Reprocess'
 import ReprocessForm from './Reprocess/Form'
 import ReprocessResult from './Reprocess/Result'
+import Withdraw from './Withdraw'
 import WithdrawConfirmation from './Withdraw/Confirmation'
 import WithdrawForm from './Withdraw/Form'
 import WithdrawResultSuccess from './Withdraw/Result/Success'
@@ -131,6 +132,9 @@ storiesOf('Containers', module)
         result: 'error',
       }}
     />
+  ))
+  .add('Withdraw', () => (
+    <Withdraw />
   ))
   .add('WithdrawConfirmation', () => (
     <WithdrawConfirmation />
