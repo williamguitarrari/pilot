@@ -1,11 +1,13 @@
 import Balance32 from 'emblematic-icons/svg/Extract32.svg'
 import Configuration32 from 'emblematic-icons/svg/Configuration32.svg'
 import Transaction32 from 'emblematic-icons/svg/Transaction32.svg'
+import Withdraw32 from 'emblematic-icons/svg/Withdraw32.svg'
 
 import { Balance } from '../Balance'
 import CompanySettings from '../CompanySettings'
 import Transactions from '../Transactions'
 import UserSettings from '../UserSettings'
+import Withdraw from '../Withdraw'
 
 export default {
   balance: {
@@ -27,6 +29,16 @@ export default {
     path: '/transactions/:id',
     exact: true,
     hidden: true,
+  },
+  withdrawRoot: {
+    component: Withdraw,
+    icon: Withdraw32,
+    path: '/withdraw',
+    title: 'pages.withdraw.title',
+  },
+  withdraw: {
+    hidden: true,
+    path: '/withdraw/:id?',
   },
   accountSettings: {
     title: 'settings.user.menu',
