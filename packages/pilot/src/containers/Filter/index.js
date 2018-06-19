@@ -168,7 +168,7 @@ class Filters extends Component {
     return (
       <div className={style.inputs}>
         <DateInput
-          dates={dates}
+          value={dates}
           active={isDateActive}
           onChange={this.handleDateInputChange}
           presets={datePresets}
