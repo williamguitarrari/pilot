@@ -53,7 +53,7 @@ const HeaderContainer = ({
       <HeaderMenu
         title={
           <Fragment>
-            <Avatar />
+            <Avatar alt={user.name} />
             <span>{user.name}</span>
           </Fragment>
         }
