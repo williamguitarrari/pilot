@@ -5,6 +5,7 @@ import proxy from './proxy'
 import user from './user'
 import company from './company'
 import invites from './invites'
+import recipient from './recipient'
 import transactions from './transactions'
 
 const cockpit = applySpec({
@@ -14,6 +15,7 @@ const cockpit = applySpec({
   user,
   company,
   invites,
+  recipient,
 })
 
 export default proxy(cockpit)
