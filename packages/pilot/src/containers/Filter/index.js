@@ -31,13 +31,14 @@ import Search32 from 'emblematic-icons/svg/Search32.svg'
 import Calendar32 from 'emblematic-icons/svg/Calendar32.svg'
 
 import {
+  anyPass,
   equals,
+  isEmpty,
+  isNil,
   partial,
   pick,
+  propOr,
   reject,
-  isNil,
-  isEmpty,
-  anyPass,
 } from 'ramda'
 
 import compileTags, { hasTags } from './compileTags'
@@ -217,7 +218,7 @@ class Filters extends Component {
                     options={items}
                     name={name}
                     onChange={partial(this.handleFilterChange, [key])}
-                    value={values[key]}
+                    value={propOr([], key, values)}
                   />
                 </Col>
               ))}
