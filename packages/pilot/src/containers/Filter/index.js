@@ -217,7 +217,7 @@ class Filters extends Component {
                     options={items}
                     name={name}
                     onChange={partial(this.handleFilterChange, [key])}
-                    values={values[key] || []}
+                    value={values[key]}
                   />
                 </Col>
               ))}
