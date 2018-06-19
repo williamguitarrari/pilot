@@ -77,6 +77,9 @@ const anyDateRange = {
   start: moment().subtract(3, 'months'),
 }
 
+const formatAmount = (amount = 0) =>
+  currencyFormatter(amount)
+
 class Balance extends Component {
   constructor (props) {
     super(props)
@@ -188,17 +191,17 @@ class Balance extends Component {
       outcoming: {
         title: t('pages.balance.total.outcoming'),
         unit: t('currency'),
-        value: disabled ? null : total.outcoming,
+        value: disabled ? 0 : total.outcoming,
       },
       outgoing: {
         title: t('pages.balance.total.outgoing'),
         unit: t('currency'),
-        value: disabled ? null : -total.outgoing,
+        value: disabled ? 0 : -total.outgoing,
       },
       net: {
         title: t('pages.balance.total.net'),
         unit: t('currency'),
-        value: disabled ? null : total.net,
+        value: disabled ? 0 : total.net,
       },
     }
   }
@@ -316,7 +319,7 @@ class Balance extends Component {
           >
             <BalanceTotalDisplay
               action={isNil(onWithdrawClick) ? null : withdrawalAction}
-              amount={currencyFormatter(amount)}
+              amount={formatAmount(amount)}
               detail={
                 <span>
                   {t('pages.balance.available_withdrawal')}
@@ -335,11 +338,11 @@ class Balance extends Component {
           >
             <BalanceTotalDisplay
               action={isNil(onAnticipationClick) ? null : anticipationAction}
-              amount={currencyFormatter(outcoming)}
+              amount={formatAmount(outcoming)}
               detail={
                 <span>
                   {t('pages.balance.available_anticipation')}
-                  <strong> {currencyFormatter(anticipation)} </strong>
+                  <strong> {formatAmount(anticipation)} </strong>
                 </span>
               }
               disabled={disabled}
