@@ -4517,16 +4517,16 @@ form-data@~2.3.1:
     combined-stream "1.0.6"
     mime-types "^2.1.12"
 
-former-kit-skin-pagarme@0.5.2:
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/former-kit-skin-pagarme/-/former-kit-skin-pagarme-0.5.2.tgz#9918b8984c6ec6169e450a16df754a05e441ff98"
+former-kit-skin-pagarme@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/former-kit-skin-pagarme/-/former-kit-skin-pagarme-0.6.0.tgz#95a560380c3e7a951ac695620144b23c44734e05"
   dependencies:
     emblematic-icons "0.1.1"
     react-dates "12.7.1"
 
-former-kit@0.5.2:
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/former-kit/-/former-kit-0.5.2.tgz#b1c139743e785f6d9f2812170b390720350da18a"
+former-kit@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/former-kit/-/former-kit-0.6.0.tgz#59317bfd51ae4399c2be8d7fddca61d0605fa246"
   dependencies:
     classnames "2.2.5"
     moment "2.20.1"
@@ -5093,7 +5093,11 @@ hoist-non-react-statics@2.3.1:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.3.1.tgz#343db84c6018c650778898240135a1420ee22ce0"
 
-hoist-non-react-statics@^2.1.1, hoist-non-react-statics@^2.5.0:
+hoist-non-react-statics@^2.1.1:
+  version "2.5.5"
+  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
+
+hoist-non-react-statics@^2.5.0:
   version "2.5.4"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.4.tgz#fc3b1ac05d2ae3abedec84eba846511b0d4fcc4f"
 
