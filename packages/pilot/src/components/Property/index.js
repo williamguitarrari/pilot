@@ -1,14 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { either, is } from 'ramda'
+import {
+  anyPass,
+  is,
+  isNil,
+} from 'ramda'
 
 import style from './style.css'
 
-const isStringOrNumber = either(
+const isStringOrNumber = anyPass([
   is(String),
-  is(Number)
-)
+  is(Number),
+  isNil,
+])
 
 const Property = ({ title, value }) => (
   <div className={style.property} >
