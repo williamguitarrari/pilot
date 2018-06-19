@@ -5,6 +5,7 @@ import {
   applySpec,
   assoc,
   either,
+  head,
   ifElse,
   isEmpty,
   isNil,
@@ -21,7 +22,6 @@ import {
   reduce,
   subtract,
   sum,
-  unless,
   when,
 } from 'ramda'
 
@@ -30,7 +30,11 @@ const getWithDv = propName => pipe(
     path(['bank_account', propName]),
     path(['bank_account', `${propName}_dv`]),
   ]),
-  unless(pipe(last, isNil), join('-'))
+  ifElse(
+    pipe(last, isNil),
+    head,
+    join('-')
+  )
 )
 
 const buildRecipient = pipe(
