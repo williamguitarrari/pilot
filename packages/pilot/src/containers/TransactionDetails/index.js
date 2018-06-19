@@ -884,7 +884,7 @@ TransactionDetails.propTypes = {
     title: PropTypes.string,
   }).isRequired,
   permissions: PropTypes.shape({
-    manualReview: PropTypes.string.isRequired,
+    manualReview: PropTypes.bool.isRequired,
     refund: PropTypes.bool.isRequired,
     reprocess: PropTypes.bool.isRequired,
   }).isRequired,
@@ -938,7 +938,7 @@ TransactionDetails.propTypes = {
     created_at: PropTypes.instanceOf(moment),
     external_id: PropTypes.string,
     id: PropTypes.number,
-    updated_at: PropTypes.string,
+    updated_at: PropTypes.instanceOf(moment),
     soft_descriptor: PropTypes.string,
     status: PropTypes.string,
     status_reason: PropTypes.string,
@@ -953,8 +953,14 @@ TransactionDetails.propTypes = {
     acquirer: PropTypes.shape({
       name: PropTypes.string,
       response_code: PropTypes.string,
-      sequence_number: PropTypes.number,
-      transaction_id: PropTypes.number,
+      sequence_number: PropTypes.oneOfType([
+        PropTypes.number,
+        PropTypes.string,
+      ]),
+      transaction_id: PropTypes.oneOfType([
+        PropTypes.number,
+        PropTypes.string,
+      ]),
     }),
     antifraud: PropTypes.object, // eslint-disable-line
     customer: PropTypes.shape({
