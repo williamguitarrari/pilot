@@ -376,7 +376,7 @@ class Balance extends Component {
                 <div className={style.filter}>
                   <DateInput
                     active={filterDatesEqualCurrent}
-                    dates={this.state.dates}
+                    value={this.state.dates}
                     disabled={disabled}
                     icon={<IconCalendar width={16} height={16} />}
                     limits={dateLimits}
