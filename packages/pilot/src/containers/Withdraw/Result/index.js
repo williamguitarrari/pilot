@@ -253,6 +253,7 @@ WithdrawResult.propTypes = {
   onViewStatement: PropTypes.func.isRequired,
   requested: PropTypes.number.isRequired,
   status: PropTypes.oneOf([
+    'error',
     'current',
     'success',
   ]).isRequired,

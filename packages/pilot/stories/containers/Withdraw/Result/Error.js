@@ -43,7 +43,7 @@ const WithdrawResultState = () => (
       onTryAgain={action('Try again')}
       onViewStatement={action('See statement')}
       requested={34234}
-      status="current"
+      status="error"
       statusMessage="Erro ao sacar"
       t={pipe(split('.'), last)}
       transferCost={transferCost}

@@ -210,7 +210,7 @@ class Withdraw extends Component {
           confirmationDisabledButtons: false,
           currentStep: 'result',
           statusMessage: t('pages.withdraw.withdraw_error'),
-          stepsStatus: getStepsStatus('result', 'current'),
+          stepsStatus: getStepsStatus('result', 'error'),
         })
       })
   }
