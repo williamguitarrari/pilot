@@ -55,6 +55,8 @@ const buildErrorMessage = t => cond([
   ],
 ])
 
+const maxEnabledAmount = 99999999999
+
 class WithdrawFormContainer extends Component {
   constructor (props) {
     super(props)
@@ -142,10 +144,10 @@ class WithdrawFormContainer extends Component {
                   onChange={onRequestedChange}
                   renderer={props => (
                     <CurrencyInput
+                      max={maxEnabledAmount}
                       {...props}
                     />
                   )}
-                  max={available}
                   value={requested.toString()}
                 />
               </div>
