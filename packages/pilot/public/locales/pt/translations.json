@@ -1,5 +1,6 @@
 {
   "amount": "Valor",
+  "at": "às",
   "back_login_action": "Voltar para o login",
   "bank": "Banco",
   "bulk_anticipations": {
@@ -145,6 +146,7 @@
       }
     },
     "bank_code": {
+      "000": "000 - Banco não informado",
       "001": "001 - Banco do Brasil S.A.",
       "003": "003 - Banco da Amazônia S.A.",
       "004": "004 - Banco do Nordeste do Brasil S.A.",
@@ -298,7 +300,29 @@
       "number": "Número do cartão"
     },
     "customer": {
-      "email": "E-mail"
+      "birthday": "Data de nascimento",
+      "city": "Cidade",
+      "complement": "Complemento",
+      "document_number": "CPF/CNPJ",
+      "email": "E-mail",
+      "gender": "Gênero",
+      "neighborhood": "Bairro",
+      "name": "Nome do cliente",
+      "number": "Nº",
+      "phone": "Telefone",
+      "state": "Estado",
+      "street": "Rua",
+      "zip_code": "CEP"
+    },
+    "installment": {
+      "anticipation": "SERVIÇO DE ANTECIPAÇÃO",
+      "chargeback_refund": "ESTORNO OU CHARGEBACK",
+      "mdr": "MDR",
+      "net_amount": "VALOR LÍQUIDO",
+      "number": "PARCELA",
+      "payment_date": "DATA",
+      "status": "STATUS DA PARCELA",
+      "total": "TOTAL BRUTO"
     },
     "operations": {
       "anticipation": "Antecipação",
@@ -322,6 +346,11 @@
       "refund": "Estorno",
       "transfer": "Saque",
       "withdraw": "Saque"
+    },
+    "payment": {
+      "mdr": "MDR: R$ {{value}}",
+      "cost": "Custo de processamento: R$ {{value}}",
+      "refund": "Valor estornado: R$ {{value}}"
     },
     "transaction": {
       "acquirer_name": "Operadora do cartão",
@@ -347,7 +376,7 @@
       "refuse_reason": "Motivo de recusa",
       "soft_descriptor": "Descrição na fatura",
       "status": "Status",
-      "subscription_id": "ID da Assinatura",
+      "subscription_id": "Id da assinatura",
       "tid": "TID (ID da transação)"
     },
     "user": {
@@ -626,7 +655,146 @@
       }
     },
     "transaction": {
-      "title": "Detalhes da Transação"
+      "acquirer_name": "Operadora do cartão",
+      "acquirer_response_code": "Resposta da operadora",
+      "alert": {
+        "chargeback_reason": "Motivo do chargeback:",
+        "pending_review": "Existe {{count}} transação pendente de revisão.",
+        "pending_review_plural": "Existem {{count}} transações pendentes de revisão.",
+        "reason_code": "Código {{code}}",
+        "resubmit": "Reapresentar chargeback",
+        "warning": "Atenção"
+      },
+      "antifraud_score": "Score do antifraude",
+      "authorization_code": "Código de autorização",
+      "boleto": {
+        "title": "Boleto",
+        "show": "ver boleto",
+        "due_date": "Vencimento:",
+        "feedback": "Copiado!",
+        "waiting_payment_warning": "O demonstrativo de parcelas fica disponível após o pagamento do boleto.",
+        "url": "Link do boleto"
+      },
+      "capture_method": "Método de captura",
+      "card_brand": "Bandeira",
+      "chargeback" : {
+        "code": {
+          "unknown": "Desconhecido",
+          "30":"Visa: Mercadoria não entregue ou serviço não prestado",
+          "4855":"Master: Mercadoria não entregue ou serviço não prestado",
+          "41":"Visa: Transação recorrente cancelada",
+          "4841":"Master: Transação recorrente cancelada ou com valor diferente",
+          "53":"Visa: Disputa do portador, mercadoria diferente da descrita ou defeituosa",
+          "4853":"Master: Disputa do portador, mercadoria diferente da descrita ou defeituosa",
+          "85":"Visa: Crédito não processado",
+          "4860":"Master: Crédito não processado",
+          "4859":"Master: Adendo ou no show",
+          "77":"Visa: Número de conta inexistente",
+          "4812":"Master: Número de conta inexistente",
+          "73":"Cartão expirado",
+          "70":"Visa: Cartão em boletim de proteção",
+          "4807":"Master: Cartão em boletim de proteção",
+          "71":"Visa: Transação negada",
+          "72":"Visa: Sem autorização",
+          "78":"Visa: Violação do código de serviço",
+          "4808":"Master: Relativo a autorização",
+          "80":"Visa: Valor da transação incorreto",
+          "86":"Visa: Pagamento por outros meios",
+          "90":"Visa: Saque ou recarga não recebida em caixa eletrônico",
+          "4831":"Master: Valor da transação difere",
+          "4850":"Master: Disputa de transação parcelada",
+          "74":"Visa: Apresentação tardia",
+          "4842":"Master: Apresentação tardia",
+          "76":"Visa: Código da transação ou moeda incorreto",
+          "4846":"Master: Código da transação ou moeda incorreto",
+          "82":"Visa: Transação duplicada",
+          "4834":"Master: Erro no ponto de venda",
+          "57":"Visa: Múltiplas transações fraudulentas",
+          "62":"Visa: Transação falsificada e transferência de responsabilidade do chip",
+          "75":"Visa: Transação não reconhecida",
+          "81":"Visa: Fraude – ambiente de cartão presente",
+          "83":"Visa: Fraude – ambiente de cartão ausente",
+          "93":"Visa: Programa de monitoramento de fraude da Visa",
+          "4837":"Master: Sem autorização do portador",
+          "4840":"Master: Processamento fraudulento de transações",
+          "4849":"Master: Atividade questionável do estabelecimento",
+          "4863":"Master: Portador não reconhece – potencial de fraude",
+          "4870":"Master: Transferência de responsabilidade do chip",
+          "4871":"Master: Transferência de responsabilidade do chip e senha"
+        }
+      },
+      "copy": "Copiar",
+      "created_date": "Data da transação",
+      "credit_card": "Cartão de crédito",
+      "customer_card_title": "Detalhes do cliente",
+      "customer_name": "Nome",
+      "details": "Ver detalhes",
+      "document": "CPF / CNPJ",
+      "email": "E-mail",
+      "events_title": "Histórico da transação",
+      "header": {
+        "approve": "Aprovar",
+        "boleto_amount": "Valor emitido",
+        "card_amount": "Valor autorizado",
+        "installment": "À vista",
+        "installment_plural": "Parcelado {{count}}x",
+        "installment_title": "Pagamento",
+        "refuse": "Recusar",
+        "status": "Status",
+        "title": "Transação"
+      },
+      "id": "Id da transação",
+      "installments": "Parcelas",
+      "metadata": "Metadata",
+      "net_amount": "Valor líquido",
+      "not_captured": "",
+      "nsu": "NSU",
+      "out_amount": "Total de saídas",
+      "paid_amount": "Valor capturado",
+      "payment_method": "Forma de pagamento",
+      "recipients": {
+        "account": "C: {{number}}",
+        "agency_account": "agência / conta",
+        "agency": "Ag: {{number}}",
+        "amount": "Total bruto (R$)",
+        "bank": "banco",
+        "collapsedInstallments": "Visualizar parcelas",
+        "empty": "Nenhum recebedor",
+        "expandedInstallments": "Ocultar parcelas",
+        "filter_by_name_or_legal_name": "Filtre por nome ou razão social",
+        "legal_name": "razão social",
+        "liabilities": "Responsável por",
+        "net_amount": "Total líquido (R$)",
+        "out_amount": "Total de saídas ({{symbol}})",
+        "recipient": "recebedor",
+        "search": "buscar",
+        "select": "selecionar",
+        "status": "Status da próxima parcela",
+        "title_plural": "Divisão entre recebedores",
+        "title": "Parcelas",
+        "total_amount": "Valor total bruto (R$)",
+        "total_recipient_plural": "{{count}} recebedores",
+        "total_recipient": "{{count}} recebedor"
+      },
+      "refuse_reason": "Motivo da recusa",
+      "reprocess": {
+        "next": "Esta transação foi reprocessadada gerando a transação",
+        "previous": "Esta transação foi criada através do reprocessamento da transação",
+        "showNext": "Visualizar transação",
+        "showPrevious": "Visualizar transação original"
+      },
+      "risk_level": {
+        "high": "Risco: alto",
+        "low": "Risco: baixo",
+        "moderated": "Risco: moderado",
+        "very_high": "Risco: muito alto",
+        "very_low": "Risco: muito baixo"
+      },
+      "soft_descriptor": "Descrição na fatura",
+      "status": "STATUS",
+      "subscription_id": "Id da assinatura",
+      "tid": "TID (ID da transação)",
+      "title": "Detalhes da transação"
     },
     "transactions": {
       "count": "transações",

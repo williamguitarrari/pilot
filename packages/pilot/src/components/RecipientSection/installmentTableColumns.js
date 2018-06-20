@@ -108,20 +108,20 @@ const columns = [
     aggregationTitle: 'TOTAIS',
     align: 'center',
     orderable: false,
-    title: 'installment.number',
+    title: 'models.installment.number',
   },
   {
     accessor: ['status'],
     orderable: false,
     renderer: renderStatus,
-    title: 'installment.status',
+    title: 'models.installment.status',
   },
   {
     accessor: ['payment_date'],
     align: 'center',
     orderable: false,
     renderer: renderPaymentDates,
-    title: 'installment.payment_date',
+    title: 'models.installment.payment_date',
   },
   {
     accessor: ['amount'],
@@ -130,7 +130,7 @@ const columns = [
     align: 'end',
     orderable: false,
     renderer: ({ amount }) => currencyFormatter(amount),
-    title: 'installment.total',
+    title: 'models.installment.total',
   },
   {
     accessor: ['costs', 'mdr'],
@@ -139,7 +139,7 @@ const columns = [
     align: 'end',
     orderable: false,
     renderer: ({ costs }) => currencyFormatter(costs.mdr),
-    title: 'installment.mdr',
+    title: 'models.installment.mdr',
   },
   {
     accessor: ['costs', 'anticipation'],
@@ -148,7 +148,7 @@ const columns = [
     align: 'end',
     orderable: false,
     renderer: ({ costs }) => currencyFormatter(costs.anticipation),
-    title: 'installment.anticipation',
+    title: 'models.installment.anticipation',
   },
   {
     accessor: ['costs', 'chargeback'],
@@ -161,7 +161,7 @@ const columns = [
         currencyFormatter(costs.chargeback) :
         currencyFormatter(costs.refund)
     ),
-    title: 'installment.chargeback_refund',
+    title: 'models.installment.chargeback_refund',
   },
   {
     accessor: ['net_amount'],
@@ -170,7 +170,7 @@ const columns = [
     align: 'end',
     orderable: false,
     renderer: ({ costs }) => currencyFormatter(costs.net_amount),
-    title: 'installment.net_amount',
+    title: 'models.installment.net_amount',
   },
 ]
 

@@ -54,7 +54,7 @@ const mapDispatchToProps = ({
 })
 
 const enhanced = compose(
-  translate('transactions'),
+  translate(),
   connect(
     mapStateToProps,
     mapDispatchToProps
@@ -77,16 +77,16 @@ const copyToClipBoard = (text) => {
 }
 
 const getTransactionDetailsLabels = t => ({
-  acquirer_name: t('transaction.acquirer_name'),
-  acquirer_response_code: t('transaction.acquirer_response_code'),
-  antifraud_score: t('transaction.antifraud_score'),
-  authorization_code: t('transaction.authorization_code'),
-  capture_method: t('transaction.capture_method'),
-  nsu: t('transaction.nsu'),
-  soft_descriptor: t('transaction.soft_descriptor'),
-  subscription_id: t('transaction.subscription_id'),
-  tid: t('transaction.tid'),
-  title: t('transaction.title'),
+  acquirer_name: t('pages.transaction.acquirer_name'),
+  acquirer_response_code: t('pages.transaction.acquirer_response_code'),
+  antifraud_score: t('pages.transaction.antifraud_score'),
+  authorization_code: t('pages.transaction.authorization_code'),
+  capture_method: t('pages.transaction.capture_method'),
+  nsu: t('pages.transaction.nsu'),
+  soft_descriptor: t('pages.transaction.soft_descriptor'),
+  subscription_id: t('pages.transaction.subscription_id'),
+  tid: t('pages.transaction.tid'),
+  title: t('pages.transaction.title'),
 })
 
 const countCustomerPhones = pipe(
@@ -100,44 +100,44 @@ const countCustomerPhones = pipe(
 
 
 const getCustomerLabels = (customer, t) => ({
-  birthday: t('customer.birthday'),
-  city: t('customer.city'),
-  complementary: t('customer.complement'),
-  document_number: t('customer.document_number'),
-  email: t('customer.email'),
-  gender: t('customer.gender'),
-  name: t('customer.name'),
-  neighborhood: t('customer.neighborhood'),
-  phone: t('customer.phone', { count: countCustomerPhones(customer) }),
-  state: t('customer.state'),
-  street_number: t('customer.number'),
-  street: t('customer.street'),
-  title: t('customer.title'),
-  zipcode: t('customer.zip_code'),
+  birthday: t('models.customer.birthday'),
+  city: t('models.customer.city'),
+  complementary: t('models.customer.complement'),
+  document_number: t('models.customer.document_number'),
+  email: t('models.customer.email'),
+  gender: t('models.customer.gender'),
+  name: t('models.customer.name'),
+  neighborhood: t('models.customer.neighborhood'),
+  phone: t('models.customer.phone', { count: countCustomerPhones(customer) }),
+  state: t('models.customer.state'),
+  street_number: t('models.customer.number'),
+  street: t('models.customer.street'),
+  title: t('pages.transaction.customer_card_title'),
+  zipcode: t('models.customer.zip_code'),
 })
 
 const getEventsLabels = t => ({
-  title: t('events.title'),
+  title: t('pages.transaction.events_title'),
 })
 
 const getPaymentBoletoLabels = t => ({
-  copy: t('copy'),
-  due_date: t('boleto.due_date'),
-  feedback: t('boleto.feedback'),
-  show: t('boleto.show'),
-  title: t('boleto.title'),
+  copy: t('pages.transaction.copy'),
+  due_date: t('pages.transaction.boleto.due_date'),
+  feedback: t('pages.transaction.boleto.feedback'),
+  show: t('pages.transaction.boleto.show'),
+  title: t('pages.transaction.boleto.title'),
 })
 
 const getPaymentCardLabels = t => ({
-  title: t('credit_card'),
+  title: t('pages.transaction.credit_card'),
 })
 
 const getRiskLevelsLabels = t => ({
-  very_low: t('transaction.risk_level.very_low'),
-  low: t('transaction.risk_level.low'),
-  moderated: t('transaction.risk_level.moderated'),
-  high: t('transaction.risk_level.high'),
-  very_high: t('transaction.risk_level.very_high'),
+  very_low: t('pages.transaction.risk_level.very_low'),
+  low: t('pages.transaction.risk_level.low'),
+  moderated: t('pages.transaction.risk_level.moderated'),
+  high: t('pages.transaction.risk_level.high'),
+  very_high: t('pages.transaction.risk_level.very_high'),
 })
 
 // TODO: Remove this function and it usage when the this issue is solved
@@ -357,68 +357,68 @@ class TransactionDetails extends Component {
     } = transaction
 
     const alertLabels = {
-      chargeback_reason_label: t('alert.chargeback_reason'),
-      chargeback_reason: t(`chargeback.code.${reason_code || 'unknown'}`),
-      reason_code: t('alert.reason_code', { code: reason_code || '-' }),
-      resubmit: t('alert.resubmit'),
+      chargeback_reason_label: t('pages.transaction.alert.chargeback_reason'),
+      chargeback_reason: t(`pages.transaction.chargeback.code.${reason_code || 'unknown'}`),
+      reason_code: t('pages.transaction.alert.reason_code', { code: reason_code || '-' }),
+      resubmit: t('pages.transaction.alert.resubmit'),
     }
 
     const customerLabels = getCustomerLabels(customer, t)
 
     const headerLabels = {
-      boletoAmountLabel: t('header.boleto_amount'),
-      cardAmountLabel: t('header.card_amount'),
-      installmentsLabel: t('header.installment_title'),
-      installments: t('header.installment', {
+      boletoAmountLabel: t('pages.transaction.header.boleto_amount'),
+      cardAmountLabel: t('pages.transaction.header.card_amount'),
+      installmentsLabel: t('pages.transaction.header.installment_title'),
+      installments: t('pages.transaction.header.installment', {
         count: payment.installments,
       }),
-      title: t('header.title'),
-      statusLabel: t('header.status'),
-      approveLabel: t('header.approve'),
-      refuseLabel: t('header.refuse'),
+      title: t('pages.transaction.header.title'),
+      statusLabel: t('pages.transaction.header.status'),
+      approveLabel: t('pages.transaction.header.approve'),
+      refuseLabel: t('pages.transaction.header.refuse'),
     }
 
     const recipientsLabels = {
-      collapseInstallmentTitle: t('recipients.collapsedInstallments'),
-      expandInstallmentTitle: t('recipients.expandedInstallments'),
-      installmentTotalLabel: t('recipients.amount'),
-      liabilitiesLabel: t('recipients.liabilities'),
-      netAmountLabel: t('recipients.net_amount'),
-      noRecipientLabel: t('recipients.empty'),
-      outAmountLabel: t('recipients.out_amount', { symbol: t('currency_symbol') }),
-      statusLabel: t('recipients.status'),
-      title: t('recipients.title', {
+      collapseInstallmentTitle: t('pages.transaction.recipients.collapsedInstallments'),
+      expandInstallmentTitle: t('pages.transaction.recipients.expandedInstallments'),
+      installmentTotalLabel: t('pages.transaction.recipients.amount'),
+      liabilitiesLabel: t('pages.transaction.recipients.liabilities'),
+      netAmountLabel: t('pages.transaction.recipients.net_amount'),
+      noRecipientLabel: t('pages.transaction.recipients.empty'),
+      outAmountLabel: t('pages.transaction.recipients.out_amount', { symbol: t('currency_symbol') }),
+      statusLabel: t('pages.transaction.recipients.status'),
+      title: t('pages.transaction.recipients.title', {
         count: recipients.length,
       }),
-      totalRecipientsLabel: t('recipients.total_recipient', {
+      totalRecipientsLabel: t('pages.transaction.recipients.total_recipient', {
         count: recipients.length,
       }),
-      totalTitle: t('recipients.total_amount'),
-    }
+      totalTitle: t('pages.transaction.recipients.total_amount'),
 
+    }
     const reprocessLabels = {
-      previousAlert: t('reprocess.previous'),
-      nextAlert: t('reprocess.next'),
-      showPrevious: t('reprocess.showPrevious'),
-      showNext: t('reprocess.showNext'),
+      previousAlert: t('pages.transaction.reprocess.previous'),
+      nextAlert: t('pages.transaction.reprocess.next'),
+      showPrevious: t('pages.transaction.reprocess.showPrevious'),
+      showNext: t('pages.transaction.reprocess.showNext'),
     }
 
     const totalDisplayLabels = {
       captured_at: captured_at
         ? t('captured_at', { date: moment(captured_at).format('L') })
-        : t('not_captured'),
+        : t('pages.transaction.not_captured'),
       currency_symbol: t('currency_symbol'),
-      mdr: t('payment.mdr',
+      mdr: t('models.payment.mdr',
         { value: currencyFormatter(payment.mdr_amount || 0) }
       ),
-      cost: t('payment.cost',
+      cost: t('models.payment.cost',
         { value: currencyFormatter(payment.cost_amount || 0) }
       ),
-      net_amount: t('net_amount'),
-      out_amount: t('out_amount'),
-      paid_amount: t('paid_amount'),
+      net_amount: t('pages.transaction.net_amount'),
+      out_amount: t('pages.transaction.out_amount'),
+      paid_amount: t('pages.transaction.paid_amount'),
       // receive_date: t('received_at', { date: '01/01/1970' }),
-      refund: t('payment.refund',
+      refund: t('models.payment.refund',
         { value: currencyFormatter(payment.refund_amount || 0) }
       ),
     }
@@ -430,12 +430,12 @@ class TransactionDetails extends Component {
         <TransactionDetailsContainer
           alertLabels={alertLabels}
           atLabel={t('at')}
-          boletoWarningMessage={t('boleto.waiting_payment_warning')}
+          boletoWarningMessage={t('pages.transaction.boleto.waiting_payment_warning')}
           customerLabels={customerLabels}
           eventsLabels={eventsLabels}
           headerLabels={headerLabels}
           installmentColumns={installmentColumns}
-          metadataTitle={t('metadata')}
+          metadataTitle={t('pages.transaction.metadata')}
           nextTransactionId={nextTransactionId}
           onCopyBoletoUrl={this.handleCopyBoletoUrlClick}
           onDismissAlert={this.handleAlertDismiss}
