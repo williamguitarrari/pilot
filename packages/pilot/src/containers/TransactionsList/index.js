@@ -186,6 +186,7 @@ const TransactionsList = ({
                 subtitle={
                   <div className={style.toolBar}>
                     <SegmentedSwitch
+                      disabled={loading}
                       name="view-mode"
                       onChange={onChangeViewMode}
                       options={[
@@ -229,7 +230,10 @@ const TransactionsList = ({
 
               <CardContent>
                 {viewMode === 'chart' &&
-                  <Charts data={data} />
+                  <Charts
+                    disabled={loading}
+                    data={data}
+                  />
                 }
                 {viewMode === 'table' &&
                   <Table
