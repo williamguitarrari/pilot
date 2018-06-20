@@ -292,7 +292,7 @@
       "756": "756 - Banco Cooperativo do Brasil S.A. - BANCOOB",
       "757": "757 - Banco KEB HANA do Brasil S.A."
     },
-    "card": {
+        "card": {
       "brand": "Bandeira",
       "holder_name": "Nome do cliente",
       "number": "Número do cartão"
@@ -629,19 +629,20 @@
       "title": "Detalhes da Transação"
     },
     "transactions": {
-      "title": "Transações",
       "count": "transações",
-      "total_amount": "total de",
-      "text_search_placeholder": "ID, número do documento, nome ou e-mail do cliente",
+      "graphic": "Gráfico",
+      "graphic_legends": "Legendas",
+      "items_per_page_plural": "{{count}} itens por página",
+      "items_per_page": "{{count}} item por página",
+      "no_results": "Nenhum resultado.",
       "period_full": "Todo período",
       "period_today": "Hoje",
       "period": "{{start}} - {{end}}",
-      "items_per_page": "{{count}} item por página",
-      "items_per_page_plural": "{{count}} itens por página",
-      "no_results": "Nenhum resultado.",
+      "text_search_placeholder": "ID, número do documento, nome ou e-mail do cliente",
+      "title": "Transações",
+      "total_amount": "total de",
       "try_again": "Tente novamente com outros filtros."
     }
-    
   },
   "components": {
     "date_input": {
