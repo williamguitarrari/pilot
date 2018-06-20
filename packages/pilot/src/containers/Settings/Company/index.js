@@ -50,9 +50,9 @@ class CompanySettings extends Component {
             selected={this.state.selectedIndex}
             variant="just-text"
           >
-            <TabItem text={t('settings.company.tab.general')} />
-            <TabItem text={t('settings.company.tab.team')} />
-            <TabItem text={t('settings.company.tab.register')} />
+            <TabItem text={t('pages.settings.company.tab.general')} />
+            <TabItem text={t('pages.settings.company.tab.team')} />
+            <TabItem text={t('pages.settings.company.tab.register')} />
           </TabBar>
         </CardContent>
         {selectedIndex === 0 &&

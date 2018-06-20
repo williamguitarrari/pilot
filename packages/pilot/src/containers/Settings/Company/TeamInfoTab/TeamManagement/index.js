@@ -78,13 +78,13 @@ class MenagementTeam extends React.Component {
             fill="gradient"
             icon={<IconAdd width={12} height={12} />}
             onClick={this.handleModalOpenAddUser}
-          > {t('settings.company.card.team.table.addUser')}
+          > {t('pages.settings.company.card.team.table.addUser')}
           </Button>
 
           <div style={{ flex: '1' }} />
 
           <strong>
-            {t('settings.company.card.team.table.user', { count: team.length })}
+            {t('pages.settings.company.card.team.table.user', { count: team.length })}
           </strong>
         </CardActions>
         {(deleteUserStatus.error || deleteUserStatus.success) && (
@@ -102,7 +102,7 @@ class MenagementTeam extends React.Component {
                 type="info"
                 icon={<IconInfo height={16} width={16} />}
               >
-                <p>{t('settings.company.card.team.deleteUser.success')}</p>
+                <p>{t('pages.settings.company.card.team.deleteUser.success')}</p>
               </Alert>
             }
           </CardContent>
@@ -132,8 +132,8 @@ class MenagementTeam extends React.Component {
             onClick={
               this.handleSectionTitleClick
             }
-            subtitle={t('settings.company.card.team.subtitle.management')}
-            title={t('settings.company.card.team.title.management')}
+            subtitle={t('pages.settings.company.card.team.subtitle.management')}
+            title={t('pages.settings.company.card.team.title.management')}
           />
           {!this.state.collapsed &&
             this.renderContent()

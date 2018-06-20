@@ -16,11 +16,11 @@ const RegisterInfoTab = ({
 }) => (
   <Fragment>
     <CardContent>
-      <p>{t('settings.company.card.register.cardTitle')}</p>
+      <p>{t('pages.settings.company.card.register.cardTitle')}</p>
     </CardContent>
 
     <CardTitle
-      title={t('settings.company.card.register.cardCompany')}
+      title={t('pages.settings.company.card.register.cardCompany')}
     />
 
     <CardContent>
@@ -38,7 +38,7 @@ const RegisterInfoTab = ({
     </CardContent>
 
     <CardTitle
-      title={t('settings.company.card.register.accountManager')}
+      title={t('pages.settings.company.card.register.accountManager')}
     />
 
     <CardContent>

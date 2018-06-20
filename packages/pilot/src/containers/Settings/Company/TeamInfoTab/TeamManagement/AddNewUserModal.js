@@ -20,7 +20,7 @@ import Close from 'emblematic-icons/svg/ClearClose32.svg'
 const isEmail = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
 const isEmailValid = t => value => isEmail.test(value) ? null : t('validations.isEmail')
 /* eslint-enable */
-const required = t => value => (value ? null : t('settings.user.card.access.fieldRequired'))
+const required = t => value => (value ? null : t('pages.settings.user.card.access.fieldRequired'))
 const permissions = [
   {
     name: 'Administrador',
@@ -107,7 +107,7 @@ class AddNewUserModal extends React.Component {
           onChange={this.handleFormOnChange}
         >
           <ModalTitle
-            title={t('settings.company.card.team.table.addUser')}
+            title={t('pages.settings.company.card.team.table.addUser')}
             titleAlign="center"
             onClose={handleCloseModal}
             closeIcon={<Close height={16} width={16} />}
@@ -115,7 +115,7 @@ class AddNewUserModal extends React.Component {
           <hr />
           <ModalContent>
             <p>
-              {t('settings.company.card.team.modal.identification')}
+              {t('pages.settings.company.card.team.modal.identification')}
             </p>
 
             <FormInput
@@ -125,7 +125,7 @@ class AddNewUserModal extends React.Component {
 
             <p>
               <small>
-                {t('settings.company.card.team.modal.access_level')}
+                {t('pages.settings.company.card.team.modal.access_level')}
               </small>
             </p>
 
@@ -147,7 +147,7 @@ class AddNewUserModal extends React.Component {
                 type="info"
                 icon={<IconInfo height={16} width={16} />}
               >
-                {t('settings.company.card.team.modal.success',
+                {t('pages.settings.company.card.team.modal.success',
                   { email: this.state.submittedEmail })
                 }
               </Alert>

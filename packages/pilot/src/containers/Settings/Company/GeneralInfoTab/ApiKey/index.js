@@ -53,7 +53,7 @@ class ApiKeyContainer extends React.Component {
     return (
       <CardContent>
         <p>
-          {t('settings.company.card.general.headline.api')}
+          {t('pages.settings.company.card.general.headline.api')}
         </p>
         <Grid>
           {apiKeys.map(({ title, keys: { apiKey, encryptionKey } }) => (
@@ -66,7 +66,7 @@ class ApiKeyContainer extends React.Component {
                 tv={1}
               >
                 <strong>
-                  {t(`settings.company.card.general.api_key.${title}`)}
+                  {t(`pages.settings.company.card.general.api_key.${title}`)}
                 </strong>
               </Col>
               <Col
@@ -111,8 +111,8 @@ class ApiKeyContainer extends React.Component {
           collapsed={this.state.apiKeyCollapsed}
           icon={<IconLock height={16} width={16} />}
           onClick={this.handleSectionTitleClick}
-          subtitle={t('settings.company.card.general.subtitle.api')}
-          title={t('settings.company.card.general.title.api')}
+          subtitle={t('pages.settings.company.card.general.subtitle.api')}
+          title={t('pages.settings.company.card.general.title.api')}
         />
         {
           !this.state.apiKeyCollapsed ?

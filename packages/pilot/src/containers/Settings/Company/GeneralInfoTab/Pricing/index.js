@@ -57,7 +57,7 @@ class Pricing extends React.Component {
       >
         <p>
           <strong>
-            {t(`settings.company.card.general.rate.${mainTitle}`)}
+            {t(`pages.settings.company.card.general.rate.${mainTitle}`)}
           </strong>
         </p>
         <Grid>
@@ -65,7 +65,7 @@ class Pricing extends React.Component {
             {subItems.map(({ prices, title: serviceTitle }) => (
               <Col key={serviceTitle} tablet={6} palm={12}>
                 <span>
-                  {t(`settings.company.card.general.rate.${serviceTitle}`)}
+                  {t(`pages.settings.company.card.general.rate.${serviceTitle}`)}
                 </span>
                 <strong>
                   {intersperse(' + ',
@@ -95,7 +95,7 @@ class Pricing extends React.Component {
     return (
       <CardContent>
         <span>
-          {t('settings.company.card.general.headline.rate')}
+          {t('pages.settings.company.card.general.headline.rate')}
         </span>
         <Grid>
           <Row>
@@ -117,8 +117,8 @@ class Pricing extends React.Component {
           collapsed={this.state.pricingCollapsed}
           icon={<IconPercent height={16} width={16} />}
           onClick={this.handleSectionTitleClick}
-          subtitle={t('settings.company.card.general.subtitle.rate')}
-          title={t('settings.company.card.general.title.rate')}
+          subtitle={t('pages.settings.company.card.general.subtitle.rate')}
+          title={t('pages.settings.company.card.general.title.rate')}
         />
         {!this.state.pricingCollapsed
           && this.renderContent()
