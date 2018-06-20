@@ -50,6 +50,6 @@ export default function balanceReducer (state, action) {
     }
 
     default:
-      return initialState
+      return state || initialState
   }
 }
