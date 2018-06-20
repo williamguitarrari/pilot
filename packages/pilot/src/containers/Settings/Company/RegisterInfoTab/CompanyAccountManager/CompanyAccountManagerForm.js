@@ -7,13 +7,28 @@ import {
   Grid,
   Row,
 } from 'former-kit'
-import { isEmpty } from 'ramda'
+import {
+  always,
+  complement,
+  isEmpty,
+  isNil,
+  mapObjIndexed,
+  unless,
+} from 'ramda'
+
+const replaceNilForString = num => unless(
+  complement(isNil),
+  always(''),
+  num
+)
+
+const formatInitialData = mapObjIndexed(replaceNilForString)
 
 class CompanyGeneralForm extends Component {
   constructor (props) {
     super(props)
 
-    const initalFormData = props.managingPartner
+    const initalFormData = formatInitialData(props.managingPartner)
 
     this.state = {
       initalFormData,
