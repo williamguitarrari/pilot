@@ -231,8 +231,8 @@ const TransactionsList = ({
               <CardContent>
                 {viewMode === 'chart' &&
                   <Charts
-                    disabled={loading}
                     data={data}
+                    legendsTitle={t('pages.transactions.graphic_legends')}
                   />
                 }
                 {viewMode === 'table' &&
