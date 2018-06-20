@@ -26,16 +26,19 @@ class CurrencyInput extends Component {
   }
 
   handleChange (event) {
+    const { max } = this.props
     const { value } = event.target
     const formattedValue = formatter(value)
     const normalizedValue = removeNonDigits(value)
 
-    this.setState({
-      value: formattedValue,
-    })
+    if (!max || (max && normalizedValue <= max)) {
+      this.setState({
+        value: formattedValue,
+      })
 
-    if (this.props.onChange) {
-      this.props.onChange(normalizedValue, formattedValue)
+      if (this.props.onChange) {
+        this.props.onChange(normalizedValue, formattedValue)
+      }
     }
   }
 
@@ -55,8 +58,13 @@ class CurrencyInput extends Component {
 }
 
 CurrencyInput.propTypes = {
+  max: PropTypes.number,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
+}
+
+CurrencyInput.defaultProps = {
+  max: null,
 }
 
 export default CurrencyInput
