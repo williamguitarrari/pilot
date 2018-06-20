@@ -115,7 +115,7 @@ class Balance extends Component {
     const getTranslatedChild = () => {
       const childrenValue = bank_account[key]
       if (key === 'bank_code') {
-        return t(`${key}.${childrenValue}`)
+        return t(`models.${key}.${childrenValue}`)
       }
       if (key === 'type') {
         return t(childrenValue)
