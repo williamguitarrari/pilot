@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
+import Form from 'react-vanilla-form'
 import {
   Button,
   Card,
@@ -14,48 +15,24 @@ import {
 } from 'former-kit'
 import {
   always,
-  apply,
   cond,
-  equals,
-  gt,
   gte,
-  juxt,
   lt,
-  pipe,
-  prop,
-  propSatisfies,
 } from 'ramda'
 import CurrencyInput from '../../../components/CurrencyInput'
 import formatCurrency from '../../../formatters/currency'
-import Summary from '../Summary'
+import greaterThanValidation from '../../../validation/greaterThan'
+import lessThanOrEqualValidation from '../../../validation/lessThanOrEqual'
+import numberValidation from '../../../validation/number'
+import requiredValidation from '../../../validation/required'
 import style from './style.css'
+import Summary from '../Summary'
 
 const chooseTransferCardColor = cond([
   [Number.isNaN, always('#757575')],
   [lt(0), always('#37cc9a')],
   [gte(0), always('#ff796f')],
 ])
-
-const buildErrorMessage = t => cond([
-  [
-    propSatisfies(Number.isNaN, 'requested'),
-    always(t('pages.withdraw.requested_required')),
-  ],
-  [
-    propSatisfies(gt(0), 'amount'),
-    always(t('pages.withdraw.negative_transfer_value')),
-  ],
-  [
-    pipe(
-      juxt([prop('requested'), prop('maximum')]),
-      apply(gt),
-      equals(true)
-    ),
-    always(t('pages.withdraw.requested_value_greater_max')),
-  ],
-])
-
-const maxEnabledAmount = 99999999999
 
 class WithdrawFormContainer extends Component {
   constructor (props) {
@@ -94,14 +71,8 @@ class WithdrawFormContainer extends Component {
     const {
       available,
       maximum,
-      onRequestedChange,
-      requested,
       t,
-      transferCost,
     } = this.props
-
-    const amount = requested + transferCost
-    const getErrorMessage = buildErrorMessage(t)
 
     return (
       <Row stretch>
@@ -138,17 +109,14 @@ class WithdrawFormContainer extends Component {
                   </span>
                 </span>
                 <FormInput
-                  error={getErrorMessage({ requested, amount, maximum })}
                   label={t('pages.withdraw.withdraw_value')}
-                  name="withdrawValue"
-                  onChange={onRequestedChange}
+                  name="requested"
                   renderer={props => (
                     <CurrencyInput
-                      max={maxEnabledAmount}
+                      max={99999999999}
                       {...props}
                     />
                   )}
-                  value={requested.toString()}
                 />
               </div>
             </CardContent>
@@ -199,9 +167,44 @@ class WithdrawFormContainer extends Component {
   }
 
   render () {
+    const {
+      maximum,
+      onRequestedChange,
+      requested,
+      t,
+      transferCost,
+    } = this.props
+
+    const isRequired = requiredValidation(t('pages.withdraw.required'))
+    const isNumber = numberValidation(t('pages.withdraw.number'))
+
+    const amount = requested + transferCost
+
+    const buildAmountValidation = lessThanOrEqualValidation(
+      0,
+      t('pages.withdraw.negative_transfer_value')
+    )
+
     return (
       <Card>
-        <form onSubmit={this.props.onSubmit}>
+        <Form
+          data={{
+            requested: requested.toString(),
+          }}
+          validateOn="blur"
+          validation={{
+            requested: [
+              isRequired,
+              isNumber,
+              always(buildAmountValidation(amount)),
+              greaterThanValidation(
+                maximum, t('pages.withdraw.requested_value_greater_max')
+              ),
+            ],
+          }}
+          onChange={data => onRequestedChange(Number(data.requested))}
+          onSubmit={this.props.onSubmit}
+        >
           <CardContent>
             <Grid>
               {this.renderInputRow()}
@@ -209,7 +212,7 @@ class WithdrawFormContainer extends Component {
             </Grid>
           </CardContent>
           {this.renderCardActions()}
-        </form>
+        </Form>
       </Card>
     )
   }
