@@ -58,7 +58,7 @@ class CompanyGeneralForm extends Component {
             <Col palm={12} tablet={12} desk={4} tv={3}>
               <FormInput
                 disabled
-                label={t('settings.company.card.register.address.form.street')}
+                label={t('pages.settings.company.card.register.address.form.street')}
                 name="street"
                 type="text"
               />
@@ -66,7 +66,7 @@ class CompanyGeneralForm extends Component {
             <Col palm={12} tablet={12} desk={2} tv={2}>
               <FormInput
                 disabled
-                label={t('settings.company.card.register.address.form.streetNumber')}
+                label={t('pages.settings.company.card.register.address.form.streetNumber')}
                 name="streetNumber"
                 type="text"
               />
@@ -74,7 +74,7 @@ class CompanyGeneralForm extends Component {
             <Col palm={12} tablet={12} desk={3} tv={2}>
               <FormInput
                 disabled
-                label={t('settings.company.card.register.address.form.complementary')}
+                label={t('pages.settings.company.card.register.address.form.complementary')}
                 name="complementary"
                 type="text"
               />
@@ -82,7 +82,7 @@ class CompanyGeneralForm extends Component {
             <Col palm={12} tablet={12} desk={3} tv={3}>
               <FormInput
                 disabled
-                label={t('settings.company.card.register.address.form.neighborhood')}
+                label={t('pages.settings.company.card.register.address.form.neighborhood')}
                 name="neighborhood"
                 type="text"
               />
@@ -92,7 +92,7 @@ class CompanyGeneralForm extends Component {
             <Col palm={12} tablet={12} desk={3} tv={2}>
               <FormInput
                 disabled
-                label={t('settings.company.card.register.address.form.city')}
+                label={t('pages.settings.company.card.register.address.form.city')}
                 name="city"
                 type="text"
               />
@@ -100,7 +100,7 @@ class CompanyGeneralForm extends Component {
             <Col palm={12} tablet={12} desk={3} tv={2}>
               <FormInput
                 disabled
-                label={t('settings.company.card.register.address.form.state')}
+                label={t('pages.settings.company.card.register.address.form.state')}
                 name="state"
                 type="text"
               />
@@ -108,7 +108,7 @@ class CompanyGeneralForm extends Component {
             <Col palm={12} tablet={12} desk={3} tv={2}>
               <FormInput
                 disabled
-                label={t('settings.company.card.register.address.form.zipcode')}
+                label={t('pages.settings.company.card.register.address.form.zipcode')}
                 name="zipcode"
                 type="text"
               />

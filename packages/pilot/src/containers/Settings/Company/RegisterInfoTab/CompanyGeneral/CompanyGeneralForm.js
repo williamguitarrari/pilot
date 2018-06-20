@@ -57,7 +57,7 @@ class CompanyGeneralForm extends Component {
             <Col palm={12} tablet={6} desk={6} tv={4}>
               <FormInput
                 disabled
-                label={t('settings.company.card.register.general.form.name')}
+                label={t('pages.settings.company.card.register.general.form.name')}
                 name="name"
                 type="text"
               />
@@ -65,7 +65,7 @@ class CompanyGeneralForm extends Component {
             <Col palm={12} tablet={12} desk={6} tv={4}>
               <FormInput
                 disabled
-                label={t('settings.company.card.register.general.form.fullName')}
+                label={t('pages.settings.company.card.register.general.form.fullName')}
                 name="fullName"
                 type="text"
               />
@@ -73,7 +73,7 @@ class CompanyGeneralForm extends Component {
             <Col palm={12} tablet={12} desk={3} tv={2}>
               <FormInput
                 disabled
-                label={t('settings.company.card.register.general.form.cnpj')}
+                label={t('pages.settings.company.card.register.general.form.cnpj')}
                 name="cnpj"
                 type="text"
               />
@@ -81,7 +81,7 @@ class CompanyGeneralForm extends Component {
             <Col palm={12} tablet={12} desk={5} tv={5}>
               <FormInput
                 disabled
-                label={t('settings.company.card.register.general.form.siteUrl')}
+                label={t('pages.settings.company.card.register.general.form.siteUrl')}
                 name="siteUrl"
                 type="text"
               />

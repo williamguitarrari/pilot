@@ -20,11 +20,11 @@ import {
 import IconWarning from 'emblematic-icons/svg/Warning32.svg'
 import IconInfo from 'emblematic-icons/svg/Info32.svg'
 
-const required = t => value => (value ? null : t('settings.user.card.access.fieldRequired'))
+const required = t => value => (value ? null : t('pages.settings.user.card.access.fieldRequired'))
 const equalsString = (t, str1) => ifElse(
   equals(str1),
   F,
-  always(t('settings.user.card.access.passwordEqual'))
+  always(t('pages.settings.user.card.access.passwordEqual'))
 )
 
 class PasswordRedefinitionForm extends Component {
@@ -105,21 +105,21 @@ class PasswordRedefinitionForm extends Component {
             <Row>
               <Col palm={12} tablet={12} desk={3} tv={3}>
                 <FormInput
-                  label={t('settings.user.card.access.currentPassword')}
+                  label={t('pages.settings.user.card.access.currentPassword')}
                   name="current_password"
                   type="password"
                 />
               </Col>
               <Col palm={12} tablet={12} desk={3} tv={3}>
                 <FormInput
-                  label={t('settings.user.card.access.newPassword')}
+                  label={t('pages.settings.user.card.access.newPassword')}
                   name="new_password"
                   type="password"
                 />
               </Col>
               <Col palm={12} tablet={12} desk={3} tv={3}>
                 <FormInput
-                  label={t('settings.user.card.access.matchNewPassword')}
+                  label={t('pages.settings.user.card.access.matchNewPassword')}
                   name="new_password_confirmation"
                   type="password"
                 />
@@ -140,7 +140,7 @@ class PasswordRedefinitionForm extends Component {
                     type="info"
                     icon={<IconInfo height={16} width={16} />}
                   >
-                    <p>{t('settings.user.card.access.alert.success')}</p>
+                    <p>{t('pages.settings.user.card.access.alert.success')}</p>
                   </Alert>
                 }
               </Col>
@@ -154,14 +154,14 @@ class PasswordRedefinitionForm extends Component {
             size="default"
             onClick={this.handleCancellation}
           >
-            {t('settings.user.card.access.buttonCancel')}
+            {t('pages.settings.user.card.access.buttonCancel')}
           </Button>
           <Button
             type="submit"
             size="default"
             fill="gradient"
           >
-            {t('settings.user.card.access.buttonSubmit')}
+            {t('pages.settings.user.card.access.buttonSubmit')}
           </Button>
         </CardActions>
       </Form>

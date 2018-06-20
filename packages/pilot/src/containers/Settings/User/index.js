@@ -37,7 +37,7 @@ class UserSettings extends Component {
     return (
       <Card>
         <CardTitle
-          title={t('settings.user.card.header')}
+          title={t('pages.settings.user.card.header')}
         />
 
         <CardContent>
@@ -46,8 +46,8 @@ class UserSettings extends Component {
               collapsed={this.state.passwordInfoSectionCollapsed}
               icon={<IconInfo height={16} width={16} />}
               onClick={this.handleSectionTitleClick('passwordInfoSectionCollapsed')}
-              subtitle={t('settings.user.card.access.subtitle')}
-              title={t('settings.user.card.access.title')}
+              subtitle={t('pages.settings.user.card.access.subtitle')}
+              title={t('pages.settings.user.card.access.title')}
             />
             {!this.state.passwordInfoSectionCollapsed &&
               <PasswordRedefinitionForm

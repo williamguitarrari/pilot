@@ -30,21 +30,21 @@ const PersonalInfoForm = ({
         <Row>
           <Col palm={12} tablet={12} desk={4} tv={4}>
             <FormInput
-              label={t('settings.user.personal.name')}
+              label={t('pages.settings.user.personal.name')}
               name="name"
               type="text"
             />
           </Col>
           <Col palm={12} tablet={12} desk={4} tv={4}>
             <FormInput
-              label={t('settings.user.personal.email')}
+              label={t('pages.settings.user.personal.email')}
               name="email"
               type="text"
             />
           </Col>
           <Col palm={12} tablet={12} desk={4} tv={4}>
             <FormInput
-              label={t('settings.user.personal.mothername')}
+              label={t('pages.settings.user.personal.mothername')}
               name="mothername"
               type="text"
             />
@@ -54,28 +54,28 @@ const PersonalInfoForm = ({
         <Row>
           <Col palm={12} tablet={12} desk={2} tv={2}>
             <FormInput
-              label={t('settings.user.personal.document')}
+              label={t('pages.settings.user.personal.document')}
               name="document"
               type="text"
             />
           </Col>
           <Col palm={12} tablet={12} desk={4} tv={4}>
             <FormInput
-              label={t('settings.user.personal.birthday')}
+              label={t('pages.settings.user.personal.birthday')}
               name="birthday"
               type="text"
             />
           </Col>
           <Col palm={12} tablet={12} desk={2} tv={2}>
             <FormInput
-              label={t('settings.user.personal.cpf')}
+              label={t('pages.settings.user.personal.cpf')}
               name="cpf"
               type="text"
             />
           </Col>
           <Col palm={12} tablet={12} desk={2} tv={2}>
             <FormInput
-              label={t('settings.user.personal.phone')}
+              label={t('pages.settings.user.personal.phone')}
               name="phone"
               type="text"
             />
@@ -90,14 +90,14 @@ const PersonalInfoForm = ({
         fill="outline"
         onClick={onCancel}
       >
-        {t('settings.user.personal.button.cancel')}
+        {t('pages.settings.user.personal.button.cancel')}
       </Button>
       <Button
         type="submit"
         size="large"
         fill="gradient"
       >
-        {t('settings.user.personal.button.save')}
+        {t('pages.settings.user.personal.button.save')}
       </Button>
     </CardActions>
   </Form>
