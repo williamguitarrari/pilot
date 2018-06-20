@@ -10,14 +10,12 @@ import {
   Steps,
 } from 'former-kit'
 import {
-  always,
-  applySpec,
-  equals,
-  head,
+  assoc,
+  identity,
   ifElse,
   map,
-  nth,
   pipe,
+  propEq,
   toPairs,
 } from 'ramda'
 import DetailsHead from '../../components/DetailsHead'
@@ -30,14 +28,16 @@ import WithdrawResult from './Result'
 
 const createStepsStatus = pipe(
   toPairs,
-  map(applySpec({
-    id: head,
-    status: ifElse(
-      pipe(head, equals('result')),
-      always('current'),
-      nth(1)
-    ),
+  map(item => ({
+    id: item[0],
+    status: item[1],
   }))
+)
+
+const setCurrentStep = currentStep => ifElse(
+  propEq('id', currentStep),
+  assoc('status', 'current'),
+  identity
 )
 
 class Withdraw extends Component {
@@ -50,8 +50,10 @@ class Withdraw extends Component {
   }
 
   getStepsStatus () {
-    const { stepsStatus } = this.props
-    return createStepsStatus(stepsStatus)
+    const { stepsStatus, currentStep } = this.props
+    const steps = createStepsStatus(stepsStatus)
+
+    return map(setCurrentStep(currentStep), steps)
   }
 
   renderRecipient () {
@@ -214,7 +216,7 @@ class Withdraw extends Component {
                 steps={[
                   { id: 'data', title: t('pages.withdraw.data') },
                   { id: 'confirmation', title: t('pages.withdraw.confirmation') },
-                  { id: 'result', title: t('pages.withdraw.result') },
+                  { id: 'result', title: t('pages.withdraw.conclusion') },
                 ]}
               />
             </Card>
