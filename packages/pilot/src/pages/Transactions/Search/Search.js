@@ -24,6 +24,7 @@ import {
   path,
   pipe,
   prop,
+  replace,
   tail,
   unless,
   without,
@@ -233,10 +234,12 @@ class TransactionsSearch extends React.Component {
   }
 
   updateQuery (query) {
-    this.setState({
-      expandedRows: [],
-      selectedRows: [],
-    })
+    const {
+      history: {
+        push,
+        location,
+      },
+    } = this.props
 
     const buildSearchQuery = pipe(
       normalizeQueryDatesToString,
@@ -244,10 +247,20 @@ class TransactionsSearch extends React.Component {
       qs.stringify
     )
 
-    this.props.history.push({
-      pathname: 'transactions',
-      search: buildSearchQuery(query),
+    const newQuery = buildSearchQuery(query)
+    const currentQuery = replace('?', '', location.search)
+
+    this.setState({
+      expandedRows: [],
+      selectedRows: [],
     })
+
+    if (currentQuery !== newQuery) {
+      push({
+        pathname: 'transactions',
+        search: newQuery,
+      })
+    }
   }
 
   requestData (query) {
@@ -280,7 +293,7 @@ class TransactionsSearch extends React.Component {
       ...this.props.query,
       sort: {
         field,
-        order: order === 'ascending' ? 'descending' : 'ascending',
+        order,
       },
       offset: 1,
     }

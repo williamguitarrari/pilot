@@ -93,8 +93,8 @@ const TransactionsList = ({
 }) => {
   const columns = tableColumns({ t, onDetailsClick })
   const orderColumn = findIndex(propEq('accessor', orderField), columns)
-  const handleOrderChange = columnIndex =>
-    onOrderChange(columns[columnIndex].accessor)
+  const handleOrderChange = (columnIndex, tableOrder) =>
+    onOrderChange(columns[columnIndex].accessor, tableOrder)
 
   return (
     <Grid>
