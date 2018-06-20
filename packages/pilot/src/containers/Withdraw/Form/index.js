@@ -145,6 +145,7 @@ class WithdrawFormContainer extends Component {
                       {...props}
                     />
                   )}
+                  max={available}
                   value={requested.toString()}
                 />
               </div>
