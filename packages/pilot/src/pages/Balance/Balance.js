@@ -348,9 +348,11 @@ class Balance extends Component {
           type="info"
         >
           <span>
-            {path(['errors', 0, 'message'], error)
-              || t('balance.unknown_error')
-            }
+            {pathOr(
+              t('pages.balance.unknown_error'),
+              ['errors', 0, 'message'],
+              error
+            )}
           </span>
         </Alert>
       )
@@ -362,7 +364,7 @@ class Balance extends Component {
           icon={<IconInfo height={16} width={16} />}
           type="info"
         >
-          <span>{t('balance.invalid_recipient')}</span>
+          <span>{t('pages.balance.invalid_recipient')}</span>
         </Alert>
       )
     }
