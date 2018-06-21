@@ -22,15 +22,25 @@ import ChevronUp32 from 'emblematic-icons/svg/ChevronUp32.svg'
 import {
   anyPass,
   equals,
-  isNil,
+  flatten,
   isEmpty,
+  isNil,
   join,
+  mergeDeepLeft,
+  pipe,
+  values,
 } from 'ramda'
 
 import compileTags from './compileTags'
 import style from './style.css'
 
 const isNilOrEmpty = anyPass([isNil, isEmpty])
+
+const getFilters = pipe(
+  mergeDeepLeft,
+  values,
+  flatten
+)
 
 class Filters extends Component {
   constructor (props) {
@@ -137,21 +147,27 @@ class Filters extends Component {
   renderOptions () {
     const {
       collapsed,
+      query,
     } = this.state
 
     const {
       options,
+      query: {
+        filters,
+      },
     } = this.props
 
     if (isNilOrEmpty(options) || collapsed) {
       return null
     }
 
+    const selectedFilters = getFilters(filters, query.filters)
+
     return (
       <CardContent>
         <CardSection>
           <CardContent>
-            <fieldset name="properties">
+            <fieldset name="filters">
               <Row flex>
                 {options.map(({ name, items, key }) => (
                   <Col key={name}>
@@ -163,6 +179,7 @@ class Filters extends Component {
                       disabled={this.props.disabled}
                       name={key}
                       options={items}
+                      value={selectedFilters}
                     />
                   </Col>
                 ))}
@@ -178,20 +195,25 @@ class Filters extends Component {
     const {
       collapsed,
       query: {
-        properties,
+        filters: localFilters,
       },
     } = this.state
 
     const {
       options,
       t,
+      query: {
+        filters: urlFilters,
+      },
     } = this.props
 
-    if (!collapsed || isNilOrEmpty(properties)) {
+    const filters = mergeDeepLeft(urlFilters, localFilters)
+
+    if (!collapsed || isNilOrEmpty(filters)) {
       return null
     }
 
-    const tags = compileTags(options, properties)
+    const tags = compileTags(options, filters)
 
     return (
       <CardContent className={style.selectedOptionsTags}>
