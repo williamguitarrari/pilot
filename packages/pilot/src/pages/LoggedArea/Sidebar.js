@@ -31,6 +31,7 @@ const Sidebar = ({
       .filter(({ hidden }) => !hidden)
       .map(route => ({
         ...route,
+        path: removeRouteParams(route.path),
         active: pathname.includes(removeRouteParams(route.path)),
       }))
     }
