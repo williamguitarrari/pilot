@@ -19,14 +19,18 @@ import {
   gte,
   lt,
 } from 'ramda'
+
 import CurrencyInput from '../../../components/CurrencyInput'
-import formatCurrency from '../../../formatters/currency'
 import greaterThanValidation from '../../../validation/greaterThan'
 import lessThanOrEqualValidation from '../../../validation/lessThanOrEqual'
 import numberValidation from '../../../validation/number'
 import requiredValidation from '../../../validation/required'
+import DataDisplay from '../../../components/DataDisplay'
+import TotalDisplay from '../../../components/TotalDisplay'
+import Summary from '../../../components/Summary'
+import formatCurrency from '../../../formatters/currency'
+
 import style from './style.css'
-import Summary from '../Summary'
 
 const chooseTransferCardColor = cond([
   [Number.isNaN, always('#757575')],
@@ -143,26 +147,30 @@ class WithdrawFormContainer extends Component {
     const amount = requested + transferCost
 
     return (
-      <Summary
-        unit={t('pages.withdraw.currency_symbol')}
-        colors={{
-          amount: chooseTransferCardColor(amount),
-          requested: '#37cc9a',
-          transferCost: '#ff796f',
-        }}
-        labels={{
-          amount: t('pages.withdraw.value_to_transfer'),
-          date: t('pages.withdraw.date'),
-          requested: t('pages.withdraw.requested_value'),
-          transferCost: t('pages.withdraw.transfer_cost'),
-        }}
-        contents={{
-          amount,
-          date: moment(date).format('DD/MM/YYYY'),
-          requested,
-          transferCost,
-        }}
-      />
+      <Summary>
+        <DataDisplay
+          title={t('pages.withdraw.date')}
+          value={moment(date).format('DD/MM/YYYY')}
+        />
+        <TotalDisplay
+          amount={amount}
+          color={chooseTransferCardColor(amount)}
+          title={t('pages.withdraw.value_to_transfer')}
+          unit={t('pages.withdraw.currency_symbol')}
+        />
+        <TotalDisplay
+          amount={requested}
+          color="#37cc9a"
+          title={t('pages.withdraw.requested_value')}
+          unit={t('pages.withdraw.currency_symbol')}
+        />
+        <TotalDisplay
+          amount={transferCost}
+          color="#ff796f"
+          title={t('pages.withdraw.transfer_cost')}
+          unit={t('pages.withdraw.currency_symbol')}
+        />
+      </Summary>
     )
   }
 

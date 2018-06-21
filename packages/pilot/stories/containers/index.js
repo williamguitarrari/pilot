@@ -37,7 +37,6 @@ import WithdrawConfirmation from './Withdraw/Confirmation'
 import WithdrawForm from './Withdraw/Form'
 import WithdrawResultSuccess from './Withdraw/Result/Success'
 import WithdrawResultError from './Withdraw/Result/Error'
-import WithdrawSummary from './Withdraw/Summary'
 
 storiesOf('Containers', module)
   .add('Recipient list', () => (
@@ -147,7 +146,4 @@ storiesOf('Containers', module)
   ))
   .add('Withdraw Result Error', () => (
     <WithdrawResultError />
-  ))
-  .add('Withdraw Summary', () => (
-    <WithdrawSummary />
   ))
