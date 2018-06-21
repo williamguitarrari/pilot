@@ -307,21 +307,18 @@ class TransactionsSearch extends React.Component {
     this.updateQuery({ dates })
   }
 
-  handleFilterChange (filters) {
-    const {
-      search,
-      dates,
-      properties,
-    } = filters
-
-    const sort = filters.sort || this.props.query.sort
-
+  handleFilterChange ({
+    dates,
+    filters,
+    search,
+    sort,
+  }) {
     const query = {
       ...this.props.query,
       search,
       dates,
-      sort,
-      filters: properties,
+      sort: sort || this.props.query.sort,
+      filters,
       offset: 1,
     }
 
