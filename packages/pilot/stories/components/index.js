@@ -15,6 +15,7 @@ import Operations from './Operations'
 import RecipientSectionState from './RecipientSection'
 import RiskLevel from './RiskLevel'
 import ReprocessDetails from './ReprocessDetails'
+import Summary from './Summary'
 import TotalDisplay from './TotalDisplay'
 import TransactionDetailsCard from './TransactionDetailsCard'
 import TreeView from './TreeView'
@@ -94,4 +95,7 @@ storiesOf('Components', module)
   ))
   .add('Sidebar Summary', () => (
     <SidebarSummary />
+  ))
+  .add('Summary', () => (
+    <Summary />
   ))

@@ -23,7 +23,9 @@ import IconExtract from 'emblematic-icons/svg/Extract24.svg'
 import WithdrawErrorIcon from './WithdrawError.svg'
 
 import DetailsHead from '../../../components/DetailsHead'
-import Summary from '../Summary'
+import DataDisplay from '../../../components/DataDisplay'
+import TotalDisplay from '../../../components/TotalDisplay'
+import Summary from '../../../components/Summary'
 import formatAccountType from '../../../formatters/accountType'
 import formatAgencyAccount from '../../../formatters/agencyAccount'
 import formatCpfCnpj from '../../../formatters/cpfCnpj'
@@ -52,26 +54,30 @@ class WithdrawResult extends Component {
     } = this.props
 
     return (
-      <Summary
-        colors={{
-          amount: '#37cc9a',
-          requested: '#37cc9a',
-          transferCost: '#ff796f',
-        }}
-        contents={{
-          amount,
-          date: date.format('DD/MM/YYYY'),
-          requested,
-          transferCost,
-        }}
-        labels={{
-          amount: t('pages.withdraw.value_to_transfer'),
-          date: t('pages.withdraw.date'),
-          requested: t('pages.withdraw.requested_value'),
-          transferCost: t('pages.withdraw.transfer_cost'),
-        }}
-        unit={t('pages.withdraw.currency_symbol')}
-      />
+      <Summary>
+        <DataDisplay
+          title={t('pages.withdraw.date')}
+          value={date.format('DD/MM/YYYY')}
+        />
+        <TotalDisplay
+          amount={amount}
+          color="#37cc9a"
+          title={t('pages.withdraw.value_to_transfer')}
+          unit={t('pages.withdraw.currency_symbol')}
+        />
+        <TotalDisplay
+          amount={requested}
+          color="#37cc9a"
+          title={t('pages.withdraw.requested_value')}
+          unit={t('pages.withdraw.currency_symbol')}
+        />
+        <TotalDisplay
+          amount={transferCost}
+          color="#ff796f"
+          title={t('pages.withdraw.transfer_cost')}
+          unit={t('pages.withdraw.currency_symbol')}
+        />
+      </Summary>
     )
   }
 

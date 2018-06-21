@@ -12,8 +12,10 @@ import {
   Grid,
   Row,
 } from 'former-kit'
+import DataDisplay from '../../../components/DataDisplay'
+import TotalDisplay from '../../../components/TotalDisplay'
 import DetailsHead from '../../../components/DetailsHead'
-import Summary from '../Summary'
+import Summary from '../../../components/Summary'
 import formatAccountType from '../../../formatters/accountType'
 import formatAgencyAccount from '../../../formatters/agencyAccount'
 import formatCpfCnpj from '../../../formatters/cpfCnpj'
@@ -54,26 +56,30 @@ class WithdrawConfirmationContainer extends Component {
     } = this.props
 
     return (
-      <Summary
-        colors={{
-          amount: '#37cc9a',
-          requested: '#37cc9a',
-          transferCost: '#ff796f',
-        }}
-        contents={{
-          amount,
-          date: moment(date).format('DD/MM/YYYY'),
-          requested,
-          transferCost,
-        }}
-        labels={{
-          amount: t('pages.withdraw.value_to_transfer'),
-          date: t('pages.withdraw.date'),
-          requested: t('pages.withdraw.requested_value'),
-          transferCost: t('pages.withdraw.transfer_cost'),
-        }}
-        unit={t('pages.withdraw.currency_symbol')}
-      />
+      <Summary>
+        <DataDisplay
+          title={t('pages.withdraw.date')}
+          value={moment(date).format('DD/MM/YYYY')}
+        />
+        <TotalDisplay
+          amount={amount}
+          title={t('pages.withdraw.value_to_transfer')}
+          color="#37cc9a"
+          unit={t('pages.withdraw.currency_symbol')}
+        />
+        <TotalDisplay
+          amount={requested}
+          title={t('pages.withdraw.requested_value')}
+          color="#37cc9a"
+          unit={t('pages.withdraw.currency_symbol')}
+        />
+        <TotalDisplay
+          amount={transferCost}
+          title={t('pages.withdraw.transfer_cost')}
+          color="#ff796f"
+          unit={t('pages.withdraw.currency_symbol')}
+        />
+      </Summary>
     )
   }
 
