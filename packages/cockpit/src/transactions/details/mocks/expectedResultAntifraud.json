@@ -24,15 +24,22 @@
     },
     "created_at": "2018-05-17T17:28:26.998Z",
     "customer": {
-      "address": null,
+      "address": {
+        "city": "Cotia",
+        "complementary": null,
+        "country": "br",
+        "id": 366361,
+        "neighborhood": "Rio Cotia",
+        "object": "address",
+        "state": "sp",
+        "street": "Rua Matrix",
+        "street_number": "9999",
+        "zipcode": "06714360"
+      },
       "birthday": "1965-01-01T00:00:00.000Z",
       "country": "br",
       "created_at": "2018-05-17T17:28:26.801Z",
       "documents": [
-        {
-          "number": null,
-          "type": "cpf"
-        },
         {
           "id": "doc_cjhat6tvg028l2g6dj90jasof",
           "number": "44444444444",

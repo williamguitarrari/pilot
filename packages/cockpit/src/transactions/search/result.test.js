@@ -92,7 +92,6 @@ const mock = {
           antifraud: null,
           amount: 2000,
           customer: {
-            address: null,
             name: 'Test',
             email: 'test@test.com',
             country: null,
@@ -585,7 +584,6 @@ const mock = {
           amount: 20000,
           antifraud: null,
           customer: {
-            address: null,
             name: 'Test',
             email: 'test@test.com',
             country: null,
