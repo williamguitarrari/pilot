@@ -157,6 +157,11 @@ const getPhones = pipe(
   reject(isNil)
 )
 
+const rejectInvalidDocument = reject(either(
+  isNil,
+  propSatisfies(isNil, 'number')
+))
+
 const getDocuments = pipe(
   prop('customer'),
   juxt([
@@ -170,12 +175,12 @@ const getDocuments = pipe(
     prop('documents'),
   ]),
   flatten,
-  reject(isNil)
+  rejectInvalidDocument
 )
 
 const getAddress = ifElse(
   propSatisfies(isNil, 'address'),
-  getCustomerSubProp('address'),
+  path(['billing', 'address']),
   prop('address')
 )
 
