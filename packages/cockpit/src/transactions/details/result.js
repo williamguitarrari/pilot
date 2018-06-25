@@ -1,6 +1,7 @@
 import {
   __,
   always,
+  any,
   apply,
   applySpec,
   assoc,
@@ -34,8 +35,8 @@ import {
   prop,
   propEq,
   propOr,
-  propSatisfies,
   props,
+  propSatisfies,
   reduce,
   reject,
   reverse,
@@ -119,6 +120,17 @@ const getStatus = (transaction, manualReviewAnalysis) => {
   return manualReviewAnalysis.status
 }
 
+const nameEqualPagarme = propEq('name', 'pagarme')
+const hasPagarmeAntifraudAnalysis = any(nameEqualPagarme)
+
+const findPagarmeAntifraudAnalysis = find(nameEqualPagarme)
+
+const getAntifraudAnalysis = ifElse(
+  hasPagarmeAntifraudAnalysis,
+  findPagarmeAntifraudAnalysis,
+  head
+)
+
 const buildCreditCardOperations = ({
   transaction,
   gatewayOperations,
@@ -134,11 +146,6 @@ const buildCreditCardOperations = ({
       return operations.concat([operation])
     }
 
-    const pagarmeAnalysis = find(
-      propEq('name', 'pagarme'),
-      antifraudAnalyses
-    )
-
     const manualReviewAnalysis = find(
       propEq('name', 'manual_review'),
       antifraudAnalyses
@@ -149,10 +156,12 @@ const buildCreditCardOperations = ({
       manualReviewTimeout(transaction) ||
       manualReviewAnalysis
 
+    const analysis = getAntifraudAnalysis(antifraudAnalyses)
+
     const antifraudOperation = {
       created_at: operation.date_created,
       id: operation.id,
-      status: pagarmeAnalysis.status,
+      status: analysis.status,
       type: operation.type,
     }
 
