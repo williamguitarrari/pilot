@@ -1,0 +1,26 @@
+@import "former-kit-skin-pagarme/dist/styles/spacing.css";
+@import "former-kit-skin-pagarme/dist/styles/colors/light.css";
+
+.head {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.advise,
+.information {
+  color: var(--color-light-steel-100);
+}
+
+.headActions button:not(:first-child) {
+  margin-left: var(--spacing-small);
+}
+
+.errorCol {
+  align-items: center;
+}
+
+.grid {
+  width: 100%;
+}
