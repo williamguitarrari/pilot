@@ -38,6 +38,12 @@ import WithdrawForm from './Withdraw/Form'
 import WithdrawResultSuccess from './Withdraw/Result/Success'
 import WithdrawResultError from './Withdraw/Result/Error'
 import {
+  AnticipationConfirmationDisabled,
+  AnticipationConfirmationWithAutomaticTransfer,
+  AnticipationConfirmationWithError,
+  AnticipationConfirmationWithoutAutomaticTransfer,
+} from './Anticipation/Confirmation'
+import {
   AnticipationResultError,
   AnticipationResultWithAutomaticTransfer,
   AnticipationResultWithoutAutomaticTransfer,
@@ -151,6 +157,18 @@ storiesOf('Containers', module)
   ))
   .add('Withdraw Result Error', () => (
     <WithdrawResultError />
+  ))
+  .add('Anticipation Confirmation with automatic transfer', () => (
+    <AnticipationConfirmationWithAutomaticTransfer />
+  ))
+  .add('Anticipation Confirmation without automatic transfer', () => (
+    <AnticipationConfirmationWithoutAutomaticTransfer />
+  ))
+  .add('Anticipation Confirmation with error', () => (
+    <AnticipationConfirmationWithError />
+  ))
+  .add('Anticipation Confirmation disabled', () => (
+    <AnticipationConfirmationDisabled />
   ))
   .add('Anticipation Result with automatic transfer', () => (
     <AnticipationResultWithAutomaticTransfer />
