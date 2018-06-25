@@ -37,6 +37,11 @@ import WithdrawConfirmation from './Withdraw/Confirmation'
 import WithdrawForm from './Withdraw/Form'
 import WithdrawResultSuccess from './Withdraw/Result/Success'
 import WithdrawResultError from './Withdraw/Result/Error'
+import {
+  AnticipationResultError,
+  AnticipationResultWithAutomaticTransfer,
+  AnticipationResultWithoutAutomaticTransfer,
+} from './Anticipation/Result'
 
 storiesOf('Containers', module)
   .add('Recipient list', () => (
@@ -146,4 +151,13 @@ storiesOf('Containers', module)
   ))
   .add('Withdraw Result Error', () => (
     <WithdrawResultError />
+  ))
+  .add('Anticipation Result with automatic transfer', () => (
+    <AnticipationResultWithAutomaticTransfer />
+  ))
+  .add('Anticipation Result without automatic transfer', () => (
+    <AnticipationResultWithoutAutomaticTransfer />
+  ))
+  .add('Anticipation Result error', () => (
+    <AnticipationResultError />
   ))
