@@ -20,15 +20,15 @@ import {
 import IconChecked from 'emblematic-icons/svg/Check32.svg'
 import IconError from 'emblematic-icons/svg/ClearClose32.svg'
 import IconExtract from 'emblematic-icons/svg/Extract24.svg'
-import WithdrawErrorIcon from './WithdrawError.svg'
 
-import DetailsHead from '../../../components/DetailsHead'
 import DataDisplay from '../../../components/DataDisplay'
-import TotalDisplay from '../../../components/TotalDisplay'
-import Summary from '../../../components/Summary'
+import DetailsHead from '../../../components/DetailsHead'
 import formatAccountType from '../../../formatters/accountType'
 import formatAgencyAccount from '../../../formatters/agencyAccount'
 import formatCpfCnpj from '../../../formatters/cpfCnpj'
+import Summary from '../../../components/Summary'
+import TotalDisplay from '../../../components/TotalDisplay'
+import TransferError from '../../../components/TransferError'
 
 import style from './style.css'
 
@@ -174,16 +174,11 @@ class WithdrawResult extends Component {
               tablet={12}
               tv={12}
             >
-              <div className={style.containerError}>
-                <WithdrawErrorIcon />
-                <p className={style.errorMessage}>{t('pages.withdraw.result_error')}</p>
-                <Button
-                  fill="gradient"
-                  onClick={onTryAgain}
-                >
-                  {t('pages.withdraw.try_again')}
-                </Button>
-              </div>
+              <TransferError
+                actionLabel={t('pages.withdraw.try_again')}
+                message={t('pages.withdraw.result_error')}
+                onClick={onTryAgain}
+              />
             </Col>
           </Row>
         }
