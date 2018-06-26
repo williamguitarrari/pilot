@@ -21,16 +21,6 @@
   align-items: center;
 }
 
-.containerError {
-  margin-top: 49px;
-  text-align: center;
-}
-
-.errorMessage {
-  color: var(--color-light-steel-100);
-  line-height: 1.81;
-}
-
 .grid {
   width: 100%;
 }
