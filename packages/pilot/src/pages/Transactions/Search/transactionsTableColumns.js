@@ -1,9 +1,12 @@
 import React from 'react'
 import {
+  head,
+  isNil,
   path,
   pick,
   pipe,
   prop,
+  unless,
 } from 'ramda'
 import { Button } from 'former-kit'
 import formatCpfCnpj from '../../../formatters/cpfCnpj'
@@ -35,10 +38,16 @@ const getDefaultColumns = detailsClick => ([
   },
   {
     title: 'transaction.document',
-    accessor: ['customer', 'document_number'],
+    accessor: ['customer', 'documents'],
     renderer: pipe(
-      path(['customer', 'document_number']),
-      formatCpfCnpj
+      path(['customer', 'documents']),
+      unless(
+        isNil,
+        pipe(
+          head,
+          formatCpfCnpj
+        )
+      )
     ),
   },
   {

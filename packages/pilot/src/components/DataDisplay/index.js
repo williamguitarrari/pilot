@@ -1,5 +1,5 @@
-import React from 'react'
 import PropTypes from 'prop-types'
+import React from 'react'
 
 import style from './style.css'
 
@@ -35,11 +35,11 @@ DataDisplay.propTypes = {
   children: PropTypes.node,
   color: PropTypes.string,
   subtitle: PropTypes.node,
-  title: PropTypes.oneOf([
+  title: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.string,
   ]).isRequired,
-  value: PropTypes.oneOf([
+  value: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.string,
   ]),

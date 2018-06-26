@@ -1,106 +1,104 @@
 import React from 'react'
-import {
-  arrayOf,
-  string,
-  shape,
-  bool,
-  func,
-  instanceOf,
-  object,
-  number,
-} from 'prop-types'
+import PropTypes from 'prop-types'
 import moment from 'moment'
-import IconTransactions from 'emblematic-icons/svg/Transaction32.svg'
+
+import IconChart from 'emblematic-icons/svg/TrendingUp32.svg'
 import IconInfo from 'emblematic-icons/svg/Info32.svg'
+import IconTable from 'emblematic-icons/svg/Menu32.svg'
 import IconWarning from 'emblematic-icons/svg/Warning32.svg'
+import Search32 from 'emblematic-icons/svg/Search32.svg'
+import Calendar32 from 'emblematic-icons/svg/Calendar32.svg'
+
+import {
+  findIndex,
+  propEq,
+} from 'ramda'
+
 import {
   Alert,
-  Grid,
-  Row,
-  Col,
   Card,
+  CardActions,
   CardContent,
   CardTitle,
-  CardSection,
-  CardSectionTitle,
+  Col,
+  DateInput,
+  Dropdown,
+  Grid,
+  Input,
+  Pagination,
+  Row,
+  SegmentedSwitch,
+  Table,
 } from 'former-kit'
 
 import style from './style.css'
 
 import Filter from '../Filter'
 import Charts from './Charts'
-import Table from './Table'
 
+import tableColumns from './tableColumns'
+
+import itemsPerPage from '../../models/itemsPerPage'
 import formatCurrency from '../../formatters/currency'
 import formatDate from '../../formatters/longDate'
+import translateDateInput from '../../formatters/dateInputTranslator'
 
-const renderDateSelected = ({ start, end }) => {
+const formatSelectedPeriod = (t, { start, end }) => {
   if (!start && !end) {
-    return 'todo o período'
+    return t('pages.transactions.period_full')
   }
 
   if (moment(start).isSame(end, 'days')) {
-    return 'Hoje'
+    return t('pages.transactions.period_today')
   }
 
-  return `${formatDate(start)} até ${formatDate(end)}`
+  return t(
+    'pages.transactions.period',
+    {
+      start: formatDate(start),
+      end: formatDate(end),
+    }
+  )
 }
-
-const renderTableSubtitle = count => (
-  <div className={style.tableButtons}>
-    <span>total de {count} transações</span>
-  </div>
-)
 
 const TransactionsList = ({
   amount,
-  clearFiltersLabel,
-  collapsed,
-  columns,
   count,
   data,
-  dateLabels,
   dateSelectorPresets,
-  dates,
-  filterConfirmLabel,
+  expandedRows,
   filterOptions,
-  filtersTitle,
-  findByLabel,
-  graphicLegendsTittle,
-  graphicTittle,
-  handleRowClick,
-  handleChartsCollapse,
-  handleFilterChange,
-  handleOrderChange,
-  handlePageChange,
-  handlePageCountChange,
-  handlePendingReviewsFilter,
-  itemsPerPageLabel,
   loading,
-  noContentFoundMessage,
-  ofLabel,
+  onChangeViewMode,
+  onDetailsClick,
+  onPendingReviewsFilter,
+  onExpandRow,
+  onFilterChange,
+  onFilterClear,
+  onOrderChange,
+  onPageChange,
+  onPageCountChange,
+  onRowClick,
+  onSelectRow,
   order,
-  orderColumn,
+  orderField,
   pagination,
   pendingReviewsCount,
-  periodSummaryLabel,
+  query,
   rows,
-  search,
   selectedPage,
-  t,
-  tableTitle,
-  totalVolumeLabel,
-  transactionsNumberLabel,
-  tryFilterAgainMessage,
-  values,
-  expandedRows,
   selectedRows,
-  handleExpandRow,
-  handleSelectRow,
-}) => (
-  <Grid>
-    {
-      pendingReviewsCount > 0 &&
+  t,
+  viewMode,
+}) => {
+  const columns = tableColumns({ t, onDetailsClick })
+  const orderColumn = findIndex(propEq('accessor', orderField), columns)
+  const handleOrderChange = (columnIndex, tableOrder) =>
+    onOrderChange(columns[columnIndex].accessor, tableOrder)
+
+  return (
+    <Grid>
+      {pendingReviewsCount > 0 &&
         <Row>
           <Col
             desk={12}
@@ -112,7 +110,7 @@ const TransactionsList = ({
               <Alert
                 action={t('view_transactions')}
                 icon={<IconWarning height={16} width={16} />}
-                onDismiss={handlePendingReviewsFilter}
+                onDismiss={onPendingReviewsFilter}
                 type="warning"
               >
                 <p>
@@ -125,218 +123,231 @@ const TransactionsList = ({
             </div>
           </Col>
         </Row>
-    }
-    <Row>
-      <Col
-        palm={12}
-        tablet={12}
-        desk={12}
-        tv={12}
-      >
-        <Filter
-          clearLabel={clearFiltersLabel}
-          confirmLabel={filterConfirmLabel}
-          dateLabels={dateLabels}
-          datePresets={dateSelectorPresets}
-          dates={dates}
-          disabled={loading}
-          findByLabel={findByLabel}
-          onChange={handleFilterChange}
-          options={filterOptions}
-          search={search}
-          title={filtersTitle}
-          values={values}
-        />
-      </Col>
-      <Col
-        palm={12}
-        tablet={12}
-        desk={12}
-        tv={12}
-      >
-        {
-          rows.length > 0 &&
-          <Card>
-            <CardTitle
-              title={
-                <h2 className={style.customTitle}>
-                  <IconTransactions width={16} height={16} />
-                  {periodSummaryLabel} <strong>{renderDateSelected(dates)}</strong>
-                </h2>
-              }
-              subtitle={
-                <h3 className={style.customTitle}>
-                  {transactionsNumberLabel} <strong>{count}</strong>
-                  <div className={style.verticalDivider} />
-                  {totalVolumeLabel} <strong>{formatCurrency(amount)}</strong>
-                </h3>
-              }
+      }
+      <Row>
+        <Col
+          palm={12}
+          tablet={12}
+          desk={12}
+          tv={12}
+        >
+          <Filter
+            disabled={loading}
+            onChange={onFilterChange}
+            onClear={onFilterClear}
+            options={filterOptions}
+            query={query}
+            t={t}
+          >
+            <DateInput
+              icon={<Calendar32 width={16} height={16} />}
+              name="dates"
+              presets={dateSelectorPresets}
+              strings={translateDateInput(t)}
             />
-
-            <CardContent>
-              <CardSection>
-                <CardSectionTitle
-                  title={graphicTittle}
-                  collapsed={collapsed}
-                  onClick={handleChartsCollapse}
-                />
-                {!collapsed &&
-                  <CardContent>
-                    <Charts
-                      data={data}
-                      legendsTitle={graphicLegendsTittle}
-                    />
-                  </CardContent>
-                }
-              </CardSection>
-            </CardContent>
-
-            <CardContent>
-              <CardSection>
-                <CardSectionTitle
-                  title={tableTitle}
-                  subtitle={renderTableSubtitle(count, loading)}
-                />
-                <Table
-                  expandable
-                  maxColumns={7}
-                  rows={rows}
-                  columns={columns}
-                  order={order}
-                  orderColumn={orderColumn}
-                  pagination={pagination}
-                  handleRowClick={handleRowClick}
-                  handleOrderChange={handleOrderChange}
-                  handlePageChange={handlePageChange}
-                  handlePageCountChange={handlePageCountChange}
-                  loading={loading}
-                  selectedPage={selectedPage}
-                  itemsPerPageLabel={itemsPerPageLabel}
-                  ofLabel={ofLabel}
-                  expandedRows={expandedRows}
-                  selectedRows={selectedRows}
-                  handleExpandRow={handleExpandRow}
-                  handleSelectRow={handleSelectRow}
-                />
-              </CardSection>
-            </CardContent>
-          </Card>
-        }
-        {
-          rows.length <= 0 &&
-          !loading &&
-          <div className={style.parentWidth}>
+            <Input
+              icon={<Search32 width={16} height={16} />}
+              name="search"
+              placeholder={t('pages.transactions.text_search_placeholder')}
+            />
+          </Filter>
+        </Col>
+        <Col
+          palm={12}
+          tablet={12}
+          desk={12}
+          tv={12}
+        >
+          {rows.length <= 0 && !loading &&
             <Alert
-              type="info"
               icon={<IconInfo height={16} width={16} />}
+              type="info"
             >
               <p>
-                <strong>{noContentFoundMessage}</strong>
-                {tryFilterAgainMessage}
+                <strong>{t('pages.transactions.no_results')}</strong>&nbsp;
+                {t('pages.transactions.try_again')}
               </p>
             </Alert>
-          </div>
-        }
-      </Col>
-    </Row>
-  </Grid>
-)
+          }
+          {rows.length > 0 &&
+            <Card>
+              <CardTitle
+                title={
+                  <h2 className={style.customTitle}>
+                    {formatSelectedPeriod(t, query.dates)}
+                    <div className={style.verticalDivider} />
+                    {count}&nbsp;
+                    <small>{t('pages.transactions.count')}</small>&nbsp;
+                    <small>-</small>&nbsp;
+                    <small>{t('pages.transactions.total_amount')}</small>&nbsp;
+                    {formatCurrency(amount)}
+                  </h2>
+                }
+                subtitle={
+                  <div className={style.toolBar}>
+                    <SegmentedSwitch
+                      disabled={loading}
+                      name="view-mode"
+                      onChange={onChangeViewMode}
+                      options={[
+                        {
+                          title: <IconTable width={16} height={16} />,
+                          value: 'table',
+                        },
+                        {
+                          title: <IconChart width={16} height={16} />,
+                          value: 'chart',
+                        },
+                      ]}
+                      value={viewMode}
+                    />
+                    <Dropdown
+                      disabled={loading || viewMode === 'graph'}
+                      name="page-count"
+                      onChange={e =>
+                        onPageCountChange(parseInt(e.target.value, 10))
+                      }
+                      options={itemsPerPage.map(i => ({
+                        name: t('pages.transactions.items_per_page', { count: i }),
+                        value: `${i}`,
+                      }))}
+                      size="tiny"
+                      value={selectedPage.toString()}
+                    />
+                    <Pagination
+                      currentPage={pagination.offset}
+                      disabled={loading || viewMode === 'graph'}
+                      onPageChange={onPageChange}
+                      size="tiny"
+                      strings={{
+                        of: t('components.pagination.of'),
+                      }}
+                      totalPages={pagination.total}
+                    />
+                  </div>
+                }
+              />
+
+              <CardContent>
+                {viewMode === 'chart' &&
+                  <Charts
+                    data={data}
+                    legendsTitle={t('pages.transactions.graphic_legends')}
+                  />
+                }
+                {viewMode === 'table' &&
+                  <Table
+                    columns={columns}
+                    disabled={loading}
+                    expandable
+                    expandedRows={expandedRows}
+                    maxColumns={7}
+                    onExpandRow={onExpandRow}
+                    onOrderChange={handleOrderChange}
+                    onRowClick={onRowClick}
+                    onSelectRow={onSelectRow}
+                    orderColumn={orderColumn}
+                    orderSequence={order}
+                    rows={rows}
+                    selectedRows={selectedRows}
+                  />
+                }
+              </CardContent>
+
+              {viewMode === 'table' &&
+                <CardActions>
+                  <Pagination
+                    currentPage={pagination.offset}
+                    disabled={loading}
+                    onPageChange={onPageChange}
+                    strings={{
+                      of: t('components.pagination.of'),
+                    }}
+                    size="tiny"
+                    totalPages={pagination.total}
+                  />
+                </CardActions>
+              }
+            </Card>
+          }
+        </Col>
+      </Row>
+    </Grid>
+  )
+}
 
 TransactionsList.propTypes = {
-  amount: number,
-  count: number,
-  clearFiltersLabel: string.isRequired, // eslint-disable-line react/no-typos
-  collapsed: bool.isRequired, // eslint-disable-line react/no-typos
-  columns: arrayOf(object),
-  data: arrayOf(object), // eslint-disable-line
-  dateLabels: arrayOf(shape({
-    anyDate: string,
-    cancel: string,
-    confirmPeriod: string,
-    custom: string,
-    day: string,
-    daySelected: string,
-    daysSelected: string,
-    end: string,
-    noDayOrPeriodSelected: string,
-    period: string,
-    select: string,
-    start: string,
-    today: string,
-  })).isRequired,
-  dates: shape({
-    start: instanceOf(moment),
-    end: instanceOf(moment),
+  amount: PropTypes.number,
+  count: PropTypes.number,
+  // eslint-disable-next-line
+  data: PropTypes.arrayOf(PropTypes.object),
+  query: PropTypes.shape({
+    dates: PropTypes.shape({
+      start: PropTypes.instanceOf(moment),
+      end: PropTypes.instanceOf(moment),
+    }),
+    search: PropTypes.string,
+    // eslint-disable-next-line
+    properties: PropTypes.object,
   }),
-  dateSelectorPresets: arrayOf(shape({
-    key: string,
-    title: string,
-    date: string,
-    items: arrayOf(shape({
-      title: string,
-      date: func,
+  dateSelectorPresets: PropTypes.arrayOf(PropTypes.shape({
+    key: PropTypes.string,
+    title: PropTypes.string,
+    date: PropTypes.string,
+    items: PropTypes.arrayOf(PropTypes.shape({
+      title: PropTypes.string,
+      date: PropTypes.func,
     })),
   })).isRequired,
-  expandedRows: arrayOf(number).isRequired,
-  filterConfirmLabel: string.isRequired, // eslint-disable-line react/no-typos
-  filterOptions: arrayOf(shape({
-    key: string,
-    name: string,
-    items: arrayOf(shape({
-      label: string,
-      value: string,
+  expandedRows: PropTypes.arrayOf(PropTypes.number).isRequired,
+  filterOptions: PropTypes.arrayOf(PropTypes.shape({
+    key: PropTypes.string,
+    name: PropTypes.string,
+    items: PropTypes.arrayOf(PropTypes.shape({
+      label: PropTypes.string,
+      value: PropTypes.string,
     })),
   })).isRequired,
-  filtersTitle: string.isRequired, // eslint-disable-line react/no-typos
-  findByLabel: string.isRequired, // eslint-disable-line react/no-typos
-  graphicLegendsTittle: string.isRequired, // eslint-disable-line react/no-typos
-  graphicTittle: string.isRequired, // eslint-disable-line react/no-typos
-  handleChartsCollapse: func.isRequired, // eslint-disable-line react/no-typos
-  handleExpandRow: func.isRequired, // eslint-disable-line react/no-typos
-  handleRowClick: func.isRequired, // eslint-disable-line react/no-typos
-  handleFilterChange: func.isRequired, // eslint-disable-line react/no-typos
-  handleOrderChange: func.isRequired, // eslint-disable-line react/no-typos
-  handlePageChange: func.isRequired, // eslint-disable-line react/no-typos
-  handlePageCountChange: func.isRequired, // eslint-disable-line react/no-typos
-  handlePendingReviewsFilter: func.isRequired, // eslint-disable-line react/no-typos
-  handleSelectRow: func.isRequired, // eslint-disable-line react/no-typos
-  itemsPerPageLabel: string.isRequired, // eslint-disable-line react/no-typos
-  loading: bool.isRequired, // eslint-disable-line react/no-typos
-  noContentFoundMessage: string.isRequired, // eslint-disable-line react/no-typos
-  ofLabel: string.isRequired, // eslint-disable-line react/no-typos
-  order: string,
-  orderColumn: number,
-  pagination: shape({
-    offset: number,
-    total: number,
+  loading: PropTypes.bool.isRequired,
+  onDetailsClick: PropTypes.func.isRequired,
+  onExpandRow: PropTypes.func.isRequired,
+  onRowClick: PropTypes.func.isRequired,
+  onFilterChange: PropTypes.func.isRequired,
+  onFilterClear: PropTypes.func.isRequired,
+  onOrderChange: PropTypes.func.isRequired,
+  onPageChange: PropTypes.func.isRequired,
+  onPageCountChange: PropTypes.func.isRequired,
+  onPendingReviewsFilter: PropTypes.func.isRequired,
+  onSelectRow: PropTypes.func.isRequired,
+  onChangeViewMode: PropTypes.func.isRequired,
+  order: PropTypes.string,
+  orderField: PropTypes.arrayOf(PropTypes.string),
+  pagination: PropTypes.shape({
+    offset: PropTypes.number,
+    total: PropTypes.number,
   }).isRequired,
-  pendingReviewsCount: number.isRequired, // eslint-disable-line react/no-typos
-  periodSummaryLabel: string.isRequired, // eslint-disable-line react/no-typos
-  rows: arrayOf(object).isRequired, // eslint-disabled-line react/no-typos
-  search: string,
-  selectedPage: number,
-  selectedRows: arrayOf(number).isRequired,
-  t: func.isRequired, // eslint-disable-line react/no-typos
-  tableTitle: string.isRequired, // eslint-disable-line react/no-typos
-  totalVolumeLabel: string.isRequired, // eslint-disable-line react/no-typos
-  transactionsNumberLabel: string.isRequired, // eslint-disable-line react/no-typos
-  tryFilterAgainMessage: string.isRequired, // eslint-disable-line react/no-typos
-  values: object, // eslint-disable-line
+  pendingReviewsCount: PropTypes.number.isRequired,
+  rows: PropTypes.arrayOf(PropTypes.object).isRequired,
+  selectedPage: PropTypes.number,
+  selectedRows: PropTypes.arrayOf(PropTypes.number).isRequired,
+  t: PropTypes.func.isRequired,
+  viewMode: PropTypes.oneOf(['chart', 'table']).isRequired,
 }
 
 TransactionsList.defaultProps = {
   amount: 0,
-  columns: [],
   count: 0,
-  dates: {
-    start: moment(),
-    end: moment(),
-  },
   order: 'descending',
-  orderColumn: 0,
-  search: '',
+  orderField: [],
+  query: {
+    dates: {
+      start: moment(),
+      end: moment(),
+    },
+    search: '',
+    properties: {},
+  },
   selectedPage: 15,
-  values: [],
 }
 
 export default TransactionsList

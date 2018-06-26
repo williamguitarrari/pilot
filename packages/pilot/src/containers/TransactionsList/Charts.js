@@ -15,7 +15,7 @@ import {
   Legend,
   Row,
 } from 'former-kit'
-import formatCurrency from '../../formatters/currency'
+import currencyFormatter from '../../formatters/currency'
 import formatDate from '../../formatters/longDate'
 import statusLegends from '../../models/statusLegends'
 import style from './style.css'
@@ -40,6 +40,9 @@ const renderLegend = (legendKey) => {
     </Col>
   )
 }
+
+const formatCurrency = value =>
+  currencyFormatter(value)
 
 const Charts = ({ data, legendsTitle }) => (
   <Fragment>

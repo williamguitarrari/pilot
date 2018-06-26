@@ -1,12 +1,7 @@
+/* eslint-disable */
 import React from 'react'
 import PropTypes from 'prop-types'
-import {
-  head,
-  pipe,
-  split,
-  filter,
-  defaultTo,
-} from 'ramda'
+
 import {
   Sidebar,
   SidebarHeader,
@@ -15,15 +10,6 @@ import {
 } from 'former-kit'
 
 import Menu32 from 'emblematic-icons/svg/Menu32.svg'
-
-const defaultToEmptyStr = defaultTo('')
-const getBasePath = pipe(
-  defaultToEmptyStr,
-  split('/'),
-  filter(Boolean),
-  head,
-  defaultToEmptyStr
-)
 
 class SidebarContainer extends React.Component {
   constructor (props) {
@@ -43,10 +29,10 @@ class SidebarContainer extends React.Component {
   render () {
     const { collapsed } = this.state
     const {
-      logo: Logo,
       links,
-      pathName,
+      logo: Logo,
       onLinkClick,
+      t,
     } = this.props
     return (
       <Sidebar collapsed={collapsed}>
@@ -57,11 +43,16 @@ class SidebarContainer extends React.Component {
           </button>
         </SidebarHeader>
         <SidebarLinks>
-          {links.map(({ title, path, icon: Icon }) => (
+          {links.map(({
+            active,
+            icon: Icon,
+            path,
+            title,
+          }) => (
             <SidebarLink
               key={path}
-              title={title}
-              active={getBasePath(path) === getBasePath(pathName)}
+              title={t(title)}
+              active={active}
               icon={<Icon width={16} height={16} />}
               collapsed={collapsed}
               onClick={() => onLinkClick(path)}
@@ -75,15 +66,16 @@ class SidebarContainer extends React.Component {
 }
 
 SidebarContainer.propTypes = {
-  logo: PropTypes.func.isRequired,
   links: PropTypes.arrayOf(PropTypes.shape({
+    active: PropTypes.bool,
     title: PropTypes.string,
     path: PropTypes.string,
     icon: PropTypes.func,
     component: PropTypes.func,
   })).isRequired,
+  logo: PropTypes.func.isRequired,
   onLinkClick: PropTypes.func.isRequired,
-  pathName: PropTypes.string.isRequired,
+  t: PropTypes.func.isRequired,
 }
 
 export default SidebarContainer

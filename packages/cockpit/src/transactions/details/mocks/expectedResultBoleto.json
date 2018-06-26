@@ -1,57 +1,58 @@
 {
   "transaction": {
-    "id": 3169773,
-    "amount": 1000,
-    "created_at": "2018-03-27T19:37:37.779Z",
-    "updated_at": "2018-03-27T19:37:38.065Z",
-    "soft_descriptor": null,
-    "external_id": null,
-    "status": "waiting_payment",
-    "status_reason": "acquirer",
-    "reason_code": null,
-    "boleto": {
-      "barcode": "1234 5678",
-      "due_date": "2018-04-03T03:00:00.000Z",
-      "url": "https://pagar.me"
-    },
-    "payment": {
-      "method": "boleto",
-      "paid_amount": 0,
-      "net_amount": 0,
-      "cost_amount": 0,
-      "refund_amount": 0,
-      "mdr_amount": 0,
-      "installments": 1
-    },
     "acquirer": {
       "name": "pagarme",
       "response_code": null,
       "sequence_number": "3169773",
       "transaction_id": "3169773"
     },
+    "amount": 1000,
     "antifraud": null,
-    "customer": {
-      "name": "ACME, Inc.",
-      "document_number": "56727549000137",
-      "document_type": "cnpj",
-      "email": null,
-      "birth_date": null,
-      "country": null,
-      "phones": null
+    "boleto": {
+      "barcode": "1234 5678",
+      "due_date": "2018-04-03T03:00:00.000Z",
+      "url": "https://pagar.me"
+    },
+    "capabilities": {
+      "refundable": false,
+      "reprocessable": false
     },
     "card": {
       "brand_name": null,
-      "capture_method": null,
+      "capture_method": "ecommerce",
       "first_digits": null,
       "holder_name": null,
       "international": true,
       "last_digits": null,
       "pin_mode": null
     },
+    "created_at": "2018-03-27T19:37:37.779Z",
+    "customer": {
+      "birthday": null,
+      "created_at": "2015-05-26T04:35:46.000Z",
+      "country": null,
+      "documents": [
+        {
+          "number": "56727549000137",
+          "type": "cnpj"
+        }
+      ],
+      "email": null,
+      "external_id": null,
+      "gender": null,
+      "id": 16819,
+      "individual": null,
+      "name": "ACME, Inc.",
+      "object": "customer",
+      "phones": []
+    },
+    "external_id": null,
+    "id": 3169773,
     "metadata": {
       "invoice_id": "in_cjfa2cie200430bnrrs4w080b",
       "invoice_serial_number": 1
     },
+    "nextId": null,
     "operations": [
       {
         "id": "go_cjfa2cil20tmqbe3t3w32ktqb",
@@ -68,7 +69,24 @@
         "cycle": null
       }
     ],
+    "payment": {
+      "cost_amount": 0,
+      "installments": 1,
+      "mdr_amount": 0,
+      "method": "boleto",
+      "net_amount": 0,
+      "paid_amount": 0,
+      "refund_amount": 0
+    },
+    "postback_url": null,
+    "previousId": null,
+    "reason_code": null,
     "recipients": [],
-    "risk_level": "unknown"
+    "risk_level": "unknown",
+    "soft_descriptor": null,
+    "status_reason": "acquirer",
+    "status": "waiting_payment",
+    "subscription": null,
+    "updated_at": "2018-03-27T19:37:38.065Z"
   }
 }

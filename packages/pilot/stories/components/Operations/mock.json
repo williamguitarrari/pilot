@@ -1,0 +1,142 @@
+{
+  "recipient": {
+    "id": "re_cixm61j7e00doin6de8ocgttb",
+    "name": "API BANK ACCOUNT",
+    "bank_account": {
+      "id": 17365090,
+      "type": "conta_corrente",
+      "bank_code": "341",
+      "agency": "0932-5",
+      "account": "58054-1"
+    }
+  },
+  "requests": [
+    {
+      "id": "ba_cig37i5s6004xor6e5cefsjsp",
+      "type": "anticipation",
+      "created_at": "2017-01-06T05:17:54.000Z",
+      "amount": 525040
+    },
+    {
+      "id": "ba_cig120jcg000rii6evg415z4w",
+      "type": "anticipation",
+      "created_at": "2017-01-06T17:08:41.000Z",
+      "amount": 368910
+    }
+  ],
+  "balance": {
+    "amount": 4000,
+    "outcoming": 2000,
+    "available": {
+      "withdrawal": 3000,
+      "anticipation": 23000
+    }
+  },
+  "search": {
+    "total": {
+      "outcoming": 233213,
+      "outgoing": 213123,
+      "net": 21323
+    },
+    "operations": {
+      "total": 2321313132,
+      "count": 98324,
+      "offset": 0,
+      "rows": [
+        {
+          "id": 4861,
+          "type": "debit",
+          "payment_date": {
+            "original": null,
+            "actual": "2017-03-06T03:00:00.000Z"
+          },
+          "outcoming": [
+            { "type": "payable", "amount": 100000 }
+          ],
+          "outgoing": [
+            { "type": "mdr", "amount": 115 },
+            { "type": "anticipation_fee", "amount": 0 }
+          ],
+          "net": 99885
+        },
+        {
+          "id": 4852,
+          "type": "debit",
+          "payment_date": {
+            "original": null,
+            "actual": "2017-03-06T03:00:00.000Z"
+          },
+          "outcoming": [
+            { "type": "payable", "amount": 10000 }
+          ],
+          "outgoing": [
+            { "type": "mdr", "amount": 115 },
+            { "type": "anticipation_fee", "amount": 0 }
+          ],
+          "net": 9885
+        },
+        {
+          "id": 4840,
+          "type": "debit",
+          "payment_date": {
+            "original": null,
+            "actual": "2017-03-05T03:00:00.000Z"
+          },
+          "outcoming": [
+            { "type": "payable", "amount": 30000 }
+          ],
+          "outgoing": [
+            { "type": "mdr", "amount": 115 },
+            { "type": "anticipation_fee", "amount": 0 }
+          ],
+          "net": 29885
+        },
+        {
+          "id": 2499868,
+          "type": "credit",
+          "payment_date": {
+            "original": null,
+            "actual": "2017-03-03T03:00:00.000Z"
+          },
+          "outcoming": [
+            { "type": "payable", "amount": 30000 }
+          ],
+          "outgoing": [
+            { "type": "mdr", "amount": 115 },
+            { "type": "anticipation_fee", "amount": 100 }
+          ],
+          "net": 29785
+        },
+        {
+          "id": 2499850,
+          "type": "refund",
+          "payment_date": {
+            "original": null,
+            "actual": "2017-09-03T03:00:00.000Z"
+          },
+          "outcoming": [
+            { "type": "mdr", "amount": 115 }
+          ],
+          "outgoing": [
+            { "type": "payable", "amount": 100000 },
+            { "type": "anticipation_fee", "amount": 100 }
+          ],
+          "net": -99985
+        },
+        {
+          "id": "",
+          "type": "gateway",
+          "payment_date": {
+            "original": null,
+            "actual": "2017-09-03T03:00:00.000Z"
+          },
+          "outcoming": [],
+          "outgoing": [
+            { "type": "gateway_service", "amount": 8120 }
+          ],
+          "net": -8120
+        }
+      ]
+    }
+  }
+}

@@ -1,15 +1,19 @@
 /* eslint-disable camelcase */
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import {
   __,
   always,
+  applySpec,
   anyPass,
   both,
   contains,
   either,
   equals,
+  flatten,
+  head,
+  ifElse,
   isEmpty,
   isNil,
   juxt,
@@ -20,6 +24,7 @@ import {
   pipe,
   prop,
   propEq,
+  reject,
   sum,
   unless,
   when,
@@ -37,6 +42,8 @@ import {
 import IconInfo from 'emblematic-icons/svg/Info32.svg'
 import IconCheck from 'emblematic-icons/svg/Check24.svg'
 import IconClearClose from 'emblematic-icons/svg/ClearClose24.svg'
+import IconReverse from 'emblematic-icons/svg/Reverse24.svg'
+import ReprocessIcon from 'emblematic-icons/svg/Reprocess24.svg'
 import currencyFormatter from '../../formatters/currency'
 import CustomerCard from '../../components/CustomerCard'
 import decimalCurrencyFormatter from '../../formatters/decimalCurrency'
@@ -51,8 +58,9 @@ import TotalDisplay from '../../components/TotalDisplay'
 import TransactionDetailsCard from '../../components/TransactionDetailsCard'
 import transactionOperationTypes from '../../models/transactionOperationTypes'
 import TreeView from '../../components/TreeView'
-
 import style from './style.css'
+import formatCpfCnpj from '../../formatters/cpfCnpj'
+import formatDate from '../../formatters/longDate'
 
 const isZeroOrNegative = value => value <= 0
 
@@ -113,6 +121,56 @@ const showStatusAlert = either(
   isBoletoWaitingPayment
 )
 
+const formatDocument = applySpec({
+  type: prop('type'),
+  number: pipe(
+    prop('number'),
+    formatCpfCnpj
+  ),
+})
+
+const formatCustomerBirthDay = customer => ({
+  ...customer,
+  birthday: !isNil(customer.birthday) ? formatDate(customer.birthday) : null,
+})
+
+const getDefaultDocumentNumber = pipe(
+  prop('documents'),
+  ifElse(
+    either(isNil, isEmpty),
+    always(null),
+    pipe(
+      head,
+      formatDocument,
+      prop('number')
+    )
+  )
+)
+
+const formatCustomerAddress = (customer) => {
+  if (!customer.address) {
+    return customer
+  }
+
+  const { id, ...address } = customer.address
+
+  return {
+    ...address,
+    ...customer,
+  }
+}
+
+const formatCustomerDocuments = customer => ({
+  ...customer,
+  document_number: getDefaultDocumentNumber(customer),
+})
+
+const formatCustomerData = pipe(
+  formatCustomerBirthDay,
+  formatCustomerDocuments,
+  formatCustomerAddress
+)
+
 const getHeaderAmountLabel = (transaction, headerLabels) => {
   if (isBoletoTransaction(transaction)) {
     return headerLabels.boletoAmountLabel
@@ -130,10 +188,72 @@ const renderLegend = status => (
   </Legend>
 )
 
+const validatePreviousTransactionRedirect = (props, propName) => {
+  if (propName === 'onPreviousTransactionRedirect') {
+    const {
+      onPreviousTransactionRedirect,
+      transaction: {
+        previousId,
+      },
+    } = props
+
+    if (previousId && isNil(onPreviousTransactionRedirect)) {
+      throw new Error('The prop onPreviousTransactionRedirect must be a function when transaction.previousId is not null')
+    }
+  }
+}
+
+const validateNextTransactionRedirect = (props, propName) => {
+  if (propName === 'onNextTransactionRedirect') {
+    const {
+      onNextTransactionRedirect,
+      transaction: {
+        nextId,
+      },
+      nextTransactionId,
+    } = props
+
+    if ((nextId || nextTransactionId) && isNil(onNextTransactionRedirect)) {
+      throw new Error('The prop onNextTransactionRedirect must be a function when transaction.nextId is not null')
+    }
+  }
+}
+
+const validateRefundFunction = (props, propName) => {
+  if (propName === 'onRefund') {
+    const {
+      onRefund,
+      transaction: {
+        capabilities,
+      },
+    } = props
+
+    if (capabilities && capabilities.refundable && isNil(onRefund)) {
+      throw new Error('The prop onRefund must be a function when transaction.capabilities.refundable is true')
+    }
+  }
+}
+
+const validateReprocessFunction = (props, propName) => {
+  if (propName === 'onReprocess') {
+    const {
+      onReprocess,
+      transaction: {
+        capabilities,
+      },
+    } = props
+
+    if (capabilities && capabilities.reprocessable && isNil(onReprocess)) {
+      throw new Error('The prop onReprocess must be a function when transaction.capabilities.reprocessable is true')
+    }
+  }
+}
+
 class TransactionDetails extends Component {
   constructor (props) {
     super(props)
 
+    this.getActions = this.getActions.bind(this)
     this.renderAlertInfo = this.renderAlertInfo.bind(this)
     this.renderBoleto = this.renderBoleto.bind(this)
     this.renderEvents = this.renderEvents.bind(this)
@@ -142,31 +262,74 @@ class TransactionDetails extends Component {
     this.renderPaymentCard = this.renderPaymentCard.bind(this)
   }
 
-  getHeaderActions () {
+
+  getActions () {
     const {
-      transaction,
       headerLabels,
+      nextTransactionId,
+      transaction,
       onManualReviewRefuse,
       onManualReviewApprove,
       permissions,
+      onRefund,
+      onReprocess,
+      transaction: {
+        capabilities,
+      },
     } = this.props
 
-    if (isPendingReviewTransaction(transaction) && permissions.manualReview) {
-      return [
-        {
-          icon: <IconClearClose width={12} height={12} />,
-          onClick: onManualReviewRefuse,
-          title: headerLabels.refuseLabel,
-        },
-        {
-          icon: <IconCheck width={12} height={12} />,
-          onClick: onManualReviewApprove,
-          title: headerLabels.approveLabel,
-        },
-      ]
+    const onReprocessAction = {
+      icon: <ReprocessIcon width={12} height={12} />,
+      onClick: onReprocess,
+      title: 'Reprocessar',
     }
 
-    return []
+    const onRefundAction = {
+      icon: <IconReverse width={12} height={12} />,
+      onClick: onRefund,
+      title: 'Estornar',
+    }
+
+    const getManualReviewTransactionActions = (trx) => {
+      if (isPendingReviewTransaction(trx) && permissions.manualReview) {
+        return [
+          {
+            icon: <IconClearClose width={12} height={12} />,
+            onClick: onManualReviewRefuse,
+            title: headerLabels.refuseLabel,
+          },
+          {
+            icon: <IconCheck width={12} height={12} />,
+            onClick: onManualReviewApprove,
+            title: headerLabels.approveLabel,
+          },
+        ]
+      }
+      return []
+    }
+
+    const detailsHeadActions = pipe(
+      juxt([
+        ifElse(
+          both(
+            propEq('reprocessable', true),
+            always(isEmptyOrNull(nextTransactionId))
+          ),
+          always(onReprocessAction),
+          always(null)
+        ),
+        ifElse(
+          propEq('refundable', true),
+          always(onRefundAction),
+          always(null)
+        ),
+        always(getManualReviewTransactionActions(transaction)),
+      ]),
+      flatten,
+      reject(isNil)
+    )
+
+    return detailsHeadActions(capabilities)
   }
 
   renderAlertInfo () {
@@ -210,6 +373,7 @@ class TransactionDetails extends Component {
     return (
       <PaymentBoleto
         barcode={barcode}
+        copyBarcodeFeedback={paymentBoletoLabels.feedback}
         copyBarcodeLabel={paymentBoletoLabels.copy}
         dueDate={moment(due_date).format('L')}
         dueDateLabel={paymentBoletoLabels.due_date}
@@ -280,23 +444,24 @@ class TransactionDetails extends Component {
 
     return operations.map((operation, index) => {
       const {
-        type,
-        status,
         created_at,
         cycle,
+        status,
+        type,
       } = operation
-      const legendStatus = getOperationLegendStatus(operation)
-      const number = operations.length - index
       const date = moment(created_at)
       const key = `${type}_${status}_${(cycle || 0)}_${index}`
+      const legendStatus = getOperationLegendStatus(operation)
+      const number = operations.length - index
+
       return (
         <Event
+          active={index === 0}
+          collapsed={index !== 0}
+          color={legendStatus.color}
           key={key}
           number={number}
           title={legendStatus.title}
-          color={legendStatus.color}
-          active={index === 0}
-          collapsed={index !== 0}
         >
           <section>
             <p>
@@ -308,6 +473,66 @@ class TransactionDetails extends Component {
         </Event>
       )
     })
+  }
+
+  renderReprocessAlerts () {
+    const {
+      nextTransactionId,
+      onNextTransactionRedirect,
+      onPreviousTransactionRedirect,
+      reprocessLabels,
+      transaction,
+    } = this.props
+    const nextId = transaction.nextId || nextTransactionId
+
+    return (
+      <Fragment>
+        {(nextId && nextId !== transaction.id) &&
+          <Row stretch>
+            <Col
+              desk={12}
+              palm={12}
+              tablet={12}
+              tv={12}
+            >
+              <Alert
+                action={reprocessLabels.showNext}
+                icon={<IconInfo height={16} width={16} />}
+                onDismiss={onNextTransactionRedirect}
+                type="info"
+              >
+                <span>
+                  {reprocessLabels.nextAlert}
+                  <strong> {nextId} </strong>
+                </span>
+              </Alert>
+            </Col>
+          </Row>
+        }
+        {transaction.previousId &&
+          <Row stretch>
+            <Col
+              desk={12}
+              tv={12}
+              tablet={12}
+              palm={12}
+            >
+              <Alert
+                action={reprocessLabels.showPrevious}
+                icon={<IconInfo height={16} width={16} />}
+                onDismiss={onPreviousTransactionRedirect}
+                type="info"
+              >
+                <span>
+                  {reprocessLabels.previousAlert}
+                  <strong> {transaction.previousId} </strong>
+                </span>
+              </Alert>
+            </Col>
+          </Row>
+        }
+      </Fragment>
+    )
   }
 
   render () {
@@ -340,15 +565,16 @@ class TransactionDetails extends Component {
     } = transaction
 
     const transactionDetailsContent = {
-      tid: id,
       acquirer_name: acquirer ? acquirer.name : null,
       acquirer_response_code: acquirer ? acquirer.response_code : null,
       authorization_code: acquirer ? acquirer.response_code : null,
+      capture_method: card ? card.capture_method : null,
       nsu: acquirer ? acquirer.sequence_number : null,
       soft_descriptor,
       subscription_id: subscription ? subscription.id : null,
-      capture_method: card ? card.capture_method : null,
+      tid: id,
     }
+
     if (isEmpty(transaction)) {
       return (<div />)
     }
@@ -387,7 +613,7 @@ class TransactionDetails extends Component {
             <Card>
               <CardContent>
                 <DetailsHead
-                  actions={this.getHeaderActions()}
+                  actions={this.getActions()}
                   identifier={`#${id}`}
                   properties={detailsHeadProperties}
                   title={headerLabels.title}
@@ -396,6 +622,8 @@ class TransactionDetails extends Component {
             </Card>
           </Col>
         </Row>
+
+        {this.renderReprocessAlerts()}
 
         <Row stretch>
           <Col
@@ -476,15 +704,13 @@ class TransactionDetails extends Component {
               tablet={12}
               tv={12}
             >
-              <div className={style.statusAlert}>
-                <Alert
-                  action={alertLabels.resubmit}
-                  icon={<IconInfo height={16} width={16} />}
-                  type="info"
-                >
-                  {this.renderAlertInfo()}
-                </Alert>
-              </div>
+              <Alert
+                action={alertLabels.resubmit}
+                icon={<IconInfo height={16} width={16} />}
+                type="info"
+              >
+                {this.renderAlertInfo()}
+              </Alert>
             </Col>
           </Row>
         }
@@ -534,7 +760,7 @@ class TransactionDetails extends Component {
                     tv={12}
                   >
                     <CustomerCard
-                      contents={customer}
+                      contents={formatCustomerData(customer)}
                       labels={customerLabels}
                       title={customerLabels.title}
                     />
@@ -601,7 +827,7 @@ TransactionDetails.propTypes = {
   atLabel: PropTypes.string.isRequired,
   boletoWarningMessage: PropTypes.string.isRequired,
   customerLabels: PropTypes.shape({
-    born_at: PropTypes.string,
+    birthday: PropTypes.string,
     city: PropTypes.string,
     complement: PropTypes.string,
     document_number: PropTypes.string,
@@ -637,22 +863,30 @@ TransactionDetails.propTypes = {
     payment_date: PropTypes.instanceOf(moment),
     status: PropTypes.string,
   })).isRequired,
+  nextTransactionId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   onCopyBoletoUrl: PropTypes.func,
   onDismissAlert: PropTypes.func, // eslint-disable-line react/no-unused-prop-types
   onManualReviewApprove: PropTypes.func,
   onManualReviewRefuse: PropTypes.func,
+  onNextTransactionRedirect: validateNextTransactionRedirect,
+  onPreviousTransactionRedirect: validatePreviousTransactionRedirect,
+  onRefund: validateRefundFunction,
+  onReprocess: validateReprocessFunction,
   onShowBoleto: PropTypes.func,
   paymentBoletoLabels: PropTypes.shape({
     copy: PropTypes.string,
     due_date: PropTypes.string,
     show: PropTypes.string,
     title: PropTypes.string,
+    feedback: PropTypes.string,
   }).isRequired,
   paymentCardLabels: PropTypes.shape({
     title: PropTypes.string,
   }).isRequired,
   permissions: PropTypes.shape({
-    manualReview: PropTypes.string.isRequired,
+    manualReview: PropTypes.bool.isRequired,
+    refund: PropTypes.bool.isRequired,
+    reprocess: PropTypes.bool.isRequired,
   }).isRequired,
   riskLevelsLabels: PropTypes.shape({
     very_low: PropTypes.string,
@@ -674,6 +908,12 @@ TransactionDetails.propTypes = {
     totalRecipientsLabel: PropTypes.string,
     totalTitle: PropTypes.string,
   }).isRequired,
+  reprocessLabels: PropTypes.shape({
+    previousAlert: PropTypes.string,
+    nextAlert: PropTypes.string,
+    showPrevious: PropTypes.string,
+    showNext: PropTypes.string,
+  }).isRequired,
   totalDisplayLabels: PropTypes.shape({
     captured_at: PropTypes.string,
     currency_symbol: PropTypes.string,
@@ -686,16 +926,20 @@ TransactionDetails.propTypes = {
     refund: PropTypes.string,
   }).isRequired,
   transaction: PropTypes.shape({
-    id: PropTypes.number,
     boleto: PropTypes.shape({
       barcode: PropTypes.string,
       due_date: PropTypes.instanceOf(moment),
       url: PropTypes.string,
     }),
-    created_at: PropTypes.string,
-    updated_at: PropTypes.string,
-    soft_descriptor: PropTypes.string,
+    capabilities: PropTypes.shape({
+      reprocessable: PropTypes.bool,
+      refundable: PropTypes.bool,
+    }),
+    created_at: PropTypes.instanceOf(moment),
     external_id: PropTypes.string,
+    id: PropTypes.number,
+    updated_at: PropTypes.instanceOf(moment),
+    soft_descriptor: PropTypes.string,
     status: PropTypes.string,
     status_reason: PropTypes.string,
     payment: PropTypes.shape({
@@ -709,8 +953,14 @@ TransactionDetails.propTypes = {
     acquirer: PropTypes.shape({
       name: PropTypes.string,
       response_code: PropTypes.string,
-      sequence_number: PropTypes.number,
-      transaction_id: PropTypes.number,
+      sequence_number: PropTypes.oneOfType([
+        PropTypes.number,
+        PropTypes.string,
+      ]),
+      transaction_id: PropTypes.oneOfType([
+        PropTypes.number,
+        PropTypes.string,
+      ]),
     }),
     antifraud: PropTypes.object, // eslint-disable-line
     customer: PropTypes.shape({
@@ -732,7 +982,7 @@ TransactionDetails.propTypes = {
     }),
     metadata: PropTypes.object, // eslint-disable-line
     operations: PropTypes.arrayOf(PropTypes.shape({
-      created_at: PropTypes.string,
+      created_at: PropTypes.instanceOf(moment),
       type: PropTypes.string,
       status: PropTypes.string,
       cycle: PropTypes.number,
@@ -771,10 +1021,16 @@ TransactionDetails.propTypes = {
 }
 
 TransactionDetails.defaultProps = {
+  nextTransactionId: null,
   onCopyBoletoUrl: null,
   onDismissAlert: null,
   onManualReviewApprove: null,
   onManualReviewRefuse: null,
+  onExport: null,
+  onNextTransactionRedirect: null,
+  onPreviousTransactionRedirect: null,
+  onRefund: null,
+  onReprocess: null,
   onShowBoleto: null,
 }
 

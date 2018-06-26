@@ -14,7 +14,6 @@ import {
   contains,
   defaultTo,
   either,
-  findIndex,
   identity,
   isEmpty,
   isNil,
@@ -25,7 +24,7 @@ import {
   path,
   pipe,
   prop,
-  propEq,
+  replace,
   tail,
   unless,
   without,
@@ -40,8 +39,6 @@ import { requestLogout } from '../../Account/actions'
 import dateSelectorPresets from '../../../models/dateSelectorPresets'
 import filterOptions from '../../../models/transactionFilterOptions'
 import TransactionsList from '../../../containers/TransactionsList'
-import getDefaultTransactionColumns from './transactionsTableColumns'
-import getColumnTranslator from '../../../formatters/columnTranslator'
 
 const mapStateToProps = ({
   account: { client },
@@ -62,22 +59,12 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const enhanced = compose(
-  translate('transactions'),
+  translate(),
   connect(
     mapStateToProps,
     mapDispatchToProps
   ),
   withRouter
-)
-
-const getOrderColumn = (field, columns) => findIndex(
-  propEq('accessor', field),
-  columns
-)
-
-const getColumnAccessor = index => pipe(
-  nth(index),
-  prop('accessor')
 )
 
 const momentToString = momentObj => momentObj.toISOString()
@@ -149,26 +136,10 @@ const parseQueryUrl = pipe(
   mergeAll
 )
 
-const getDateLabels = t => ({
-  anyDate: t('dates.any'),
-  cancel: t('dates.cancel'),
-  confirmPeriod: t('dates.confirm'),
-  custom: t('dates.custom'),
-  day: t('dates.day'),
-  daySelected: t('dates.day_selected'),
-  daysSelected: t('dates.selected'),
-  end: t('dates.end'),
-  noDayOrPeriodSelected: t('dates.no_selected'),
-  period: t('dates.period'),
-  select: t('dates.select'),
-  start: t('dates.start'),
-  today: t('dates.today'),
-})
 
 class TransactionsSearch extends React.Component {
   constructor (props) {
     super(props)
-    const { t } = this.props
     this.handleChartsCollapse = this.handleChartsCollapse.bind(this)
     this.handleFilterChange = this.handleFilterChange.bind(this)
     this.handleOrderChange = this.handleOrderChange.bind(this)
@@ -182,23 +153,8 @@ class TransactionsSearch extends React.Component {
     this.requestData = this.requestData.bind(this)
     this.requestPendingReviewsCount = this.requestPendingReviewsCount.bind(this)
 
-    const translateColumns = getColumnTranslator(t)
-    const columnsDefault = getDefaultTransactionColumns(this.handleRowDetailsClick)
-
     this.state = {
-      clearFiltersLabel: t('clear_filters'),
-      columns: translateColumns(columnsDefault),
       collapsed: true,
-      dateLabels: getDateLabels(t),
-      filterConfirmLabel: t('confirm_filters'),
-      filtersTitle: t('filters'),
-      findByLabel: t('find_by'),
-      graphicLegendsTittle: t('graphic_legends'),
-      graphicTittle: t('graphic'),
-      itemsPerPageLabel: t('items_per_page'),
-      noContentFoundMessage: t('no_content_found'),
-      ofLabel: t('of'),
-      periodSummaryLabel: t('period_summary'),
       result: {
         total: {},
         list: {
@@ -208,13 +164,25 @@ class TransactionsSearch extends React.Component {
           dataset: [],
         },
       },
-      tableTitle: t('transactions'),
-      totalVolumeLabel: t('total_volume'),
-      transactionsNumberLabel: t('transactions_number'),
-      tryFilterAgainMessage: t('try_filter_again'),
       expandedRows: [],
+      pendingReviewsCount: 0,
       selectedRows: [],
+      viewMode: 'table',
     }
+
+    this.handleChartsCollapse = this.handleChartsCollapse.bind(this)
+    this.handleExpandRow = this.handleExpandRow.bind(this)
+    this.handleFilterChange = this.handleFilterChange.bind(this)
+    this.handleFilterClear = this.handleFilterClear.bind(this)
+    this.handleOrderChange = this.handleOrderChange.bind(this)
+    this.handlePageChange = this.handlePageChange.bind(this)
+    this.handlePageCountChange = this.handlePageCountChange.bind(this)
+    this.handleRowClick = this.handleRowClick.bind(this)
+    this.handleRowDetailsClick = this.handleRowDetailsClick.bind(this)
+    this.handleSelectRow = this.handleSelectRow.bind(this)
+    this.handleViewModeChange = this.handleViewModeChange.bind(this)
+
+    this.requestData = this.requestData.bind(this)
   }
 
   componentDidMount () {
@@ -266,10 +234,12 @@ class TransactionsSearch extends React.Component {
   }
 
   updateQuery (query) {
-    this.setState({
-      expandedRows: [],
-      selectedRows: [],
-    })
+    const {
+      history: {
+        push,
+        location,
+      },
+    } = this.props
 
     const buildSearchQuery = pipe(
       normalizeQueryDatesToString,
@@ -277,10 +247,20 @@ class TransactionsSearch extends React.Component {
       qs.stringify
     )
 
-    this.props.history.push({
-      pathname: 'transactions',
-      search: buildSearchQuery(query),
+    const newQuery = buildSearchQuery(query)
+    const currentQuery = replace('?', '', location.search)
+
+    this.setState({
+      expandedRows: [],
+      selectedRows: [],
     })
+
+    if (currentQuery !== newQuery) {
+      push({
+        pathname: 'transactions',
+        search: newQuery,
+      })
+    }
   }
 
   requestData (query) {
@@ -302,19 +282,17 @@ class TransactionsSearch extends React.Component {
     const query = {
       ...this.props.query,
       offset: 1,
-      count: parseInt(count, 10),
+      count,
     }
 
     this.updateQuery(query)
   }
 
-  handleOrderChange (index, order) {
-    const getAccessor = getColumnAccessor(index)
-
+  handleOrderChange (field, order) {
     const query = {
       ...this.props.query,
       sort: {
-        field: getAccessor(this.state.columns),
+        field,
         order,
       },
       offset: 1,
@@ -323,21 +301,24 @@ class TransactionsSearch extends React.Component {
     this.updateQuery(query)
   }
 
-  handleFilterChange (filters) {
-    const {
-      search,
-      dates,
-      values,
-    } = filters
+  handleFilterClear () {
+    const { dates } = this.props.query
 
-    const sort = filters.sort || this.props.query.sort
+    this.updateQuery({ dates })
+  }
 
+  handleFilterChange ({
+    dates,
+    filters,
+    search,
+    sort,
+  }) {
     const query = {
       ...this.props.query,
       search,
       dates,
-      filters: values,
-      sort,
+      sort: sort || this.props.query.sort,
+      filters,
       offset: 1,
     }
 
@@ -377,6 +358,12 @@ class TransactionsSearch extends React.Component {
     })
   }
 
+  handleViewModeChange (viewMode) {
+    this.setState({
+      viewMode,
+    })
+  }
+
   handleExpandRow (expandedRows) {
     this.setState({
       expandedRows,
@@ -391,47 +378,29 @@ class TransactionsSearch extends React.Component {
 
   render () {
     const {
-      clearFiltersLabel,
       collapsed,
       columns,
-      dateLabels,
       expandedRows,
-      filterConfirmLabel,
-      filtersTitle,
-      findByLabel,
-      graphicLegendsTittle,
-      graphicTittle,
-      itemsPerPageLabel,
-      noContentFoundMessage,
-      ofLabel,
       pendingReviewsCount,
-      periodSummaryLabel,
       result: {
         total,
         list,
         chart,
       },
       selectedRows,
-      tableTitle,
-      totalVolumeLabel,
-      transactionsNumberLabel,
-      tryFilterAgainMessage,
+      viewMode,
     } = this.state
 
     const {
       loading,
+      query,
       query: {
         count,
-        dates,
-        filters,
         offset,
-        search,
         sort,
       },
       t,
     } = this.props
-
-    const orderColumn = getOrderColumn(sort.field, columns)
 
     const pagination = {
       offset,
@@ -443,49 +412,36 @@ class TransactionsSearch extends React.Component {
     return (
       <TransactionsList
         amount={total.payment ? total.payment.paid_amount : 0}
-        clearFiltersLabel={clearFiltersLabel}
         collapsed={collapsed}
         columns={columns}
         count={total.count}
         data={chart.dataset}
-        dateLabels={dateLabels}
         dateSelectorPresets={dateSelectorPresets}
-        dates={dates}
         expandedRows={expandedRows}
-        filterConfirmLabel={filterConfirmLabel}
         filterOptions={filterOptions}
-        filtersTitle={filtersTitle}
-        findByLabel={findByLabel}
-        graphicLegendsTittle={graphicLegendsTittle}
-        graphicTittle={graphicTittle}
-        handleChartsCollapse={this.handleChartsCollapse}
-        handleExpandRow={this.handleExpandRow}
-        handleFilterChange={this.handleFilterChange}
-        handleOrderChange={this.handleOrderChange}
-        handlePageChange={this.handlePageChange}
-        handlePageCountChange={this.handlePageCountChange}
-        handleRowClick={this.handleRowClick}
-        handleSelectRow={this.handleSelectRow}
-        handlePendingReviewsFilter={this.handlePendingReviewsFilter}
-        itemsPerPageLabel={itemsPerPageLabel}
+        onPendingReviewsFilter={this.handlePendingReviewsFilter}
         loading={loading}
-        noContentFoundMessage={noContentFoundMessage}
-        ofLabel={ofLabel}
-        order={sort ? sort.order : ''}
-        orderColumn={orderColumn}
+        onChangeViewMode={this.handleViewModeChange}
+        onChartsCollapse={this.handleChartsCollapse}
+        onDetailsClick={this.handleRowDetailsClick}
+        onExpandRow={this.handleExpandRow}
+        onFilterChange={this.handleFilterChange}
+        onFilterClear={this.handleFilterClear}
+        onOrderChange={this.handleOrderChange}
+        onPageChange={this.handlePageChange}
+        onPageCountChange={this.handlePageCountChange}
+        onRowClick={this.handleRowClick}
+        onSelectRow={this.handleSelectRow}
+        order={sort.order}
+        orderField={sort.field}
         pagination={pagination}
         pendingReviewsCount={pendingReviewsCount}
-        periodSummaryLabel={periodSummaryLabel}
         rows={list.rows}
-        search={search}
         selectedPage={count}
         selectedRows={selectedRows}
+        query={query}
+        viewMode={viewMode}
         t={t}
-        tableTitle={tableTitle}
-        totalVolumeLabel={totalVolumeLabel}
-        transactionsNumberLabel={transactionsNumberLabel}
-        tryFilterAgainMessage={tryFilterAgainMessage}
-        values={filters}
       />
     )
   }

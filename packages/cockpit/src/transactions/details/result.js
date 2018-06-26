@@ -1,6 +1,7 @@
 import {
   __,
   always,
+  any,
   apply,
   applySpec,
   assoc,
@@ -27,13 +28,15 @@ import {
   objOf,
   path,
   pathEq,
+  pathOr,
   pick,
   pipe,
   pluck,
   prop,
   propEq,
-  propSatisfies,
+  propOr,
   props,
+  propSatisfies,
   reduce,
   reject,
   reverse,
@@ -45,10 +48,12 @@ import {
   values,
   when,
 } from 'ramda'
-
 import moment from 'moment'
-
+import isReprocessable from './isReprocessable'
+import isRefundable from './isRefundable'
 import { transactionSpec } from '../shared'
+
+const isNilOrEmpty = either(isNil, isEmpty)
 
 const sortByCreatedAt = sort((left, right) => {
   if (has('created_at', right)) {
@@ -115,6 +120,17 @@ const getStatus = (transaction, manualReviewAnalysis) => {
   return manualReviewAnalysis.status
 }
 
+const nameEqualPagarme = propEq('name', 'pagarme')
+const hasPagarmeAntifraudAnalysis = any(nameEqualPagarme)
+
+const findPagarmeAntifraudAnalysis = find(nameEqualPagarme)
+
+const getAntifraudAnalysis = ifElse(
+  hasPagarmeAntifraudAnalysis,
+  findPagarmeAntifraudAnalysis,
+  head
+)
+
 const buildCreditCardOperations = ({
   transaction,
   gatewayOperations,
@@ -130,11 +146,6 @@ const buildCreditCardOperations = ({
       return operations.concat([operation])
     }
 
-    const pagarmeAnalysis = find(
-      propEq('name', 'pagarme'),
-      antifraudAnalyses
-    )
-
     const manualReviewAnalysis = find(
       propEq('name', 'manual_review'),
       antifraudAnalyses
@@ -145,10 +156,12 @@ const buildCreditCardOperations = ({
       manualReviewTimeout(transaction) ||
       manualReviewAnalysis
 
+    const analysis = getAntifraudAnalysis(antifraudAnalyses)
+
     const antifraudOperation = {
       created_at: operation.date_created,
       id: operation.id,
-      status: pagarmeAnalysis.status,
+      status: analysis.status,
       type: operation.type,
     }
 
@@ -196,11 +209,7 @@ const createOperationObj = applySpec({
     prop('status'),
     always('success')
   ),
-  cycle: ifElse(
-    has('cycle'),
-    prop('cycle'),
-    always(null)
-  ),
+  cycle: propOr(null, 'cycle'),
 })
 
 const buildOperations = applySpec({
@@ -258,9 +267,9 @@ const aggregateInstallments = (acc, installment) =>
 
 const mapRecipients = map(applySpec({
   amount: sumInstallmentsAmount,
-  charge_remainder: prop('charge_remainder'),
   created_at: prop('date_created'),
   id: prop('recipient_id'),
+  charge_remainder: prop('charge_remainder'),
   installments: pipe(
     prop('installments'),
     map(applySpec({
@@ -351,7 +360,7 @@ const buildNewSplitRules = when(
 
 const buildReasonCode = pipe(
   ifElse(
-    either(isNil, isEmpty),
+    isNilOrEmpty,
     always(null),
     pipe(
       last,
@@ -360,6 +369,25 @@ const buildReasonCode = pipe(
   ),
   objOf('reason_code')
 )
+
+const getOriginalId = pathOr(
+  null,
+  ['transaction', 'metadata', 'pagarme_original_transaction_id']
+)
+
+const getReprocessedId = pathOr(null, ['reprocessed', 0, 'id'])
+
+const buildReprocessIds = applySpec({
+  nextId: getReprocessedId,
+  previousId: getOriginalId,
+})
+
+const buildCapabilities = ({ transaction, reprocessed }) => ({
+  capabilities: {
+    refundable: isRefundable(transaction),
+    reprocessable: isReprocessable(transaction, reprocessed),
+  },
+})
 
 const mapTransactionToResult = applySpec({
   transaction: pipe(
@@ -374,8 +402,11 @@ const mapTransactionToResult = applySpec({
         ]),
         buildOperations
       ),
+      buildCapabilities,
+      buildReprocessIds,
       pipe(prop('split_rules'), buildRecipients),
       pipe(prop('chargebackOperations'), buildReasonCode),
+      pick(['capabilities']),
     ]),
     mergeAll
   ),

@@ -6,11 +6,16 @@
       "sequence_number": "3082517",
       "transaction_id": "123456"
     },
+    "amount": 985172498,
     "antifraud": null,
     "boleto": null,
+    "capabilities": {
+      "refundable": false,
+      "reprocessable": false
+    },
     "card": {
       "brand_name": "visa",
-      "capture_method": null,
+      "capture_method": "ecommerce",
       "first_digits": "987654",
       "holder_name": "Derek",
       "international": true,
@@ -19,20 +24,34 @@
     },
     "created_at": "2018-03-14T13:40:28.465Z",
     "customer": {
-      "birth_date": "1999-01-01T00:00:00.000Z",
+      "address": {
+        "street": "Gomes de Carvalho"
+      },
       "country": "us",
-      "document_number": null,
-      "document_type": "cpf",
+      "documents": [
+        {
+          "number": "123456789",
+          "type": "cpf"
+        }
+      ],
       "email": "markzuckerberg@gmail.com",
       "name": "Lalala",
       "phones": [
-        "+5599993333"
-      ]
+        "(42) 3624-3958",
+        "+55 (42) 9999-3333"
+      ],
+      "birthday": "1999-01-01T00:00:00.000Z",
+      "created_at": "2018-03-14T13:40:28.431Z",
+      "external_id": "#4433",
+      "gender": null,
+      "id": 517958,
+      "individual": null,
+      "object": "customer"
     },
     "external_id": null,
     "id": 3082517,
-    "amount": 985172498,
     "metadata": {},
+    "nextId": null,
     "operations": [
       {
         "cycle": 2,
@@ -63,11 +82,18 @@
         "id": 2
       },
       {
-        "cycle": null,
         "created_at": "2018-03-15T13:40:28.564Z",
+        "cycle": null,
         "id": "go_2",
         "status": "success",
         "type": "capture"
+      },
+      {
+        "created_at": "2018-03-14T13:40:28.579Z",
+        "cycle": null,
+        "id": "go_2",
+        "status": "success",
+        "type": "authorize"
       }
     ],
     "payment": {
@@ -79,6 +105,8 @@
       "refund_amount": 0,
       "mdr_amount": 0
     },
+    "postback_url": null,
+    "previousId": null,
     "recipients": [
       {
         "amount": 394068999,
@@ -248,9 +276,9 @@
         ],
         "name": "JONATHAN",
         "net_amount": 354662099,
+        "status": "waiting_funds",
         "percentage": "40",
         "split_rule_id": "sr_1",
-        "status": "waiting_funds",
         "updated_at": "2018-03-14T13:40:28.475Z"
       },
       {
@@ -421,9 +449,9 @@
         ],
         "name": "JONATHAN",
         "net_amount": -354662100,
+        "status": "suspended",
         "percentage": "30",
         "split_rule_id": "sr_2",
-        "status": "suspended",
         "updated_at": "2018-03-14T13:40:28.475Z"
       },
       {
@@ -592,16 +620,17 @@
         "liabilities": [],
         "name": "Marceneiro",
         "net_amount": 295551750,
+        "status": "waiting_funds",
         "percentage": "30",
         "split_rule_id": "sr_3",
-        "status": "waiting_funds",
         "updated_at": "2018-03-14T13:40:28.475Z"
       }
     ],
-    "soft_descriptor": null,
-    "status": "chargedback",
-    "status_reason": "acquirer",
     "reason_code": "84",
+    "soft_descriptor": null,
+    "status_reason": "acquirer",
+    "status": "chargedback",
+    "subscription": null,
     "updated_at": "2018-03-14T16:11:52.057Z"
   }
 }

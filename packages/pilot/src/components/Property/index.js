@@ -1,12 +1,27 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import {
+  anyPass,
+  is,
+  isNil,
+} from 'ramda'
+
 import style from './style.css'
+
+const isStringOrNumber = anyPass([
+  is(String),
+  is(Number),
+  isNil,
+])
 
 const Property = ({ title, value }) => (
   <div className={style.property} >
     <h4 className={style.title}>{title}</h4>
-    <span className={style.value}>{value}</span>
+    {isStringOrNumber(value)
+      ? <span className={style.value}>{value}</span>
+      : value
+    }
   </div>
 )
 
@@ -16,9 +31,6 @@ Property.defaultProps = {
 
 Property.propTypes = {
   title: PropTypes.string.isRequired,
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
+  value: PropTypes.node,
 }
 export default Property

@@ -1,0 +1,75 @@
+@import "former-kit-skin-pagarme/dist/styles/spacing.css";
+@import "former-kit-skin-pagarme/dist/styles/colors/light.css";
+
+.anticipationDate {
+  font-weight: bold;
+  color: var(--color-light-steel-100);
+}
+
+.anticipationIcon {
+  color: var(--color-light-greenish-100);
+  padding-left: var(--spacing-tiny);
+}
+
+.container {
+  border-radius: 3px;
+
+  & > div .pagination.paginationBottom {
+    padding-top: var(--spacing-medium);
+  }
+}
+
+.head {
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.negative {
+  color: var(--color-light-salmon-100);
+}
+
+.net {
+  font-weight: bold;
+}
+
+.operator {
+  padding: 0 4px;
+}
+
+.pagination {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.paginationBottom {
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-top: none;
+}
+
+.payment {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.positive {
+  color: var(--color-light-greenish-100);
+}
+
+.subtitle > h3 {
+  color: var(--color-light-steel-100);
+  font-size: 14px;
+  font-weight: normal;
+  margin-right: var(--spacing-small);
+}
+
+.type {
+  color: var(--color-light-steel-100);
+  font-weight: bold;
+}
+
+.zero {
+  color: var(--color-light-steel-100);
+}

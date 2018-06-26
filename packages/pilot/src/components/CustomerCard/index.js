@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import {
   Card,
   CardTitle,
@@ -9,9 +8,7 @@ import {
   Row,
   Col,
 } from 'former-kit'
-
 import { mapObjIndexed } from 'ramda'
-
 import Property from '../Property'
 
 const fields = (labels, contents) => mapObjIndexed((label, key) => (
@@ -20,6 +17,7 @@ const fields = (labels, contents) => mapObjIndexed((label, key) => (
     value={contents[key]}
   />
 ), labels)
+
 
 const CustomerCard = ({ title, labels, contents }) => {
   const customer = fields(labels, contents)
@@ -31,7 +29,7 @@ const CustomerCard = ({ title, labels, contents }) => {
         <Grid>
           <Row>
             <Col palm={12} tablet={6} desk={4} tv={4}>
-              { customer.name }
+              {customer.name}
             </Col>
 
             <Col palm={12} tablet={6} desk={4} tv={4}>
@@ -39,7 +37,7 @@ const CustomerCard = ({ title, labels, contents }) => {
             </Col>
 
             <Col palm={12} tablet={6} desk={4} tv={4}>
-              {customer.born_at}
+              {customer.birthday}
             </Col>
 
             <Col palm={12} tablet={6} desk={4} tv={4}>
@@ -54,32 +52,32 @@ const CustomerCard = ({ title, labels, contents }) => {
               {customer.email}
             </Col>
 
-            <Col palm={12} tablet={4} desk={4} tv={4}>
-              {customer.zip_code}
-            </Col>
-
-            <Col palm={12} tablet={8} desk={8} tv={8}>
+            <Col palm={12} tablet={12} desk={8} tv={8}>
               {customer.street}
             </Col>
 
-            <Col palm={12} tablet={2} desk={1} tv={1}>
-              {customer.number}
+            <Col palm={12} tablet={6} desk={1} tv={1}>
+              {customer.street_number}
             </Col>
 
-            <Col palm={12} tablet={10} desk={3} tv={3}>
-              {customer.complement}
+            <Col palm={12} tablet={6} desk={3} tv={3}>
+              {customer.complementary}
             </Col>
 
-            <Col palm={12} tablet={8} desk={4} tv={4}>
+            <Col palm={12} tablet={6} desk={4} tv={4}>
               {customer.neighborhood}
             </Col>
 
-            <Col palm={12} tablet={4} desk={3} tv={3}>
+            <Col palm={12} tablet={6} desk={4} tv={4}>
               {customer.city}
             </Col>
 
-            <Col palm={12} tablet={4} desk={1} tv={1}>
+            <Col palm={12} tablet={6} desk={1} tv={1}>
               {customer.state}
+            </Col>
+
+            <Col palm={12} tablet={6} desk={3} tv={3}>
+              {customer.zipcode}
             </Col>
           </Row>
         </Grid>
@@ -89,25 +87,25 @@ const CustomerCard = ({ title, labels, contents }) => {
 }
 
 const shape = {
-  name: PropTypes.string,
-  document_number: PropTypes.string,
-  born_at: PropTypes.string,
-  gender: PropTypes.string,
-  phone: PropTypes.string,
-  email: PropTypes.string,
-  zip_code: PropTypes.string,
-  street: PropTypes.string,
-  number: PropTypes.string,
-  complement: PropTypes.string,
-  neighborhood: PropTypes.string,
+  birthday: PropTypes.string,
   city: PropTypes.string,
+  complementary: PropTypes.string,
+  document_number: PropTypes.string,
+  email: PropTypes.string,
+  gender: PropTypes.string,
+  name: PropTypes.string,
+  neighborhood: PropTypes.string,
+  phone: PropTypes.string,
   state: PropTypes.string,
+  street_number: PropTypes.string,
+  street: PropTypes.string,
+  zipcode: PropTypes.string,
 }
 
 CustomerCard.propTypes = {
-  title: PropTypes.string.isRequired,
-  labels: PropTypes.shape(shape).isRequired,
   contents: PropTypes.shape(shape).isRequired,
+  labels: PropTypes.shape(shape).isRequired,
+  title: PropTypes.string.isRequired,
 }
 
 export default CustomerCard

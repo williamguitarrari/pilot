@@ -80,6 +80,13 @@ const recipientsLabels = {
   totalTitle: 'VALOR TOTAL BRUTO (R$)',
 }
 
+const reprocessLabels = {
+  nextAlert: 'Esta transação foi extornada gerando a transação',
+  previousAlert: 'Esta transação foi criada a partir do extorno da transação',
+  showNext: 'Visualizar transação',
+  showPrevious: 'Visualizar transação original',
+}
+
 const totalDisplayLabels = {
   captured_at: `Capturado em ${
     moment(transactionMock.captured_at).format('L')
@@ -119,6 +126,8 @@ storiesOf('Pages', module)
     <Layout>
       <TransactionDetails
         alertLabels={alertLabels}
+        atLabel={t('at')}
+        boletoWarningMessage={t('boleto.waiting_payment_warning')}
         customerLabels={customerLabels}
         eventsLabels={eventsLabels}
         headerLabels={headerLabels}
@@ -126,11 +135,21 @@ storiesOf('Pages', module)
         metadataTitle="Metadata"
         onCopyBoletoUrl={action('copy boleto')}
         onDismissAlert={action('dismiss alert')}
+        onExport={action('export')}
+        onRefund={action('refund')}
+        onReprocess={action('reprocess')}
         onShowBoleto={action('show boleto')}
+        onNextTransactionRedirect={action('show next transaction')}
+        onPreviousTransactionRedirect={action('show previous transaction')}
         paymentBoletoLabels={paymentBoletoLabels}
         paymentCardLabels={paymentCardLabels}
+        permissions={{
+          refund: true,
+          reprocess: true,
+        }}
         recipientsLabels={recipientsLabels}
         riskLevelsLabels={riskLevelsLabels}
+        reprocessLabels={reprocessLabels}
         totalDisplayLabels={totalDisplayLabels}
         transaction={transactionMock}
         transactionDetailsLabels={transactionDetailsLabels}

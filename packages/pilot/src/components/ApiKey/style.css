@@ -1,0 +1,16 @@
+@import "former-kit-skin-pagarme/dist/styles/spacing.css";
+
+.title {
+  align-items: center;
+  display: flex;
+  height: 30px;
+  justify-content: flex-start;
+
+  & > *:not(:first-child) {
+    margin-left: var(--spacing-tiny);
+  }
+}
+
+.content {
+  font-size: 14px;
+}

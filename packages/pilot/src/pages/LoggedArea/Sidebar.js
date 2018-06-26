@@ -1,31 +1,45 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import {
+  head,
+  pipe,
+  split,
+  values,
+} from 'ramda'
 
 import { withRouter } from 'react-router-dom'
 
-import Sidebar from '../../containers/Sidebar'
+import SidebarContainer from '../../containers/Sidebar'
 
 import routes from './routes'
 
 import Logo from '../logo.svg'
 
-const SidebarState = ({
+const removeRouteParams = pipe(
+  split(':'),
+  head
+)
+
+const Sidebar = ({
   location: { pathname },
   history,
   t,
 }) => (
-  <Sidebar
+  <SidebarContainer
     logo={Logo}
-    links={Object.values(routes).filter(r => r.component).map(route => ({
+    links={values(routes)
+      .filter(({ hidden }) => !hidden)
+      .map(route => ({
         ...route,
-        title: t(route.title),
-    }))}
+        active: pathname.includes(removeRouteParams(route.path)),
+      }))
+    }
     onLinkClick={history.push}
-    pathName={pathname}
+    t={t}
   />
 )
 
-SidebarState.propTypes = {
+Sidebar.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string,
   }).isRequired,
@@ -35,4 +49,4 @@ SidebarState.propTypes = {
   t: PropTypes.func.isRequired,
 }
 
-export default withRouter(SidebarState)
+export default withRouter(Sidebar)
