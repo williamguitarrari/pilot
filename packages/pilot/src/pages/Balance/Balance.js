@@ -269,9 +269,13 @@ class Balance extends Component {
       })
   }
 
-  // eslint-disable-next-line class-methods-use-this, no-unused-vars
-  handleAnticipation (amount) {
-    // TODO: add this method when it's available in API
+  handleAnticipation () {
+    const {
+      history,
+      company,
+    } = this.props
+
+    history.push(`/anticipation/${getRecipientId(company)}`)
   }
 
   // eslint-disable-next-line class-methods-use-this, no-unused-vars
@@ -311,9 +315,13 @@ class Balance extends Component {
     this.updateQuery(query)
   }
 
-  // eslint-disable-next-line class-methods-use-this, no-unused-vars
-  handleWithdraw (amount) {
-    // TODO: add this method when it's available in API
+  handleWithdraw () {
+    const {
+      history,
+      company,
+    } = this.props
+
+    history.push(`/withdraw/${getRecipientId(company)}`)
   }
 
   render () {
@@ -377,11 +385,11 @@ class Balance extends Component {
           currentPage={query.page}
           dates={dates}
           disabled={loading}
-          // onAnticipationClick={this.handleAnticipation}
+          onAnticipationClick={this.handleAnticipation}
           // onCancelRequestClick={this.handleCancelRequest}
           onFilterClick={this.handleFilterClick}
           onPageChange={this.handlePageChange}
-          // onWithdrawClick={this.handleWithdraw}
+          onWithdrawClick={this.handleWithdraw}
           queryDates={query.dates}
           recipient={recipient}
           requests={requests}
