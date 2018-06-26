@@ -83,9 +83,11 @@ class BalanceState extends Component {
           dates={dates}
           filterDisable={compareMomentDates(query.dates, dates)}
           loading={loading}
+          onAnticipationClick={action('anticipation')}
           onDateChange={this.handleDateChange}
           onFilterClick={action('filter click')}
           onPageChange={action('page click')}
+          onWithdrawClick={action('withdraw')}
           queryDates={query.dates}
           recipient={recipient}
           requests={requests}
