@@ -17,6 +17,7 @@ import RiskLevel from './RiskLevel'
 import ReprocessDetails from './ReprocessDetails'
 import Summary from './Summary'
 import TotalDisplay from './TotalDisplay'
+import TransferError from './TransferError'
 import TransactionDetailsCard from './TransactionDetailsCard'
 import TreeView from './TreeView'
 import ApiKeySection from './ApiKey'
@@ -98,4 +99,7 @@ storiesOf('Components', module)
   ))
   .add('Summary', () => (
     <Summary />
+  ))
+  .add('Transfer Error', () => (
+    <TransferError />
   ))
