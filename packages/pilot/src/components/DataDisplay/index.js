@@ -1,16 +1,23 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+import PropTypes from 'prop-types'
+import classNames from 'classnames'
 
 import style from './style.css'
 
 const DataDisplay = ({
+  align,
   children,
   color,
   subtitle,
   title,
   value,
 }) => (
-  <div className={style.content}>
+  <div className={
+      classNames(style.content, {
+        [style[align]]: align,
+      })
+    }
+  >
     <div className={style.title}>
       {
         typeof title === 'string'
@@ -32,6 +39,11 @@ const DataDisplay = ({
 )
 
 DataDisplay.propTypes = {
+  align: PropTypes.oneOf([
+    'center',
+    'end',
+    'start',
+  ]),
   children: PropTypes.node,
   color: PropTypes.string,
   subtitle: PropTypes.node,
@@ -46,6 +58,7 @@ DataDisplay.propTypes = {
 }
 
 DataDisplay.defaultProps = {
+  align: 'center',
   children: null,
   color: '#757575',
   subtitle: null,
