@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import {
   Grid,
   Row,
@@ -11,54 +11,63 @@ import Section from '../../Section'
 import TotalDisplay from '../../../src/components/TotalDisplay'
 
 const TotalDisplayExample = () => (
-  <Section>
-    <Grid>
-      <Row stretch>
-        <Col palm={12} tablet={6} desk={3}>
-          <TotalDisplay
-            title="Valor Capturado"
-            amount={1000000000}
-            color="#37cc9a"
-            unit="R$"
-            subtitle={
-              <span>
-                Capturado em 10/03/2018 às 14:15h
-              </span>
-            }
-          />
-        </Col>
+  <Fragment>
+    <Section>
+      <Grid>
+        <Row>
+          <Col palm={12} tablet={12} desk={12}>
+            <TotalDisplay
+              align="center"
+              title="Valor Capturado"
+              amount={1000000000}
+              color="#37cc9a"
+              unit="R$"
+              subtitle={
+                <span>
+                  Capturado em 10/03/2018 às 14:15h
+                </span>
+              }
+            />
+          </Col>
+        </Row>
 
-        <Col palm={12} tablet={6} desk={3}>
-          <TotalDisplay
-            title="Total de Saídas"
-            amount={-500000}
-            color="#ff796f"
-            unit="R$"
-            subtitle={
-              <span>
-                MDR: R$ 6,00 | Valor estornado: R$ 15,00 <br />
-                Outras saídas: R$ 0,75 <IconInfo width={12} height={12} />
-              </span>
-            }
-          />
-        </Col>
+        <Row>
+          <Col palm={12} tablet={12} desk={12}>
+            <TotalDisplay
+              align="start"
+              title="Total de Saídas"
+              amount={-500000}
+              color="#ff796f"
+              unit="R$"
+              subtitle={
+                <span>
+                  MDR: R$ 6,00 | Valor estornado: R$ 15,00 <br />
+                  Outras saídas: R$ 0,75 <IconInfo width={12} height={12} />
+                </span>
+              }
+            />
+          </Col>
+        </Row>
 
-        <Col palm={12} tablet={6} desk={3}>
-          <TotalDisplay
-            title="Valor Líquido"
-            amount={9995000000}
-            color="#4ca9d7"
-            unit="R$"
-            subtitle={
-              <span>
-                Data a receber: 20/03/2018
-              </span>
-            }
-          />
-        </Col>
-      </Row>
-    </Grid>
-  </Section>
+        <Row>
+          <Col palm={12} tablet={12} desk={12}>
+            <TotalDisplay
+              align="end"
+              title="Valor Líquido"
+              amount={9995000000}
+              color="#4ca9d7"
+              unit="R$"
+              subtitle={
+                <span>
+                  Data a receber: 20/03/2018
+                </span>
+              }
+            />
+          </Col>
+        </Row>
+      </Grid>
+    </Section>
+  </Fragment>
 )
 
 export default TotalDisplayExample
