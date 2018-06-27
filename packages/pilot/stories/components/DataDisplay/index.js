@@ -11,9 +11,10 @@ import DataDisplay from '../../../src/components/DataDisplay'
 const DataDisplayExample = () => (
   <Section>
     <Grid>
-      <Row stretch>
-        <Col palm={12} tablet={6} desk={3}>
+      <Row>
+        <Col palm={12} tablet={12} desk={12}>
           <DataDisplay
+            align="center"
             color="#37cc9a"
             subtitle={
               <span>
@@ -24,9 +25,23 @@ const DataDisplayExample = () => (
             value={1234}
           />
         </Col>
+      </Row>
 
-        <Col palm={12} tablet={6} desk={3}>
+      <Row>
+        <Col palm={12} tablet={12} desk={12}>
           <DataDisplay
+            align="end"
+            color="#ff796f"
+            title="Data"
+            value="20/02/2000"
+          />
+        </Col>
+      </Row>
+
+      <Row>
+        <Col palm={12} tablet={12} desk={12}>
+          <DataDisplay
+            align="start"
             color="#ff796f"
             title="Data"
             value="20/02/2000"
