@@ -294,7 +294,7 @@
       "756": "756 - Banco Cooperativo do Brasil S.A. - BANCOOB",
       "757": "757 - Banco KEB HANA do Brasil S.A."
     },
-        "card": {
+    "card": {
       "brand": "Bandeira",
       "holder_name": "Nome do cliente",
       "number": "Número do cartão"
@@ -359,10 +359,13 @@
       "antifraud_score": "Score do antifraude",
       "authorization_code": "Código de autorização",
       "boleto_url": "Link do boleto",
+      "boleto": "Boleto",
       "capture_method": "Método de captura",
       "card_brand": "Bandeira",
       "created_date": "Data da transação",
+      "credit_card": "Cartão de crédito",
       "customer_name": "Nome do cliente",
+      "debit_card": "Cartão de débito",
       "details": "Detalhes da transação",
       "document": "CPF / CNPJ",
       "email": "E-mail",
@@ -370,6 +373,7 @@
       "installments_count_plural": "{{count}}x",
       "installments_count": "à  vista",
       "installments": "Parcelas",
+      "international_credit_card": "Cartão de crédito estrangeiro",
       "nsu": "NSU",
       "paid_amount": "Valor capturado",
       "payment_method": "Forma de pagamento",
@@ -798,6 +802,7 @@
       "subscription_id": "Id da assinatura",
       "tid": "TID (ID da transação)",
       "title": "Detalhes da transação",
+      "view_details": "Ver detalhes",
       "view_transactions": "Visualizar Transações"
     },
     "transactions": {
