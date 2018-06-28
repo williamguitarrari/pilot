@@ -223,7 +223,7 @@ class TransactionsSearch extends React.Component {
     this.handleFilterChange({
       dates: {},
       search: '',
-      values: {
+      filters: {
         status: ['pending_review'],
       },
       sort: {

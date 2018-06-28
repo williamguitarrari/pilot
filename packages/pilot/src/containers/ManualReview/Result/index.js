@@ -34,8 +34,7 @@ const Result = ({
       <Grid>
         <Row>
           <Col palm={12} tablet={12} desk={12} tv={12}>
-            <div className={style.alert}>
-              {stepStatusResult === 'error'
+            {stepStatusResult === 'error'
                 ?
                   <Alert
                     icon={<IconError width={16} height={16} />}
@@ -63,7 +62,6 @@ const Result = ({
                     </span>
                   </Alert>
               }
-            </div>
           </Col>
         </Row>
       </Grid>
@@ -78,14 +76,12 @@ const Result = ({
             {t('pages.manual_review.result_error_try_again')}
           </Button>
         :
-          <Fragment>
-            <Button
-              fill="outline"
-              onClick={onViewTransaction}
-            >
-              {t('pages.manual_review.result_success_view_transaction')}
-            </Button>
-          </Fragment>
+          <Button
+            fill="outline"
+            onClick={onViewTransaction}
+          >
+            {t('pages.manual_review.result_success_view_transaction')}
+          </Button>
       }
     </ModalActions>
   </Fragment>
