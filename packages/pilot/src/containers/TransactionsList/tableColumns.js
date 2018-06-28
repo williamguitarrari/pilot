@@ -54,7 +54,8 @@ const getDefaultColumns = ({ t, onDetailsClick }) => ([
     renderer: pipe(
       prop('payment'),
       pick(['method', 'international']),
-      formatPaymentMethod
+      formatPaymentMethod,
+      t
     ),
   },
   {
@@ -107,7 +108,7 @@ const getDefaultColumns = ({ t, onDetailsClick }) => ([
         fill="outline"
         onClick={() => onDetailsClick(index)}
       >
-        VER DETALHES
+        {t('pages.transaction.view_details')}
       </Button>
     ),
     title: t('models.transaction.details'),
