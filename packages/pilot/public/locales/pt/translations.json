@@ -666,7 +666,7 @@
         "pending_review_plural": "Existem {{count}} transações pendentes de revisão.",
         "reason_code": "Código {{code}}",
         "resubmit": "Reapresentar chargeback",
-        "warning": "Atenção"
+        "warning": "Atenção."
       },
       "antifraud_score": "Score do antifraude",
       "authorization_code": "Código de autorização",
@@ -797,7 +797,8 @@
       "status": "STATUS",
       "subscription_id": "Id da assinatura",
       "tid": "TID (ID da transação)",
-      "title": "Detalhes da transação"
+      "title": "Detalhes da transação",
+      "view_transactions": "Visualizar Transações"
     },
     "transactions": {
       "count": "transações",

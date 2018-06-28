@@ -106,21 +106,19 @@ const TransactionsList = ({
             tablet={12}
             tv={12}
           >
-            <div className={style.parentWidth}>
-              <Alert
-                action={t('view_transactions')}
-                icon={<IconWarning height={16} width={16} />}
-                onDismiss={onPendingReviewsFilter}
-                type="warning"
-              >
-                <p>
-                  <strong>{t('alert.warning')}!</strong>&nbsp;
-                  {
-                    t('alert.pending_review', { count: pendingReviewsCount })
-                  }
-                </p>
-              </Alert>
-            </div>
+            <Alert
+              action={t('pages.transaction.view_transactions')}
+              icon={<IconWarning height={16} width={16} />}
+              onDismiss={onPendingReviewsFilter}
+              type="warning"
+            >
+              <p>
+                <strong>{t('pages.transaction.alert.warning')}</strong>&nbsp;
+                {
+                  t('pages.transaction.alert.pending_review', { count: pendingReviewsCount })
+                }
+              </p>
+            </Alert>
           </Col>
         </Row>
       }
