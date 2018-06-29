@@ -202,7 +202,6 @@ const getCustomerProp = ifElse(
     documents: getDocuments,
     email: getCustomerSubProp('email'),
     external_id: getCustomerSubProp('external_id'),
-    gender: getCustomerSubProp('gender'),
     id: getCustomerSubProp('id'),
     individual: getCustomerSubProp('individual'),
     name: getCustomerSubProp('name'),
