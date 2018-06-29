@@ -8,6 +8,8 @@ import Pricing from './Pricing'
 
 const GeneralInfoTab = ({
   apiKeys,
+  apiVersion,
+  environment,
   pricing,
   t,
 }) => (
@@ -22,6 +24,8 @@ const GeneralInfoTab = ({
     <CardContent>
       <ApiKey
         apiKeys={apiKeys}
+        apiVersion={apiVersion}
+        environment={environment}
         t={t}
       />
     </CardContent>
@@ -29,15 +33,18 @@ const GeneralInfoTab = ({
 )
 
 GeneralInfoTab.propTypes = {
-  apiKeys: PropTypes.arrayOf(
-    PropTypes.shape({
-      keys: PropTypes.shape({
-        apiKey: PropTypes.string,
-        encryptionKey: PropTypes.string,
-      }),
-      title: PropTypes.string,
-    })
-  ).isRequired,
+  apiKeys: PropTypes.shape({
+    keys: PropTypes.shape({
+      apiKey: PropTypes.string.isRequired,
+      encryptionKey: PropTypes.string.isRequired,
+    }),
+    title: PropTypes.string.isRequired,
+  }),
+  apiVersion: PropTypes.string,
+  environment: PropTypes.oneOf([
+    'live',
+    'test',
+  ]).isRequired,
   pricing: PropTypes.arrayOf(PropTypes.shape({
     mainTitle: PropTypes.string.isRequired,
     subItems: PropTypes.arrayOf(PropTypes.shape({
@@ -49,6 +56,11 @@ GeneralInfoTab.propTypes = {
     })).isRequired,
   })).isRequired,
   t: PropTypes.func.isRequired,
+}
+
+GeneralInfoTab.defaultProps = {
+  apiKeys: null,
+  apiVersion: null,
 }
 
 export default GeneralInfoTab
