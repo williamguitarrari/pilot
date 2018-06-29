@@ -28,6 +28,8 @@ class CompanySettings extends Component {
       pricing,
       team,
       apiKeys,
+      apiVersion,
+      environment,
       general,
       address,
       managingPartner,
@@ -58,6 +60,8 @@ class CompanySettings extends Component {
         {selectedIndex === 0 &&
           <GeneralInfoTab
             apiKeys={apiKeys}
+            apiVersion={apiVersion}
+            environment={environment}
             pricing={pricing}
             t={t}
           />
@@ -96,15 +100,14 @@ CompanySettings.propTypes = {
     state: PropTypes.string,
     zipcode: PropTypes.string,
   }).isRequired,
-  apiKeys: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string,
-      keys: PropTypes.shape({
-        encryptionKey: PropTypes.string,
-        apiKey: PropTypes.string,
-      }),
-    })
-  ).isRequired,
+  apiKeys: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    keys: PropTypes.shape({
+      encryptionKey: PropTypes.string.isRequired,
+      apiKey: PropTypes.string.isRequired,
+    }),
+  }),
+  apiVersion: PropTypes.string,
   createUserStatus: PropTypes.shape({
     error: PropTypes.string,
     loading: PropTypes.bool,
@@ -115,6 +118,10 @@ CompanySettings.propTypes = {
     loading: PropTypes.bool,
     success: PropTypes.bool,
   }).isRequired,
+  environment: PropTypes.oneOf([
+    'live',
+    'test',
+  ]).isRequired,
   general: PropTypes.shape({
     name: PropTypes.string,
     fullName: PropTypes.string,
@@ -149,6 +156,8 @@ CompanySettings.propTypes = {
 }
 
 CompanySettings.defaultProps = {
+  apiKeys: null,
+  apiVersion: null,
   t: t => t,
 }
 
