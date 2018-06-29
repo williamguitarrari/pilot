@@ -41,10 +41,6 @@ const CustomerCard = ({ title, labels, contents }) => {
             </Col>
 
             <Col palm={12} tablet={6} desk={4} tv={4}>
-              {customer.gender}
-            </Col>
-
-            <Col palm={12} tablet={6} desk={4} tv={4}>
               {customer.phone}
             </Col>
 
@@ -92,7 +88,6 @@ const shape = {
   complementary: PropTypes.string,
   document_number: PropTypes.string,
   email: PropTypes.string,
-  gender: PropTypes.string,
   name: PropTypes.string,
   neighborhood: PropTypes.string,
   phone: PropTypes.string,
