@@ -647,7 +647,8 @@
             },
             "subtitle": {
               "rate": "Taxas e serviços negociados durante a ativação da sua conta.",
-              "api": "Responsáveis pela autenticação da API do Pagar.me e pela autorização de transações."
+              "api": "Responsáveis pela autenticação da API do Pagar.me e pela autorização de transações.",
+              "api_version": "Versão da API:"
             },
             "headline": {
               "rate": "Para solicitar renegociação das taxas, entre em contato conosco.",
@@ -669,8 +670,12 @@
               "minimum_monthly_payment": "Mínimo pago mensalmente"
             },
             "api_key": {
+              "api": "API",
+              "copy": "Copiar",
+              "encryption_key": "Criptografia",
               "live": "Live",
-              "test": "Test"
+              "test": "Test",
+              "test_advise": "Atenção: essas chaves funcionam somente para operações em modo teste. Transações criadas usando essas chaves não geram recebíveis reais."
             }
           },
           "product": {

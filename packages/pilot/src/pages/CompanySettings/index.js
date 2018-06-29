@@ -12,6 +12,7 @@ import {
 import { translate } from 'react-i18next'
 
 import CompanySettings from '../../containers/Settings/Company'
+import environment from '../../environment'
 
 const mapStateToProps = ({
   account: { client, user },
@@ -34,12 +35,13 @@ class CompanySettingsPage extends React.Component {
     super(props)
     this.state = {
       companyInfo: {
-        pricing: [],
-        apiKeys: [],
-        team: [],
-        general: {},
         address: {},
+        apiKeys: null,
+        apiVersion: null,
+        general: {},
         managingPartner: {},
+        pricing: [],
+        team: [],
       },
       createUserStatus: {
         error: null,
@@ -139,8 +141,9 @@ class CompanySettingsPage extends React.Component {
 
     const {
       companyInfo: {
-        apiKeys,
         address,
+        apiKeys,
+        apiVersion,
         general,
         managingPartner,
         pricing,
@@ -152,8 +155,10 @@ class CompanySettingsPage extends React.Component {
       <CompanySettings
         address={address}
         apiKeys={apiKeys}
+        apiVersion={apiVersion}
         createUserStatus={this.state.createUserStatus}
         deleteUserStatus={this.state.deleteUserStatus}
+        environment={environment}
         general={general}
         handleCreateUser={this.handleCreateUser}
         handleDeleteUser={this.handleDeleteUser}
