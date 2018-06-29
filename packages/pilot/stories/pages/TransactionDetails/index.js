@@ -27,7 +27,6 @@ const customerLabels = {
   complement: 'Complemento',
   document_number: 'CPF/CNPJ',
   email: 'E-mail',
-  gender: 'Genero',
   name: 'Nome do cliente',
   neighborhood: 'Bairro',
   number: 'N',

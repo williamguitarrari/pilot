@@ -832,7 +832,6 @@ TransactionDetails.propTypes = {
     complement: PropTypes.string,
     document_number: PropTypes.string,
     email: PropTypes.string,
-    gender: PropTypes.string,
     name: PropTypes.string,
     neighborhood: PropTypes.string,
     number: PropTypes.string,
