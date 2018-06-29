@@ -105,7 +105,6 @@ const getCustomerLabels = (customer, t) => ({
   complementary: t('models.customer.complement'),
   document_number: t('models.customer.document_number'),
   email: t('models.customer.email'),
-  gender: t('models.customer.gender'),
   name: t('models.customer.name'),
   neighborhood: t('models.customer.neighborhood'),
   phone: t('models.customer.phone', { count: countCustomerPhones(customer) }),
