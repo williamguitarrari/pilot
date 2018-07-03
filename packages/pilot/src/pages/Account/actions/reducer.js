@@ -1,4 +1,8 @@
-import { merge } from 'ramda'
+import {
+  applySpec,
+  merge,
+  path,
+} from 'ramda'
 
 import {
   ACCOUNT_RECEIVE,
@@ -7,7 +11,13 @@ import {
   LOGIN_RECEIVE,
   LOGIN_REQUEST,
   LOGOUT_REQUEST,
+  RECIPIENT_BALANCE_RECEIVE,
 } from '.'
+
+const getBalance = applySpec({
+  available: path(['available', 'amount']),
+  waitingFunds: path(['waiting_funds', 'amount']),
+})
 
 const initialState = {
   loading: false,
@@ -64,6 +74,15 @@ export default function loginReducer (state = initialState, action) {
 
     case LOGOUT_REQUEST: {
       return initialState
+    }
+
+    case RECIPIENT_BALANCE_RECEIVE: {
+      return merge(
+        state,
+        {
+          balance: getBalance(action.payload),
+        }
+      )
     }
 
     default:
