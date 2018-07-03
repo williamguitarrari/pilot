@@ -22,6 +22,8 @@ import ApiKeySection from './ApiKey'
 import PendingRequests from './PendingRequests'
 import BalanceTotalDisplay from './BalanceTotalDisplay'
 import BalanceSummary from './BalanceSummary'
+import SidebarSections from './SidebarSections'
+import SidebarSummary from './SidebarSummary'
 
 storiesOf('Components', module)
   .add('Copy button', () => (
@@ -86,4 +88,10 @@ storiesOf('Components', module)
   ))
   .add('Balance summary', () => (
     <BalanceSummary />
+  ))
+  .add('Sidebar Sections', () => (
+    <SidebarSections />
+  ))
+  .add('Sidebar Summary', () => (
+    <SidebarSummary />
   ))
