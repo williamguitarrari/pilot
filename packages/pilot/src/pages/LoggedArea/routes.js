@@ -35,6 +35,7 @@ export default {
     icon: Withdraw32,
     path: '/withdraw',
     title: 'pages.withdraw.title',
+    hidden: true,
   },
   withdraw: {
     hidden: true,
