@@ -21,12 +21,16 @@ const removeRouteParams = pipe(
 )
 
 const Sidebar = ({
-  location: { pathname },
+  balance,
+  companyName,
   history,
+  location: { pathname },
+  recipientId,
   t,
 }) => (
   <SidebarContainer
-    logo={Logo}
+    balance={balance}
+    companyName={companyName}
     links={values(routes)
       .filter(({ hidden }) => !hidden)
       .map(route => ({
@@ -34,12 +38,21 @@ const Sidebar = ({
         active: pathname.includes(removeRouteParams(route.path)),
       }))
     }
+    logo={Logo}
+    onAnticipate={() => history.push(`/anticipation/${recipientId}`)}
     onLinkClick={history.push}
+    onWithdraw={() => history.push(`/withdraw/${recipientId}`)}
     t={t}
   />
 )
 
 Sidebar.propTypes = {
+  balance: PropTypes.shape({
+    available: PropTypes.number,
+    waitingFunds: PropTypes.number,
+  }).isRequired,
+  companyName: PropTypes.string,
+  recipientId: PropTypes.string,
   location: PropTypes.shape({
     pathname: PropTypes.string,
   }).isRequired,
@@ -47,6 +60,11 @@ Sidebar.propTypes = {
     push: PropTypes.func,
   }).isRequired,
   t: PropTypes.func.isRequired,
+}
+
+Sidebar.defaultProps = {
+  companyName: '',
+  recipientId: null,
 }
 
 export default withRouter(Sidebar)
