@@ -38,9 +38,7 @@ const SidebarSummary = ({
       }
     </button>
 
-    {!collapsed
-      && children
-    }
+    {!collapsed && children}
   </div>
 )
 
