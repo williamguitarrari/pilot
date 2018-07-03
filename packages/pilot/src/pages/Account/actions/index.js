@@ -20,3 +20,6 @@ export const receiveCompany = createAction(COMPANY_RECEIVE)
 
 export const LOGIN_FAIL = 'pilot/account/LOGIN_FAIL'
 export const failLogin = createAction(LOGIN_FAIL)
+
+export const RECIPIENT_BALANCE_RECEIVE = 'pilot/account/RECIPIENT_BALANCE_RECEIVE'
+export const receiveRecipientBalance = createAction(RECIPIENT_BALANCE_RECEIVE)
