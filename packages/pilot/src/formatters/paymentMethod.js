@@ -18,10 +18,10 @@ const isDebitCard = propEq('method', 'debit_card')
 const isBoleto = propEq('method', 'boleto')
 
 const formatPaymentMethod = cond([
-  [isIntlCreditCard, always('Cartao de credito internacional')],
-  [isCreditCard, always('Cartao de credito')],
-  [isDebitCard, always('Cartao de debito')],
-  [isBoleto, always('Boleto')],
+  [isIntlCreditCard, always('models.transaction.international_credit_card')],
+  [isCreditCard, always('models.transaction.credit_card')],
+  [isDebitCard, always('models.transaction.debit_card')],
+  [isBoleto, always('models.transaction.boleto')],
   [T, always(null)],
 ])
 
