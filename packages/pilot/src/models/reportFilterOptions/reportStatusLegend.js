@@ -8,7 +8,7 @@ const status = {
     color: '#951d3c',
     text: 'Processando',
     acronym: 'PR',
-  }
+  },
   waiting: {
     color: '#fcb20a',
     text: 'Aguardando processamento',

@@ -13,6 +13,6 @@ export default {
     {
       label: 'Pronto',
       value: 'ready',
-    }
-  ]
+    },
+  ],
 }
