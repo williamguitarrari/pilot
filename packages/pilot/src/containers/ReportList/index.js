@@ -11,7 +11,7 @@ import AddIcon from 'emblematic-icons/svg/Add32.svg'
 import moment from 'moment'
 import { contains } from 'ramda'
 import style from './style.css'
-import ReportCard from '../componentes/ReportCard/'
+import ReportCard from '../../components/ReportCard'
 
 const options = [
   {
@@ -75,9 +75,10 @@ class ReportList extends Component {
     } = this.props
     return reports.map(report => (
       <ReportCard
+        actions={() => null}
         report={report}
-        onClick={this.handleClick}
-        cardExpanded={contains(report.id, this.state.expandedCard)}
+        subtitle="teste"
+        title="teste"
       />
     ))
   }
