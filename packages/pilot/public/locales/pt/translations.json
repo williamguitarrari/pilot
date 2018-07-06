@@ -814,6 +814,9 @@
       "title": "Transações",
       "total_amount": "total de",
       "try_again": "Tente novamente com outros filtros."
+    },
+    "report": {
+      "title": "Relatórios"
     }
   },
   "components": {
