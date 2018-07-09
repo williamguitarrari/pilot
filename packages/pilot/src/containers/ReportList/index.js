@@ -40,28 +40,14 @@ class ReportList extends Component {
       totalPages,
     } = props
     this.state = {
-      expandedCard: [],
       selected: 'ten',
       currentPage: currentPage || 1,
       totalPages: totalPages || 10,
     }
 
-    this.handleClick = this.handleClick.bind(this)
     this.pageChanged = this.pageChanged.bind(this)
-    this.renderReportList = this.renderReportList.bind(this)
   }
 
-  handleClick (id) {
-    if (contains(id, this.state.expandedCard)) {
-      this.setState({
-        expandedCard: this.state.expandedCard.filter(cardId => cardId !== id),
-      })
-    } else {
-      this.setState({
-        expandedCard: [...this.state.expandedCard, id],
-      })
-    }
-  }
 
   pageChanged (page) {
     this.setState({
@@ -94,7 +80,6 @@ class ReportList extends Component {
           title="Relatórios - Total de 75"
           subtitle={
             <div className={style.cardComponent}>
-              {/* {this.renderCardTitleButton()} */}
               <Button
                 size="default"
                 relevance="low"
