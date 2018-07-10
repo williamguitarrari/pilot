@@ -25,6 +25,9 @@ import {
   flatten,
   isEmpty,
   isNil,
+  unless,
+  is,
+  of,
   join,
   mergeDeepLeft,
   pipe,
@@ -40,6 +43,11 @@ const getFilters = pipe(
   mergeDeepLeft,
   values,
   flatten
+)
+
+const ensureArray = unless(
+  is(Array),
+  of
 )
 
 class Filters extends Component {
@@ -106,7 +114,7 @@ class Filters extends Component {
 
     return (
       <CardActions>
-        {children.map(this.renderChildrenInput)}
+        {ensureArray(children).map(this.renderChildrenInput)}
         {!isNilOrEmpty(options) &&
           <Button
             disabled={this.props.disabled}
