@@ -391,6 +391,53 @@
     }
   },
   "pages": {
+    "anticipation": {
+      "advise": "Antecipações para o mesmo dia útil precisam ser solicitadas antes das 10:59 da manhã. Esta antecipação será analisada e poderá ser aprovada ou rejeitada. Após a aprovação, o valor a ser antecipado é adicionado ao saldo a partir das 12 horas do dia selecionado.",
+      "amount":{
+        "advise": "REVISAR",
+        "title": "Valor a ser antecipado"
+      },
+      "avaiable": {
+        "max": "Valor máximo:",
+        "min": "Valor mínimo:",
+        "subtitle": "Liberado para antecipação:",
+        "title": "Digite o valor bruto que deseja antecipar:"
+      },
+      "cost": {
+        "advise": "REVISAR",
+        "anticipation": "Antecipação: {{cost}}",
+        "title": "Total de taxas",
+        "transaction": "Transfêrencia: {{cost}}"
+      },
+      "date": {
+        "advise": "REVISAR",
+        "label": "Data da antecipação",
+        "title": "Em qual data deseja receber?",
+        "invalid": "Data inválida",
+        "error": "Dia não processável"
+      },
+      "from_end": "do final",
+      "end": "Fim",
+      "initial": "Início",
+      "maximum_error": "Valor maior do que o permitido",
+      "minimum_error": "Valor menor do que o permitido",
+      "number": "Deve ser um número",
+      "period":{
+        "advise": "REVISAR",
+        "title": "Ordem de antecipação:"
+      },
+      "requested": {
+        "advise": "REVISAR",
+        "automatic": "Gostaria de transferir este valor automaticamente para a conta bancária do recebedor?",
+        "label": "Valor da antecipação",
+        "title": "Valor aproximado ao que você solicitou:"
+      },
+      "required_error": "Campo obrigatório",
+      "select": "Selecione a data da antecipação",
+      "simulate": "Calcular valor",
+      "start": "do início",
+      "yes": "Sim"
+    },
     "balance": {
       "account": "Conta",
       "agency": "Agência",
