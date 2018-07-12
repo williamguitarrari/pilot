@@ -3,7 +3,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import {
+  Button,
   Sidebar,
+  SidebarContent,
   SidebarHeader,
   SidebarLink,
   SidebarLinks,
@@ -60,6 +62,17 @@ class SidebarContainer extends React.Component {
           )
         )}
         </SidebarLinks>
+        {!collapsed &&
+          <SidebarContent>
+            <Button
+              onClick={() => window.open('https://dashboard.pagar.me/')}
+              fill="outline"
+              size="tiny"
+            >
+              Voltar para versão 1.0
+            </Button>
+          </SidebarContent>
+        }
       </Sidebar>
     )
   }
