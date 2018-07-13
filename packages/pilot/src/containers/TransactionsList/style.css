@@ -23,12 +23,10 @@
   }
 }
 
-.toolBar {
+.toolBar > * {
+  margin-left: var(--spacing-small);
 
-  & > * {
-    margin-left: var(--spacing-small);
-  }
-  & > *:first-child {
+  &:first-child {
     margin-left: unset;
   }
 }
