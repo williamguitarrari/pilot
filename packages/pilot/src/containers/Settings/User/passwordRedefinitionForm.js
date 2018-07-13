@@ -20,11 +20,11 @@ import {
 import IconWarning from 'emblematic-icons/svg/Warning32.svg'
 import IconInfo from 'emblematic-icons/svg/Info32.svg'
 
-const required = t => value => (value ? null : t('pages.settings.user.card.access.fieldRequired'))
+const required = t => value => (value ? null : t('pages.settings.user.card.access.field_required'))
 const equalsString = (t, str1) => ifElse(
   equals(str1),
   F,
-  always(t('pages.settings.user.card.access.passwordEqual'))
+  always(t('pages.settings.user.card.access.password_equal'))
 )
 
 class PasswordRedefinitionForm extends Component {
@@ -105,21 +105,21 @@ class PasswordRedefinitionForm extends Component {
             <Row>
               <Col palm={12} tablet={12} desk={3} tv={3}>
                 <FormInput
-                  label={t('pages.settings.user.card.access.currentPassword')}
+                  label={t('pages.settings.user.card.access.current_password')}
                   name="current_password"
                   type="password"
                 />
               </Col>
               <Col palm={12} tablet={12} desk={3} tv={3}>
                 <FormInput
-                  label={t('pages.settings.user.card.access.newPassword')}
+                  label={t('pages.settings.user.card.access.new_nassword')}
                   name="new_password"
                   type="password"
                 />
               </Col>
               <Col palm={12} tablet={12} desk={3} tv={3}>
                 <FormInput
-                  label={t('pages.settings.user.card.access.matchNewPassword')}
+                  label={t('pages.settings.user.card.access.match_new_password')}
                   name="new_password_confirmation"
                   type="password"
                 />
@@ -154,14 +154,14 @@ class PasswordRedefinitionForm extends Component {
             size="default"
             onClick={this.handleCancellation}
           >
-            {t('pages.settings.user.card.access.buttonCancel')}
+            {t('pages.settings.user.card.access.button_cancel')}
           </Button>
           <Button
             type="submit"
             size="default"
             fill="gradient"
           >
-            {t('pages.settings.user.card.access.buttonSubmit')}
+            {t('pages.settings.user.card.access.button_submit')}
           </Button>
         </CardActions>
       </Form>

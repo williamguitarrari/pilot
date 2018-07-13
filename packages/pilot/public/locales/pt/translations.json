@@ -521,13 +521,13 @@
           "access": {
             "title": "Alterar senha",
             "subtitle": "Recomendamos que use uma senha forte e diferente das demais que costuma utilizar.",
-            "currentPassword": "Senha",
-            "newPassword": "Nova senha",
-            "matchNewPassword": "Confirme a nova senha",
-            "buttonSubmit": "Salvar alterações",
-            "buttonCancel": "Cancelar",
-            "fieldRequired": "Esse campo é obrigatório",
-            "passwordEqual": "As senhas não conferem",
+            "current_password": "Senha",
+            "new_password": "Nova senha",
+            "match_new_password": "Confirme a nova senha",
+            "button_submit": "Salvar alterações",
+            "button_cancel": "Cancelar",
+            "field_required": "Esse campo é obrigatório",
+            "password_equal": "As senhas não conferem",
             "alert": {
               "success": "Senha atualizada com sucesso."
             }
@@ -597,7 +597,7 @@
             "table": {
               "user": "{{count}} Usuário",
               "user_plural": "{{count}} Usuários",
-              "addUser": "Adicionar usuário"
+              "add_user": "Adicionar usuário"
             },
             "modal": {
               "title": "Adicionar usuário",
@@ -605,48 +605,48 @@
               "access_level": "Nível de acesso",
               "identification": "Identificação"
             },
-            "deleteUser" : {
+            "delete_user": {
               "success": "Usuario deletado com sucesso."
             }
           },
           "register": {
-            "cardTitle": "As alterações dos dados da empresa estão sujeitas à análise. Se tiver alguma dúvida, entre em contato conosco.",
-            "cardCompany": "Dados da empresa",
-            "accountManager": "Contato responsável",
+            "card_title": "As alterações dos dados da empresa estão sujeitas à análise. Se tiver alguma dúvida, entre em contato conosco.",
+            "card_company": "Dados da empresa",
+            "account_manager": "Contato responsável",
             "title": {
               "company": "Informações da empresa",
               "address": "Endereço",
               "documents": "Documentos",
-              "managingPartner": "Informações pessoais",
+              "managing_partner": "Informações pessoais",
               "bank": "Informações da conta"
             },
             "subtitle": {
               "company": "Verifique ou edite informações da sua empresa.",
               "address": "Verifique ou edite informações do endereço da sua empresa.",
               "documents": "Visualize os documentos vinculados à sua conta.",
-              "managingPartner": "Verifique ou edite informações do sócio administrador.",
+              "managing_partner": "Verifique ou edite informações do sócio administrador.",
               "bank": "Verifique ou adicione novas contas que você utilizará para realizar os saques da sua conta Pagar.me."
             },
             "general": {
               "form": {
                 "name": "Nome",
-                "fullName": "Nome completo",
+                "full_name": "Nome completo",
                 "cnpj": "CNPJ",
-                "siteUrl": "Site Url"
+                "site_url": "Site Url"
               }
             },
             "address": {
               "form": {
                 "street": "Rua",
                 "complementary": "Complemento",
-                "streetNumber": "Número",
+                "street_number": "Número",
                 "neighborhood": "Bairro",
                 "city": "Cidade",
                 "state": "Estado",
                 "zipcode": "CEP"
               }
             },
-            "managingPartner": {
+            "managing_partner": {
               "form": {
                 "name": "Nome",
                 "cpf": "CPF",

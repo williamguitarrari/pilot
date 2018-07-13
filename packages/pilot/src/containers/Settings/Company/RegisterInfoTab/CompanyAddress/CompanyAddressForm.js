@@ -81,7 +81,7 @@ class CompanyGeneralForm extends Component {
             <Col palm={12} tablet={12} desk={2} tv={2}>
               <FormInput
                 disabled
-                label={t('pages.settings.company.card.register.address.form.streetNumber')}
+                label={t('pages.settings.company.card.register.address.form.street_number')}
                 name="streetNumber"
                 type="text"
               />
