@@ -13,6 +13,7 @@ import {
   HeaderMenu,
   HeaderTitle,
   HeaderBackButton,
+  PopoverContent,
   PopoverMenu,
 } from 'former-kit'
 
@@ -58,14 +59,14 @@ const HeaderContainer = ({
           </Fragment>
         }
       >
-        <div>
+        <PopoverContent>
           <strong>
             {user.name}
           </strong>
           <small>
             {t(`models.user.permission.${user.permission}`)}
           </small>
-        </div>
+        </PopoverContent>
         <PopoverMenu
           items={[
             { title: t('header.account.settings'), action: onSettings },
