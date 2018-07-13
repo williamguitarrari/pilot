@@ -2,90 +2,130 @@
 
 # Pilot
 
-A próxima versão da Dashboard Pagar.me
-
-<br>
-
 [![Join the chat at https://gitter.im/pagarme/react-event-components](https://badges.gitter.im/pagarme/pilot.svg)](https://gitter.im/pagarme/pilot?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 <br>
 
+A próxima versão da Dashboard Pagar.me
+<br>
+
+
+## Índice
+
+- [Introdução](#introdução)
+- [Tecnologia utilizada](#tecnologia-utilizada)
+- [Requisitos](#requisitos)
+- [Instalação](#instalação)
+- [Cockpit](#cockpit)
+	- [Rodando testes no Cockpit](#rodando-testes-no-cockpit)
+- [Estrutura do projeto](#estrutura-do-projeto)
+- [Contribuindo](#contribuindo)
+- [Licenças](#licenças)
+
+## Introdução 
 
 Pilot é o codinome da nova dashboard do Pagar.me. O produto foi criado
 a partir de feedbacks dos usuários, para que eles possam ter uma
 experiência cada vez mais transparente de sua operação financeira no
 Pagar.me, e consigam focar no seu negócio!
 
-## Trabalhando neste repositório
-
-Este repositório é um monorepo que aloja os pacotes que compõem o Pilot.
-Para instalar as dependências é necessário usar o
-[Yarn](https://yarnpkg.com/en) versão 1.0 ou superior, que suporta a
-funcionalidade de [Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/).
-
-### Stack
+## Tecnologia utilizada
 
 A stack foi escolhida com base no que empresas como Facebook, AirBnb,
 e New York Times estão usando para construir suas experiências. Também foi
 levado em consideração a simplicidade, curva de aprendizado e requisitos
 como fácil distribuição e entrega progressiva.
 
-Tendo isso em vista, fomos de React. A estrutura do projeto foi iniciada
-rapidamente usando o [FormerKit Dashboard](https://github.com/pagarme/react-scripts-former-kit-dashboard),
+Tendo isso em vista, optamos por usar [React](http://github.com/facebook/react) e [Ramda](https://github.com/ramda/ramda). 
+A estrutura do projeto foi iniciada rapidamente usando o [FormerKit Dashboard](https://github.com/pagarme/react-scripts-former-kit-dashboard),
 projeto que desenvolvemos baseado no Create React App para nos permitir
 criar rapidamente projetos de dashboards.
 
-### Rodando
+## Requisitos
 
-Use o Yarn para instalar as dependências:
+Este repositório é um monorepo que aloja os pacotes que compõem a Pilot.
+Para instalar as dependências é necessário usar o
+[Yarn](https://yarnpkg.com/en) versão 1.0 ou superior, que suporta a
+funcionalidade de [Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/).
 
+## Instalação
+
+Algumas instruções para desenvolver na Pilot:
+
+1. **Clonando o repositório**
+
+	```sh
+	$ git clone git@github.com:pagarme/pilot.git
+	```
+
+2. **Rodando o servidor**
+
+	Entre na pasta principal do projeto:
+
+	```sh
+	$ cd pilot
+	```
+
+	Use o Yarn para instalar as dependências:
+
+	```sh
+	$ yarn
+	```
+
+	Entre no diretório da Pilot e inicie a aplicação:
+
+	```sh
+	$ cd packages/pilot
+	$ yarn start
+	```
+
+## Cockpit
+
+![cockpit-data-flow](https://user-images.githubusercontent.com/20358128/42246516-48de3114-7ef3-11e8-8428-8b3462b7eb92.png)
+
+O Cockpit é nossa biblioteca para efetuar requests a serviços externos, 
+e devolver os dados retornados em um formato estruturado para serem 
+utilizados nas páginas da Pilot. Atualmente, a principal função do 
+Cockpit é fazer a comunicação com a API utilizando o [pagarme-js](https://github.com/pagarme/pagarme-js). Porém, sua estrutura permite 
+interação com outros serviços, caso haja necessidade. Uma request ao 
+Cockpit equivale a uma ou mais requests na API, onde o dado retornado 
+será tratado para ser renderizado na Pilot.
+
+### Rodando testes no Cockpit
+
+Entre no diretório do Cockpit e inicie os testes:
+```sh
+$ cd packages/cockpit
+$ yarn test
 ```
-yarn
-```
 
-Entre no diretório do Pilot:
+## Estrutura do projeto
 
-```
-cd packages/pilot
-```
+- **`packages`**: Toda a estrutura de arquivos e pastas dos monorepos, 
+seguindo a funcionalidades de [Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/).
 
-Inicie a aplicação:
+  - **`cockpit`**: Contém a estrutura de arquivos e pastas do Cockpit.
+	- **`config`**: Configurações gerais do Webpack e Jest.
+	- **`dist`**: Scripts prontos para produção.
+	- **`scripts`**: Todos os scripts usados para testes.
+    - **`src`**: Código-fonte do Cockpit.
 
-```
-yarn start
-```
+  - **`pilot`**: Contém a estrutura de arquivos e pastas da Pilot.
+    - **`src`** 
+	  - **`components`**: Todos os componentes da Pilot.
+	  - **`containers`**: Todos os containers da Pilot.
+	  - **`formatters`**: Funções utilizadas para formatação dos dados da aplicação.
+	  - **`models`**: Modelos baseados na estrutura de dados da aplicação e da API.
+	  - **`pages`**: Todos os [higher-order components](https://reactjs.org/docs/higher-order-components.html) que contém toda a lógica de busca de dados e manutenção de estado das páginas da Pilot.
 
-### Contribuindo
+	- **`stories`**: Nossa biblioteca de componentes, containers
+	 e páginas usadas na aplicação. Utilizamos o [Storybook](https://github.com/storybooks/storybook).
 
-Caso queira fazer uma contribuição grande, recomendamos que abra uma
-issue para discutir sua ideia antes de executá-la. Para pequenos bugfixes
-fique a vontade para abrir PRs. Fique atento aos padrões de projeto que
-usamos -- veja nosso styleguide de [React e CSS][react-styleguide] e
-também nosso [Git Style Guide][git-styleguide].
+## Contribuindo
 
-Usamos o Github flow no desenvolvimento. Para criar um novo PR:
+Para ler informações sobre contribuição, confira nosso guia 
+de contribuição em [CONTRIBUTING.md](CONTRIBUTING.md).
 
-1. Crie um fork deste repositório e clone em seu computador
-1. Crie uma nova branch baseada na master (`git checkout -b fix/button-size` por exemplo)
-1. Faça suas alterações, criando commits que agrupam as alterações feitas
-1. Envie sua branch para seu fork (`git push origin fix/button-size`, por exemplo)
+## Licenças
 
-Caso sua branch fique desatualizada, poderemos solicitar um rebase.
-Para fazê-lo:
-
-1. Adicione nosso "upstream" como remoto: `git remote add upstream https://github.com/pagarme/pilot`
-1. Busque as atualizações do upstream: `git fetch upstream`
-1. Faça o rebase de sua branch: `git rebase upstream/master <sua-branch>`
-1. Resolva os conflitos e use `git rebase --continue` para continuar
-1. Faça o force push em seu fork: `git push origin <sua-branch> --force-with-lease`
-
-## Licensing
-
-See [LICENSES](LICENSES.md).
-
----
-
-[milestones]: https://github.com/pagarme/pilot/milestones
-[dashboard-pagarme]: https://dashboard.pagar.me
-[react-styleguide]: https://github.com/pagarme/react-style-guide
-[git-styleguide]: https://github.com/pagarme/git-style-guide
-[storybook]: https://github.com/storybooks/storybook
+Veja as licenças em [LICENSES](LICENSES.md).
