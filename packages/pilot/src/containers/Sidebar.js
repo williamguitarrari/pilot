@@ -155,7 +155,7 @@ class SidebarContainer extends React.Component {
               fill="outline"
               size="tiny"
             >
-              Voltar para versão 1.0
+              {t('pages.sidebar.back_to_old_version')}
             </Button>
           </SidebarContent>
         }
