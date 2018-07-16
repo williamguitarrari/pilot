@@ -132,8 +132,12 @@ class Anticipation extends Component {
       onConfirmationConfirm,
       onConfirmationReturn,
       onDataConfirm,
+      onDateChange,
+      onFormChange,
+      onTimeframeChange,
       onTryAgain,
       onViewStatement,
+      recalculationNeeded,
       recipient: {
         bank_account: bankAccount,
       },
@@ -164,6 +168,7 @@ class Anticipation extends Component {
                 bankAccount={bankAccount}
                 cost={totalCost}
                 date={date}
+                error={error}
                 isAutomaticTransfer={automaticTransfer}
                 isValidDay={validateDay}
                 loading={loading}
@@ -171,7 +176,11 @@ class Anticipation extends Component {
                 minimum={minimum}
                 onCalculateSubmit={onCalculateSubmit}
                 onCancel={onCancel}
+                onChange={onFormChange}
                 onConfirm={onDataConfirm}
+                onDateChange={onDateChange}
+                onTimeframeChange={onTimeframeChange}
+                recalculationNeeded={recalculationNeeded}
                 requested={requested}
                 t={t}
                 timeframe={timeframe}
@@ -234,9 +243,9 @@ class Anticipation extends Component {
               <Steps
                 status={this.getStepsStatus()}
                 steps={[
-                  { id: 'data', title: t('a') },
-                  { id: 'confirmation', title: t('b') },
-                  { id: 'result', title: t('c') },
+                  { id: 'data', title: t('pages.anticipation.data') },
+                  { id: 'confirmation', title: t('pages.anticipation.confirmation') },
+                  { id: 'result', title: t('pages.anticipation.conclusion') },
                 ]}
               />
             </Card>
@@ -258,13 +267,17 @@ Anticipation.propTypes = {
   loading: PropTypes.bool.isRequired,
   maximum: PropTypes.number,
   minimum: PropTypes.number,
+  onCalculateSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   onConfirmationConfirm: PropTypes.func.isRequired,
   onConfirmationReturn: PropTypes.func.isRequired,
   onDataConfirm: PropTypes.func.isRequired,
-  onCalculateSubmit: PropTypes.func.isRequired,
+  onDateChange: PropTypes.func.isRequired,
+  onFormChange: PropTypes.func.isRequired,
+  onTimeframeChange: PropTypes.func.isRequired,
   onViewStatement: PropTypes.func.isRequired,
   onTryAgain: PropTypes.func.isRequired,
+  recalculationNeeded: PropTypes.bool.isRequired,
   recipient: PropTypes.shape({
     bank_account: PropTypes.shape({
       agencia: PropTypes.string,

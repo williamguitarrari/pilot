@@ -215,7 +215,7 @@ const AnticipationForm = ({
                 </Button>
               </div>
               <hr className={style.spacer} />
-              <p>{t('pages.anticipation.advise')}</p>
+              <p className={style.advise}>{t('pages.anticipation.advise')}</p>
             </Col>
           </Row>
 
