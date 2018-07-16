@@ -112,7 +112,7 @@ class PasswordRedefinitionForm extends Component {
               </Col>
               <Col palm={12} tablet={12} desk={3} tv={3}>
                 <FormInput
-                  label={t('pages.settings.user.card.access.new_nassword')}
+                  label={t('pages.settings.user.card.access.new_password')}
                   name="new_password"
                   type="password"
                 />
