@@ -394,48 +394,76 @@
     "anticipation": {
       "advise": "Antecipações para o mesmo dia útil precisam ser solicitadas antes das 10:59 da manhã. Esta antecipação será analisada e poderá ser aprovada ou rejeitada. Após a aprovação, o valor a ser antecipado é adicionado ao saldo a partir das 12 horas do dia selecionado.",
       "amount":{
-        "advise": "REVISAR",
+        "advise": "Este é o valor líquido a ser antecipado, já com as taxas descontadas.",
         "title": "Valor a ser antecipado"
       },
       "avaiable": {
-        "max": "Valor máximo:",
-        "min": "Valor mínimo:",
+        "max": "Máximo:",
+        "min": "Mínimo:",
         "subtitle": "Liberado para antecipação:",
-        "title": "Digite o valor bruto que deseja antecipar:"
+        "title": "Disponível para antecipação:"
       },
+      "anticipation_success": "Pedido confirmado! Sua antecipação será analisada em breve.",
+      "anticipation_timeframe": "Ordem da antecipação:",
+      "cancel": "Cancelar",
+      "conclusion": "Conclusão",
+      "confirm": "Antecipar valor",
+      "confirmation": "Confirmação",
+      "confirmation_advise_with_transfer": "O valor da antecipação será depositado em:",
+      "confirmation_advise_without_transfer": "O valor da antecipação será adicionado ao seu saldo:",
+      "continue": "Continuar",
       "cost": {
-        "advise": "REVISAR",
+        "advise": "Estes são os valores cobrados para que os valores sejam antecipados. A Taxa de Transferência não é cobrada caso você adicione ao saldo ao invés de transferir para a conta bancária.",
         "anticipation": "Antecipação: {{cost}}",
         "title": "Total de taxas",
-        "transaction": "Transfêrencia: {{cost}}"
+        "transfer": "Transfêrencia: {{cost}}"
       },
+      "currency_symbol": "R$",
+      "data": "Dados",
       "date": {
-        "advise": "REVISAR",
+        "advise": "Selecione aqui a data em que a antecipação acontecerá. Você pode antecipar apenas em dias úteis.",
         "label": "Data da antecipação",
         "title": "Em qual data deseja receber?",
         "invalid": "Data inválida",
         "error": "Dia não processável"
       },
-      "from_end": "do final",
+      "from_end": "Final",
       "end": "Fim",
       "initial": "Início",
       "maximum_error": "Valor maior do que o permitido",
       "minimum_error": "Valor menor do que o permitido",
+      "no": "Não",
       "number": "Deve ser um número",
+      "password": "Senha",
       "period":{
-        "advise": "REVISAR",
+        "advise": "Você pode escolher que o valor seja descontado a partir dos recebíveis do início do período vigente, ou a partir do final. Esta opção afeta o custo da sua antecipação.",
         "title": "Ordem de antecipação:"
       },
       "requested": {
-        "advise": "REVISAR",
-        "automatic": "Gostaria de transferir este valor automaticamente para a conta bancária do recebedor?",
-        "label": "Valor da antecipação",
-        "title": "Valor aproximado ao que você solicitou:"
+        "advise": "Este é o valor mais próximo ao desejado que encontramos, baseado nos parâmetros selecionados. Ele é a soma dos valores na ordem escolhida, até chegar o mais próximo possível do valor desejado. Como antecipamos os recebíveis de cada transação por inteiro, este valor costuma ficar diferente do valor desejado caso você não antecipe o valor máximo disponível.",
+        "label": "Valor desejado({{currency}})",
+        "title": "Valor Bruto"
       },
       "required_error": "Campo obrigatório",
+      "result_advise_with_transfer": "Assim que aprovado, o valor será depositado a partir das 16 horas do dia selecionado.",
+      "result_advise_without_transfer": "Assim que aprovado, o valor será adicionado ao saldo a partir das 12 horas do dia selecionado.",
+      "result_error": "Erro na antecipação",
+      "result_information": "Em caso de dúvidas, acesse a Central de Ajuda para ter respostas instantâneas às perguntas mais frequentes ou entrar em contato conosco.",
+      "return": "Voltar",
       "select": "Selecione a data da antecipação",
       "simulate": "Calcular valor",
-      "start": "do início",
+      "start": "Início",
+      "title": "Antecipação",
+      "transfer": {
+        "advise": "Transfira para conta bancária para sacar o valor da antecipação direto em conta. Costuma ficar disponível após as 16 horas do dia selecionado, dependendo do tempo de compensação do banco. Adicione ao Saldo para somar o valor da antecipação ao saldo. Útil se quiser sacar mais tarde ou somar ao valor de saldo antes de sacar.",
+        "label": "Tipo de antecipação:",
+        "yes": "Transferir para conta bancária",
+        "no": "Adicionar ao Saldo"
+      },
+      "try_again": "Tentar novamente",
+      "type_password": "Digite sua senha para confirmar",
+      "view_statement": "Ver no extrato",
+      "wrong_pass": "Senha inválida",
       "yes": "Sim"
     },
     "balance": {
