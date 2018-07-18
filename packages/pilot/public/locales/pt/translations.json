@@ -8,7 +8,7 @@
     "withdraw": "Saque"
   },
   "cancel": "cancelar",
-  "card_number": "Número do cartão",
+  "card_number": "Número do cartão", 
   "confirmation": "Confirmação",
   "conta_corrente": "Corrente",
   "conta_corrente_conjunta": "Corrente conjunta",
@@ -674,6 +674,9 @@
             "subtitle": {
               "boleto": "Configurações globais de seus boletos.",
               "subscriptions": "Configurações globais de suas assinaturas recorrentes."
+            },
+            "boleto": {
+              "title": "Boletos"
             }
           },
           "team": {

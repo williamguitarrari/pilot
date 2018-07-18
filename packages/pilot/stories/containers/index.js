@@ -50,8 +50,12 @@ import {
   AnticipationResultWithoutAutomaticTransfer,
 } from './Anticipation/Result'
 import Anticipation from './Anticipation'
+import BoletoConfigurationForm from './Settings/Boleto/Form'
 
 storiesOf('Containers', module)
+  .add('Boleto Configuration Form', () => (
+    <BoletoConfigurationForm />
+  ))
   .add('Anticipation Form', () => (
     <AnticipationForm />
   ))
