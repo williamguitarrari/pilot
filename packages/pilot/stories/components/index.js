@@ -2,6 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 
 import BoletoRefundDetails from './BoletoRefundDetails'
+import ConfigurationCardForm from './ConfigurationCardForm'
 import CopyButton from './CopyButton'
 import CurrencyInput from './CurrencyInput'
 import CreditCardRefundDetails from './CreditCardRefundDetails'
@@ -28,78 +29,29 @@ import SidebarSections from './SidebarSections'
 import SidebarSummary from './SidebarSummary'
 
 storiesOf('Components', module)
-  .add('Copy button', () => (
-    <CopyButton />
-  ))
-  .add('Currency Input', () => (
-    <CurrencyInput />
-  ))
-  .add('Customer card', () => (
-    <CustomerCard />
-  ))
-  .add('Details head', () => (
-    <DetailsHead />
-  ))
-  .add('Recipient section', () => (
-    <RecipientSectionState />
-  ))
-  .add('Transaction details card', () => (
-    <TransactionDetailsCard />
-  ))
-  .add('Event list', () => (
-    <EventList />
-  ))
-  .add('DataDisplay', () => (
-    <DataDisplay />
-  ))
-  .add('Reprocess details', () => (
-    <ReprocessDetails />
-  ))
-  .add('TotalDisplay', () => (
-    <TotalDisplay />
-  ))
-  .add('Payment card', () => (
-    <PaymentCards />
-  ))
-  .add('RiskLevel', () => (
-    <RiskLevel />
-  ))
-  .add('TreeView', () => (
-    <TreeView />
-  ))
-  .add('Property', () => (
-    <Property />
-  ))
-  .add('Boleto Refund Details', () => (
-    <BoletoRefundDetails />
-  ))
-  .add('CreditCardRefundDetails', () => (
-    <CreditCardRefundDetails />
-  ))
-  .add('ApiKey', () => (
-    <ApiKeySection />
-  ))
-  .add('Pending Requests', () => (
-    <PendingRequests />
-  ))
-  .add('Operations', () => (
-    <Operations />
-  ))
-  .add('Balance total display', () => (
-    <BalanceTotalDisplay />
-  ))
-  .add('Balance summary', () => (
-    <BalanceSummary />
-  ))
-  .add('Sidebar Sections', () => (
-    <SidebarSections />
-  ))
-  .add('Sidebar Summary', () => (
-    <SidebarSummary />
-  ))
-  .add('Summary', () => (
-    <Summary />
-  ))
-  .add('Transfer Error', () => (
-    <TransferError />
-  ))
+  .add('Configuration card form', () => <ConfigurationCardForm />)
+  .add('Copy button', () => <CopyButton />)
+  .add('Currency Input', () => <CurrencyInput />)
+  .add('Customer card', () => <CustomerCard />)
+  .add('Details head', () => <DetailsHead />)
+  .add('Recipient section', () => <RecipientSectionState />)
+  .add('Transaction details card', () => <TransactionDetailsCard />)
+  .add('Event list', () => <EventList />)
+  .add('DataDisplay', () => <DataDisplay />)
+  .add('Reprocess details', () => <ReprocessDetails />)
+  .add('TotalDisplay', () => <TotalDisplay />)
+  .add('Payment card', () => <PaymentCards />)
+  .add('RiskLevel', () => <RiskLevel />)
+  .add('TreeView', () => <TreeView />)
+  .add('Property', () => <Property />)
+  .add('Boleto Refund Details', () => <BoletoRefundDetails />)
+  .add('CreditCardRefundDetails', () => <CreditCardRefundDetails />)
+  .add('ApiKey', () => <ApiKeySection />)
+  .add('Pending Requests', () => <PendingRequests />)
+  .add('Operations', () => <Operations />)
+  .add('Balance total display', () => <BalanceTotalDisplay />)
+  .add('Balance summary', () => <BalanceSummary />)
+  .add('Sidebar Sections', () => <SidebarSections />)
+  .add('Sidebar Summary', () => <SidebarSummary />)
+  .add('Summary', () => <Summary />)
+  .add('Transfer Error', () => <TransferError />)
