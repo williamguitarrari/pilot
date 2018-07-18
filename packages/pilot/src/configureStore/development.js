@@ -9,10 +9,7 @@ import { save, load } from 'redux-localstorage-simple'
 
 import DevTools from '../DevTools'
 import { rootEpic, rootReducer } from '../pages/actions'
-
-const states = [
-  'account.sessionId',
-]
+import states from './states'
 
 const enhancer = compose(
   applyMiddleware(createEpicMiddleware(rootEpic), save({
