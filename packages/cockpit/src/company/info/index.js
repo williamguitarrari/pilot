@@ -1,6 +1,7 @@
 import { applySpec } from 'ramda'
-import apiKeys from './apiKeys'
 import address from './address'
+import apiKeys from './apiKeys'
+import apiVersion from './apiVersion'
 import general from './general'
 import managingPartner from './managingPartner'
 import pricing from './pricing'
@@ -11,6 +12,7 @@ const info = client => () => client
   .current()
   .then(applySpec({
     pricing,
+    apiVersion,
     apiKeys,
     team,
     general,
