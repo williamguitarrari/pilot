@@ -681,6 +681,9 @@
             "subtitle": {
               "boleto": "Configurações globais de seus boletos.",
               "subscriptions": "Configurações globais de suas assinaturas recorrentes."
+            },
+            "boleto": {
+              "title": "Boletos"
             }
           },
           "team": {
