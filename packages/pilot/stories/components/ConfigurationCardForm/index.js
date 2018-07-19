@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { action } from '@storybook/addon-actions'
 import {
+  FormInput,
   FormDropdown,
   Spacing,
 } from 'former-kit'
@@ -18,6 +19,7 @@ const initialDataState = {
 const collapsedAction = action('collapsed')
 const cancelAction = action('cancel')
 const confirmAction = action('confirm')
+const changeAction = action('change')
 
 class ConfigurationCardFormExample extends Component {
   constructor () {
@@ -30,6 +32,7 @@ class ConfigurationCardFormExample extends Component {
 
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleCancel = this.handleCancel.bind(this)
+    this.handleChange = this.handleChange.bind(this)
     this.toggleCollapse = this.toggleCollapse.bind(this)
   }
 
@@ -45,6 +48,12 @@ class ConfigurationCardFormExample extends Component {
     this.setState({
       data: initialDataState,
     }, () => cancelAction(this.state.data))
+  }
+
+  handleChange (data) {
+    this.setState({
+      data,
+    }, () => changeAction(this.state))
   }
 
   toggleCollapse () {
@@ -74,6 +83,7 @@ class ConfigurationCardFormExample extends Component {
           instructions,
         }}
         onCancel={this.handleCancel}
+        onChange={this.handleChange}
         onClick={this.toggleCollapse}
         onSubmit={this.handleSubmit}
         collapsed={collapsed}
@@ -83,13 +93,9 @@ class ConfigurationCardFormExample extends Component {
         <p>{t('configurations.boleto.description')}</p>
 
         <div className={style.content}>
-          <FormDropdown
+          <FormInput
             label={t('configurations.boleto.installments_title')}
             name="installments"
-            options={[
-              { name: '1', value: '1' },
-              { name: '2', value: '2' },
-            ]}
           />
           <Spacing size="small" />
           <FormDropdown
