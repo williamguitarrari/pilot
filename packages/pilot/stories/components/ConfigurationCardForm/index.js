@@ -75,7 +75,7 @@ class ConfigurationCardFormExample extends Component {
         }}
         onCancel={this.handleCancel}
         onClick={this.toggleCollapse}
-        onConfirm={this.handleSubmit}
+        onSubmit={this.handleSubmit}
         collapsed={collapsed}
         icon={<IconBarcode width={16} height={16} />}
         t={translate => translate}
