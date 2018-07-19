@@ -17,7 +17,7 @@ const ConfigurationCardForm = ({
   icon,
   onCancel,
   onClick,
-  onConfirm,
+  onSubmit,
   subtitle,
   title,
   t,
@@ -37,7 +37,7 @@ const ConfigurationCardForm = ({
           data={data}
           validation={validation}
           validateOn="blur"
-          onSubmit={onConfirm}
+          onSubmit={onSubmit}
         >
           <CardContent>{children}</CardContent>
 
@@ -69,7 +69,7 @@ ConfigurationCardForm.propTypes = {
   icon: PropTypes.element.isRequired,
   onCancel: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
-  onConfirm: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
   subtitle: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   t: PropTypes.func.isRequired,
