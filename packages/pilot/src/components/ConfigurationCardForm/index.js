@@ -14,8 +14,10 @@ const ConfigurationCardForm = ({
   children,
   collapsed,
   data,
+  disabled,
   icon,
   onCancel,
+  onChange,
   onClick,
   onSubmit,
   subtitle,
@@ -35,25 +37,28 @@ const ConfigurationCardForm = ({
       {!collapsed &&
         <Form
           data={data}
-          validation={validation}
-          validateOn="blur"
+          onChange={onChange}
           onSubmit={onSubmit}
+          validateOn="blur"
+          validation={validation}
         >
           <CardContent>{children}</CardContent>
 
           <CardActions>
             <Button
+              disabled={disabled}
               fill="outline"
               onClick={onCancel}
               type="reset"
             >
-              {t('configurations.card_form.cancel')}
+              {t('pages.settings.company.cancel')}
             </Button>
             <Button
+              disabled={disabled}
               fill="gradient"
               type="submit"
             >
-              {t('configurations.card_form.confirm')}
+              {t('pages.settings.company.confirm')}
             </Button>
           </CardActions>
         </Form>
@@ -66,18 +71,21 @@ ConfigurationCardForm.propTypes = {
   children: PropTypes.node.isRequired,
   collapsed: PropTypes.bool,
   data: PropTypes.shape({}).isRequired,
+  disabled: PropTypes.bool,
   icon: PropTypes.element.isRequired,
   onCancel: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   subtitle: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
   t: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
   validation: PropTypes.shape({}),
 }
 
 ConfigurationCardForm.defaultProps = {
   collapsed: false,
+  disabled: false,
   validation: null,
 }
 
