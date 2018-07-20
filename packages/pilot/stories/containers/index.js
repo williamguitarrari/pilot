@@ -35,6 +35,7 @@ import {
 import Reprocess from './Reprocess'
 import ReprocessForm from './Reprocess/Form'
 import ReprocessResult from './Reprocess/Result'
+import SelectAccount from './AddRecipient/BankAccountStep/SelectAccount'
 import Withdraw from './Withdraw'
 import WithdrawConfirmation from './Withdraw/Confirmation'
 import WithdrawForm from './Withdraw/Form'
@@ -158,6 +159,9 @@ storiesOf('Containers', module)
         result: 'error',
       }}
     />
+  ))
+  .add('Select Account', () => (
+    <SelectAccount />
   ))
   .add('Withdraw', () => (
     <Withdraw />
