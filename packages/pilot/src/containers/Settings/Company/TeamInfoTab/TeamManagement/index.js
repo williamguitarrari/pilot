@@ -78,7 +78,7 @@ class MenagementTeam extends React.Component {
             fill="gradient"
             icon={<IconAdd width={12} height={12} />}
             onClick={this.handleModalOpenAddUser}
-          > {t('pages.settings.company.card.team.table.addUser')}
+          > {t('pages.settings.company.card.team.table.add_user')}
           </Button>
 
           <div style={{ flex: '1' }} />
@@ -102,7 +102,7 @@ class MenagementTeam extends React.Component {
                 type="info"
                 icon={<IconInfo height={16} width={16} />}
               >
-                <p>{t('pages.settings.company.card.team.deleteUser.success')}</p>
+                <p>{t('pages.settings.company.card.team.delete_user.success')}</p>
               </Alert>
             }
           </CardContent>

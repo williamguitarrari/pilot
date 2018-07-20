@@ -74,7 +74,7 @@ class CompanyGeneralForm extends Component {
             <Col palm={12} tablet={12} desk={4} tv={4}>
               <FormInput
                 disabled
-                label={t('pages.settings.company.card.register.managingPartner.form.name')}
+                label={t('pages.settings.company.card.register.managing_partner.form.name')}
                 name="name"
                 type="text"
               />
@@ -82,7 +82,7 @@ class CompanyGeneralForm extends Component {
             <Col palm={12} tablet={12} desk={2} tv={2}>
               <FormInput
                 disabled
-                label={t('pages.settings.company.card.register.managingPartner.form.phone')}
+                label={t('pages.settings.company.card.register.managing_partner.form.phone')}
                 name="phone_number"
                 type="text"
               />
@@ -90,7 +90,7 @@ class CompanyGeneralForm extends Component {
             <Col palm={12} tablet={12} desk={2} tv={2}>
               <FormInput
                 disabled
-                label={t('pages.settings.company.card.register.managingPartner.form.cpf')}
+                label={t('pages.settings.company.card.register.managing_partner.form.cpf')}
                 name="cpf"
                 type="text"
               />

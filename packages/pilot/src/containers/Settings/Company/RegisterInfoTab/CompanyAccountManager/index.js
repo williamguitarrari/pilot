@@ -39,8 +39,8 @@ class CompanyInformation extends React.Component {
           collapsed={this.state.collapsed}
           icon={<IconInfo height={16} width={16} />}
           onClick={this.handleSectionTitleClick}
-          subtitle={t('pages.settings.company.card.register.subtitle.managingPartner')}
-          title={t('pages.settings.company.card.register.title.managingPartner')}
+          subtitle={t('pages.settings.company.card.register.subtitle.managing_partner')}
+          title={t('pages.settings.company.card.register.title.managing_partner')}
         />
         {!this.state.collapsed && (
           <CardContent>

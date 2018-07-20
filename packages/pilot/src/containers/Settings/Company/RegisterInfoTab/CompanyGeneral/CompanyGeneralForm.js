@@ -80,7 +80,7 @@ class CompanyGeneralForm extends Component {
             <Col palm={12} tablet={12} desk={6} tv={4}>
               <FormInput
                 disabled
-                label={t('pages.settings.company.card.register.general.form.fullName')}
+                label={t('pages.settings.company.card.register.general.form.full_name')}
                 name="fullName"
                 type="text"
               />
@@ -96,7 +96,7 @@ class CompanyGeneralForm extends Component {
             <Col palm={12} tablet={12} desk={5} tv={5}>
               <FormInput
                 disabled
-                label={t('pages.settings.company.card.register.general.form.siteUrl')}
+                label={t('pages.settings.company.card.register.general.form.site_url')}
                 name="siteUrl"
                 type="text"
               />
