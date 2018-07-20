@@ -71,6 +71,9 @@ storiesOf('Containers', module)
   .add('Add Account', () => (
     <AddAccount />
   ))
+  .add('Bank Account Step', () => (
+    <BankAccountStep />
+  ))
   .add('Recipient list', () => (
     <RecipientListState />
   ))
