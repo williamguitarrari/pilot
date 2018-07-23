@@ -18,6 +18,8 @@ import WithdrawContainer from '../../containers/Withdraw'
 import partnersBankCodes from '../../models/partnersBanksCodes'
 import env from '../../environment'
 
+import { receiveWithdraw } from './actions/'
+
 const mapStateToProps = ({
   account: {
     client,
@@ -30,9 +32,16 @@ const mapStateToProps = ({
   pricing,
 })
 
+const mapDispatchToProps = ({
+  onWithdrawReceive: receiveWithdraw,
+})
+
 const enhanced = compose(
   translate('translations'),
-  connect(mapStateToProps),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  ),
   withRouter
 )
 
@@ -186,6 +195,7 @@ class Withdraw extends Component {
     const {
       client,
       t,
+      onWithdrawReceive,
     } = this.props
 
     const {
@@ -204,6 +214,8 @@ class Withdraw extends Component {
           statusMessage: t('pages.withdraw.withdraw_success'),
           stepsStatus: getStepsStatus('result', 'success'),
         })
+
+        onWithdrawReceive()
       })
       .catch(() => {
         this.setState({
@@ -339,6 +351,7 @@ Withdraw.propTypes = {
       ted: PropTypes.number,
     }),
   }).isRequired,
+  onWithdrawReceive: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
 }
 

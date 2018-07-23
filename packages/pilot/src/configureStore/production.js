@@ -10,10 +10,7 @@ import {
 import { createEpicMiddleware } from 'redux-observable'
 
 import { rootEpic, rootReducer } from '../pages/actions'
-
-const states = [
-  'account.sessionId',
-]
+import states from './states'
 
 const store = createStore(
   rootReducer,

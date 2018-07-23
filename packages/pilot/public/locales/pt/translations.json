@@ -294,7 +294,7 @@
       "756": "756 - Banco Cooperativo do Brasil S.A. - BANCOOB",
       "757": "757 - Banco KEB HANA do Brasil S.A."
     },
-        "card": {
+    "card": {
       "brand": "Bandeira",
       "holder_name": "Nome do cliente",
       "number": "Número do cartão"
@@ -305,7 +305,6 @@
       "complement": "Complemento",
       "document_number": "CPF/CNPJ",
       "email": "E-mail",
-      "gender": "Gênero",
       "neighborhood": "Bairro",
       "name": "Nome do cliente",
       "number": "Nº",
@@ -359,10 +358,13 @@
       "antifraud_score": "Score do antifraude",
       "authorization_code": "Código de autorização",
       "boleto_url": "Link do boleto",
+      "boleto": "Boleto",
       "capture_method": "Método de captura",
       "card_brand": "Bandeira",
       "created_date": "Data da transação",
+      "credit_card": "Cartão de crédito",
       "customer_name": "Nome do cliente",
+      "debit_card": "Cartão de débito",
       "details": "Detalhes da transação",
       "document": "CPF / CNPJ",
       "email": "E-mail",
@@ -370,6 +372,7 @@
       "installments_count_plural": "{{count}}x",
       "installments_count": "à  vista",
       "installments": "Parcelas",
+      "international_credit_card": "Cartão de crédito estrangeiro",
       "nsu": "NSU",
       "paid_amount": "Valor capturado",
       "payment_method": "Forma de pagamento",
@@ -388,11 +391,86 @@
     }
   },
   "pages": {
+    "anticipation": {
+      "advise": "Antecipações para o mesmo dia útil precisam ser solicitadas antes das 10:59 da manhã. Esta antecipação será analisada e poderá ser aprovada ou rejeitada. Após a aprovação, o valor a ser antecipado é adicionado ao saldo a partir das 12 horas do dia selecionado.",
+      "amount":{
+        "advise": "Este é o valor líquido a ser antecipado, já com as taxas descontadas.",
+        "title": "Valor a ser antecipado"
+      },
+      "avaiable": {
+        "max": "Máximo:",
+        "min": "Mínimo:",
+        "subtitle": "Liberado para antecipação:",
+        "title": "Disponível para antecipação:"
+      },
+      "anticipation_success": "Pedido confirmado! Sua antecipação será analisada em breve.",
+      "anticipation_timeframe": "Ordem da antecipação:",
+      "cancel": "Cancelar",
+      "conclusion": "Conclusão",
+      "confirm": "Antecipar valor",
+      "confirmation": "Confirmação",
+      "confirmation_advise_with_transfer": "O valor da antecipação será depositado em:",
+      "confirmation_advise_without_transfer": "O valor da antecipação será adicionado ao seu saldo:",
+      "continue": "Continuar",
+      "cost": {
+        "advise": "Estes são os valores cobrados para que os valores sejam antecipados. A Taxa de Transferência não é cobrada caso você adicione ao saldo ao invés de transferir para a conta bancária.",
+        "anticipation": "Antecipação: {{cost}}",
+        "title": "Total de taxas",
+        "transfer": "Transfêrencia: {{cost}}"
+      },
+      "currency_symbol": "R$",
+      "data": "Dados",
+      "date": {
+        "advise": "Selecione aqui a data em que a antecipação acontecerá. Você pode antecipar apenas em dias úteis.",
+        "label": "Data da antecipação",
+        "title": "Em qual data deseja receber?",
+        "invalid": "Data inválida",
+        "error": "Dia não processável"
+      },
+      "from_end": "Final",
+      "end": "Fim",
+      "initial": "Início",
+      "maximum_error": "Valor maior do que o permitido",
+      "minimum_error": "Valor menor do que o permitido",
+      "no": "Não",
+      "number": "Deve ser um número",
+      "password": "Senha",
+      "period":{
+        "advise": "Você pode escolher que o valor seja descontado a partir dos recebíveis do início do período vigente, ou a partir do final. Esta opção afeta o custo da sua antecipação.",
+        "title": "Ordem de antecipação:"
+      },
+      "requested": {
+        "advise": "Este é o valor mais próximo ao desejado que encontramos, baseado nos parâmetros selecionados. Ele é a soma dos valores na ordem escolhida, até chegar o mais próximo possível do valor desejado. Como antecipamos os recebíveis de cada transação por inteiro, este valor costuma ficar diferente do valor desejado caso você não antecipe o valor máximo disponível.",
+        "label": "Valor desejado({{currency}})",
+        "title": "Valor Bruto"
+      },
+      "required_error": "Campo obrigatório",
+      "result_advise_with_transfer": "Assim que aprovado, o valor será depositado a partir das 16 horas do dia selecionado.",
+      "result_advise_without_transfer": "Assim que aprovado, o valor será adicionado ao saldo a partir das 12 horas do dia selecionado.",
+      "result_error": "Erro na antecipação",
+      "result_information": "Em caso de dúvidas, acesse a Central de Ajuda para ter respostas instantâneas às perguntas mais frequentes ou entrar em contato conosco.",
+      "return": "Voltar",
+      "select": "Selecione a data da antecipação",
+      "simulate": "Calcular valor",
+      "start": "Início",
+      "title": "Antecipação",
+      "transfer": {
+        "advise": "Transfira para conta bancária para sacar o valor da antecipação direto em conta. Costuma ficar disponível após as 16 horas do dia selecionado, dependendo do tempo de compensação do banco. Adicione ao Saldo para somar o valor da antecipação ao saldo. Útil se quiser sacar mais tarde ou somar ao valor de saldo antes de sacar.",
+        "label": "Tipo de antecipação:",
+        "yes": "Transferir para conta bancária",
+        "no": "Adicionar ao Saldo"
+      },
+      "try_again": "Tentar novamente",
+      "type_password": "Digite sua senha para confirmar",
+      "view_statement": "Ver no extrato",
+      "wrong_pass": "Senha inválida",
+      "yes": "Sim"
+    },
     "balance": {
       "account": "Conta",
       "agency": "Agência",
       "anticipation_title": "A receber",
-      "anticipation": "Antecipação",
+      "anticipation": "Antecipar",
       "available_anticipation": "Liberado para antecipação",
       "available_withdrawal": "Liberado para saque",
       "bank_code": "Banco",
@@ -475,6 +553,17 @@
       "success": "A transação foi reprocessada com sucesso",
       "title": "Reprocessar transação"
     },
+    "sidebar": {
+      "anticipation": "Antecipar",
+      "available": "Disponível",
+      "balance": "Saldo",
+      "back_to_old_version": "Voltar para versão 1.0",
+      "currency_symbol": "R$",
+      "hide_balance": "Ocultar saldo",
+      "show_balance": "Mostrar saldo",
+      "waiting_funds": "A Receber",
+      "withdraw": "Sacar"
+    },
     "withdraw": {
       "balance": "Saldo disponível",
       "cancel": "Cancelar",
@@ -488,7 +577,7 @@
       "date": "Data de saída",
       "form_message": "Digite o valor que deseja sacar",
       "max_value_to_be": "Valor máximo a ser",
-      "negative_transfer_value": "Valor de transferência negativo",
+      "negative_transfer_value": "Valor solicitado é menor do que o custo",
       "number": "Deve ser um número",
       "password": "Senha",
       "requested_required": "Campo obrigatório",
@@ -798,6 +887,7 @@
       "subscription_id": "Id da assinatura",
       "tid": "TID (ID da transação)",
       "title": "Detalhes da transação",
+      "view_details": "Ver detalhes",
       "view_transactions": "Visualizar Transações"
     },
     "transactions": {

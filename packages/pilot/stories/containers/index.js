@@ -1,6 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 
+import AnticipationForm from './Anticipation/Form'
 import BoletoForm from './Refund/BoletoForm'
 import BoletoRefundConfirm from './Refund/BoletoConfirmation'
 import BoletoRefundResult from './Refund/BoletoResult'
@@ -37,9 +38,23 @@ import WithdrawConfirmation from './Withdraw/Confirmation'
 import WithdrawForm from './Withdraw/Form'
 import WithdrawResultSuccess from './Withdraw/Result/Success'
 import WithdrawResultError from './Withdraw/Result/Error'
-import WithdrawSummary from './Withdraw/Summary'
+import {
+  AnticipationConfirmationDisabled,
+  AnticipationConfirmationWithAutomaticTransfer,
+  AnticipationConfirmationWithError,
+  AnticipationConfirmationWithoutAutomaticTransfer,
+} from './Anticipation/Confirmation'
+import {
+  AnticipationResultError,
+  AnticipationResultWithAutomaticTransfer,
+  AnticipationResultWithoutAutomaticTransfer,
+} from './Anticipation/Result'
+import Anticipation from './Anticipation'
 
 storiesOf('Containers', module)
+  .add('Anticipation Form', () => (
+    <AnticipationForm />
+  ))
   .add('Recipient list', () => (
     <RecipientListState />
   ))
@@ -148,6 +163,27 @@ storiesOf('Containers', module)
   .add('Withdraw Result Error', () => (
     <WithdrawResultError />
   ))
-  .add('Withdraw Summary', () => (
-    <WithdrawSummary />
+  .add('Anticipation Confirmation with automatic transfer', () => (
+    <AnticipationConfirmationWithAutomaticTransfer />
+  ))
+  .add('Anticipation Confirmation without automatic transfer', () => (
+    <AnticipationConfirmationWithoutAutomaticTransfer />
+  ))
+  .add('Anticipation Confirmation with error', () => (
+    <AnticipationConfirmationWithError />
+  ))
+  .add('Anticipation Confirmation disabled', () => (
+    <AnticipationConfirmationDisabled />
+  ))
+  .add('Anticipation Result with automatic transfer', () => (
+    <AnticipationResultWithAutomaticTransfer />
+  ))
+  .add('Anticipation Result without automatic transfer', () => (
+    <AnticipationResultWithoutAutomaticTransfer />
+  ))
+  .add('Anticipation Result error', () => (
+    <AnticipationResultError />
+  ))
+  .add('Anticipation', () => (
+    <Anticipation />
   ))

@@ -90,11 +90,9 @@ class Balance extends Component {
     this.getPendingRequests = this.getPendingRequests.bind(this)
     this.getSummaryTotal = this.getSummaryTotal.bind(this)
     this.handleFilterClick = this.handleFilterClick.bind(this)
-    this.handleAnticipationClick = this.handleAnticipationClick.bind(this)
     this.handleDatesChange = this.handleDatesChange.bind(this)
     this.handleOperationsPageChange = this.handleOperationsPageChange.bind(this)
     this.handleRequestCancelClick = this.handleRequestCancelClick.bind(this)
-    this.handleWithdrawalClick = this.handleWithdrawalClick.bind(this)
 
     this.state = {
       dates: {
@@ -206,15 +204,6 @@ class Balance extends Component {
     }
   }
 
-  handleAnticipationClick () {
-    const {
-      balance: { available: { anticipation } },
-      onAnticipationClick,
-    } = this.props
-
-    onAnticipationClick(anticipation)
-  }
-
   handleDatesChange (dates) {
     this.setState({ dates })
   }
@@ -239,15 +228,6 @@ class Balance extends Component {
     } = this.props
 
     onCancelRequestClick(requests[requestIndex].id)
-  }
-
-  handleWithdrawalClick () {
-    const {
-      balance: { available: { withdrawal } },
-      onWithdrawClick,
-    } = this.props
-
-    onWithdrawClick(withdrawal)
   }
 
   render () {
@@ -278,13 +258,13 @@ class Balance extends Component {
 
     const anticipationAction = {
       disabled,
-      onClick: this.handleAnticipationClick,
+      onClick: onAnticipationClick,
       title: t('pages.balance.anticipation'),
     }
 
     const withdrawalAction = {
       disabled,
-      onClick: this.handleWithdrawalClick,
+      onClick: onWithdrawClick,
       title: t('pages.balance.withdraw'),
     }
 
@@ -473,11 +453,11 @@ Balance.propTypes = {
   currentPage: PropTypes.number.isRequired,
   dates: datesShape.isRequired, // eslint-disable-line react/no-typos
   disabled: PropTypes.bool.isRequired,
-  onAnticipationClick: PropTypes.func,
+  onAnticipationClick: PropTypes.func.isRequired,
   onCancelRequestClick: PropTypes.func,
   onFilterClick: PropTypes.func.isRequired,
   onPageChange: PropTypes.func.isRequired,
-  onWithdrawClick: PropTypes.func,
+  onWithdrawClick: PropTypes.func.isRequired,
   recipient: PropTypes.shape({
     bank_account: PropTypes.shape({
       account: PropTypes.string.isRequired,
@@ -524,9 +504,7 @@ Balance.propTypes = {
 }
 
 Balance.defaultProps = {
-  onAnticipationClick: null,
   onCancelRequestClick: null,
-  onWithdrawClick: null,
 }
 
 export default Balance

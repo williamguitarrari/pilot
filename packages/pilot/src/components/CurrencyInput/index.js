@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {
   pipe,
   replace,
+  omit,
 } from 'ramda'
 
 import currencyFormatter from '../../formatters/currency'
@@ -14,6 +15,11 @@ const formatter = pipe(
   currencyFormatter
 )
 
+const notAllowedProps = [
+  'inputRef',
+  'multiline',
+]
+
 class CurrencyInput extends Component {
   constructor (props) {
     super(props)
@@ -23,23 +29,31 @@ class CurrencyInput extends Component {
     }
 
     this.handleChange = this.handleChange.bind(this)
+    this.normalizeValue = this.normalizeValue.bind(this)
   }
 
-  handleChange (event) {
+  componentWillReceiveProps ({ value }) {
+    if (value !== this.state.value) {
+      this.normalizeValue(value)
+    }
+  }
+
+  normalizeValue (value, onChangeCallback) {
     const { max } = this.props
-    const { value } = event.target
     const formattedValue = formatter(value)
     const normalizedValue = removeNonDigits(value)
 
     if (!max || (max && normalizedValue <= max)) {
       this.setState({
         value: formattedValue,
-      })
-
-      if (this.props.onChange) {
-        this.props.onChange(normalizedValue, formattedValue)
-      }
+      }, () => (
+        onChangeCallback && onChangeCallback(normalizedValue, formattedValue)
+      ))
     }
+  }
+
+  handleChange ({ target }) {
+    this.normalizeValue(target.value, this.props.onChange)
   }
 
   render () {
@@ -49,7 +63,7 @@ class CurrencyInput extends Component {
 
     return (
       <input
-        {...this.props}
+        {...omit(notAllowedProps, this.props)}
         onChange={this.handleChange}
         value={value}
       />

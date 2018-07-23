@@ -20,13 +20,15 @@ import {
 import IconChecked from 'emblematic-icons/svg/Check32.svg'
 import IconError from 'emblematic-icons/svg/ClearClose32.svg'
 import IconExtract from 'emblematic-icons/svg/Extract24.svg'
-import WithdrawErrorIcon from './WithdrawError.svg'
 
+import DataDisplay from '../../../components/DataDisplay'
 import DetailsHead from '../../../components/DetailsHead'
-import Summary from '../Summary'
 import formatAccountType from '../../../formatters/accountType'
 import formatAgencyAccount from '../../../formatters/agencyAccount'
 import formatCpfCnpj from '../../../formatters/cpfCnpj'
+import Summary from '../../../components/Summary'
+import TotalDisplay from '../../../components/TotalDisplay'
+import TransferError from '../../../components/TransferError'
 
 import style from './style.css'
 
@@ -52,26 +54,30 @@ class WithdrawResult extends Component {
     } = this.props
 
     return (
-      <Summary
-        colors={{
-          amount: '#37cc9a',
-          requested: '#37cc9a',
-          transferCost: '#ff796f',
-        }}
-        contents={{
-          amount,
-          date: date.format('DD/MM/YYYY'),
-          requested,
-          transferCost,
-        }}
-        labels={{
-          amount: t('pages.withdraw.value_to_transfer'),
-          date: t('pages.withdraw.date'),
-          requested: t('pages.withdraw.requested_value'),
-          transferCost: t('pages.withdraw.transfer_cost'),
-        }}
-        unit={t('pages.withdraw.currency_symbol')}
-      />
+      <Summary>
+        <DataDisplay
+          title={t('pages.withdraw.date')}
+          value={date.format('DD/MM/YYYY')}
+        />
+        <TotalDisplay
+          amount={amount}
+          color="#37cc9a"
+          title={t('pages.withdraw.value_to_transfer')}
+          unit={t('pages.withdraw.currency_symbol')}
+        />
+        <TotalDisplay
+          amount={requested}
+          color="#37cc9a"
+          title={t('pages.withdraw.requested_value')}
+          unit={t('pages.withdraw.currency_symbol')}
+        />
+        <TotalDisplay
+          amount={transferCost}
+          color="#ff796f"
+          title={t('pages.withdraw.transfer_cost')}
+          unit={t('pages.withdraw.currency_symbol')}
+        />
+      </Summary>
     )
   }
 
@@ -168,16 +174,11 @@ class WithdrawResult extends Component {
               tablet={12}
               tv={12}
             >
-              <div className={style.containerError}>
-                <WithdrawErrorIcon />
-                <p className={style.errorMessage}>{t('pages.withdraw.result_error')}</p>
-                <Button
-                  fill="gradient"
-                  onClick={onTryAgain}
-                >
-                  {t('pages.withdraw.try_again')}
-                </Button>
-              </div>
+              <TransferError
+                actionLabel={t('pages.withdraw.try_again')}
+                message={t('pages.withdraw.result_error')}
+                onClick={onTryAgain}
+              />
             </Col>
           </Row>
         }

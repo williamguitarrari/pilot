@@ -15,13 +15,17 @@ import Operations from './Operations'
 import RecipientSectionState from './RecipientSection'
 import RiskLevel from './RiskLevel'
 import ReprocessDetails from './ReprocessDetails'
+import Summary from './Summary'
 import TotalDisplay from './TotalDisplay'
+import TransferError from './TransferError'
 import TransactionDetailsCard from './TransactionDetailsCard'
 import TreeView from './TreeView'
 import ApiKeySection from './ApiKey'
 import PendingRequests from './PendingRequests'
 import BalanceTotalDisplay from './BalanceTotalDisplay'
 import BalanceSummary from './BalanceSummary'
+import SidebarSections from './SidebarSections'
+import SidebarSummary from './SidebarSummary'
 
 storiesOf('Components', module)
   .add('Copy button', () => (
@@ -86,4 +90,16 @@ storiesOf('Components', module)
   ))
   .add('Balance summary', () => (
     <BalanceSummary />
+  ))
+  .add('Sidebar Sections', () => (
+    <SidebarSections />
+  ))
+  .add('Sidebar Summary', () => (
+    <SidebarSummary />
+  ))
+  .add('Summary', () => (
+    <Summary />
+  ))
+  .add('Transfer Error', () => (
+    <TransferError />
   ))

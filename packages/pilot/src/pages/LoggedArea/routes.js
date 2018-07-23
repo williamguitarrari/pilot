@@ -8,8 +8,22 @@ import CompanySettings from '../CompanySettings'
 import Transactions from '../Transactions'
 import UserSettings from '../UserSettings'
 import Withdraw from '../Withdraw'
+import { Anticipation } from '../Anticipation'
 
 export default {
+  anticipationRoot: {
+    component: Anticipation,
+    exact: true,
+    hidden: true,
+    icon: Balance32,
+    path: '/anticipation',
+    title: 'pages.anticipation.title',
+  },
+  anticipation: {
+    hidden: true,
+    path: '/anticipation/:id?',
+    title: 'pages.anticipation.title',
+  },
   balance: {
     component: Balance,
     icon: Balance32,
@@ -35,6 +49,7 @@ export default {
     icon: Withdraw32,
     path: '/withdraw',
     title: 'pages.withdraw.title',
+    hidden: true,
   },
   withdraw: {
     hidden: true,

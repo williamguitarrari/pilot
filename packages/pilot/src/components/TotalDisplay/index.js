@@ -42,23 +42,30 @@ const renderTitle = (color, unit, title) => (
 )
 
 const TotalDisplay = ({
-  title,
+  align,
   amount,
   color,
   subtitle,
+  title,
   unit,
 }) => (
   <DataDisplay
     title={renderTitle(color, unit, title)}
     color={color}
     subtitle={subtitle}
+    align={align}
   >
     {renderValue(amount, color)}
   </DataDisplay>
 )
 
 TotalDisplay.propTypes = {
-  title: PropTypes.string.isRequired,
+  align: PropTypes.oneOf([
+    'center',
+    'end',
+    'start',
+  ]),
+  title: PropTypes.node.isRequired,
   amount: PropTypes.number.isRequired,
   color: PropTypes.string.isRequired,
   unit: PropTypes.string,
@@ -66,6 +73,7 @@ TotalDisplay.propTypes = {
 }
 
 TotalDisplay.defaultProps = {
+  align: 'center',
   subtitle: null,
   unit: '',
 }
