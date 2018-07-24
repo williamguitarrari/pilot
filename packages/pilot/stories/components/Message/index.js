@@ -2,7 +2,7 @@ import React from 'react'
 
 import Section from '../../Section'
 import ErrorIcon from '../../../src/components/TransferError/ErrorIcon.svg'
-import Message from '../../../src/components/Message'
+import { Message } from '../../../src/components/Message'
 
 const MessageExample = () => (
   <Section>
