@@ -3,11 +3,12 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import {
   either,
+  isEmpty,
   isNil,
   keys,
   map,
-  propSatisfies,
   pipe,
+  propSatisfies,
   take,
 } from 'ramda'
 import {
@@ -18,8 +19,11 @@ import {
   DateInput,
   Grid,
   Row,
+  Spacing,
+  Tooltip,
 } from 'former-kit'
 import IconCalendar from 'emblematic-icons/svg/Calendar32.svg'
+import IconInfo from 'emblematic-icons/svg/Info32.svg'
 
 import BalanceSummary from '../../components/BalanceSummary'
 import BalanceTotalDisplay from '../../components/BalanceTotalDisplay'
@@ -93,6 +97,7 @@ class Balance extends Component {
     this.handleDatesChange = this.handleDatesChange.bind(this)
     this.handleOperationsPageChange = this.handleOperationsPageChange.bind(this)
     this.handleRequestCancelClick = this.handleRequestCancelClick.bind(this)
+    this.renderAnticipation = this.renderAnticipation.bind(this)
 
     this.state = {
       dates: {
@@ -182,26 +187,31 @@ class Balance extends Component {
   getSummaryTotal () {
     const {
       disabled,
-      search: { total },
+      total,
       t,
     } = this.props
-    return {
-      outcoming: {
-        title: t('pages.balance.total.outcoming'),
-        unit: t('currency'),
-        value: disabled ? 0 : total.outcoming,
-      },
-      outgoing: {
-        title: t('pages.balance.total.outgoing'),
-        unit: t('currency'),
-        value: disabled ? 0 : -total.outgoing,
-      },
-      net: {
-        title: t('pages.balance.total.net'),
-        unit: t('currency'),
-        value: disabled ? 0 : total.net,
-      },
+
+    if (!isEmpty(total)) {
+      return {
+        outcoming: {
+          title: t('pages.balance.total.outcoming'),
+          unit: t('currency'),
+          value: disabled ? 0 : total.outcoming,
+        },
+        outgoing: {
+          title: t('pages.balance.total.outgoing'),
+          unit: t('currency'),
+          value: disabled ? 0 : -total.outgoing,
+        },
+        net: {
+          title: t('pages.balance.total.net'),
+          unit: t('currency'),
+          value: disabled ? 0 : total.net,
+        },
+      }
     }
+
+    return null
   }
 
   handleDatesChange (dates) {
@@ -230,12 +240,56 @@ class Balance extends Component {
     onCancelRequestClick(requests[requestIndex].id)
   }
 
+  renderAnticipation () {
+    const {
+      anticipation: {
+        available,
+        error,
+        loading,
+      },
+      t,
+    } = this.props
+
+    if (loading) {
+      return (
+        <span>
+          {t('pages.balance.anticipation_loading')}
+        </span>
+      )
+    }
+
+    if (error) {
+      return (
+        <span>
+          {t('pages.balance.anticipation_error')}
+          <Spacing size="tiny" />
+          <Tooltip
+            placement="rightMiddle"
+            content={t('pages.balance.anticipation_error_info')}
+          >
+            <IconInfo height={16} width={16} />
+          </Tooltip>
+        </span>
+      )
+    }
+
+    return (
+      <span>
+        {t('pages.balance.available_anticipation')}
+        <strong> {formatAmount(available)} </strong>
+      </span>
+    )
+  }
+
   render () {
     const {
+      anticipation: {
+        error: anticipationError,
+        loading: anticipationLoading,
+      },
       balance: {
         amount,
         available: {
-          anticipation,
           withdrawal,
         },
         outcoming,
@@ -319,13 +373,8 @@ class Balance extends Component {
             <BalanceTotalDisplay
               action={isNil(onAnticipationClick) ? null : anticipationAction}
               amount={formatAmount(outcoming)}
-              detail={
-                <span>
-                  {t('pages.balance.available_anticipation')}
-                  <strong> {formatAmount(anticipation)} </strong>
-                </span>
-              }
-              disabled={disabled}
+              detail={this.renderAnticipation()}
+              disabled={disabled || anticipationLoading || anticipationError}
               title={t('pages.balance.anticipation_title')}
             />
           </Col>
@@ -438,10 +487,14 @@ const datesShape = PropTypes.shape({
 })
 
 Balance.propTypes = {
+  anticipation: PropTypes.shape({
+    error: PropTypes.bool.isRequired,
+    loading: PropTypes.bool.isRequired,
+    available: PropTypes.number,
+  }).isRequired,
   balance: PropTypes.shape({
     amount: PropTypes.number.isRequired,
     available: PropTypes.shape({
-      anticipation: PropTypes.number.isRequired,
       withdrawal: PropTypes.number.isRequired,
     }),
     outcoming: PropTypes.number.isRequired,
@@ -494,17 +547,18 @@ Balance.propTypes = {
       ),
       total: PropTypes.number.isRequired,
     }),
-    total: PropTypes.shape({
-      net: PropTypes.number.isRequired,
-      outcoming: PropTypes.number.isRequired,
-      outgoing: PropTypes.number.isRequired,
-    }).isRequired,
   }).isRequired,
   t: PropTypes.func.isRequired,
+  total: PropTypes.shape({
+    net: PropTypes.number,
+    outcoming: PropTypes.number,
+    outgoing: PropTypes.number,
+  }),
 }
 
 Balance.defaultProps = {
   onCancelRequestClick: null,
+  total: {},
 }
 
 export default Balance

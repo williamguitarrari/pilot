@@ -32,6 +32,11 @@ class BalanceState extends Component {
 
     this.handleDateChange = this.handleDateChange.bind(this)
     this.state = {
+      anticipation: {
+        available: 10000,
+        error: false,
+        loading: false,
+      },
       company: {
         name: 'Test Company SA',
       },
@@ -48,6 +53,11 @@ class BalanceState extends Component {
         },
         page: 1,
       },
+      total: {
+        net: 1000000,
+        outcoming: 1000000,
+        outgoing: 1000000,
+      },
     }
   }
 
@@ -62,6 +72,7 @@ class BalanceState extends Component {
 
   render () {
     const {
+      anticipation,
       company,
       dates,
       loading,
@@ -72,15 +83,18 @@ class BalanceState extends Component {
         search,
       },
       query,
+      total,
     } = this.state
 
     return (
       <Section>
         <Balance
+          anticipation={anticipation}
           balance={balance}
           company={company}
           currentPage={query.page}
           dates={dates}
+          disabled={false}
           filterDisable={compareMomentDates(query.dates, dates)}
           loading={loading}
           onAnticipationClick={action('anticipation')}
@@ -93,6 +107,7 @@ class BalanceState extends Component {
           requests={requests}
           search={search}
           t={t => t}
+          total={total}
         />
       </Section>
     )

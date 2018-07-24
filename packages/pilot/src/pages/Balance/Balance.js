@@ -3,9 +3,11 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import qs from 'qs'
 import {
+  __,
   always,
   anyPass,
   applySpec,
+  assoc,
   complement,
   compose,
   defaultTo,
@@ -20,7 +22,6 @@ import {
   path,
   pathOr,
   pipe,
-  prop,
   tail,
   test,
   uncurryN,
@@ -38,6 +39,20 @@ import {
 } from './actions'
 import BalanceContainer from '../../containers/Balance'
 import env from '../../environment'
+
+const getBulkAnticipationsLimits = (client, recipientId) => {
+  const now = moment()
+
+  return client
+    .business
+    .requestBusinessCalendar(now.year())
+    .then(calendar => client
+      .business
+      .nextAnticipableBusinessDay(calendar, { hour: 10 }, now))
+    .then(paymentDate => paymentDate.valueOf())
+    .then(assoc('payment_date', __, { recipientId, timeframe: 'start' }))
+    .then(client.bulkAnticipations.limits)
+}
 
 const mapStateToProps = ({
   account: {
@@ -136,17 +151,6 @@ const parseQueryUrl = pipe(
   mergeAll
 )
 
-const parseQueryUrlDates = pipe(
-  qs.parse,
-  unless(
-    isNilOrEmpty,
-    pipe(
-      queryDatesToMoment,
-      prop('dates')
-    )
-  )
-)
-
 const isRecipientId = test(/^re_/)
 
 const isNotRecipientId = complement(isRecipientId)
@@ -164,21 +168,28 @@ const getValidId = uncurryN(2, defaultId => unless(
 ))
 
 const getRecipientId = pathOr(null, ['default_recipient_id', env])
+const getAnticipationAmount = path(['maximum', 'amount'])
 
 class Balance extends Component {
   constructor (props) {
     super(props)
 
     this.state = {
+      anticipation: {
+        available: 0,
+        error: false,
+        loading: false,
+      },
       query: {
         count: 10,
         dates: {
           end: moment(),
-          start: moment().subtract(30, 'days'),
+          start: moment().subtract(7, 'days'),
         },
         page: 1,
       },
       result: {},
+      total: {},
     }
 
     this.handleAnticipation = this.handleAnticipation.bind(this)
@@ -188,8 +199,10 @@ class Balance extends Component {
     this.handlePageChange = this.handlePageChange.bind(this)
     this.handleWithdraw = this.handleWithdraw.bind(this)
 
-    this.updateQuery = this.updateQuery.bind(this)
+    this.requestAnticipationLimits = this.requestAnticipationLimits.bind(this)
     this.requestData = this.requestData.bind(this)
+    this.requestTotal = this.requestTotal.bind(this)
+    this.updateQuery = this.updateQuery.bind(this)
   }
 
   componentDidMount () {
@@ -207,12 +220,19 @@ class Balance extends Component {
       this.updateQuery(this.state.query, params.id)
     } else {
       this.requestData(params.id, parseQueryUrl(urlBalanceQuery))
+      this.requestTotal(params.id, parseQueryUrl(urlBalanceQuery))
+      this.requestAnticipationLimits(params.id)
     }
   }
 
   componentWillReceiveProps (nextProps) {
     const {
       location: { search },
+      match: {
+        params: {
+          id: currentId,
+        },
+      },
     } = this.props
     const {
       match: { params },
@@ -221,6 +241,10 @@ class Balance extends Component {
 
     if (search !== location.search) {
       this.requestData(params.id, parseQueryUrl(location.search))
+      this.requestTotal(params.id, parseQueryUrl(location.search))
+    }
+    if (currentId !== params.id) {
+      this.requestAnticipationLimits(params.id)
     }
   }
 
@@ -251,15 +275,54 @@ class Balance extends Component {
     }
   }
 
+  requestAnticipationLimits (id) {
+    const { client } = this.props
+    this.setState({
+      anticipation: {
+        loading: true,
+        error: false,
+      },
+    })
+    return getBulkAnticipationsLimits(client, id)
+      .then((anticipationLimits) => {
+        this.setState({
+          anticipation: {
+            available: getAnticipationAmount(anticipationLimits),
+            error: false,
+            loading: false,
+          },
+        })
+      })
+      .catch(() => {
+        this.setState({
+          anticipation: {
+            error: true,
+            loading: false,
+          },
+        })
+      })
+  }
+
+  requestTotal (id, searchQuery) {
+    return this.props.client
+      .balance
+      .total(id, searchQuery)
+      .then((total) => {
+        this.setState({ total })
+      })
+      // TODO add catch when BalanceSummary have loading state
+  }
+
   requestData (id, searchQuery) {
     this.props.onRequestBalance({ searchQuery })
 
     return this.props.client
-      .balance(id, searchQuery)
+      .balance
+      .data(id, searchQuery)
       .then(({ query, result }) => {
         this.setState({
-          result,
           query,
+          result,
         })
 
         this.props.onReceiveBalance(query)
@@ -329,24 +392,25 @@ class Balance extends Component {
       company,
       error,
       loading,
-      location,
       t,
     } = this.props
 
     const {
+      anticipation,
+      query: {
+        dates,
+        page,
+      },
       result: {
         balance,
         recipient,
         requests,
         search,
       },
-      query,
+      total,
     } = this.state
 
-    const searchDates = parseQueryUrlDates(location.search)
-    const dates = isNilOrEmpty(searchDates) ? query.dates : searchDates
-
-    const isEmptyResult = isNilOrEmpty(this.state.result)
+    const isEmptyResult = isNilOrEmpty(this.state.result.search)
     const hasDefaultRecipient = !isNilOrEmpty(getRecipientId(company))
 
     if (error) {
@@ -380,9 +444,10 @@ class Balance extends Component {
     if (!isEmptyResult) {
       return (
         <BalanceContainer
+          anticipation={anticipation}
           balance={balance}
           company={company}
-          currentPage={query.page}
+          currentPage={page}
           dates={dates}
           disabled={loading}
           onAnticipationClick={this.handleAnticipation}
@@ -390,11 +455,11 @@ class Balance extends Component {
           onFilterClick={this.handleFilterClick}
           onPageChange={this.handlePageChange}
           onWithdrawClick={this.handleWithdraw}
-          queryDates={query.dates}
           recipient={recipient}
           requests={requests}
           search={search}
           t={t}
+          total={total}
         />
       )
     }
@@ -405,7 +470,10 @@ class Balance extends Component {
 
 Balance.propTypes = {
   client: PropTypes.shape({
-    balance: PropTypes.func.isRequired,
+    balance: PropTypes.shape({
+      data: PropTypes.func.isRequired,
+      total: PropTypes.func.isRequired,
+    }).isRequired,
   }).isRequired,
   company: PropTypes.shape({
     default_recipient_id: PropTypes.shape({
