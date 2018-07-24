@@ -482,6 +482,9 @@
     },
     "balance": {
       "account": "Conta",
+      "anticipation_error": "Não foi possível calcular sua antecipação.",
+      "anticipation_error_info": "Devido ao volume alto de transações, não conseguimos calcular sua antecipação no momento. Caso deseje antecipar, use a Pagar.me API ou entre em contato conosco.",
+      "anticipation_loading": "Calculando limites de antecipação.",
       "agency": "Agência",
       "anticipation_title": "A receber",
       "anticipation": "Antecipar",
