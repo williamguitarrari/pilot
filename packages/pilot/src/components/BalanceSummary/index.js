@@ -63,14 +63,17 @@ const totalShape = PropTypes.shape({
 
 BalanceSummary.propTypes = {
   amount: PropTypes.shape({
-    net: totalShape.isRequired,
-    outcoming: totalShape.isRequired,
-    outgoing: totalShape.isRequired,
-  }).isRequired,
+    net: totalShape,
+    outcoming: totalShape,
+    outgoing: totalShape,
+  }),
   dates: PropTypes.shape({
     end: PropTypes.instanceOf(moment).isRequired,
     start: PropTypes.instanceOf(moment).isRequired,
   }).isRequired,
+}
+BalanceSummary.defaultProps = {
+  amount: {},
 }
 
 export default BalanceSummary
