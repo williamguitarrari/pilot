@@ -19,7 +19,6 @@ import {
   pipe,
   pluck,
   prop,
-  reduce,
   subtract,
   sum,
   when,
@@ -55,7 +54,6 @@ const buildRecipient = pipe(
 const buildBalance = applySpec({
   amount: path(['balance', 'available', 'amount']),
   available: {
-    anticipation: path(['bulk_anticipations_limit', 'maximum', 'amount']),
     withdrawal: path(['balance', 'available', 'amount']),
   },
   outcoming: path(['balance', 'waiting_funds', 'amount']),
@@ -79,30 +77,6 @@ const buildRequests = pipe(
     type: always('anticipation'),
   }))
 )
-
-const buildTotal = direction => pipe(
-  prop('per_day'),
-  reduce((acc, val) => {
-    const available = val.available.amount[direction]
-    const fee = val.available.fee[direction]
-
-    return acc + (available - fee)
-  }, 0)
-)
-
-const getOutgoing = pipe(
-  buildTotal('out'),
-  negate
-)
-
-const buildSearchTotal = applySpec({
-  net: pipe(
-    juxt([buildTotal('in'), getOutgoing]),
-    apply(subtract)
-  ),
-  outcoming: buildTotal('in'),
-  outgoing: getOutgoing,
-})
 
 const isInvalidOperationDate = type => pipe(
   prop(type),
@@ -201,7 +175,6 @@ const buildResult = query => applySpec({
         rows: buildOperationsRows,
         total: buildOperationsTotal(query),
       },
-      total: buildSearchTotal,
     },
   },
 })
