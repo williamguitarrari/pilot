@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {
+  CardContent,
   Col,
   FormDropdown,
   FormInput,
@@ -37,77 +38,106 @@ class BoletoForm extends Component {
     } = this.state
 
     const {
+      actionsDisabled,
       daysToAddInExpirationDate,
+      disabled,
+      onCancel,
+      onChange,
+      onSubmit,
       instructions,
       instructionsOptions,
-      onCancel,
-      onSubmit,
       t,
     } = this.props
 
-    const isNumber = numberValidation(t('pages.settings.company.boleto.number'))
-    const isRequired = requiredValidation(t('pages.settings.company.boleto.required'))
+    const isNumber = numberValidation(
+      t('pages.settings.company.boleto.number')
+    )
+    const isRequired = requiredValidation(
+      t('pages.settings.company.boleto.required')
+    )
+    const daysToAddInExpirationDateLabel =
+      t('pages.settings.company.boleto.daysToAddInExpirationDate.label')
 
     return (
-      <ConfigurationCardForm
-        collapsed={collapsed}
-        data={{
-          daysToAddInExpirationDate,
-          instructions,
-        }}
-        icon={<IconBarcode width={16} height={16} />}
-        onCancel={onCancel}
-        onClick={this.toggleForm}
-        onSubmit={onSubmit}
-        subtitle={t('pages.settings.company.boleto.subtitle')}
-        t={t}
-        title={t('pages.settings.company.card.product.boleto.title')}
-        validation={{
-          daysToAddInExpirationDate: [
-            isRequired,
-            isNumber,
-            lessThan(0, t('pages.settings.company.boleto.greater_than_or_equal')),
-          ],
-          instructions: isRequired,
-        }}
-      >
-        <p>{t('pages.settings.company.boleto.description')}</p>
+      <CardContent>
+        <ConfigurationCardForm
+          collapsed={collapsed}
+          data={{
+            daysToAddInExpirationDate,
+            instructions,
+          }}
+          disabled={actionsDisabled}
+          icon={<IconBarcode width={16} height={16} />}
+          onCancel={onCancel}
+          onChange={onChange}
+          onClick={this.toggleForm}
+          onSubmit={onSubmit}
+          subtitle={t('pages.settings.company.boleto.subtitle',
+          { count: Number(daysToAddInExpirationDate) })}
+          t={t}
+          title={t('pages.settings.company.card.product.boleto.title')}
+          validation={{
+            daysToAddInExpirationDate: [
+              isRequired,
+              isNumber,
+              lessThan(0,
+                t('pages.settings.company.boleto.greater_than_or_equal')
+              ),
+            ],
+            instructions: isRequired,
+          }}
+        >
+          <p>{t('pages.settings.company.boleto.description')}</p>
 
-        <Grid>
-          <Row flex>
-            <Col
-              desk={2}
-              palm={2}
-              tablet={2}
-              tv={2}
-            >
-              <FormInput
-                label={t('pages.settings.company.boleto.daysToAddInExpirationDate.label')}
-                name="daysToAddInExpirationDate"
-              />
-            </Col>
+          <Grid>
+            <Row flex>
+              <Col
+                desk={2}
+                palm={2}
+                tablet={2}
+                tv={2}
+              >
+                <FormInput
+                  disabled={disabled}
+                  label={daysToAddInExpirationDateLabel}
+                  name="daysToAddInExpirationDate"
+                />
+              </Col>
 
-            <Col
-              desk={4}
-              palm={4}
-              tablet={4}
-              tv={4}
-            >
-              <FormDropdown
-                label={t('pages.settings.company.boleto.instructions.label')}
-                name="instructions"
-                options={instructionsOptions}
-              />
-            </Col>
-          </Row>
-        </Grid>
-      </ConfigurationCardForm>
+              <Col
+                desk={6}
+                palm={6}
+                tablet={6}
+                tv={6}
+              >
+                <FormDropdown
+                  disabled={disabled}
+                  key={instructions}
+                  label={
+                    t('pages.settings.company.boleto.instructions.label')
+                  }
+                  name="instructions"
+                  options={instructionsOptions}
+                  placeholder={
+                    t('pages.settings.company.boleto.instructions.placeholder')
+                  }
+                />
+              </Col>
+            </Row>
+          </Grid>
+        </ConfigurationCardForm>
+      </CardContent>
     )
   }
 }
 
 BoletoForm.propTypes = {
+  actionsDisabled: PropTypes.bool.isRequired,
   daysToAddInExpirationDate: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
+  onCancel: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
   instructions: PropTypes.string.isRequired,
   instructionsOptions: PropTypes.arrayOf(
     PropTypes.shape({
@@ -115,9 +145,11 @@ BoletoForm.propTypes = {
       value: PropTypes.string.isRequired,
     })
   ).isRequired,
-  onCancel: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
+}
+
+BoletoForm.defaultProps = {
+  disabled: false,
 }
 
 export default BoletoForm
