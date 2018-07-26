@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { action } from '@storybook/addon-actions'
 import {
-  FormInput,
   FormDropdown,
+  FormInput,
   Spacing,
 } from 'former-kit'
 import IconBarcode from 'emblematic-icons/svg/BarCode32.svg'

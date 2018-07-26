@@ -6,24 +6,36 @@ class BoletoForm extends Component {
   constructor (props) {
     super(props)
     this.state = {
+      actionsDisabled: true,
       daysToAddInExpirationDate: '2',
       instructions: 'accept',
     }
 
     this.onCancel = this.onCancel.bind(this)
+    this.onChange = this.onChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
   }
 
   onCancel () {
     this.setState({
+      actionsDisabled: true,
       daysToAddInExpirationDate: '2',
       instructions: 'accept',
     }, () => action('Cancel')(this.state))
   }
 
+  onChange ({ instructions, daysToAddInExpirationDate }) {
+    this.setState(({
+      actionsDisabled: false,
+      daysToAddInExpirationDate,
+      instructions,
+    }), () => action('Change')(this.state))
+  }
+
   onSubmit ({ instructions, daysToAddInExpirationDate }, errors) {
     if (!errors) {
       this.setState({
+        actionsDisabled: true,
         daysToAddInExpirationDate,
         instructions,
       }, () => action('Submit')(this.state))
@@ -32,12 +44,14 @@ class BoletoForm extends Component {
 
   render () {
     const {
+      actionsDisabled,
       daysToAddInExpirationDate,
       instructions,
     } = this.state
 
     return (
       <BoletoConfigurationForm
+        actionsDisabled={actionsDisabled}
         daysToAddInExpirationDate={daysToAddInExpirationDate}
         instructions={instructions}
         instructionsOptions={[
@@ -51,6 +65,7 @@ class BoletoForm extends Component {
           },
         ]}
         onCancel={this.onCancel}
+        onChange={this.onChange}
         onSubmit={this.onSubmit}
         t={translate => translate}
       />
