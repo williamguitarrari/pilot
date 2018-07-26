@@ -8,8 +8,9 @@ import {
 } from 'former-kit'
 
 import GeneralInfoTab from './GeneralInfoTab'
-import TeamInfoTab from './TeamInfoTab'
+import ProductInfoTab from './ProductInfoTab'
 import RegisterInfoTab from './RegisterInfoTab'
+import TeamInfoTab from './TeamInfoTab'
 
 class CompanySettings extends Component {
   constructor (props) {
@@ -24,20 +25,28 @@ class CompanySettings extends Component {
 
   render () {
     const {
-      t,
-      pricing,
-      team,
+      address,
       apiKeys,
       apiVersion,
+      boletoActionsDisabled,
+      boletoDaysToAddInExpirationDate,
+      boletoDisabled,
+      boletoInstructions,
+      boletoInstructionsOptions,
+      createUserStatus,
+      deleteUserStatus,
       environment,
       general,
-      address,
-      managingPartner,
       handleCreateUser,
       handleDeleteUser,
-      createUserStatus,
+      managingPartner,
+      onBoletoSettingsCancel,
+      onBoletoSettingsChange,
+      onBoletoSettingsSubmit,
+      pricing,
       resetCreateUserState,
-      deleteUserStatus,
+      t,
+      team,
     } = this.props
 
     const {
@@ -49,10 +58,11 @@ class CompanySettings extends Component {
         <CardContent>
           <TabBar
             onTabChange={this.changeTab}
-            selected={this.state.selectedIndex}
+            selected={selectedIndex}
             variant="just-text"
           >
             <TabItem text={t('pages.settings.company.tab.general')} />
+            <TabItem text={t('pages.settings.company.tab.products')} />
             <TabItem text={t('pages.settings.company.tab.team')} />
             <TabItem text={t('pages.settings.company.tab.register')} />
           </TabBar>
@@ -67,6 +77,19 @@ class CompanySettings extends Component {
           />
         }
         {selectedIndex === 1 &&
+          <ProductInfoTab
+            boletoActionsDisabled={boletoActionsDisabled}
+            boletoDaysToAddInExpirationDate={boletoDaysToAddInExpirationDate}
+            boletoDisabled={boletoDisabled}
+            boletoHandleCancel={onBoletoSettingsCancel}
+            boletoHandleChange={onBoletoSettingsChange}
+            boletoHandleSubmit={onBoletoSettingsSubmit}
+            boletoInstructions={boletoInstructions}
+            boletoInstructionsOptions={boletoInstructionsOptions}
+            t={t}
+          />
+        }
+        {selectedIndex === 2 &&
           <TeamInfoTab
             createUserStatus={createUserStatus}
             deleteUserStatus={deleteUserStatus}
@@ -77,7 +100,7 @@ class CompanySettings extends Component {
             team={team}
           />
         }
-        {selectedIndex === 2 &&
+        {selectedIndex === 3 &&
           <RegisterInfoTab
             address={address}
             general={general}
@@ -92,22 +115,30 @@ class CompanySettings extends Component {
 
 CompanySettings.propTypes = {
   address: PropTypes.shape({
-    street: PropTypes.string,
-    complementary: PropTypes.string,
-    streetNumber: PropTypes.string,
-    neighborhood: PropTypes.string,
     city: PropTypes.string,
+    complementary: PropTypes.string,
+    neighborhood: PropTypes.string,
     state: PropTypes.string,
+    street: PropTypes.string,
+    streetNumber: PropTypes.string,
     zipcode: PropTypes.string,
   }).isRequired,
   apiKeys: PropTypes.shape({
-    title: PropTypes.string.isRequired,
     keys: PropTypes.shape({
-      encryptionKey: PropTypes.string.isRequired,
       apiKey: PropTypes.string.isRequired,
+      encryptionKey: PropTypes.string.isRequired,
     }),
+    title: PropTypes.string.isRequired,
   }),
   apiVersion: PropTypes.string,
+  boletoActionsDisabled: PropTypes.bool.isRequired,
+  boletoDaysToAddInExpirationDate: PropTypes.string,
+  boletoDisabled: PropTypes.bool.isRequired,
+  boletoInstructions: PropTypes.string,
+  boletoInstructionsOptions: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+  })).isRequired,
   createUserStatus: PropTypes.shape({
     error: PropTypes.string,
     loading: PropTypes.bool,
@@ -136,6 +167,9 @@ CompanySettings.propTypes = {
     cpf: PropTypes.string,
     email: PropTypes.string,
   }).isRequired,
+  onBoletoSettingsCancel: PropTypes.func.isRequired,
+  onBoletoSettingsChange: PropTypes.func.isRequired,
+  onBoletoSettingsSubmit: PropTypes.func.isRequired,
   pricing: PropTypes.arrayOf(PropTypes.shape({
     mainTitle: PropTypes.string.isRequired,
     subItems: PropTypes.arrayOf(PropTypes.shape({
@@ -158,6 +192,8 @@ CompanySettings.propTypes = {
 CompanySettings.defaultProps = {
   apiKeys: null,
   apiVersion: null,
+  boletoDaysToAddInExpirationDate: null,
+  boletoInstructions: null,
   t: t => t,
 }
 

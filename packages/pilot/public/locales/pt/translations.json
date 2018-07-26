@@ -631,10 +631,32 @@
         }
       },
       "company": {
+        "boleto": {
+          "title": "Boletos",
+          "subtitle": "Vencimento padrão: {{count}} dia global de seus boletos.",
+          "subtitle_plural": "Vencimento padrão: {{count}} dias globais de seus boletos.",
+          "description": "Nesta página você pode alterar as configurações globais de seus boletos. Consulte nossa documentação para saber mais sobre cada parâmetro.",
+          "daysToAddInExpirationDate": {
+            "label": "Vencimento padrão (em dias)."
+          },
+          "instructions": {
+            "label": "Instruções para pagamento do boleto.",
+            "placeholder": "Selecione uma instrução."
+          },
+          "options": {
+            "accept": "Sr. Caixa, aceitar o pagamento e não cobrar juros após o vencimento.",
+            "refuse": "Sr. Caixa, favor não aceitar pagamento após o vencimento."
+          },
+          "number": "Deve ser um número.",
+          "required": "Campo obrigatório.",
+          "greater_than_or_equal": "O número precisa ser maior que zero."
+        },
+        "confirm": "Confirmar",
+        "cancel": "Cancelar",
         "menu": "Configurações",
         "tab": {
           "general": "Geral",
-          "product": "Produtos",
+          "products": "Produtos",
           "team": "Equipe",
           "personalization": "Personalização",
           "register": "Cadastro"
