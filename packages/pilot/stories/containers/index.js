@@ -77,6 +77,7 @@ import BankAccount from './Settings/BankAccount'
 import Home from './Home'
 import ConclusionStepSuccess from './AddRecipient/ConclusionStep/Success'
 import ConclusionStepFail from './AddRecipient/ConclusionStep/Fail'
+import ConfigurationStep from './AddRecipient/ConfigurationsStep'
 
 storiesOf('Containers|Bank/Account', module)
   .add('selector', () => <BankAccountSelector />)
@@ -92,6 +93,9 @@ storiesOf('Containers|Page containers', module)
   ))
   .add('Recipient Conclusion Fail', () => (
     <ConclusionStepFail />
+  ))
+  .add('Recipient Configuration Step', () => (
+    <ConfigurationStep />
   ))
   .add('Anticipation Form', () => (
     <AnticipationForm />
