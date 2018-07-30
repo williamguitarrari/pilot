@@ -3,13 +3,14 @@ import { storiesOf } from '@storybook/react'
 
 import AnticipationForm from './Anticipation/Form'
 import BankAccountSelector from './Settings/BankAccount/Selector'
+import Balance from './Balance'
+import BankAccountForm from './Settings/BankAccount/Add'
 import BoletoForm from './Refund/BoletoForm'
 import BoletoRefundConfirm from './Refund/BoletoConfirmation'
 import BoletoRefundResult from './Refund/BoletoResult'
 import CardConfirmation from './Refund/CardConfirmation'
 import CardForm from './Refund/CardForm'
 import CardResult from './Refund/CardResult'
-import Balance from './Balance'
 import RecipientListState from './RecipientList'
 import {
   ManualReviewApproveForm,
@@ -194,4 +195,7 @@ storiesOf('Containers', module)
   ))
   .add('Anticipation', () => (
     <Anticipation />
+  ))
+  .add('Bank Account Form', () => (
+    <BankAccountForm />
   ))
