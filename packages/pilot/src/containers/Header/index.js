@@ -1,26 +1,33 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import {
-  Switch,
-  Route,
   HashRouter,
+  Route,
+  Switch,
 } from 'react-router-dom'
 
 import {
   Avatar,
+  Button,
   Header,
+  HeaderBackButton,
   HeaderContent,
   HeaderMenu,
   HeaderTitle,
-  HeaderBackButton,
+  Popover,
   PopoverContent,
   PopoverMenu,
+  Spacing,
 } from 'former-kit'
 
+import IconFeedback from 'emblematic-icons/svg/Feedback24.svg'
+
+import style from './style.css'
+
 const HeaderContainer = ({
-  onSettings,
-  onLogout,
   onBack,
+  onLogout,
+  onSettings,
   routes,
   t,
   user,
@@ -29,14 +36,14 @@ const HeaderContainer = ({
     <HashRouter>
       <Switch>
         {routes.map(({
-          icon: Icon,
-          title,
           exact,
+          icon: Icon,
           path,
+          title,
         }) => (
           <Route
-            key={path}
             exact={exact}
+            key={path}
             path={path}
             render={() => (
               <Fragment>
@@ -51,6 +58,26 @@ const HeaderContainer = ({
     </HashRouter>
 
     <HeaderContent>
+      <Popover
+        content={
+          <PopoverContent>
+            <small>
+              <strong className={style.feedback}>{t('feedback_text_emphasis')}</strong>
+              {t('feedback_text')}&nbsp;
+              <a href="mailto:nova@pagar.me">{t('feedback_text_email')}</a>.
+            </small>
+          </PopoverContent>
+        }
+        placement="bottomEnd"
+      >
+        <Button
+          fill="clean"
+          icon={<IconFeedback color="#37cc9a" />}
+        />
+      </Popover>
+
+      <Spacing size="small" />
+
       <HeaderMenu
         title={
           <Fragment>
@@ -79,20 +106,20 @@ const HeaderContainer = ({
 )
 
 HeaderContainer.propTypes = {
-  t: PropTypes.func.isRequired,
   onBack: PropTypes.func.isRequired,
-  routes: PropTypes.arrayOf(PropTypes.shape({
-    title: PropTypes.string,
-    path: PropTypes.string,
-    exact: PropTypes.bool,
-    component: PropTypes.func,
-  })).isRequired,
-  user: PropTypes.shape({
-    name: PropTypes.string,
-    email: PropTypes.string,
-  }).isRequired,
-  onSettings: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
+  onSettings: PropTypes.func.isRequired,
+  routes: PropTypes.arrayOf(PropTypes.shape({
+    component: PropTypes.func,
+    exact: PropTypes.bool,
+    path: PropTypes.string,
+    title: PropTypes.string,
+  })).isRequired,
+  t: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    email: PropTypes.string,
+    name: PropTypes.string,
+  }).isRequired,
 }
 
 export default HeaderContainer
