@@ -71,8 +71,8 @@ class RecipientList extends Component {
         status,
         amount,
       } = recipient
-      const collapsed = notContains(index, this.state.expandedItems) && !expandAllRecipients
-      const onClick = this.handleItemExpand.bind(this, index)
+      const collapsed = notContains(index, this.state.expandedItems) &&
+        !expandAllRecipients
       const key = `recipient_${index}`
       return (
         <RecipientSection
@@ -88,7 +88,7 @@ class RecipientList extends Component {
           name={name}
           netAmount={net_amount} // eslint-disable-line camelcase
           netAmountLabel={netAmountLabel}
-          onDetailsClick={onClick}
+          onDetailsClick={() => this.handleItemExpand(index)}
           outAmountLabel={outAmountLabel}
           status={status}
           statusLabel={statusLabel}
