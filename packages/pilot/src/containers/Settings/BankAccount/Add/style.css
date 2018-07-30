@@ -1,0 +1,15 @@
+@import "former-kit-skin-pagarme/dist/styles/spacing.css";
+
+.agencyAccountContainer {
+  display: flex;
+}
+
+.agencyAccountFields {
+  display: flex;
+  flex-direction: row;
+}
+
+.separator {
+  align-self: start;
+  margin-top: 18px;
+}
