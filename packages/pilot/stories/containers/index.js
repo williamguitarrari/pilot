@@ -2,6 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 
 import AnticipationForm from './Anticipation/Form'
+import BankAccountSelector from './Settings/BankAccount/Selector'
 import BoletoForm from './Refund/BoletoForm'
 import BoletoRefundConfirm from './Refund/BoletoConfirmation'
 import BoletoRefundResult from './Refund/BoletoResult'
@@ -53,6 +54,9 @@ import Anticipation from './Anticipation'
 import BoletoConfigurationForm from './Settings/Boleto/Form'
 
 storiesOf('Containers', module)
+  .add('Bank Account Selector', () => (
+    <BankAccountSelector />
+  ))
   .add('Boleto Configuration Form', () => (
     <BoletoConfigurationForm />
   ))
