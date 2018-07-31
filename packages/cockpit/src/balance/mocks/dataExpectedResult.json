@@ -35,16 +35,10 @@
       "amount": 3000,
       "outcoming": 2000,
       "available": {
-        "withdrawal": 3000,
-        "anticipation": 23000
+        "withdrawal": 3000
       }
     },
     "search": {
-      "total": {
-        "net": 76451657,
-        "outcoming": 88996335,
-        "outgoing": 12544678
-      },
       "operations": {
         "total": 1000,
         "count": 100,
