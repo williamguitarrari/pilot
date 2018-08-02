@@ -2,17 +2,28 @@
 import React, { cloneElement, Component } from 'react'
 import { TransitionMotion, spring, presets } from 'react-motion'
 import PropTypes from 'prop-types'
-import { identity } from 'ramda'
+import {
+  curry,
+  identity,
+  ifElse,
+  is,
+  mapObjIndexed,
+  uncurryN,
+} from 'ramda'
 
-const applySpring = (val, springPreset) =>
-  spring(val, springPreset || presets.noWobble)
+const applySpring = curry((springPreset, val) =>
+  spring(val, springPreset || presets.noWobble))
 
-const ensureSpring = (styles, springOptions) =>
-  Object.keys(styles).reduce((acc, key) => {
-    const value = styles[key]
-    acc[key] = typeof value === 'number' ? applySpring(value, springOptions) : value
-    return acc
-  }, {})
+const applySpringIfNumber = springOptions => ifElse(
+  is(Number),
+  applySpring(springOptions),
+  identity
+)
+
+const ensureSpring = uncurryN(
+  2,
+  springOptions => mapObjIndexed(applySpringIfNumber(springOptions))
+)
 
 class Transition extends Component {
   constructor () {
@@ -38,8 +49,8 @@ class Transition extends Component {
 
     return [
       {
-        key: this.props.children.key,
         data: this.props.children,
+        key: this.props.children.key,
         style: this.props.atEnter,
       },
     ]
@@ -49,11 +60,12 @@ class Transition extends Component {
     if (!this.props.children) {
       return []
     }
+
     return [
       {
-        key: this.props.children.key,
         data: this.props.children,
-        style: ensureSpring(this.props.atActive, this.props.springOptions),
+        key: this.props.children.key,
+        style: ensureSpring(this.props.springOptions, this.props.atActive),
       },
     ]
   }
@@ -63,7 +75,7 @@ class Transition extends Component {
   }
 
   willLeave () {
-    return ensureSpring(this.props.atLeave, this.props.springOptions)
+    return ensureSpring(this.props.springOptions, this.props.atLeave)
   }
 
   didLeave (styleThatLeft) {
@@ -74,8 +86,8 @@ class Transition extends Component {
 
   renderChild (config) {
     const props = {
-      style: this.props.mapStyles(config.style),
       key: config.key,
+      style: this.props.mapStyles(config.style),
     }
 
     return cloneElement(config.data, props)
@@ -105,28 +117,28 @@ class Transition extends Component {
 }
 
 Transition.propTypes = {
+  /* eslint-disable react/forbid-prop-types */
+  atActive: PropTypes.object.isRequired,
+  atEnter: PropTypes.object.isRequired,
+  atLeave: PropTypes.object.isRequired,
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
-  /* eslint-disable react/forbid-prop-types */
-  atEnter: PropTypes.object.isRequired,
-  atActive: PropTypes.object.isRequired,
-  atLeave: PropTypes.object.isRequired,
   /* eslint-enable react/forbid-prop-types */
   didLeave: PropTypes.func,
   mapStyles: PropTypes.func,
   runOnMount: PropTypes.bool,
   springOptions: PropTypes.shape({
-    stiffness: PropTypes.number,
     damping: PropTypes.number,
     precision: PropTypes.number,
+    stiffness: PropTypes.number,
   }),
 }
 
 Transition.defaultProps = {
   className: '',
   didLeave: identity,
-  runOnMount: false,
   mapStyles: identity,
+  runOnMount: false,
   springOptions: presets.noWobble,
 }
 
