@@ -7,19 +7,38 @@ import {
   CardSectionDoubleLineTitle,
   Col,
   Grid,
+  Table,
   Row,
 } from 'former-kit'
 
-import { intersperse } from 'ramda'
-
 import IconPercent from 'emblematic-icons/svg/Percent32.svg'
 
-import formatCurrency from '../../../../../formatters/currency'
+import decimalCurrencyFormatter
+  from '../../../../../formatters/decimalCurrency'
 
-const sectionColumns = {
-  psp: 4,
-  transfers: 8,
-}
+const getColumns = t => [
+  {
+    accessor: ['title'],
+    orderable: true,
+    title: t('pages.settings.company.pricing.service'),
+  },
+  {
+    accessor: ['description'],
+    orderable: true,
+    title: t('pages.settings.company.pricing.description'),
+  },
+  {
+    accessor: ['cost'],
+    orderable: true,
+    title: t('pages.settings.company.pricing.cost'),
+    renderer: (item) => {
+      if (item.unit === '%') {
+        return item.cost + item.unit
+      }
+      return item.unit + decimalCurrencyFormatter(item.cost)
+    },
+  },
+]
 
 class Pricing extends React.Component {
   constructor (props) {
@@ -31,7 +50,6 @@ class Pricing extends React.Component {
 
     this.handleSectionTitleClick = this.handleSectionTitleClick.bind(this)
     this.renderContent = this.renderContent.bind(this)
-    this.renderPricing = this.renderPricing.bind(this)
   }
 
   handleSectionTitleClick () {
@@ -40,66 +58,34 @@ class Pricing extends React.Component {
     })
   }
 
-  renderPricing () {
-    const {
-      pricing,
-      t,
-    } = this.props
-
-    /* eslint-disable react/no-array-index-key */
-    return pricing.map(({ mainTitle, subItems }, index) => (
-      <Col
-        key={`${mainTitle}-${index}`}
-        palm={12}
-        tablet={12}
-        desk={sectionColumns[mainTitle] || 12}
-        tv={sectionColumns[mainTitle] || 12}
-      >
-        <p>
-          <strong>
-            {t(`pages.settings.company.card.general.rate.${mainTitle}`)}
-          </strong>
-        </p>
-        <Grid>
-          <Row flex>
-            {subItems.map(({ prices, title: serviceTitle }) => (
-              <Col key={serviceTitle} tablet={6} palm={12}>
-                <span>
-                  {t(`pages.settings.company.card.general.rate.${serviceTitle}`)}
-                </span>
-                <strong>
-                  {intersperse(' + ',
-                    prices.map(({ unit, value }) => (
-                      <span key={`${unit}:${value}`}>
-                        {unit === 'real' && formatCurrency(value)}
-                        {unit === 'percentage' && `${value}%`}
-                      </span>
-                    ))
-                  )}
-                </strong>
-              </Col>
-            ))}
-          </Row>
-        </Grid>
-      </Col>
-    ))
-    /* eslint-enable react/no-array-index-key */
-  }
-
   renderContent () {
     const {
+      onOrderChange,
       pricing,
       t,
     } = this.props
 
     return (
       <CardContent>
-        <span>
-          {t('pages.settings.company.card.general.headline.rate')}
-        </span>
         <Grid>
           <Row>
-            {pricing && this.renderPricing()}
+            <Col
+              desk={12}
+              palm={12}
+              tablet={12}
+              tv={12}
+            >
+              {t('pages.settings.company.card.general.headline.rate')}
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Table
+                columns={getColumns(t)}
+                rows={pricing}
+                onOrderChange={onOrderChange}
+              />
+            </Col>
           </Row>
         </Grid>
       </CardContent>
@@ -129,15 +115,12 @@ class Pricing extends React.Component {
 }
 
 Pricing.propTypes = {
+  onOrderChange: PropTypes.func.isRequired,
   pricing: PropTypes.arrayOf(PropTypes.shape({
-    mainTitle: PropTypes.string.isRequired,
-    subItems: PropTypes.arrayOf(PropTypes.shape({
-      prices: PropTypes.arrayOf(PropTypes.shape({
-        unit: PropTypes.string.isRequired,
-        value: PropTypes.number.isRequired,
-      })).isRequired,
-      title: PropTypes.string.isRequired,
-    })).isRequired,
+    cost: PropTypes.number.isRequired,
+    description: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    unit: PropTypes.string.isRequired,
   })).isRequired,
   t: PropTypes.func.isRequired,
 }

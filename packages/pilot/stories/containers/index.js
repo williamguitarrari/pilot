@@ -33,6 +33,7 @@ import {
 import Reprocess from './Reprocess'
 import ReprocessForm from './Reprocess/Form'
 import ReprocessResult from './Reprocess/Result'
+import Pricing from './Settings/Company/GeneralInfoTab/Pricing'
 import Withdraw from './Withdraw'
 import WithdrawConfirmation from './Withdraw/Confirmation'
 import WithdrawForm from './Withdraw/Form'
@@ -54,6 +55,9 @@ import Anticipation from './Anticipation'
 storiesOf('Containers', module)
   .add('Anticipation Form', () => (
     <AnticipationForm />
+  ))
+  .add('Pricing', () => (
+    <Pricing />
   ))
   .add('Recipient list', () => (
     <RecipientListState />
