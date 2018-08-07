@@ -13,3 +13,11 @@
   align-self: start;
   margin-top: 18px;
 }
+
+.content {
+  padding:
+    0
+    var(--spacing-small)
+    var(--spacing-small)
+    var(--spacing-small);
+}
