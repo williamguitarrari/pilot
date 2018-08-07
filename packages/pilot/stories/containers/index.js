@@ -53,11 +53,13 @@ import {
 } from './Anticipation/Result'
 import Anticipation from './Anticipation'
 import BoletoConfigurationForm from './Settings/Boleto/Form'
+import BankAccount from './Settings/BankAccount'
 
 storiesOf('Containers', module)
   .add('Bank Account Selector', () => (
     <BankAccountSelector />
   ))
+  .add('Bank account settings', () => <BankAccount />)
   .add('Boleto Configuration Form', () => (
     <BoletoConfigurationForm />
   ))

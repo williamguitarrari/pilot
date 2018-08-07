@@ -744,7 +744,9 @@
               "address": "Endereço",
               "documents": "Documentos",
               "managing_partner": "Informações pessoais",
-              "bank": "Informações da conta"
+              "bank": "Informações da conta",
+              "select": "Selecionar uma conta",
+              "add": "Adicionar uma conta"
             },
             "subtitle": {
               "company": "Verifique ou edite informações da sua empresa.",
@@ -766,7 +768,12 @@
               "name": "Banco",
               "agency": "Agência",
               "account": "Conta",
-              "account_type": "Tipo de conta"
+              "account_type": "Tipo de conta",
+              "subtitles": {
+                "main_account": "Conta principal",
+                "agency:": "Agência",
+                "account": "Conta"
+              }
             },
             "address": {
               "form": {
