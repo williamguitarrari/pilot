@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import {
   Button,
+  CardContent,
   Table,
 } from 'former-kit'
 
@@ -73,20 +74,24 @@ const BankAccountSelector = ({
   selectedAccountId,
   t,
 }) => (
-  <Table
-    columns={getColumns(selectedAccountId, onSelect, t)}
-    rows={accounts}
-  />
+  <CardContent>
+    <Table
+      columns={getColumns(selectedAccountId, onSelect, t)}
+      rows={accounts}
+    />
+  </CardContent>
 )
 
 BankAccountSelector.propTypes = {
   accounts: PropTypes.arrayOf(
     PropTypes.shape({
-      agencia_dv: PropTypes.string.isRequired,
       agencia: PropTypes.string.isRequired,
+      agencia_dv: PropTypes.string.isRequired,
       bank_code: PropTypes.string.isRequired,
-      conta_dv: PropTypes.string.isRequired,
       conta: PropTypes.string.isRequired,
+      conta_dv: PropTypes.string.isRequired,
+      document_number: PropTypes.string.isRequired,
+      document_type: PropTypes.string.isRequired,
       id: PropTypes.number.isRequired,
       legal_name: PropTypes.string.isRequired,
       type: PropTypes.string.isRequired,

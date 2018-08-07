@@ -4,7 +4,6 @@ import Form from 'react-vanilla-form'
 import {
   Button,
   CardActions,
-  CardContent,
   Col,
   FormDropdown,
   FormInput,
@@ -90,7 +89,7 @@ const BankAccountForm = ({
         type: isRequired,
       }}
     >
-      <CardContent>
+      <div className={style.content}>
         <Grid>
           <Row>
             <Col palm={12} tablet={4} desk={4} tv={4}>
@@ -166,7 +165,7 @@ const BankAccountForm = ({
             </Col>
           </Row>
         </Grid>
-      </CardContent>
+      </div>
       <CardActions>
         <Button
           disabled={actionsDisabled}
