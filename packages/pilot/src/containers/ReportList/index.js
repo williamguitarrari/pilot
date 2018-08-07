@@ -9,7 +9,6 @@ import {
 } from 'former-kit'
 import AddIcon from 'emblematic-icons/svg/Add32.svg'
 import moment from 'moment'
-import { contains } from 'ramda'
 import style from './style.css'
 import ReportCard from '../../components/ReportCard'
 
