@@ -15,9 +15,9 @@ export default {
       value: 'ready',
     },
     {
-     label: 'Cancelado',
-     value: 'canceled'
-    }
-  ]
+      label: 'Cancelado',
+      value: 'canceled',
+    },
+  ],
 }
 
