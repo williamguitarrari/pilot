@@ -51,7 +51,6 @@ import {
   AnticipationResultWithoutAutomaticTransfer,
 } from './Anticipation/Result'
 import Anticipation from './Anticipation'
-import WithdrawSummary from './Withdraw/Summary'
 import ReportListState from './ReportList'
 
 storiesOf('Containers', module)

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import {
   Button,
@@ -6,8 +6,16 @@ import {
   CardTitle,
   Dropdown,
   Pagination,
+  Popover,
+  PopoverContent,
+  PopoverMenu,
 } from 'former-kit'
 import AddIcon from 'emblematic-icons/svg/Add32.svg'
+import DownloadIcon from 'emblematic-icons/svg/Download32.svg'
+import TrashIcon from 'emblematic-icons/svg/Trash32.svg'
+import ReprocessIcon from 'emblematic-icons/svg/Reprocess32.svg'
+
+
 import moment from 'moment'
 import style from './style.css'
 import ReportCard from '../../components/ReportCard'
@@ -31,6 +39,73 @@ const options = [
   },
 ]
 
+const items = [
+  {
+    action: () => null,
+    title: 'csv',
+  },
+  {
+    action: () => null,
+    title: 'Excel',
+  },
+  {
+    action: () => null,
+    title: 'PDF',
+  },
+]
+
+
+const renderActions = (report) => {
+  if (report === 'canceled') {
+    return (
+      <Fragment>
+        <Button
+          fill="outline"
+          icon={<TrashIcon width={16} height={16} />}
+          onClick={() => null}
+          size="default"
+        />
+
+        <Button
+          fill="outline"
+          icon={<ReprocessIcon width={16} height={16} />}
+          onClick={() => null}
+          size="default"
+        />
+      </Fragment>
+    )
+  }
+
+  return (
+    <Fragment>
+      <Button
+        fill="outline"
+        icon={<TrashIcon width={16} height={16} />}
+        onClick={() => null}
+        size="default"
+      />
+      <Popover
+        content={
+          <div className={style.exportPopover}>
+            <PopoverContent>
+              <strong>Exportar para:</strong>
+            </PopoverContent>
+            <PopoverMenu items={items} />
+          </div>
+        }
+        placement="bottomEnd"
+      >
+        <Button
+          fill="outline"
+          icon={<DownloadIcon width={16} height={16} />}
+          onClick={() => null}
+          size="default"
+        />
+      </Popover>
+    </Fragment>
+  )
+}
+
 class ReportList extends Component {
   constructor (props) {
     super(props)
@@ -47,7 +122,6 @@ class ReportList extends Component {
     this.pageChanged = this.pageChanged.bind(this)
   }
 
-
   pageChanged (page) {
     this.setState({
       currentPage: page,
@@ -60,10 +134,12 @@ class ReportList extends Component {
     } = this.props
     return reports.map(report => (
       <ReportCard
-        actions={() => null}
-        report={report}
-        subtitle="teste"
-        title="teste"
+        actions={renderActions(report.status)}
+        filterLabel="Filtros"
+        status={report.status}
+        subtitle="Período: 01/01/2017 a 01/06/2017   |   Criado em 10/05/  2018"
+        t={t => t}
+        title="Carta de circularização"
       />
     ))
   }
