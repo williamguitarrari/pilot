@@ -959,6 +959,7 @@ TransactionDetails.propTypes = {
       url: PropTypes.string,
     }),
     capabilities: PropTypes.shape({
+      capturable: PropTypes.bool,
       reprocessable: PropTypes.bool,
       refundable: PropTypes.bool,
     }),
