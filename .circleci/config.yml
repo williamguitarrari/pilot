@@ -25,6 +25,7 @@ jobs:
 
       - run: |
           cd packages/pilot
+          yarn lint
           yarn build
           yarn build-storybook
           yarn percy; true
