@@ -7,6 +7,8 @@ import BankAccountSelector from './Settings/BankAccount/Selector'
 import Balance from './Balance'
 import BankAccountForm from './Settings/BankAccount/Add'
 import AddAccount from './AddRecipient/BankAccountStep/AddAccount'
+import BankAccountStep from './AddRecipient/BankAccountStep'
+import ConfirmRecipientStep from './AddRecipient/ConfirmStep'
 import BoletoForm from './Refund/BoletoForm'
 import BoletoRefundConfirm from './Refund/BoletoConfirmation'
 import BoletoRefundResult from './Refund/BoletoResult'
@@ -96,6 +98,9 @@ storiesOf('Containers|Page containers', module)
   ))
   .add('Add Account', () => (
     <AddAccount />
+  ))
+  .add('Recipient Confirm Step', () => (
+    <ConfirmRecipientStep />
   ))
   .add('Bank Account Step', () => (
     <BankAccountStep />
