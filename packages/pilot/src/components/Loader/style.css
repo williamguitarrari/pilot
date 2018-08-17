@@ -1,0 +1,327 @@
+@import "former-kit-skin-pagarme/dist/styles/colors/light.css";
+
+:root {
+  --loader-animation-duration: 5.4s;
+  --loader-animation-size: 15px;
+  --loader-box-shadow-base-color: rgba(23, 201, 178, 1);
+  --loader-box-shadow-next: 20px;
+  --loader-box-shadow-transparent: rgba(23, 201, 178, 0);
+  --loader-high-z-index: 10;
+  --loader-last-item-color: rgba(132, 89, 185, 1);
+  --loader-last-item-transparent: rgba(132, 89, 185, 0);
+  --loader-margin: 5px;
+  --loader-size: calc(calc(var(--loader-animation-size) * 3) + calc(var(--loader-margin) * 2));
+  --loader-z-index: 2;
+  --overlay-background-color: rgba(255, 255, 255, 0.8);
+}
+
+.loader {
+  height: var(--loader-size);
+  position: relative;
+  width: var(--loader-size);
+  z-index: var(--loader-z-index);
+
+  &:after {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    display: block;
+    width: var(--loader-animation-size);
+    height: var(--loader-animation-size);
+    background-color: var(--loader-box-shadow-base-color);
+    opacity: 0;
+    content: "";
+    animation: base var(--loader-animation-duration) linear forwards infinite;
+  }
+
+  &:before {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: block;
+    width: var(--loader-animation-size);
+    height: var(--loader-animation-size);
+    content: "";
+    box-shadow:
+      var(--loader-box-shadow-next) 0 0 var(--loader-box-shadow-transparent),
+      calc(var(--loader-box-shadow-next) * 2) 0 0 var(--loader-box-shadow-transparent),
+      0 calc(0 - var(--loader-box-shadow-next)) 0 var(--loader-box-shadow-transparent),
+      var(--loader-box-shadow-next) calc(0 - var(--loader-box-shadow-next)) 0 var(--loader-box-shadow-transparent),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - var(--loader-box-shadow-next)) 0 var(--loader-box-shadow-transparent),
+      0 calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-box-shadow-transparent),
+      var(--loader-box-shadow-next) calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-box-shadow-transparent),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-last-item-transparent);
+    animation: loader var(--loader-animation-duration) linear forwards infinite;
+  }
+}
+
+@keyframes base {
+
+  0% {
+    bottom: 10px;
+    opacity: 0;
+  }
+
+  5%,
+  50% {
+    bottom: 0;
+    opacity: 1;
+  }
+
+  55%,
+  100% {
+    bottom: -10px;
+    opacity: 0;
+  }
+}
+
+@keyframes loader {
+
+  0% {
+    box-shadow:
+      var(--loader-box-shadow-next) -10px var(--loader-box-shadow-transparent),
+      calc(var(--loader-box-shadow-next) * 2) 0 var(--loader-box-shadow-transparent),
+      0 calc(0 - var(--loader-box-shadow-next)) var(--loader-box-shadow-transparent),
+      var(--loader-box-shadow-next) calc(0 - var(--loader-box-shadow-next)) var(--loader-box-shadow-transparent),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - var(--loader-box-shadow-next)) var(--loader-box-shadow-transparent),
+      0 calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-box-shadow-transparent),
+      var(--loader-box-shadow-next) calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-box-shadow-transparent),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-last-item-transparent);
+  }
+
+  5% {
+    box-shadow:
+      var(--loader-box-shadow-next) -10px var(--loader-box-shadow-transparent),
+      calc(var(--loader-box-shadow-next) * 2) 0 var(--loader-box-shadow-transparent),
+      0 calc(0 - var(--loader-box-shadow-next)) var(--loader-box-shadow-transparent),
+      var(--loader-box-shadow-next) calc(0 - var(--loader-box-shadow-next)) var(--loader-box-shadow-transparent),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - var(--loader-box-shadow-next)) var(--loader-box-shadow-transparent),
+      0 calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-box-shadow-transparent),
+      var(--loader-box-shadow-next) calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-box-shadow-transparent),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-last-item-transparent);
+  }
+
+  10% {
+    box-shadow:
+      var(--loader-box-shadow-next) 0 var(--loader-box-shadow-base-color),
+      calc(var(--loader-box-shadow-next) * 2) -10px var(--loader-box-shadow-transparent),
+      0 calc(0 - var(--loader-box-shadow-next)) var(--loader-box-shadow-transparent),
+      var(--loader-box-shadow-next) calc(0 - var(--loader-box-shadow-next)) var(--loader-box-shadow-transparent),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - var(--loader-box-shadow-next)) var(--loader-box-shadow-transparent),
+      0 calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-box-shadow-transparent),
+      var(--loader-box-shadow-next) calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-box-shadow-transparent),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-last-item-transparent);
+  }
+
+  15% {
+    box-shadow:
+      var(--loader-box-shadow-next) 0 var(--loader-box-shadow-base-color),
+      calc(var(--loader-box-shadow-next) * 2) 0  var(--loader-box-shadow-base-color),
+      0 calc(0 - var(--loader-box-shadow-next) - 10px) var(--loader-box-shadow-transparent),
+      var(--loader-box-shadow-next) calc(0 - var(--loader-box-shadow-next)) var(--loader-box-shadow-transparent),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - var(--loader-box-shadow-next)) var(--loader-box-shadow-transparent),
+      0 calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-box-shadow-transparent),
+      var(--loader-box-shadow-next) calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-box-shadow-transparent),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-last-item-transparent);
+  }
+
+  20% {
+    box-shadow:
+      var(--loader-box-shadow-next) 0 var(--loader-box-shadow-base-color),
+      calc(var(--loader-box-shadow-next) * 2) 0 var(--loader-box-shadow-base-color),
+      0 calc(0 - var(--loader-box-shadow-next)) var(--loader-box-shadow-base-color),
+      var(--loader-box-shadow-next) calc(0 - var(--loader-box-shadow-next) - 10px) var(--loader-box-shadow-transparent),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - var(--loader-box-shadow-next)) var(--loader-box-shadow-transparent),
+      0 calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-box-shadow-transparent),
+      var(--loader-box-shadow-next) calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-box-shadow-transparent),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-last-item-transparent);
+  }
+
+  25% {
+    box-shadow:
+      var(--loader-box-shadow-next) 0 var(--loader-box-shadow-base-color),
+      calc(var(--loader-box-shadow-next) * 2) 0 var(--loader-box-shadow-base-color),
+      0 calc(0 - var(--loader-box-shadow-next)) var(--loader-box-shadow-base-color),
+      var(--loader-box-shadow-next) calc(0 - var(--loader-box-shadow-next)) var(--loader-box-shadow-base-color),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - var(--loader-box-shadow-next) - 10px) var(--loader-box-shadow-transparent),
+      0 calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-box-shadow-transparent),
+      var(--loader-box-shadow-next) calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-box-shadow-transparent),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-last-item-transparent);
+  }
+
+  30% {
+    box-shadow:
+      var(--loader-box-shadow-next) 0 var(--loader-box-shadow-base-color),
+      calc(var(--loader-box-shadow-next) * 2) 0 var(--loader-box-shadow-base-color),
+      0 calc(0 - var(--loader-box-shadow-next)) var(--loader-box-shadow-base-color),
+      var(--loader-box-shadow-next) calc(0 - var(--loader-box-shadow-next)) var(--loader-box-shadow-base-color),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - var(--loader-box-shadow-next)) var(--loader-box-shadow-base-color),
+      0 calc(0 - calc(var(--loader-box-shadow-next) * 2) - 10px) var(--loader-box-shadow-transparent),
+      var(--loader-box-shadow-next) calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-box-shadow-transparent),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-last-item-transparent);
+  }
+
+  35% {
+    box-shadow:
+      var(--loader-box-shadow-next) 0 var(--loader-box-shadow-base-color),
+      calc(var(--loader-box-shadow-next) * 2) 0 var(--loader-box-shadow-base-color),
+      0 calc(0 - var(--loader-box-shadow-next)) var(--loader-box-shadow-base-color),
+      var(--loader-box-shadow-next) calc(0 - var(--loader-box-shadow-next)) var(--loader-box-shadow-base-color),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - var(--loader-box-shadow-next)) var(--loader-box-shadow-base-color),
+      0 calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-box-shadow-base-color),
+      var(--loader-box-shadow-next) calc(0 - calc(var(--loader-box-shadow-next) * 2) - 10px) var(--loader-box-shadow-transparent),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-last-item-transparent);
+  }
+
+  40% {
+    box-shadow:
+      var(--loader-box-shadow-next) 0 var(--loader-box-shadow-base-color),
+      calc(var(--loader-box-shadow-next) * 2) 0 var(--loader-box-shadow-base-color),
+      0 calc(0 - var(--loader-box-shadow-next)) var(--loader-box-shadow-base-color),
+      var(--loader-box-shadow-next) calc(0 - var(--loader-box-shadow-next)) var(--loader-box-shadow-base-color),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - var(--loader-box-shadow-next)) var(--loader-box-shadow-base-color),
+      0 calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-box-shadow-base-color),
+      var(--loader-box-shadow-next) calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-box-shadow-base-color),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - calc(var(--loader-box-shadow-next) * 2) - 10px) var(--loader-last-item-transparent);
+  }
+
+  45%,
+  55% {
+    box-shadow:
+      var(--loader-box-shadow-next) 0 var(--loader-box-shadow-base-color),
+      calc(var(--loader-box-shadow-next) * 2) 0 var(--loader-box-shadow-base-color),
+      0 calc(0 - var(--loader-box-shadow-next)) var(--loader-box-shadow-base-color),
+      var(--loader-box-shadow-next) calc(0 - var(--loader-box-shadow-next)) var(--loader-box-shadow-base-color),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - var(--loader-box-shadow-next)) var(--loader-box-shadow-base-color),
+      0 calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-box-shadow-base-color),
+      var(--loader-box-shadow-next) calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-box-shadow-base-color),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-last-item-color);
+  }
+
+  60% {
+    box-shadow:
+      var(--loader-box-shadow-next) 10px var(--loader-box-shadow-transparent),
+      calc(var(--loader-box-shadow-next) * 2) 0 var(--loader-box-shadow-base-color),
+      0 calc(0 - var(--loader-box-shadow-next)) var(--loader-box-shadow-base-color),
+      var(--loader-box-shadow-next) calc(0 - var(--loader-box-shadow-next)) var(--loader-box-shadow-base-color),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - var(--loader-box-shadow-next)) var(--loader-box-shadow-base-color),
+      0 calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-box-shadow-base-color),
+      var(--loader-box-shadow-next) calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-box-shadow-base-color),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-last-item-color);
+  }
+
+  65% {
+    box-shadow:
+      var(--loader-box-shadow-next) 10px var(--loader-box-shadow-transparent),
+      calc(var(--loader-box-shadow-next) * 2) 10px var(--loader-box-shadow-transparent),
+      0 calc(0 - var(--loader-box-shadow-next)) var(--loader-box-shadow-base-color),
+      var(--loader-box-shadow-next) calc(0 - var(--loader-box-shadow-next)) var(--loader-box-shadow-base-color),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - var(--loader-box-shadow-next)) var(--loader-box-shadow-base-color),
+      0 calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-box-shadow-base-color),
+      var(--loader-box-shadow-next) calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-box-shadow-base-color),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-last-item-color);
+  }
+
+  70% {
+    box-shadow:
+      var(--loader-box-shadow-next) 10px var(--loader-box-shadow-transparent),
+      calc(var(--loader-box-shadow-next) * 2) 10px var(--loader-box-shadow-transparent),
+      0 calc(0 - var(--loader-box-shadow-next) + 10px) var(--loader-box-shadow-transparent),
+      var(--loader-box-shadow-next) calc(0 - var(--loader-box-shadow-next)) var(--loader-box-shadow-base-color),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - var(--loader-box-shadow-next)) var(--loader-box-shadow-base-color),
+      0 calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-box-shadow-base-color),
+      var(--loader-box-shadow-next) calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-box-shadow-base-color),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-last-item-color);
+  }
+
+  75% {
+    box-shadow:
+      var(--loader-box-shadow-next) 10px var(--loader-box-shadow-transparent),
+      calc(var(--loader-box-shadow-next) * 2) 10px var(--loader-box-shadow-transparent),
+      0 calc(0 - var(--loader-box-shadow-next) + 10px) var(--loader-box-shadow-transparent),
+      var(--loader-box-shadow-next) calc(0 - var(--loader-box-shadow-next) + 10px) var(--loader-box-shadow-transparent),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - var(--loader-box-shadow-next)) var(--loader-box-shadow-base-color),
+      0 calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-box-shadow-base-color),
+      var(--loader-box-shadow-next) calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-box-shadow-base-color),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-last-item-color);
+  }
+
+  80% {
+    box-shadow:
+      var(--loader-box-shadow-next) 10px var(--loader-box-shadow-transparent),
+      calc(var(--loader-box-shadow-next) * 2) 10px var(--loader-box-shadow-transparent),
+      0 calc(0 - var(--loader-box-shadow-next) + 10px) var(--loader-box-shadow-transparent),
+      var(--loader-box-shadow-next) calc(0 - var(--loader-box-shadow-next) + 10px) var(--loader-box-shadow-transparent),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - var(--loader-box-shadow-next) + 10px) var(--loader-box-shadow-transparent),
+      0 calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-box-shadow-base-color),
+      var(--loader-box-shadow-next) calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-box-shadow-base-color),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-last-item-color);
+  }
+
+  85% {
+    box-shadow:
+      var(--loader-box-shadow-next) 10px var(--loader-box-shadow-transparent),
+      calc(var(--loader-box-shadow-next) * 2) 10px var(--loader-box-shadow-transparent),
+      0 calc(0 - var(--loader-box-shadow-next) + 10px) var(--loader-box-shadow-transparent),
+      var(--loader-box-shadow-next) calc(0 - var(--loader-box-shadow-next) + 10px) var(--loader-box-shadow-transparent),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - var(--loader-box-shadow-next) + 10px) var(--loader-box-shadow-transparent),
+      0 calc(0 - calc(var(--loader-box-shadow-next) * 2) + 10px) var(--loader-box-shadow-transparent),
+      var(--loader-box-shadow-next) calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-box-shadow-base-color),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-last-item-color);
+  }
+
+  90% {
+    box-shadow:
+      var(--loader-box-shadow-next) 10px var(--loader-box-shadow-transparent),
+      calc(var(--loader-box-shadow-next) * 2) 10px var(--loader-box-shadow-transparent),
+      0 calc(0 - var(--loader-box-shadow-next) + 10px) var(--loader-box-shadow-transparent),
+      var(--loader-box-shadow-next) calc(0 - var(--loader-box-shadow-next) + 10px) var(--loader-box-shadow-transparent),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - var(--loader-box-shadow-next) + 10px) var(--loader-box-shadow-transparent),
+      0 calc(0 - calc(var(--loader-box-shadow-next) * 2) + 10px) var(--loader-box-shadow-transparent),
+      var(--loader-box-shadow-next) calc(0 - calc(var(--loader-box-shadow-next) * 2) + 10px) var(--loader-box-shadow-transparent),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - calc(var(--loader-box-shadow-next) * 2)) var(--loader-last-item-color);
+  }
+
+  95%,
+  100% {
+    box-shadow:
+      var(--loader-box-shadow-next) 10px var(--loader-box-shadow-transparent),
+      calc(var(--loader-box-shadow-next) * 2) 10px var(--loader-box-shadow-transparent),
+      0 calc(0 - var(--loader-box-shadow-next) + 10px) var(--loader-box-shadow-transparent),
+      var(--loader-box-shadow-next) calc(0 - var(--loader-box-shadow-next) + 10px) var(--loader-box-shadow-transparent),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - var(--loader-box-shadow-next) + 10px) var(--loader-box-shadow-transparent),
+      0 calc(0 - calc(var(--loader-box-shadow-next) * 2) + 10px) var(--loader-box-shadow-transparent),
+      var(--loader-box-shadow-next) calc(0 - calc(var(--loader-box-shadow-next) * 2) + 10px) var(--loader-box-shadow-transparent),
+      calc(var(--loader-box-shadow-next) * 2) calc(0 - calc(var(--loader-box-shadow-next) * 2) + 10px) var(--loader-last-item-transparent);
+  }
+}
+
+.fixed {
+  position: fixed;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.overlay {
+  align-items: center;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  right: 0;
+  top: 0;
+}
+
+.loaderOverlay {
+  background-color: var(--overlay-background-color);
+}
+
+.highZIndex {
+  z-index: var(--loader-high-z-index);
+}
