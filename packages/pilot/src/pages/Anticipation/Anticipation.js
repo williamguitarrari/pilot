@@ -538,9 +538,10 @@ class Anticipation extends Component {
       })
   }
 
-  handleFormChange () {
+  handleFormChange (data, { requested }) {
     this.setState({
       recalculationNeeded: true,
+      error: requested,
     })
   }
 
