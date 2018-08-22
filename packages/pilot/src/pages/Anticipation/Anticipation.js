@@ -6,18 +6,23 @@ import {
   allPass,
   always,
   apply,
+  applySpec,
   compose,
   cond,
   contains,
+  curry,
   equals,
+  filter,
   head,
   isNil,
   juxt,
+  map,
   partial,
   path,
+  pathOr,
   pipe,
   prop,
-  pathOr,
+  propEq,
   subtract,
 } from 'ramda'
 import { translate } from 'react-i18next'
@@ -130,7 +135,7 @@ const confirmBulk = (client, {
   })
 )
 
-const destroyBulk = (client, {
+const destroyBulk = curry((client, {
   bulkId,
   recipientId,
 }) => (
@@ -138,6 +143,28 @@ const destroyBulk = (client, {
     id: bulkId,
     recipientId,
   })
+))
+
+const getBulkAnticipations = (client, { recipientId }) => (
+  client
+    .bulkAnticipations
+    .find({
+      recipientId,
+    })
+)
+
+const isBuilding = propEq('status', 'building')
+
+const filterBuildingBulkAnticipations = filter(isBuilding)
+
+const buildDeleteOption = applySpec({ bulkId: prop('id') })
+
+const deleteBulkAnticipationPromises = client => map(destroyBulk(client))
+
+const buildDeleteBuildingBulkAnticipation = client => pipe(
+  filterBuildingBulkAnticipations,
+  map(buildDeleteOption),
+  deleteBulkAnticipationPromises(client)
 )
 
 const getDefaultRecipient = client => (
@@ -339,23 +366,13 @@ class Anticipation extends Component {
               transferCost: this.getTransferCost(),
             })
 
-            if (bulkId) {
-              return this.destroyBulk()
-                .then(() => {
-                  this.setState(
-                    {
-                      bulkId: null,
-                    },
-                    () => {
-                      onBulkDeleted()
-                      this.getAnticipationLimits()
-                        .then(this.createBulk)
-                    })
-                })
-            }
-
-            return this.getAnticipationLimits()
+            getBulkAnticipations(client, { recipientId: recipient.id })
+              .then(buildDeleteBuildingBulkAnticipation(client))
+              .then(deletePromises =>
+                Promise.all(deletePromises)
+                  .then(this.getAnticipationLimits)
               .then(this.createBulk)
+              )
           }
         )
 
