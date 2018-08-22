@@ -29,12 +29,6 @@ import { translate } from 'react-i18next'
 import moment from 'moment'
 import { Alert } from 'former-kit'
 import IconInfo from 'emblematic-icons/svg/Info32.svg'
-import {
-  confirmedBulk,
-  createdBulk,
-  deletedBulk,
-  updatedBulk,
-} from './actions'
 import AnticipationContainer from '../../containers/Anticipation'
 import env from '../../environment'
 import partnersBankCodes from '../../models/partnersBanksCodes'
@@ -46,21 +40,10 @@ const mapStateToProps = ({
       pricing,
     } = {},
   },
-  anticipation: {
-    bulkId,
-  },
 }) => ({
-  bulkId,
   client,
   pricing,
 })
-
-const mapDispatchToProps = {
-  onBulkConfirmed: confirmedBulk,
-  onBulkCreated: createdBulk,
-  onBulkDeleted: deletedBulk,
-  onBulkUpdated: updatedBulk,
-}
 
 const getAnticipationLimits = (client, {
   payment_date: paymentDate,
@@ -196,7 +179,7 @@ const getRecipientById = (id, client) => (
 
 const enhanced = compose(
   translate(),
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(mapStateToProps),
   withRouter
 )
 
@@ -288,7 +271,7 @@ class Anticipation extends Component {
 
     this.state = {
       ...initialState,
-      bulkId: props.bulkId,
+      bulkId: null,
     }
 
     this.confirmBulk = this.confirmBulk.bind(this)
@@ -317,11 +300,9 @@ class Anticipation extends Component {
           id,
         },
       },
-      onBulkDeleted,
     } = this.props
 
     const {
-      bulkId,
       paymentDate,
     } = this.state
 
@@ -371,7 +352,7 @@ class Anticipation extends Component {
               .then(deletePromises =>
                 Promise.all(deletePromises)
                   .then(this.getAnticipationLimits)
-              .then(this.createBulk)
+                  .then(this.createBulk)
               )
           }
         )
@@ -611,7 +592,6 @@ class Anticipation extends Component {
 
     const {
       client,
-      onBulkUpdated,
     } = this.props
 
     return updateBulk(client, {
@@ -640,7 +620,6 @@ class Anticipation extends Component {
           loading: false,
           requestedAmount: value || requestedAmount,
         })
-        onBulkUpdated({ bulkId })
       })
       .catch(pipe(getErrorMessage, error => this.setState({
         error,
@@ -658,7 +637,6 @@ class Anticipation extends Component {
 
     const {
       client,
-      onBulkConfirmed,
       t,
     } = this.props
 
@@ -674,7 +652,6 @@ class Anticipation extends Component {
           statusMessage: t('pages.anticipation.anticipation_success'),
           stepsStatus: getStepsStatus('result', 'success'),
         })
-        onBulkConfirmed()
       })
       .catch(pipe(getErrorMessage, error => this.setState({
         currentStep: 'result',
@@ -697,7 +674,6 @@ class Anticipation extends Component {
 
     const {
       client,
-      onBulkCreated,
     } = this.props
 
     return createBulk(client, {
@@ -728,7 +704,6 @@ class Anticipation extends Component {
           loading: false,
           requestedAmount: value || requestedAmount,
         })
-        onBulkCreated({ bulkId: id })
       })
       .catch(pipe(getErrorMessage, error => this.setState({
         error,
@@ -828,7 +803,6 @@ class Anticipation extends Component {
 }
 
 Anticipation.propTypes = {
-  bulkId: PropTypes.string,
   client: PropTypes.shape({
     bulkAnticipations: PropTypes.shape({
       limits: PropTypes.func,
@@ -844,10 +818,6 @@ Anticipation.propTypes = {
       id: PropTypes.string,
     }).isRequired,
   }).isRequired,
-  onBulkConfirmed: PropTypes.func.isRequired,
-  onBulkCreated: PropTypes.func.isRequired,
-  onBulkDeleted: PropTypes.func.isRequired,
-  onBulkUpdated: PropTypes.func.isRequired,
   pricing: PropTypes.shape({
     transfers: PropTypes.shape({
       credito_em_conta: PropTypes.number,
@@ -855,10 +825,6 @@ Anticipation.propTypes = {
     }),
   }).isRequired,
   t: PropTypes.func.isRequired,
-}
-
-Anticipation.defaultProps = {
-  bulkId: null,
 }
 
 export default enhanced(Anticipation)
