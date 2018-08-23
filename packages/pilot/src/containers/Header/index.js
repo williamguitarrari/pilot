@@ -21,8 +21,53 @@ import {
 } from 'former-kit'
 
 import IconFeedback from 'emblematic-icons/svg/Feedback24.svg'
+import IconTestAmbientOff from 'emblematic-icons/svg/TestAmbientOff24.svg'
+import IconTestAmbientOn from 'emblematic-icons/svg/TestAmbientOn24.svg'
+
+import environment, {
+  liveUrl,
+  testUrl,
+} from '../../environment'
 
 import style from './style.css'
+
+const getEnvironmentUrl = () => (
+  environment === 'test'
+    ? liveUrl
+    : testUrl
+)
+
+const renderEnvironmentButton = ({
+  t,
+}) => (
+  <Popover
+    content={
+      <PopoverContent>
+        <small>
+          {t(`header.environment.text_${environment}`)}&nbsp;
+          <a href={getEnvironmentUrl()}>
+            {t('header.environment.text_action')}
+          </a>.
+        </small>
+      </PopoverContent>
+    }
+    placement="bottomEnd"
+  >
+    {environment === 'test' &&
+      <small className={style.testEnvironmentLabel}>
+        {t('header.environment.test_environment')}
+      </small>
+    }
+    <Button
+      fill="clean"
+      icon={
+        environment === 'test'
+        ? <IconTestAmbientOn />
+        : <IconTestAmbientOff />
+      }
+    />
+  </Popover>
+)
 
 const HeaderContainer = ({
   onBack,
@@ -58,6 +103,10 @@ const HeaderContainer = ({
     </HashRouter>
 
     <HeaderContent>
+      {renderEnvironmentButton({ t })}
+
+      <Spacing size="small" />
+
       <Popover
         content={
           <PopoverContent>
@@ -104,6 +153,10 @@ const HeaderContainer = ({
     </HeaderContent>
   </Header>
 )
+
+renderEnvironmentButton.propTypes = {
+  t: PropTypes.func.isRequired,
+}
 
 HeaderContainer.propTypes = {
   onBack: PropTypes.func.isRequired,
