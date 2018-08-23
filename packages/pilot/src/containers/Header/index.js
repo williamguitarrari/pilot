@@ -62,9 +62,9 @@ const HeaderContainer = ({
         content={
           <PopoverContent>
             <small>
-              <strong className={style.feedback}>{t('feedback_text_emphasis')}</strong>
-              {t('feedback_text')}&nbsp;
-              <a href="mailto:nova@pagar.me">{t('feedback_text_email')}</a>.
+              <strong className={style.feedback}>{t('header.feedback.text_emphasis')}</strong>
+              {t('header.feedback.text')}&nbsp;
+              <a href="mailto:nova@pagar.me">{t('header.feedback.action')}</a>.
             </small>
           </PopoverContent>
         }
