@@ -8,7 +8,7 @@ import CompanySettings from '../CompanySettings'
 import Transactions from '../Transactions'
 import UserSettings from '../UserSettings'
 import Withdraw from '../Withdraw'
-import { Anticipation } from '../Anticipation'
+import Anticipation from '../Anticipation'
 
 export default {
   anticipationRoot: {
@@ -47,13 +47,9 @@ export default {
   withdrawRoot: {
     component: Withdraw,
     icon: Withdraw32,
-    path: '/withdraw',
+    path: '/withdraw/:id?',
     title: 'pages.withdraw.title',
     hidden: true,
-  },
-  withdraw: {
-    hidden: true,
-    path: '/withdraw/:id?',
   },
   accountSettings: {
     title: 'pages.settings.user.menu',
