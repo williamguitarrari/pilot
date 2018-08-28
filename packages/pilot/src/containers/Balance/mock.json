@@ -13,16 +13,18 @@
     },
     "requests": [
       {
-        "id": "ba_cig37i5s6004xor6e5cefsjsp",
-        "type": "anticipation",
+        "amount": 525040,
         "created_at": "2017-01-06T05:17:54.000Z",
-        "amount": 525040
+        "id": "ba_cig37i5s6004xor6e5cefsjsp",
+        "status": "pending",
+        "type": "anticipation"
       },
       {
-        "id": "ba_cig120jcg000rii6evg415z4w",
-        "type": "anticipation",
+        "amount": 368910,
         "created_at": "2017-01-06T17:08:41.000Z",
-        "amount": 368910
+        "id": "ba_cig120jcg000rii6evg415z4w",
+        "status": "pending",
+        "type": "anticipation"
       }
     ],
     "balance": {

@@ -130,6 +130,8 @@ const defaultBankAccountErrorsState = {
   type: '',
 }
 
+const userIsReadOnly = propEq('permission', 'read_only')
+
 class CompanySettingsPage extends React.Component {
   constructor (props) {
     super(props)
@@ -139,7 +141,7 @@ class CompanySettingsPage extends React.Component {
       bankAccount: {
         accounts: [],
         actionsDisabled: true,
-        actionSelectDisabled: false,
+        actionSelectDisabled: userIsReadOnly(props.user) || false,
         data: defaultBankAccountState,
         errors: defaultBankAccountErrorsState,
         loading: false,
@@ -529,7 +531,7 @@ class CompanySettingsPage extends React.Component {
         bankAccounts={bankAccount.accounts}
         bankActionsDisabled={bankAccount.actionsDisabled}
         bankAccountSelected={bankAccount.selectedAccount}
-        bankAccountSelectActionDisabled={bankAccount.actionSelectDisabled}
+        bankAccountChangeActionDisabled={bankAccount.actionSelectDisabled}
         bankAccountSelectedView={bankAccount.selectedView}
         bankData={bankAccount.data}
         bankErrors={bankAccount.errors}
@@ -574,6 +576,7 @@ CompanySettingsPage.propTypes = {
       destroy: PropTypes.func.isRequired,
     }),
   }).isRequired,
+  user: PropTypes.shape({}),
   company: PropTypes.shape({
     boletos: PropTypes.shape({
       days_to_add_in_expiration_date: PropTypes.number.isRequired,
@@ -586,6 +589,7 @@ CompanySettingsPage.propTypes = {
 
 CompanySettingsPage.defaultProps = {
   company: null,
+  user: null,
 }
 
 export default enhanced(CompanySettingsPage)

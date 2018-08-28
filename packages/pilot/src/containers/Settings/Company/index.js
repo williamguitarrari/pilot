@@ -31,7 +31,7 @@ class CompanySettings extends Component {
       bankAccounts,
       bankActionsDisabled,
       bankAccountSelected,
-      bankAccountSelectActionDisabled,
+      bankAccountChangeActionDisabled,
       bankAccountSelectedView,
       bankData,
       bankErrors,
@@ -119,7 +119,7 @@ class CompanySettings extends Component {
             bankAccountData={bankData}
             bankAccountErrors={bankErrors}
             bankAccountSelected={bankAccountSelected}
-            bankAccountSelectActionDisabled={bankAccountSelectActionDisabled}
+            bankAccountChangeActionDisabled={bankAccountChangeActionDisabled}
             bankAccountSelectedView={bankAccountSelectedView}
             general={general}
             managingPartner={managingPartner}
@@ -171,7 +171,7 @@ CompanySettings.propTypes = {
   ).isRequired,
   bankActionsDisabled: PropTypes.bool.isRequired,
   bankAccountSelected: PropTypes.shape(bankAccountShape).isRequired,
-  bankAccountSelectActionDisabled: PropTypes.bool.isRequired,
+  bankAccountChangeActionDisabled: PropTypes.bool.isRequired,
   bankAccountSelectedView: PropTypes.oneOf([
     'addition', 'selection',
   ]).isRequired,

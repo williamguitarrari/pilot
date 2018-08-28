@@ -83,7 +83,7 @@ class BankAccount extends Component {
       onChange,
       onSubmit,
       selectedAccount,
-      selectionActionDisabled,
+      changeActionDisabled,
       t,
     } = this.props
 
@@ -123,7 +123,7 @@ class BankAccount extends Component {
               {viewSelectAccount &&
                 <BankAccountSelector
                   accounts={accounts}
-                  disabled={selectionActionDisabled}
+                  disabled={changeActionDisabled}
                   onSelect={onAccountSelect}
                   selectedAccountId={selectedAccount.id}
                   t={t}
@@ -134,6 +134,7 @@ class BankAccount extends Component {
                 <BankAccountForm
                   actionsDisabled={disabled}
                   data={data}
+                  disabled={changeActionDisabled}
                   errors={errors}
                   onChange={onChange}
                   onCancel={onCancel}
@@ -188,7 +189,7 @@ BankAccount.propTypes = {
   onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   selectedAccount: PropTypes.shape(accountShape).isRequired,
-  selectionActionDisabled: PropTypes.bool.isRequired,
+  changeActionDisabled: PropTypes.bool.isRequired,
   selectedView: PropTypes.oneOf([
     'addition', 'selection',
   ]),
