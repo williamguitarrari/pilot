@@ -7,3 +7,11 @@
 .filter > button {
   margin-left: var(--spacing-small);
 }
+
+.modalAlignContent {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}

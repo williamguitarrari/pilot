@@ -22,6 +22,7 @@ import {
   path,
   pathOr,
   pipe,
+  propEq,
   tail,
   test,
   uncurryN,
@@ -59,6 +60,7 @@ const mapStateToProps = ({
     client,
     company,
     sessionId,
+    user,
   },
   balance: {
     error,
@@ -67,11 +69,12 @@ const mapStateToProps = ({
   },
 }) => ({
   client,
-  error,
   company,
+  error,
   loading,
   query,
   sessionId,
+  user,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -175,6 +178,8 @@ const cancelBulkAnticipation = ({ bulkId, recipientId }, client) =>
     recipientId,
     id: bulkId,
   })
+
+const userIsReadOnly = propEq('permission', 'read_only')
 
 class Balance extends Component {
   constructor (props) {
@@ -434,6 +439,7 @@ class Balance extends Component {
       error,
       loading,
       t,
+      user,
     } = this.props
 
     const {
@@ -496,7 +502,7 @@ class Balance extends Component {
           disabled={loading}
           modalConfirmOpened={modalOpened}
           onAnticipationClick={this.handleAnticipation}
-          onCancelRequestClick={this.handleOpenConfirmCancel}
+          onCancelRequestClick={userIsReadOnly(user) ? null : this.handleOpenConfirmCancel}
           onCancelRequestClose={this.handleCloseConfirmCancel}
           onConfirmCancelPendingRequest={this.handleCancelRequest}
           onFilterClick={this.handleFilterClick}
@@ -559,12 +565,18 @@ Balance.propTypes = {
     },
   }),
   t: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    permission: PropTypes.oneOf([
+      'admin', 'write', 'read_only',
+    ]).isRequired,
+  }),
 }
 
 Balance.defaultProps = {
   company: null,
   error: null,
   query: null,
+  user: null,
 }
 
 export default enhanced(Balance)

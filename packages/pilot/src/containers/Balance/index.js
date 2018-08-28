@@ -21,14 +21,16 @@ import {
   Col,
   DateInput,
   Grid,
+  Modal,
+  ModalActions,
+  ModalContent,
+  ModalTitle,
   Row,
   Spacing,
   Tooltip,
-  Modal,
-  ModalContent,
-  ModalActions,
 } from 'former-kit'
 import IconCalendar from 'emblematic-icons/svg/Calendar32.svg'
+import IconClose from 'emblematic-icons/svg/ClearClose32.svg'
 import IconInfo from 'emblematic-icons/svg/Info32.svg'
 
 import BalanceSummary from '../../components/BalanceSummary'
@@ -78,8 +80,8 @@ const isEmptyDates = either(
   propSatisfies(isNil, 'start')
 )
 
-const isSameDay = dates =>
-  moment(dates).isSame(moment(), 'day')
+const isSameDay = date =>
+  moment(date).isSame(moment(), 'day')
 
 const isNotNullOrEmpty = complement(
   either(isNil, isEmpty)
@@ -182,13 +184,17 @@ class Balance extends Component {
     amount,
     created_at, // eslint-disable-line camelcase
     type,
+    status,
   }) {
     const { t } = this.props
-    const title = bulkAnticipationsLabels[type] || '-'
+    const { types, statuses } = bulkAnticipationsLabels
+    const title =
+      `${t(types[type])} ${t(statuses[status])}` || '-'
+
     return {
       amount: currencyFormatter(amount),
       created_at: dateFormatter(created_at),
-      title: t(title),
+      title,
     }
   }
 
@@ -431,13 +437,13 @@ class Balance extends Component {
                   <div className={style.filter}>
                     <DateInput
                       active={filterDatesEqualCurrent}
-                      value={this.state.dates}
                       disabled={disabled}
                       icon={<IconCalendar width={16} height={16} />}
                       limits={dateLimits}
                       onChange={this.handleDatesChange}
                       presets={datePresets}
                       strings={getDateLabels(this.props.t)}
+                      value={this.state.dates}
                     />
                     <Button
                       disabled={filterDatesEqualCurrent}
@@ -493,34 +499,44 @@ class Balance extends Component {
         </Grid>
 
         <Modal isOpen={modalConfirmOpened}>
+          <ModalTitle
+            closeIcon={<IconClose width={16} height={16} />}
+            onClose={onCancelRequestClose}
+            title={t('cancel_pending_request_title')}
+          />
           <ModalContent>
-            {
-              isValidDateAndSameDay(anticipationCancel)
-                ?
-                  <Fragment>
-                    <span>
-                      {t('cancel_pending_request_text_today')}
-                      <br />
-                      <br />
-                      {t('cancel_pending_request_text_today_confirm')}
-                    </span>
-                  </Fragment>
-                : t('cancel_pending_request_text')
-            }
+            <div className={style.modalAlignContent}>
+              {
+                isValidDateAndSameDay(anticipationCancel)
+                  ?
+                    <Fragment>
+                      <span>
+                        {t('cancel_pending_request_text_today')}
+                        <br />
+                        <br />
+                        {t('cancel_pending_request_text_today_confirm')}
+                      </span>
+                    </Fragment>
+                  : t('cancel_pending_request_text')
+              }
+            </div>
           </ModalContent>
           <ModalActions>
-            <Button
-              relevance="low"
-              onClick={onCancelRequestClose}
-            >
-              {t('cancel_pending_request_cancel')}
-            </Button>
-            <Button
-              relevance="high"
-              onClick={onConfirmCancelPendingRequest}
-            >
-              {t('cancel_pending_request_confirm')}
-            </Button>
+            <div className={style.modalAlignContent}>
+              <Button
+                fill="outline"
+                onClick={onCancelRequestClose}
+              >
+                {t('cancel_pending_request_cancel')}
+              </Button>
+              <Spacing size="small" />
+              <Button
+                fill="gradient"
+                onClick={onConfirmCancelPendingRequest}
+              >
+                {t('cancel_pending_request_confirm')}
+              </Button>
+            </div>
           </ModalActions>
         </Modal>
       </Fragment>

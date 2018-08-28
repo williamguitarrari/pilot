@@ -3,4 +3,11 @@ const types = {
   withdraw: 'bulk_anticipations.withdraw',
 }
 
-export default types
+const statuses = {
+  pending: 'bulk_anticipations.statuses.pending',
+}
+
+export default {
+  statuses,
+  types,
+}

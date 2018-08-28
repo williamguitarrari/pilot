@@ -13,7 +13,6 @@ import {
   juxt,
   last,
   map,
-  negate,
   path,
   pathEq,
   pipe,
@@ -23,6 +22,7 @@ import {
   sum,
   when,
 } from 'ramda'
+import { buildPendingRequest } from '../../bulkAnticipations'
 
 const getWithDv = propName => pipe(
   juxt([
@@ -59,23 +59,9 @@ const buildBalance = applySpec({
   outcoming: path(['balance', 'waiting_funds', 'amount']),
 })
 
-const calculateRequestAmount = pipe(
-  juxt([
-    prop('amount'),
-    pipe(prop('anticipation_fee'), negate),
-    pipe(prop('fee'), negate),
-  ]),
-  sum
-)
-
 const buildRequests = pipe(
   prop('bulk_anticipations_pending'),
-  map(applySpec({
-    amount: calculateRequestAmount,
-    created_at: prop('date_created'),
-    id: prop('id'),
-    type: always('anticipation'),
-  }))
+  buildPendingRequest
 )
 
 const isInvalidOperationDate = type => pipe(
