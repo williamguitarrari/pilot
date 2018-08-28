@@ -170,6 +170,12 @@ const getValidId = uncurryN(2, defaultId => unless(
 const getRecipientId = pathOr(null, ['default_recipient_id', env])
 const getAnticipationAmount = path(['maximum', 'amount'])
 
+const cancelBulkAnticipation = ({ bulkId, recipientId }, client) =>
+  client.bulkAnticipations.cancel({
+    recipientId,
+    id: bulkId,
+  })
+
 class Balance extends Component {
   constructor (props) {
     super(props)
@@ -190,6 +196,8 @@ class Balance extends Component {
       },
       result: {},
       total: {},
+      modalOpened: false,
+      anticipationCancel: null,
     }
 
     this.handleAnticipation = this.handleAnticipation.bind(this)
@@ -198,6 +206,8 @@ class Balance extends Component {
     this.handleFilterClick = this.handleFilterClick.bind(this)
     this.handlePageChange = this.handlePageChange.bind(this)
     this.handleWithdraw = this.handleWithdraw.bind(this)
+    this.handleOpenConfirmCancel = this.handleOpenConfirmCancel.bind(this)
+    this.handleCloseConfirmCancel = this.handleCloseConfirmCancel.bind(this)
 
     this.requestAnticipationLimits = this.requestAnticipationLimits.bind(this)
     this.requestData = this.requestData.bind(this)
@@ -341,12 +351,27 @@ class Balance extends Component {
     history.push(`/anticipation/${getRecipientId(company)}`)
   }
 
-  // eslint-disable-next-line class-methods-use-this, no-unused-vars
-  handleCancelRequest (requestId) {
-    // TODO: add this method when it's available in API
+  handleCancelRequest () {
+    const { client, company } = this.props
+    const recipientId = getRecipientId(company)
+    const { id: bulkId } = this.state.anticipationCancel
+
+    cancelBulkAnticipation({
+      recipientId,
+      bulkId,
+    }, client)
+      .then(() => client.bulkAnticipations.findPendingRequests(recipientId))
+      .then(response => this.setState({
+        ...this.state,
+        modalOpened: false,
+        result: {
+          ...this.state.result,
+          requests: response,
+        },
+      }))
   }
 
-  handleDateChange (dates) { // eslint-disable-line class-methods-use-this
+  handleDateChange (dates) {
     const { query } = this.state
 
     this.setState({
@@ -387,6 +412,22 @@ class Balance extends Component {
     history.push(`/withdraw/${getRecipientId(company)}`)
   }
 
+  handleOpenConfirmCancel (anticipation) {
+    this.setState({
+      ...this.state,
+      modalOpened: true,
+      anticipationCancel: anticipation,
+    })
+  }
+
+  handleCloseConfirmCancel () {
+    this.setState({
+      ...this.state,
+      modalOpened: false,
+      anticipationCancel: null,
+    })
+  }
+
   render () {
     const {
       company,
@@ -397,6 +438,8 @@ class Balance extends Component {
 
     const {
       anticipation,
+      anticipationCancel,
+      modalOpened,
       query: {
         dates,
         page,
@@ -445,13 +488,17 @@ class Balance extends Component {
       return (
         <BalanceContainer
           anticipation={anticipation}
+          anticipationCancel={anticipationCancel}
           balance={balance}
           company={company}
           currentPage={page}
           dates={dates}
           disabled={loading}
+          modalConfirmOpened={modalOpened}
           onAnticipationClick={this.handleAnticipation}
-          // onCancelRequestClick={this.handleCancelRequest}
+          onCancelRequestClick={this.handleOpenConfirmCancel}
+          onCancelRequestClose={this.handleCloseConfirmCancel}
+          onConfirmCancelPendingRequest={this.handleCancelRequest}
           onFilterClick={this.handleFilterClick}
           onPageChange={this.handlePageChange}
           onWithdrawClick={this.handleWithdraw}

@@ -1,15 +1,18 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import {
+  complement,
   either,
   isEmpty,
   isNil,
   keys,
   map,
   pipe,
+  prop,
   propSatisfies,
   take,
+  when,
 } from 'ramda'
 import {
   Button,
@@ -21,6 +24,9 @@ import {
   Row,
   Spacing,
   Tooltip,
+  Modal,
+  ModalContent,
+  ModalActions,
 } from 'former-kit'
 import IconCalendar from 'emblematic-icons/svg/Calendar32.svg'
 import IconInfo from 'emblematic-icons/svg/Info32.svg'
@@ -70,6 +76,21 @@ const datesEqual = (left, right) => {
 const isEmptyDates = either(
   propSatisfies(isNil, 'end'),
   propSatisfies(isNil, 'start')
+)
+
+const isSameDay = dates =>
+  moment(dates).isSame(moment(), 'day')
+
+const isNotNullOrEmpty = complement(
+  either(isNil, isEmpty)
+)
+
+const isValidDateAndSameDay = when(
+  isNotNullOrEmpty,
+  pipe(
+    prop('payment_date'),
+    isSameDay
+  )
 )
 
 /*
@@ -237,7 +258,7 @@ class Balance extends Component {
       requests,
     } = this.props
 
-    onCancelRequestClick(requests[requestIndex].id)
+    onCancelRequestClick(requests[requestIndex])
   }
 
   renderAnticipation () {
@@ -287,6 +308,7 @@ class Balance extends Component {
         error: anticipationError,
         loading: anticipationLoading,
       },
+      anticipationCancel,
       balance: {
         amount,
         available: {
@@ -298,8 +320,11 @@ class Balance extends Component {
       currentPage,
       dates,
       disabled,
+      modalConfirmOpened,
       onAnticipationClick,
       onCancelRequestClick,
+      onCancelRequestClose,
+      onConfirmCancelPendingRequest,
       onWithdrawClick,
       search: {
         operations,
@@ -325,146 +350,180 @@ class Balance extends Component {
     const filterDatesEqualCurrent = datesEqual(this.state.dates, dates)
 
     return (
-      <Grid>
-        <Row stretch>
-          <Col
-            desk={12}
-            palm={12}
-            tablet={12}
-            tv={12}
-          >
-            <Card>
-              <CardContent>
-                <DetailsHead
-                  identifier={company.name}
-                  properties={this.getHeadProperties()}
-                  title={t('pages.balance.recipient')}
-                />
-              </CardContent>
-            </Card>
-          </Col>
-        </Row>
-        <Row stretch>
-          <Col
-            desk={4}
-            palm={12}
-            tablet={6}
-            tv={4}
-          >
-            <BalanceTotalDisplay
-              action={isNil(onWithdrawClick) ? null : withdrawalAction}
-              amount={formatAmount(amount)}
-              detail={
-                <span>
-                  {t('pages.balance.available_withdrawal')}
-                  <strong> {currencyFormatter(withdrawal)} </strong>
-                </span>
-              }
-              disabled={disabled}
-              title={t('pages.balance.withdrawal_title')}
-            />
-          </Col>
-          <Col
-            desk={4}
-            palm={12}
-            tablet={6}
-            tv={4}
-          >
-            <BalanceTotalDisplay
-              action={isNil(onAnticipationClick) ? null : anticipationAction}
-              amount={formatAmount(outcoming)}
-              detail={this.renderAnticipation()}
-              disabled={disabled || anticipationLoading || anticipationError}
-              title={t('pages.balance.anticipation_title')}
-            />
-          </Col>
-          <Col
-            desk={4}
-            palm={12}
-            tablet={6}
-            tv={4}
-          >
-            <PendingRequests
-              emptyMessage={t('pages.balance.pending_requests_empty_message')}
-              loading={disabled}
-              onCancel={isNil(onCancelRequestClick) ? null : this.handleRequestCancelClick}
-              requests={this.getPendingRequests()}
-              title={t('pages.balance.pending_requests_title')}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col
-            desk={12}
-            palm={12}
-            tablet={12}
-            tv={12}
-          >
-            <Card className={style.allowOverflow}>
-              <CardContent>
-                <div className={style.filter}>
-                  <DateInput
-                    active={filterDatesEqualCurrent}
-                    value={this.state.dates}
-                    disabled={disabled}
-                    icon={<IconCalendar width={16} height={16} />}
-                    limits={dateLimits}
-                    onChange={this.handleDatesChange}
-                    presets={datePresets}
-                    strings={getDateLabels(this.props.t)}
+      <Fragment>
+        <Grid>
+          <Row stretch>
+            <Col
+              desk={12}
+              palm={12}
+              tablet={12}
+              tv={12}
+            >
+              <Card>
+                <CardContent>
+                  <DetailsHead
+                    identifier={company.name}
+                    properties={this.getHeadProperties()}
+                    title={t('pages.balance.recipient')}
                   />
-                  <Button
-                    disabled={filterDatesEqualCurrent}
-                    fill="gradient"
-                    onClick={this.handleFilterClick}
-                    size="default"
-                  >
-                    {t('filter_action')}
-                  </Button>
-                </div>
-              </CardContent>
-              <CardContent>
-                <BalanceSummary
-                  amount={this.getSummaryTotal()}
-                  dates={dates}
-                />
-              </CardContent>
-            </Card>
-          </Col>
-        </Row>
-        <Row>
-          <Col
-            desk={12}
-            palm={12}
-            tablet={12}
-            tv={12}
-          >
-            <Card>
-              <Operations
-                columns={translateColumns(getColumns(typesLabels))}
-                currentPage={currentPage}
-                disabled={disabled}
-                emptyMessage={t('models.operations.empty_message')}
-                exportLabel={t('models.operations.export')}
-                loading={disabled}
-                ofLabel={t('of')}
-                onExport={() => null}
-                onPageChange={this.handleOperationsPageChange}
-                rows={operations.rows}
-                subtitle={
+                </CardContent>
+              </Card>
+            </Col>
+          </Row>
+          <Row stretch>
+            <Col
+              desk={4}
+              palm={12}
+              tablet={6}
+              tv={4}
+            >
+              <BalanceTotalDisplay
+                action={isNil(onWithdrawClick) ? null : withdrawalAction}
+                amount={formatAmount(amount)}
+                detail={
                   <span>
-                    {t('pages.balance.total.of')}
-                    <strong> {operations.total} </strong>
-                    {t('pages.balance.releases')}
+                    {t('pages.balance.available_withdrawal')}
+                    <strong> {currencyFormatter(withdrawal)} </strong>
                   </span>
                 }
-                title={t('pages.balance.operations_title')}
-                totalPages={operations.count}
+                disabled={disabled}
+                title={t('pages.balance.withdrawal_title')}
               />
-            </Card>
-          </Col>
-        </Row>
-      </Grid>
+            </Col>
+            <Col
+              desk={4}
+              palm={12}
+              tablet={6}
+              tv={4}
+            >
+              <BalanceTotalDisplay
+                action={isNil(onAnticipationClick) ? null : anticipationAction}
+                amount={formatAmount(outcoming)}
+                detail={this.renderAnticipation()}
+                disabled={disabled || anticipationLoading || anticipationError}
+                title={t('pages.balance.anticipation_title')}
+              />
+            </Col>
+            <Col
+              desk={4}
+              palm={12}
+              tablet={6}
+              tv={4}
+            >
+              <PendingRequests
+                emptyMessage={t('pages.balance.pending_requests_empty_message')}
+                loading={disabled}
+                onCancel={isNil(onCancelRequestClick) ? null : this.handleRequestCancelClick}
+                requests={this.getPendingRequests()}
+                title={t('pages.balance.pending_requests_title')}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col
+              desk={12}
+              palm={12}
+              tablet={12}
+              tv={12}
+            >
+              <Card className={style.allowOverflow}>
+                <CardContent>
+                  <div className={style.filter}>
+                    <DateInput
+                      active={filterDatesEqualCurrent}
+                      value={this.state.dates}
+                      disabled={disabled}
+                      icon={<IconCalendar width={16} height={16} />}
+                      limits={dateLimits}
+                      onChange={this.handleDatesChange}
+                      presets={datePresets}
+                      strings={getDateLabels(this.props.t)}
+                    />
+                    <Button
+                      disabled={filterDatesEqualCurrent}
+                      fill="gradient"
+                      onClick={this.handleFilterClick}
+                      size="default"
+                    >
+                      {t('filter_action')}
+                    </Button>
+                  </div>
+                </CardContent>
+                <CardContent>
+                  <BalanceSummary
+                    amount={this.getSummaryTotal()}
+                    dates={dates}
+                  />
+                </CardContent>
+              </Card>
+            </Col>
+          </Row>
+          <Row>
+            <Col
+              desk={12}
+              palm={12}
+              tablet={12}
+              tv={12}
+            >
+              <Card>
+                <Operations
+                  columns={translateColumns(getColumns(typesLabels))}
+                  currentPage={currentPage}
+                  disabled={disabled}
+                  emptyMessage={t('models.operations.empty_message')}
+                  exportLabel={t('models.operations.export')}
+                  loading={disabled}
+                  ofLabel={t('of')}
+                  onExport={() => null}
+                  onPageChange={this.handleOperationsPageChange}
+                  rows={operations.rows}
+                  subtitle={
+                    <span>
+                      {t('pages.balance.total.of')}
+                      <strong> {operations.total} </strong>
+                      {t('pages.balance.releases')}
+                    </span>
+                  }
+                  title={t('pages.balance.operations_title')}
+                  totalPages={operations.count}
+                />
+              </Card>
+            </Col>
+          </Row>
+        </Grid>
+
+        <Modal isOpen={modalConfirmOpened}>
+          <ModalContent>
+            {
+              isValidDateAndSameDay(anticipationCancel)
+                ?
+                  <Fragment>
+                    <span>
+                      {t('cancel_pending_request_text_today')}
+                      <br />
+                      <br />
+                      {t('cancel_pending_request_text_today_confirm')}
+                    </span>
+                  </Fragment>
+                : t('cancel_pending_request_text')
+            }
+          </ModalContent>
+          <ModalActions>
+            <Button
+              relevance="low"
+              onClick={onCancelRequestClose}
+            >
+              {t('cancel_pending_request_cancel')}
+            </Button>
+            <Button
+              relevance="high"
+              onClick={onConfirmCancelPendingRequest}
+            >
+              {t('cancel_pending_request_confirm')}
+            </Button>
+          </ModalActions>
+        </Modal>
+      </Fragment>
     )
   }
 }
@@ -492,6 +551,10 @@ Balance.propTypes = {
     loading: PropTypes.bool.isRequired,
     available: PropTypes.number,
   }).isRequired,
+  anticipationCancel: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    payment_date: PropTypes.string.isRequired,
+  }),
   balance: PropTypes.shape({
     amount: PropTypes.number.isRequired,
     available: PropTypes.shape({
@@ -506,8 +569,11 @@ Balance.propTypes = {
   currentPage: PropTypes.number.isRequired,
   dates: datesShape.isRequired, // eslint-disable-line react/no-typos
   disabled: PropTypes.bool.isRequired,
+  modalConfirmOpened: PropTypes.bool,
   onAnticipationClick: PropTypes.func.isRequired,
   onCancelRequestClick: PropTypes.func,
+  onCancelRequestClose: PropTypes.func,
+  onConfirmCancelPendingRequest: PropTypes.func,
   onFilterClick: PropTypes.func.isRequired,
   onPageChange: PropTypes.func.isRequired,
   onWithdrawClick: PropTypes.func.isRequired,
@@ -557,7 +623,11 @@ Balance.propTypes = {
 }
 
 Balance.defaultProps = {
+  anticipationCancel: null,
+  modalConfirmOpened: false,
   onCancelRequestClick: null,
+  onCancelRequestClose: null,
+  onConfirmCancelPendingRequest: null,
   total: {},
 }
 
