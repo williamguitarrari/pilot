@@ -16,7 +16,7 @@ const RegisterInfoTab = ({
   bankAccountData,
   bankAccountErrors,
   bankAccountSelected,
-  bankAccountSelectActionDisabled,
+  bankAccountChangeActionDisabled,
   bankAccountSelectedView,
   general,
   managingPartner,
@@ -56,6 +56,7 @@ const RegisterInfoTab = ({
     <CardContent>
       <CompanyBankAccount
         accounts={bankAccounts}
+        changeActionDisabled={bankAccountChangeActionDisabled}
         data={bankAccountData}
         disabled={bankAccountActionsDisabled}
         errors={bankAccountErrors}
@@ -64,7 +65,6 @@ const RegisterInfoTab = ({
         onChange={onBankAccountChange}
         onSubmit={onBankAccountCreate}
         selectedAccount={bankAccountSelected}
-        selectionActionDisabled={bankAccountSelectActionDisabled}
         selectedView={bankAccountSelectedView}
         t={t}
       />
@@ -132,7 +132,7 @@ RegisterInfoTab.propTypes = {
   bankAccountSelectedView: PropTypes.oneOf([
     'addition', 'selection',
   ]).isRequired,
-  bankAccountSelectActionDisabled: PropTypes.bool.isRequired,
+  bankAccountChangeActionDisabled: PropTypes.bool.isRequired,
   general: PropTypes.shape({
     cnpj: PropTypes.string,
     fullName: PropTypes.string,

@@ -41,6 +41,7 @@ const BankAccountForm = ({
     legalName,
     type,
   },
+  disabled,
   errors,
   onCancel,
   onChange,
@@ -108,6 +109,7 @@ const BankAccountForm = ({
           <Row>
             <Col palm={12} tablet={4} desk={4} tv={4}>
               <FormDropdown
+                disabled={disabled}
                 key={bankCode}
                 label={t('models.bank_account.bank')}
                 name="bankCode"
@@ -116,6 +118,7 @@ const BankAccountForm = ({
             </Col>
             <Col palm={12} tablet={3} desk={3} tv={3}>
               <FormDropdown
+                disabled={disabled}
                 key={type}
                 label={t('models.bank_account.account_type')}
                 name="type"
@@ -128,6 +131,7 @@ const BankAccountForm = ({
               <div className={style.agencyAccountContainer}>
                 <div className={style.agencyAccountFields} >
                   <FormInput
+                    disabled={disabled}
                     label={t('models.bank_account.agency')}
                     maxLength={5}
                     name="agency"
@@ -136,6 +140,7 @@ const BankAccountForm = ({
                   />
                   <span className={style.separator}>-</span>
                   <FormInput
+                    disabled={disabled}
                     label={t('models.bank_account.dv')}
                     maxLength={1}
                     name="agencyCd"
@@ -146,6 +151,7 @@ const BankAccountForm = ({
                 <Spacing size="large" />
                 <div className={style.agencyAccountFields} >
                   <FormInput
+                    disabled={disabled}
                     label={t('models.bank_account.account')}
                     maxLength={13}
                     name="account"
@@ -154,6 +160,7 @@ const BankAccountForm = ({
                   />
                   <span className={style.separator}>-</span>
                   <FormInput
+                    disabled={disabled}
                     label={t('models.bank_account.dv')}
                     maxLength={2}
                     name="accountCd"
@@ -200,6 +207,7 @@ BankAccountForm.propTypes = {
     legalName: PropTypes.string.isRequired,
     type: PropTypes.string,
   }),
+  disabled: PropTypes.bool,
   errors: PropTypes.shape({
     account: PropTypes.string,
     accountCd: PropTypes.string,
@@ -224,6 +232,7 @@ BankAccountForm.defaultProps = {
     bankCode: '',
     type: '',
   },
+  disabled: false,
   errors: null,
 }
 export default BankAccountForm
