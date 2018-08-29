@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {
   Card,
-  CardTitle,
   CardContent,
 
   Button,
@@ -28,24 +27,20 @@ const PaymentBoleto = ({
 }) => (
   <Card className={style.card}>
     <CardContent className={style.cardContent}>
-      <CardTitle
-        title={title}
-        subtitle={
-          <Button
-            fill="clean"
-            size="tiny"
-            onClick={onShow}
-          >
-            {showBoletoLabel}
-          </Button>
-        }
-      />
-
+      <div className={style.cardTitle}>
+        <h2>{title}</h2>
+        <Button
+          fill="clean"
+          size="tiny"
+          onClick={onShow}
+        >
+          {showBoletoLabel}
+        </Button>
+      </div>
       <div className={style.cardBarCode}>
         <IconBarCode width={25} height={25} />
         <strong>{barcode}</strong>
       </div>
-
       <div className={style.cardDueDate}>
         <p>{dueDateLabel} {dueDate}</p>
         <CopyButton
