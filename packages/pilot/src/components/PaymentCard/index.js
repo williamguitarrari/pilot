@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import {
   Card,
   CardContent,
-  CardTitle,
 } from 'former-kit'
 
 import IconChip from './IconChip.svg'
@@ -22,14 +21,15 @@ const PaymentCard = ({
 }) => (
   <Card className={style.card}>
     <CardContent className={style.cardContent}>
-      <CardTitle title={title} />
+      <div className={style.cardTitle}>
+        <h2>{title}</h2>
+      </div>
       <div className={style.cardNumber}>
         <IconChip className={style.cardChip} />
         <strong>
           { cardNumberFormatter(first) } { last }
         </strong>
       </div>
-
       <div className={style.cardBrandHolder}>
         <p>{ holderName }</p>
         { CardBrand(brand) }
