@@ -37,6 +37,7 @@ import Loader from './Loader'
 import Message from './Message'
 import MessageActions from './MessageActions'
 import PasswordInput from './PasswordInput'
+import ConfirmModal from './ConfirmModal'
 import WithLoader from './withLoader'
 import WithSpinner from './withSpinner'
 
@@ -77,6 +78,7 @@ storiesOf('Components|Custom components', module)
   .add('MetricIndicator', () => <MetricIndicator />)
   .add('MetricList', () => <MetricList />)
   .add('MetricChart', () => <MetricChart />)
+  .add('Confirm Modal', () => <ConfirmModal />)
 
 storiesOf('Components|High Order Components', module)
   .add('with loader', () => <WithLoader />)
