@@ -30,6 +30,7 @@ import SidebarSummary from './SidebarSummary'
 import Loader from './Loader'
 import Message from './Message'
 import MessageActions from './MessageActions'
+import ConfirmModal from './ConfirmModal'
 
 storiesOf('Components', module)
   .add('Configuration card form', () => <ConfigurationCardForm />)
@@ -61,3 +62,4 @@ storiesOf('Components', module)
   .add('Loader', () => <Loader />)
   .add('Message', () => <Message />)
   .add('Message with actions', () => <MessageActions />)
+  .add('Confirm Modal', () => <ConfirmModal />)
