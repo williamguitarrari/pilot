@@ -73,6 +73,13 @@ import ConfigurationStep from './AddRecipient/ConfigurationsStep'
 import RecipientDetailInfo from './RecipientDetailInfo'
 import RecipientBalance from './RecipientDetails/RecipientBalance'
 
+import {
+  AddRecipientFetchError,
+  AddRecipientSubmitError,
+  AddRecipientSuccess,
+  AddRecipientSuccessNoAccounts,
+} from './AddRecipient'
+
 storiesOf('Containers', module)
   .add('Bank Account Selector', () => (
     <BankAccountSelector />
@@ -85,6 +92,18 @@ storiesOf('Containers', module)
   ))
   .add('Recipient Detail Info', () => (
     <RecipientDetailInfo />
+  ))
+  .add('Add Recipient', () => (
+    <AddRecipientSuccess />
+  ))
+  .add('Add Recipient no previous accounts', () => (
+    <AddRecipientSuccessNoAccounts />
+  ))
+  .add('Add Recipient fetch accounts error', () => (
+    <AddRecipientFetchError />
+  ))
+  .add('Add Recipient submit error', () => (
+    <AddRecipientSubmitError />
   ))
   .add('Recipient Conclusion Success', () => (
     <ConclusionStep />
