@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
+
 import {
   complement,
   either,
@@ -15,6 +16,7 @@ import {
   take,
   when,
 } from 'ramda'
+
 import {
   Button,
   Card,
@@ -34,6 +36,7 @@ import {
   // More details in issue #1159
   // Tooltip,
 } from 'former-kit'
+
 import IconCalendar from 'emblematic-icons/svg/Calendar32.svg'
 import IconClose from 'emblematic-icons/svg/ClearClose32.svg'
 // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
