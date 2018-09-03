@@ -445,24 +445,26 @@ class Balance extends Component {
               tablet={6}
               tv={4}
             >
-              <BalanceTotalDisplay
-                action={
-                  isNil(onWithdrawClick)
-                    ? null
-                    : withdrawalAction
-                }
-                amount={formatAmount(amount)}
-                detail={
-                  <span>
-                    {t('pages.balance.available_withdrawal')}
-                    <strong> {currencyFormatter(withdrawal)} </strong>
-                  </span>
-                }
-                disabled={
-                  disabled || withdrawal <= ted + MINIMUM_API_VALUE
-                }
-                title={t('pages.balance.withdrawal_title')}
-              />
+              <Card>
+                <BalanceTotalDisplay
+                  action={
+                    isNil(onWithdrawClick)
+                      ? null
+                      : withdrawalAction
+                  }
+                  amount={formatAmount(amount)}
+                  detail={
+                    <span>
+                      {t('pages.balance.available_withdrawal')}
+                      <strong> {currencyFormatter(withdrawal)} </strong>
+                    </span>
+                  }
+                  disabled={
+                    disabled || withdrawal <= ted + MINIMUM_API_VALUE
+                  }
+                  title={t('pages.balance.withdrawal_title')}
+                />
+              </Card>
             </Col>
             <Col
               desk={4}
