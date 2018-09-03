@@ -40,11 +40,14 @@ import {
   BoletoRefund,
   CreditCardRefund,
 } from './Refund'
+
 import Capture from './Capture'
+
 import {
   CaptureFormExample,
   FixedCaptureFormExample,
 } from './Capture/Form'
+
 import CaptureResult from './Capture/Result'
 import IdentificationStep from './AddRecipient/IdentificationStep'
 import Reprocess from './Reprocess'
@@ -78,6 +81,7 @@ import ConclusionStepSuccess from './AddRecipient/ConclusionStep/Success'
 import ConclusionStepFail from './AddRecipient/ConclusionStep/Fail'
 import ConfigurationStep from './AddRecipient/ConfigurationsStep'
 import RecipientDetailInfo from './RecipientDetailInfo'
+import RecipientBalance from './RecipientDetails/RecipientBalance'
 
 storiesOf('Containers|Bank/Account', module)
   .add('selector', () => <BankAccountSelector />)
@@ -217,6 +221,9 @@ storiesOf('Containers|Page containers', module)
       }}
       statusMessage="An error ocurred!"
     />
+  ))
+  .add('Recipient balance', () => (
+    <RecipientBalance />
   ))
   .add('Reprocess form', () => (
     <ReprocessForm />
