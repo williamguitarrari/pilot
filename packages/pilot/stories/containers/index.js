@@ -70,14 +70,20 @@ import BankAccount from './Settings/BankAccount'
 import ConclusionStepSuccess from './AddRecipient/ConclusionStep/Success'
 import ConclusionStepFail from './AddRecipient/ConclusionStep/Fail'
 import ConfigurationStep from './AddRecipient/ConfigurationsStep'
+import RecipientDetailInfo from './RecipientDetailInfo'
 
 storiesOf('Containers', module)
   .add('Bank Account Selector', () => (
     <BankAccountSelector />
   ))
-  .add('Bank account settings', () => <BankAccount />)
+  .add('Bank account settings', () => (
+    <BankAccount />
+  ))
   .add('Boleto Configuration Form', () => (
     <BoletoConfigurationForm />
+  ))
+  .add('Recipient Detail Info', () => (
+    <RecipientDetailInfo />
   ))
   .add('Recipient Conclusion Success', () => (
     <ConclusionStepSuccess />
