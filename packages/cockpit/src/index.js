@@ -1,5 +1,6 @@
 import { applySpec } from 'ramda'
 import balance from './balance'
+import bulkAnticipations from './bulkAnticipations'
 import business from './business'
 import proxy from './proxy'
 import user from './user'
@@ -10,6 +11,7 @@ import transactions from './transactions'
 
 const cockpit = applySpec({
   balance,
+  bulkAnticipations,
   business,
   transactions,
   user,

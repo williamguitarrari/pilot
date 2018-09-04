@@ -16,13 +16,15 @@
         "id": "ba_cig37i5s6004xor6e5cefsjsp",
         "type": "anticipation",
         "created_at": "2017-01-06T05:17:54.000Z",
-        "amount": 525040
+        "amount": 525040,
+        "status": "pending"
       },
       {
         "id": "ba_cig120jcg000rii6evg415z4w",
         "type": "anticipation",
         "created_at": "2017-01-06T17:08:41.000Z",
-        "amount": 368910
+        "amount": 368910,
+        "status": "pending"
       }
     ],
     "balance": {

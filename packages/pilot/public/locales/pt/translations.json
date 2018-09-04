@@ -5,6 +5,9 @@
   "bank": "Banco",
   "bulk_anticipations": {
     "anticipation": "Antecipação",
+    "statuses": {
+      "pending": "pendente"
+    },
     "withdraw": "Saque"
   },
   "cancel": "cancelar",
@@ -631,10 +634,32 @@
         }
       },
       "company": {
+        "boleto": {
+          "title": "Boletos",
+          "subtitle": "Vencimento padrão: {{count}} dia global de seus boletos.",
+          "subtitle_plural": "Vencimento padrão: {{count}} dias globais de seus boletos.",
+          "description": "Nesta página você pode alterar as configurações globais de seus boletos. Consulte nossa documentação para saber mais sobre cada parâmetro.",
+          "daysToAddInExpirationDate": {
+            "label": "Vencimento padrão (em dias)."
+          },
+          "instructions": {
+            "label": "Instruções para pagamento do boleto.",
+            "placeholder": "Selecione uma instrução."
+          },
+          "options": {
+            "accept": "Sr. Caixa, aceitar o pagamento e não cobrar juros após o vencimento.",
+            "refuse": "Sr. Caixa, favor não aceitar pagamento após o vencimento."
+          },
+          "number": "Deve ser um número.",
+          "required": "Campo obrigatório.",
+          "greater_than_or_equal": "O número precisa ser maior que zero."
+        },
+        "confirm": "Confirmar",
+        "cancel": "Cancelar",
         "menu": "Configurações",
         "tab": {
           "general": "Geral",
-          "product": "Produtos",
+          "products": "Produtos",
           "team": "Equipe",
           "personalization": "Personalização",
           "register": "Cadastro"
@@ -647,7 +672,8 @@
             },
             "subtitle": {
               "rate": "Taxas e serviços negociados durante a ativação da sua conta.",
-              "api": "Responsáveis pela autenticação da API do Pagar.me e pela autorização de transações."
+              "api": "Responsáveis pela autenticação da API do Pagar.me e pela autorização de transações.",
+              "api_version": "Versão da API:"
             },
             "headline": {
               "rate": "Para solicitar renegociação das taxas, entre em contato conosco.",
@@ -669,8 +695,12 @@
               "minimum_monthly_payment": "Mínimo pago mensalmente"
             },
             "api_key": {
+              "api": "API",
+              "copy": "Copiar",
+              "encryption_key": "Criptografia",
               "live": "Live",
-              "test": "Test"
+              "test": "Test",
+              "test_advise": "Atenção: essas chaves funcionam somente para operações em modo teste. Transações criadas usando essas chaves não geram recebíveis reais."
             }
           },
           "product": {
@@ -681,6 +711,9 @@
             "subtitle": {
               "boleto": "Configurações globais de seus boletos.",
               "subscriptions": "Configurações globais de suas assinaturas recorrentes."
+            },
+            "boleto": {
+              "title": "Boletos"
             }
           },
           "team": {
@@ -706,6 +739,7 @@
             }
           },
           "register": {
+            "bank_title": "Dados bancários",
             "card_title": "As alterações dos dados da empresa estão sujeitas à análise. Se tiver alguma dúvida, entre em contato conosco.",
             "card_company": "Dados da empresa",
             "account_manager": "Contato responsável",
@@ -714,7 +748,9 @@
               "address": "Endereço",
               "documents": "Documentos",
               "managing_partner": "Informações pessoais",
-              "bank": "Informações da conta"
+              "bank": "Informações da conta",
+              "select": "Selecionar uma conta",
+              "add": "Adicionar uma conta"
             },
             "subtitle": {
               "company": "Verifique ou edite informações da sua empresa.",
@@ -730,6 +766,21 @@
                 "cnpj": "CNPJ",
                 "site_url": "Site Url"
               }
+            },
+            "bank": {
+              "account_name": "Nome da conta",
+              "name": "Banco",
+              "agency": "Agência",
+              "account": "Conta",
+              "account_type": "Tipo de conta",
+              "main_account": "Conta principal",
+              "select": "Selecionar",
+              "required": "Campo obrigatório",
+              "number": "Deve ser um número",
+              "bank_code": "Banco",
+              "invalid_cd": "Digito verificador inválido",
+              "cancel": "Cancelar",
+              "confirm": "Salvar Alterações"
             },
             "address": {
               "form": {
@@ -938,5 +989,11 @@
     "pagination": {
       "of": "de"
     }
-  }
+  },
+  "cancel_pending_request_cancel": "Não quero cancelar",
+  "cancel_pending_request_confirm": "Sim, quero cancelar",
+  "cancel_pending_request_text_today_confirm": "Quer cancelar mesmo assim?",
+  "cancel_pending_request_text_today": "Atenção: caso queira antecipar nesta mesma data, você precisará criar outro pedido antes das 10:50 de hoje.",
+  "cancel_pending_request_text": "Você tem certeza de que deseja cancelar esta antecipação?",
+  "cancel_pending_request_title": "Cancelar antecipação"
 }

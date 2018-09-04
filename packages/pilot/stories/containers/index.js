@@ -2,13 +2,15 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 
 import AnticipationForm from './Anticipation/Form'
+import BankAccountSelector from './Settings/BankAccount/Selector'
+import Balance from './Balance'
+import BankAccountForm from './Settings/BankAccount/Add'
 import BoletoForm from './Refund/BoletoForm'
 import BoletoRefundConfirm from './Refund/BoletoConfirmation'
 import BoletoRefundResult from './Refund/BoletoResult'
 import CardConfirmation from './Refund/CardConfirmation'
 import CardForm from './Refund/CardForm'
 import CardResult from './Refund/CardResult'
-import Balance from './Balance'
 import RecipientListState from './RecipientList'
 import {
   ManualReviewApproveForm,
@@ -50,8 +52,17 @@ import {
   AnticipationResultWithoutAutomaticTransfer,
 } from './Anticipation/Result'
 import Anticipation from './Anticipation'
+import BoletoConfigurationForm from './Settings/Boleto/Form'
+import BankAccount from './Settings/BankAccount'
 
 storiesOf('Containers', module)
+  .add('Bank Account Selector', () => (
+    <BankAccountSelector />
+  ))
+  .add('Bank account settings', () => <BankAccount />)
+  .add('Boleto Configuration Form', () => (
+    <BoletoConfigurationForm />
+  ))
   .add('Anticipation Form', () => (
     <AnticipationForm />
   ))
@@ -186,4 +197,7 @@ storiesOf('Containers', module)
   ))
   .add('Anticipation', () => (
     <Anticipation />
+  ))
+  .add('Bank Account Form', () => (
+    <BankAccountForm />
   ))
