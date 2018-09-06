@@ -40,6 +40,7 @@ import {
   SelfRegisterCreateAccount,
   SelfRegisterCheckCNPJ,
   SelfRegisterTypeCNPJ,
+  SelfRegisterWithoutCNPJ,
 } from './SelfRegister'
 import Withdraw from './Withdraw'
 import WithdrawConfirmation from './Withdraw/Confirmation'
@@ -174,6 +175,9 @@ storiesOf('Containers|Page containers', module)
   ))
   .add('Self Register Type CNPJ', () => (
     <SelfRegisterTypeCNPJ />
+  ))
+  .add('Self Register Without CNPJ', () => (
+    <SelfRegisterWithoutCNPJ />
   ))
   .add('Withdraw', () => (
     <Withdraw />
