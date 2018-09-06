@@ -165,6 +165,9 @@ storiesOf('Containers|Page containers', module)
   .add('Self Register Create Account', () => (
     <SelfRegisterCreateAccount />
   ))
+  .add('Self Register Check CNPJ', () => (
+    <SelfRegisterCheckCNPJ />
+  ))
   .add('Withdraw', () => (
     <Withdraw />
   ))
