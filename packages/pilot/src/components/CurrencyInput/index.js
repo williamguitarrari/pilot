@@ -25,35 +25,36 @@ class CurrencyInput extends Component {
     super(props)
 
     this.state = {
-      value: formatter(props.value),
+      value: {
+        formatted: formatter(props.value),
+        normalized: removeNonDigits(props.value),
+      },
     }
 
     this.handleChange = this.handleChange.bind(this)
-    this.normalizeValue = this.normalizeValue.bind(this)
   }
 
-  componentWillReceiveProps ({ value }) {
-    if (value !== this.state.value) {
-      this.normalizeValue(value)
-    }
-  }
+  componentDidUpdate (prevProps, prevState) {
+    const { formatted, normalized } = this.state.value
 
-  normalizeValue (value, onChangeCallback) {
-    const { max } = this.props
-    const formattedValue = formatter(value)
-    const normalizedValue = removeNonDigits(value)
-
-    if (!max || (max && normalizedValue <= max)) {
-      this.setState({
-        value: formattedValue,
-      }, () => (
-        onChangeCallback && onChangeCallback(normalizedValue, formattedValue)
-      ))
+    if (prevState.value.normalized !== normalized) {
+      prevProps.onChange(normalized, formatted)
     }
   }
 
   handleChange ({ target }) {
-    this.normalizeValue(target.value, this.props.onChange)
+    const { max } = this.props
+    const formatted = formatter(target.value)
+    const normalized = removeNonDigits(target.value)
+
+    if (!max || (max && normalized <= max)) {
+      this.setState({
+        value: {
+          formatted,
+          normalized,
+        },
+      })
+    }
   }
 
   render () {
@@ -65,7 +66,7 @@ class CurrencyInput extends Component {
       <input
         {...omit(notAllowedProps, this.props)}
         onChange={this.handleChange}
-        value={value}
+        value={value.formatted}
       />
     )
   }
