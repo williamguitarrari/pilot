@@ -55,7 +55,7 @@ import Anticipation from './Anticipation'
 import BoletoConfigurationForm from './Settings/Boleto/Form'
 import BankAccount from './Settings/BankAccount'
 
-storiesOf('Containers', module)
+storiesOf('Containers|Page containers', module)
   .add('Bank Account Selector', () => (
     <BankAccountSelector />
   ))
