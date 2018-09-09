@@ -49,7 +49,7 @@ const LivePresentation = (
   />
 )
 
-storiesOf('Pages', module)
+storiesOf('Pages|Login', module)
   .add('Login Live', () => (
     <Account
       base="light"
@@ -113,6 +113,8 @@ storiesOf('Pages', module)
       t={t}
     />
   ))
+
+storiesOf('Pages|Signup')
   .add('Signup', () => (
     <Account
       // eslint-disable-next-line
