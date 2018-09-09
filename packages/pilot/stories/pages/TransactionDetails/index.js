@@ -119,8 +119,8 @@ const riskLevelsLabels = {
   moderated: 'Risco: moderado',
 }
 
-storiesOf('Pages', module)
-  .add('Transaction details', () => (
+storiesOf('Pages|Transaction', module)
+  .add('details', () => (
     <Layout>
       <TransactionDetails
         alertLabels={alertLabels}
