@@ -1,3 +1,12 @@
+@import "former-kit-skin-pagarme/dist/styles/colors/light.css";
+
+.testEnvironmentLabel {
+  align-self: center;
+  color: var(--color-light-greenish-100);
+  cursor: pointer;
+  user-select: none;
+}
+
 .feedback {
   display: block;
   white-space: nowrap;
