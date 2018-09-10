@@ -104,6 +104,7 @@
   },
   "validations": {
     "isEmail": "Não é um e-mail válido",
+    "isCep": "Não é um CEP válido",
     "isCnpj": "Não é um CNPJ válido",
     "isCpf": "Não é um CPF válido",
     "isPhone": "Não é um telefone válido",
@@ -612,6 +613,17 @@
       },
       "different_passwords_error": "As senhas não conferem",
       "number_error": "Deve ser um número",
+      "partner_address": {
+        "cep": "CEP",
+        "city": "Cidade",
+        "complement": "Complemento (opcional)",
+        "continue": "Continuar",
+        "form_title": "Endereço do Proprietário",
+        "neighborhood": "Bairro",
+        "number": "Número",
+        "state": "Estado",
+        "street": "Rua"
+      },
       "partner_data": {
         "birth_date": "Data de nascimento",
         "continue": "Continuar",
