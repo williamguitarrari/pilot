@@ -85,7 +85,10 @@
   "validations": {
     "isEmail": "Não é um e-mail válido",
     "isCnpj": "Não é um CNPJ válido",
-    "isPhone": "Não é um telefone válido"
+    "isCpf": "Não é um CPF válido",
+    "isPhone": "Não é um telefone válido",
+    "isDate": "Não é uma data válida",
+    "hasLegalAge": "É preciso ter 18 anos ou mais"
   },
 
   "password_recovery": {
@@ -590,6 +593,15 @@
       },
       "different_passwords_error": "As senhas não conferem",
       "number_error": "Deve ser um número",
+      "partner_data": {
+        "birth_date": "Data de nascimento",
+        "continue": "Continuar",
+        "cpf": "CPF",
+        "form_title": "Dados do Proprietário",
+        "monther_name": "Nome da mãe",
+        "partner_name": "Nome",
+        "phone": "Telefone (com DDD)"
+      },
       "required_error": "Campo obrigatório",
       "return": "Voltar",
       "type_cnpj": {
