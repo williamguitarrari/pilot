@@ -44,6 +44,7 @@ import {
   SelfRegisterCompanyData,
   SelfRegisterPartnerData,
   SelfRegisterPartnerAddress,
+  SelfRegisterAlreadySell,
 } from './SelfRegister'
 import Withdraw from './Withdraw'
 import WithdrawConfirmation from './Withdraw/Confirmation'
@@ -190,6 +191,9 @@ storiesOf('Containers|Page containers', module)
   ))
   .add('Self Register Partnet Address', () => (
     <SelfRegisterPartnerAddress />
+  ))
+  .add('Self Register Already Sell', () => (
+    <SelfRegisterAlreadySell />
   ))
   .add('Withdraw', () => (
     <Withdraw />
