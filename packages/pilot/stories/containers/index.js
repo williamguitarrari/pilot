@@ -46,6 +46,7 @@ import {
   SelfRegisterPartnerAddress,
   SelfRegisterAlreadySell,
   SelfRegisterBusinessDetailPresent,
+  SelfRegisterBusinessDetailFuture,
 } from './SelfRegister'
 import Withdraw from './Withdraw'
 import WithdrawConfirmation from './Withdraw/Confirmation'
@@ -198,6 +199,9 @@ storiesOf('Containers|Page containers', module)
   ))
   .add('Self Register Business Detail Present', () => (
     <SelfRegisterBusinessDetailPresent />
+  ))
+  .add('Self Register Business Detail Future', () => (
+    <SelfRegisterBusinessDetailFuture />
   ))
   .add('Withdraw', () => (
     <Withdraw />
