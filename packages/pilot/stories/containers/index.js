@@ -51,6 +51,7 @@ import {
   SelfRegisterSalesAmountFuture,
   SelfRegisterContract,
   SelfRegisterWaitingRiskAnalysis,
+  SelfRegisterRefusedAccount,
 } from './SelfRegister'
 import Withdraw from './Withdraw'
 import WithdrawConfirmation from './Withdraw/Confirmation'
@@ -218,6 +219,9 @@ storiesOf('Containers|Page containers', module)
   ))
   .add('Self Register Risk Analysis', () => (
     <SelfRegisterWaitingRiskAnalysis />
+  ))
+  .add('Self Register Refused Account', () => (
+    <SelfRegisterRefusedAccount />
   ))
   .add('Withdraw', () => (
     <Withdraw />
