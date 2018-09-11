@@ -67,11 +67,18 @@ import {
 import Anticipation from './Anticipation'
 import BoletoConfigurationForm from './Settings/Boleto/Form'
 import BankAccount from './Settings/BankAccount'
-import ConclusionStepSuccess from './AddRecipient/ConclusionStep/Success'
-import ConclusionStepFail from './AddRecipient/ConclusionStep/Fail'
+import ConclusionStep from './AddRecipient/ConclusionStep'
+import ErrorStep from './AddRecipient/ErrorStep'
 import ConfigurationStep from './AddRecipient/ConfigurationsStep'
 import RecipientDetailInfo from './RecipientDetailInfo'
 import RecipientBalance from './RecipientDetails/RecipientBalance'
+
+import {
+  AddRecipientFetchError,
+  AddRecipientSubmitError,
+  AddRecipientSuccess,
+  AddRecipientSuccessNoAccounts,
+} from './AddRecipient'
 
 storiesOf('Containers', module)
   .add('Bank Account Selector', () => (
@@ -86,11 +93,23 @@ storiesOf('Containers', module)
   .add('Recipient Detail Info', () => (
     <RecipientDetailInfo />
   ))
+  .add('Add Recipient', () => (
+    <AddRecipientSuccess />
+  ))
+  .add('Add Recipient no previous accounts', () => (
+    <AddRecipientSuccessNoAccounts />
+  ))
+  .add('Add Recipient fetch accounts error', () => (
+    <AddRecipientFetchError />
+  ))
+  .add('Add Recipient submit error', () => (
+    <AddRecipientSubmitError />
+  ))
   .add('Recipient Conclusion Success', () => (
-    <ConclusionStepSuccess />
+    <ConclusionStep />
   ))
   .add('Recipient Conclusion Fail', () => (
-    <ConclusionStepFail />
+    <ErrorStep />
   ))
   .add('Recipient Configuration Step', () => (
     <ConfigurationStep />
