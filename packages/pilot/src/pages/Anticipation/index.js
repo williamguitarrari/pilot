@@ -12,7 +12,6 @@ import {
   contains,
   curry,
   equals,
-  filter,
   head,
   isNil,
   juxt,
@@ -22,7 +21,6 @@ import {
   pathOr,
   pipe,
   prop,
-  propEq,
   subtract,
 } from 'ramda'
 import { translate } from 'react-i18next'
@@ -128,24 +126,18 @@ const destroyBulk = curry((client, {
   })
 ))
 
-const getBulkAnticipations = (client, { recipientId }) => (
+const getBuildingBulkAnticipations = (client, recipientId) =>
   client
     .bulkAnticipations
     .find({
       recipientId,
+      status: 'building',
     })
-)
-
-const isBuilding = propEq('status', 'building')
-
-const filterBuildingBulkAnticipations = filter(isBuilding)
 
 const buildDeleteOption = applySpec({ bulkId: prop('id') })
-
 const deleteBulkAnticipationPromises = client => map(destroyBulk(client))
 
 const buildDeleteBuildingBulkAnticipation = client => pipe(
-  filterBuildingBulkAnticipations,
   map(buildDeleteOption),
   deleteBulkAnticipationPromises(client)
 )
@@ -337,25 +329,22 @@ class Anticipation extends Component {
 
     recipientPromise
       .then((recipient) => {
-        this.setState(
-          {
-            loading: true,
-            recipient,
-          },
-          () => {
-            this.setState({
-              transferCost: this.getTransferCost(),
-            })
+        this.setState({
+          loading: true,
+          recipient,
+        }, () => {
+          this.setState({
+            transferCost: this.getTransferCost(),
+          })
 
-            getBulkAnticipations(client, { recipientId: recipient.id })
-              .then(buildDeleteBuildingBulkAnticipation(client))
-              .then(deletePromises =>
-                Promise.all(deletePromises)
-                  .then(this.getAnticipationLimits)
-                  .then(this.createBulk)
-              )
-          }
-        )
+          getBuildingBulkAnticipations(client, recipient.id)
+            .then(buildDeleteBuildingBulkAnticipation(client))
+            .then(deletePromises =>
+              Promise.all(deletePromises)
+                .then(this.getAnticipationLimits)
+                .then(this.createBulk)
+            )
+        })
 
         if (!id) {
           history.replace(`/anticipation/${recipient.id}`)
