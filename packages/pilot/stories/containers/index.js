@@ -1,5 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
+import { checkA11y } from '@storybook/addon-a11y'
 
 import AnticipationForm from './Anticipation/Form'
 import BankAccountSelector from './Settings/BankAccount/Selector'
@@ -56,6 +57,7 @@ import BoletoConfigurationForm from './Settings/Boleto/Form'
 import BankAccount from './Settings/BankAccount'
 
 storiesOf('Containers|Page containers', module)
+  .addDecorator(checkA11y)
   .add('Bank Account Selector', () => (
     <BankAccountSelector />
   ))
