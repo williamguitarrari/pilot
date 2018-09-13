@@ -17,3 +17,15 @@
   color: var(--color-light-steel-100);
   font-size: var(--body-font-size);
 }
+
+.actions {
+  display: flex;
+}
+
+.actions > * {
+  margin-left: var(--spacing-medium);
+
+  &:first-child {
+    margin-left: unset;
+  }
+}

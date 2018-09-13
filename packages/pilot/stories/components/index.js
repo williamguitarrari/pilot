@@ -29,6 +29,7 @@ import SidebarSections from './SidebarSections'
 import SidebarSummary from './SidebarSummary'
 import Loader from './Loader'
 import Message from './Message'
+import MessageActions from './MessageActions'
 
 storiesOf('Components', module)
   .add('Configuration card form', () => <ConfigurationCardForm />)
@@ -59,3 +60,4 @@ storiesOf('Components', module)
   .add('Transfer Error', () => <TransferError />)
   .add('Loader', () => <Loader />)
   .add('Message', () => <Message />)
+  .add('Message with actions', () => <MessageActions />)
