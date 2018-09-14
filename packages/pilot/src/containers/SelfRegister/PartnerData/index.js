@@ -14,12 +14,8 @@ import dateValidation from '../../../validation/date'
 import { handleMaskField, onFormMaskFieldChange } from '../formMaskFieldHelpers'
 import HeaderImage from '../../../components/SelfRegister/HeaderImage'
 import legalAgeValidation from '../../../validation/legalAge'
-<<<<<<< HEAD
 import { Message } from '../../../components/Message'
-=======
-import Message from '../../../components/Message'
 import phoneValidation from '../../../validation/phone'
->>>>>>> ea95f3b... validation: add PartnerData phone
 import requiredValidation from '../../../validation/required'
 import style from '../style.css'
 
@@ -74,8 +70,8 @@ class SelfRegisterPartnerData extends Component {
           onSubmit={onSubmit}
           validateOn="blur"
           validation={{
-            partner_name: isRequired(t),
-            birth_date: [
+            partnerName: isRequired(t),
+            birthDate: [
               isRequired(t),
               isDate(t),
               hasLegalAge(t),
@@ -91,7 +87,7 @@ class SelfRegisterPartnerData extends Component {
               <Col tv={12} desk={12} tablet={12} palm={12}>
                 <FormInput
                   label={t('pages.self_register.partner_data.partner_name')}
-                  name="partner_name"
+                  name="partnerName"
                 />
               </Col>
             </Row>
@@ -109,8 +105,8 @@ class SelfRegisterPartnerData extends Component {
                 <FormInput
                   label={t('pages.self_register.partner_data.birth_date')}
                   mask={masks.date}
-                  name="birth_date"
-                  onChange={this.handleMaskField('birth_date')}
+                  name="birthDate"
+                  onChange={this.handleMaskField('birthDate')}
                 />
               </Col>
               <Col tv={4} desk={4} tablet={4} palm={12}>
