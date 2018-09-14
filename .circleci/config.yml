@@ -65,8 +65,8 @@ jobs:
           cd pilot-latest-live
           export PUBLIC_URL_REGEX='https:\/\/beta.dashboard.stg.pagarme.net\/latest'
           export PUBLIC_URL='https://beta.dashboard.stg.pagarme.net/latest'
-          export REACT_APP_LIVE_URL='https://beta.dashboard.stg.pagarme.net/latest/'
-          export REACT_APP_TEST_URL='https://beta.dashboard.sandbox.stg.pagarme.net/latest/'
+          export REACT_APP_LIVE_URL='https://beta.dashboard.stg.pagarme.net/latest/index.html'
+          export REACT_APP_TEST_URL='https://beta.dashboard.sandbox.stg.pagarme.net/latest/index.html'
           export REACT_APP_API_ENVIRONMENT='live'
           sed -e 's/\".\"/"'$PUBLIC_URL_REGEX'\"/g' package.json > package.json.bak
           cp package.json.bak package.json
@@ -81,8 +81,8 @@ jobs:
           cd ../pilot-${CIRCLE_TAG}-live
           export PUBLIC_URL_REGEX='https:\/\/beta.dashboard.stg.pagarme.net\/versions\/'${CIRCLE_TAG}
           export PUBLIC_URL='https://beta.dashboard.stg.pagarme.net/versions/'${CIRCLE_TAG}
-          export REACT_APP_LIVE_URL='https://beta.dashboard.stg.pagarme.net/versions/${CIRCLE_TAG}/'
-          export REACT_APP_TEST_URL='https://beta.dashboard.sandbox.stg.pagarme.net/versions/${CIRCLE_TAG}/'
+          export REACT_APP_LIVE_URL='https://beta.dashboard.stg.pagarme.net/versions/'${CIRCLE_TAG}'/index.html'
+          export REACT_APP_TEST_URL='https://beta.dashboard.sandbox.stg.pagarme.net/versions/'${CIRCLE_TAG}'/index.html'
           export REACT_APP_API_ENVIRONMENT='live'
           sed -e 's/\".\"/"'$PUBLIC_URL_REGEX'\"/g' package.json > package.json.bak
           cp package.json.bak package.json
