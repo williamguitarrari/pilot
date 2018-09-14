@@ -27,7 +27,9 @@ class SelfRegisterPartnerAddress extends Component {
     super()
 
     this.state = {
-      cep: '',
+      formData: {
+        cep: '',
+      },
     }
 
     this.handleMaskField = handleMaskField.bind(this)
@@ -51,7 +53,7 @@ class SelfRegisterPartnerAddress extends Component {
         <Form
           className={style.fillWidth}
           data={{
-            ...this.state,
+            ...this.state.formData,
           }}
           onChange={this.onFormMaskFieldChange}
           onSubmit={onSubmit}
