@@ -77,23 +77,34 @@
   },
   "landing": {
     "logo": "FormerKit",
-    "title": "Bem-vindo ao Pagar.me",
-    "subtitle": "A melhor forma de receber dinheiro online",
-    "body": "Esta é a Dashboard do Pagar.me, o painel de controle da sua operação. Através dela você terá acesso a suas vendas, saldo, extrato, além de poder realizar saques, estornos e outras tarefas cotidianas de sua operação.",
-    "login_call": "use o formulário para entrar em sua conta.",
-    "signup_call": "ainda não tem uma conta?",
-    "signup_action": "registre-se!"
+    "title": "Seja bem-vindo",
+    "live": {
+      "about_dashboard": "A Dashboard Pagar.me é o painel de controle da sua operação. Através dela você tem acesso a diversos dados relevantes para seu dia a dia de trabalho, e também pode realizar diferentes ações cotidianas com facilidade, como estornos, consulta de saldo e mais.",
+      "back_link": "Ir para área de",
+      "back_link_emphasis": "teste",
+      "subtitle": "À dashboard Pagar.me"
+    },
+    "login_call": "Faça login para acessar sua conta",
+    "signup_call": "Ainda não tem uma conta?",
+    "signup_action": "Cadastre-se!",
+    "test": {
+      "about_dashboard": "Aqui você pode criar dados fictícios, alterar configurações e usar novas funcionalidades para testar e verificar a sua operação.",
+      "sandbox_disclaimer": "Nada do que é feito aqui altera seu saldo.",
+      "back_button": "Voltar para o login Live",
+      "subtitle": "À dashboard de",
+      "subtitle_company": "Pagar.me",
+      "subtitle_emphasis": "teste"
+    }
   },
   "login": {
     "token": "Token",
-    "login_action": "Acessar",
-    "password_recovery_action": "Esqueci minha senha",
+    "login_action": "Entrar",
+    "password_recovery_action": "Redefinir senha",
     "network_error": "Falha de comunicação com o Pagar.me. Verifique seu acesso a internet."
   },
   "validations": {
     "isEmail": "Não é um e-mail válido"
   },
-
   "password_recovery": {
     "confirmation": "em instantes você receberá um e-mail com as instruções para a redefinição de sua senha",
     "confirmation_emphasis": "pronto",

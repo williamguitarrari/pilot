@@ -36,15 +36,16 @@ const PresentationContainer = ({
         }
       </span>
     </div>
-    <p className={styles.paragraph}>
-      {t(`landing.${environment}.about_dashboard`)}
-
+    <div>
+      <p className={styles.paragraph}>
+        {t(`landing.${environment}.about_dashboard`)}
+      </p>
       {environment === 'test' &&
         <p className={styles.paragraph}>
           {t('landing.test.sandbox_disclaimer')}
         </p>
       }
-    </p>
+    </div>
     <div className={classNames(styles.uppercase, styles.signInBlock)}>
       <p>
         <span>{t('landing.login_call')}</span>
@@ -101,14 +102,9 @@ const PresentationContainer = ({
 )
 
 PresentationContainer.propTypes = {
-  environmentUrl: PropTypes.oneOf(['liveUrl', 'testUrl']),
-  environment: PropTypes.oneOf(['live', 'test']),
+  environmentUrl: PropTypes.string.isRequired,
+  environment: PropTypes.oneOf(['live', 'test']).isRequired,
   t: PropTypes.func.isRequired,
-}
-
-PresentationContainer.defaultProps = {
-  environmentUrl: 'testUrl',
-  environment: 'test',
 }
 
 export default PresentationContainer
