@@ -33,10 +33,18 @@ const Placeholder = props => (
   </svg>
 )
 
-const PresentationFunc = (
+const TestPresentation = (
   <Presentation
-    onGotoSignup={action('signup')}
-    onBackToLogin={action('back to login')}
+    environment="test"
+    environmentUrl=""
+    t={t}
+  />
+)
+
+const LivePresentation = (
+  <Presentation
+    environment="live"
+    environmentUrl=""
     t={t}
   />
 )
@@ -53,7 +61,7 @@ storiesOf('Pages', module)
           t={t}
         />
       }
-      secondaryContent={PresentationFunc}
+      secondaryContent={LivePresentation}
       t={t}
     />
   ))
@@ -68,7 +76,7 @@ storiesOf('Pages', module)
           t={t}
         />
       }
-      secondaryContent={PresentationFunc}
+      secondaryContent={TestPresentation}
       t={t}
     />
   ))
@@ -84,7 +92,7 @@ storiesOf('Pages', module)
           t={t}
         />
       }
-      secondaryContent={PresentationFunc}
+      secondaryContent={TestPresentation}
       t={t}
     />
   ))
@@ -99,7 +107,7 @@ storiesOf('Pages', module)
           t={t}
         />
       }
-      secondaryContent={PresentationFunc}
+      secondaryContent={TestPresentation}
       t={t}
     />
   ))
@@ -114,7 +122,7 @@ storiesOf('Pages', module)
           t={t}
         />
       }
-      secondaryContent={PresentationFunc}
+      secondaryContent={TestPresentation}
       t={t}
     />
   ))
@@ -129,7 +137,7 @@ storiesOf('Pages', module)
           t={t}
         />
       }
-      secondaryContent={PresentationFunc}
+      secondaryContent={TestPresentation}
       t={t}
     />
   ))
@@ -144,7 +152,7 @@ storiesOf('Pages', module)
           t={t}
         />
       }
-      secondaryContent={PresentationFunc}
+      secondaryContent={TestPresentation}
       t={t}
     />
   ))
