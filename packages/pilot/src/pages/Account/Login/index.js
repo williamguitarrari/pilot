@@ -7,7 +7,8 @@ import { translate } from 'react-i18next'
 import { compose } from 'ramda'
 import { connect } from 'react-redux'
 
-import Login from '../../../containers/Account/Login'
+import LoginForm from '../../../containers/Account/LoginForm'
+
 import { requestLogin } from '../actions'
 
 import buildParamErrors from './buildParamErrors'
@@ -44,7 +45,6 @@ const enhanced = compose(
   translate(),
   withRouter
 )
-
 class LoginPage extends PureComponent {
   // eslint-disable-next-line class-methods-use-this
   handlePasswordRecovery (e) {
@@ -53,23 +53,32 @@ class LoginPage extends PureComponent {
   }
 
   render () {
+    const {
+      base,
+      error,
+      loading,
+      onLogin,
+      t,
+    } = this.props
     return (
-      <Login
-        t={this.props.t}
-        errors={buildParamErrors(this.props.error)}
-        loading={this.props.loading}
-        onLogin={this.props.onLogin}
+      <LoginForm
+        base={base}
+        errors={buildParamErrors(error)}
+        loading={loading}
+        onLogin={onLogin}
         onPasswordRecovery={this.handlePasswordRecovery}
+        t={t}
       />
     )
   }
 }
 
 LoginPage.propTypes = {
-  t: PropTypes.func.isRequired,
+  base: PropTypes.oneOf(['dark', 'light']).isRequired,
   error: PropTypes.instanceOf(Error),
   loading: PropTypes.bool,
   onLogin: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired,
 }
 
 LoginPage.defaultProps = {

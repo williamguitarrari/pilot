@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Form from 'react-vanilla-form'
-import IconWarning from 'emblematic-icons/svg/Warning32.svg'
+import IconError from 'emblematic-icons/svg/ClearClose32.svg'
 import {
   Button,
   FormInput,
@@ -11,6 +11,7 @@ import {
 import styles from '../style.css'
 
 const LoginContainer = ({
+  base,
   errors,
   loading,
   onLogin,
@@ -18,33 +19,31 @@ const LoginContainer = ({
   t,
 }) => (
   <Form
-    data={{
-      email: '',
-      password: '',
-    }}
     errors={errors}
     customErrorProp="error"
     onSubmit={onLogin}
-    className={styles.primaryContent}
   >
     <div className={styles.login}>
       <FormInput
+        base={base}
         disabled={loading}
         label={t('email')}
         name="email"
       />
       <FormInput
+        base={base}
         disabled={loading}
         type="password"
         label={t('password')}
         name="password"
       />
     </div>
-    {errors &&
-      <div className={styles.errorAlert}>
+    <div className={styles.errorAlert}>
+      {errors &&
         <Alert
+          base={base}
           type="error"
-          icon={<IconWarning height={16} width={16} />}
+          icon={<IconError height={16} width={16} />}
         >
           <span>
             {errors.null
@@ -53,8 +52,8 @@ const LoginContainer = ({
             }
           </span>
         </Alert>
-      </div>
-    }
+      }
+    </div>
 
     <div className={styles.actions}>
       <div className={styles.hugeButton}>
@@ -79,6 +78,7 @@ const LoginContainer = ({
 )
 
 LoginContainer.propTypes = {
+  base: PropTypes.oneOf(['dark', 'light']).isRequired,
   errors: PropTypes.oneOfType([
     PropTypes.shape({
       email: PropTypes.string,
@@ -89,11 +89,10 @@ LoginContainer.propTypes = {
   loading: PropTypes.bool,
   onLogin: PropTypes.func.isRequired,
   onPasswordRecovery: PropTypes.func.isRequired,
-  t: PropTypes.func,
+  t: PropTypes.func.isRequired,
 }
 
 LoginContainer.defaultProps = {
-  t: t => t,
   errors: null,
   loading: false,
 }
