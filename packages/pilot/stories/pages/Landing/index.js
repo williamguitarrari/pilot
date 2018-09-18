@@ -56,6 +56,7 @@ storiesOf('Pages', module)
       logo={Placeholder}
       primaryContent={
         <LoginForm
+          base="light"
           onLogin={action('login')}
           onPasswordRecovery={action('recover password')}
           t={t}
@@ -71,6 +72,7 @@ storiesOf('Pages', module)
       logo={Placeholder}
       primaryContent={
         <LoginForm
+          base="dark"
           onLogin={action('login')}
           onPasswordRecovery={action('recover password')}
           t={t}
