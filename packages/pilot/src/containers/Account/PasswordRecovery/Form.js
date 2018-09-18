@@ -33,7 +33,7 @@ const PasswordRecoveryForm = ({
       <div className={styles.hugeButton}>
         <Button
           type="submit"
-          size="large"
+          size="huge"
           fill="gradient"
         >
           {t('password_recovery.recovery_action')}
@@ -49,11 +49,7 @@ const PasswordRecoveryForm = ({
 PasswordRecoveryForm.propTypes = {
   onBackToLogin: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  t: PropTypes.func,
-}
-
-PasswordRecoveryForm.defaultProps = {
-  t: t => t,
+  t: PropTypes.func.isRequired,
 }
 
 export default PasswordRecoveryForm

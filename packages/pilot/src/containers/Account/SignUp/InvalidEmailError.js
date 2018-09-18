@@ -21,7 +21,7 @@ const InvalidEmailError = ({
       <div className={styles.hugeButton} >
         <Button
           type="button"
-          size="large"
+          size="huge"
           fill="gradient"
           onClick={onBackToSignUp}
         >
@@ -34,11 +34,7 @@ const InvalidEmailError = ({
 
 InvalidEmailError.propTypes = {
   onBackToSignUp: PropTypes.func.isRequired,
-  t: PropTypes.func,
-}
-
-InvalidEmailError.defaultProps = {
-  t: t => t,
+  t: PropTypes.func.isRequired,
 }
 
 export default InvalidEmailError

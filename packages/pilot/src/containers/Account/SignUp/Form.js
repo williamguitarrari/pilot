@@ -20,7 +20,6 @@ const SignUpForm = ({
       password: '',
     }}
     onSubmit={onSubmit}
-    className={styles.primaryContent}
   >
     <div className={styles.signIn}>
       <FormInput
@@ -48,7 +47,7 @@ const SignUpForm = ({
       <div className={styles.hugeButton} >
         <Button
           type="submit"
-          size="large"
+          size="huge"
           fill="gradient"
         >
           {t('sign_up.sign_up_action')}
@@ -60,11 +59,7 @@ const SignUpForm = ({
 
 SignUpForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  t: PropTypes.func,
-}
-
-SignUpForm.defaultProps = {
-  t: t => t,
+  t: PropTypes.func.isRequired,
 }
 
 export default SignUpForm
