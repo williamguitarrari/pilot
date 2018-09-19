@@ -70,7 +70,6 @@ import BankAccount from './Settings/BankAccount'
 import ConclusionStep from './AddRecipient/ConclusionStep'
 import ErrorStep from './AddRecipient/ErrorStep'
 import ConfigurationStep from './AddRecipient/ConfigurationsStep'
-import RecipientDetailInfo from './RecipientDetailInfo'
 import RecipientBalance from './RecipientDetails/RecipientBalance'
 
 import {
@@ -79,6 +78,9 @@ import {
   AddRecipientSuccess,
   AddRecipientSuccessNoAccounts,
 } from './AddRecipient'
+
+import RecipientDetailConfig from './RecipientDetails/Config'
+import RecipientDetailInfo from './RecipientDetailInfo'
 
 storiesOf('Containers', module)
   .add('Bank Account Selector', () => (
@@ -92,6 +94,9 @@ storiesOf('Containers', module)
   ))
   .add('Recipient Detail Info', () => (
     <RecipientDetailInfo />
+  ))
+  .add('Recipient Configuration', () => (
+    <RecipientDetailConfig />
   ))
   .add('Add Recipient', () => (
     <AddRecipientSuccess />
