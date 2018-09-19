@@ -1,5 +1,10 @@
 import pagarme from 'pagarme'
-import { identity, pathOr } from 'ramda'
+import {
+  complement,
+  identity,
+  isNil,
+  pathOr,
+} from 'ramda'
 import 'rxjs/add/operator/do'
 import 'rxjs/add/operator/mergeMap'
 import 'rxjs/add/operator/map'
@@ -22,6 +27,8 @@ import {
 import { WITHDRAW_RECEIVE } from '../../Withdraw/actions'
 
 const getRecipientId = pathOr(null, ['account', 'company', 'default_recipient_id', env])
+
+const hasProperty = complement(isNil)
 
 const loginEpic = action$ =>
   action$
@@ -54,10 +61,21 @@ const accountEpic = action$ =>
     })
     .map(receiveAccount)
     .do(({ error, payload }) => {
-      if (error || typeof window.FS === 'undefined') {
+      if (error) {
         return
       }
-      window.FS.identify(payload.id, { email_str: payload.email })
+
+      if (hasProperty(window.dataLayer)) {
+        window.dataLayer.push({
+          fullstoryUserId: payload.id,
+          email: payload.email,
+          event: 'loginReceive',
+        })
+      }
+
+      if (hasProperty(window.FS)) {
+        window.FS.identify(payload.id, { email_str: payload.email })
+      }
     })
 
 const companyEpic = (action$, store) =>
@@ -72,13 +90,24 @@ const companyEpic = (action$, store) =>
     })
     .map(receiveCompany)
     .do(({ error, payload }) => {
-      if (error || typeof window.FS === 'undefined') {
+      if (error) {
         return
       }
-      window.FS.setUserVars({
-        companyName_str: payload.name,
-        companyId_str: payload.id,
-      })
+
+      if (hasProperty(window.dataLayer)) {
+        window.dataLayer.push({
+          companyId: payload.id,
+          companyName: payload.name,
+          event: 'accountReceive',
+        })
+      }
+
+      if (hasProperty(window.FS)) {
+        window.FS.setUserVars({
+          companyName_str: payload.name,
+          companyId_str: payload.id,
+        })
+      }
     })
 
 const recipientBalanceEpic = (action$, store) =>
