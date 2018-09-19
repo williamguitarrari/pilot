@@ -82,7 +82,7 @@ import ConclusionStepFail from './AddRecipient/ConclusionStep/Fail'
 import ConclusionStep from './AddRecipient/ConclusionStep'
 import ErrorStep from './AddRecipient/ErrorStep'
 import ConfigurationStep from './AddRecipient/ConfigurationsStep'
-import RecipientBalance from './RecipientDetails/RecipientBalance'
+import RecipientBalance from './RecipientDetails/Balance'
 
 import {
   AddRecipientFetchError,
@@ -92,7 +92,8 @@ import {
 } from './AddRecipient'
 
 import RecipientDetailConfig from './RecipientDetails/Config'
-import RecipientDetailInfo from './RecipientDetailInfo'
+import RecipientDetailInfo from './RecipientDetails/Info'
+import RecipientDetails from './RecipientDetails'
 
 storiesOf('Containers|Bank/Account', module)
   .add('selector', () => <BankAccountSelector />)
@@ -106,8 +107,17 @@ storiesOf('Containers|Page containers', module)
   .add('Recipient Detail Info', () => (
     <RecipientDetailInfo />
   ))
+  .add('Recipient Details', () => (
+    <RecipientDetails />
+  ))
   .add('Recipient Configuration', () => (
     <RecipientDetailConfig />
+  ))
+  .add('Recipient Info', () => (
+    <RecipientDetailInfo />
+  ))
+  .add('Recipient Balance', () => (
+    <RecipientBalance />
   ))
   .add('Add Recipient', () => (
     <AddRecipientSuccess />
