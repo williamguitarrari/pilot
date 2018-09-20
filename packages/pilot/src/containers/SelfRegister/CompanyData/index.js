@@ -19,6 +19,7 @@ import style from './../style.css'
 
 const step = 'company-data'
 
+const isPhone = t => phoneValidation(t('validations.isPhone'))
 const isRequired = t => requiredValidation(t('pages.self_register.required_error'))
 
 class SelfRegisterCompanyData extends Component {
@@ -54,7 +55,7 @@ class SelfRegisterCompanyData extends Component {
           validation={{
             tradeName: isRequired(t),
             legalName: isRequired(t),
-            commercialPhone: isRequired(t),
+            commercialPhone: [isRequired(t), isPhone(t)],
           }}
         >
           <Grid>
