@@ -2,6 +2,7 @@ import React from 'react'
 
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
+import { checkA11y } from '@storybook/addon-a11y'
 
 import Account from '../../../src/containers/Account'
 import LoginForm from '../../../src/containers/Account/LoginForm'
@@ -49,7 +50,8 @@ const LivePresentation = (
   />
 )
 
-storiesOf('Pages', module)
+storiesOf('Pages|Login', module)
+  .addDecorator(checkA11y)
   .add('Login Live', () => (
     <Account
       base="light"
@@ -113,6 +115,9 @@ storiesOf('Pages', module)
       t={t}
     />
   ))
+
+storiesOf('Pages|Signup')
+  .addDecorator(checkA11y)
   .add('Signup', () => (
     <Account
       // eslint-disable-next-line

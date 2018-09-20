@@ -2,6 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
+import { checkA11y } from '@storybook/addon-a11y'
 
 import { Layout } from 'former-kit'
 
@@ -119,8 +120,9 @@ const riskLevelsLabels = {
   moderated: 'Risco: moderado',
 }
 
-storiesOf('Pages', module)
-  .add('Transaction details', () => (
+storiesOf('Pages|Transaction', module)
+  .addDecorator(checkA11y)
+  .add('details', () => (
     <Layout>
       <TransactionDetails
         alertLabels={alertLabels}
