@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Form from 'react-vanilla-form'
+import { replace } from 'ramda'
 
 import {
   Button,
@@ -11,12 +12,10 @@ import {
 
 import accountTypes from '../../../../models/accountTypes'
 import SelectAccountContent from './SelectAccountContent'
+import banks from '../../../../models/banks'
 import style from '../style.css'
 
-const toDropdownOptions = account => ({
-  name: `${account.account_name} - ${account.bank} - ${account.agency} - ${account.account_number}`,
-  value: account.id,
-})
+const removeBankCode = replace(/^\d+ - /, '')
 
 const SelectAccount = ({
   accounts,
@@ -26,7 +25,23 @@ const SelectAccount = ({
   onContinue,
   t,
 }) => {
-  const options = accounts.map(toDropdownOptions)
+  const options = accounts.map((account) => {
+    const bankCode = account.bank
+    const bankHasName = banks.includes(bankCode)
+    let bankName
+
+    if (bankHasName) {
+      const bankNameWithCode = t(`models.bank_code.${bankCode}`)
+      bankName = removeBankCode(bankNameWithCode)
+    } else {
+      bankName = bankCode
+    }
+
+    return {
+      name: `${account.name} - ${bankName} - ${account.agency} - ${account.number}`,
+      value: account.id,
+    }
+  })
 
   const continueWithSelectedAccount = (formData) => {
     const sameId = account => account.id === formData.id
@@ -80,9 +95,9 @@ const SelectAccount = ({
 SelectAccount.propTypes = {
   accounts: PropTypes.arrayOf(
     PropTypes.shape({
-      account_name: PropTypes.string,
-      account_number: PropTypes.string,
-      account_type: PropTypes.oneOf(accountTypes),
+      name: PropTypes.string,
+      number: PropTypes.string,
+      type: PropTypes.oneOf(accountTypes),
       agency: PropTypes.string,
       bank: PropTypes.string,
       id: PropTypes.string,

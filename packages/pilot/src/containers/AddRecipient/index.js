@@ -60,43 +60,37 @@ class AddRecipients extends Component {
   }
 
   handleContinueNavigation (stepData) {
-    const { currentStepNumber } = this.state
+    const { data, currentStepNumber } = this.state
+    const currentStep = this.steps[currentStepNumber]
     const nextStepNumber = currentStepNumber + 1
     const nextStep = this.steps[nextStepNumber]
 
+    const newData = { ...data }
+    if (stepData) newData[currentStep.id] = stepData
+
     if (nextStep.fetch) {
-      this.handleAsyncNextStep(stepData)
+      this.handleAsyncNextStep(newData)
     } else {
-      this.handleNextStep(stepData)
+      this.handleNextStep(newData)
     }
   }
 
-  handleNextStep (stepData) {
-    const { data, currentStepNumber } = this.state
+  handleNextStep (newData) {
+    const { currentStepNumber } = this.state
     const nextStepNumber = currentStepNumber + 1
-    const currentStep = this.steps[currentStepNumber]
     const stepsStatus = this.createNewStepStatus(nextStepNumber)
 
     this.setState({
       currentStepNumber: nextStepNumber,
-      data: {
-        ...data,
-        [currentStep.id]: stepData,
-      },
+      data: newData,
       stepsStatus,
     })
   }
 
-  handleAsyncNextStep (stepData) {
-    const { data, currentStepNumber } = this.state
-    const currentStep = this.steps[currentStepNumber]
-
+  handleAsyncNextStep (newData) {
     this.setState({
       isLoading: true,
-      data: {
-        ...data,
-        [currentStep.id]: stepData,
-      },
+      data: newData,
     }, () => {
       this.fetchAndSetNextStepData()
     })
@@ -175,11 +169,7 @@ class AddRecipients extends Component {
         title: t('pages.add_recipient.data'),
       },
       {
-        fetch: () => {
-          const { data } = this.state
-          const { documentType, cnpj, cpf } = data[IDENTIFICATION]
-          return fetchAccounts({ documentType, cnpj, cpf })
-        },
+        fetch: () => fetchAccounts(this.state.data[IDENTIFICATION]),
         id: BANK_ACCOUNT,
         title: t('pages.add_recipient.bank_account'),
       },
@@ -293,7 +283,7 @@ class AddRecipients extends Component {
 
     return (
       <Fragment>
-        <Loader visible={isLoading} />
+        { isLoading && <Loader visible /> }
         <Card>
           <Steps
             status={stepsStatus}

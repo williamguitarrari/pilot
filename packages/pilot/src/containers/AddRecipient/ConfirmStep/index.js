@@ -97,7 +97,9 @@ const renderBankAccount = (bankAccount, action, t) => (
       </Col>
       <Col tv={1} desk={1} tablet={1} palm={1}>
         <span className={styles.infoTitle}>{t('pages.add_recipient.bank')}</span>
-        <span className={styles.info}>{bankAccount.bank}</span>
+        <span className={styles.info}>
+          { t(`models.bank_code.${bankAccount.bank}`) }
+        </span>
       </Col>
       <Col tv={1} desk={1} tablet={1} palm={1}>
         <span className={styles.infoTitle}>{t('pages.add_recipient.agency')}</span>
@@ -105,11 +107,11 @@ const renderBankAccount = (bankAccount, action, t) => (
       </Col>
       <Col tv={1} desk={1} tablet={1} palm={1}>
         <span className={styles.infoTitle}>{t('pages.add_recipient.account')}</span>
-        <span className={styles.info}>{bankAccount.account_number}</span>
+        <span className={styles.info}>{bankAccount.number}</span>
       </Col>
       <Col tv={1} desk={1} tablet={1} palm={1}>
         <span className={styles.infoTitle}>{t('pages.add_recipient.account_type')}</span>
-        <span className={styles.info}>{bankAccount.account_type}</span>
+        <span className={styles.info}>{bankAccount.type}</span>
       </Col>
     </Row>
     <hr className={styles.line} />
@@ -246,7 +248,7 @@ const ConfirmStep = ({
       <Button
         type="submit"
         fill="gradient"
-        onClick={onContinue}
+        onClick={() => onContinue()}
       >
         {t('pages.add_recipient.create_recipient')}
       </Button>
@@ -299,9 +301,9 @@ ConfirmStep.propTypes = {
       transferWeekday: PropTypes.string,
     }).isRequired,
     [BANK_ACCOUNT]: PropTypes.shape({
-      account_name: PropTypes.string,
-      account_number: PropTypes.string,
-      account_type: PropTypes.string,
+      name: PropTypes.string,
+      number: PropTypes.string,
+      type: PropTypes.string,
       agency: PropTypes.string,
       bank: PropTypes.string,
     }),
@@ -346,11 +348,11 @@ ConfirmStep.defaultProps = {
       transferWeekday: '',
     },
     [BANK_ACCOUNT]: {
-      account_name: '',
-      account_number: '',
-      account_type: '',
+      name: '',
+      number: '',
+      type: 'conta_corrente',
       agency: '',
-      bank: '',
+      bank: '001',
     },
   },
 }
