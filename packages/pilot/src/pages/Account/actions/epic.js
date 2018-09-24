@@ -1,8 +1,6 @@
 import pagarme from 'pagarme'
 import {
-  complement,
   identity,
-  isNil,
   pathOr,
 } from 'ramda'
 import 'rxjs/add/operator/do'
@@ -11,7 +9,8 @@ import 'rxjs/add/operator/map'
 import { combineEpics } from 'redux-observable'
 import cockpit from 'cockpit'
 import env from '../../../environment'
-
+import identifyUser from '../../../vendor/identifyUser'
+import setCompany from '../../../vendor/setCompany'
 import {
   ACCOUNT_RECEIVE,
   COMPANY_RECEIVE,
@@ -27,8 +26,6 @@ import {
 import { WITHDRAW_RECEIVE } from '../../Withdraw/actions'
 
 const getRecipientId = pathOr(null, ['account', 'company', 'default_recipient_id', env])
-
-const hasProperty = complement(isNil)
 
 const loginEpic = action$ =>
   action$
@@ -65,17 +62,8 @@ const accountEpic = action$ =>
         return
       }
 
-      if (hasProperty(window.dataLayer)) {
-        window.dataLayer.push({
-          fullstoryUserId: payload.id,
-          email: payload.email,
-          event: 'loginReceive',
-        })
-      }
-
-      if (hasProperty(window.FS)) {
-        window.FS.identify(payload.id, { email_str: payload.email })
-      }
+      const { id, email } = payload
+      identifyUser(id, email)
     })
 
 const companyEpic = (action$, store) =>
@@ -94,20 +82,16 @@ const companyEpic = (action$, store) =>
         return
       }
 
-      if (hasProperty(window.dataLayer)) {
-        window.dataLayer.push({
-          companyId: payload.id,
-          companyName: payload.name,
-          event: 'accountReceive',
-        })
-      }
+      const { id, name } = payload
+      const {
+        account: {
+          user: {
+            id: userId,
+          },
+        },
+      } = store.getState()
 
-      if (hasProperty(window.FS)) {
-        window.FS.setUserVars({
-          companyName_str: payload.name,
-          companyId_str: payload.id,
-        })
-      }
+      setCompany(id, name, userId)
     })
 
 const recipientBalanceEpic = (action$, store) =>
