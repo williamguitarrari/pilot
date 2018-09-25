@@ -103,13 +103,13 @@
     "network_error": "Falha de comunicação com o Pagar.me. Verifique seu acesso a internet."
   },
   "validations": {
-    "isEmail": "Não é um e-mail válido",
+    "hasLegalAge": "É preciso ter 18 anos ou mais",
     "isCep": "Não é um CEP válido",
     "isCnpj": "Não é um CNPJ válido",
     "isCpf": "Não é um CPF válido",
-    "isPhone": "Não é um telefone válido",
     "isDate": "Não é uma data válida",
-    "hasLegalAge": "É preciso ter 18 anos ou mais"
+    "isEmail": "Não é um e-mail válido",
+    "isPhone": "Não é um telefone válido"
   },
   "password_recovery": {
     "confirmation": "em instantes você receberá um e-mail com as instruções para a redefinição de sua senha",
