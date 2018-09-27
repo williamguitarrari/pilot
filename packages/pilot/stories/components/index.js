@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react'
 import { checkA11y } from '@storybook/addon-a11y'
 
 import BoletoRefundDetails from './BoletoRefundDetails'
+import ClientForm from './ClientForm'
 import ConfigurationCardForm from './ConfigurationCardForm'
 import CopyButton from './CopyButton'
 import CurrencyInput from './CurrencyInput'
@@ -31,6 +32,10 @@ import SidebarSummary from './SidebarSummary'
 import Loader from './Loader'
 import Message from './Message'
 import MessageActions from './MessageActions'
+
+storiesOf('Components|Add Transaction', module)
+  .addDecorator(checkA11y)
+  .add('client form', () => <ClientForm />)
 
 storiesOf('Components|Custom components', module)
   .addDecorator(checkA11y)
