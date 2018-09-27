@@ -140,18 +140,6 @@ const parseQueryUrl = pipe(
 class TransactionsSearch extends React.Component {
   constructor (props) {
     super(props)
-    this.handleChartsCollapse = this.handleChartsCollapse.bind(this)
-    this.handleFilterChange = this.handleFilterChange.bind(this)
-    this.handleOrderChange = this.handleOrderChange.bind(this)
-    this.handlePageChange = this.handlePageChange.bind(this)
-    this.handlePageCountChange = this.handlePageCountChange.bind(this)
-    this.handleRowDetailsClick = this.handleRowDetailsClick.bind(this)
-    this.handleRowClick = this.handleRowClick.bind(this)
-    this.handleExpandRow = this.handleExpandRow.bind(this)
-    this.handlePendingReviewsFilter = this.handlePendingReviewsFilter.bind(this)
-    this.handleSelectRow = this.handleSelectRow.bind(this)
-    this.requestData = this.requestData.bind(this)
-    this.requestPendingReviewsCount = this.requestPendingReviewsCount.bind(this)
 
     this.state = {
       collapsed: true,
@@ -177,12 +165,13 @@ class TransactionsSearch extends React.Component {
     this.handleOrderChange = this.handleOrderChange.bind(this)
     this.handlePageChange = this.handlePageChange.bind(this)
     this.handlePageCountChange = this.handlePageCountChange.bind(this)
+    this.handlePendingReviewsFilter = this.handlePendingReviewsFilter.bind(this)
     this.handleRowClick = this.handleRowClick.bind(this)
     this.handleRowDetailsClick = this.handleRowDetailsClick.bind(this)
     this.handleSelectRow = this.handleSelectRow.bind(this)
     this.handleViewModeChange = this.handleViewModeChange.bind(this)
-
     this.requestData = this.requestData.bind(this)
+    this.requestPendingReviewsCount = this.requestPendingReviewsCount.bind(this)
   }
 
   componentDidMount () {
