@@ -7,8 +7,8 @@ import {
   CardTitle,
 } from 'former-kit'
 import { pick } from 'ramda'
-import PartnerInfo from '../AddRecipient/ConfirmStep/PartnerInfo'
-import ReceiverInfo from '../AddRecipient/ConfirmStep/ReceiverInfo'
+import PartnerInfo from '../../AddRecipient/ConfirmStep/PartnerInfo'
+import ReceiverInfo from '../../AddRecipient/ConfirmStep/ReceiverInfo'
 import styles from './style.css'
 
 const RecipientDetailInfo = ({

@@ -1,8 +1,8 @@
 import React from 'react'
 import { Card } from 'former-kit'
 
-import Section from '../../Section'
-import RecipientDetailInfo from '../../../src/containers/RecipientDetailInfo'
+import Section from '../../../Section'
+import RecipientDetailInfo from '../../../../src/containers/RecipientDetails/Info'
 
 const identification = {
   cnpj: '11.111.111/1111-11',
@@ -64,7 +64,7 @@ const bankAccount = {
   bank: '351 - Itaú Unibanco SA',
 }
 
-const RecipientDetailExample = () => (
+const RecipientDetailInfoExample = () => (
   <Section>
     <Card>
       <RecipientDetailInfo
@@ -77,4 +77,4 @@ const RecipientDetailExample = () => (
   </Section>
 )
 
-export default RecipientDetailExample
+export default RecipientDetailInfoExample
