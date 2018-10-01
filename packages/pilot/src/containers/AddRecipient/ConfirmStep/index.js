@@ -81,7 +81,9 @@ const renderBankAccount = (bankAccount, action, t) => (
   <Fragment>
     <Row>
       <Col>
-        <span className={styles.title}>{t('pages.add_recipient.bank_account')}</span>
+        <span className={styles.title}>
+          {t('pages.add_recipient.bank_account')}
+        </span>
       </Col>
       <Col className={styles.editButtonCol}>
         <EditButton
@@ -91,87 +93,136 @@ const renderBankAccount = (bankAccount, action, t) => (
       </Col>
     </Row>
     <Row>
-      <Col tv={1} desk={1} tablet={1} palm={1}>
-        <span className={styles.infoTitle}>{t('pages.add_recipient.account_name')}</span>
-        <span className={styles.info}>{bankAccount.name}</span>
+      <Col>
+        <span className={styles.infoTitle}>
+          {t('pages.add_recipient.account_name')}
+        </span>
+        <span className={styles.info}>
+          {bankAccount.name}
+        </span>
       </Col>
-      <Col tv={1} desk={1} tablet={1} palm={1}>
-        <span className={styles.infoTitle}>{t('pages.add_recipient.bank')}</span>
+      <Col>
+        <span className={styles.infoTitle}>
+          {t('pages.add_recipient.bank')}
+        </span>
         <span className={styles.info}>
           { t(`models.bank_code.${bankAccount.bank}`) }
         </span>
       </Col>
-      <Col tv={1} desk={1} tablet={1} palm={1}>
-        <span className={styles.infoTitle}>{t('pages.add_recipient.agency')}</span>
-        <span className={styles.info}>{bankAccount.agency}</span>
+      <Col>
+        <span className={styles.infoTitle}>
+          {t('pages.add_recipient.agency')}
+        </span>
+        <span className={styles.info}>
+          {bankAccount.agency}
+        </span>
       </Col>
-      <Col tv={1} desk={1} tablet={1} palm={1}>
-        <span className={styles.infoTitle}>{t('pages.add_recipient.account')}</span>
-        <span className={styles.info}>{bankAccount.number}</span>
+      <Col>
+        <span className={styles.infoTitle}>
+          {t('pages.add_recipient.account')}
+        </span>
+        <span className={styles.info}>
+          {bankAccount.number}
+        </span>
       </Col>
-      <Col tv={1} desk={1} tablet={1} palm={1}>
-        <span className={styles.infoTitle}>{t('pages.add_recipient.account_type')}</span>
-        <span className={styles.info}>{bankAccount.type}</span>
+      <Col>
+        <span className={styles.infoTitle}>
+          {t('pages.add_recipient.account_type')}
+        </span>
+        <span className={styles.info}>
+          {t(`models.account_type.${bankAccount.type}`)}
+        </span>
       </Col>
     </Row>
     <hr className={styles.line} />
   </Fragment>
 )
 
-const renderAnticipationConfig = (configuration, action, t) => (
-  <Fragment>
-    <Row>
-      <Col>
-        <span className={styles.title}>{t('pages.add_recipient.anticipation_configuration')}</span>
-      </Col>
-      <Col className={styles.editButtonCol}>
-        <EditButton
-          onClick={() => action(CONFIGURATION)}
-          t={t}
-        />
-      </Col>
-    </Row>
-    <Row>
-      <Col tv={2} desk={2} tablet={2} palm={2}>
-        <span className={styles.infoTitle}>{t('pages.add_recipient.anticipation_model')}</span>
-        <span className={styles.info}>{configuration.anticipationModel}</span>
-      </Col>
-      <Col tv={2} desk={2} tablet={2} palm={2}>
-        <span className={styles.infoTitle}>{t('pages.add_recipient.anticipation_volume')}</span>
-        <span className={styles.info}>{configuration.anticipationVolumePercentage}</span>
-      </Col>
-    </Row>
-    <hr className={styles.line} />
-  </Fragment>
-)
+const renderAnticipationConfig = (configuration, action, t) => {
+  const { anticipationModel } = configuration
+  const anticipationTranslations = {
+    manual: t('pages.add_recipient.manual_volume'),
+    automatic_volume: t('pages.add_recipient.automatic_volume'),
+    automatic_1025: t('pages.add_recipient.automatic_1025'),
+    automatic_dx: t('pages.add_recipient.automatic_dx'),
+  }
+  const anticipationType = anticipationTranslations[anticipationModel]
+
+  return (
+    <Fragment>
+      <Row>
+        <Col>
+          <span className={styles.title}>{t('pages.add_recipient.anticipation_configuration')}</span>
+        </Col>
+        <Col className={styles.editButtonCol}>
+          <EditButton
+            onClick={() => action(CONFIGURATION)}
+            t={t}
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <span className={styles.infoTitle}>
+            {t('pages.add_recipient.anticipation_model')}
+          </span>
+          <span className={styles.info}>
+            {anticipationType}
+          </span>
+        </Col>
+        <Col>
+          <span className={styles.infoTitle}>{t('pages.add_recipient.anticipation_volume')}</span>
+          <span className={styles.info}>{configuration.anticipationVolumePercentage}</span>
+        </Col>
+      </Row>
+      <hr className={styles.line} />
+    </Fragment>
+  )
+}
 
 const renderTransferInterval = (configuration, t) => {
-  const interval = configuration.transferInterval
-  const monthly = configuration.transferDay
-  const daily = configuration.transferWeekday
-  const render = (interval === 'Mensal')
-    ? (
-      <Col tv={2} desk={2} tablet={2} palm={2}>
-        <span className={styles.infoTitle}>{t('pages.add_recipient.transfer_day')}</span>
-        {interval === 'Semanal' &&
-        <span className={styles.info}>{daily}</span>
-        }
-        <span className={styles.info}>{monthly}</span>
-      </Col>
-    )
-    : null
+  const {
+    transferInterval,
+    transferEnabled,
+    transferDay,
+    transferWeekday,
+  } = configuration
 
-  if (configuration.transferEnabled) {
+  const transferTypes = {
+    daily: t('pages.add_recipient.daily'),
+    weekly: t('pages.add_recipient.weekly'),
+    monthly: t('pages.add_recipient.monthly'),
+  }
+
+  if (transferEnabled) {
     return (
       <Fragment>
-        <Col tv={2} desk={2} tablet={2} palm={2}>
-          <span className={styles.infoTitle}>{t('pages.add_recipient.automatic_transfer_interval')}</span>
-          <span className={styles.info}>{interval}</span>
+        <Col>
+          <span className={styles.infoTitle}>
+            {t('pages.add_recipient.automatic_transfer_interval')}
+          </span>
+          <span className={styles.info}>
+            {transferTypes[transferInterval]}
+          </span>
         </Col>
-        {render}
+        { transferInterval !== 'daily' &&
+          <Col>
+            <span className={styles.infoTitle}>
+              {t('pages.add_recipient.transfer_day')}
+            </span>
+            <span className={styles.info}>
+              {
+                (transferInterval === 'weekly')
+                  ? t(`pages.add_recipient.${transferWeekday}`)
+                  : transferDay
+              }
+            </span>
+          </Col>
+        }
       </Fragment>
     )
   }
+
   return null
 }
 
