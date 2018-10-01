@@ -8,6 +8,7 @@ import ConfigurationCardForm from './ConfigurationCardForm'
 import CopyButton from './CopyButton'
 import CurrencyInput from './CurrencyInput'
 import CreditCardRefundDetails from './CreditCardRefundDetails'
+import CustomerSelection from './CustomerSelection'
 import CustomerCard from './CustomerCard'
 import DataDisplay from './DataDisplay'
 import DetailsHead from './DetailsHead'
@@ -35,7 +36,8 @@ import MessageActions from './MessageActions'
 
 storiesOf('Components|Add Transaction', module)
   .addDecorator(checkA11y)
-  .add('client form', () => <ClientForm />)
+  .add('Customer form', () => <ClientForm />)
+  .add('Customer selection', () => <CustomerSelection />)
 
 storiesOf('Components|Custom components', module)
   .addDecorator(checkA11y)
