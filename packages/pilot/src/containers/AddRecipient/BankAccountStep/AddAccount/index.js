@@ -15,6 +15,8 @@ import AddAccountContent from './AddAccountContent'
 import createNumberValidation from '../../../../validation/number'
 import createRequiredValidation from '../../../../validation/required'
 import createMaxLengthValidation from '../../../../validation/maxLength'
+import createAccountDigitValidation from '../../../../validation/accountCheckDigit'
+import createAgencyDigitValidation from '../../../../validation/agencyCheckDigit'
 
 import style from '../style.css'
 
@@ -26,26 +28,31 @@ const AddAccount = ({
   onContinue,
   t,
 }) => {
-  const max13Message = t('pages.add_recipient.field_max', { number: 13 })
   const max30Message = t('pages.add_recipient.field_max', { number: 30 })
+  const max13Message = t('pages.add_recipient.field_max', { number: 13 })
   const max5Message = t('pages.add_recipient.field_max', { number: 5 })
   const numberMessage = t('pages.add_recipient.field_number')
   const requiredMessage = t('pages.add_recipient.field_required')
+  const digitMessage = t('pages.add_recipient.field_invalid_digit')
 
   const isNumber = createNumberValidation(numberMessage)
-  const max13Characters = createMaxLengthValidation(13, max13Message)
   const max30Characters = createMaxLengthValidation(30, max30Message)
+  const max13Characters = createMaxLengthValidation(13, max13Message)
   const max5Characters = createMaxLengthValidation(5, max5Message)
   const required = createRequiredValidation(requiredMessage)
+  const isAccountDigit = createAccountDigitValidation(digitMessage)
+  const isAgencyDigit = createAgencyDigitValidation(digitMessage)
 
   return (
     <Form
       data={data}
       validateOn="blur"
       validation={{
+        agency_digit: [isAgencyDigit],
         agency: [required, isNumber, max5Characters],
         bank: [required],
         name: [required, max30Characters],
+        number_digit: [required, isAccountDigit],
         number: [required, isNumber, max13Characters],
         type: [required],
       }}
@@ -88,35 +95,47 @@ const AddAccount = ({
   )
 }
 
+export const accountProps = PropTypes.shape({
+  agency_digit: PropTypes.string,
+  agency: PropTypes.string,
+  bank: PropTypes.string,
+  name: PropTypes.string,
+  number_digit: PropTypes.string,
+  number: PropTypes.string,
+  type: PropTypes.oneOf(accountTypes),
+})
+
+export const accountErrorProps = PropTypes.shape({
+  agency_digit: PropTypes.string,
+  agency: PropTypes.string,
+  bank: PropTypes.string,
+  name: PropTypes.string,
+  number_digit: PropTypes.string,
+  number: PropTypes.string,
+  type: PropTypes.string,
+})
+
+export const accountDefaultProps = {
+  agency_digit: '',
+  agency: '',
+  bank: '001',
+  name: '',
+  number_digit: '',
+  number: '',
+  type: 'conta_corrente',
+}
+
 AddAccount.propTypes = {
-  data: PropTypes.shape({
-    name: PropTypes.string,
-    number: PropTypes.string,
-    type: PropTypes.oneOf(accountTypes),
-    agency: PropTypes.string,
-    bank: PropTypes.string,
-  }),
-  errors: PropTypes.shape({
-    name: PropTypes.string,
-    number: PropTypes.string,
-    type: PropTypes.string,
-    agency: PropTypes.string,
-    bank: PropTypes.string,
-  }),
-  onContinue: PropTypes.func.isRequired,
+  data: accountProps,
+  errors: accountErrorProps,
   onBack: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
+  onContinue: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
 }
 
 AddAccount.defaultProps = {
-  data: {
-    name: '',
-    number: '',
-    type: 'conta_corrente',
-    agency: '',
-    bank: '001',
-  },
+  data: accountDefaultProps,
   errors: {},
 }
 

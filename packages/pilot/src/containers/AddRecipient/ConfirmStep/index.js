@@ -16,6 +16,8 @@ import ReceiverInfo from './ReceiverInfo'
 import PartnerInfo from './PartnerInfo'
 import styles from './style.css'
 
+import { accountProps, accountDefaultProps } from '../BankAccountStep'
+
 import {
   BANK_ACCOUNT,
   CONFIGURATION,
@@ -114,7 +116,7 @@ const renderBankAccount = (bankAccount, action, t) => (
           {t('pages.add_recipient.agency')}
         </span>
         <span className={styles.info}>
-          {bankAccount.agency}
+          {bankAccount.agency + bankAccount.agency_digit}
         </span>
       </Col>
       <Col>
@@ -122,7 +124,7 @@ const renderBankAccount = (bankAccount, action, t) => (
           {t('pages.add_recipient.account')}
         </span>
         <span className={styles.info}>
-          {bankAccount.number}
+          {`${bankAccount.number}-${bankAccount.number_digit}`}
         </span>
       </Col>
       <Col>
@@ -351,13 +353,7 @@ ConfirmStep.propTypes = {
       transferDay: PropTypes.string,
       transferWeekday: PropTypes.string,
     }).isRequired,
-    [BANK_ACCOUNT]: PropTypes.shape({
-      name: PropTypes.string,
-      number: PropTypes.string,
-      type: PropTypes.string,
-      agency: PropTypes.string,
-      bank: PropTypes.string,
-    }),
+    [BANK_ACCOUNT]: accountProps,
   }),
   onBack: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
@@ -398,13 +394,7 @@ ConfirmStep.defaultProps = {
       transferDay: '',
       transferWeekday: '',
     },
-    [BANK_ACCOUNT]: {
-      name: '',
-      number: '',
-      type: 'conta_corrente',
-      agency: '',
-      bank: '001',
-    },
+    [BANK_ACCOUNT]: accountDefaultProps,
   },
 }
 
