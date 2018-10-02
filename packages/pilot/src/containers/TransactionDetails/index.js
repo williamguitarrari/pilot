@@ -488,7 +488,7 @@ class TransactionDetails extends Component {
     return (
       <Fragment>
         {(nextId && nextId !== transaction.id) &&
-          <Row stretch>
+          <Row>
             <Col
               desk={12}
               palm={12}
@@ -510,7 +510,7 @@ class TransactionDetails extends Component {
           </Row>
         }
         {transaction.previousId &&
-          <Row stretch>
+          <Row>
             <Col
               desk={12}
               tv={12}
@@ -698,7 +698,7 @@ class TransactionDetails extends Component {
         </Row>
 
         {showStatusAlert(transaction) &&
-          <Row stretch>
+          <Row>
             <Col
               desk={12}
               palm={12}
