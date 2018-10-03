@@ -32,20 +32,27 @@ class CurrencyInput extends Component {
     }
 
     this.handleChange = this.handleChange.bind(this)
+    this.handleValueUpdate = this.handleValueUpdate.bind(this)
   }
 
   componentDidUpdate (prevProps, prevState) {
     const { formatted, normalized } = this.state.value
+    const { onChange, value } = this.props
+
 
     if (prevState.value.normalized !== normalized) {
-      prevProps.onChange(normalized, formatted)
+      onChange(normalized, formatted)
+    }
+
+    if (prevProps.value !== value) {
+      this.handleValueUpdate(value)
     }
   }
 
-  handleChange ({ target }) {
+  handleValueUpdate (value) {
     const { max } = this.props
-    const formatted = formatter(target.value)
-    const normalized = removeNonDigits(target.value)
+    const formatted = formatter(value)
+    const normalized = removeNonDigits(value)
 
     if (!max || (max && normalized <= max)) {
       this.setState({
@@ -55,6 +62,10 @@ class CurrencyInput extends Component {
         },
       })
     }
+  }
+
+  handleChange ({ target }) {
+    this.handleValueUpdate(target.value)
   }
 
   render () {
