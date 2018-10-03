@@ -21,6 +21,7 @@ import { range } from 'ramda'
 import createCpfCnpjValidation from '../../../validation/cpfCnpj'
 import createEmailValidation from '../../../validation/email'
 import createPhoneValidation from '../../../validation/phone'
+import createUrlValidation from '../../../validation/protocol'
 import createRequiredValidation from '../../../validation/required'
 import style from './style.css'
 
@@ -41,12 +42,20 @@ const partnerInitialization = {
   phone: '',
 }
 
-const getValidations = (documentType, t) => {
+const getValidations = (data, t) => {
   const requiredMessage =
     t('pages.add_recipient.field_required')
 
-  const validateCpfCnpjMessage =
+  let validateCpfCnpjMessage =
     t('pages.add_recipient.field_invalid_cpf')
+
+  if (data.documentType === 'cnpj') {
+    validateCpfCnpjMessage = t('pages.add_recipient.field_invalid_cnpj')
+  }
+
+  if (data.documentType === 'cnpj' && data.cnpjInformation === true) {
+    validateCpfCnpjMessage = t('pages.add_recipient.field_invalid_cpf')
+  }
 
   const validateEmailMessage =
     t('pages.add_recipient.field_invalid_email')
@@ -54,24 +63,48 @@ const getValidations = (documentType, t) => {
   const validatePhoneMessage =
     t('pages.add_recipient.field_invalid_phone')
 
+  const validateUrlMessage =
+    t('pages.add_recipient.field_url')
+
   const required = createRequiredValidation(requiredMessage)
   const validateCpfCnpj = createCpfCnpjValidation(validateCpfCnpjMessage)
   const validateEmail = createEmailValidation(validateEmailMessage)
+  const validateEmailIfExists = (email) => {
+    if (email === '') {
+      return null
+    }
+    return validateEmail(email)
+  }
   const validatePhone = createPhoneValidation(validatePhoneMessage)
+  const validatePhoneIfExists = (phone) => {
+    if (phone === '') {
+      return null
+    }
+    return validatePhone(phone)
+  }
+  const validateUrl = createUrlValidation(validateUrlMessage)
+  const validateUrlIfExists = (url) => {
+    if (url === '') {
+      return null
+    }
+    return validateUrl(url)
+  }
 
-  if (documentType === 'cnpj') {
+
+  if (data.documentType === 'cnpj') {
     const partnerValidations = {
       cpf: [required, validateCpfCnpj],
       name: [required],
-      phone: [required, validatePhone],
+      email: [required, validateEmailIfExists],
     }
 
     return {
       cnpj: [required, validateCpfCnpj],
-      cnpjEmail: [validateEmail],
+      cnpjEmail: [required, validateEmailIfExists],
       cnpjName: [required],
-      cnpjPhone: [validatePhone],
-      documentInformation: [required, validatePhone, validateEmail],
+      cnpjUrl: [validateUrlIfExists],
+      cnpjPhone: [validatePhoneIfExists],
+      documentInformation: [required, validatePhone, validateEmailIfExists],
       documentType: [],
       partner0: partnerValidations,
       partner1: partnerValidations,
@@ -83,10 +116,10 @@ const getValidations = (documentType, t) => {
 
   return {
     cpf: [required, validateCpfCnpj],
-    cpfEmail: [required, validateEmail],
+    cpfEmail: [required, validateEmailIfExists],
     cpfName: [required],
-    cpfPhone: [required, validatePhone],
-    cpfUrl: [required],
+    cpfUrl: [validateUrlIfExists],
+    cpfPhone: [validatePhoneIfExists],
   }
 }
 
@@ -143,6 +176,7 @@ class IdentificationStep extends Component {
     this.setState({
       formData,
     })
+    this.state.formErrors = []
   }
 
   onChangeWithMask (event, partner) {
@@ -283,21 +317,25 @@ class IdentificationStep extends Component {
     return (
       <Fragment>
         <Row>
+          <h2 className={style.receiverTitle}>
+            {
+              (documentType === 'cpf')
+                ? t('pages.add_recipient.recipient')
+                : t('pages.add_recipient.company')
+            }
+          </h2>
+        </Row>
+        <Row>
+          <span className={style.subtitle}>
+            {
+              (documentType === 'cpf')
+                ? t('pages.add_recipient.fill_recipient_info')
+                : t('pages.add_recipient.fill_company_info')
+            }
+          </span>
+        </Row>
+        <Row>
           <Col>
-            <h2 className={style.title}>
-              {
-                (documentType === 'cpf')
-                  ? t('pages.add_recipient.recipient')
-                  : t('pages.add_recipient.company')
-              }
-            </h2>
-            <h3 className={style.subtitle}>
-              {
-                (documentType === 'cpf')
-                  ? t('pages.add_recipient.fill_recipient_info')
-                  : t('pages.add_recipient.fill_company_info')
-              }
-            </h3>
             <FormInput
               label={
                 (documentType === 'cpf')
@@ -308,8 +346,6 @@ class IdentificationStep extends Component {
               size={35}
             />
           </Col>
-        </Row>
-        <Row stretch>
           <Col>
             <FormInput
               label={t('pages.add_recipient.optional_email')}
@@ -317,6 +353,8 @@ class IdentificationStep extends Component {
               size={35}
             />
           </Col>
+        </Row>
+        <Row stretch>
           <Col>
             <FormInput
               label={t('pages.add_recipient.optional_url')}
@@ -370,9 +408,8 @@ class IdentificationStep extends Component {
             </Col>
             <Col>
               <FormInput
-                label={t('pages.add_recipient.phone')}
-                mask={masks.phone}
-                name="phone"
+                label={t('pages.add_recipient.email')}
+                name="email"
                 onChange={event =>
                   this.onChangeWithMask(event, `partner${partnerIndex}`)}
                 size={35}
@@ -406,15 +443,19 @@ class IdentificationStep extends Component {
         onChange={this.onFormChange}
         onSubmit={this.onFormSubmit}
         validateOn="blur"
-        validation={getValidations(documentType, t)}
+        validation={getValidations(formData, t)}
       >
         <CardContent>
-          <h2 className={style.title}>
-            {t('pages.add_recipient.identification')}
-          </h2>
-          <h3 className={style.subtitle}>
-            {t('pages.add_recipient.choose_recipient_type')}
-          </h3>
+          <Row>
+            <h2 className={style.title}>
+              {t('pages.add_recipient.identification')}
+            </h2>
+          </Row>
+          <Row>
+            <h3 className={style.subtitle}>
+              {t('pages.add_recipient.choose_recipient_type')}
+            </h3>
+          </Row>
           <span className={style.label}>
             {t('pages.add_recipient.recipient_type')}
           </span>
@@ -447,14 +488,18 @@ class IdentificationStep extends Component {
               { this.renderDocumentInformationInput()}
               { documentType === 'cnpj' && (
                 <Fragment>
-                  <Row className={style.paddingTop}>
+                  <Row>
+                    <h2 className={style.partnerTitle}>
+                      {t('pages.add_recipient.partners')}
+                    </h2>
+                  </Row>
+                  <Row>
+                    <h3 className={style.subtitle}>
+                      {t('pages.add_recipient.fill_partner_info')}
+                    </h3>
+                  </Row>
+                  <Row>
                     <Col>
-                      <h2 className={style.title}>
-                        {t('pages.add_recipient.partners')}
-                      </h2>
-                      <h3 className={style.subtitle}>
-                        {t('pages.add_recipient.fill_partner_info')}
-                      </h3>
                       <FormDropdown
                         label={t('pages.add_recipient.choose_partner_amount')}
                         name="partnerNumber"
