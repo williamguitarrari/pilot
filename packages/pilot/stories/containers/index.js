@@ -13,6 +13,7 @@ import CardConfirmation from './Refund/CardConfirmation'
 import CardForm from './Refund/CardForm'
 import CardResult from './Refund/CardResult'
 import RecipientListState from './RecipientList'
+import TransactionCustomers from './Transaction/Customers'
 import {
   ManualReviewApproveForm,
   ManualReviewRefuseForm,
@@ -59,6 +60,10 @@ import BankAccount from './Settings/BankAccount'
 storiesOf('Containers|Bank/Account', module)
   .add('selector', () => <BankAccountSelector />)
   .add('settings', () => <BankAccount />)
+
+storiesOf('Containers|Transactions', module)
+  .addDecorator(checkA11y)
+  .add('customer', () => <TransactionCustomers />)
 
 storiesOf('Containers|Page containers', module)
   .addDecorator(checkA11y)
