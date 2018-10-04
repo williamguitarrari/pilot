@@ -6,7 +6,8 @@ import {
 } from 'former-kit'
 import Form from 'react-vanilla-form'
 
-import { handleMaskField } from '../form-mask-field-helpers'
+import { handleMaskField } from '../formMaskFieldHelpers'
+import cnpjValidation from '../../../validation/cnpj'
 import HeaderImage from '../../../components/SelfRegister/HeaderImage'
 import { Message } from '../../../components/Message'
 import requiredValidation from '../../../validation/required'
@@ -14,14 +15,17 @@ import style from '../style.css'
 
 const step = 'type-cnpj'
 
+const isCnpj = t => cnpjValidation(t('validations.isCnpj'))
 const isRequired = t => requiredValidation(t('pages.self_register.required_error'))
 
 class SelfRegisterTypeCNPJ extends Component {
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
 
     this.state = {
-      cnpj: '',
+      formData: {
+        cnpj: props.registerData.cnpj,
+      },
     }
 
     this.handleMaskField = handleMaskField.bind(this)
@@ -50,12 +54,12 @@ class SelfRegisterTypeCNPJ extends Component {
         <Form
           className={style.fillWidth}
           data={{
-            cnpj: this.state.cnpj,
+            cnpj: this.state.formData.cnpj,
           }}
           onSubmit={onSubmit}
           validateOn="blur"
           validation={{
-            cnpj: isRequired(t),
+            cnpj: [isRequired(t), isCnpj(t)],
           }}
         >
           <FormInput
@@ -76,8 +80,14 @@ class SelfRegisterTypeCNPJ extends Component {
 }
 
 SelfRegisterTypeCNPJ.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  registerData: PropTypes.object,
   onSubmit: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
+}
+
+SelfRegisterTypeCNPJ.defaultProps = {
+  registerData: {},
 }
 
 export default SelfRegisterTypeCNPJ
