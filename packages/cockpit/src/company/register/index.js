@@ -67,10 +67,9 @@ const buildCompanyParameters = applySpec({
   partner_street_number: prop('number'),
   partner_neighborhood: prop('neighborhood'),
   partner_city: prop('city'),
-
-  // TODO: adicionar este campo quando a tela o possuir
   partner_state: always('SP'),
   partner_zipcode: prop('cep'),
+  agreement_term_version: always(1),
   mql: buildMql,
 })
 
