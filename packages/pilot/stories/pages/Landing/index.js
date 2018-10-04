@@ -2,9 +2,10 @@ import React from 'react'
 
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
+import { checkA11y } from '@storybook/addon-a11y'
 
 import Account from '../../../src/containers/Account'
-import Login from '../../../src/containers/Account/Login'
+import LoginForm from '../../../src/containers/Account/LoginForm'
 import {
   PasswordRecoveryForm,
   PasswordRecoveryConfirmation,
@@ -14,8 +15,9 @@ import {
   SignUpConfirmation,
   InvalidEmailError,
 } from '../../../src/containers/Account/SignUp'
-import Unregistered from '../../../src/containers/Account/UnregisteredPresentation'
-import Registered from '../../../src/containers/Account/RegisteredPresentation'
+import Presentation from '../../../src/containers/Account/Presentation'
+
+const t = translation => translation
 
 const Placeholder = props => (
   <svg viewBox="0 0 26.458 26.458" {...props}>
@@ -32,36 +34,54 @@ const Placeholder = props => (
   </svg>
 )
 
-const availableLanguages = ['pt', 'en']
-
-const registeredPresentation = (
-  <Registered
-    availableLanguages={availableLanguages}
-    selectedLanguage={availableLanguages[0]}
-    onGotoSignup={action('signup')}
-    onLanguageChange={action('change language')}
+const TestPresentation = (
+  <Presentation
+    environment="test"
+    environmentUrl=""
+    t={t}
   />
 )
 
-const unregisteredPresentation = (
-  <Unregistered
-    onGotoSignup={action('signup')}
-    onBackToLogin={action('back to login')}
+const LivePresentation = (
+  <Presentation
+    environment="live"
+    environmentUrl=""
+    t={t}
   />
 )
 
-storiesOf('Pages', module)
-  .add('Login', () => (
+storiesOf('Pages|Login', module)
+  .addDecorator(checkA11y)
+  .add('Login Live', () => (
     <Account
-      // eslint-disable-next-line
+      base="light"
       logo={Placeholder}
       primaryContent={
-        <Login
+        <LoginForm
+          base="light"
           onLogin={action('login')}
           onPasswordRecovery={action('recover password')}
+          t={t}
         />
       }
-      secondaryContent={registeredPresentation}
+      secondaryContent={LivePresentation}
+      t={t}
+    />
+  ))
+  .add('Login Test', () => (
+    <Account
+      base="dark"
+      logo={Placeholder}
+      primaryContent={
+        <LoginForm
+          base="dark"
+          onLogin={action('login')}
+          onPasswordRecovery={action('recover password')}
+          t={t}
+        />
+      }
+      secondaryContent={TestPresentation}
+      t={t}
     />
   ))
   .add('Password Recovery Form', () => (
@@ -73,9 +93,11 @@ storiesOf('Pages', module)
           onPasswordRecovery={action('recover password')}
           onBackToLogin={action('back to login')}
           onSubmit={action('submit')}
+          t={t}
         />
       }
-      secondaryContent={registeredPresentation}
+      secondaryContent={TestPresentation}
+      t={t}
     />
   ))
   .add('Password Recovery Confirmation', () => (
@@ -86,50 +108,58 @@ storiesOf('Pages', module)
         <PasswordRecoveryConfirmation
           onBackToLogin={action('back to login')}
           onPasswordRecovery={action('recover password')}
+          t={t}
         />
       }
-      secondaryContent={registeredPresentation}
+      secondaryContent={TestPresentation}
+      t={t}
     />
   ))
+
+storiesOf('Pages|Signup')
+  .addDecorator(checkA11y)
   .add('Signup', () => (
     <Account
-      base="light"
       // eslint-disable-next-line
       logo={Placeholder}
       primaryContent={
         <SignUpForm
           onPasswordRecovery={action('recover password')}
           onSubmit={action('submit')}
+          t={t}
         />
       }
-      secondaryContent={unregisteredPresentation}
+      secondaryContent={TestPresentation}
+      t={t}
     />
   ))
   .add('Signup Confirmation', () => (
     <Account
-      base="light"
       // eslint-disable-next-line
       logo={Placeholder}
       primaryContent={
         <SignUpConfirmation
           onPasswordRecovery={action('recover password')}
           onBackToLogin={action('back to login')}
+          t={t}
         />
       }
-      secondaryContent={unregisteredPresentation}
+      secondaryContent={TestPresentation}
+      t={t}
     />
   ))
   .add('Signup E-mail Invalid', () => (
     <Account
-      base="light"
       // eslint-disable-next-line
       logo={Placeholder}
       primaryContent={
         <InvalidEmailError
           onPasswordRecovery={action('recover password')}
           onBackToSignUp={action('back to signup')}
+          t={t}
         />
       }
-      secondaryContent={unregisteredPresentation}
+      secondaryContent={TestPresentation}
+      t={t}
     />
   ))

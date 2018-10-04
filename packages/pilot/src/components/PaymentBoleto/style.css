@@ -1,7 +1,16 @@
 @import "former-kit-skin-pagarme/dist/styles/spacing.css";
+@import "former-kit-skin-pagarme/dist/styles/colors/light.css";
 
 .card {
   height: 150px;
+
+  & h2 {
+    color: var(--color-light-steel-100);
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0;
+    text-transform: uppercase;
+  }
 
   & p:not(.cardDueDate) {
     margin: 0;
@@ -9,14 +18,11 @@
 }
 
 .cardContent {
-  height: 100%;
+  align-items: flex-start;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  height: 100%;
   justify-content: space-between;
-  padding:
-    var(--spacing-small)
-    var(--spacing-medium);
 
   & > * {
     width: 100%;
@@ -24,19 +30,36 @@
 
   & > div:first-of-type {
     padding: 0;
-    height: 18px;
   }
 }
 
-.cardBarCode svg {
-  margin-right: var(--spacing-tiny);
-  top: 7px;
-  position: relative;
+.cardTitle {
+  align-items: center;
+  display: flex;
+  height: 26px;
+  justify-content: space-between;
+}
+
+.cardBarCode {
+  color: var(--color-light-steel-100);
+  font-size: 14px;
+  line-height: var(--spacing-medium);
+
+  & svg {
+    margin-right: var(--spacing-tiny);
+    position: relative;
+    top: 8px;
+  }
 }
 
 .cardDueDate {
-  height: 35px;
-  display: flex;
   align-items: center;
+  display: flex;
+  height: 26px;
   justify-content: space-between;
+
+  & p {
+    color: var(--color-light-steel-100);
+    font-size: 12px;
+  }
 }

@@ -1,12 +1,16 @@
 import pagarme from 'pagarme'
-import { identity, pathOr } from 'ramda'
+import {
+  identity,
+  pathOr,
+} from 'ramda'
 import 'rxjs/add/operator/do'
 import 'rxjs/add/operator/mergeMap'
 import 'rxjs/add/operator/map'
 import { combineEpics } from 'redux-observable'
 import cockpit from 'cockpit'
 import env from '../../../environment'
-
+import identifyUser from '../../../vendor/identifyUser'
+import setCompany from '../../../vendor/setCompany'
 import {
   ACCOUNT_RECEIVE,
   COMPANY_RECEIVE,
@@ -54,10 +58,12 @@ const accountEpic = action$ =>
     })
     .map(receiveAccount)
     .do(({ error, payload }) => {
-      if (error || typeof window.FS === 'undefined') {
+      if (error) {
         return
       }
-      window.FS.identify(payload.id, { email_str: payload.email })
+
+      const { id, email } = payload
+      identifyUser(id, email)
     })
 
 const companyEpic = (action$, store) =>
@@ -72,13 +78,20 @@ const companyEpic = (action$, store) =>
     })
     .map(receiveCompany)
     .do(({ error, payload }) => {
-      if (error || typeof window.FS === 'undefined') {
+      if (error) {
         return
       }
-      window.FS.setUserVars({
-        companyName_str: payload.name,
-        companyId_str: payload.id,
-      })
+
+      const { id, name } = payload
+      const {
+        account: {
+          user: {
+            id: userId,
+          },
+        },
+      } = store.getState()
+
+      setCompany(id, name, userId)
     })
 
 const recipientBalanceEpic = (action$, store) =>

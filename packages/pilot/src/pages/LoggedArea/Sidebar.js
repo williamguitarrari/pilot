@@ -13,7 +13,7 @@ import SidebarContainer from '../../containers/Sidebar'
 
 import routes from './routes'
 
-import Logo from '../logo.svg'
+import Logo from '../../components/Logo/logo.svg'
 
 const removeRouteParams = pipe(
   split(':'),

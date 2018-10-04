@@ -1,5 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
+import { checkA11y } from '@storybook/addon-a11y'
 
 import BoletoRefundDetails from './BoletoRefundDetails'
 import ConfigurationCardForm from './ConfigurationCardForm'
@@ -31,7 +32,8 @@ import Loader from './Loader'
 import Message from './Message'
 import MessageActions from './MessageActions'
 
-storiesOf('Components', module)
+storiesOf('Components|Custom components', module)
+  .addDecorator(checkA11y)
   .add('Configuration card form', () => <ConfigurationCardForm />)
   .add('Copy button', () => <CopyButton />)
   .add('Currency Input', () => <CurrencyInput />)

@@ -21,7 +21,7 @@ const Confirmation = ({
       <div className={styles.hugeButton} >
         <Button
           type="button"
-          size="large"
+          size="huge"
           fill="gradient"
           onClick={onBackToLogin}
         >
@@ -34,11 +34,7 @@ const Confirmation = ({
 
 Confirmation.propTypes = {
   onBackToLogin: PropTypes.func.isRequired,
-  t: PropTypes.func,
-}
-
-Confirmation.defaultProps = {
-  t: t => t,
+  t: PropTypes.func.isRequired,
 }
 
 export default Confirmation

@@ -160,7 +160,18 @@
   version "0.19.7"
   resolved "https://registry.yarnpkg.com/@std/esm/-/esm-0.19.7.tgz#8eeab6c54596a92e3557992621c91e8166a19852"
 
-"@storybook/addon-actions@3.4.11", "@storybook/addon-actions@^3.3.14":
+"@storybook/addon-a11y@^3.4.10":
+  version "3.4.11"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-a11y/-/addon-a11y-3.4.11.tgz#884f8caeeaac8e4a35d13ca5d679040edc505e1e"
+  dependencies:
+    "@storybook/components" "3.4.11"
+    axe-core "^2.6.1"
+    babel-runtime "^6.26.0"
+    glamor "^2.20.40"
+    glamorous "^4.12.1"
+    prop-types "^15.6.1"
+
+"@storybook/addon-actions@3.4.11", "@storybook/addon-actions@^3.4.10":
   version "3.4.11"
   resolved "https://registry.yarnpkg.com/@storybook/addon-actions/-/addon-actions-3.4.11.tgz#a51418c5b684fd3df2788c19ef266845d6068baf"
   dependencies:
@@ -175,7 +186,7 @@
     react-inspector "^2.2.2"
     uuid "^3.2.1"
 
-"@storybook/addon-links@3.4.11", "@storybook/addon-links@^3.3.14":
+"@storybook/addon-links@3.4.11", "@storybook/addon-links@^3.4.10":
   version "3.4.11"
   resolved "https://registry.yarnpkg.com/@storybook/addon-links/-/addon-links-3.4.11.tgz#097b4fcf4b3af3903762ac0d7e65c5d37d14af88"
   dependencies:
@@ -184,7 +195,13 @@
     global "^4.3.2"
     prop-types "^15.6.1"
 
-"@storybook/addons@3.4.11", "@storybook/addons@^3.3.14":
+"@storybook/addon-options@^3.4.10":
+  version "3.4.11"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-options/-/addon-options-3.4.11.tgz#6f27f223cad466dc1079045f5af01c99f94f65d0"
+  dependencies:
+    babel-runtime "^6.26.0"
+
+"@storybook/addons@3.4.11", "@storybook/addons@^3.4.10":
   version "3.4.11"
   resolved "https://registry.yarnpkg.com/@storybook/addons/-/addons-3.4.11.tgz#f3e27c46d80ad1f171888c4aad0a19a8a032d072"
 
@@ -290,7 +307,7 @@
   dependencies:
     babel-runtime "^6.5.0"
 
-"@storybook/react@^3.3.14":
+"@storybook/react@^3.4.10":
   version "3.4.11"
   resolved "https://registry.yarnpkg.com/@storybook/react/-/react-3.4.11.tgz#0496132d78ca2f66ace79d9c4f7e951402c962db"
   dependencies:
@@ -834,6 +851,10 @@ aws-sign2@~0.7.0:
 aws4@^1.2.1, aws4@^1.6.0, aws4@^1.8.0:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.8.0.tgz#f0e003d9ca9e7f59c7a508945d7b2ef9a04a542f"
+
+axe-core@^2.6.1:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-2.6.1.tgz#28772c4f76966d373acda35b9a409299dc00d1b5"
 
 axobject-query@^0.1.0:
   version "0.1.0"
@@ -4635,16 +4656,16 @@ form-data@~2.3.1, form-data@~2.3.2:
     combined-stream "1.0.6"
     mime-types "^2.1.12"
 
-former-kit-skin-pagarme@0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/former-kit-skin-pagarme/-/former-kit-skin-pagarme-0.9.0.tgz#b68c7cfc2267336967518d4261faa80ad705a065"
+former-kit-skin-pagarme@0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/former-kit-skin-pagarme/-/former-kit-skin-pagarme-0.10.0.tgz#35e8643ff3d6d5ccd797bc177e02e6a4a01f8da9"
   dependencies:
     emblematic-icons "0.1.1"
     react-dates "12.7.1"
 
-former-kit@0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/former-kit/-/former-kit-0.9.0.tgz#e000a8a817aed86999fab12cdc72cd67c193df13"
+former-kit@0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/former-kit/-/former-kit-0.10.0.tgz#9fe7e9bddaa821b88d0a5434a19b732c99e6aa5f"
   dependencies:
     classnames "2.2.5"
     moment "2.20.1"
