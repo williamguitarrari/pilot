@@ -3,12 +3,12 @@ import { action } from '@storybook/addon-actions'
 import { Card } from 'former-kit'
 
 import Section from '../../Section'
-import ClientForm from '../../../src/components/ClientForm'
+import CustomerForm from '../../../src/components/CustomerForm'
 
-const ClientFormExample = () => (
+const CustomerFormExample = () => (
   <Section>
     <Card>
-      <ClientForm
+      <CustomerForm
         customer={{
           type: 'individual',
         }}
@@ -21,4 +21,4 @@ const ClientFormExample = () => (
   </Section>
 )
 
-export default ClientFormExample
+export default CustomerFormExample

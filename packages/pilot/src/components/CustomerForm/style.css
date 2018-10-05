@@ -6,3 +6,11 @@
   color: var(--color-light-steel-100);
   margin-bottom: var(--spacing-tiny);
 }
+
+.formContent {
+  padding:
+    0
+    var(--spacing-medium)
+    var(--spacing-medium)
+    var(--spacing-medium);
+}
