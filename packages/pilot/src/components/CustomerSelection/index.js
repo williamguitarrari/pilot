@@ -40,7 +40,7 @@ const getColumns = (selected, onSelect, t) => [
     align: 'center',
     isAction: true,
     renderer: (item) => {
-      if (item.id === selected.id) {
+      if (selected && item.id === selected.id) {
         return (
           <IconCheck
             color="#37cc9a"
@@ -113,8 +113,12 @@ CustomerSelection.propTypes = {
   onCancel: PropTypes.func.isRequired,
   onSelect: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  selected: customerShape.isRequired, // eslint-disable-line react/no-typos
+  selected: customerShape,
   t: PropTypes.func.isRequired,
+}
+
+CustomerSelection.defaultProps = {
+  selected: null,
 }
 
 export default CustomerSelection
