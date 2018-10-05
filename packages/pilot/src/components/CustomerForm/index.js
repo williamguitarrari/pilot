@@ -12,7 +12,6 @@ import {
   Button,
   Col,
   CardActions,
-  CardContent,
   FormDropdown,
   FormInput,
   RadioGroup,
@@ -59,7 +58,7 @@ const setStateData = (name, { value }) =>
     },
   })
 
-class ClientForm extends Component {
+class CustomerForm extends Component {
   constructor (props) {
     super(props)
 
@@ -137,7 +136,7 @@ class ClientForm extends Component {
         }}
         validateOn="blur"
       >
-        <CardContent>
+        <div className={style.formContent}>
           <Row>
             <Col palm={4} tablet={4} desk={2} tv={2}>
               <FormInput
@@ -214,7 +213,7 @@ class ClientForm extends Component {
               />
             </Col>
           </Row>
-        </CardContent>
+        </div>
 
         <CardActions>
           <Button
@@ -237,7 +236,7 @@ class ClientForm extends Component {
   }
 }
 
-ClientForm.propTypes = {
+CustomerForm.propTypes = {
   customer: PropTypes.shape({
     country: PropTypes.string,
     document: PropTypes.string,
@@ -247,16 +246,19 @@ ClientForm.propTypes = {
     phone: PropTypes.string,
     type: PropTypes.oneOf([
       'corporation', 'individual',
-    ]).isRequired,
-  }).isRequired,
+    ]),
+  }),
   onCancel: PropTypes.func.isRequired,
   onChange: PropTypes.func,
   onSubmit: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
 }
 
-ClientForm.defaultProps = {
+CustomerForm.defaultProps = {
+  customer: {
+    type: 'individual',
+  },
   onChange: null,
 }
 
-export default ClientForm
+export default CustomerForm
