@@ -77,6 +77,8 @@ const copyToClipBoard = (text) => {
   document.body.removeChild(textarea)
 }
 
+const handleExportClick = () => window.print()
+
 const getTransactionDetailsLabels = t => ({
   acquirer_name: t('pages.transaction.acquirer_name'),
   acquirer_response_code: t('pages.transaction.acquirer_response_code'),
@@ -454,6 +456,7 @@ class TransactionDetails extends Component {
           onManualReviewApprove={this.handleManualReviewApprove}
           onManualReviewRefuse={this.handleManualReviewRefuse}
           onRefund={this.handleRefund}
+          onExport={handleExportClick}
           onNextTransactionRedirect={this.handleNextTransactionRedirect}
           onPreviousTransactionRedirect={this.handlePreviousTransactionRedirect}
           onReprocess={this.handleReprocessOpen}
