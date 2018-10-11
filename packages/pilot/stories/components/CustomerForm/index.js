@@ -3,7 +3,7 @@ import { action } from '@storybook/addon-actions'
 import { Card } from 'former-kit'
 
 import Section from '../../Section'
-import CustomerForm from '../../../src/components/CustomerForm'
+import CustomerForm from '../../../src/containers/CreateTransaction/Customers/CustomerForm'
 
 const CustomerFormExample = () => (
   <Section>

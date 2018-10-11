@@ -19,11 +19,11 @@ import {
   Spacing,
 } from 'former-kit'
 
-import cnpj from '../../validation/cnpj'
-import cpf from '../../validation/cpf'
-import email from '../../validation/email'
-import phone from '../../validation/phone'
-import required from '../../validation/required'
+import cnpj from '../../../validation/cnpj'
+import cpf from '../../../validation/cpf'
+import email from '../../../validation/email'
+import phone from '../../../validation/phone'
+import required from '../../../validation/required'
 
 import style from './style.css'
 
