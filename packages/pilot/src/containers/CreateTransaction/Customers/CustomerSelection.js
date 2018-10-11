@@ -10,8 +10,8 @@ import {
 import { pipe, prop } from 'ramda'
 import IconCheck from 'emblematic-icons/svg/Check32.svg'
 
-import formatCpf from '../../formatters/cpfCnpj'
-import formatPhone from '../../formatters/phone'
+import formatCpf from '../../../formatters/cpfCnpj'
+import formatPhone from '../../../formatters/phone'
 
 const getColumns = (selected, onSelect, t) => [
   {
@@ -99,10 +99,11 @@ const CustomerSelection = ({
     </CardActions>
   </Fragment>
 )
+
 const customerShape = PropTypes.shape({
   document: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
+  id: PropTypes.number,
   name: PropTypes.string.isRequired,
   phone: PropTypes.string.isRequired,
 })

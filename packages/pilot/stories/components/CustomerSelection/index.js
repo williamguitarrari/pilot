@@ -3,7 +3,7 @@ import { action } from '@storybook/addon-actions'
 import { Card } from 'former-kit'
 
 import Section from '../../Section'
-import CustomerSelection from '../../../src/components/CustomerSelection'
+import CustomerSelection from '../../../src/containers/CreateTransaction/Customers/CustomerSelection'
 
 const actionSelection = action('selection')
 
