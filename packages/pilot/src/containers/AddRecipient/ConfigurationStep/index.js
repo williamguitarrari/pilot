@@ -68,8 +68,9 @@ class ConfigurationsStep extends Component {
   render () {
     const {
       canConfigureAnticipation,
-      minimumAnticipationDays,
       errors,
+      maximumAnticipationDays,
+      minimumAnticipationDelay,
       onBack,
       onCancel,
       t,
@@ -92,9 +93,9 @@ class ConfigurationsStep extends Component {
       createBetweenValidation(start, end, betweenMessage)
 
     const atLeastMessage =
-      t('pages.add_recipient.field_minimum', { number: minimumAnticipationDays })
+      t('pages.add_recipient.field_minimum', { number: minimumAnticipationDelay })
     const atLeastMinimumDays =
-      createLessThanValidation(minimumAnticipationDays, atLeastMessage)
+      createLessThanValidation(minimumAnticipationDelay, atLeastMessage)
 
     return (
       <Form
@@ -124,7 +125,14 @@ class ConfigurationsStep extends Component {
                   {t('pages.add_recipient.choose_anticipation_model')}
                 </h3>
               </Col>
-              { Anticipation({ data, t, canConfigureAnticipation }) }
+              {
+                Anticipation({
+                  canConfigureAnticipation,
+                  data,
+                  maximumAnticipationDays,
+                  t,
+                })
+              }
             </Row>
             <h2 className={style.title}>
               {t('pages.add_recipient.transfer_configuration')}
@@ -179,7 +187,8 @@ ConfigurationsStep.propTypes = {
     transferDay: PropTypes.string,
     transferWeekday: PropTypes.string,
   }),
-  minimumAnticipationDays: PropTypes.number,
+  maximumAnticipationDays: PropTypes.number,
+  minimumAnticipationDelay: PropTypes.number,
   onBack: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   onContinue: PropTypes.func.isRequired,
@@ -190,7 +199,8 @@ ConfigurationsStep.defaultProps = {
   canConfigureAnticipation: true,
   data: {},
   errors: {},
-  minimumAnticipationDays: 15,
+  maximumAnticipationDays: 31,
+  minimumAnticipationDelay: 15,
 }
 
 export default ConfigurationsStep
