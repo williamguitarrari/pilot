@@ -11,7 +11,6 @@ import {
   propEq,
   reverse,
   split,
-  T,
   unless,
 } from 'ramda'
 import { apiUrl } from '../../environment'
@@ -51,7 +50,6 @@ const buildCompanyParameters = applySpec({
   company_template_token: always('cjkifh2ja0000y0739q5odyyt'),
   email: prop('email'),
   name: prop('tradeName'),
-  should_activate: T,
   password: prop('password'),
   full_name: prop('legalName'),
   document_type: getDocumentType,
