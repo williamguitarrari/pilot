@@ -69,6 +69,7 @@ const buildCompanyParameters = applySpec({
   partner_zipcode: prop('cep'),
   agreement_term_version: always(1),
   mql: buildMql,
+  primary_phone: prop('commercialPhone'),
 })
 
 const registerCompany = (registerData) => {
