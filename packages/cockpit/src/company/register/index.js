@@ -3,12 +3,14 @@ import moment from 'moment'
 import {
   always,
   applySpec,
+  concat,
   ifElse,
   isNil,
   join,
   pipe,
   prop,
   propEq,
+  replace,
   reverse,
   split,
   unless,
@@ -46,6 +48,13 @@ const getDocumentType = ifElse(
   always('cpf')
 )
 
+const formatPhoneNumber = phone =>
+  pipe(
+    prop(phone),
+    replace(/\D+/g, ''),
+    concat('+55')
+  )
+
 const buildCompanyParameters = applySpec({
   company_template_token: always('cjkifh2ja0000y0739q5odyyt'),
   email: prop('email'),
@@ -59,7 +68,7 @@ const buildCompanyParameters = applySpec({
   partner_cpf: prop('cpf'),
   partner_birthday: getTimestampFromBirthDate,
   partner_mother_name: prop('montherName'),
-  partner_phone: prop('phone'),
+  partner_phone: formatPhoneNumber('phone'),
   partner_street: prop('street'),
   partner_complementary: prop('complement'),
   partner_street_number: prop('number'),
@@ -69,7 +78,7 @@ const buildCompanyParameters = applySpec({
   partner_zipcode: prop('cep'),
   agreement_term_version: always(1),
   mql: buildMql,
-  primary_phone: prop('commercialPhone'),
+  primary_phone: formatPhoneNumber('commercialPhone'),
 })
 
 const registerCompany = (registerData) => {
