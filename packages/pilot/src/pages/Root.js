@@ -87,12 +87,16 @@ class Root extends Component {
     }
 
     if (!client) {
-      return (
-        <Switch>
-          <Route path="/account/register" component={SelfRegister} />
-          <Route path="/account" component={Account} />
-        </Switch>
-      )
+      if (localStorage.getItem('feature_flag_self_register') === 'true') {
+        return (
+          <Switch>
+            <Route path="/account/register" component={SelfRegister} />
+            <Route path="/account" component={Account} />
+          </Switch>
+        )
+      }
+
+      return <Route path="/account" component={Account} />
     }
 
     if (user && startsWith('/account/login', path)) {
