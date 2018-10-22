@@ -87,9 +87,17 @@ class Root extends Component {
     }
 
     if (!client) {
+      if (window.featureFlag && window.featureFlag.selfRegister === true) {
+        return (
+          <Switch>
+            <Route path="/account/register" component={SelfRegister} />
+            <Route path="/account" component={Account} />
+          </Switch>
+        )
+      }
+
       return (
         <Switch>
-          <Route path="/account/register" component={SelfRegister} />
           <Route path="/account" component={Account} />
         </Switch>
       )
