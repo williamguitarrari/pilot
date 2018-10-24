@@ -6,14 +6,15 @@ import {
   drop,
   path,
 } from 'ramda'
+import moment from 'moment'
 import buildQuery from './query'
 
 const defaultFrom = 0
 const defaultSize = 15
 
 const mockDates = {
-  start: new Date(),
-  end: new Date(),
+  start: moment(),
+  end: moment(),
 }
 
 const aggregations = {

@@ -1,11 +1,12 @@
+import moment from 'moment'
 import buildResult from './result'
 import requestResultMock from './transactionsMock.json'
 
 const query = {
   search: '12345',
   dates: {
-    start: new Date(),
-    end: new Date(),
+    start: moment(),
+    end: moment(),
   },
   filters: {
     payment_method: ['credit_card', 'debit_card'],

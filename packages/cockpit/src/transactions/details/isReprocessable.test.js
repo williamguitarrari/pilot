@@ -4,6 +4,7 @@ import {
   of,
   pipe,
 } from 'ramda'
+import moment from 'moment'
 import isReprocessable from './isReprocessable'
 import { transaction as transactionMock } from './mocks/fromRequests.json'
 
@@ -16,7 +17,7 @@ const dataWithMetadata = pipe(
 )(transactionMock)
 const emptyData = []
 
-const now = (new Date()).toISOString()
+const now = moment().toISOString()
 
 describe('isReprocessable', () => {
   it('should return false if status is processing', () => {

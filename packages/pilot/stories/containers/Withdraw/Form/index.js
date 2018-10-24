@@ -5,6 +5,7 @@ import {
   pipe,
   split,
 } from 'ramda'
+import moment from 'moment'
 import WithdrawForm from '../../../../src/containers/Withdraw/Form'
 import Section from '../../../Section'
 
@@ -33,7 +34,7 @@ class WithdrawFormState extends Component {
         <WithdrawForm
           amount={Number(this.state.requested) + transferCost}
           available={123456}
-          date={new Date()}
+          date={moment()}
           maximum={12345}
           onRequestedChange={this.handleRequestChange}
           onSubmit={action('Submit')}

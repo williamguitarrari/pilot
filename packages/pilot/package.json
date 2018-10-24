@@ -15,7 +15,7 @@
     "i18next-browser-languagedetector": "2.1.0",
     "i18next-xhr-backend": "1.5.1",
     "intl": "1.2.5",
-    "moment": "2.20.1",
+    "moment": "https://github.com/pagarme/moment/archive/0.0.2.tar.gz",
     "normalize.css": "7.0.0",
     "pagarme": "3.7.3",
     "prop-types": "15.6.0",

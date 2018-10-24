@@ -10,8 +10,8 @@ const initialState = {
   query: {
     search: '',
     dates: {
-      start: moment(new Date()).subtract(30, 'days'),
-      end: moment(new Date()),
+      start: moment().subtract(30, 'days'),
+      end: moment(),
     },
     filters: {},
     offset: 1,
