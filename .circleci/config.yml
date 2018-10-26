@@ -1,9 +1,13 @@
 version: 2
 image: ubuntu:16.04
+
 jobs:
   build:
     docker:
       - image: node:9
+
+    environment:
+      TZ: America/Sao_Paulo
 
     working_directory: ~/repo
 
