@@ -12,7 +12,7 @@ import {
 import ArrowBack from 'emblematic-icons/svg/ChevronBack24.svg'
 import classNames from 'classnames'
 
-import Logo from '../../pages/logo.svg'
+import Logo from '../../components/Logo/logo.svg'
 import SelfRegisterBulletSteps from '../../components/SelfRegister/BulletSteps'
 import SelfRegisterContainer from './SelfRegisterContainer'
 import style from './style.css'
