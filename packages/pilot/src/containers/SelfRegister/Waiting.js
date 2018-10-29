@@ -10,7 +10,7 @@ import {
 } from 'former-kit'
 import classNames from 'classnames'
 
-import Logo from '../../pages/logo.svg'
+import Logo from '../../components/Logo/logo.svg'
 import SelfRegisterContainer from './SelfRegisterContainer'
 import style from './style.css'
 
