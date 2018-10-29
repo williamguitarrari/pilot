@@ -81,6 +81,7 @@ const AccountArea = ({ t, history: { location } }) => {
             path="/account/signup"
             component={SignUp}
           />
+          <Redirect to="/account/login" />
         </Switch>
       }
       secondaryContent={
