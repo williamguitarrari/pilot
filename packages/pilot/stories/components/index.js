@@ -1,6 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 
+import SearchableDropdown from './SearchableDropdown'
 import BoletoRefundDetails from './BoletoRefundDetails'
 import ConfigurationCardForm from './ConfigurationCardForm'
 import CopyButton from './CopyButton'
@@ -33,6 +34,7 @@ import MessageActions from './MessageActions'
 import ConfirmModal from './ConfirmModal'
 
 storiesOf('Components', module)
+  .add('Searchable Dropdown', () => <SearchableDropdown />)
   .add('Configuration card form', () => <ConfigurationCardForm />)
   .add('Copy button', () => <CopyButton />)
   .add('Currency Input', () => <CurrencyInput />)
