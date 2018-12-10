@@ -25,6 +25,9 @@
 ## Notas de deploy
 <!-- Notas de deploy do desenvolvimento da aplicação. Devem ser novas dependências, scripts, etc. -->
 
+## Como testar?
+<!-- Adicione algumas instruções de como os reviewers podem testar esse PR. -->
+
 **Novos scripts**:
 
 - `script` : detalhes do script
