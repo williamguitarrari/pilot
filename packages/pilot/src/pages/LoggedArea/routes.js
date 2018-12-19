@@ -4,6 +4,7 @@ import Transaction32 from 'emblematic-icons/svg/Transaction32.svg'
 import Withdraw32 from 'emblematic-icons/svg/Withdraw32.svg'
 
 import { Balance } from '../Balance'
+import { Recipients } from '../Recipients'
 import CompanySettings from '../CompanySettings'
 import Transactions from '../Transactions'
 import UserSettings from '../UserSettings'
@@ -30,6 +31,11 @@ export default {
     exact: true,
     path: '/balance/:id?',
     title: 'pages.balance.title',
+  },
+  recipients: {
+    title: 'pages.recipients.title',
+    path: '/recipients',
+    component: Recipients,
   },
   transactions: {
     title: 'pages.transactions.title',
