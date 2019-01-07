@@ -59,6 +59,7 @@ class AddRecipientPage extends Component {
     this.fetchAccounts = this.fetchAccounts.bind(this)
     this.onExit = this.onExit.bind(this)
     this.onLoginAgain = this.onLoginAgain.bind(this)
+    this.onAddRecipient = this.onAddRecipient.bind(this)
     this.onViewDetails = this.onViewDetails.bind(this)
     this.submitRecipient = this.submitRecipient.bind(this)
   }
@@ -69,6 +70,10 @@ class AddRecipientPage extends Component {
 
   onLoginAgain () {
     this.props.redirectToLoginPage()
+  }
+
+  onAddRecipient () {
+    this.props.history.replace('/recipients/add')
   }
 
   onViewDetails (recipientId) {
@@ -90,6 +95,7 @@ class AddRecipientPage extends Component {
         fetchAccounts={this.fetchAccounts}
         onExit={this.onExit}
         onLoginAgain={this.onLoginAgain}
+        onAddRecipient={this.onAddRecipient}
         onViewDetails={this.onViewDetails}
         options={this.props.options}
         submitRecipient={this.submitRecipient}

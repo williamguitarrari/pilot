@@ -62,6 +62,7 @@ class AddRecipients extends Component {
     this.handleEdit = this.handleEdit.bind(this)
     this.handleNextStep = this.handleNextStep.bind(this)
     this.handleTryAgain = this.handleTryAgain.bind(this)
+    this.handleAddRecipient = this.handleAddRecipient(this)
     this.handleViewDetails = this.handleViewDetails.bind(this)
     this.openExitModal = this.openExitModal.bind(this)
     this.renderError = this.renderError.bind(this)
@@ -154,6 +155,11 @@ class AddRecipients extends Component {
       fetchData: {},
       stepsStatus: [...initialStepStatus],
     })
+  }
+
+  handleAddRecipient () {
+    const { onAddRecipient } = this.props
+    return onAddRecipient
   }
 
   handleViewDetails () {
@@ -251,6 +257,7 @@ class AddRecipients extends Component {
       onCancel: this.openExitModal,
       onContinue: this.handleContinueNavigation,
       onExit,
+      onAddRecipient: this.handleAddRecipient,
       onViewDetails: this.handleViewDetails,
       onEdit: this.handleEdit,
       t,
@@ -342,6 +349,7 @@ AddRecipients.propTypes = {
   fetchAccounts: PropTypes.func.isRequired,
   onExit: PropTypes.func.isRequired,
   onLoginAgain: PropTypes.func.isRequired,
+  onAddRecipient: PropTypes.func.isRequired,
   onViewDetails: PropTypes.func.isRequired,
   options: PropTypes.shape({
     canConfigureAnticipation: PropTypes.bool,
