@@ -18,6 +18,7 @@ import {
   Table,
 } from 'former-kit'
 
+import AddButton from './AddButton'
 import style from './style.css'
 import Filter from '../Filter'
 import tableColumns from './tableColumns'
@@ -94,6 +95,10 @@ const RecipientsList = ({
                 }
                 subtitle={
                   <div>
+                    <AddButton
+                      onClick={() => console.log('Adicionando...')}
+                      t={t}
+                    />
                     <Pagination
                       currentPage={pagination.offset}
                       totalPages={pagination.total}
