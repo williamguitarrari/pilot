@@ -23,6 +23,7 @@ import ReprocessDetails from './ReprocessDetails'
 import Summary from './Summary'
 import ProductForm from './ProductForm'
 import { WithProducts, EmptyList } from './ProductsList'
+import ProductShipping from './ProductShipping'
 import TotalDisplay from './TotalDisplay'
 import TransferError from './TransferError'
 import TransactionDetailsCard from './TransactionDetailsCard'
@@ -48,6 +49,7 @@ storiesOf('Components|Add Transaction/Products', module)
   .add('Add products', () => <ProductForm />)
   .add('List products', () => <WithProducts />)
   .add('Empty list products', () => <EmptyList />)
+  .add('Shipping form', () => <ProductShipping />)
 
 storiesOf('Components|Add Transaction/Payment', module)
   .addDecorator(checkA11y)

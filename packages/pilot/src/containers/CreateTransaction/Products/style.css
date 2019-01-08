@@ -33,3 +33,14 @@
   align-self: flex-start;
   padding-top: 20px;
 }
+
+.emptyState {
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+.fieldset {
+  border: none;
+  padding: 0;
+  padding-bottom: var(--spacing-small);
+}
