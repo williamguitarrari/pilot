@@ -9509,15 +9509,10 @@ package-json@^4.0.0:
     registry-url "^3.0.3"
     semver "^5.1.0"
 
-pagarme@3.7.1:
-  version "3.7.1"
-  resolved "https://registry.yarnpkg.com/pagarme/-/pagarme-3.7.1.tgz#63d80d2348ca3f856f6b037d34963a2ffd28f844"
-  integrity sha512-QGCSfuzSPjqPg+FIo1j+wXrg9cvqwWsj+Kg9UioiR9/B+2jtgNlcx5QQkUyL+Zo87GQiAgdBeEl4zs5S/tGFqQ==
-
-pagarme@3.7.3:
-  version "3.7.3"
-  resolved "https://registry.yarnpkg.com/pagarme/-/pagarme-3.7.3.tgz#c95f390d498ad1f3dbe220f83adc724ef1b4c776"
-  integrity sha512-xhRtvL3qj6ATa4FtehkmRypdXdyM0JDlVNUJtYkb8+SmedCbakzxk3X2Q+bSZv5vdSqGNC3kBGPj/2vCAy0iPA==
+pagarme@4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/pagarme/-/pagarme-4.0.0.tgz#ae634367d4796c10e7767a7379c3904893b6a6ba"
+  integrity sha512-xuORp9BJPQFlbUAyjbGnYKjSmDLi6+MY/WNVx7jWi9Y72AFR8aA5wWR5JrE7i+Tw6zwpP6rZMhHmpouO3zd0tw==
 
 pako@~1.0.5:
   version "1.0.8"
