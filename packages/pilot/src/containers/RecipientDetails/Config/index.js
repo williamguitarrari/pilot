@@ -10,11 +10,15 @@ import AnticipationContent from './AnticipationContent'
 import TransferContent from './TransferContent'
 import BankAccountContent from './BankAccountContent'
 import RecipientItem from './RecipientItem'
+import HelpButton from '../../../components/HelpButton'
+import HelpModal from '../../../components/HelpModal'
 
 import {
   userAccountProps,
   userAccountDefaultProps,
 } from '../../AddRecipient/BankAccountStep'
+
+import style from './style.css'
 
 class RecipientDetailConfig extends Component {
   constructor (props) {
@@ -120,32 +124,54 @@ class RecipientDetailConfig extends Component {
     const anticipationVolume = t('pages.add_recipient.automatic_volume')
     const anticipation1025 = t('pages.add_recipient.automatic_1025')
     const anticipationDx = t('pages.add_recipient.automatic_dx')
+    const helpBtn = (
+      <HelpButton
+        openHelpModal={this.openHelpModal}
+        t={t}
+      />
+    )
 
     if (anticipation.anticipationModel === 'manual') {
       return (
-        <Fragment>
+        <div className={style.alignItems}>
           {`${model}: ${anticipationManual}`}
           <Spacing size="large" />
           {`${volume}: ${anticipation.anticipationVolumePercentage}%`}
-        </Fragment>
+          <Spacing size="large" />
+          {helpBtn}
+        </div>
       )
     }
     if (anticipation.anticipationModel === 'automatic_volume') {
       return (
-        <Fragment>
+        <div className={style.alignItems}>
           {`${model}: ${anticipationVolume}`}
           <Spacing size="large" />
           {`${volume}: ${anticipation.anticipationVolumePercentage}%`}
-        </Fragment>
+          <Spacing size="large" />
+          {helpBtn}
+        </div>
       )
     }
     if (anticipation.anticipationModel === 'automatic_1025') {
-      return `${model}: ${anticipation1025}`
+      return (
+        <div className={style.alignItems}>
+          {`${model}: ${anticipation1025}`}
+          <Spacing size="large" />
+          {helpBtn}
+        </div>
+      )
     }
     if (anticipation.anticipationModel === 'automatic_dx') {
-      return `${model}: ${anticipationDx}`
+      return (
+        <div className={style.alignItems}>
+          {`${model}: ${anticipationDx}`}
+          <Spacing size="large" />
+          {helpBtn}
+        </div>
+      )
     }
-    return null
+    return helpBtn
   }
 
   renderTransferSub () {
@@ -248,6 +274,14 @@ class RecipientDetailConfig extends Component {
             t={t}
           />
         </RecipientItem>
+        <HelpModal
+          isOpen={openModal}
+          onExit={this.closeHelpModal}
+          title={t('pages.recipient_detail.help_title')}
+          t={t}
+        >
+          {'TextoTextoTextoTextoTexto'}
+        </HelpModal>
       </Fragment>
     )
   }
