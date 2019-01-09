@@ -1034,5 +1034,7 @@
   "password_strength": "Força",
   "password_rules_title": "Sua senha precisa ter:",
   "password_rules_min_length": "No mínimo {{length}} caracteres",
-  "password_rules_max_length": "No máximo {{length}} caracteres"
+  "password_rules_max_length": "No máximo {{length}} caracteres",
+  "transactions_export_table": "Exportar tabela",
+  "transactions_export_to": "Exportar para:"
 }
