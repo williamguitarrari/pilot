@@ -28,6 +28,7 @@ class RecipientDetailConfig extends Component {
       anticipation: props.anticipation,
       transfer: props.transfer,
       bankAccount: props.bankAccount,
+      openModal: false,
     }
 
     this.handleCollapse = this.handleCollapse.bind(this)
@@ -40,6 +41,8 @@ class RecipientDetailConfig extends Component {
     this.onSaveAnticipation = this.onSaveAnticipation.bind(this)
     this.onSaveTransfer = this.onSaveTransfer.bind(this)
     this.onSaveBankAccount = this.onSaveBankAccount.bind(this)
+    this.openHelpModal = this.openHelpModal.bind(this)
+    this.closeHelpModal = this.closeHelpModal.bind(this)
   }
 
   onChangeAnticipationHandler (anticipation) {
@@ -103,6 +106,14 @@ class RecipientDetailConfig extends Component {
         expanded: {},
       })
     )
+  }
+
+  openHelpModal () {
+    this.setState({ openModal: true })
+  }
+
+  closeHelpModal () {
+    this.setState({ openModal: false })
   }
 
   handleCollapse (id) {
@@ -221,6 +232,7 @@ class RecipientDetailConfig extends Component {
       anticipation,
       transfer,
       bankAccount,
+      openModal,
     } = this.state
     return (
       <Fragment>

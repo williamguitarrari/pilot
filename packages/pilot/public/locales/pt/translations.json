@@ -408,7 +408,19 @@
       "title": "Detalhes do Recebedor",
       "recipient_information": "Dados cadastrais do recebedor",
       "partner_information": "Dados cadastrais dos sócios",
-      "metadata": "Metadados"
+      "metadata": "Metadados",
+      "help": "Dúvidas?",
+      "help_title": "Dúvidas sobre os modelos de antecipação?",
+      "help_subtitle": "Veja abaixo uma explicação sobre todos os modelos de antecipação disponíveis",
+      "help_manual_title": "MANUAL POR VOLUME",
+      "help_manual_text": "Lorem ipsum dolor sit amet, et pri corrumpit dignissim, ex idque epicurei eum, laudem eripuit eu mei. Eos dolorem corrumpit vulputate ne. Usu ei simul solet omittam, dicant omnium labitur sit ne. Rebum detracto intellegat cu pri. Sumo torquatos sea ei, eum dicit sanctus veritus te, nam wisi vocibus convenire in.",
+      "help_automatic_title": "AUTOMÁTICO POR VOLUME",
+      "help_automatic_text": "Lorem ipsum dolor sit amet, et pri corrumpit dignissim, ex idque epicurei eum, laudem eripuit eu mei. Eos dolorem corrumpit vulputate ne. Usu ei simul solet omittam, dicant omnium labitur sit ne. Rebum detracto intellegat cu pri. Sumo torquatos sea ei, eum dicit sanctus veritus te, nam wisi vocibus convenire in.",
+      "help_1025_title": "ANTECIPAÇÃO 1025",
+      "help_1025_text": "Lorem ipsum dolor sit amet, et pri corrumpit dignissim, ex idque epicurei eum, laudem eripuit eu mei. Eos dolorem corrumpit vulputate ne. Usu ei simul solet omittam, dicant omnium labitur sit ne. Rebum detracto intellegat cu pri. Sumo torquatos sea ei, eum dicit sanctus veritus te, nam wisi vocibus convenire in.",
+      "help_dx_title": "ANTECIPAÇÃO DX",
+      "help_dx_text": "Lorem ipsum dolor sit amet, et pri corrumpit dignissim, ex idque epicurei eum, laudem eripuit eu mei. Eos dolorem corrumpit vulputate ne. Usu ei simul solet omittam, dicant omnium labitur sit ne. Rebum detracto intellegat cu pri. Sumo torquatos sea ei, eum dicit sanctus veritus te, nam wisi vocibus convenire in.",
+      "help_exit": "Sair"
     },
     "add_recipient": {
       "add": "Adicionar",
@@ -454,7 +466,6 @@
       "create_recipient": "Criar recebedor",
       "daily": "Diária",
       "data": "Dados",
-      "doubt": "Dúvidas?",
       "edit": "Editar",
       "effective_transfer_day": "Dia em que a transferência ocorrerá",
       "email": "E-mail",
