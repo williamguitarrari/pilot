@@ -1,0 +1,7 @@
+.alert {
+  background: #BA55D3;
+  border: none;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  /* display: none; */
+}

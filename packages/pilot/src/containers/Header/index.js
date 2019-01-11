@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import {
   HashRouter,
@@ -22,88 +22,123 @@ import {
 
 import IconFeedback from 'emblematic-icons/svg/Feedback24.svg'
 
+
+import SaveAlert from '../../components/SaveAlert'
+
 import style from './style.css'
 
-const HeaderContainer = ({
-  onBack,
-  onLogout,
-  onSettings,
-  routes,
-  t,
-  user,
-}) => (
-  <Header>
-    <HashRouter>
-      <Switch>
-        {routes.map(({
-          exact,
-          icon: Icon,
-          path,
-          title,
-        }) => (
-          <Route
-            exact={exact}
-            key={path}
-            path={path}
-            render={() => (
-              <Fragment>
-                {!Icon && <HeaderBackButton onClick={onBack} />}
-                {Icon && <Icon width={16} height={16} />}
-                <HeaderTitle>{t(title)}</HeaderTitle>
-              </Fragment>
-            )}
-          />
-        ))}
-      </Switch>
-    </HashRouter>
+class HeaderContainer extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      seeAlert: false,
+    }
 
-    <HeaderContent>
-      <Popover
-        content={
-          <PopoverContent>
-            <small>
-              <strong className={style.feedback}>{t('feedback_text_emphasis')}</strong>
-              {t('feedback_text')}&nbsp;
-              <a href="mailto:nova@pagar.me">{t('feedback_text_email')}</a>.
-            </small>
-          </PopoverContent>
-        }
-        placement="bottomEnd"
-      >
-        <Button
-          fill="clean"
-          icon={<IconFeedback color="#37cc9a" />}
+    this.openAlert = this.openAlert.bind(this)
+    this.closeAlert = this.closeAlert.bind(this)
+  }
+
+  openAlert () {
+    this.state({ seeAlert: true })
+  }
+
+  closeAlert () {
+    this.state({ seeAlert: false })
+  }
+
+
+  render () {
+    const {
+      onBack,
+      onLogout,
+      onSettings,
+      routes,
+      t,
+      user,
+    } = this.props
+
+    const { seeAlert } = this.state
+    return (
+      <Fragment>
+        <Header>
+          <HashRouter>
+            <Switch>
+              {routes.map(({
+                exact,
+                icon: Icon,
+                path,
+                title,
+              }) => (
+                <Route
+                  exact={exact}
+                  key={path}
+                  path={path}
+                  render={() => (
+                    <Fragment>
+                      {!Icon && <HeaderBackButton onClick={onBack} />}
+                      {Icon && <Icon width={16} height={16} />}
+                      <HeaderTitle>{t(title)}</HeaderTitle>
+                    </Fragment>
+                  )}
+                />
+              ))}
+            </Switch>
+          </HashRouter>
+
+          <HeaderContent>
+            <Popover
+              content={
+                <PopoverContent>
+                  <small>
+                    <strong className={style.feedback}>{t('feedback_text_emphasis')}</strong>
+                    {t('feedback_text')}&nbsp;
+                    <a href="mailto:nova@pagar.me">{t('feedback_text_email')}</a>.
+                  </small>
+                </PopoverContent>
+              }
+              placement="bottomEnd"
+            >
+              <Button
+                fill="clean"
+                icon={<IconFeedback color="#37cc9a" />}
+              />
+            </Popover>
+
+            <Spacing size="small" />
+
+            <HeaderMenu
+              title={
+                <Fragment>
+                  <Avatar alt={user.name} />
+                  <span>{user.name}</span>
+                </Fragment>
+              }
+            >
+              <PopoverContent>
+                <strong>
+                  {user.name}
+                </strong>
+                <small>
+                  {t(`models.user.permission.${user.permission}`)}
+                </small>
+              </PopoverContent>
+              <PopoverMenu
+                items={[
+                  { title: t('header.account.settings'), action: onSettings },
+                  { title: t('header.account.logout'), action: onLogout },
+                ]}
+              />
+            </HeaderMenu>
+          </HeaderContent>
+        </Header>
+        <SaveAlert
+          isOpen={seeAlert}
+          t={t}
         />
-      </Popover>
-
-      <Spacing size="small" />
-
-      <HeaderMenu
-        title={
-          <Fragment>
-            <Avatar alt={user.name} />
-            <span>{user.name}</span>
-          </Fragment>
-        }
-      >
-        <PopoverContent>
-          <strong>
-            {user.name}
-          </strong>
-          <small>
-            {t(`models.user.permission.${user.permission}`)}
-          </small>
-        </PopoverContent>
-        <PopoverMenu
-          items={[
-            { title: t('header.account.settings'), action: onSettings },
-            { title: t('header.account.logout'), action: onLogout },
-          ]}
-        />
-      </HeaderMenu>
-    </HeaderContent>
-  </Header>
-)
+      </Fragment>
+    )
+  }
+}
 
 HeaderContainer.propTypes = {
   onBack: PropTypes.func.isRequired,
