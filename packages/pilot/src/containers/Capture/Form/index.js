@@ -117,7 +117,7 @@ const CaptureForm = ({
                 <span className={style.captureWarning}>
                   {t('pages.capture.token_capture_warning')}
                   {' '}
-                  <a href="https://google.com">
+                  <a href="https://docs.pagar.me/v3/docs/captura-manual-de-transa%C3%A7%C3%B5es-criadas-pelo-checkout-pagarme">
                     {t('pages.capture.token_capture_link')}
                   </a>
                 </span>
