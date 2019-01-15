@@ -4,6 +4,11 @@ const status = {
     text: 'Paga',
     acronym: 'P',
   },
+  analyzing: {
+    color: '#0b6e69',
+    text: 'Em análise',
+    acronym: 'EA',
+  },
   authorized: {
     color: '#b6ca2d',
     text: 'Autorizada',
