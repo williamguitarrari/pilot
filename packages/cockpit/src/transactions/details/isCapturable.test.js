@@ -1,4 +1,9 @@
-import { assoc } from 'ramda'
+import {
+  assoc,
+  pipe,
+} from 'ramda'
+import moment from 'moment'
+
 import isCapturable from './isCapturable'
 import { transaction as transactionMock } from './mocks/fromRequests.json'
 
@@ -20,5 +25,25 @@ describe('isCapturable', () => {
   it('should return true if status is authorized', () => {
     const transaction = assoc('status', 'authorized', transactionMock)
     expect(isCapturable(transaction)).toBe(true)
+  })
+
+  it('should return true if authorized with encryption key and valid token', () => {
+    const transaction = pipe(
+      assoc('status', 'authorized'),
+      assoc('referer', 'encryption_key'),
+      assoc('date_created', moment().subtract(4, 'hours').toDate())
+    )(transactionMock)
+
+    expect(isCapturable(transaction)).toBe(true)
+  })
+
+  it('should return false if authorized with encryption key and invalid token', () => {
+    const transaction = pipe(
+      assoc('status', 'authorized'),
+      assoc('referer', 'encryption_key'),
+      assoc('date_created', moment().subtract(5, 'hours').toDate())
+    )(transactionMock)
+
+    expect(isCapturable(transaction)).toBe(false)
   })
 })
