@@ -104,13 +104,7 @@
     "network_error": "Falha de comunicação com o Pagar.me. Verifique seu acesso a internet."
   },
   "validations": {
-    "hasLegalAge": "É preciso ter 18 anos ou mais",
-    "isCep": "Não é um CEP válido",
-    "isCnpj": "Não é um CNPJ válido",
-    "isCpf": "Não é um CPF válido",
-    "isDate": "Não é uma data válida",
-    "isEmail": "Não é um e-mail válido",
-    "isPhone": "Não é um telefone válido"
+    "isEmail": "Não é um e-mail válido"
   },
   "password_recovery": {
     "confirmation": "Em instantes você receberá um e-mail com as instruções para a redefinição de sua senha.",
@@ -601,112 +595,6 @@
       "result": "Conclusão",
       "success": "A transação foi reprocessada com sucesso",
       "title": "Reprocessar transação"
-    },
-    "self_register": {
-      "already_sell": {
-        "no": "Não",
-        "question": "Você já vende pela internet?",
-        "yes": "Sim"
-      },
-      "business_detail_present": {
-        "continue": "Continuar",
-        "form_title": "Detalhes do seu negócio",
-        "which_platform": "Qual plataforma você usa?",
-        "which_segment": "Em qual segmento você atua?"
-      },
-      "business_detail_future": {
-        "continue": "Continuar",
-        "form_title": "Detalhes do seu negócio",
-        "when_will_open_options": {
-          "is_ready": "Meu negócio já está pronto",
-          "is_still_a_project": "Ainda é um projeto",
-          "will_start_in_30_days": "Pretendo iniciar as vendas daqui a 30 dias",
-          "will_start_in_60_days": "Pretendo iniciar as vendas daqui a 60 dias"
-        },
-        "when_will_open": "Quando pretende abrir uma loja virtual ou negócio digital?",
-        "which_segment": "Em qual segmento você atuará?"
-      },
-      "check_cnpj": {
-        "description_part_1": "Todas as lojas virtuais precisam apresentar número de CPF ou CNPJ em seu rodapé.",
-        "description_part_2": "Isso confere segurança e credibilidade aos seus clientes, além de ser obrigatório de acordo com o Decreto Federal nº 7962/13.",
-        "no": "Não",
-        "question": "Sua empresa tem CNPJ ativo?",
-        "yes": "Sim"
-      },
-      "contract": {
-        "agree": "Concordo",
-        "form_title": "Termos de aceite"
-      },
-      "company_data": {
-        "commercial_phone": "Telefone comercial (com DDD)",
-        "continue": "Continuar",
-        "form_title": "Dados da Empresa",
-        "legal_name": "Razão social",
-        "site": "Site (opcional)",
-        "trade_name": "Nome fantasia"
-      },
-      "create_account": {
-        "attraction": "Crie sua conta e aceite pagamentos online hoje.",
-        "confirm_password": "Confirmar a senha",
-        "continue": "Continuar",
-        "email": "E-mail",
-        "password": "Senha",
-        "welcome": "Boas-vindas ao Pagar.me!"
-      },
-      "different_passwords_error": "As senhas não conferem",
-      "number_error": "Deve ser um número",
-      "partner_address": {
-        "cep": "CEP",
-        "city": "Cidade",
-        "complement": "Complemento (opcional)",
-        "continue": "Continuar",
-        "form_title": "Endereço do Proprietário",
-        "neighborhood": "Bairro",
-        "number": "Número",
-        "state": "Estado",
-        "street": "Rua"
-      },
-      "partner_data": {
-        "birth_date": "Data de nascimento",
-        "continue": "Continuar",
-        "cpf": "CPF",
-        "form_title": "Dados do Proprietário",
-        "monther_name": "Nome da mãe",
-        "partner_name": "Nome",
-        "phone": "Telefone (com DDD)"
-      },
-      "refused_account": {
-        "description": "Sua empresa não foi aprovada na análise e não poderá usar o Pagar.me",
-        "title": "Ops..."
-      },
-      "required_error": "Campo obrigatório",
-      "return": "Voltar",
-      "sales_amount": {
-        "question_present": "Qual o seu volume de vendas atual?",
-        "question_future": "Qual o seu volume de vendas esperado?",
-        "from0to20": "R$ 0 a R$ 20 mil",
-        "from20to30": "R$ 20 mil a R$ 30 mil",
-        "from30to50": "R$ 30 mil a R$ 50 mil",
-        "higher": "Acima de R$ 50 mil"
-      },
-      "type_cnpj": {
-        "cnpj": "CNPJ",
-        "continue": "Continuar",
-        "description_part_1": "Todas as lojas virtuais precisam apresentar número de CPF ou CNPJ em seu rodapé.",
-        "description_part_2": "Isso confere segurança e credibilidade aos seus clientes, além de ser obrigatório de acordo com o Decreto Federal nº 7962/13.",
-        "question": "Sua empresa tem CNPJ ativo?"
-      },
-      "waiting_risk_analysis": {
-        "message_email_sent": "Dentro de 30 minutos você receberá um e-mail confirmando a sua conta. O e-mail será enviado para",
-        "message_support": "Caso você não receba nenhum e-mail de confirmação em 24 horas, por favor nos avise em relacionamento@pagar.me",
-        "we_are_almost_finish": "Estamos quase lá!"
-      },
-      "without_cnpj": {
-        "description_part_1": "O CNPJ é obrigatório para usar o Pagar.me hoje.",
-        "description_part_2": "Obrigado pelo interesse, estamos nos aprimorando para poder atendê-lo em breve.",
-        "go_to_start_page": "Ir para a página inicial",
-        "what_a_pity": "Que pena!"
-      }
     },
     "sidebar": {
       "anticipation": "Antecipar",

@@ -5,7 +5,6 @@ import qs from 'qs'
 import {
   Route,
   withRouter,
-  Switch,
 } from 'react-router-dom'
 
 import { connect } from 'react-redux'
@@ -15,7 +14,6 @@ import { requestLogin } from './Account/actions'
 
 import Account from './Account'
 import LoggedArea from './LoggedArea'
-import SelfRegister from './SelfRegister'
 
 import environment from '../environment'
 
@@ -87,16 +85,9 @@ class Root extends Component {
     }
 
     if (!client) {
-      if (localStorage.getItem('feature_flag_self_register') === 'true') {
-        return (
-          <Switch>
-            <Route path="/account/register" component={SelfRegister} />
-            <Route path="/account" component={Account} />
-          </Switch>
-        )
-      }
-
-      return <Route path="/account" component={Account} />
+      return (
+        <Route path="/account" component={Account} />
+      )
     }
 
     if (user && startsWith('/account/login', path)) {
