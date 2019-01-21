@@ -11,6 +11,7 @@ import { connect } from 'react-redux'
 import { compose, pipe, startsWith, tail } from 'ramda'
 
 import { requestLogin } from './Account/actions'
+import { inactiveCompanyLogin } from '../vendor/googleTagManager'
 
 import Account from './Account'
 import LoggedArea from './LoggedArea'
@@ -53,6 +54,10 @@ class Root extends Component {
 
     const parsedQueryString = parseQueryString(queryString)
     const sessionId = getSessionId(this.props, parsedQueryString)
+
+    if (!client && !sessionId) {
+      inactiveCompanyLogin()
+    }
 
     if (!client && sessionId) {
       this.props.requestLogin({ session_id: sessionId, environment })

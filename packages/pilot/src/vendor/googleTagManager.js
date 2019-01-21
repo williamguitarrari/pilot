@@ -32,3 +32,26 @@ export const setCompany = (id, name) => {
     })
   }
 }
+
+/**
+ * Triggers inactiveCompanyLogin event
+ */
+export const inactiveCompanyLogin = () => {
+  if (hasProperty(window.dataLayer)) {
+    window.dataLayer.push({
+      event: 'inactiveCompanyLogin',
+    })
+  }
+}
+
+/**
+ * Trigger activeCompanyLogin event
+ */
+
+export const activeCompanyLogin = () => {
+  if (hasProperty(window.dataLayer)) {
+    window.dataLayer.push({
+      event: 'activeCompanyLogin',
+    })
+  }
+}

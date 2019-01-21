@@ -24,6 +24,7 @@ import {
 } from '.'
 
 import { WITHDRAW_RECEIVE } from '../../Withdraw/actions'
+import { activeCompanyLogin, inactiveCompanyLogin } from '../../../vendor/googleTagManager'
 
 const getRecipientId = pathOr(null, ['account', 'company', 'default_recipient_id', env])
 
@@ -82,7 +83,12 @@ const companyEpic = (action$, store) =>
         return
       }
 
-      const { id, name } = payload
+      const {
+        id,
+        name,
+        status,
+      } = payload
+
       const {
         account: {
           user: {
@@ -92,6 +98,12 @@ const companyEpic = (action$, store) =>
       } = store.getState()
 
       setCompany(id, name, userId)
+
+      if (status === 'active') {
+        activeCompanyLogin()
+      } else {
+        inactiveCompanyLogin()
+      }
     })
 
 const recipientBalanceEpic = (action$, store) =>
