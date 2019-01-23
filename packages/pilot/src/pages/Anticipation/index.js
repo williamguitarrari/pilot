@@ -5,23 +5,25 @@ import { withRouter } from 'react-router-dom'
 import {
   allPass,
   always,
-  apply,
   applySpec,
+  both,
   compose,
   cond,
   contains,
   curry,
+  either,
   equals,
+  gt,
   head,
+  identity,
+  ifElse,
   isNil,
-  juxt,
   map,
   partial,
   path,
   pathOr,
   pipe,
   prop,
-  subtract,
 } from 'ramda'
 import { translate } from 'react-i18next'
 import moment from 'moment'
@@ -58,18 +60,18 @@ const getAnticipationLimits = (client, {
 )
 
 const calculateLimits = propName => pipe(
-  prop(propName),
-  juxt([
-    prop('amount'),
-    prop('anticipation_fee'),
-    prop('fee'),
-    prop('fraud_coverage_fee'),
-  ]),
-  apply(subtract)
+  path([propName, 'amount'])
 )
 
 const calculateMaxLimit = calculateLimits('maximum')
-const calculateMinLimit = calculateLimits('minimum')
+const calculateMinLimit = pipe(
+  calculateLimits('minimum'),
+  ifElse(
+    gt(100),
+    () => 100,
+    identity
+  )
+)
 
 const createBulk = (client, {
   automaticTransfer,
@@ -181,12 +183,27 @@ const getErrorMessage = pipe(
   prop('message')
 )
 
-const isPresetOrFuture = currenteDay => date =>
-  currenteDay.isSameOrBefore(date)
+const isPresent = date =>
+  date.isSame(moment(), 'day')
+
+const isFuture = date =>
+  date.isAfter(moment())
+
+const isBefore11AM = () =>
+  moment()
+    .isBefore(
+      moment()
+        .hours(11).minutes(0).seconds(0)
+    )
 
 const isValidDay = (calendar, client) => allPass([
-  date => date && date.isValid(),
-  isPresetOrFuture(moment()),
+  either(
+    both(
+      isPresent,
+      isBefore11AM
+    ),
+    isFuture
+  ),
   partial(client.business.isBusinessDay, [calendar]),
 ])
 
@@ -202,6 +219,7 @@ const initialState = {
   bulkId: null,
   calendar: {},
   currentStep: stepsId.data,
+  error: null,
   feesValues: {
     anticipation: 0,
     fraud: 0,
@@ -472,6 +490,7 @@ class Anticipation extends Component {
       {
         error: null,
         isAutomaticTransfer,
+        transferCost: isAutomaticTransfer ? this.getTransferCost() : 0,
         paymentDate: date,
         recalculationNeeded: false,
         requestedAmount: requested,
@@ -595,15 +614,15 @@ class Anticipation extends Component {
         amount,
         anticipation_fee: anticipationFee,
         fee,
-        fraud_coverage_fee: fraudCovarageFee,
+        fraud_coverage_fee: fraudCoverageFee,
         status,
       }) => {
         this.setState({
-          approximateRequested: amount - fee,
+          approximateRequested: amount,
           bulkAnticipationStatus: status,
           feesValues: {
             anticipation: anticipationFee,
-            fraud: fraudCovarageFee,
+            fraud: fraudCoverageFee,
             otherFee: fee,
           },
           loading: false,
@@ -681,7 +700,7 @@ class Anticipation extends Component {
         status,
       }) => {
         this.setState({
-          approximateRequested: amount - fee,
+          approximateRequested: amount,
           bulkAnticipationStatus: status,
           bulkId: id,
           error: null,
@@ -709,6 +728,7 @@ class Anticipation extends Component {
       feesValues: {
         anticipation,
         fraud,
+        otherFee,
       },
       isAutomaticTransfer,
       limits: {
@@ -731,7 +751,7 @@ class Anticipation extends Component {
       t,
     } = this.props
 
-    const totalCost = -(anticipation + fraud)
+    const totalCost = -(anticipation + fraud + otherFee)
     const amount = approximateRequested + totalCost + transferCost
 
     if (businessCalendarError) {

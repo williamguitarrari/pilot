@@ -50,13 +50,19 @@ class AnticipationFormContainer extends Component {
     this.handleCalculateSubmit = this.handleCalculateSubmit.bind(this)
   }
 
-  componentWillReceiveProps ({ date }) {
+  componentWillReceiveProps ({ amount, date }) {
     if (date && !date.isSame(this.state.dates.start, 'day')) {
       this.setState({
         dates: {
           start: date,
           end: date,
         },
+      })
+    }
+
+    if (amount < 0) {
+      this.setState({
+        hasErrors: true,
       })
     }
   }
@@ -241,7 +247,7 @@ class AnticipationFormContainer extends Component {
                         align="end"
                         amount={amount}
                         amountSize="huge"
-                        color={colors.amount}
+                        color={amount > 0 ? colors.amount : colors.cost}
                         title={
                           <div className={style.titleInfo}>
                             {renderInfo(
