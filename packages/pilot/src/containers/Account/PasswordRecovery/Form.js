@@ -6,40 +6,55 @@ import {
   FormInput,
 } from 'former-kit'
 
+import isEmail from '../../../validation/email'
+
 import styles from '../style.css'
 
 const PasswordRecoveryForm = ({
-  onSubmit,
+  base,
+  errors,
+  loading,
   onBackToLogin,
+  onSubmit,
   t,
 }) => (
   <Form
-    data={{
-      email: '',
-    }}
+    className={styles.resetPassword}
+    errors={errors}
     onSubmit={onSubmit}
-    className={styles.primaryContent}
+    validation={{
+      email: isEmail(t('invalid_email')),
+    }}
   >
     <div className={styles.login}>
-      <p className={styles.paragraph}>
+      <span className={styles.recoveryCall}>
         {t('password_recovery.recovery_call')}
-      </p>
+      </span>
       <FormInput
+        base={base}
+        className={styles.input}
+        disabled={loading}
         label={t('email')}
         name="email"
+        type="email"
       />
     </div>
     <div className={styles.actions}>
       <div className={styles.hugeButton}>
         <Button
-          type="submit"
-          size="huge"
+          disabled={loading}
           fill="gradient"
+          size="huge"
+          type="submit"
         >
           {t('password_recovery.recovery_action')}
         </Button>
       </div>
-      <button role="link" onClick={onBackToLogin}>
+      <button
+        disabled={loading}
+        onClick={onBackToLogin}
+        role="link"
+      >
         {t('back_login_action')}
       </button>
     </div>
@@ -47,9 +62,19 @@ const PasswordRecoveryForm = ({
 )
 
 PasswordRecoveryForm.propTypes = {
+  base: PropTypes.oneOf(['dark', 'light']).isRequired,
+  errors: PropTypes.shape({
+    email: PropTypes.string,
+  }),
+  loading: PropTypes.bool,
   onBackToLogin: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
+}
+
+PasswordRecoveryForm.defaultProps = {
+  errors: null,
+  loading: false,
 }
 
 export default PasswordRecoveryForm

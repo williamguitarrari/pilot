@@ -33,26 +33,15 @@ import {
   BoletoRefund,
   CreditCardRefund,
 } from './Refund'
+import Capture from './Capture'
+import {
+  CaptureFormExample,
+  FixedCaptureFormExample,
+} from './Capture/Form'
+import CaptureResult from './Capture/Result'
 import Reprocess from './Reprocess'
 import ReprocessForm from './Reprocess/Form'
 import ReprocessResult from './Reprocess/Result'
-import {
-  SelfRegisterCreateAccount,
-  SelfRegisterCheckCNPJ,
-  SelfRegisterTypeCNPJ,
-  SelfRegisterWithoutCNPJ,
-  SelfRegisterCompanyData,
-  SelfRegisterPartnerData,
-  SelfRegisterPartnerAddress,
-  SelfRegisterAlreadySell,
-  SelfRegisterBusinessDetailPresent,
-  SelfRegisterBusinessDetailFuture,
-  SelfRegisterSalesAmountPresent,
-  SelfRegisterSalesAmountFuture,
-  SelfRegisterContract,
-  SelfRegisterWaitingRiskAnalysis,
-  SelfRegisterRefusedAccount,
-} from './SelfRegister'
 import Withdraw from './Withdraw'
 import WithdrawConfirmation from './Withdraw/Confirmation'
 import WithdrawForm from './Withdraw/Form'
@@ -145,6 +134,49 @@ storiesOf('Containers|Page containers', module)
   .add('Balance', () => (
     <Balance />
   ))
+  .add('Capture form', () => (
+    <CaptureFormExample />
+  ))
+  .add('Capture form with fixed amount', () => (
+    <FixedCaptureFormExample />
+  ))
+  .add('Capture confirmation', () => (
+    <CaptureResult />
+  ))
+  .add('Capture step identification', () => (
+    <Capture
+      stepStatus={{
+        identification: 'current',
+        confirmation: 'pending',
+      }}
+    />
+  ))
+  .add('Capture step identification (token)', () => (
+    <Capture
+      isFromCheckout
+      stepStatus={{
+        identificaiton: 'current',
+        confirmation: 'pending',
+      }}
+    />
+  ))
+  .add('Capture step confirmation', () => (
+    <Capture
+      stepStatus={{
+        identification: 'success',
+        confirmation: 'current',
+      }}
+    />
+  ))
+  .add('Capture step confirmation error', () => (
+    <Capture
+      stepStatus={{
+        identification: 'success',
+        confirmation: 'error',
+      }}
+      statusMessage="An error ocurred!"
+    />
+  ))
   .add('Reprocess form', () => (
     <ReprocessForm />
   ))
@@ -177,51 +209,6 @@ storiesOf('Containers|Page containers', module)
         result: 'error',
       }}
     />
-  ))
-  .add('Self Register Create Account', () => (
-    <SelfRegisterCreateAccount />
-  ))
-  .add('Self Register Check CNPJ', () => (
-    <SelfRegisterCheckCNPJ />
-  ))
-  .add('Self Register Type CNPJ', () => (
-    <SelfRegisterTypeCNPJ />
-  ))
-  .add('Self Register Without CNPJ', () => (
-    <SelfRegisterWithoutCNPJ />
-  ))
-  .add('Self Register Company Data', () => (
-    <SelfRegisterCompanyData />
-  ))
-  .add('Self Register Partnet Data', () => (
-    <SelfRegisterPartnerData />
-  ))
-  .add('Self Register Partnet Address', () => (
-    <SelfRegisterPartnerAddress />
-  ))
-  .add('Self Register Already Sell', () => (
-    <SelfRegisterAlreadySell />
-  ))
-  .add('Self Register Business Detail Present', () => (
-    <SelfRegisterBusinessDetailPresent />
-  ))
-  .add('Self Register Business Detail Future', () => (
-    <SelfRegisterBusinessDetailFuture />
-  ))
-  .add('Self Register Sales Amount Present', () => (
-    <SelfRegisterSalesAmountPresent />
-  ))
-  .add('Self Register Sales Amount Future', () => (
-    <SelfRegisterSalesAmountFuture />
-  ))
-  .add('Self Register Contract', () => (
-    <SelfRegisterContract />
-  ))
-  .add('Self Register Risk Analysis', () => (
-    <SelfRegisterWaitingRiskAnalysis />
-  ))
-  .add('Self Register Refused Account', () => (
-    <SelfRegisterRefusedAccount />
   ))
   .add('Withdraw', () => (
     <Withdraw />

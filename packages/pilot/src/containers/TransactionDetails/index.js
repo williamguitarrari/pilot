@@ -36,13 +36,14 @@ import {
   CardTitle,
   Col,
   Grid,
-  Row,
   Legend,
+  Row,
 } from 'former-kit'
 import IconInfo from 'emblematic-icons/svg/Info32.svg'
 import IconCheck from 'emblematic-icons/svg/Check24.svg'
 import IconClearClose from 'emblematic-icons/svg/ClearClose24.svg'
 import IconReverse from 'emblematic-icons/svg/Reverse24.svg'
+import CaptureIcon from 'emblematic-icons/svg/Wallet24.svg'
 import ReprocessIcon from 'emblematic-icons/svg/Reprocess24.svg'
 import currencyFormatter from '../../formatters/currency'
 import CustomerCard from '../../components/CustomerCard'
@@ -219,6 +220,21 @@ const validateNextTransactionRedirect = (props, propName) => {
   }
 }
 
+const validateCaptureFunction = (props, propName) => {
+  if (propName === 'onCapture') {
+    const {
+      onCapture,
+      transaction: {
+        capabilities,
+      },
+    } = props
+
+    if (capabilities && capabilities.capturable && isNil(onCapture)) {
+      throw new Error('The prop onCapture must be a function when transaction.capabilities.capturable is true')
+    }
+  }
+}
+
 const validateRefundFunction = (props, propName) => {
   if (propName === 'onRefund') {
     const {
@@ -271,12 +287,19 @@ class TransactionDetails extends Component {
       onManualReviewRefuse,
       onManualReviewApprove,
       permissions,
+      onCapture,
       onRefund,
       onReprocess,
       transaction: {
         capabilities,
       },
     } = this.props
+
+    const onCaptureAction = {
+      icon: <CaptureIcon width={12} height={12} />,
+      onClick: onCapture,
+      title: 'Capturar',
+    }
 
     const onReprocessAction = {
       icon: <ReprocessIcon width={12} height={12} />,
@@ -310,6 +333,11 @@ class TransactionDetails extends Component {
 
     const detailsHeadActions = pipe(
       juxt([
+        ifElse(
+          propEq('capturable', true),
+          always(onCaptureAction),
+          always(null)
+        ),
         ifElse(
           both(
             propEq('reprocessable', true),
@@ -422,17 +450,27 @@ class TransactionDetails extends Component {
     const { totalDisplayLabels } = this.props
 
     return (
-      <span>
+      <div className={style.subtitle}>
         <div>
-          {totalDisplayLabels.mdr}
+          {totalDisplayLabels.mdr &&
+            <span>
+              {totalDisplayLabels.mdr}
+            </span>
+          }
+          {totalDisplayLabels.cost &&
+            <span>
+              {totalDisplayLabels.cost}
+            </span>
+          }
         </div>
         <div>
-          {totalDisplayLabels.cost}
+          {totalDisplayLabels.refund &&
+            <span>
+              {totalDisplayLabels.refund}
+            </span>
+          }
         </div>
-        <div>
-          {totalDisplayLabels.refund}
-        </div>
-      </span>
+      </div>
     )
   }
 
@@ -648,9 +686,15 @@ class TransactionDetails extends Component {
               <CardContent className={style.content}>
                 <TotalDisplay
                   amount={payment.paid_amount}
+                  amountSize="huge"
                   color="#37cc9a"
-                  subtitle={totalDisplayLabels.captured_at}
+                  subtitle={
+                    <div className={style.subtitle}>
+                      {totalDisplayLabels.captured_at}
+                    </div>
+                  }
                   title={totalDisplayLabels.paid_amount}
+                  titleSize="medium"
                 />
               </CardContent>
             </Card>
@@ -671,9 +715,15 @@ class TransactionDetails extends Component {
                       payment.mdr_amount,
                     ])
                   }
+                  amountSize="huge"
                   color="#ff796f"
-                  subtitle={this.renderOutAmountSubTitle()}
+                  subtitle={
+                    <div className={style.subtitle}>
+                      {this.renderOutAmountSubTitle()}
+                    </div>
+                  }
                   title={totalDisplayLabels.out_amount}
+                  titleSize="medium"
                 />
               </CardContent>
             </Card>
@@ -688,9 +738,15 @@ class TransactionDetails extends Component {
               <CardContent className={style.content}>
                 <TotalDisplay
                   amount={payment.net_amount}
+                  amountSize="huge"
                   color="#4ca9d7"
-                  subtitle={totalDisplayLabels.receive_date}
+                  subtitle={
+                    <div className={style.subtitle}>
+                      {totalDisplayLabels.receive_date}
+                    </div>
+                  }
                   title={totalDisplayLabels.net_amount}
+                  titleSize="medium"
                 />
               </CardContent>
             </Card>
@@ -724,7 +780,7 @@ class TransactionDetails extends Component {
             tv={9}
           >
             <Grid>
-              {!isEmptyOrNull(recipients) &&
+              {!isEmptyOrNull(recipients) && !isBoletoWaitingPayment(transaction) &&
                 <Row>
                   <Col
                     desk={12}
@@ -864,6 +920,7 @@ TransactionDetails.propTypes = {
     status: PropTypes.string,
   })).isRequired,
   nextTransactionId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  onCapture: validateCaptureFunction,
   onCopyBoletoUrl: PropTypes.func,
   onDismissAlert: PropTypes.func, // eslint-disable-line react/no-unused-prop-types
   onManualReviewApprove: PropTypes.func,
@@ -931,6 +988,7 @@ TransactionDetails.propTypes = {
       url: PropTypes.string,
     }),
     capabilities: PropTypes.shape({
+      capturable: PropTypes.bool,
       reprocessable: PropTypes.bool,
       refundable: PropTypes.bool,
     }),
@@ -1021,6 +1079,7 @@ TransactionDetails.propTypes = {
 
 TransactionDetails.defaultProps = {
   nextTransactionId: null,
+  onCapture: null,
   onCopyBoletoUrl: null,
   onDismissAlert: null,
   onManualReviewApprove: null,

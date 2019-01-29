@@ -4,6 +4,7 @@ import { checkA11y } from '@storybook/addon-a11y'
 
 import BoletoRefundDetails from './BoletoRefundDetails'
 import ConfigurationCardForm from './ConfigurationCardForm'
+import CaptureDetails from './CaptureDetails'
 import CopyButton from './CopyButton'
 import CurrencyInput from './CurrencyInput'
 import CreditCardRefundDetails from './CreditCardRefundDetails'
@@ -31,6 +32,7 @@ import SidebarSummary from './SidebarSummary'
 import Loader from './Loader'
 import Message from './Message'
 import MessageActions from './MessageActions'
+import PasswordInput from './PasswordInput'
 
 storiesOf('Components|Custom components', module)
   .addDecorator(checkA11y)
@@ -44,7 +46,7 @@ storiesOf('Components|Custom components', module)
   .add('Event list', () => <EventList />)
   .add('DataDisplay', () => <DataDisplay />)
   .add('Reprocess details', () => <ReprocessDetails />)
-  .add('TotalDisplay', () => <TotalDisplay />)
+  .add('Capture Details', () => <CaptureDetails />)
   .add('Payment card', () => <PaymentCards />)
   .add('RiskLevel', () => <RiskLevel />)
   .add('TreeView', () => <TreeView />)
@@ -63,3 +65,5 @@ storiesOf('Components|Custom components', module)
   .add('Loader', () => <Loader />)
   .add('Message', () => <Message />)
   .add('Message with actions', () => <MessageActions />)
+  .add('Password Input', () => <PasswordInput />)
+  .add('TotalDisplay', () => <TotalDisplay />)
