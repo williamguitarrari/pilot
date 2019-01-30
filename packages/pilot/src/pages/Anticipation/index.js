@@ -275,6 +275,18 @@ const getStepsStatus = (nextStep, nextStepStatus) => {
   return buildStepsStatus(nextStep)
 }
 
+const getRequestedAmount = (min, max, requested) => {
+  if (requested <= min) {
+    return min
+  }
+
+  if (requested >= max) {
+    return max
+  }
+
+  return requested
+}
+
 class Anticipation extends Component {
   constructor (props) {
     super(props)
@@ -410,13 +422,14 @@ class Anticipation extends Component {
       payment_date: paymentDate,
     })
       .then((response) => {
+        const minValue = calculateMinLimit(response)
         const maxValue = calculateMaxLimit(response)
         this.setState({
           error: null,
           limits: {
             ...response,
             maxValue,
-            minValue: calculateMinLimit(response),
+            minValue,
           },
           requestedAmount: maxValue,
           recalculationNeeded: true,
@@ -456,7 +469,7 @@ class Anticipation extends Component {
       },
     } = this.state
 
-    this.createOrUpdateBulk(minValue)
+    return this.createOrUpdateBulk(minValue)
       .then(this.getAnticipationLimits)
   }
 
@@ -472,9 +485,7 @@ class Anticipation extends Component {
     this.setState(
       {
         paymentDate: start,
-        loading: true,
-      },
-      this.handleLimitsChange
+      }
     )
   }
 
@@ -484,18 +495,28 @@ class Anticipation extends Component {
     requested,
     timeframe,
   }) {
-    this.setState(
-      {
-        error: null,
-        isAutomaticTransfer,
-        transferCost: isAutomaticTransfer ? this.getTransferCost() : 0,
-        paymentDate: date,
-        recalculationNeeded: false,
-        requestedAmount: requested,
-        timeframe,
-      },
-      this.createOrUpdateBulk
-    )
+    this.handleLimitsChange()
+      .then(() => {
+        const {
+          limits: {
+            maxValue,
+            minValue,
+          },
+        } = this.state
+
+        this.setState(
+          {
+            error: null,
+            isAutomaticTransfer,
+            transferCost: isAutomaticTransfer ? this.getTransferCost() : 0,
+            paymentDate: date,
+            recalculationNeeded: false,
+            requestedAmount: getRequestedAmount(minValue, maxValue, requested),
+            timeframe,
+          },
+          this.createOrUpdateBulk
+        )
+      })
   }
 
   createOrUpdateBulk (minValue) {
@@ -615,6 +636,13 @@ class Anticipation extends Component {
         fraud_coverage_fee: fraudCoverageFee,
         status,
       }) => {
+        const {
+          limits: {
+            minValue,
+            maxValue,
+          },
+        } = this.state
+
         this.setState({
           approximateRequested: amount,
           bulkAnticipationStatus: status,
@@ -624,7 +652,7 @@ class Anticipation extends Component {
             otherFee: fee,
           },
           loading: false,
-          requestedAmount: value || requestedAmount,
+          requestedAmount: getRequestedAmount(minValue, maxValue, requestedAmount),
         })
       })
       .catch(pipe(getErrorMessage, error => this.setState({
@@ -697,6 +725,13 @@ class Anticipation extends Component {
         id,
         status,
       }) => {
+        const {
+          limits: {
+            minValue,
+            maxValue,
+          },
+        } = this.state
+
         this.setState({
           approximateRequested: amount,
           bulkAnticipationStatus: status,
@@ -708,7 +743,7 @@ class Anticipation extends Component {
             otherFee: fee,
           },
           loading: false,
-          requestedAmount: value || requestedAmount,
+          requestedAmount: getRequestedAmount(minValue, maxValue, requestedAmount),
         })
       })
       .catch(pipe(getErrorMessage, error => this.setState({
