@@ -464,9 +464,7 @@ class Anticipation extends Component {
     this.setState(
       {
         timeframe,
-        loading: true,
-      },
-      this.handleLimitsChange
+      }
     )
   }
 
