@@ -59,13 +59,13 @@ const getAnticipationLimits = (client, {
     })
 )
 
-const calculateLimits = propName => pipe(
+const getLimitsProp = propName => pipe(
   path([propName, 'amount'])
 )
 
-const calculateMaxLimit = calculateLimits('maximum')
+const calculateMaxLimit = getLimitsProp('maximum')
 const calculateMinLimit = pipe(
-  calculateLimits('minimum'),
+  getLimitsProp('minimum'),
   ifElse(
     gt(100),
     () => 100,
@@ -296,11 +296,12 @@ class Anticipation extends Component {
       bulkId: null,
     }
 
-    this.confirmBulk = this.confirmBulk.bind(this)
-    this.createBulk = this.createBulk.bind(this)
-    this.createOrUpdateBulk = this.createOrUpdateBulk.bind(this)
-    this.destroyBulk = this.destroyBulk.bind(this)
-    this.getAnticipationLimits = this.getAnticipationLimits.bind(this)
+    this.confirmAnticipation = this.confirmAnticipation.bind(this)
+    this.createAnticipation = this.createAnticipation.bind(this)
+    this.createOrUpdateAnticipation = this.createOrUpdateAnticipation.bind(this)
+    this.destroyAnticipation = this.destroyAnticipation.bind(this)
+    this.updateAnticipation = this.updateAnticipation.bind(this)
+    this.calculateLimits = this.calculateLimits.bind(this)
     this.getTransferCost = this.getTransferCost.bind(this)
     this.goTo = this.goTo.bind(this)
     this.goToBalance = this.goToBalance.bind(this)
@@ -310,7 +311,6 @@ class Anticipation extends Component {
     this.handleFormChange = this.handleFormChange.bind(this)
     this.handleLimitsChange = this.handleLimitsChange.bind(this)
     this.handleTimeframeChange = this.handleTimeframeChange.bind(this)
-    this.updateBulk = this.updateBulk.bind(this)
   }
 
   componentDidMount () {
@@ -371,8 +371,8 @@ class Anticipation extends Component {
             .then(buildDeleteBuildingBulkAnticipation(client))
             .then(deletePromises =>
               Promise.all(deletePromises)
-                .then(this.getAnticipationLimits)
-                .then(this.createBulk)
+                .then(this.calculateLimits)
+                .then(this.createAnticipation)
             )
         })
 
@@ -398,48 +398,11 @@ class Anticipation extends Component {
     } = this.props
 
     if (bulkAnticipationStatus !== 'pending') {
-      this.destroyBulk(client, {
+      this.destroyAnticipation(client, {
         bulkId,
         recipientId,
       })
     }
-  }
-
-  getAnticipationLimits () {
-    const {
-      recipient: {
-        id: recipientId,
-      },
-      paymentDate,
-      timeframe,
-    } = this.state
-
-    const { client } = this.props
-
-    return getAnticipationLimits(client, {
-      recipientId,
-      timeframe,
-      payment_date: paymentDate,
-    })
-      .then((response) => {
-        const minValue = calculateMinLimit(response)
-        const maxValue = calculateMaxLimit(response)
-        this.setState({
-          error: null,
-          limits: {
-            ...response,
-            maxValue,
-            minValue,
-          },
-          requestedAmount: maxValue,
-          recalculationNeeded: true,
-          loading: false,
-        })
-      })
-      .catch(pipe(getErrorMessage, error => this.setState({
-        error,
-        loading: false,
-      })))
   }
 
   getTransferCost () {
@@ -462,6 +425,41 @@ class Anticipation extends Component {
     return 0
   }
 
+  calculateLimits () {
+    const {
+      recipient: {
+        id: recipientId,
+      },
+      paymentDate,
+      timeframe,
+    } = this.state
+
+    const { client } = this.props
+
+    return getAnticipationLimits(client, {
+      recipientId,
+      timeframe,
+      payment_date: paymentDate,
+    })
+      .then((response) => {
+        const maxValue = calculateMaxLimit(response)
+        this.setState({
+          error: null,
+          limits: {
+            maxValue,
+            minValue: calculateMinLimit(response),
+          },
+          requestedAmount: maxValue,
+          recalculationNeeded: true,
+          loading: false,
+        })
+      })
+      .catch(pipe(getErrorMessage, error => this.setState({
+        error,
+        loading: false,
+      })))
+  }
+
   handleLimitsChange () {
     const {
       limits: {
@@ -469,8 +467,8 @@ class Anticipation extends Component {
       },
     } = this.state
 
-    return this.createOrUpdateBulk(minValue)
-      .then(this.getAnticipationLimits)
+    return this.createOrUpdateAnticipation(minValue)
+      .then(this.calculateLimits)
   }
 
   handleTimeframeChange (timeframe) {
@@ -495,6 +493,10 @@ class Anticipation extends Component {
     requested,
     timeframe,
   }) {
+    this.setState({
+      loading: true,
+    })
+
     this.handleLimitsChange()
       .then(() => {
         const {
@@ -504,31 +506,53 @@ class Anticipation extends Component {
           },
         } = this.state
 
-        this.setState(
-          {
-            error: null,
-            isAutomaticTransfer,
-            transferCost: isAutomaticTransfer ? this.getTransferCost() : 0,
-            paymentDate: date,
-            recalculationNeeded: false,
-            requestedAmount: getRequestedAmount(minValue, maxValue, requested),
-            timeframe,
-          },
-          this.createOrUpdateBulk
-        )
-      })
+        const requestedAmount = getRequestedAmount(minValue, maxValue, requested)
+
+        this.setState({
+          error: null,
+          isAutomaticTransfer,
+          transferCost: isAutomaticTransfer ? this.getTransferCost() : 0,
+          paymentDate: date,
+          recalculationNeeded: false,
+          requestedAmount,
+          timeframe,
+        })
+
+        this.updateAnticipation(requestedAmount)
+      }).catch(pipe(getErrorMessage, error => this.setState({
+        error,
+        loading: false,
+      })))
   }
 
-  createOrUpdateBulk (minValue) {
+  createOrUpdateAnticipation (minValue) {
     const {
       bulkId,
+      isAutomaticTransfer,
+      paymentDate,
+      recipient: {
+        id: recipientId,
+      },
+      requestedAmount,
+      timeframe,
     } = this.state
 
     if (!bulkId) {
-      return this.createBulk(minValue)
+      return this.createAnticipation(minValue)
     }
 
-    return this.updateBulk(minValue)
+    const {
+      client,
+    } = this.props
+
+    return updateBulk(client, {
+      automaticTransfer: isAutomaticTransfer,
+      bulkId,
+      paymentDate,
+      recipientId,
+      requestedAmount: minValue || requestedAmount,
+      timeframe,
+    })
   }
 
   handleConfirmationConfirm (password) {
@@ -553,7 +577,7 @@ class Anticipation extends Component {
             error: '',
           })
 
-          this.confirmBulk()
+          this.confirmAnticipation()
         } else {
           this.setState({
             loading: false,
@@ -590,7 +614,7 @@ class Anticipation extends Component {
     history.push(`/balance/${id}`)
   }
 
-  destroyBulk () {
+  destroyAnticipation () {
     const {
       bulkId,
     } = this.state
@@ -605,7 +629,7 @@ class Anticipation extends Component {
       .catch((error) => { console.warn(error) }) //eslint-disable-line
   }
 
-  updateBulk (value) {
+  updateAnticipation (value) {
     const {
       bulkId,
       isAutomaticTransfer,
@@ -661,7 +685,7 @@ class Anticipation extends Component {
       })))
   }
 
-  confirmBulk () {
+  confirmAnticipation () {
     const {
       bulkId,
       recipient: {
@@ -695,7 +719,7 @@ class Anticipation extends Component {
       })))
   }
 
-  createBulk (value) {
+  createAnticipation (value) {
     const {
       isAutomaticTransfer,
       paymentDate,
