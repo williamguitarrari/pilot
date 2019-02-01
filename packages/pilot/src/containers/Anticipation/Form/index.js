@@ -39,10 +39,6 @@ class AnticipationFormContainer extends Component {
     super(props)
 
     this.state = {
-      dates: {
-        start: props.date,
-        end: props.date,
-      },
       hasErrors: false,
     }
 
@@ -50,25 +46,7 @@ class AnticipationFormContainer extends Component {
     this.handleCalculateSubmit = this.handleCalculateSubmit.bind(this)
   }
 
-  componentWillReceiveProps ({ amount, date }) {
-    if (date && !date.isSame(this.state.dates.start, 'day')) {
-      this.setState({
-        dates: {
-          start: date,
-          end: date,
-        },
-      })
-    }
-
-    if (amount < 0) {
-      this.setState({
-        hasErrors: true,
-      })
-    }
-  }
-
   handleDateChange (dates) {
-    this.setState({ dates })
     this.props.onDateChange(dates)
   }
 
@@ -99,6 +77,7 @@ class AnticipationFormContainer extends Component {
       amount,
       approximateRequested,
       cost,
+      date,
       error,
       isAutomaticTransfer,
       isValidDay,
@@ -116,7 +95,6 @@ class AnticipationFormContainer extends Component {
       transferCost,
     } = this.props
     const {
-      dates,
       hasErrors,
     } = this.state
 
@@ -132,7 +110,10 @@ class AnticipationFormContainer extends Component {
             <Card>
               <Form
                 anticipationInfo={renderInfo(t('pages.anticipation.date.advise'))}
-                dates={dates}
+                dates={{
+                  start: date,
+                  end: date,
+                }}
                 error={error}
                 isAutomaticTransfer={isAutomaticTransfer}
                 isValidDay={isValidDay}
@@ -267,7 +248,7 @@ class AnticipationFormContainer extends Component {
               </CardContent>
               <CardActions>
                 <Button
-                  disabled={loading || hasErrors}
+                  disabled={loading || hasErrors || amount < 0}
                   fill="outline"
                   onClick={onCancel}
                   type="button"
@@ -275,7 +256,7 @@ class AnticipationFormContainer extends Component {
                   {t('pages.anticipation.cancel')}
                 </Button>
                 <Button
-                  disabled={loading || hasErrors || recalculationNeeded}
+                  disabled={loading || hasErrors || recalculationNeeded || amount < 0}
                   onClick={onConfirm}
                   type="button"
                 >
