@@ -35,14 +35,18 @@ export const identify = (
 /**
  * Set Company identification variables on accountReceive
  * in google tag manager data layer
- * @param {string} id company id
- * @param {string} name company name
+ * @param {string} companyId company id
+ * @param {string} companyName company name
+ * @param {string} companyDateCreated company created date
+ * @param {string} companyStatus company status
  */
-export const setCompany = (id, name) => {
+export const setCompany = (companyId, companyName, companyDateCreated, companyStatus) => {
   if (hasProperty(window.dataLayer)) {
     window.dataLayer.push({
-      companyId: id,
-      companyName: name,
+      companyId,
+      companyName,
+      companyDateCreated,
+      companyStatus,
       event: 'accountReceive',
     })
   }

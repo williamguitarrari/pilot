@@ -37,16 +37,20 @@ export const identify = (
  *
  * @param {string} companyId company id
  * @param {string} companyName company name
+ * @param {string} companyDateCreated company created date
+ * @param {string} companyStatus company status
  * @param {number} userId user id
  *
  */
-export const setCompany = (companyId, companyName, userId) => {
+export const setCompany = (companyId, companyName, companyDateCreated, companyStatus, userId) => {
   if (hasProperty(window.Appcues)) {
     window.Appcues.identify(
       userId,
       {
         companyId,
         companyName,
+        companyDateCreated,
+        companyStatus,
       }
     )
   }

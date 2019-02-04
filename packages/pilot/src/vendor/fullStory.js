@@ -37,13 +37,17 @@ export const identify = (
  *
  * @param {string} id company id
  * @param {string} name company name
+ * @param {string} dateCreated company created date
+ * @param {string} status company status
  *
  */
-export const setCompany = (id, name) => {
+export const setCompany = (id, name, dateCreated, status) => {
   if (hasProperty(window.FS)) {
     window.FS.setUserVars({
       companyId_str: id,
       companyName_str: name,
+      companyDateCreated_str: dateCreated,
+      companyStatus_str: status,
     })
   }
 }
