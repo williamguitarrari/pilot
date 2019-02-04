@@ -183,6 +183,17 @@ const getErrorMessage = pipe(
   prop('message')
 )
 
+const isInsuficientPayablesError = pipe(
+  path(['response', 'status']),
+  equals(409)
+)
+
+const getInsuficientPayablesError = t => ifElse(
+  isInsuficientPayablesError,
+  always(t('pages.anticipation.insuficient_payables')),
+  getErrorMessage
+)
+
 const isPresent = date =>
   date.isSame(moment(), 'day')
 
@@ -308,7 +319,7 @@ class Anticipation extends Component {
     this.handleConfirmationConfirm = this.handleConfirmationConfirm.bind(this)
     this.handleDateChange = this.handleDateChange.bind(this)
     this.handleFormChange = this.handleFormChange.bind(this)
-    this.handleLimitsChange = this.handleLimitsChange.bind(this)
+    this.resetAnticipation = this.resetAnticipation.bind(this)
     this.handleTimeframeChange = this.handleTimeframeChange.bind(this)
   }
 
@@ -460,7 +471,7 @@ class Anticipation extends Component {
       })))
   }
 
-  handleLimitsChange () {
+  resetAnticipation () {
     const {
       limits: {
         minValue,
@@ -468,7 +479,6 @@ class Anticipation extends Component {
     } = this.state
 
     return this.createOrUpdateAnticipation(minValue)
-      .then(this.calculateLimits)
   }
 
   handleTimeframeChange (timeframe) {
@@ -480,11 +490,9 @@ class Anticipation extends Component {
   }
 
   handleDateChange ({ start }) {
-    this.setState(
-      {
-        paymentDate: start,
-      }
-    )
+    this.setState({
+      paymentDate: start,
+    })
   }
 
   handleCalculateSubmit ({
@@ -497,7 +505,10 @@ class Anticipation extends Component {
       loading: true,
     })
 
-    this.handleLimitsChange()
+    const { t } = this.props
+
+    this.resetAnticipation()
+      .then(this.calculateLimits)
       .then(() => {
         const {
           limits: {
@@ -518,10 +529,16 @@ class Anticipation extends Component {
         })
 
         this.updateAnticipation(requestedAmount)
-      }).catch(pipe(getErrorMessage, error => this.setState({
-        error,
-        loading: false,
-      })))
+      })
+      .catch(
+        pipe(
+          getInsuficientPayablesError(t),
+          message => this.setState({
+            error: message,
+            loading: false,
+          })
+        )
+      )
   }
 
   createOrUpdateAnticipation (minValue) {
@@ -588,7 +605,7 @@ class Anticipation extends Component {
 
   handleFormChange (data, { requested }) {
     this.setState({
-      error: requested,
+      error: requested !== this.state.error ? requested : null,
     })
   }
 
