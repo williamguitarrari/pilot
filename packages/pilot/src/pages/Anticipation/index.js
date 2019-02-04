@@ -233,7 +233,6 @@ const initialState = {
   },
   loading: false,
   paymentDate: moment(),
-  recalculationNeeded: false,
   requestedAmount: 0,
   statusMessage: '',
   stepsStatus: {
@@ -456,7 +455,6 @@ class Anticipation extends Component {
             minValue: maxValue > 100 ? calculateMinLimit(response) : 0,
           },
           requestedAmount: maxValue,
-          recalculationNeeded: true,
           loading: false,
         })
       })
@@ -519,7 +517,6 @@ class Anticipation extends Component {
           isAutomaticTransfer,
           transferCost: isAutomaticTransfer ? this.getTransferCost() : 0,
           paymentDate: date,
-          recalculationNeeded: false,
           requestedAmount,
           timeframe,
         })
@@ -595,7 +592,6 @@ class Anticipation extends Component {
 
   handleFormChange (data, { requested }) {
     this.setState({
-      recalculationNeeded: true,
       error: requested,
     })
   }
@@ -803,7 +799,6 @@ class Anticipation extends Component {
       },
       loading,
       paymentDate,
-      recalculationNeeded,
       recipient,
       requestedAmount,
       statusMessage,
@@ -860,7 +855,6 @@ class Anticipation extends Component {
             onTimeframeChange={this.handleTimeframeChange}
             onTryAgain={() => this.goTo('data', 'current')}
             onViewStatement={this.goToBalance}
-            recalculationNeeded={recalculationNeeded}
             recipient={recipient}
             requested={requestedAmount}
             statusMessage={statusMessage}

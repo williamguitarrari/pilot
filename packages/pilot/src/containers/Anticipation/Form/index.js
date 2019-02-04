@@ -88,7 +88,6 @@ class AnticipationFormContainer extends Component {
       onChange,
       onConfirm,
       onTimeframeChange,
-      recalculationNeeded,
       requested,
       t,
       timeframe,
@@ -256,7 +255,7 @@ class AnticipationFormContainer extends Component {
                   {t('pages.anticipation.cancel')}
                 </Button>
                 <Button
-                  disabled={loading || hasErrors || recalculationNeeded || amount < 0}
+                  disabled={loading || hasErrors || amount < 0}
                   onClick={onConfirm}
                   type="button"
                 >
@@ -288,7 +287,6 @@ AnticipationFormContainer.propTypes = {
   onConfirm: PropTypes.func.isRequired,
   onDateChange: PropTypes.func.isRequired,
   onTimeframeChange: PropTypes.func.isRequired,
-  recalculationNeeded: PropTypes.bool.isRequired,
   requested: PropTypes.number.isRequired,
   t: PropTypes.func.isRequired,
   timeframe: PropTypes.oneOf(['end', 'start']),

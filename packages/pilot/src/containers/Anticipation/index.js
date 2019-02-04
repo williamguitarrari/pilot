@@ -137,7 +137,6 @@ class Anticipation extends Component {
       onTimeframeChange,
       onTryAgain,
       onViewStatement,
-      recalculationNeeded,
       recipient: {
         bank_account: bankAccount,
       },
@@ -180,7 +179,6 @@ class Anticipation extends Component {
                 onConfirm={onDataConfirm}
                 onDateChange={onDateChange}
                 onTimeframeChange={onTimeframeChange}
-                recalculationNeeded={recalculationNeeded}
                 requested={requested}
                 t={t}
                 timeframe={timeframe}
@@ -277,7 +275,6 @@ Anticipation.propTypes = {
   onTimeframeChange: PropTypes.func.isRequired,
   onViewStatement: PropTypes.func.isRequired,
   onTryAgain: PropTypes.func.isRequired,
-  recalculationNeeded: PropTypes.bool.isRequired,
   recipient: PropTypes.shape({
     bank_account: PropTypes.shape({
       agencia: PropTypes.string,
