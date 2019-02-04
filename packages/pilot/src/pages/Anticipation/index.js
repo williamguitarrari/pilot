@@ -323,10 +323,6 @@ class Anticipation extends Component {
       },
     } = this.props
 
-    const {
-      paymentDate,
-    } = this.state
-
     let recipientPromise
 
     if (!id) {
@@ -344,7 +340,7 @@ class Anticipation extends Component {
           .nextAnticipableBusinessDay(
             calendar,
             { hour: 10, minute: 20 },
-            paymentDate
+            moment()
           )
 
         this.setState({
