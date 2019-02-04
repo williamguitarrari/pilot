@@ -412,11 +412,17 @@ class Anticipation extends Component {
     const bankCode = path(['bank_account', 'bank_code'], recipient)
 
     if (recipient && bankCode) {
-      // eslint-disable-next-line camelcase
-      const { pricing: { transfers: { ted, credito_em_conta } } } = this.props
+      const {
+        pricing: {
+          transfers: {
+            ted,
+            credito_em_conta: creditoEmConta,
+          },
+        },
+      } = this.props
 
       if (contains(partnersBankCodes, bankCode)) {
-        return credito_em_conta // eslint-disable-line camelcase
+        return creditoEmConta
       }
 
       return -ted
@@ -447,7 +453,7 @@ class Anticipation extends Component {
           error: null,
           limits: {
             maxValue,
-            minValue: calculateMinLimit(response),
+            minValue: maxValue > 100 ? calculateMinLimit(response) : 0,
           },
           requestedAmount: maxValue,
           recalculationNeeded: true,
@@ -722,6 +728,10 @@ class Anticipation extends Component {
   createAnticipation (value) {
     const {
       isAutomaticTransfer,
+      limits: {
+        maxValue,
+        minValue,
+      },
       paymentDate,
       recipient: {
         id: recipientId,
@@ -733,6 +743,12 @@ class Anticipation extends Component {
     const {
       client,
     } = this.props
+
+    if (maxValue < 100) {
+      return this.setState({
+        loading: true,
+      })
+    }
 
     return createBulk(client, {
       automaticTransfer: isAutomaticTransfer,
@@ -749,13 +765,6 @@ class Anticipation extends Component {
         id,
         status,
       }) => {
-        const {
-          limits: {
-            minValue,
-            maxValue,
-          },
-        } = this.state
-
         this.setState({
           approximateRequested: amount,
           bulkAnticipationStatus: status,
