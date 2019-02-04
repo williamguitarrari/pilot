@@ -63,8 +63,22 @@ const accountEpic = action$ =>
         return
       }
 
-      const { id, email } = payload
-      identifyUser(id, email)
+      const {
+        id,
+        email,
+        name,
+        date_created: dateCreated,
+        permission,
+      } = payload
+
+      identifyUser(
+        id,
+        email,
+        name,
+        dateCreated,
+        permission,
+        env
+      )
     })
 
 const companyEpic = (action$, store) =>

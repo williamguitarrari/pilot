@@ -5,10 +5,30 @@ import hasProperty from './hasProperty'
  *
  * @param {number} id user id
  * @param {string} email user email
+ * @param {string} userName user name
+ * @param {string} userDateCreated account created date
+ * @param {string} userPermission user permission
+ * @param {string} environment current environment
  */
-export const identify = (id, email) => {
+export const identify = (
+  id,
+  email,
+  userName,
+  userDateCreated,
+  userPermission,
+  environment
+) => {
   if (hasProperty(window.FS)) {
-    window.FS.identify(id, { email_str: email })
+    window.FS.identify(
+      id,
+      {
+        email_str: email,
+        userName_str: userName,
+        userDateCreated_str: userDateCreated,
+        userPermission_str: userPermission,
+        environment_str: environment,
+      }
+    )
   }
 }
 

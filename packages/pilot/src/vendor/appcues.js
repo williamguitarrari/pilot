@@ -3,12 +3,32 @@ import hasProperty from './hasProperty'
 /**
  * Identify User in Appcues
  *
- * @param {number} id user id
- * @param {string} email user email
+ * @param {number} userId user id
+ * @param {string} userEmail user email
+ * @param {string} userName user name
+ * @param {string} userDateCreated account created date
+ * @param {string} userPermission user permission
+ * @param {string} environment current environment
  */
-export const identify = (id, email) => {
+export const identify = (
+  userId,
+  userEmail,
+  userName,
+  userDateCreated,
+  userPermission,
+  environment
+) => {
   if (hasProperty(window.Appcues)) {
-    window.Appcues.identify(id, { email })
+    window.Appcues.identify(
+      userId,
+      {
+        userEmail,
+        userName,
+        userDateCreated,
+        userPermission,
+        environment,
+      }
+    )
   }
 }
 
