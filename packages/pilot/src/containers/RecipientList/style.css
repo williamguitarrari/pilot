@@ -1,3 +1,5 @@
+@import "former-kit-skin-pagarme/dist/styles/colors.css";
+
 .titleContainer {
   padding-bottom: 0;
 }
@@ -32,4 +34,125 @@
 
 .recipient + .recipient {
   margin-top: 24px;
+}
+
+@media print {
+
+  .recipient {
+    background-color: var(--color-white);
+
+    & div > * {
+      padding: 0 !important; /* stylelint-disable-line declaration-no-important */
+    }
+
+    & > div:last-child > div {
+      display: none;
+    }
+
+    & > div:first-child {
+
+      & abbr {
+        background: none !important; /* stylelint-disable-line declaration-no-important */
+      }
+
+      & span {
+        font-size: 14px;
+        font-weight: normal;
+      }
+    }
+
+    & div:last-child > div {
+      flex-direction: column;
+
+      & > div {
+        justify-content: space-between;
+        width: 100%;
+        align-items: baseline;
+        flex-direction: row;
+
+        & > * {
+          display: inline-block;
+          text-align: center;
+          width: auto;
+          font-weight: normal;
+          background: none;
+        }
+
+        & span,
+        & div {
+          font-weight: bold;
+          font-size: 12px;
+        }
+
+        & strong {
+          font-weight: normal;
+          font-size: 14px;
+        }
+      }
+    }
+
+    .title {
+      font-size: 14px !important; /* stylelint-disable-line declaration-no-important */
+    }
+
+    & table tr,
+    & table tr th {
+      font-size: 12px;
+      background-color: var(--color-white);
+      color: var(--color-black);
+      padding: 0 !important; /* stylelint-disable-line declaration-no-important */
+      text-align: center;
+      height: auto;
+
+      &:after {
+        height: 100%;
+      }
+
+      & > div {
+        text-align: center;
+        justify-content: center;
+        padding-bottom: 0;
+      }
+    }
+
+    & table tr td {
+      text-align: center;
+      font-size: 10px;
+      padding: 8px;
+
+      & > span:before {
+        max-width: 20px;
+        border-top: solid 1px var(--color-light-iron-50);
+      }
+
+      &:not(:first-child):after {
+        content: "";
+        border-right: solid 1px var(--color-light-iron-50);
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 50%;
+        transform: translate(0, -50%);
+      }
+    }
+
+    & table tr td:last-child {
+
+      & > span:before {
+        right: 50% !important; /* stylelint-disable-line declaration-no-important */
+        transform: translate(50%, 0) !important; /* stylelint-disable-line declaration-no-important */
+        border-top: 1px solid var(--color-light-iron-50);
+      }
+    }
+
+    & table {
+      border: none;
+      width: 100%;
+
+      & > thead > tr {
+        font-size: 12px;
+        border: none;
+      }
+    }
+  }
 }
