@@ -31,3 +31,12 @@ export const setCompany = (companyId, companyName, userId) => {
     )
   }
 }
+
+/**
+ * Triggers appcues page change
+ */
+export const page = () => {
+  if (hasProperty(window.Appcues)) {
+    window.Appcues.page()
+  }
+}
