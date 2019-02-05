@@ -83,7 +83,7 @@
     }
 
     & > div {
-      padding: var(--spacing-tiny) 0 0;
+      padding: var(--spacing-tiny) 0 0 !important; /* stylelint-disable-line declaration-no-important */
     }
   }
 
@@ -94,9 +94,14 @@
       box-shadow: none;
       color: var(--color-black);
       margin-left: 0;
-      margin-bottom: 0;
-      padding-left: 0;
+      margin-bottom: 0; /* stylelint-disable-line declaration-no-important */
+      padding-left: 0 !important; /* stylelint-disable-line declaration-no-important */
       padding-right: 0;
+    }
+
+    & div > h3,
+    & div > h2 {
+      margin: 0 !important; /* stylelint-disable-line declaration-no-important */
     }
   }
 
@@ -123,6 +128,20 @@
     }
   }
 
+  .alertCustom {
+    border-bottom: 1px solid var(--color-light-iron-50);
+    padding-top: var(--spacing-small);
+
+    & div {
+      border: none;
+      padding-top: var(--spacing-tiny);
+    }
+
+    & button {
+      display: none;
+    }
+  }
+
   .detailsInfo {
     flex-direction: column-reverse;
     justify-content: space-between;
@@ -141,17 +160,44 @@
     max-height: 1300px;
     min-height: 1100px;
     padding-top: 50px;
+    break-before: auto;
+    page-break-before: always;
+    width: 100%;
+
+    & > div {
+      width: 100%;
+    }
+
+    & + .transactionCardInfo {
+      margin-bottom: 300px;
+    }
+
+    & + .transactionCardInfo:not(:last-child) {
+      margin-bottom: 150px;
+    }
   }
 
   .customerInfo {
     border-bottom: 1px solid var(--color-light-iron-50);
     color: var(--color-black);
     order: 1;
+
+    & + .transactionCardInfo {
+      margin-bottom: 150px;
+    }
+
+    & + .transactionCardInfo:not(:last-child) {
+      margin-bottom: 0;
+    }
+  }
+
+  .metadataInfo {
+    width: 100%;
   }
 
   .transactionCardInfo {
     color: var(--color-black);
-    min-height: 450px;
+    min-height: 350px;
 
     & > div {
       padding-top: var(--spacing-small);
@@ -161,12 +207,17 @@
       color: var(--color-black);
       font-size: 16px;
     }
+
+    &:only-child {
+      margin-bottom: 360px;
+    }
   }
 
   .transactionInfo {
 
     & > div {
       width: 100%;
+      padding-bottom: 0;
 
       & > div > div {
         margin: 0;

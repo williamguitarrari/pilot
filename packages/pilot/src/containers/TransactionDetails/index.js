@@ -564,7 +564,7 @@ class TransactionDetails extends Component {
     return (
       <Fragment>
         {(nextId && nextId !== transaction.id) &&
-          <Row>
+          <Row className={style.alertCustom}>
             <Col
               desk={12}
               palm={12}
@@ -577,7 +577,7 @@ class TransactionDetails extends Component {
                 onDismiss={onNextTransactionRedirect}
                 type="info"
               >
-                <span>
+                <span className={style.reprocessAlertCustom}>
                   {reprocessLabels.nextAlert}
                   <strong> {nextId} </strong>
                 </span>
@@ -586,7 +586,7 @@ class TransactionDetails extends Component {
           </Row>
         }
         {transaction.previousId &&
-          <Row>
+          <Row className={style.alertCustom}>
             <Col
               desk={12}
               tv={12}
@@ -599,7 +599,7 @@ class TransactionDetails extends Component {
                 onDismiss={onPreviousTransactionRedirect}
                 type="info"
               >
-                <span>
+                <span className={style.reprocessAlertCustom}>
                   {reprocessLabels.previousAlert}
                   <strong> {transaction.previousId} </strong>
                 </span>
@@ -809,7 +809,7 @@ class TransactionDetails extends Component {
         </Row>
 
         {showStatusAlert(transaction) &&
-          <Row>
+          <Row className={style.alertCustom}>
             <Col
               desk={12}
               palm={12}
@@ -895,7 +895,7 @@ class TransactionDetails extends Component {
                 </Col>
               </Row>
               {!isEmptyOrNull(metadata) &&
-                <Row>
+                <Row className={style.metadataInfo}>
                   <Col
                     desk={12}
                     palm={12}
