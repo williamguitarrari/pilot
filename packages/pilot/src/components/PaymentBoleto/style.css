@@ -63,3 +63,79 @@
     font-size: 12px;
   }
 }
+
+@media print {
+
+  .card {
+    background: none;
+    height: auto;
+    text-align: center;
+
+    & svg {
+      display: none;
+    }
+  }
+
+  .cardContent {
+    border-bottom: 1px solid  var(--color-light-iron-50);
+    flex-flow: row wrap;
+    height: auto;
+    justify-content: flex-start;
+    padding: 0 0 10px;
+
+    & > * {
+      width: auto;
+    }
+  }
+
+  .cardTitle {
+    text-align: left;
+    width: 100%;
+
+    &:before {
+      content: "Dado do boleto";
+      display: block;
+      font-size: 16px;
+      font-weight: bold;
+      order: 1;
+    }
+
+    & h2,
+    & button {
+      display: none;
+    }
+  }
+
+  .cardBarCode {
+    margin-right: var(--spacing-small);
+
+    & > strong {
+      font-size: 14px;
+      font-weight: normal;
+
+      &:empty:after {
+        content: "-";
+        display: inline;
+      }
+    }
+
+    &:before {
+      content: "Número do boleto: ";
+      display: inline;
+      font-size: 16px;
+      font-weight: normal;
+    }
+  }
+
+  .cardDueDate {
+
+    & > p {
+      color: var(--color-black);
+      font-size: 16px;
+    }
+
+    & button {
+      display: none;
+    }
+  }
+}
