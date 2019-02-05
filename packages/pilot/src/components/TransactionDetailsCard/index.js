@@ -5,7 +5,6 @@ import {
   Card,
   CardContent,
   CardTitle,
-
   Grid,
   Row,
   Col,
@@ -17,6 +16,7 @@ import {
 } from 'ramda'
 
 import Property from '../Property'
+import style from './style.css'
 
 const objectFields = (labels, contents) => (
   mapObjIndexed((content, key) => (
@@ -41,7 +41,7 @@ const TransactionDetailsCard = ({ title, labels, contents }) => (
     <CardTitle title={title} />
     <CardContent>
       <Grid>
-        <Row>
+        <Row className={style.propertyCustom}>
           {
             fieldsColumns(labels, contents).map((fields, parentIndex) =>
               fields.map((field, index) => (
@@ -51,6 +51,7 @@ const TransactionDetailsCard = ({ title, labels, contents }) => (
                   desk={4}
                   tv={4}
                   key={composeIndex(parentIndex, index)}
+                  className={style.propertyCustom}
                 >
                   { field }
                 </Col>
