@@ -68,9 +68,15 @@ const getCustomerName = pathOr(LIMITER, ['customer', 'name'])
 
 const getCustomerSubProp = subProp => pathOr(LIMITER, ['customer', subProp])
 
-const getAddressSubProp = property => either(
-  pathOr(LIMITER, ['billing', 'address', property]),
-  pathOr(LIMITER, ['address', property])
+const getAddressProp = property => path(['address', property])
+const getAddressPropFromBilling = property => path(['billing', 'address', property])
+
+const getAddressSubProp = property => pipe(
+  either(
+    getAddressProp(property),
+    getAddressPropFromBilling(property)
+  ),
+  defaultToLimiter
 )
 
 const getStatusName = pipe(
