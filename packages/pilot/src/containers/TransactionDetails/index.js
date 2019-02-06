@@ -780,7 +780,7 @@ class TransactionDetails extends Component {
             tv={9}
           >
             <Grid>
-              {!isEmptyOrNull(recipients) && !isBoletoWaitingPayment(transaction) &&
+              {!isEmptyOrNull(recipients) &&
                 <Row>
                   <Col
                     desk={12}
