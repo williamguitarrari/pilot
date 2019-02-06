@@ -2,6 +2,8 @@ import {
   __,
   always,
   append,
+  both,
+  complement,
   defaultTo,
   divide,
   either,
@@ -17,7 +19,6 @@ import {
   map,
   path,
   pathOr,
-  pathSatisfies,
   pipe,
   pick,
   prop,
@@ -27,6 +28,7 @@ import {
   propOr,
   splitAt,
   values,
+  when,
 } from 'ramda'
 import moment from 'moment'
 import acquirerNames from './acquirerNames'
@@ -217,10 +219,25 @@ const getPhones = ifElse(
 
 const getId = prop('id')
 
-const getDocuments = pipe(
+const hasCustomerDocumentNumber = pipe(
+  path(['customer', 'document_number']),
+  complement(isNil)
+)
+
+const getCustomerDocumentNumber = pipe(
+  path(['customer', 'document_number']),
+  when(isNil, always(LIMITER))
+)
+
+const isArrayNotEmpty = both(
+  is(Array),
+  complement(isEmpty)
+)
+
+const getDocumentList = pipe(
   path(['customer', 'documents']),
   ifElse(
-    is(Array),
+    isArrayNotEmpty,
     pipe(
       map(propOr('', 'number')),
       join(', ')
@@ -230,9 +247,9 @@ const getDocuments = pipe(
 )
 
 const getDocumentNumber = ifElse(
-  pathSatisfies(isEmptyOrNill, ['customer', 'documents']),
-  path(['customer', 'document_number']),
-  getDocuments
+  hasCustomerDocumentNumber,
+  getCustomerDocumentNumber,
+  getDocumentList
 )
 
 const formatDate = date => moment(date).format('DD/MM/YYYY HH:mm')
