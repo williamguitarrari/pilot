@@ -31,6 +31,9 @@ import {
   when,
 } from 'ramda'
 import moment from 'moment'
+import Intl from 'intl'
+import 'intl/locale-data/jsonp/pt'
+
 import acquirerNames from './acquirerNames'
 import antifraudStatusNames from './antifraudStatusNames'
 import cardBrandNames from './cardBrandNames'
@@ -271,13 +274,22 @@ const getCardBrand = pipe(
   defaultToLimiter
 )
 
+const formatToBRL = new Intl.NumberFormat(
+  'pt-BR',
+  {
+    minimumFractionDigits: 2,
+  }
+)
+
+
 const getBRLProp = property => pipe(
   prop(property),
   ifElse(
     isNil,
     always(0),
     divide(__, 100)
-  )
+  ),
+  formatToBRL.format
 )
 
 const transactionSpec = {
