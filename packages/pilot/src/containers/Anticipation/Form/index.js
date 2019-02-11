@@ -39,10 +39,6 @@ class AnticipationFormContainer extends Component {
     super(props)
 
     this.state = {
-      dates: {
-        start: props.date,
-        end: props.date,
-      },
       hasErrors: false,
     }
 
@@ -50,19 +46,7 @@ class AnticipationFormContainer extends Component {
     this.handleCalculateSubmit = this.handleCalculateSubmit.bind(this)
   }
 
-  componentWillReceiveProps ({ date }) {
-    if (date && !date.isSame(this.state.dates.start, 'day')) {
-      this.setState({
-        dates: {
-          start: date,
-          end: date,
-        },
-      })
-    }
-  }
-
   handleDateChange (dates) {
-    this.setState({ dates })
     this.props.onDateChange(dates)
   }
 
@@ -93,6 +77,7 @@ class AnticipationFormContainer extends Component {
       amount,
       approximateRequested,
       cost,
+      date,
       error,
       isAutomaticTransfer,
       isValidDay,
@@ -103,14 +88,12 @@ class AnticipationFormContainer extends Component {
       onChange,
       onConfirm,
       onTimeframeChange,
-      recalculationNeeded,
       requested,
       t,
       timeframe,
       transferCost,
     } = this.props
     const {
-      dates,
       hasErrors,
     } = this.state
 
@@ -126,7 +109,10 @@ class AnticipationFormContainer extends Component {
             <Card>
               <Form
                 anticipationInfo={renderInfo(t('pages.anticipation.date.advise'))}
-                dates={dates}
+                dates={{
+                  start: date,
+                  end: date,
+                }}
                 error={error}
                 isAutomaticTransfer={isAutomaticTransfer}
                 isValidDay={isValidDay}
@@ -241,7 +227,7 @@ class AnticipationFormContainer extends Component {
                         align="end"
                         amount={amount}
                         amountSize="huge"
-                        color={colors.amount}
+                        color={amount > 0 ? colors.amount : colors.cost}
                         title={
                           <div className={style.titleInfo}>
                             {renderInfo(
@@ -261,7 +247,7 @@ class AnticipationFormContainer extends Component {
               </CardContent>
               <CardActions>
                 <Button
-                  disabled={loading || hasErrors}
+                  disabled={loading || hasErrors || amount < 0}
                   fill="outline"
                   onClick={onCancel}
                   type="button"
@@ -269,7 +255,7 @@ class AnticipationFormContainer extends Component {
                   {t('pages.anticipation.cancel')}
                 </Button>
                 <Button
-                  disabled={loading || hasErrors || recalculationNeeded}
+                  disabled={loading || hasErrors || amount < 0}
                   onClick={onConfirm}
                   type="button"
                 >
@@ -301,7 +287,6 @@ AnticipationFormContainer.propTypes = {
   onConfirm: PropTypes.func.isRequired,
   onDateChange: PropTypes.func.isRequired,
   onTimeframeChange: PropTypes.func.isRequired,
-  recalculationNeeded: PropTypes.bool.isRequired,
   requested: PropTypes.number.isRequired,
   t: PropTypes.func.isRequired,
   timeframe: PropTypes.oneOf(['end', 'start']),

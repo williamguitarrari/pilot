@@ -23,3 +23,34 @@
     margin: calc(var(--spacing-small) - 5px) 0;
   }
 }
+
+@media print {
+
+  .value:empty {
+    border: 0;
+    margin: 0;
+
+    &:after {
+      content: "-";
+    }
+  }
+
+  .property {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .title {
+    font-size: 16px;
+    font-weight: bold;
+
+    &:after {
+      content: ": ";
+      padding-right: 3px;
+    }
+  }
+
+  .value {
+    font-size: 14px;
+  }
+}

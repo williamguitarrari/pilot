@@ -17,6 +17,7 @@ import Account from './Account'
 import LoggedArea from './LoggedArea'
 
 import environment from '../environment'
+import { page as appcuesPage } from '../vendor/appcues'
 
 const mapStateToProps = ({
   account: {
@@ -49,8 +50,16 @@ class Root extends Component {
   componentDidMount () {
     const {
       client,
+      history: { listen },
       location: { search: queryString },
     } = this.props
+
+    const historyUnlisten = listen(() => {
+      appcuesPage()
+    })
+
+    // eslint-disable-next-line react/no-did-mount-set-state
+    this.setState({ historyUnlisten })
 
     const parsedQueryString = parseQueryString(queryString)
     const sessionId = getSessionId(this.props, parsedQueryString)
@@ -62,6 +71,10 @@ class Root extends Component {
     if (!client && sessionId) {
       this.props.requestLogin({ session_id: sessionId, environment })
     }
+  }
+
+  componentWillUnmount () {
+    this.state.historyUnlisten()
   }
 
   render () {
@@ -116,6 +129,7 @@ Root.propTypes = {
     search: PropTypes.string,
   }).isRequired,
   history: PropTypes.shape({
+    listen: PropTypes.func,
     replace: PropTypes.func,
   }).isRequired,
   requestLogin: PropTypes.func.isRequired,

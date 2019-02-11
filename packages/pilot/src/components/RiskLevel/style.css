@@ -1,6 +1,14 @@
 @import "former-kit-skin-pagarme/dist/styles/colors.css";
 @import "former-kit-skin-pagarme/dist/styles/spacing.css";
 
+:root {
+  --risk-very-low: #04e12d;
+  --risk-low: #06b927;
+  --risk-moderated: #fdc626;
+  --risk-high: #ff9600;
+  --risk-very-high: #fd003f;
+}
+
 .riskLevelBar {
   background-image:
     linear-gradient(
@@ -23,26 +31,68 @@
 }
 
 .very_low {
-  background-color: #04e12d;
+  background-color: var(--risk-very-low);
   width: calc(20% + 2px);
 }
 
 .low {
-  background-color: #06b927;
+  background-color: var(--risk-low);
   width: calc(40% + 2px);
 }
 
 .moderated {
-  background-color: #fdc626;
+  background-color: var(--risk-moderated);
   width: calc(60% + 2px);
 }
 
 .high {
-  background-color: #ff9600;
+  background-color: var(--risk-high);
   width: calc(80% + 2px);
 }
 
 .very_high {
-  background-color: #fd003f;
+  background-color: var(--risk-very-high);
   width: 100%;
+}
+
+@media print {
+
+  .riskLevelBar {
+    display: inline-block;
+    width: 100%;
+    position: relative;
+    border-top: 10px solid var(--color-light-silver-50);
+  }
+
+  .riskLevel {
+    height: 10px;
+    position: absolute;
+    top: -10px;
+    left: 0;
+  }
+
+  .very_low {
+    border-top: 10px solid var(--risk-very-low);
+    width: calc(20% + 2px);
+  }
+
+  .low {
+    border-top: 10px solid var(--risk-low);
+    width: calc(40% + 2px);
+  }
+
+  .moderated {
+    border-top: 10px solid var(--risk-moderated);
+    width: calc(60% + 2px);
+  }
+
+  .high {
+    border-top: 10px solid var(--risk-high);
+    width: calc(80% + 2px);
+  }
+
+  .very_high {
+    border-top: 10px solid var(--risk-very-high);
+    width: 100%;
+  }
 }

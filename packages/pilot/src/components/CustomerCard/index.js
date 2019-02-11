@@ -10,6 +10,7 @@ import {
 } from 'former-kit'
 import { mapObjIndexed } from 'ramda'
 import Property from '../Property'
+import style from './style.css'
 
 const fields = (labels, contents) => mapObjIndexed((label, key) => (
   <Property
@@ -17,7 +18,6 @@ const fields = (labels, contents) => mapObjIndexed((label, key) => (
     value={contents[key]}
   />
 ), labels)
-
 
 const CustomerCard = ({ title, labels, contents }) => {
   const customer = fields(labels, contents)
@@ -28,51 +28,123 @@ const CustomerCard = ({ title, labels, contents }) => {
       <CardContent>
         <Grid>
           <Row>
-            <Col palm={12} tablet={6} desk={4} tv={4}>
+            <Col
+              palm={12}
+              tablet={6}
+              desk={4}
+              tv={4}
+              className={style.propertyCustom}
+            >
               {customer.name}
             </Col>
 
-            <Col palm={12} tablet={6} desk={4} tv={4}>
+            <Col
+              palm={12}
+              tablet={6}
+              desk={4}
+              tv={4}
+              className={style.propertyCustom}
+            >
               {customer.document_number}
             </Col>
 
-            <Col palm={12} tablet={6} desk={4} tv={4}>
+            <Col
+              palm={12}
+              tablet={6}
+              desk={4}
+              tv={4}
+              className={style.propertyCustom}
+            >
               {customer.birthday}
             </Col>
 
-            <Col palm={12} tablet={6} desk={4} tv={4}>
+            <Col
+              palm={12}
+              tablet={6}
+              desk={4}
+              tv={4}
+              className={style.propertyCustom}
+            >
               {customer.phone}
             </Col>
 
-            <Col palm={12} tablet={6} desk={4} tv={4}>
+            <Col
+              palm={12}
+              tablet={6}
+              desk={4}
+              tv={4}
+              className={style.propertyCustom}
+            >
               {customer.email}
             </Col>
 
-            <Col palm={12} tablet={12} desk={8} tv={8}>
+            <Col
+              palm={12}
+              tablet={6}
+              desk={8}
+              tv={8}
+              className={style.propertyCustom}
+            >
               {customer.street}
             </Col>
 
-            <Col palm={12} tablet={6} desk={1} tv={1}>
+            <Col
+              palm={12}
+              tablet={6}
+              desk={1}
+              tv={1}
+              className={style.propertyCustom}
+            >
               {customer.street_number}
             </Col>
 
-            <Col palm={12} tablet={6} desk={3} tv={3}>
+            <Col
+              palm={12}
+              tablet={6}
+              desk={3}
+              tv={3}
+              className={style.propertyCustom}
+            >
               {customer.complementary}
             </Col>
 
-            <Col palm={12} tablet={6} desk={4} tv={4}>
+            <Col
+              palm={12}
+              tablet={6}
+              desk={4}
+              tv={4}
+              className={style.propertyCustom}
+            >
               {customer.neighborhood}
             </Col>
 
-            <Col palm={12} tablet={6} desk={4} tv={4}>
+            <Col
+              palm={12}
+              tablet={6}
+              desk={4}
+              tv={4}
+              className={style.propertyCustom}
+            >
               {customer.city}
             </Col>
 
-            <Col palm={12} tablet={6} desk={1} tv={1}>
+            <Col
+              palm={12}
+              tablet={6}
+              desk={1}
+              tv={1}
+              className={style.propertyCustom}
+            >
               {customer.state}
             </Col>
 
-            <Col palm={12} tablet={6} desk={3} tv={3}>
+            <Col
+              palm={12}
+              tablet={6}
+              desk={3}
+              tv={3}
+              className={style.propertyCustom}
+            >
               {customer.zipcode}
             </Col>
           </Row>

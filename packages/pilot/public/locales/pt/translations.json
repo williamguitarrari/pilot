@@ -457,6 +457,7 @@
       "from_end": "Final",
       "end": "Fim",
       "initial": "Início",
+      "insuficient_payables": "Não há recebíveis disponíveis para o período selecionado",
       "maximum_error": "Valor maior do que o permitido",
       "minimum_error": "Valor menor do que o permitido",
       "no": "Não",
@@ -1033,5 +1034,7 @@
   "password_strength": "Força",
   "password_rules_title": "Sua senha precisa ter:",
   "password_rules_min_length": "No mínimo {{length}} caracteres",
-  "password_rules_max_length": "No máximo {{length}} caracteres"
+  "password_rules_max_length": "No máximo {{length}} caracteres",
+  "transactions_export_table": "Exportar tabela",
+  "transactions_export_to": "Exportar para:"
 }

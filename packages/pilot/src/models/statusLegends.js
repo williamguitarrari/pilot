@@ -69,6 +69,11 @@ const status = {
     text: 'Cancelada',
     acronym: 'CA',
   },
+  unavailable: {
+    color: '#a0a0a0',
+    text: 'Indisponível',
+    acronym: 'IN',
+  },
 }
 
 export default status

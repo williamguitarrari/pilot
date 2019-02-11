@@ -11,6 +11,8 @@ import numberFormat from '../../formatters/decimalCurrency'
 import legendStatus from '../../models/statusLegends'
 import style from './style.css'
 
+const unavailableStatus = 'unavailable'
+
 const RecipientCard = ({
   liabilities,
   liabilitiesLabel,
@@ -32,13 +34,14 @@ const RecipientCard = ({
         <div>
           <span className={style.statusLabel}>{statusLabel}</span>
           <Legend
-            color={legendStatus[status].color}
-            acronym={legendStatus[status].acronym}
+            color={legendStatus[status || unavailableStatus].color}
+            acronym={legendStatus[status || unavailableStatus].acronym}
             hideLabel
           >
-            {legendStatus[status].text}
+            {legendStatus[status || unavailableStatus].text}
           </Legend>
         </div>
+
       </div>
 
       <div>
@@ -65,7 +68,7 @@ RecipientCard.propTypes = {
   netAmount: PropTypes.number.isRequired,
   netAmountLabel: PropTypes.string,
   outAmountLabel: PropTypes.string,
-  status: PropTypes.string.isRequired,
+  status: PropTypes.string,
   statusLabel: PropTypes.string,
   totalAmount: PropTypes.number.isRequired,
   totalLabel: PropTypes.string,
@@ -75,6 +78,7 @@ RecipientCard.defaultProps = {
   liabilitiesLabel: '',
   netAmountLabel: '',
   outAmountLabel: '',
+  status: unavailableStatus,
   statusLabel: '',
   totalLabel: '',
 }

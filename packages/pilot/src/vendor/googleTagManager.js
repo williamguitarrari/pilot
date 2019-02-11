@@ -6,12 +6,27 @@ import hasProperty from './hasProperty'
  *
  * @param {number} id user id
  * @param {string} email user email
+ * @param {string} userName user name
+ * @param {string} userDateCreated account created date
+ * @param {string} userPermission user permission
+ * @param {string} environment current environment
  */
-export const identify = (id, email) => {
+export const identify = (
+  id,
+  email,
+  userName,
+  userDateCreated,
+  userPermission,
+  environment
+) => {
   if (hasProperty(window.dataLayer)) {
     window.dataLayer.push({
       fullstoryUserId: id,
       email,
+      userName,
+      userDateCreated,
+      userPermission,
+      environment,
       event: 'loginReceive',
     })
   }
@@ -20,14 +35,18 @@ export const identify = (id, email) => {
 /**
  * Set Company identification variables on accountReceive
  * in google tag manager data layer
- * @param {string} id company id
- * @param {string} name company name
+ * @param {string} companyId company id
+ * @param {string} companyName company name
+ * @param {string} companyDateCreated company created date
+ * @param {string} companyStatus company status
  */
-export const setCompany = (id, name) => {
+export const setCompany = (companyId, companyName, companyDateCreated, companyStatus) => {
   if (hasProperty(window.dataLayer)) {
     window.dataLayer.push({
-      companyId: id,
-      companyName: name,
+      companyId,
+      companyName,
+      companyDateCreated,
+      companyStatus,
       event: 'accountReceive',
     })
   }

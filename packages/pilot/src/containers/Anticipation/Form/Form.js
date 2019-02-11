@@ -76,7 +76,6 @@ const AnticipationForm = ({
       transfer: isAutomaticTransfer ? 'yes' : 'no',
     }}
     errors={buildError(error)}
-    validateOn="blur"
     validation={{
       date: validateDate(t, isValidDay),
       requested: [
@@ -155,7 +154,7 @@ const AnticipationForm = ({
                 name="requested"
                 renderer={props => (
                   <CurrencyInput
-                    max={99999999999}
+                    max={maximum}
                     {...props}
                   />
                 )}

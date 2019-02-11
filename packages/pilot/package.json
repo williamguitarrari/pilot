@@ -18,7 +18,7 @@
     "moment": "2.20.1",
     "normalize.css": "7.0.0",
     "p4g4rm3": "0.1.2",
-    "pagarme": "3.7.3",
+    "pagarme": "4.0.0",
     "prop-types": "15.6.0",
     "qs": "6.5.1",
     "ramda": "0.25.0",
@@ -38,7 +38,8 @@
     "redux-localstorage-simple": "^2.0.0",
     "redux-observable": "0.18.0",
     "rxjs": "5.5.6",
-    "validator": "10.6.0"
+    "validator": "10.6.0",
+    "xlsx": "0.14.0"
   },
   "devDependencies": {
     "@percy-io/in-percy": "0.1.10",

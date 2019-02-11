@@ -8,6 +8,8 @@ import { setCompany as fullStorySetCompany } from './fullStory'
  *
  * @param {string} companyId company id
  * @param {string} companyName company name
+ * @param {string} companyDateCreated company created date
+ * @param {string} companyStatus company status
  * @param {number} userId user id
  *
  */

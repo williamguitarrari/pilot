@@ -53,3 +53,37 @@
 .huge {
   font-size: 28px;
 }
+
+@media print {
+
+  .content {
+    border-bottom: 1px solid var(--color-light-steel-50);
+  }
+
+  .title {
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .amount {
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-top: 0;
+    padding: 6px 0;
+
+    & small {
+      display: inline-block;
+      font-size: 14px;
+      font-weight: normal;
+    }
+
+    & span {
+      font-weight: normal;
+      font-size: 16px;
+    }
+
+    & h3 {
+      display: inline-block;
+    }
+  }
+}

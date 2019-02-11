@@ -32,7 +32,7 @@ const PaymentCard = ({
       </div>
       <div className={style.cardBrandHolder}>
         <p>{ holderName }</p>
-        { CardBrand(brand) }
+        <span>{ CardBrand(brand) }</span>
       </div>
     </CardContent>
   </Card>

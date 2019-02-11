@@ -63,8 +63,22 @@ const accountEpic = action$ =>
         return
       }
 
-      const { id, email } = payload
-      identifyUser(id, email)
+      const {
+        id,
+        email,
+        name,
+        date_created: dateCreated,
+        permission,
+      } = payload
+
+      identifyUser(
+        id,
+        email,
+        name,
+        dateCreated,
+        permission,
+        env
+      )
     })
 
 const companyEpic = (action$, store) =>
@@ -84,6 +98,7 @@ const companyEpic = (action$, store) =>
       }
 
       const {
+        date_created: dateCreated,
         id,
         name,
         status,
@@ -97,7 +112,13 @@ const companyEpic = (action$, store) =>
         },
       } = store.getState()
 
-      setCompany(id, name, userId)
+      setCompany(
+        id,
+        name,
+        dateCreated,
+        status,
+        userId
+      )
 
       if (status === 'active') {
         activeCompanyLogin()
