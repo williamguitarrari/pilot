@@ -121,9 +121,6 @@ storiesOf('Containers|Page containers', module)
   .add('Recipient Configuration', () => (
     <RecipientDetailConfig />
   ))
-  .add('Recipient Info', () => (
-    <RecipientDetailInfo />
-  ))
   .add('Recipient Balance', () => (
     <RecipientBalance />
   ))
