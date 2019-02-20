@@ -1,25 +1,55 @@
 export default [
   {
-    items: [
+    date: () => 0,
+    key: 'today',
+    label: 'Hoje',
+    mode: 'single',
+  },
+  {
+    key: 'last',
+    label: 'Últimos:',
+    list: [
       {
         date: () => -7,
         key: 'last-7',
-        title: '7 dias',
+        label: '7 dias',
+        mode: 'period',
       },
       {
         date: () => -15,
         key: 'last-15',
-        title: '15 dias',
+        label: '15 dias',
+        mode: 'period',
       },
       {
         date: () => -30,
         key: 'last-30',
-        title: '30 dias',
+        label: '30 dias',
+        mode: 'period',
       },
       {
         date: () => -60,
         key: 'last-60',
-        title: '60 dias',
+        label: '60 dias',
+        mode: 'period',
+      },
+    ],
+  },
+  {
+    key: 'custom',
+    label: 'Customizado:',
+    list: [
+      {
+        date: () => null,
+        key: 'single',
+        label: 'Dia',
+        mode: 'single',
+      },
+      {
+        date: () => null,
+        key: 'period',
+        label: 'Período',
+        mode: 'period',
       },
     ],
     title: 'Últimos:',
