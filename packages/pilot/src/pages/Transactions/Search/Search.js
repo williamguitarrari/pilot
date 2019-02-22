@@ -85,11 +85,19 @@ const normalizeQueryDatesToString = pipe(
 
 const stringToMoment = str => moment(str)
 
+const normalizeDateTime = property => (date) => {
+  if (property === 'start') {
+    return date.startOf('day')
+  }
+
+  return date.endOf('day')
+}
+
 const normalizeStringToDate = property => pipe(
   prop(property),
   unless(
     either(isNil, isEmpty),
-    pipe(stringToMoment, objOf(property))
+    pipe(stringToMoment, normalizeDateTime(property), objOf(property))
   )
 )
 
@@ -185,10 +193,12 @@ class TransactionsSearch extends React.Component {
         total: {},
       },
       selectedRows: [],
+      showDateInputCalendar: false,
       viewMode: 'table',
     }
 
     this.handleChartsCollapse = this.handleChartsCollapse.bind(this)
+    this.handleDatePresetChange = this.handleDatePresetChange.bind(this)
     this.handleExpandRow = this.handleExpandRow.bind(this)
     this.handleExport = this.handleExport.bind(this)
     this.handleFilterChange = this.handleFilterChange.bind(this)
@@ -298,6 +308,12 @@ class TransactionsSearch extends React.Component {
       })
   }
 
+  handleDatePresetChange () {
+    this.setState({
+      showDateInputCalendar: true,
+    })
+  }
+
   handlePageCountChange (count) {
     const query = {
       ...this.props.query,
@@ -322,7 +338,10 @@ class TransactionsSearch extends React.Component {
   }
 
   handleFilterClear () {
-    const { dates } = this.props.query
+    const dates = {
+      end: null,
+      start: null,
+    }
 
     this.updateQuery({ dates })
   }
@@ -426,6 +445,7 @@ class TransactionsSearch extends React.Component {
         total,
       },
       selectedRows,
+      showDateInputCalendar,
       viewMode,
     } = this.state
 
@@ -461,6 +481,7 @@ class TransactionsSearch extends React.Component {
         loading={loading}
         onChangeViewMode={this.handleViewModeChange}
         onChartsCollapse={this.handleChartsCollapse}
+        onDatePresetChange={this.handleDatePresetChange}
         onDetailsClick={this.handleRowDetailsClick}
         onExpandRow={this.handleExpandRow}
         onExport={this.handleExport}
@@ -480,6 +501,7 @@ class TransactionsSearch extends React.Component {
         rows={list.rows}
         selectedPage={count}
         selectedRows={selectedRows}
+        showDateInputCalendar={showDateInputCalendar}
         t={t}
         viewMode={viewMode}
       />

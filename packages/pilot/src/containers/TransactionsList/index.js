@@ -82,6 +82,7 @@ const TransactionsList = ({
   filterOptions,
   loading,
   onChangeViewMode,
+  onDatePresetChange,
   onDetailsClick,
   onExpandRow,
   onExport,
@@ -101,6 +102,7 @@ const TransactionsList = ({
   rows,
   selectedPage,
   selectedRows,
+  showDateInputCalendar,
   t,
   viewMode,
 }) => {
@@ -147,7 +149,6 @@ const TransactionsList = ({
             onChange={onFilterChange}
             onClear={onFilterClear}
             options={filterOptions}
-            query={query}
             t={t}
           >
             <DateInput
@@ -155,6 +156,9 @@ const TransactionsList = ({
               name="dates"
               presets={dateSelectorPresets}
               strings={translateDateInput(t)}
+              onConfirm={() => null}
+              onPresetChange={onDatePresetChange}
+              showCalendar={showDateInputCalendar}
             />
             <Input
               icon={<Search32 width={16} height={16} />}
@@ -301,7 +305,7 @@ TransactionsList.propTypes = {
   count: PropTypes.number,
   data: PropTypes.arrayOf(PropTypes.object),
   dateSelectorPresets: PropTypes.arrayOf(PropTypes.shape({
-    date: PropTypes.string,
+    date: PropTypes.func,
     items: PropTypes.arrayOf(PropTypes.shape({
       date: PropTypes.func,
       title: PropTypes.string,
@@ -320,6 +324,7 @@ TransactionsList.propTypes = {
   })).isRequired,
   loading: PropTypes.bool.isRequired,
   onChangeViewMode: PropTypes.func.isRequired,
+  onDatePresetChange: PropTypes.func.isRequired,
   onDetailsClick: PropTypes.func.isRequired,
   onExpandRow: PropTypes.func.isRequired,
   onExport: PropTypes.func.isRequired,
@@ -349,6 +354,7 @@ TransactionsList.propTypes = {
   rows: PropTypes.arrayOf(PropTypes.object).isRequired,
   selectedPage: PropTypes.number,
   selectedRows: PropTypes.arrayOf(PropTypes.number).isRequired,
+  showDateInputCalendar: PropTypes.bool,
   t: PropTypes.func.isRequired,
   viewMode: PropTypes.oneOf(['chart', 'table']).isRequired,
 }
@@ -368,6 +374,7 @@ TransactionsList.defaultProps = {
     search: '',
   },
   selectedPage: 15,
+  showDateInputCalendar: false,
 }
 
 export default TransactionsList
