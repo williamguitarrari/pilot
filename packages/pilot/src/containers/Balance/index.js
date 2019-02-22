@@ -117,6 +117,7 @@ class Balance extends Component {
     this.handleFilterClick = this.handleFilterClick.bind(this)
     this.handleDatesChange = this.handleDatesChange.bind(this)
     this.handleOperationsPageChange = this.handleOperationsPageChange.bind(this)
+    this.handlePresetChange = this.handlePresetChange.bind(this)
     this.handleRequestCancelClick = this.handleRequestCancelClick.bind(this)
     this.renderAnticipation = this.renderAnticipation.bind(this)
 
@@ -125,6 +126,7 @@ class Balance extends Component {
         end: props.dates.end,
         start: props.dates.start,
       },
+      showDateInputCalendar: false,
     }
   }
 
@@ -260,6 +262,12 @@ class Balance extends Component {
   handleOperationsPageChange (pageIndex) {
     const { onPageChange } = this.props
     onPageChange(pageIndex)
+  }
+
+  handlePresetChange () {
+    this.setState({
+      showDateInputCalendar: true,
+    })
   }
 
   handleRequestCancelClick (requestIndex) {
@@ -458,9 +466,12 @@ class Balance extends Component {
                       icon={<IconCalendar width={16} height={16} />}
                       limits={dateLimits}
                       onChange={this.handleDatesChange}
+                      onPresetChange={this.handlePresetChange}
                       presets={datePresets}
+                      selectedPreset="last-7"
                       strings={getDateLabels(this.props.t)}
-                      value={this.state.dates}
+                      showCalendar={this.state.showDateInputCalendar}
+                      dates={this.state.dates}
                     />
                     <Button
                       disabled={filterDatesEqualCurrent}

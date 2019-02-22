@@ -4,6 +4,10 @@
   overflow: initial;
 }
 
+.filter {
+  display: flex;
+}
+
 .filter > button {
   margin-left: var(--spacing-small);
 }
