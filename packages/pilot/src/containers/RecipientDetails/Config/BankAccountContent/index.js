@@ -31,6 +31,7 @@ const hasItems = complement(either(isEmpty, isNil))
 
 const toDropdownOptions = (account) => {
   const {
+    id,
     name,
     bank,
     agency,
@@ -47,7 +48,7 @@ const toDropdownOptions = (account) => {
 
   return {
     name: `${name} - ${bank} - ${agencyNumber} - ${accountNumber}`,
-    value: account.id,
+    value: id,
   }
 }
 
