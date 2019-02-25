@@ -4,10 +4,10 @@ import { propOr, __ } from 'ramda'
 
 import {
   Button,
+  Flexbox,
   Popover,
   PopoverContent,
   Sidebar,
-  SidebarContent,
   SidebarHeader,
   SidebarLink,
   SidebarLinks,
@@ -16,9 +16,11 @@ import {
 import IconMenu from 'emblematic-icons/svg/Menu32.svg'
 import IconWallet from 'emblematic-icons/svg/Wallet32.svg'
 
-import SidebarSections from '../components/SidebarSections'
-import SidebarSummary from '../components/SidebarSummary'
-import formatDecimalCurrency from '../formatters/decimalCurrency'
+import style from './style.css'
+
+import SidebarSections from '../../components/SidebarSections'
+import SidebarSummary from '../../components/SidebarSummary'
+import formatDecimalCurrency from '../../formatters/decimalCurrency'
 
 class SidebarContainer extends React.Component {
   constructor (props) {
@@ -151,7 +153,10 @@ class SidebarContainer extends React.Component {
           ))}
         </SidebarLinks>
         {!collapsed &&
-          <SidebarContent>
+          <Flexbox
+            className={style.backToOldVersion}
+            justifyContent="center"
+          >
             <Button
               onClick={() => {
                 // eslint-disable-next-line no-undef
@@ -162,7 +167,7 @@ class SidebarContainer extends React.Component {
             >
               {t('pages.sidebar.back_to_old_version')}
             </Button>
-          </SidebarContent>
+          </Flexbox>
         }
       </Sidebar>
     )
