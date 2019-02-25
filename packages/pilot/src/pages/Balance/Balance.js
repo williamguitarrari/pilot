@@ -276,6 +276,7 @@ class Balance extends Component {
     } = prevProps
 
     const {
+      company,
       location: {
         search: newSearch,
       },
@@ -284,7 +285,6 @@ class Balance extends Component {
           id: newRecipientId,
         },
       },
-      company,
     } = this.props
 
     if (oldSearch !== newSearch) {
