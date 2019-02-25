@@ -62,7 +62,13 @@ const LoggedArea = ({
           component={component}
         />
       ))}
-      <Redirect to={recipientId ? `/balance/${recipientId}` : '/balance/'} />
+      <Redirect
+        to={
+          recipientId
+          ? `/balance/${recipientId}`
+          : '/balance/'
+        }
+      />
     </Switch>
   </Layout>
 )
