@@ -39,6 +39,7 @@ const Sidebar = ({
   history,
   location: { pathname },
   recipientId,
+  sessionId,
   t,
 }) => (
   <SidebarContainer
@@ -55,6 +56,7 @@ const Sidebar = ({
     onAnticipate={() => history.push(`/anticipation/${recipientId}`)}
     onLinkClick={handleLinkClick(history.push, pathname)}
     onWithdraw={() => history.push(`/withdraw/${recipientId}`)}
+    sessionId={sessionId}
     t={t}
   />
 )
@@ -72,12 +74,14 @@ Sidebar.propTypes = {
     pathname: PropTypes.string,
   }).isRequired,
   recipientId: PropTypes.string,
+  sessionId: PropTypes.string,
   t: PropTypes.func.isRequired,
 }
 
 Sidebar.defaultProps = {
   companyName: '',
   recipientId: null,
+  sessionId: '',
 }
 
 export default withRouter(Sidebar)

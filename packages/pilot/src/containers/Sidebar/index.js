@@ -21,6 +21,7 @@ import style from './style.css'
 import SidebarSections from '../../components/SidebarSections'
 import SidebarSummary from '../../components/SidebarSummary'
 import formatDecimalCurrency from '../../formatters/decimalCurrency'
+import environment from '../../environment'
 
 class SidebarContainer extends React.Component {
   constructor (props) {
@@ -80,6 +81,7 @@ class SidebarContainer extends React.Component {
       links,
       logo: Logo,
       onLinkClick,
+      sessionId,
       t,
     } = this.props
 
@@ -158,10 +160,10 @@ class SidebarContainer extends React.Component {
             justifyContent="center"
           >
             <Button
-              onClick={() => {
+              onClick={
                 // eslint-disable-next-line no-undef
-                window.open('https://dashboard.pagar.me/')
-              }}
+                () => window.open(`https://dashboard.pagar.me/#login?session_id=${sessionId}&redirect_to=dashboard.home&environment=${environment}`)
+              }
               fill="outline"
               size="tiny"
             >
@@ -191,6 +193,7 @@ SidebarContainer.propTypes = {
   onAnticipate: PropTypes.func,
   onLinkClick: PropTypes.func.isRequired,
   onWithdraw: PropTypes.func,
+  sessionId: PropTypes.string,
   t: PropTypes.func.isRequired,
 }
 
@@ -198,6 +201,7 @@ SidebarContainer.defaultProps = {
   companyName: '',
   onAnticipate: null,
   onWithdraw: null,
+  sessionId: '',
 }
 
 export default SidebarContainer
