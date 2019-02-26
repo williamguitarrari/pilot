@@ -275,9 +275,6 @@ storiesOf('Containers|Page containers', module)
       statusMessage="An error ocurred!"
     />
   ))
-  .add('Recipient balance', () => (
-    <RecipientBalance />
-  ))
   .add('Reprocess form', () => (
     <ReprocessForm />
   ))
