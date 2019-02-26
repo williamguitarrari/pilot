@@ -10,14 +10,17 @@ import {
   toPairs,
 } from 'ramda'
 import {
+  Button,
   Card,
   CardContent,
   Col,
+  Flexbox,
   Grid,
   Row,
   Steps,
 } from 'former-kit'
 import moment from 'moment'
+
 import AnticipationConfirmation from './Confirmation'
 import AnticipationForm from './Form'
 import AnticipationResult from './Result'
@@ -25,6 +28,10 @@ import DetailsHead from '../../components/DetailsHead'
 import formatAccountType from '../../formatters/accountType'
 import formatAgencyAccount from '../../formatters/agencyAccount'
 import formatCpfCnpj from '../../formatters/cpfCnpj'
+import { Message, MessageActions } from '../../components/Message'
+import EmptyStateIcon from './EmptyStateIcon.svg'
+
+import style from './style.css'
 
 const createStepsStatus = pipe(
   toPairs,
@@ -160,7 +167,28 @@ class Anticipation extends Component {
             tablet={12}
             tv={12}
           >
-            {currentStep === 'data' &&
+            {!loading && maximum === 0 && currentStep === 'data' &&
+              <Flexbox
+                alignItems="center"
+                className={style.emptyStateBlock}
+                direction="column"
+              >
+                <Message
+                  image={<EmptyStateIcon width={365} height={148} />}
+                  message={t('pages.anticipation.no_available_limits')}
+                >
+                  <MessageActions>
+                    <Button
+                      fill="gradient"
+                      onClick={onCancel}
+                    >
+                      {t('pages.anticipation.back_to_balance')}
+                    </Button>
+                  </MessageActions>
+                </Message>
+              </Flexbox>
+            }
+            {maximum > 0 && currentStep === 'data' &&
               <AnticipationForm
                 amount={amount}
                 approximateRequested={approximateRequested}

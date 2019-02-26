@@ -753,12 +753,6 @@ class Anticipation extends Component {
       client,
     } = this.props
 
-    if (maxValue < 100) {
-      return this.setState({
-        loading: true,
-      })
-    }
-
     return createBulk(client, {
       automaticTransfer: isAutomaticTransfer,
       paymentDate,
