@@ -432,6 +432,7 @@
       },
       "anticipation_success": "Pedido confirmado! Sua antecipação será analisada em breve.",
       "anticipation_timeframe": "Ordem da antecipação:",
+      "back_to_balance": "Voltar para o extrato",
       "cancel": "Cancelar",
       "conclusion": "Conclusão",
       "confirm": "Antecipar valor",
@@ -461,6 +462,7 @@
       "maximum_error": "Valor maior do que o permitido",
       "minimum_error": "Valor menor do que o permitido",
       "no": "Não",
+      "no_available_limits": "Não há valores disponíveis a serem antecipados.",
       "number": "Deve ser um número",
       "password": "Senha",
       "period":{
