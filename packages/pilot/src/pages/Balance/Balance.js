@@ -3,11 +3,9 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import qs from 'qs'
 import {
-  __,
   always,
   anyPass,
   applySpec,
-  assoc,
   complement,
   compose,
   defaultTo,
@@ -38,22 +36,9 @@ import {
   requestBalance,
   receiveBalance,
 } from './actions'
+import { requestLimits } from '../Anticipation'
 import BalanceContainer from '../../containers/Balance'
 import env from '../../environment'
-
-const getBulkAnticipationsLimits = (client, recipientId) => {
-  const now = moment()
-
-  return client
-    .business
-    .requestBusinessCalendar(now.year())
-    .then(calendar => client
-      .business
-      .nextAnticipableBusinessDay(calendar, { hour: 10 }, now))
-    .then(paymentDate => paymentDate.valueOf())
-    .then(assoc('payment_date', __, { recipientId, timeframe: 'start' }))
-    .then(client.bulkAnticipations.limits)
-}
 
 const mapStateToProps = ({
   account: {
@@ -62,12 +47,24 @@ const mapStateToProps = ({
     sessionId,
     user,
   },
+  anticipation: {
+    error: anticipationError,
+    limits: {
+      max,
+    },
+    loading: anticipationLoading,
+  },
   balance: {
     error,
     loading,
     query,
   },
 }) => ({
+  anticipation: {
+    available: max,
+    error: !isNil(anticipationError),
+    loading: anticipationLoading,
+  },
   client,
   company,
   error,
@@ -77,17 +74,12 @@ const mapStateToProps = ({
   user,
 })
 
-const mapDispatchToProps = dispatch => ({
-  onReceiveBalance: ({ query }) => {
-    dispatch(receiveBalance({ query }))
-  },
-  onRequestBalance: (query) => {
-    dispatch(requestBalance(query))
-  },
-  onRequestBalanceFail: (error) => {
-    dispatch(receiveBalance(error))
-  },
-})
+const mapDispatchToProps = {
+  onReceiveBalance: receiveBalance,
+  onRequestAnticipationLimits: requestLimits,
+  onRequestBalance: requestBalance,
+  onRequestBalanceFail: receiveBalance,
+}
 
 const enhanced = compose(
   translate(),
@@ -169,7 +161,6 @@ const getValidId = uncurryN(2, defaultId => unless(
 ))
 
 const getRecipientId = pathOr(null, ['default_recipient_id', env])
-const getAnticipationAmount = path(['maximum', 'amount'])
 
 const cancelBulkAnticipation = ({ bulkId, recipientId }, client) =>
   client.bulkAnticipations.cancel({
@@ -209,11 +200,6 @@ class Balance extends Component {
     super(props)
 
     this.state = {
-      anticipation: {
-        available: 0,
-        error: false,
-        loading: false,
-      },
       anticipationCancel: null,
       modalOpened: false,
       query: {
@@ -268,11 +254,6 @@ class Balance extends Component {
       location: {
         search: oldSearch,
       },
-      match: {
-        params: {
-          id: oldRecipientId,
-        },
-      },
     } = prevProps
 
     const {
@@ -291,9 +272,7 @@ class Balance extends Component {
       this.requestData(newRecipientId, parseQueryUrl(newSearch))
       this.requestTotal(newRecipientId, parseQueryUrl(newSearch))
     }
-    if (oldRecipientId !== newRecipientId) {
-      this.requestAnticipationLimits(newRecipientId)
-    }
+
     if (
       !oldSearch
       && !newSearch
@@ -336,30 +315,20 @@ class Balance extends Component {
 
   requestAnticipationLimits (id) {
     const { client } = this.props
-    this.setState({
-      anticipation: {
-        error: false,
-        loading: true,
-      },
-    })
-    return getBulkAnticipationsLimits(client, id)
-      .then((anticipationLimits) => {
-        this.setState({
-          anticipation: {
-            available: getAnticipationAmount(anticipationLimits),
-            error: false,
-            loading: false,
-          },
-        })
-      })
-      .catch(() => {
-        this.setState({
-          anticipation: {
-            error: true,
-            loading: false,
-          },
-        })
-      })
+    const now = moment()
+
+    return client
+      .business
+      .requestBusinessCalendar(now.year())
+      .then(calendar => client
+        .business
+        .nextAnticipableBusinessDay(calendar, { hour: 10 }, now))
+      .then(paymentDate =>
+        this.props.onRequestAnticipationLimits({
+          paymentDate,
+          recipientId: id,
+          timeframe: 'start',
+        }))
   }
 
   requestTotal (id, searchQuery) {
@@ -369,7 +338,7 @@ class Balance extends Component {
       .then((total) => {
         this.setState({ total })
       })
-      // TODO add catch when BalanceSummary have loading state
+    // TODO add catch when BalanceSummary have loading state
   }
 
   requestData (id, searchQuery) {
@@ -498,6 +467,7 @@ class Balance extends Component {
 
   render () {
     const {
+      anticipation,
       company,
       error,
       loading,
@@ -506,7 +476,6 @@ class Balance extends Component {
     } = this.props
 
     const {
-      anticipation,
       anticipationCancel,
       modalOpened,
       query: {
@@ -590,6 +559,11 @@ class Balance extends Component {
 }
 
 Balance.propTypes = {
+  anticipation: PropTypes.shape({
+    available: PropTypes.number.isRequired,
+    error: PropTypes.bool.isRequired,
+    loading: PropTypes.bool.isRequired,
+  }).isRequired,
   client: PropTypes.shape({
     balance: PropTypes.shape({
       data: PropTypes.func.isRequired,
@@ -624,6 +598,7 @@ Balance.propTypes = {
     }).isRequired,
   }).isRequired,
   onReceiveBalance: PropTypes.func.isRequired,
+  onRequestAnticipationLimits: PropTypes.func.isRequired,
   onRequestBalance: PropTypes.func.isRequired,
   onRequestBalanceFail: PropTypes.func.isRequired,
   query: PropTypes.shape({
