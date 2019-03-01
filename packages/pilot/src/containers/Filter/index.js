@@ -11,7 +11,6 @@ import {
   Row,
   Col,
   CheckboxGroup,
-  Spacing,
 } from 'former-kit'
 
 import Form from 'react-vanilla-form'
@@ -178,7 +177,6 @@ class Filters extends Component {
             </Button>
           )
         }
-        <Spacing size="flex" />
         <Button
           relevance={
             hasChanged
