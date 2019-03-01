@@ -195,7 +195,7 @@ class Withdraw extends Component {
       const { pricing: { transfers: { ted, credito_em_conta } } } = this.props
 
       if (contains(partnersBankCodes, bankCode)) {
-        return credito_em_conta // eslint-disable-line camelcase
+        return -credito_em_conta // eslint-disable-line camelcase
       }
 
       return -ted
@@ -216,8 +216,10 @@ class Withdraw extends Component {
       requested,
     } = this.state
 
+    const taxedAmount = requested + this.getTransferCost()
+
     client.transfers.create({
-      amount: requested,
+      amount: taxedAmount,
       recipient_id: recipient.id,
     })
       .then(() => {
