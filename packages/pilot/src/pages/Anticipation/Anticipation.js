@@ -219,7 +219,7 @@ const stepsId = {
 }
 
 const initialState = {
-  approximateRequested: 0,
+  approximateRequested: undefined,
   bulkAnticipationStatus: null,
   bulkId: null,
   calendar: {},
@@ -238,7 +238,7 @@ const initialState = {
   },
   loading: false,
   paymentDate: moment(),
-  requestedAmount: 0,
+  requestedAmount: undefined,
   statusMessage: '',
   stepsStatus: {
     [stepsId.data]: 'current',
