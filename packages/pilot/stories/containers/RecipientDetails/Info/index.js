@@ -22,48 +22,35 @@ const identification = {
   partner0: {
     cpf: '222.222.222-22',
     name: 'Luke Skywalker',
-    phone: '21 99999-9999',
+    email: 'mail@email.com',
   },
   partner1: {
     cpf: '111.111.111-11',
     name: 'Han Solo',
-    phone: '21 99999-9999',
+    email: 'mail@email.com',
   },
   partner2: {
     cpf: '333.333.333-33',
     name: 'Princess Leia',
-    phone: '11 88888-8888',
+    email: 'mail@email.com',
   },
   partner3: {
     cpf: '444.444.444-44',
     name: 'Chewie',
-    phone: '11 77777-7777',
+    email: 'mail@email.com',
   },
   partner4: {
     cpf: '',
     name: '',
-    phone: '',
+    email: '',
   },
 }
 
-const configuration = {
-  anticipationModel: 'Automática por volume',
-  anticipationVolumePercentage: '50',
-  anticipationDays: '',
-  transferEnabled: true,
-  transferInterval: 'Mensal',
-  transferDay: '5',
-  transferWeekday: 'Terça-feira',
-}
-
-const bankAccount = {
-  agency_digit: '',
-  agency: '1111',
-  bank: '001',
-  name: 'Conta Bancária',
-  number_digit: '1',
-  number: '11111',
-  type: 'conta_corrente',
+const metadata = {
+  custom: 'custom data',
+  fields: {
+    abc: '123',
+  },
 }
 
 const RecipientDetailInfoExample = () => (
@@ -71,8 +58,7 @@ const RecipientDetailInfoExample = () => (
     <Card>
       <RecipientDetailInfo
         identification={identification}
-        configuration={configuration}
-        bankAccount={bankAccount}
+        metadata={metadata}
         t={t => t}
       />
     </Card>

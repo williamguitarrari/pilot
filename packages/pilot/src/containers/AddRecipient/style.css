@@ -6,12 +6,20 @@
   margin-top: var(--spacing-small);
 }
 
+.noBorder {
+  margin-top: var(--spacing-small);
+  border: none;
+  box-shadow: none;
+}
+
 .flex {
   align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
+  padding: 0;
+  background-color: var(--color-light-silver-40);
 }
 
 .centerText {
@@ -19,4 +27,9 @@
   font-size: 16px;
   font-weight: var(--title-font-style);
   text-align: center;
+  margin-top: 0;
+}
+
+.title {
+  font-size: 24px;
 }

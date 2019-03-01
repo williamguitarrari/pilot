@@ -118,9 +118,6 @@ storiesOf('Containers|Page containers', module)
   .add('Recipient Configuration', () => (
     <RecipientDetailConfig />
   ))
-  .add('Recipient Info', () => (
-    <RecipientDetailInfo />
-  ))
   .add('Recipient Balance', () => (
     <RecipientBalance />
   ))
@@ -274,9 +271,6 @@ storiesOf('Containers|Page containers', module)
       }}
       statusMessage="An error ocurred!"
     />
-  ))
-  .add('Recipient balance', () => (
-    <RecipientBalance />
   ))
   .add('Reprocess form', () => (
     <ReprocessForm />
