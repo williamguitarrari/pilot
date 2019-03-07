@@ -18,8 +18,8 @@ import {
   Grid,
   Row,
   Steps,
+  isMomentPropValidation,
 } from 'former-kit'
-import { isMomentPropValidation } from 'former-kit/dist/Calendar'
 
 import AnticipationConfirmation from './Confirmation'
 import AnticipationForm from './Form'

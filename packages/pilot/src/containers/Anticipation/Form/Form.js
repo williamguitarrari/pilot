@@ -23,9 +23,9 @@ import {
   Row,
   SegmentedSwitch,
   Spacing,
+  isMomentPropValidation,
 } from 'former-kit'
 import IconCalendar from 'emblematic-icons/svg/Calendar32.svg'
-import { isMomentPropValidation } from 'former-kit/dist/Calendar'
 
 import CurrencyInput from '../../../components/CurrencyInput'
 import formatCurrency from '../../../formatters/currency'

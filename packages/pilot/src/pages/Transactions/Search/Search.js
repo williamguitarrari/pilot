@@ -15,6 +15,7 @@ import {
   contains,
   defaultTo,
   either,
+  equals,
   identity,
   isEmpty,
   isNil,
@@ -31,6 +32,8 @@ import {
   without,
   when,
 } from 'ramda'
+import { isMomentPropValidation } from 'former-kit'
+
 import {
   requestSearch,
   receiveSearch,
@@ -40,6 +43,7 @@ import { requestLogout } from '../../Account/actions'
 import dateSelectorPresets from '../../../models/dateSelectorPresets'
 import filterOptions from '../../../models/transactionFilterOptions'
 import TransactionsList from '../../../containers/TransactionsList'
+import { stringifyDates } from '../../../containers/Filter'
 
 const mapStateToProps = ({
   account: { client },
@@ -67,7 +71,7 @@ const enhanced = compose(
   withRouter
 )
 
-const momentToString = momentObj => momentObj.toISOString(true)
+const momentToString = momentObj => momentObj.format('MM/DD/YYYY')
 
 const normalizeDateToString = property => pipe(
   prop(property),
@@ -226,23 +230,24 @@ class TransactionsSearch extends React.Component {
   }
 
   componentDidMount () {
-    const urlSearchQuery = this.props.history.location.search
-
-    if (isEmpty(urlSearchQuery)) {
-      this.updateQuery(this.state.query)
-    } else {
-      this.requestData(parseQueryUrl(urlSearchQuery))
-    }
-
-    this.requestPendingReviewsCount()
+    this.requestData(this.state.query)
   }
 
-  componentWillReceiveProps (nextProps) {
-    const { location: { search } } = this.props // eslint-disable-line
-    const { location } = nextProps
+  componentDidUpdate () {
+    const {
+      history: {
+        location: {
+          search,
+        },
+      },
+    } = this.props
 
-    if (search !== location.search) {
-      this.requestData(parseQueryUrl(location.search))
+    const { query: currentQuery } = this.state
+
+    const urlQuery = parseQueryUrl(search)
+
+    if (!equals(stringifyDates(urlQuery), stringifyDates(currentQuery))) {
+      this.updateQuery(currentQuery)
     }
   }
 
@@ -382,6 +387,7 @@ class TransactionsSearch extends React.Component {
     }
 
     this.updateQuery(query)
+    this.requestData(query)
   }
 
   handlePageChange (page) {
@@ -551,8 +557,8 @@ TransactionsSearch.propTypes = {
   query: PropTypes.shape({
     count: PropTypes.number.isRequired,
     dates: PropTypes.shape({
-      end: PropTypes.instanceOf(moment),
-      start: PropTypes.instanceOf(moment),
+      end: isMomentPropValidation,
+      start: isMomentPropValidation,
     }),
     filters: PropTypes.shape({}),
     offset: PropTypes.number.isRequired,

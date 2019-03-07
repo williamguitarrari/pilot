@@ -30,6 +30,7 @@ import {
   Row,
   SegmentedSwitch,
   Table,
+  isMomentPropValidation,
 } from 'former-kit'
 
 import style from './style.css'
@@ -162,6 +163,7 @@ const TransactionsList = ({
               strings={translateDateInput(t)}
               onPresetChange={onDatePresetChange}
               selectionMode={
+                query.dates.start &&
                 query.dates.start.isSame(query.dates.end, 'day')
                 ? 'single'
                 : 'period'
@@ -354,8 +356,8 @@ TransactionsList.propTypes = {
   pendingReviewsCount: PropTypes.number.isRequired,
   query: PropTypes.shape({
     dates: PropTypes.shape({
-      end: PropTypes.instanceOf(moment),
-      start: PropTypes.instanceOf(moment),
+      end: isMomentPropValidation,
+      start: isMomentPropValidation,
     }),
     properties: PropTypes.object,
     search: PropTypes.string,

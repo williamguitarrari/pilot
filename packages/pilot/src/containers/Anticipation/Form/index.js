@@ -12,8 +12,8 @@ import {
   Grid,
   Spacing,
   Tooltip,
+  isMomentPropValidation,
 } from 'former-kit'
-import { isMomentPropValidation } from 'former-kit/dist/Calendar'
 import IconInfo from 'emblematic-icons/svg/Info32.svg'
 
 import TotalDisplay from '../../../components/TotalDisplay'
