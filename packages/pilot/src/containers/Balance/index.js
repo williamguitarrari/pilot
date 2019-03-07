@@ -39,7 +39,7 @@ import bulkAnticipationsLabels from '../../models/bulkAnticipationTypes'
 import currencyFormatter from '../../formatters/currency'
 import dateFormatter from '../../formatters/longDate'
 import dateLimits from '../../models/dateSelectorLimits'
-import datePresets from '../../models/dateSelectorPresets'
+import dateInputPresets from '../../models/dateSelectorPresets'
 import DetailsHead from '../../components/DetailsHead'
 import getColumns from '../../components/Operations/operationsTableColumns'
 import getColumnsTranslator from '../../formatters/columnTranslator'
@@ -120,6 +120,9 @@ class Balance extends Component {
     this.handlePresetChange = this.handlePresetChange.bind(this)
     this.handleRequestCancelClick = this.handleRequestCancelClick.bind(this)
     this.renderAnticipation = this.renderAnticipation.bind(this)
+
+    this.localizedPresets = dateInputPresets(props.t)
+    this.dateLabels = getDateLabels(props.t)
 
     this.state = {
       dates: {
@@ -467,9 +470,9 @@ class Balance extends Component {
                       limits={dateLimits}
                       onChange={this.handleDatesChange}
                       onPresetChange={this.handlePresetChange}
-                      presets={datePresets}
+                      presets={this.localizedPresets}
                       selectedPreset="last-7"
-                      strings={getDateLabels(this.props.t)}
+                      strings={this.dateLabels}
                       showCalendar={this.state.showDateInputCalendar}
                       dates={this.state.dates}
                     />

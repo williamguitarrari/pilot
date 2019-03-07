@@ -189,6 +189,8 @@ class TransactionsSearch extends React.Component {
 
     const urlSearchQuery = props.history.location.search
 
+    this.localizedPresets = dateSelectorPresets(props.t)
+
     this.state = {
       collapsed: true,
       expandedRows: [],
@@ -501,7 +503,7 @@ class TransactionsSearch extends React.Component {
         columns={columns}
         count={total.count}
         data={chart.dataset}
-        dateSelectorPresets={dateSelectorPresets}
+        dateSelectorPresets={this.localizedPresets}
         expandedRows={expandedRows}
         filterOptions={filterOptions}
         loading={loading}

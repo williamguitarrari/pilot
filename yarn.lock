@@ -6093,10 +6093,10 @@ former-kit-skin-pagarme@1.1.0:
     emblematic-icons "0.6.1"
     react-dates "18.4.0"
 
-former-kit@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/former-kit/-/former-kit-1.1.0.tgz#f16dcaba804471d7dbdf0947674e340c95a9fbb8"
-  integrity sha512-dkDi2cGKAFEDV/5M6tLjV18jEZH4xwBENdD2z/7BOFRzm/BuCnoX+26wAWIKUAm9v4OVNjMDFqrNaaZpU6eTSQ==
+former-kit@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/former-kit/-/former-kit-1.2.0.tgz#da498b52f845e13e33c287534843ce040213e817"
+  integrity sha512-tnpEYT43IlC1PuDHRj5X5NLUEQccQrEd9tFHlFtQA2pDsC6n1Ao5TNuq0n8nuna/vBSV9T7tqhhsdxn8ck7JrQ==
   dependencies:
     classnames "2.2.6"
     emblematic-icons "0.6.1"
