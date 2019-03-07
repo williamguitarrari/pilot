@@ -149,6 +149,7 @@ const TransactionsList = ({
             onChange={onFilterChange}
             onClear={onFilterClear}
             options={filterOptions}
+            query={query}
             t={t}
           >
             <DateInput
@@ -156,7 +157,6 @@ const TransactionsList = ({
               name="dates"
               presets={dateSelectorPresets}
               strings={translateDateInput(t)}
-              onConfirm={() => null}
               onPresetChange={onDatePresetChange}
               showCalendar={showDateInputCalendar}
             />

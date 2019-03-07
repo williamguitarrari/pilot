@@ -67,7 +67,7 @@ const enhanced = compose(
   withRouter
 )
 
-const momentToString = momentObj => momentObj.toISOString()
+const momentToString = momentObj => momentObj.toISOString(true)
 
 const normalizeDateToString = property => pipe(
   prop(property),
@@ -97,7 +97,11 @@ const normalizeStringToDate = property => pipe(
   prop(property),
   unless(
     either(isNil, isEmpty),
-    pipe(stringToMoment, normalizeDateTime(property), objOf(property))
+    pipe(
+      stringToMoment,
+      normalizeDateTime(property),
+      objOf(property)
+    )
   )
 )
 
@@ -183,6 +187,7 @@ class TransactionsSearch extends React.Component {
       collapsed: true,
       expandedRows: [],
       pendingReviewsCount: 0,
+      query: props.query || {},
       result: {
         chart: {
           dataset: [],
@@ -219,7 +224,7 @@ class TransactionsSearch extends React.Component {
     const urlSearchQuery = this.props.history.location.search
 
     if (isEmpty(urlSearchQuery)) {
-      this.updateQuery(this.props.query)
+      this.updateQuery(this.state.query)
     } else {
       this.requestData(parseQueryUrl(urlSearchQuery))
     }
@@ -308,15 +313,19 @@ class TransactionsSearch extends React.Component {
       })
   }
 
-  handleDatePresetChange () {
+  handleDatePresetChange (dates) {
     this.setState({
+      query: {
+        ...this.state.query,
+        dates,
+      },
       showDateInputCalendar: true,
     })
   }
 
   handlePageCountChange (count) {
     const query = {
-      ...this.props.query,
+      ...this.state.query,
       count,
       offset: 1,
     }
@@ -326,7 +335,7 @@ class TransactionsSearch extends React.Component {
 
   handleOrderChange (field, order) {
     const query = {
-      ...this.props.query,
+      ...this.state.query,
       offset: 1,
       sort: {
         field,
@@ -353,12 +362,12 @@ class TransactionsSearch extends React.Component {
     sort,
   }) {
     const query = {
-      ...this.props.query,
+      ...this.state.query,
       dates,
       filters,
       offset: 1,
       search,
-      sort: sort || this.props.query.sort,
+      sort: sort || this.state.query.sort,
     }
 
     this.updateQuery(query)
@@ -366,7 +375,7 @@ class TransactionsSearch extends React.Component {
 
   handlePageChange (page) {
     const query = {
-      ...this.props.query,
+      ...this.state.query,
       offset: page,
     }
 
@@ -439,6 +448,12 @@ class TransactionsSearch extends React.Component {
       columns,
       expandedRows,
       pendingReviewsCount,
+      query,
+      query: {
+        count,
+        offset,
+        sort,
+      },
       result: {
         chart,
         list,
@@ -451,12 +466,6 @@ class TransactionsSearch extends React.Component {
 
     const {
       loading,
-      query,
-      query: {
-        count,
-        offset,
-        sort,
-      },
       t,
     } = this.props
 
