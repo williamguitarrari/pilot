@@ -88,6 +88,7 @@ const TransactionsList = ({
   onExport,
   onFilterChange,
   onFilterClear,
+  onFilterConfirm,
   onOrderChange,
   onPageChange,
   onPageCountChange,
@@ -146,6 +147,7 @@ const TransactionsList = ({
         >
           <Filter
             disabled={loading}
+            onConfirm={onFilterConfirm}
             onChange={onFilterChange}
             onClear={onFilterClear}
             options={filterOptions}
@@ -153,11 +155,17 @@ const TransactionsList = ({
             t={t}
           >
             <DateInput
+              dates={query.dates}
               icon={<Calendar32 width={16} height={16} />}
               name="dates"
               presets={dateSelectorPresets}
               strings={translateDateInput(t)}
               onPresetChange={onDatePresetChange}
+              selectionMode={
+                query.dates.start.isSame(query.dates.end, 'day')
+                ? 'single'
+                : 'period'
+              }
               showCalendar={showDateInputCalendar}
             />
             <Input
@@ -330,6 +338,7 @@ TransactionsList.propTypes = {
   onExport: PropTypes.func.isRequired,
   onFilterChange: PropTypes.func.isRequired,
   onFilterClear: PropTypes.func.isRequired,
+  onFilterConfirm: PropTypes.func.isRequired,
   onOrderChange: PropTypes.func.isRequired,
   onPageChange: PropTypes.func.isRequired,
   onPageCountChange: PropTypes.func.isRequired,

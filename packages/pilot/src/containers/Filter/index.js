@@ -118,11 +118,13 @@ class Filters extends Component {
       hasChanged: false,
     })
 
-    this.props.onChange(filters)
+    this.props.onConfirm(filters)
   }
 
   handleFiltersChange (query) {
     this.setState({ query })
+
+    this.props.onChange(query)
   }
 
   renderChildrenInput (input, index) {
@@ -304,8 +306,9 @@ class Filters extends Component {
 Filters.propTypes = {
   children: PropTypes.node.isRequired,
   disabled: PropTypes.bool,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
   onClear: PropTypes.func.isRequired,
+  onConfirm: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(PropTypes.shape({
     items: PropTypes.arrayOf(PropTypes.shape({
       label: PropTypes.string,
@@ -320,6 +323,7 @@ Filters.propTypes = {
 
 Filters.defaultProps = {
   disabled: false,
+  onChange: () => null,
   options: [],
   query: {},
 }

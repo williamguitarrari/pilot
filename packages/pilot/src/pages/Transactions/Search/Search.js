@@ -183,11 +183,15 @@ class TransactionsSearch extends React.Component {
   constructor (props) {
     super(props)
 
+    const urlSearchQuery = props.history.location.search
+
     this.state = {
       collapsed: true,
       expandedRows: [],
       pendingReviewsCount: 0,
-      query: props.query || {},
+      query: isEmpty(urlSearchQuery)
+        ? props.query
+        : parseQueryUrl(urlSearchQuery),
       result: {
         chart: {
           dataset: [],
@@ -207,6 +211,7 @@ class TransactionsSearch extends React.Component {
     this.handleExpandRow = this.handleExpandRow.bind(this)
     this.handleExport = this.handleExport.bind(this)
     this.handleFilterChange = this.handleFilterChange.bind(this)
+    this.handleFilterConfirm = this.handleFilterConfirm.bind(this)
     this.handleFilterClear = this.handleFilterClear.bind(this)
     this.handleOrderChange = this.handleOrderChange.bind(this)
     this.handlePageChange = this.handlePageChange.bind(this)
@@ -255,7 +260,7 @@ class TransactionsSearch extends React.Component {
   }
 
   handlePendingReviewsFilter () {
-    this.handleFilterChange({
+    this.handleFilterConfirm({
       dates: {},
       filters: {
         status: ['pending_review'],
@@ -346,6 +351,12 @@ class TransactionsSearch extends React.Component {
     this.updateQuery(query)
   }
 
+  handleFilterChange (query) {
+    this.setState({
+      query,
+    })
+  }
+
   handleFilterClear () {
     const dates = {
       end: null,
@@ -355,7 +366,7 @@ class TransactionsSearch extends React.Component {
     this.updateQuery({ dates })
   }
 
-  handleFilterChange ({
+  handleFilterConfirm ({
     dates,
     filters,
     search,
@@ -495,6 +506,7 @@ class TransactionsSearch extends React.Component {
         onExpandRow={this.handleExpandRow}
         onExport={this.handleExport}
         onFilterChange={this.handleFilterChange}
+        onFilterConfirm={this.handleFilterConfirm}
         onFilterClear={this.handleFilterClear}
         onOrderChange={this.handleOrderChange}
         onPageChange={this.handlePageChange}
