@@ -8,10 +8,10 @@ import {
   ANTICIPABLE_LIMITS_REQUEST,
   DESTROY_ANTICIPATION_REQUEST,
   destroyAnticipationReceive,
-  failLimits,
   receiveLimits,
   requestLimits,
-} from '.'
+  failLimits,
+} from './actions'
 
 const getRecipientId = pathOr(null, ['account', 'company', 'default_recipient_id', env])
 
@@ -41,22 +41,23 @@ const limitsEpic = (action$, state$) =>
   action$
     .pipe(
       ofType(ANTICIPABLE_LIMITS_REQUEST),
-      mergeMap(({ error, payload }) => {
-        if (error) {
-          return failLimits(error)
-        }
+      mergeMap(({ payload }) => {
         const state = state$.value
         const recipientId = payload.recipientId || getRecipientId(state)
         const { account: { client } } = state
         const { paymentDate, timeframe } = payload
-
         return getAnticipationLimits(client, {
           payment_date: paymentDate,
           recipientId,
           timeframe,
         })
       }),
-      map(receiveLimits)
+      map(receiveLimits),
+      catchError((error) => {
+        const { message } = error
+
+        return of(failLimits({ message }))
+      })
     )
 
 const destroyAnticipationEpic = (action$, state$) =>

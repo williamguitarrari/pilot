@@ -32,9 +32,10 @@ import moment from 'moment'
 import { Alert } from 'former-kit'
 import IconInfo from 'emblematic-icons/svg/Info32.svg'
 import {
-  destroyAnticipationAction as destroyAnticipation,
-  requestLimits as requestAnticipationLimits,
-} from '.'
+  destroyAnticipation as destroyAnticipationAction,
+  requestLimits,
+} from './actions'
+
 import AnticipationContainer from '../../containers/Anticipation'
 import env from '../../environment'
 import partnersBankCodes from '../../models/partnersBanksCodes'
@@ -60,8 +61,8 @@ const mapStateToProps = ({
 })
 
 const mapDispatchToProps = {
-  destroyAnticipationAction: destroyAnticipation,
-  requestLimits: requestAnticipationLimits,
+  destroyAnticipation: destroyAnticipationAction,
+  requestAnticipationLimits: requestLimits,
 }
 
 const enhanced = compose(
