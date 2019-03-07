@@ -10,13 +10,16 @@ const initialState = {
   query: {
     count: 15,
     dates: {
-      end: moment(new Date()),
-      start: moment(new Date()).subtract(30, 'days'),
+      end: moment(new Date()).endOf('day'),
+      start: moment(new Date()).subtract(30, 'days').startOf('day'),
     },
     filters: {},
     offset: 1,
     search: '',
-    sort: {},
+    sort: {
+      field: ['created_at'],
+      order: 'descending',
+    },
   },
 }
 

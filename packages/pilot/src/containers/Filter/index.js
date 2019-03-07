@@ -20,19 +20,27 @@ import ChevronDown32 from 'emblematic-icons/svg/ChevronDown32.svg'
 import ChevronUp32 from 'emblematic-icons/svg/ChevronUp32.svg'
 
 import {
+  allPass,
   anyPass,
+  complement,
+  either,
   equals,
   flatten,
+  identity,
+  ifElse,
   isEmpty,
   isNil,
   unless,
   is,
   of,
   join,
+  map,
   mergeDeepLeft,
   pipe,
   values,
 } from 'ramda'
+
+import moment from 'moment'
 
 import compileTags from './compileTags'
 import style from './style.css'
@@ -50,12 +58,33 @@ const ensureArray = unless(
   of
 )
 
+const isDate = either(is(Date), moment.isMoment)
+
+const formatIfDate = ifElse(
+  isDate,
+  date => moment(date).format('MM/DD/YYYY HH:mm:ss'),
+  identity
+)
+
+const isNotDateObject = allPass([
+  is(Object),
+  complement(is(String)),
+  complement(isDate),
+])
+
+export const stringifyDates = ifElse(
+  isNotDateObject,
+  map(property => stringifyDates(property)),
+  formatIfDate
+)
+
 class Filters extends Component {
   constructor (props) {
     super(props)
 
     this.state = {
       collapsed: true,
+      hasChanged: false,
       query: props.query,
     }
 
@@ -65,9 +94,15 @@ class Filters extends Component {
     this.handleFiltersChange = this.handleFiltersChange.bind(this)
   }
 
-  componentWillReceiveProps ({ query }) {
-    if (!equals(query, this.state.query)) {
-      this.setState({ query })
+  componentDidUpdate (prevProps, prevState) {
+    const prevQuery = stringifyDates(prevState.query)
+    const currQuery = stringifyDates(this.props.query)
+
+    if (!equals(prevQuery, currQuery)) {
+      this.setState({ // eslint-disable-line react/no-did-update-set-state
+        hasChanged: true,
+        query: this.props.query,
+      })
     }
   }
 
@@ -80,6 +115,7 @@ class Filters extends Component {
   handleFiltersSubmit (filters) {
     this.setState({
       collapsed: true,
+      hasChanged: false,
     })
 
     this.props.onChange(filters)
@@ -102,16 +138,13 @@ class Filters extends Component {
       children,
       onClear,
       options,
-      query: originalFilters,
       t,
     } = this.props
 
     const {
       collapsed,
-      query: currentFilters,
+      hasChanged,
     } = this.state
-
-    const filtersChanged = !equals(originalFilters, currentFilters)
 
     return (
       <CardActions>
@@ -134,7 +167,7 @@ class Filters extends Component {
         <Spacing size="flex" />
         <Button
           relevance={
-            filtersChanged
+            hasChanged
               ? 'normal'
               : 'low'
           }
@@ -147,11 +180,11 @@ class Filters extends Component {
 
         <Button
           relevance={
-            filtersChanged
+            hasChanged
               ? 'normal'
               : 'low'
           }
-          disabled={!filtersChanged || this.props.disabled}
+          disabled={!hasChanged || this.props.disabled}
           type="submit"
           fill="gradient"
         >
