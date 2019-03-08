@@ -77,6 +77,7 @@ const getExportOptions = onExport => ([
 
 const TransactionsList = ({
   amount,
+  confirmationDisabled,
   count,
   data,
   dateSelectorPresets,
@@ -148,6 +149,7 @@ const TransactionsList = ({
           tv={12}
         >
           <Filter
+            confirmationDisabled={confirmationDisabled}
             disabled={loading}
             onConfirm={onFilterConfirm}
             onChange={onFilterChange}
@@ -313,6 +315,7 @@ const TransactionsList = ({
 
 TransactionsList.propTypes = {
   amount: PropTypes.number,
+  confirmationDisabled: PropTypes.bool,
   count: PropTypes.number,
   data: PropTypes.arrayOf(PropTypes.object),
   dateSelectorPresets: PropTypes.arrayOf(PropTypes.shape({
@@ -373,6 +376,7 @@ TransactionsList.propTypes = {
 
 TransactionsList.defaultProps = {
   amount: 0,
+  confirmationDisabled: false,
   count: 0,
   data: null,
   order: 'descending',

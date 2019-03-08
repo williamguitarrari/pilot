@@ -3,9 +3,10 @@ import moment from 'moment'
 import {
   SEARCH_REQUEST,
   SEARCH_RECEIVE,
+  SEARCH_CLEAR,
 } from './actions'
 
-export const initialState = {
+const initialState = {
   loading: true,
   query: {
     count: 15,
@@ -48,6 +49,13 @@ export default function searchReducer (state, action) {
       return {
         loading: false,
         query,
+      }
+    }
+
+    case SEARCH_CLEAR: {
+      return {
+        ...initialState,
+        loading: false,
       }
     }
 

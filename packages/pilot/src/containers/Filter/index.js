@@ -138,6 +138,8 @@ class Filters extends Component {
   renderToolbar () {
     const {
       children,
+      confirmationDisabled,
+      disabled,
       onClear,
       options,
       t,
@@ -153,7 +155,7 @@ class Filters extends Component {
         {ensureArray(children).map(this.renderChildrenInput)}
         {!isNilOrEmpty(options) &&
           <Button
-            disabled={this.props.disabled}
+            disabled={disabled}
             relevance="low"
             fill="outline"
             iconAlignment="end"
@@ -175,7 +177,7 @@ class Filters extends Component {
           }
           onClick={onClear}
           fill="outline"
-          disabled={this.props.disabled}
+          disabled={disabled}
         >
           {t('components.filter.reset')}
         </Button>
@@ -186,7 +188,7 @@ class Filters extends Component {
               ? 'normal'
               : 'low'
           }
-          disabled={!hasChanged || this.props.disabled}
+          disabled={confirmationDisabled || !hasChanged || disabled}
           type="submit"
           fill="gradient"
         >
@@ -305,6 +307,7 @@ class Filters extends Component {
 
 Filters.propTypes = {
   children: PropTypes.node.isRequired,
+  confirmationDisabled: PropTypes.bool,
   disabled: PropTypes.bool,
   onChange: PropTypes.func,
   onClear: PropTypes.func.isRequired,
@@ -322,6 +325,7 @@ Filters.propTypes = {
 }
 
 Filters.defaultProps = {
+  confirmationDisabled: false,
   disabled: false,
   onChange: () => null,
   options: [],

@@ -16,6 +16,7 @@ import {
   contains,
   defaultTo,
   either,
+  equals,
   identity,
   ifElse,
   isEmpty,
@@ -39,8 +40,8 @@ import { isMomentPropValidation } from 'former-kit'
 import {
   requestSearch,
   receiveSearch,
+  clearSearch,
 } from './actions'
-import { initialState } from './reducer'
 import { requestLogout } from '../../Account/actions'
 
 import dateSelectorPresets from '../../../models/dateSelectorPresets'
@@ -55,6 +56,9 @@ const mapStateToProps = ({
 const mapDispatchToProps = dispatch => ({
   onReceiveSearch: ({ query }) => {
     dispatch(receiveSearch({ query }))
+  },
+  onRequestClearSearch: () => {
+    dispatch(clearSearch())
   },
   onRequestSearch: (query) => {
     dispatch(requestSearch(query))
@@ -196,6 +200,7 @@ class TransactionsSearch extends React.Component {
 
     this.state = {
       collapsed: true,
+      confirmationDisabled: false,
       expandedRows: [],
       pendingReviewsCount: 0,
       query: isEmpty(urlSearchQuery)
@@ -236,6 +241,16 @@ class TransactionsSearch extends React.Component {
 
   componentDidMount () {
     this.requestData(this.state.query)
+  }
+
+  componentDidUpdate (prevProps) {
+    if (!equals(prevProps.query, this.props.query)) {
+      this.setState({ // eslint-disable-line react/no-did-update-set-state
+        query: this.props.query,
+      })
+
+      this.updateQuery(this.props.query)
+    }
   }
 
   requestPendingReviewsCount () {
@@ -352,12 +367,17 @@ class TransactionsSearch extends React.Component {
     const newQuery = mergeRight(this.state.query, query)
 
     this.setState({
+      confirmationDisabled: false,
       query: newQuery,
     })
   }
 
   handleFilterClear () {
-    this.updateQuery(initialState.query)
+    this.setState({
+      confirmationDisabled: true,
+    })
+
+    this.props.onRequestClearSearch()
   }
 
   handleFilterConfirm ({
@@ -451,6 +471,7 @@ class TransactionsSearch extends React.Component {
     const {
       collapsed,
       columns,
+      confirmationDisabled,
       expandedRows,
       pendingReviewsCount,
       query,
@@ -488,6 +509,7 @@ class TransactionsSearch extends React.Component {
         collapsed={collapsed}
         columns={columns}
         count={total.count}
+        confirmationDisabled={confirmationDisabled}
         data={chart.dataset}
         dateSelectorPresets={this.localizedPresets}
         expandedRows={expandedRows}
@@ -540,6 +562,7 @@ TransactionsSearch.propTypes = {
   }).isRequired,
   loading: PropTypes.bool.isRequired,
   onReceiveSearch: PropTypes.func.isRequired,
+  onRequestClearSearch: PropTypes.func.isRequired,
   onRequestSearch: PropTypes.func.isRequired,
   onRequestSearchFail: PropTypes.func.isRequired,
   query: PropTypes.shape({
