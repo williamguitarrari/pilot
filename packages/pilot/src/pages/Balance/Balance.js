@@ -257,6 +257,9 @@ class Balance extends Component {
     } = prevProps
 
     const {
+      anticipation: {
+        available,
+      },
       company,
       location: {
         search: newSearch,
@@ -271,6 +274,10 @@ class Balance extends Component {
     if (oldSearch !== newSearch) {
       this.requestData(newRecipientId, parseQueryUrl(newSearch))
       this.requestTotal(newRecipientId, parseQueryUrl(newSearch))
+
+      if (available === null) {
+        this.requestAnticipationLimits(newRecipientId)
+      }
     }
 
     if (
