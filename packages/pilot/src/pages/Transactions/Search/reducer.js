@@ -5,7 +5,7 @@ import {
   SEARCH_RECEIVE,
 } from './actions'
 
-const initialState = {
+export const initialState = {
   loading: true,
   query: {
     count: 15,

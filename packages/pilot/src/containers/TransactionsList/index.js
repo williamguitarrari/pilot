@@ -12,6 +12,7 @@ import Download32 from 'emblematic-icons/svg/Download32.svg'
 
 import {
   findIndex,
+  pick,
   propEq,
 } from 'ramda'
 
@@ -152,7 +153,7 @@ const TransactionsList = ({
             onChange={onFilterChange}
             onClear={onFilterClear}
             options={filterOptions}
-            query={query}
+            query={pick(['dates', 'filters', 'search'], query)}
             t={t}
           >
             <DateInput

@@ -8,6 +8,7 @@ import qs from 'qs'
 import XLSX from 'xlsx'
 import {
   __,
+  always,
   append,
   applySpec,
   assoc,
@@ -15,12 +16,13 @@ import {
   contains,
   defaultTo,
   either,
-  equals,
   identity,
+  ifElse,
   isEmpty,
   isNil,
   juxt,
   mergeAll,
+  mergeRight,
   nth,
   objOf,
   path,
@@ -38,12 +40,12 @@ import {
   requestSearch,
   receiveSearch,
 } from './actions'
+import { initialState } from './reducer'
 import { requestLogout } from '../../Account/actions'
 
 import dateSelectorPresets from '../../../models/dateSelectorPresets'
 import filterOptions from '../../../models/transactionFilterOptions'
 import TransactionsList from '../../../containers/TransactionsList'
-import { stringifyDates } from '../../../containers/Filter'
 
 const mapStateToProps = ({
   account: { client },
@@ -99,8 +101,9 @@ const normalizeDateTime = property => (date) => {
 
 const normalizeStringToDate = property => pipe(
   prop(property),
-  unless(
+  ifElse(
     either(isNil, isEmpty),
+    always({ end: null, start: null }),
     pipe(
       stringToMoment,
       normalizeDateTime(property),
@@ -235,24 +238,6 @@ class TransactionsSearch extends React.Component {
     this.requestData(this.state.query)
   }
 
-  componentDidUpdate () {
-    const {
-      history: {
-        location: {
-          search,
-        },
-      },
-    } = this.props
-
-    const { query: currentQuery } = this.state
-
-    const urlQuery = parseQueryUrl(search)
-
-    if (!equals(stringifyDates(urlQuery), stringifyDates(currentQuery))) {
-      this.updateQuery(currentQuery)
-    }
-  }
-
   requestPendingReviewsCount () {
     const { client } = this.props
 
@@ -307,6 +292,8 @@ class TransactionsSearch extends React.Component {
         pathname: 'transactions',
         search: newQuery,
       })
+
+      this.requestData(query)
     }
   }
 
@@ -317,7 +304,10 @@ class TransactionsSearch extends React.Component {
       .transactions
       .search(query)
       .then((res) => {
-        this.setState(res)
+        this.setState({
+          ...res,
+          query,
+        })
         this.props.onReceiveSearch(res)
       })
       .catch((error) => {
@@ -359,18 +349,15 @@ class TransactionsSearch extends React.Component {
   }
 
   handleFilterChange (query) {
+    const newQuery = mergeRight(this.state.query, query)
+
     this.setState({
-      query,
+      query: newQuery,
     })
   }
 
   handleFilterClear () {
-    const dates = {
-      end: null,
-      start: null,
-    }
-
-    this.updateQuery({ dates })
+    this.updateQuery(initialState.query)
   }
 
   handleFilterConfirm ({
@@ -389,7 +376,6 @@ class TransactionsSearch extends React.Component {
     }
 
     this.updateQuery(query)
-    this.requestData(query)
   }
 
   handlePageChange (page) {
