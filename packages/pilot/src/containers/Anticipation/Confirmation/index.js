@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import moment from 'moment'
 import {
   Button,
   Card,
@@ -12,6 +11,7 @@ import {
   Grid,
   Row,
   Spacing,
+  isMomentPropValidation,
 } from 'former-kit'
 import {
   always,
@@ -309,7 +309,7 @@ AnticipationConfirmation.propTypes = {
     legal_name: PropTypes.string,
     type: PropTypes.string,
   }),
-  date: PropTypes.instanceOf(moment).isRequired,
+  date: isMomentPropValidation,
   disabled: PropTypes.bool,
   error: PropTypes.string,
   onCancel: PropTypes.func.isRequired,
@@ -322,6 +322,7 @@ AnticipationConfirmation.propTypes = {
 
 AnticipationConfirmation.defaultProps = {
   bankAccount: null,
+  date: null,
   disabled: false,
   error: '',
 }

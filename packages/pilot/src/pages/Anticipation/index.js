@@ -311,7 +311,7 @@ class Anticipation extends Component {
     this.goToBalance = this.goToBalance.bind(this)
     this.handleCalculateSubmit = this.handleCalculateSubmit.bind(this)
     this.handleConfirmationConfirm = this.handleConfirmationConfirm.bind(this)
-    this.handleDateChange = this.handleDateChange.bind(this)
+    this.handleDateConfirm = this.handleDateConfirm.bind(this)
     this.handleFormChange = this.handleFormChange.bind(this)
     this.resetAnticipation = this.resetAnticipation.bind(this)
     this.handleTimeframeChange = this.handleTimeframeChange.bind(this)
@@ -479,7 +479,7 @@ class Anticipation extends Component {
     this.setState({ timeframe })
   }
 
-  handleDateChange ({ start }) {
+  handleDateConfirm ({ start }) {
     this.setState({
       paymentDate: start,
     })
@@ -856,12 +856,12 @@ class Anticipation extends Component {
             loading={loading}
             maximum={maxValue}
             minimum={minValue}
+            onAnticipationDateConfirm={this.handleDateConfirm}
             onCalculateSubmit={this.handleCalculateSubmit}
             onCancel={this.goToBalance}
             onConfirmationConfirm={this.handleConfirmationConfirm}
             onConfirmationReturn={() => this.goTo('data', 'current')}
             onDataConfirm={() => this.goTo('confirmation', 'current')}
-            onDateChange={this.handleDateChange}
             onFormChange={this.handleFormChange}
             onTimeframeChange={this.handleTimeframeChange}
             onTryAgain={() => this.goTo('data', 'current')}

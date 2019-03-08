@@ -14,10 +14,10 @@ import {
 import Form from 'react-vanilla-form'
 import {
   Button,
-  CalendarInput,
   Card,
   CardContent,
   Col,
+  DateInput,
   FormInput,
   Grid,
   RadioGroup,
@@ -49,6 +49,16 @@ const buildError = ifElse(
   objOf('requested')
 )
 
+const momentPropValidation = (props, propName) => {
+  const propValue = props[propName]
+
+  if (propValue && !moment.isMoment(propValue)) {
+    return new Error(`Prop ${propName} must be an instance of moment`)
+  }
+
+  return null
+}
+
 const AnticipationForm = ({
   anticipationInfo,
   dates,
@@ -59,7 +69,7 @@ const AnticipationForm = ({
   maximum,
   minimum,
   onChange,
-  onChangeDate,
+  onDateConfirm,
   onSubmit,
   onTimeframeChange,
   periodInfo,
@@ -126,20 +136,19 @@ const AnticipationForm = ({
                 <Spacing size="tiny" />
                 {anticipationInfo}
               </label>
-              <CalendarInput
-                dateSelection="single"
+              <DateInput
+                selectionMode="single"
                 disabled={loading}
                 icon={<IconCalendar width={16} height={16} />}
                 isValidDay={isValidDay}
-                months={1}
-                name="dates"
-                onChange={onChangeDate}
+                onConfirm={onDateConfirm}
+                showSidebar={false}
                 strings={{
                   end: t('pages.anticipation.end'),
                   select: t('pages.anticipation.select'),
                   start: t('pages.anticipation.initial'),
                 }}
-                value={dates}
+                dates={dates}
               />
             </Col>
           </Row>
@@ -237,8 +246,8 @@ const AnticipationForm = ({
 AnticipationForm.propTypes = {
   anticipationInfo: PropTypes.element.isRequired,
   dates: PropTypes.shape({
-    end: PropTypes.instanceOf(moment),
-    start: PropTypes.instanceOf(moment),
+    end: momentPropValidation,
+    start: momentPropValidation,
   }).isRequired,
   error: PropTypes.string,
   isAutomaticTransfer: PropTypes.bool.isRequired,
@@ -247,7 +256,7 @@ AnticipationForm.propTypes = {
   maximum: PropTypes.number.isRequired,
   minimum: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
-  onChangeDate: PropTypes.func.isRequired,
+  onDateConfirm: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onTimeframeChange: PropTypes.func.isRequired,
   periodInfo: PropTypes.element.isRequired,

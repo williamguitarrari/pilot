@@ -134,12 +134,12 @@ class Anticipation extends Component {
       loading,
       maximum,
       minimum,
+      onAnticipationDateConfirm,
       onCalculateSubmit,
       onCancel,
       onConfirmationConfirm,
       onConfirmationReturn,
       onDataConfirm,
-      onDateChange,
       onFormChange,
       onTimeframeChange,
       onTryAgain,
@@ -205,7 +205,7 @@ class Anticipation extends Component {
                 onCancel={onCancel}
                 onChange={onFormChange}
                 onConfirm={onDataConfirm}
-                onDateChange={onDateChange}
+                onDateConfirm={onAnticipationDateConfirm}
                 onTimeframeChange={onTimeframeChange}
                 requested={requested}
                 t={t}
@@ -288,17 +288,25 @@ Anticipation.propTypes = {
   approximateRequested: PropTypes.number,
   automaticTransfer: PropTypes.bool.isRequired,
   currentStep: PropTypes.string.isRequired,
-  date: PropTypes.instanceOf(moment).isRequired,
+  date: (props, propName) => {
+    const propValue = props[propName]
+
+    if (propValue && !moment.isMoment(propValue)) {
+      return new Error(`Prop ${propName} must be an instance of Moment`)
+    }
+
+    return null
+  },
   error: PropTypes.string,
   loading: PropTypes.bool.isRequired,
   maximum: PropTypes.number,
   minimum: PropTypes.number,
+  onAnticipationDateConfirm: PropTypes.func.isRequired,
   onCalculateSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   onConfirmationConfirm: PropTypes.func.isRequired,
   onConfirmationReturn: PropTypes.func.isRequired,
   onDataConfirm: PropTypes.func.isRequired,
-  onDateChange: PropTypes.func.isRequired,
   onFormChange: PropTypes.func.isRequired,
   onTimeframeChange: PropTypes.func.isRequired,
   onTryAgain: PropTypes.func.isRequired,
@@ -332,6 +340,7 @@ Anticipation.propTypes = {
 
 Anticipation.defaultProps = {
   approximateRequested: null,
+  date: null,
   error: '',
   maximum: null,
   minimum: null,

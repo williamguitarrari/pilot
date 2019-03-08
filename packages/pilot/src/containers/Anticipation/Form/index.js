@@ -42,12 +42,7 @@ class AnticipationFormContainer extends Component {
       hasErrors: false,
     }
 
-    this.handleDateChange = this.handleDateChange.bind(this)
     this.handleCalculateSubmit = this.handleCalculateSubmit.bind(this)
-  }
-
-  handleDateChange (dates) {
-    this.props.onDateChange(dates)
   }
 
   handleCalculateSubmit ({
@@ -87,6 +82,7 @@ class AnticipationFormContainer extends Component {
       onCancel,
       onChange,
       onConfirm,
+      onDateConfirm,
       onTimeframeChange,
       requested,
       t,
@@ -120,7 +116,7 @@ class AnticipationFormContainer extends Component {
                 maximum={maximum}
                 minimum={minimum}
                 onChange={onChange}
-                onChangeDate={this.handleDateChange}
+                onDateConfirm={onDateConfirm}
                 onTimeframeChange={onTimeframeChange}
                 onSubmit={this.handleCalculateSubmit}
                 periodInfo={renderInfo(t('pages.anticipation.period.advise'))}
@@ -277,7 +273,15 @@ AnticipationFormContainer.propTypes = {
   amount: PropTypes.number.isRequired,
   approximateRequested: PropTypes.number.isRequired,
   cost: PropTypes.number.isRequired,
-  date: PropTypes.instanceOf(moment),
+  date: (props, propName) => {
+    const propValue = props[propName]
+
+    if (propValue && !moment.isMoment(propValue)) {
+      return new Error(`Prop ${propName} must be an instance of Moment`)
+    }
+
+    return null
+  },
   error: PropTypes.string,
   isAutomaticTransfer: PropTypes.bool,
   isValidDay: PropTypes.func,
@@ -288,7 +292,7 @@ AnticipationFormContainer.propTypes = {
   onCancel: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
-  onDateChange: PropTypes.func.isRequired,
+  onDateConfirm: PropTypes.func.isRequired,
   onTimeframeChange: PropTypes.func.isRequired,
   requested: PropTypes.number.isRequired,
   t: PropTypes.func.isRequired,
