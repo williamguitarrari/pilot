@@ -328,4 +328,3 @@ AnticipationConfirmation.defaultProps = {
 }
 
 export default AnticipationConfirmation
-

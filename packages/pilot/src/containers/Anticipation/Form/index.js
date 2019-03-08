@@ -13,7 +13,9 @@ import {
   Spacing,
   Tooltip,
 } from 'former-kit'
+import { isMomentPropValidation } from 'former-kit/dist/Calendar'
 import IconInfo from 'emblematic-icons/svg/Info32.svg'
+
 import TotalDisplay from '../../../components/TotalDisplay'
 import Form from './Form'
 import formatCurrency from '../../../formatters/currency'
@@ -273,15 +275,7 @@ AnticipationFormContainer.propTypes = {
   amount: PropTypes.number.isRequired,
   approximateRequested: PropTypes.number.isRequired,
   cost: PropTypes.number.isRequired,
-  date: (props, propName) => {
-    const propValue = props[propName]
-
-    if (propValue && !moment.isMoment(propValue)) {
-      return new Error(`Prop ${propName} must be an instance of Moment`)
-    }
-
-    return null
-  },
+  date: isMomentPropValidation,
   error: PropTypes.string,
   isAutomaticTransfer: PropTypes.bool,
   isValidDay: PropTypes.func,

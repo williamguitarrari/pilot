@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import moment from 'moment'
 import {
   always,
   either,
@@ -26,6 +25,8 @@ import {
   Spacing,
 } from 'former-kit'
 import IconCalendar from 'emblematic-icons/svg/Calendar32.svg'
+import { isMomentPropValidation } from 'former-kit/dist/Calendar'
+
 import CurrencyInput from '../../../components/CurrencyInput'
 import formatCurrency from '../../../formatters/currency'
 import greaterThanValidation from '../../../validation/greaterThan'
@@ -48,16 +49,6 @@ const buildError = ifElse(
   always(null),
   objOf('requested')
 )
-
-const momentPropValidation = (props, propName) => {
-  const propValue = props[propName]
-
-  if (propValue && !moment.isMoment(propValue)) {
-    return new Error(`Prop ${propName} must be an instance of moment`)
-  }
-
-  return null
-}
 
 const AnticipationForm = ({
   anticipationInfo,
@@ -246,8 +237,8 @@ const AnticipationForm = ({
 AnticipationForm.propTypes = {
   anticipationInfo: PropTypes.element.isRequired,
   dates: PropTypes.shape({
-    end: momentPropValidation,
-    start: momentPropValidation,
+    end: isMomentPropValidation,
+    start: isMomentPropValidation,
   }).isRequired,
   error: PropTypes.string,
   isAutomaticTransfer: PropTypes.bool.isRequired,

@@ -19,7 +19,7 @@ import {
   Row,
   Steps,
 } from 'former-kit'
-import moment from 'moment'
+import { isMomentPropValidation } from 'former-kit/dist/Calendar'
 
 import AnticipationConfirmation from './Confirmation'
 import AnticipationForm from './Form'
@@ -288,15 +288,7 @@ Anticipation.propTypes = {
   approximateRequested: PropTypes.number,
   automaticTransfer: PropTypes.bool.isRequired,
   currentStep: PropTypes.string.isRequired,
-  date: (props, propName) => {
-    const propValue = props[propName]
-
-    if (propValue && !moment.isMoment(propValue)) {
-      return new Error(`Prop ${propName} must be an instance of Moment`)
-    }
-
-    return null
-  },
+  date: isMomentPropValidation,
   error: PropTypes.string,
   loading: PropTypes.bool.isRequired,
   maximum: PropTypes.number,
