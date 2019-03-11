@@ -16,7 +16,7 @@ import states from './states'
 const epicMiddleware = createEpicMiddleware()
 
 const enhancers = compose(applyMiddleware(
-  createEpicMiddleware(rootEpic),
+  epicMiddleware,
   save({ states })
 ))
 
