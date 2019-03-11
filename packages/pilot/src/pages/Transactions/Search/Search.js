@@ -93,7 +93,7 @@ const normalizeQueryDatesToString = pipe(
   mergeAll
 )
 
-const stringToMoment = str => moment(str)
+const stringToMoment = str => moment(str, 'L')
 
 const normalizeDateTime = property => (date) => {
   if (property === 'start') {
