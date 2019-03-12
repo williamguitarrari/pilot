@@ -245,8 +245,8 @@ AnticipationForm.propTypes = {
   isAutomaticTransfer: PropTypes.bool.isRequired,
   isValidDay: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
-  maximum: PropTypes.number.isRequired,
-  minimum: PropTypes.number.isRequired,
+  maximum: PropTypes.number,
+  minimum: PropTypes.number,
   onChange: PropTypes.func.isRequired,
   onDateConfirm: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
@@ -260,6 +260,8 @@ AnticipationForm.propTypes = {
 
 AnticipationForm.defaultProps = {
   error: '',
+  maximum: null,
+  minimum: null,
 }
 
 export default AnticipationForm

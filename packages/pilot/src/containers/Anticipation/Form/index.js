@@ -280,8 +280,8 @@ AnticipationFormContainer.propTypes = {
   isAutomaticTransfer: PropTypes.bool,
   isValidDay: PropTypes.func,
   loading: PropTypes.bool.isRequired,
-  maximum: PropTypes.number.isRequired,
-  minimum: PropTypes.number.isRequired,
+  maximum: PropTypes.number,
+  minimum: PropTypes.number,
   onCalculateSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
@@ -299,6 +299,8 @@ AnticipationFormContainer.defaultProps = {
   error: '',
   isAutomaticTransfer: true,
   isValidDay: always(true),
+  maximum: null,
+  minimum: null,
   timeframe: 'start',
 }
 

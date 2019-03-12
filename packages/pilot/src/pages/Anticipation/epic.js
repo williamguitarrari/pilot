@@ -7,7 +7,6 @@ import env from '../../environment'
 import {
   ANTICIPABLE_LIMITS_REQUEST,
   DESTROY_ANTICIPATION_REQUEST,
-  destroyAnticipationReceive,
   receiveLimits,
   requestLimits,
   failLimits,
@@ -93,8 +92,7 @@ const destroyAnticipationEpic = (action$, state$) =>
               }))
           })
       }),
-      map(requestLimits),
-      map(destroyAnticipationReceive)
+      map(requestLimits)
     )
 
 export default combineEpics(limitsEpic, destroyAnticipationEpic)

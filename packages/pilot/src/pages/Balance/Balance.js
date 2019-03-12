@@ -231,6 +231,9 @@ class Balance extends Component {
 
   componentDidMount () {
     const {
+      anticipation: {
+        available,
+      },
       history: {
         location,
       },
@@ -245,7 +248,10 @@ class Balance extends Component {
     } else {
       this.requestData(params.id, parseQueryUrl(urlBalanceQuery))
       this.requestTotal(params.id, parseQueryUrl(urlBalanceQuery))
-      this.requestAnticipationLimits(params.id)
+
+      if (available === null) {
+        this.requestAnticipationLimits(params.id)
+      }
     }
   }
 
