@@ -303,7 +303,7 @@ class Anticipation extends Component {
     this.goToBalance = this.goToBalance.bind(this)
     this.handleCalculateSubmit = this.handleCalculateSubmit.bind(this)
     this.handleConfirmationConfirm = this.handleConfirmationConfirm.bind(this)
-    this.handleDateChange = this.handleDateChange.bind(this)
+    this.handleDateConfirm = this.handleDateConfirm.bind(this)
     this.handleFormChange = this.handleFormChange.bind(this)
     this.handleTimeframeChange = this.handleTimeframeChange.bind(this)
     this.resetAnticipation = this.resetAnticipation.bind(this)
@@ -462,8 +462,16 @@ class Anticipation extends Component {
 
   calculateLimits () {
     const { requestAnticipationLimits } = this.props
+    const {
+      paymentDate,
+      recipientId,
+    } = this.state
 
-    return requestAnticipationLimits
+    return requestAnticipationLimits({
+      paymentDate,
+      recipientId,
+      timeframe: 'start',
+    })
   }
 
   resetAnticipation () {
@@ -479,11 +487,8 @@ class Anticipation extends Component {
     )
   }
 
-  handleDateChange ({ start }) {
-    this.setState(
-      { paymentDate: start },
-      this.resetAnticipation.bind(this)
-    )
+  handleDateConfirm () {
+    this.resetAnticipation.bind(this)
   }
 
   handleCalculateSubmit ({
@@ -582,11 +587,18 @@ class Anticipation extends Component {
       })
   }
 
-  handleFormChange (data, { requested }) {
+  handleFormChange ({ dates: { start }, transfer }, { requested }) {
+    const isAutomaticTransfer = transfer === 'yes'
+
     this.setState({
       error: requested !== this.state.error
         ? requested
         : null,
+      isAutomaticTransfer,
+      paymentDate: start,
+      transferCost: isAutomaticTransfer
+        ? this.getTransferCost()
+        : 0,
     })
   }
 

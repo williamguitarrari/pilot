@@ -128,18 +128,19 @@ const AnticipationForm = ({
                 {anticipationInfo}
               </label>
               <DateInput
-                selectionMode="single"
+                dates={dates}
                 disabled={loading}
                 icon={<IconCalendar width={16} height={16} />}
                 isValidDay={isValidDay}
+                name="dates"
                 onConfirm={onDateConfirm}
+                selectionMode="single"
                 showSidebar={false}
                 strings={{
                   end: t('pages.anticipation.end'),
                   select: t('pages.anticipation.select'),
                   start: t('pages.anticipation.initial'),
                 }}
-                dates={dates}
               />
             </Col>
           </Row>
