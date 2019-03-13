@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
   compose,
+  equals,
   head,
   pluck,
 } from 'ramda'
@@ -31,6 +32,8 @@ const enhanced = compose(
   withRouter
 )
 
+const isBoleto = equals('boleto')
+
 class Capture extends Component {
   constructor (props) {
     super(props)
@@ -39,8 +42,15 @@ class Capture extends Component {
       isFromCheckout,
       transaction,
     } = props
+    const {
+      payment: {
+        method: paymentMethod,
+      },
+    } = transaction
 
-    const captureAmount = isFromCheckout
+    const isBoletoOrFromCheckout = isFromCheckout || isBoleto(paymentMethod)
+
+    const captureAmount = isBoletoOrFromCheckout
       ? transaction.payment.authorized_amount.toString()
       : '0'
 
