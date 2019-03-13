@@ -59,7 +59,9 @@ const Result = ({
                 }}
                 contents={{
                   cardBrand,
-                  cardNumber: `${formatCardNumber(cardFirstDigits)} ${cardLastDigits}`,
+                  cardNumber: cardFirstDigits && cardLastDigits
+                  ? `${formatCardNumber(cardFirstDigits)} ${cardLastDigits}`
+                  : '',
                   customerEmail,
                   customerName,
                   installments,
