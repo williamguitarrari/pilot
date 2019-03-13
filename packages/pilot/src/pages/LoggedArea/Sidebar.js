@@ -1,13 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
+  curry,
   head,
+  isNil,
   pipe,
   split,
   values,
 } from 'ramda'
 
-import { withRouter } from 'react-router-dom'
+import {
+  matchPath,
+  withRouter,
+} from 'react-router-dom'
 
 import SidebarContainer from '../../containers/Sidebar'
 
@@ -20,12 +25,21 @@ const removeRouteParams = pipe(
   head
 )
 
+const handleLinkClick = curry((push, currentPath, route) => {
+  const matched = matchPath(currentPath, route)
+
+  if (isNil(matched) || !route.active) {
+    push(route.path)
+  }
+})
+
 const Sidebar = ({
   balance,
   companyName,
   history,
   location: { pathname },
   recipientId,
+  sessionId,
   t,
 }) => (
   <SidebarContainer
@@ -40,8 +54,9 @@ const Sidebar = ({
     }
     logo={Logo}
     onAnticipate={() => history.push(`/anticipation/${recipientId}`)}
-    onLinkClick={history.push}
+    onLinkClick={handleLinkClick(history.push, pathname)}
     onWithdraw={() => history.push(`/withdraw/${recipientId}`)}
+    sessionId={sessionId}
     t={t}
   />
 )
@@ -52,19 +67,21 @@ Sidebar.propTypes = {
     waitingFunds: PropTypes.number,
   }).isRequired,
   companyName: PropTypes.string,
-  recipientId: PropTypes.string,
-  location: PropTypes.shape({
-    pathname: PropTypes.string,
-  }).isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string,
+  }).isRequired,
+  recipientId: PropTypes.string,
+  sessionId: PropTypes.string,
   t: PropTypes.func.isRequired,
 }
 
 Sidebar.defaultProps = {
   companyName: '',
   recipientId: null,
+  sessionId: '',
 }
 
 export default withRouter(Sidebar)

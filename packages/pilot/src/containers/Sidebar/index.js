@@ -4,10 +4,10 @@ import { propOr, __ } from 'ramda'
 
 import {
   Button,
+  Flexbox,
   Popover,
   PopoverContent,
   Sidebar,
-  SidebarContent,
   SidebarHeader,
   SidebarLink,
   SidebarLinks,
@@ -16,9 +16,12 @@ import {
 import IconMenu from 'emblematic-icons/svg/Menu32.svg'
 import IconWallet from 'emblematic-icons/svg/Wallet32.svg'
 
-import SidebarSections from '../components/SidebarSections'
-import SidebarSummary from '../components/SidebarSummary'
-import formatDecimalCurrency from '../formatters/decimalCurrency'
+import style from './style.css'
+
+import SidebarSections from '../../components/SidebarSections'
+import SidebarSummary from '../../components/SidebarSummary'
+import formatDecimalCurrency from '../../formatters/decimalCurrency'
+import environment from '../../environment'
 
 class SidebarContainer extends React.Component {
   constructor (props) {
@@ -78,6 +81,7 @@ class SidebarContainer extends React.Component {
       links,
       logo: Logo,
       onLinkClick,
+      sessionId,
       t,
     } = this.props
 
@@ -97,7 +101,9 @@ class SidebarContainer extends React.Component {
         {!collapsed &&
           <SidebarSummary
             collapsed={summaryCollapsed}
-            onClick={() => this.setState({ summaryCollapsed: !summaryCollapsed })}
+            onClick={() => this.setState({
+              summaryCollapsed: !summaryCollapsed,
+            })}
             subtitle={
               summaryCollapsed
                 ? t('pages.sidebar.show_balance')
@@ -133,6 +139,7 @@ class SidebarContainer extends React.Component {
         <SidebarLinks>
           {links.map(({
             active,
+            exact,
             icon: Icon,
             path,
             title,
@@ -143,21 +150,26 @@ class SidebarContainer extends React.Component {
               active={active}
               icon={<Icon width={16} height={16} />}
               collapsed={collapsed}
-              onClick={() => onLinkClick(path)}
+              onClick={() => onLinkClick({ active, exact, path })}
             />
-          )
-        )}
+          ))}
         </SidebarLinks>
         {!collapsed &&
-          <SidebarContent>
+          <Flexbox
+            className={style.backToOldVersion}
+            justifyContent="center"
+          >
             <Button
-              onClick={() => window.open('https://dashboard.pagar.me/')}
+              onClick={
+                // eslint-disable-next-line no-undef
+                () => window.open(`https://dashboard.pagar.me/#login?session_id=${sessionId}&redirect_to=dashboard.home&environment=${environment}`)
+              }
               fill="outline"
               size="tiny"
             >
               {t('pages.sidebar.back_to_old_version')}
             </Button>
-          </SidebarContent>
+          </Flexbox>
         }
       </Sidebar>
     )
@@ -172,15 +184,16 @@ SidebarContainer.propTypes = {
   companyName: PropTypes.string,
   links: PropTypes.arrayOf(PropTypes.shape({
     active: PropTypes.bool,
-    title: PropTypes.string,
-    path: PropTypes.string,
-    icon: PropTypes.func,
     component: PropTypes.func,
+    icon: PropTypes.func,
+    path: PropTypes.string,
+    title: PropTypes.string,
   })).isRequired,
   logo: PropTypes.func.isRequired,
-  onLinkClick: PropTypes.func.isRequired,
   onAnticipate: PropTypes.func,
+  onLinkClick: PropTypes.func.isRequired,
   onWithdraw: PropTypes.func,
+  sessionId: PropTypes.string,
   t: PropTypes.func.isRequired,
 }
 
@@ -188,6 +201,7 @@ SidebarContainer.defaultProps = {
   companyName: '',
   onAnticipate: null,
   onWithdraw: null,
+  sessionId: '',
 }
 
 export default SidebarContainer

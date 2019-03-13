@@ -12,6 +12,7 @@ import Download32 from 'emblematic-icons/svg/Download32.svg'
 
 import {
   findIndex,
+  pick,
   propEq,
 } from 'ramda'
 
@@ -30,6 +31,7 @@ import {
   Row,
   SegmentedSwitch,
   Table,
+  isMomentPropValidation,
 } from 'former-kit'
 
 import style from './style.css'
@@ -44,7 +46,7 @@ import formatCurrency from '../../formatters/currency'
 import formatDate from '../../formatters/longDate'
 import translateDateInput from '../../formatters/dateInputTranslator'
 
-const formatSelectedPeriod = (t, { start, end }) => {
+const formatSelectedPeriod = (t, { end, start }) => {
   if (!start && !end) {
     return t('pages.transactions.period_full')
   }
@@ -56,26 +58,26 @@ const formatSelectedPeriod = (t, { start, end }) => {
   return t(
     'pages.transactions.period',
     {
-      start: formatDate(start),
       end: formatDate(end),
+      start: formatDate(start),
     }
   )
 }
 
-
 const getExportOptions = onExport => ([
   {
-    title: 'CSV',
     action: () => onExport('csv'),
+    title: 'CSV',
   },
   {
-    title: 'Excel',
     action: () => onExport('xls'),
+    title: 'Excel',
   },
 ])
 
 const TransactionsList = ({
   amount,
+  confirmationDisabled,
   count,
   data,
   dateSelectorPresets,
@@ -83,15 +85,17 @@ const TransactionsList = ({
   filterOptions,
   loading,
   onChangeViewMode,
+  onDatePresetChange,
   onDetailsClick,
-  onPendingReviewsFilter,
   onExpandRow,
   onExport,
   onFilterChange,
   onFilterClear,
+  onFilterConfirm,
   onOrderChange,
   onPageChange,
   onPageCountChange,
+  onPendingReviewsFilter,
   onRowClick,
   onSelectRow,
   order,
@@ -102,10 +106,11 @@ const TransactionsList = ({
   rows,
   selectedPage,
   selectedRows,
+  showDateInputCalendar,
   t,
   viewMode,
 }) => {
-  const columns = tableColumns({ t, onDetailsClick })
+  const columns = tableColumns({ onDetailsClick, t })
   const orderColumn = findIndex(propEq('accessor', orderField), columns)
   const handleOrderChange = (columnIndex, tableOrder) =>
     onOrderChange(columns[columnIndex].accessor, tableOrder)
@@ -144,18 +149,29 @@ const TransactionsList = ({
           tv={12}
         >
           <Filter
+            confirmationDisabled={confirmationDisabled}
             disabled={loading}
+            onConfirm={onFilterConfirm}
             onChange={onFilterChange}
             onClear={onFilterClear}
             options={filterOptions}
-            query={query}
+            query={pick(['dates', 'filters', 'search'], query)}
             t={t}
           >
             <DateInput
+              dates={query.dates}
               icon={<Calendar32 width={16} height={16} />}
               name="dates"
               presets={dateSelectorPresets}
               strings={translateDateInput(t)}
+              onPresetChange={onDatePresetChange}
+              selectionMode={
+                query.dates.start &&
+                query.dates.start.isSame(query.dates.end, 'day')
+                ? 'single'
+                : 'period'
+              }
+              showCalendar={showDateInputCalendar}
             />
             <Input
               icon={<Search32 width={16} height={16} />}
@@ -299,49 +315,42 @@ const TransactionsList = ({
 
 TransactionsList.propTypes = {
   amount: PropTypes.number,
+  confirmationDisabled: PropTypes.bool,
   count: PropTypes.number,
-  // eslint-disable-next-line
   data: PropTypes.arrayOf(PropTypes.object),
-  query: PropTypes.shape({
-    dates: PropTypes.shape({
-      start: PropTypes.instanceOf(moment),
-      end: PropTypes.instanceOf(moment),
-    }),
-    search: PropTypes.string,
-    // eslint-disable-next-line
-    properties: PropTypes.object,
-  }),
   dateSelectorPresets: PropTypes.arrayOf(PropTypes.shape({
+    date: PropTypes.func,
+    items: PropTypes.arrayOf(PropTypes.shape({
+      date: PropTypes.func,
+      title: PropTypes.string,
+    })),
     key: PropTypes.string,
     title: PropTypes.string,
-    date: PropTypes.string,
-    items: PropTypes.arrayOf(PropTypes.shape({
-      title: PropTypes.string,
-      date: PropTypes.func,
-    })),
   })).isRequired,
   expandedRows: PropTypes.arrayOf(PropTypes.number).isRequired,
   filterOptions: PropTypes.arrayOf(PropTypes.shape({
-    key: PropTypes.string,
-    name: PropTypes.string,
     items: PropTypes.arrayOf(PropTypes.shape({
       label: PropTypes.string,
       value: PropTypes.string,
     })),
+    key: PropTypes.string,
+    name: PropTypes.string,
   })).isRequired,
   loading: PropTypes.bool.isRequired,
+  onChangeViewMode: PropTypes.func.isRequired,
+  onDatePresetChange: PropTypes.func.isRequired,
   onDetailsClick: PropTypes.func.isRequired,
-  onExport: PropTypes.func.isRequired,
   onExpandRow: PropTypes.func.isRequired,
-  onRowClick: PropTypes.func.isRequired,
+  onExport: PropTypes.func.isRequired,
   onFilterChange: PropTypes.func.isRequired,
   onFilterClear: PropTypes.func.isRequired,
+  onFilterConfirm: PropTypes.func.isRequired,
   onOrderChange: PropTypes.func.isRequired,
   onPageChange: PropTypes.func.isRequired,
   onPageCountChange: PropTypes.func.isRequired,
   onPendingReviewsFilter: PropTypes.func.isRequired,
+  onRowClick: PropTypes.func.isRequired,
   onSelectRow: PropTypes.func.isRequired,
-  onChangeViewMode: PropTypes.func.isRequired,
   order: PropTypes.string,
   orderField: PropTypes.arrayOf(PropTypes.string),
   pagination: PropTypes.shape({
@@ -349,27 +358,39 @@ TransactionsList.propTypes = {
     total: PropTypes.number,
   }).isRequired,
   pendingReviewsCount: PropTypes.number.isRequired,
+  query: PropTypes.shape({
+    dates: PropTypes.shape({
+      end: isMomentPropValidation,
+      start: isMomentPropValidation,
+    }),
+    properties: PropTypes.object,
+    search: PropTypes.string,
+  }),
   rows: PropTypes.arrayOf(PropTypes.object).isRequired,
   selectedPage: PropTypes.number,
   selectedRows: PropTypes.arrayOf(PropTypes.number).isRequired,
+  showDateInputCalendar: PropTypes.bool,
   t: PropTypes.func.isRequired,
   viewMode: PropTypes.oneOf(['chart', 'table']).isRequired,
 }
 
 TransactionsList.defaultProps = {
   amount: 0,
+  confirmationDisabled: false,
   count: 0,
+  data: null,
   order: 'descending',
   orderField: [],
   query: {
     dates: {
-      start: moment(),
       end: moment(),
+      start: moment(),
     },
-    search: '',
     properties: {},
+    search: '',
   },
   selectedPage: 15,
+  showDateInputCalendar: false,
 }
 
 export default TransactionsList

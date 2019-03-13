@@ -8,6 +8,7 @@ import qs from 'qs'
 import XLSX from 'xlsx'
 import {
   __,
+  always,
   append,
   applySpec,
   assoc,
@@ -15,11 +16,14 @@ import {
   contains,
   defaultTo,
   either,
+  equals,
   identity,
+  ifElse,
   isEmpty,
   isNil,
   juxt,
   mergeAll,
+  mergeRight,
   nth,
   objOf,
   path,
@@ -31,9 +35,12 @@ import {
   without,
   when,
 } from 'ramda'
+import { isMomentPropValidation } from 'former-kit'
+
 import {
   requestSearch,
   receiveSearch,
+  clearSearch,
 } from './actions'
 import { requestLogout } from '../../Account/actions'
 
@@ -47,12 +54,14 @@ const mapStateToProps = ({
 }) => ({ client, loading, query })
 
 const mapDispatchToProps = dispatch => ({
-  onRequestSearch: (query) => {
-    dispatch(requestSearch(query))
-  },
-
   onReceiveSearch: ({ query }) => {
     dispatch(receiveSearch({ query }))
+  },
+  onRequestClearSearch: () => {
+    dispatch(clearSearch())
+  },
+  onRequestSearch: (query) => {
+    dispatch(requestSearch(query))
   },
   onRequestSearchFail: (error) => {
     dispatch(requestLogout(error))
@@ -68,7 +77,7 @@ const enhanced = compose(
   withRouter
 )
 
-const momentToString = momentObj => momentObj.toISOString()
+const momentToString = momentObj => momentObj.format('MM/DD/YYYY')
 
 const normalizeDateToString = property => pipe(
   prop(property),
@@ -84,13 +93,26 @@ const normalizeQueryDatesToString = pipe(
   mergeAll
 )
 
-const stringToMoment = str => moment(str)
+const stringToMoment = str => moment(str, 'L')
+
+const normalizeDateTime = property => (date) => {
+  if (property === 'start') {
+    return date.startOf('day')
+  }
+
+  return date.endOf('day')
+}
 
 const normalizeStringToDate = property => pipe(
   prop(property),
-  unless(
+  ifElse(
     either(isNil, isEmpty),
-    pipe(stringToMoment, objOf(property))
+    always({ end: null, start: null }),
+    pipe(
+      stringToMoment,
+      normalizeDateTime(property),
+      objOf(property)
+    )
   )
 )
 
@@ -110,19 +132,19 @@ const normalizeTo = (defaultValue, propPath) => pipe(
 )
 
 const normalizeQueryStructure = applySpec({
-  search: normalizeTo('', ['search']),
+  count: pipe(
+    normalizeTo(15, ['count']),
+    Number
+  ),
   filters: normalizeTo({}, ['filters']),
   offset: pipe(
     normalizeTo(1, ['offset']),
     Number
   ),
-  count: pipe(
-    normalizeTo(15, ['count']),
-    Number
-  ),
+  search: normalizeTo('', ['search']),
   sort: {
-    order: normalizeTo('descending', ['sort', 'order']),
     field: normalizeTo(['created_at'], ['sort', 'field']),
+    order: normalizeTo('descending', ['sort', 'order']),
   },
 })
 
@@ -138,6 +160,7 @@ const parseQueryUrl = pipe(
 )
 
 const handleCSVExportDownloadingClick = (data, filename) => {
+  /* eslint-disable no-undef */
   const downloadLink = document.createElement('a')
   downloadLink.target = '_blank'
   downloadLink.download = filename.concat('csv')
@@ -155,6 +178,7 @@ const handleCSVExportDownloadingClick = (data, filename) => {
 
   document.body.removeChild(downloadLink)
   URL.revokeObjectURL(downloadUrl)
+  /* eslint-enable no-undef */
 }
 
 const handleXLSExportDownloadingClick = (data, filename) => {
@@ -170,27 +194,38 @@ class TransactionsSearch extends React.Component {
   constructor (props) {
     super(props)
 
+    const urlSearchQuery = props.history.location.search
+
+    this.localizedPresets = dateSelectorPresets(props.t)
+
     this.state = {
       collapsed: true,
+      confirmationDisabled: false,
+      expandedRows: [],
+      pendingReviewsCount: 0,
+      query: isEmpty(urlSearchQuery)
+        ? props.query
+        : parseQueryUrl(urlSearchQuery),
       result: {
-        total: {},
-        list: {
-          rows: [],
-        },
         chart: {
           dataset: [],
         },
+        list: {
+          rows: [],
+        },
+        total: {},
       },
-      expandedRows: [],
-      pendingReviewsCount: 0,
       selectedRows: [],
+      showDateInputCalendar: false,
       viewMode: 'table',
     }
 
     this.handleChartsCollapse = this.handleChartsCollapse.bind(this)
+    this.handleDatePresetChange = this.handleDatePresetChange.bind(this)
     this.handleExpandRow = this.handleExpandRow.bind(this)
     this.handleExport = this.handleExport.bind(this)
     this.handleFilterChange = this.handleFilterChange.bind(this)
+    this.handleFilterConfirm = this.handleFilterConfirm.bind(this)
     this.handleFilterClear = this.handleFilterClear.bind(this)
     this.handleOrderChange = this.handleOrderChange.bind(this)
     this.handlePageChange = this.handlePageChange.bind(this)
@@ -205,23 +240,16 @@ class TransactionsSearch extends React.Component {
   }
 
   componentDidMount () {
-    const urlSearchQuery = this.props.history.location.search
-
-    if (isEmpty(urlSearchQuery)) {
-      this.updateQuery(this.props.query)
-    } else {
-      this.requestData(parseQueryUrl(urlSearchQuery))
-    }
-
-    this.requestPendingReviewsCount()
+    this.requestData(this.state.query)
   }
 
-  componentWillReceiveProps (nextProps) {
-    const { location: { search } } = this.props // eslint-disable-line
-    const { location } = nextProps
+  componentDidUpdate (prevProps) {
+    if (!equals(prevProps.query, this.props.query)) {
+      this.setState({ // eslint-disable-line react/no-did-update-set-state
+        query: this.props.query,
+      })
 
-    if (search !== location.search) {
-      this.requestData(parseQueryUrl(location.search))
+      this.updateQuery(this.props.query)
     }
   }
 
@@ -239,12 +267,12 @@ class TransactionsSearch extends React.Component {
   }
 
   handlePendingReviewsFilter () {
-    this.handleFilterChange({
+    this.handleFilterConfirm({
       dates: {},
-      search: '',
       filters: {
         status: ['pending_review'],
       },
+      search: '',
       sort: {
         field: ['created_at'],
         order: 'ascending',
@@ -255,8 +283,8 @@ class TransactionsSearch extends React.Component {
   updateQuery (query) {
     const {
       history: {
-        push,
         location,
+        push,
       },
     } = this.props
 
@@ -279,6 +307,8 @@ class TransactionsSearch extends React.Component {
         pathname: 'transactions',
         search: newQuery,
       })
+
+      this.requestData(query)
     }
   }
 
@@ -289,7 +319,10 @@ class TransactionsSearch extends React.Component {
       .transactions
       .search(query)
       .then((res) => {
-        this.setState(res)
+        this.setState({
+          ...res,
+          query,
+        })
         this.props.onReceiveSearch(res)
       })
       .catch((error) => {
@@ -297,11 +330,21 @@ class TransactionsSearch extends React.Component {
       })
   }
 
+  handleDatePresetChange (dates) {
+    this.setState({
+      query: {
+        ...this.state.query,
+        dates,
+      },
+      showDateInputCalendar: true,
+    })
+  }
+
   handlePageCountChange (count) {
     const query = {
-      ...this.props.query,
-      offset: 1,
+      ...this.state.query,
       count,
+      offset: 1,
     }
 
     this.updateQuery(query)
@@ -309,36 +352,47 @@ class TransactionsSearch extends React.Component {
 
   handleOrderChange (field, order) {
     const query = {
-      ...this.props.query,
+      ...this.state.query,
+      offset: 1,
       sort: {
         field,
         order,
       },
-      offset: 1,
     }
 
     this.updateQuery(query)
   }
 
-  handleFilterClear () {
-    const { dates } = this.props.query
+  handleFilterChange (query) {
+    const newQuery = mergeRight(this.state.query, query)
 
-    this.updateQuery({ dates })
+    this.setState({
+      confirmationDisabled: false,
+      query: newQuery,
+    })
   }
 
-  handleFilterChange ({
+  handleFilterClear () {
+    this.setState({
+      confirmationDisabled: true,
+    })
+
+    this.props.onRequestClearSearch()
+  }
+
+  handleFilterConfirm ({
     dates,
     filters,
     search,
     sort,
   }) {
     const query = {
-      ...this.props.query,
-      search,
+      ...this.state.query,
       dates,
-      sort: sort || this.props.query.sort,
       filters,
       offset: 1,
+      search,
+      sort: sort || this.state.query.sort,
     }
 
     this.updateQuery(query)
@@ -346,7 +400,7 @@ class TransactionsSearch extends React.Component {
 
   handlePageChange (page) {
     const query = {
-      ...this.props.query,
+      ...this.state.query,
       offset: page,
     }
 
@@ -390,7 +444,10 @@ class TransactionsSearch extends React.Component {
   }
 
   handleExport (exportType) {
-    const newQuery = { ...this.state.query, count: this.state.result.total.count }
+    const newQuery = {
+      ...this.state.query,
+      count: this.state.result.total.count,
+    }
     return this.props.client
       .transactions
       .exportData(newQuery, exportType)
@@ -414,69 +471,76 @@ class TransactionsSearch extends React.Component {
     const {
       collapsed,
       columns,
+      confirmationDisabled,
       expandedRows,
       pendingReviewsCount,
-      result: {
-        total,
-        list,
-        chart,
-      },
-      selectedRows,
-      viewMode,
-    } = this.state
-
-    const {
-      loading,
       query,
       query: {
         count,
         offset,
         sort,
       },
+      result: {
+        chart,
+        list,
+        total,
+      },
+      selectedRows,
+      showDateInputCalendar,
+      viewMode,
+    } = this.state
+
+    const {
+      loading,
       t,
     } = this.props
 
     const pagination = {
       offset,
-      total: Math.ceil(
-        total.count / count
-      ),
+      total: Math.ceil(total.count / count),
     }
 
     return (
       <TransactionsList
-        amount={total.payment ? total.payment.paid_amount : 0}
+        amount={total.payment
+          ? total.payment.paid_amount
+          : 0
+        }
         collapsed={collapsed}
         columns={columns}
         count={total.count}
+        confirmationDisabled={confirmationDisabled}
         data={chart.dataset}
-        dateSelectorPresets={dateSelectorPresets}
+        dateSelectorPresets={this.localizedPresets}
         expandedRows={expandedRows}
         filterOptions={filterOptions}
-        onPendingReviewsFilter={this.handlePendingReviewsFilter}
         loading={loading}
         onChangeViewMode={this.handleViewModeChange}
         onChartsCollapse={this.handleChartsCollapse}
+        onDatePresetChange={this.handleDatePresetChange}
         onDetailsClick={this.handleRowDetailsClick}
         onExpandRow={this.handleExpandRow}
         onExport={this.handleExport}
         onFilterChange={this.handleFilterChange}
+        onFilterConfirm={this.handleFilterConfirm}
         onFilterClear={this.handleFilterClear}
         onOrderChange={this.handleOrderChange}
         onPageChange={this.handlePageChange}
         onPageCountChange={this.handlePageCountChange}
+        onPendingReviewsFilter={this.handlePendingReviewsFilter}
         onRowClick={this.handleRowClick}
         onSelectRow={this.handleSelectRow}
         order={sort.order}
         orderField={sort.field}
         pagination={pagination}
         pendingReviewsCount={pendingReviewsCount}
+        query={query}
         rows={list.rows}
         selectedPage={count}
         selectedRows={selectedRows}
-        query={query}
-        viewMode={viewMode}
+        showDateInputCalendar={showDateInputCalendar}
         t={t}
+        viewMode={viewMode}
       />
     )
   }
@@ -491,24 +555,25 @@ TransactionsSearch.propTypes = {
     }).isRequired,
   }).isRequired,
   history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
     location: PropTypes.shape({
       search: PropTypes.string,
     }).isRequired,
+    push: PropTypes.func.isRequired,
   }).isRequired,
   loading: PropTypes.bool.isRequired,
   onReceiveSearch: PropTypes.func.isRequired,
+  onRequestClearSearch: PropTypes.func.isRequired,
   onRequestSearch: PropTypes.func.isRequired,
   onRequestSearchFail: PropTypes.func.isRequired,
   query: PropTypes.shape({
-    search: PropTypes.string,
+    count: PropTypes.number.isRequired,
     dates: PropTypes.shape({
-      start: PropTypes.instanceOf(moment),
-      end: PropTypes.instanceOf(moment),
+      end: isMomentPropValidation,
+      start: isMomentPropValidation,
     }),
     filters: PropTypes.shape({}),
     offset: PropTypes.number.isRequired,
-    count: PropTypes.number.isRequired,
+    search: PropTypes.string,
     sort: PropTypes.shape({
       field: PropTypes.arrayOf(PropTypes.string),
       order: PropTypes.string,

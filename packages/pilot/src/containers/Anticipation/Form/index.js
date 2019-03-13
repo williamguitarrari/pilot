@@ -12,8 +12,10 @@ import {
   Grid,
   Spacing,
   Tooltip,
+  isMomentPropValidation,
 } from 'former-kit'
 import IconInfo from 'emblematic-icons/svg/Info32.svg'
+
 import TotalDisplay from '../../../components/TotalDisplay'
 import Form from './Form'
 import formatCurrency from '../../../formatters/currency'
@@ -42,18 +44,13 @@ class AnticipationFormContainer extends Component {
       hasErrors: false,
     }
 
-    this.handleDateChange = this.handleDateChange.bind(this)
     this.handleCalculateSubmit = this.handleCalculateSubmit.bind(this)
   }
 
-  handleDateChange (dates) {
-    this.props.onDateChange(dates)
-  }
-
   handleCalculateSubmit ({
-    transfer,
     dates,
     requested,
+    transfer,
     ...values
   }, errors) {
     const { error } = this.props
@@ -87,6 +84,7 @@ class AnticipationFormContainer extends Component {
       onCancel,
       onChange,
       onConfirm,
+      onDateConfirm,
       onTimeframeChange,
       requested,
       t,
@@ -110,8 +108,8 @@ class AnticipationFormContainer extends Component {
               <Form
                 anticipationInfo={renderInfo(t('pages.anticipation.date.advise'))}
                 dates={{
-                  start: date,
                   end: date,
+                  start: date,
                 }}
                 error={error}
                 isAutomaticTransfer={isAutomaticTransfer}
@@ -120,7 +118,7 @@ class AnticipationFormContainer extends Component {
                 maximum={maximum}
                 minimum={minimum}
                 onChange={onChange}
-                onChangeDate={this.handleDateChange}
+                onDateConfirm={onDateConfirm}
                 onTimeframeChange={onTimeframeChange}
                 onSubmit={this.handleCalculateSubmit}
                 periodInfo={renderInfo(t('pages.anticipation.period.advise'))}
@@ -227,7 +225,10 @@ class AnticipationFormContainer extends Component {
                         align="end"
                         amount={amount}
                         amountSize="huge"
-                        color={amount > 0 ? colors.amount : colors.cost}
+                        color={amount > 0
+                          ? colors.amount
+                          : colors.cost
+                        }
                         title={
                           <div className={style.titleInfo}>
                             {renderInfo(
@@ -274,7 +275,7 @@ AnticipationFormContainer.propTypes = {
   amount: PropTypes.number.isRequired,
   approximateRequested: PropTypes.number.isRequired,
   cost: PropTypes.number.isRequired,
-  date: PropTypes.instanceOf(moment),
+  date: isMomentPropValidation,
   error: PropTypes.string,
   isAutomaticTransfer: PropTypes.bool,
   isValidDay: PropTypes.func,
@@ -285,7 +286,7 @@ AnticipationFormContainer.propTypes = {
   onCancel: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
-  onDateChange: PropTypes.func.isRequired,
+  onDateConfirm: PropTypes.func.isRequired,
   onTimeframeChange: PropTypes.func.isRequired,
   requested: PropTypes.number.isRequired,
   t: PropTypes.func.isRequired,

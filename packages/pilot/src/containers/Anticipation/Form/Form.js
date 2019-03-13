@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import moment from 'moment'
 import {
   always,
   either,
@@ -14,18 +13,20 @@ import {
 import Form from 'react-vanilla-form'
 import {
   Button,
-  CalendarInput,
   Card,
   CardContent,
   Col,
+  DateInput,
   FormInput,
   Grid,
   RadioGroup,
   Row,
   SegmentedSwitch,
   Spacing,
+  isMomentPropValidation,
 } from 'former-kit'
 import IconCalendar from 'emblematic-icons/svg/Calendar32.svg'
+
 import CurrencyInput from '../../../components/CurrencyInput'
 import formatCurrency from '../../../formatters/currency'
 import greaterThanValidation from '../../../validation/greaterThan'
@@ -59,9 +60,9 @@ const AnticipationForm = ({
   maximum,
   minimum,
   onChange,
-  onChangeDate,
-  onTimeframeChange,
+  onDateConfirm,
   onSubmit,
+  onTimeframeChange,
   periodInfo,
   requested,
   t,
@@ -73,7 +74,9 @@ const AnticipationForm = ({
       dates,
       requested: requested.toString(),
       timeframe,
-      transfer: isAutomaticTransfer ? 'yes' : 'no',
+      transfer: isAutomaticTransfer
+        ? 'yes'
+        : 'no',
     }}
     errors={buildError(error)}
     validation={{
@@ -124,20 +127,19 @@ const AnticipationForm = ({
                 <Spacing size="tiny" />
                 {anticipationInfo}
               </label>
-              <CalendarInput
-                dateSelection="single"
+              <DateInput
+                selectionMode="single"
                 disabled={loading}
                 icon={<IconCalendar width={16} height={16} />}
                 isValidDay={isValidDay}
-                months={1}
-                name="dates"
-                onChange={onChangeDate}
+                onConfirm={onDateConfirm}
+                showSidebar={false}
                 strings={{
                   end: t('pages.anticipation.end'),
                   select: t('pages.anticipation.select'),
                   start: t('pages.anticipation.initial'),
                 }}
-                value={dates}
+                dates={dates}
               />
             </Col>
           </Row>
@@ -235,8 +237,8 @@ const AnticipationForm = ({
 AnticipationForm.propTypes = {
   anticipationInfo: PropTypes.element.isRequired,
   dates: PropTypes.shape({
-    end: PropTypes.instanceOf(moment),
-    start: PropTypes.instanceOf(moment),
+    end: isMomentPropValidation,
+    start: isMomentPropValidation,
   }).isRequired,
   error: PropTypes.string,
   isAutomaticTransfer: PropTypes.bool.isRequired,
@@ -245,9 +247,9 @@ AnticipationForm.propTypes = {
   maximum: PropTypes.number.isRequired,
   minimum: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
-  onChangeDate: PropTypes.func.isRequired,
-  onTimeframeChange: PropTypes.func.isRequired,
+  onDateConfirm: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
+  onTimeframeChange: PropTypes.func.isRequired,
   periodInfo: PropTypes.element.isRequired,
   requested: PropTypes.number.isRequired,
   t: PropTypes.func.isRequired,

@@ -3,20 +3,24 @@ import moment from 'moment'
 import {
   SEARCH_REQUEST,
   SEARCH_RECEIVE,
+  SEARCH_CLEAR,
 } from './actions'
 
 const initialState = {
   loading: true,
   query: {
-    search: '',
+    count: 15,
     dates: {
-      start: moment(new Date()).subtract(30, 'days'),
-      end: moment(new Date()),
+      end: moment(new Date()).endOf('day'),
+      start: moment(new Date()).subtract(30, 'days').startOf('day'),
     },
     filters: {},
     offset: 1,
-    count: 15,
-    sort: {},
+    search: '',
+    sort: {
+      field: ['created_at'],
+      order: 'descending',
+    },
   },
 }
 
@@ -45,6 +49,13 @@ export default function searchReducer (state, action) {
       return {
         loading: false,
         query,
+      }
+    }
+
+    case SEARCH_CLEAR: {
+      return {
+        ...initialState,
+        loading: false,
       }
     }
 

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import moment from 'moment'
 import {
   Button,
   Card,
@@ -12,6 +11,7 @@ import {
   Grid,
   Row,
   Spacing,
+  isMomentPropValidation,
 } from 'former-kit'
 import {
   always,
@@ -200,11 +200,11 @@ class AnticipationConfirmation extends Component {
   renderRecipient () {
     const {
       bankAccount: {
-        agencia_dv: agenciaDv,
         agencia,
+        agencia_dv: agenciaDv,
         bank_code: bankCode,
-        conta_dv: contaDv,
         conta,
+        conta_dv: contaDv,
         document_number: documentNumber,
         legal_name: legalName,
         type,
@@ -299,17 +299,17 @@ AnticipationConfirmation.propTypes = {
   amount: PropTypes.number.isRequired,
   automaticTransfer: PropTypes.bool.isRequired,
   bankAccount: PropTypes.shape({
-    agencia_dv: PropTypes.string,
     agencia: PropTypes.string,
+    agencia_dv: PropTypes.string,
     bank_code: PropTypes.string,
-    conta_dv: PropTypes.string,
     conta: PropTypes.string,
+    conta_dv: PropTypes.string,
     document_number: PropTypes.string,
     document_type: PropTypes.string,
     legal_name: PropTypes.string,
     type: PropTypes.string,
   }),
-  date: PropTypes.instanceOf(moment).isRequired,
+  date: isMomentPropValidation,
   disabled: PropTypes.bool,
   error: PropTypes.string,
   onCancel: PropTypes.func.isRequired,
@@ -322,9 +322,9 @@ AnticipationConfirmation.propTypes = {
 
 AnticipationConfirmation.defaultProps = {
   bankAccount: null,
+  date: null,
   disabled: false,
   error: '',
 }
 
 export default AnticipationConfirmation
-

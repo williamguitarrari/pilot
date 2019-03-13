@@ -24,11 +24,13 @@ import routes from './routes'
 const getRecipientId = path(['account', 'company', 'default_recipient_id', env])
 const getBalance = path(['account', 'balance'])
 const getCompanyName = path(['account', 'company', 'name'])
+const getAccountSessionId = path(['account', 'sessionId'])
 
 const mapStateToProps = applySpec({
   balance: getBalance,
   companyName: getCompanyName,
   recipientId: getRecipientId,
+  sessionId: getAccountSessionId,
 })
 
 const enhanced = compose(
@@ -41,6 +43,7 @@ const LoggedArea = ({
   balance,
   companyName,
   recipientId,
+  sessionId,
   t,
 }) => (
   <Layout
@@ -49,6 +52,7 @@ const LoggedArea = ({
         companyName={companyName}
         balance={balance}
         recipientId={recipientId}
+        sessionId={sessionId}
         t={t}
       />
     }
@@ -62,7 +66,13 @@ const LoggedArea = ({
           component={component}
         />
       ))}
-      <Redirect to={routes.transactions.path} />
+      <Redirect
+        to={
+          recipientId
+          ? `/balance/${recipientId}`
+          : '/balance/'
+        }
+      />
     </Switch>
   </Layout>
 )
@@ -74,6 +84,7 @@ LoggedArea.propTypes = {
   }),
   companyName: PropTypes.string,
   recipientId: PropTypes.string,
+  sessionId: PropTypes.string,
   t: PropTypes.func.isRequired,
 }
 
@@ -81,6 +92,7 @@ LoggedArea.defaultProps = {
   balance: {},
   companyName: '',
   recipientId: null,
+  sessionId: '',
 }
 
 export default enhanced(LoggedArea)

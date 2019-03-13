@@ -20,19 +20,27 @@ import ChevronDown32 from 'emblematic-icons/svg/ChevronDown32.svg'
 import ChevronUp32 from 'emblematic-icons/svg/ChevronUp32.svg'
 
 import {
+  allPass,
   anyPass,
+  complement,
+  either,
   equals,
   flatten,
+  identity,
+  ifElse,
   isEmpty,
   isNil,
   unless,
   is,
   of,
   join,
+  map,
   mergeDeepLeft,
   pipe,
   values,
 } from 'ramda'
+
+import moment from 'moment'
 
 import compileTags from './compileTags'
 import style from './style.css'
@@ -50,12 +58,33 @@ const ensureArray = unless(
   of
 )
 
+const isDate = either(is(Date), moment.isMoment)
+
+const formatIfDate = ifElse(
+  isDate,
+  date => moment(date).format('MM/DD/YYYY HH:mm:ss'),
+  identity
+)
+
+const isNotDateObject = allPass([
+  is(Object),
+  complement(is(String)),
+  complement(isDate),
+])
+
+export const stringifyDates = ifElse(
+  isNotDateObject,
+  map(property => stringifyDates(property)),
+  formatIfDate
+)
+
 class Filters extends Component {
   constructor (props) {
     super(props)
 
     this.state = {
       collapsed: true,
+      hasChanged: false,
       query: props.query,
     }
 
@@ -65,9 +94,15 @@ class Filters extends Component {
     this.handleFiltersChange = this.handleFiltersChange.bind(this)
   }
 
-  componentWillReceiveProps ({ query }) {
-    if (!equals(query, this.state.query)) {
-      this.setState({ query })
+  componentDidUpdate (prevProps, prevState) {
+    const prevQuery = stringifyDates(prevState.query)
+    const currQuery = stringifyDates(this.props.query)
+
+    if (!equals(prevQuery, currQuery)) {
+      this.setState({ // eslint-disable-line react/no-did-update-set-state
+        hasChanged: true,
+        query: this.props.query,
+      })
     }
   }
 
@@ -80,13 +115,16 @@ class Filters extends Component {
   handleFiltersSubmit (filters) {
     this.setState({
       collapsed: true,
+      hasChanged: false,
     })
 
-    this.props.onChange(filters)
+    this.props.onConfirm(filters)
   }
 
   handleFiltersChange (query) {
     this.setState({ query })
+
+    this.props.onChange(query)
   }
 
   renderChildrenInput (input, index) {
@@ -99,26 +137,25 @@ class Filters extends Component {
 
   renderToolbar () {
     const {
-      query: originalFilters,
-      options,
-      onClear,
       children,
+      confirmationDisabled,
+      disabled,
+      onClear,
+      options,
       t,
     } = this.props
 
     const {
       collapsed,
-      query: currentFilters,
+      hasChanged,
     } = this.state
-
-    const filtersChanged = !equals(originalFilters, currentFilters)
 
     return (
       <CardActions>
         {ensureArray(children).map(this.renderChildrenInput)}
         {!isNilOrEmpty(options) &&
           <Button
-            disabled={this.props.disabled}
+            disabled={disabled}
             relevance="low"
             fill="outline"
             iconAlignment="end"
@@ -133,17 +170,25 @@ class Filters extends Component {
         }
         <Spacing size="flex" />
         <Button
-          relevance={filtersChanged ? 'normal' : 'low'}
+          relevance={
+            hasChanged
+              ? 'normal'
+              : 'low'
+          }
           onClick={onClear}
           fill="outline"
-          disabled={this.props.disabled}
+          disabled={disabled}
         >
           {t('components.filter.reset')}
         </Button>
 
         <Button
-          relevance={filtersChanged ? 'normal' : 'low'}
-          disabled={!filtersChanged || this.props.disabled}
+          relevance={
+            hasChanged
+              ? 'normal'
+              : 'low'
+          }
+          disabled={confirmationDisabled || !hasChanged || disabled}
           type="submit"
           fill="gradient"
         >
@@ -178,13 +223,17 @@ class Filters extends Component {
           <CardContent>
             <fieldset name="filters">
               <Row flex>
-                {options.map(({ name, items, key }) => (
+                {options.map(({ items, key, name }) => (
                   <Col key={name}>
                     <div className={style.filtersTitle}>
                       {name}
                     </div>
                     <CheckboxGroup
-                      columns={items.length > 6 ? 2 : 1}
+                      columns={
+                        items.length > 6
+                        ? 2
+                        : 1
+                      }
                       disabled={this.props.disabled}
                       name={key}
                       options={items}
@@ -210,10 +259,10 @@ class Filters extends Component {
 
     const {
       options,
-      t,
       query: {
         filters: urlFilters,
       },
+      t,
     } = this.props
 
     const filters = mergeDeepLeft(urlFilters, localFilters)
@@ -229,7 +278,7 @@ class Filters extends Component {
         <span className={style.selectedOptionsTitle}>
           {t('components.filter.filtering_by')}&nbsp;
         </span>
-        {tags.map(({ key, name, items }) => (
+        {tags.map(({ items, key, name }) => (
           !isNilOrEmpty(items) &&
             <Tag key={key}>
               <strong>{name}</strong>: {join(', ', items)}
@@ -258,7 +307,11 @@ class Filters extends Component {
 
 Filters.propTypes = {
   children: PropTypes.node.isRequired,
+  confirmationDisabled: PropTypes.bool,
   disabled: PropTypes.bool,
+  onChange: PropTypes.func,
+  onClear: PropTypes.func.isRequired,
+  onConfirm: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(PropTypes.shape({
     items: PropTypes.arrayOf(PropTypes.shape({
       label: PropTypes.string,
@@ -267,16 +320,16 @@ Filters.propTypes = {
     key: PropTypes.string,
     name: PropTypes.string,
   })),
-  onChange: PropTypes.func.isRequired,
-  onClear: PropTypes.func.isRequired,
   query: PropTypes.object, // eslint-disable-line
   t: PropTypes.func.isRequired,
 }
 
 Filters.defaultProps = {
+  confirmationDisabled: false,
+  disabled: false,
+  onChange: () => null,
   options: [],
   query: {},
-  disabled: false,
 }
 
 export default Filters

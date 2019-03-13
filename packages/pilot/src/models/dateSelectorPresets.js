@@ -1,27 +1,58 @@
-export default [
+const dateSelectorPresets = t => [
   {
-    title: 'Últimos:',
-    items: [
+    date: () => 0,
+    key: 'today',
+    label: t('dates.today'),
+    mode: 'single',
+  },
+  {
+    key: 'last',
+    label: t('dates.last'),
+    list: [
       {
-        key: 'last-7',
-        title: '7 dias',
         date: () => -7,
+        key: 'last-7',
+        label: t('dates.last-7'),
+        mode: 'period',
       },
       {
-        key: 'last-15',
-        title: '15 dias',
         date: () => -15,
+        key: 'last-15',
+        label: t('dates.last-15'),
+        mode: 'period',
       },
       {
-        key: 'last-30',
-        title: '30 dias',
         date: () => -30,
+        key: 'last-30',
+        label: t('dates.last-30'),
+        mode: 'period',
       },
       {
-        key: 'last-60',
-        title: '60 dias',
         date: () => -60,
+        key: 'last-60',
+        label: t('dates.last-60'),
+        mode: 'period',
+      },
+    ],
+  },
+  {
+    key: 'custom',
+    label: t('dates.custom'),
+    list: [
+      {
+        date: () => null,
+        key: 'single',
+        label: t('dates.day'),
+        mode: 'single',
+      },
+      {
+        date: () => null,
+        key: 'period',
+        label: t('dates.period'),
+        mode: 'period',
       },
     ],
   },
 ]
+
+export default dateSelectorPresets
