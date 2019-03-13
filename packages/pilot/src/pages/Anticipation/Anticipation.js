@@ -12,7 +12,6 @@ import {
   compose,
   cond,
   contains,
-  curry,
   either,
   eqProps,
   equals,
@@ -114,16 +113,6 @@ const confirmBulk = (client, {
   })
 )
 
-const destroyBulk = curry((client, {
-  bulkId,
-  recipientId,
-}) => (
-  client.bulkAnticipations.destroy({
-    id: bulkId,
-    recipientId,
-  })
-))
-
 const getBuildingBulkAnticipations = (client, recipientId) =>
   client
     .bulkAnticipations
@@ -132,12 +121,11 @@ const getBuildingBulkAnticipations = (client, recipientId) =>
       status: 'building',
     })
 
-const buildDeleteOption = applySpec({ bulkId: prop('id') })
-const deleteBulkAnticipationPromises = client => map(destroyBulk(client))
+const buildDeleteOptions = applySpec({ anticipationId: prop('id') })
 
-const buildDeleteBuildingBulkAnticipation = client => pipe(
-  map(buildDeleteOption),
-  deleteBulkAnticipationPromises(client)
+const buildDeleteBuildingBulkAnticipation = destroyFn => pipe(
+  map(buildDeleteOptions),
+  map(destroyFn)
 )
 
 const getDefaultRecipient = client => client
@@ -419,10 +407,13 @@ class Anticipation extends Component {
     }
   }
 
-  getTransferCost () {
+  getTransferCost (recipientObject) {
     const {
-      recipient,
+      recipient: stateRecipient,
     } = this.state
+
+    const recipient = recipientObject || stateRecipient
+
     const bankCode = path(['bank_account', 'bank_code'], recipient)
 
     if (recipient && bankCode) {
@@ -446,21 +437,24 @@ class Anticipation extends Component {
   }
 
   updateRecipient (id) {
-    const { client } = this.props
+    const {
+      client,
+      destroyAnticipation,
+    } = this.props
 
     return getRecipientById(id, client)
       .then((recipient) => {
         this.setState({
           loading: true,
           recipient,
+          transferCost: this.getTransferCost(recipient),
         }, () => {
           this.setState({
             loading: false,
-            transferCost: this.getTransferCost(),
           })
 
           getBuildingBulkAnticipations(client, recipient.id)
-            .then(buildDeleteBuildingBulkAnticipation(client))
+            .then(buildDeleteBuildingBulkAnticipation(destroyAnticipation))
             .then(deletePromises => Promise.all(deletePromises))
         })
       })
