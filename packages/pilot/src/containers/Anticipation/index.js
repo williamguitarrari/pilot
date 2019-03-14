@@ -47,6 +47,28 @@ const setCurrentStep = currentStep => ifElse(
   identity
 )
 
+const buildEmptyState = (onCancel, t) => () => (
+  <Flexbox
+    alignItems="center"
+    className={style.emptyStateBlock}
+    direction="column"
+  >
+    <Message
+      image={<EmptyStateIcon width={365} height={148} />}
+      message={t('pages.anticipation.no_available_limits')}
+    >
+      <MessageActions>
+        <Button
+          fill="gradient"
+          onClick={onCancel}
+        >
+          {t('pages.anticipation.back_to_balance')}
+        </Button>
+      </MessageActions>
+    </Message>
+  </Flexbox>
+)
+
 class Anticipation extends Component {
   constructor () {
     super()
@@ -54,6 +76,7 @@ class Anticipation extends Component {
     this.getStepsStatus = this.getStepsStatus.bind(this)
     this.renderCurrentStep = this.renderCurrentStep.bind(this)
     this.renderRecipient = this.renderRecipient.bind(this)
+    this.renderAnticipationForm = this.renderAnticipationForm.bind(this)
   }
 
   getStepsStatus () {
@@ -123,6 +146,60 @@ class Anticipation extends Component {
     )
   }
 
+  renderAnticipationForm () {
+    const {
+      amount,
+      approximateRequested,
+      automaticTransfer,
+      date,
+      error,
+      loading,
+      maximum,
+      minimum,
+      onAnticipationDateConfirm,
+      onCalculateSubmit,
+      onCancel,
+      onDataConfirm,
+      onFormChange,
+      onTimeframeChange,
+      recipient: {
+        bank_account: bankAccount,
+      },
+      requested,
+      t,
+      timeframe,
+      totalCost,
+      transferCost,
+      validateDay,
+    } = this.props
+
+    return (
+      <AnticipationForm
+        amount={amount}
+        approximateRequested={approximateRequested}
+        bankAccount={bankAccount}
+        cost={totalCost}
+        date={date}
+        error={error}
+        isAutomaticTransfer={automaticTransfer}
+        isValidDay={validateDay}
+        loading={loading}
+        maximum={maximum}
+        minimum={minimum}
+        onCalculateSubmit={onCalculateSubmit}
+        onCancel={onCancel}
+        onChange={onFormChange}
+        onConfirm={onDataConfirm}
+        onDateConfirm={onAnticipationDateConfirm}
+        onTimeframeChange={onTimeframeChange}
+        requested={requested}
+        t={t}
+        timeframe={timeframe}
+        transferCost={transferCost}
+      />
+    )
+  }
+
   renderCurrentStep () {
     const {
       amount,
@@ -133,29 +210,24 @@ class Anticipation extends Component {
       error,
       loading,
       maximum,
-      minimum,
-      onAnticipationDateConfirm,
-      onCalculateSubmit,
       onCancel,
       onConfirmationConfirm,
       onConfirmationReturn,
-      onDataConfirm,
-      onFormChange,
-      onTimeframeChange,
       onTryAgain,
       onViewStatement,
       recipient: {
         bank_account: bankAccount,
       },
-      requested,
       statusMessage,
       stepsStatus,
       t,
       timeframe,
       totalCost,
-      transferCost,
-      validateDay,
     } = this.props
+
+    const renderDataStep = !loading && maximum === 0
+      ? buildEmptyState(onCancel, t)
+      : this.renderAnticipationForm
 
     return (
       <Fragment>
@@ -167,53 +239,7 @@ class Anticipation extends Component {
             tablet={12}
             tv={12}
           >
-            {!loading && maximum === 0 && currentStep === 'data' &&
-              <Flexbox
-                alignItems="center"
-                className={style.emptyStateBlock}
-                direction="column"
-              >
-                <Message
-                  image={<EmptyStateIcon width={365} height={148} />}
-                  message={t('pages.anticipation.no_available_limits')}
-                >
-                  <MessageActions>
-                    <Button
-                      fill="gradient"
-                      onClick={onCancel}
-                    >
-                      {t('pages.anticipation.back_to_balance')}
-                    </Button>
-                  </MessageActions>
-                </Message>
-              </Flexbox>
-            }
-            {maximum > 0 && currentStep === 'data' &&
-              <AnticipationForm
-                amount={amount}
-                approximateRequested={approximateRequested}
-                bankAccount={bankAccount}
-                cost={totalCost}
-                date={date}
-                error={error}
-                isAutomaticTransfer={automaticTransfer}
-                isValidDay={validateDay}
-                loading={loading}
-                maximum={maximum}
-                minimum={minimum}
-                onCalculateSubmit={onCalculateSubmit}
-                onCancel={onCancel}
-                onChange={onFormChange}
-                onConfirm={onDataConfirm}
-                onDateConfirm={onAnticipationDateConfirm}
-                onTimeframeChange={onTimeframeChange}
-                requested={requested}
-                t={t}
-                timeframe={timeframe}
-                transferCost={transferCost}
-              />
-            }
-
+            {currentStep === 'data' && renderDataStep()}
             {currentStep === 'confirmation' &&
               <AnticipationConfirmation
                 amount={amount}
