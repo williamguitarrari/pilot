@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { CardContent } from 'former-kit'
 
@@ -12,30 +12,19 @@ import {
   UNKNOWN_ERROR,
 } from '../../../formatters/errorType'
 
-import { virtualPageView } from '../../../vendor/googleTagManager'
+const ErrorStep = (props) => {
+  const { t } = props
 
-class ErrorStep extends Component {
-  componentDidMount () {
-    virtualPageView({
-      path: '/virtual/recipient/add/error',
-      title: 'Add Recipient - Error',
-    })
-  }
-
-  render () {
-    const { t } = this.props
-
-    return (
-      <CardContent className={style.flex}>
-        <ErrorIcon />
-        <h2 className={style.title}>
-          {t('pages.add_recipient.ops')}
-        </h2>
-        <ErrorMessage {...this.props} />
-        <ErrorButtons {...this.props} />
-      </CardContent>
-    )
-  }
+  return (
+    <CardContent className={style.flex}>
+      <ErrorIcon />
+      <h2 className={style.title}>
+        {t('pages.add_recipient.ops')}
+      </h2>
+      <ErrorMessage {...props} />
+      <ErrorButtons {...props} />
+    </CardContent>
+  )
 }
 
 ErrorStep.propTypes = {

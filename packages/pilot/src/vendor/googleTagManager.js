@@ -66,20 +66,11 @@ export const inactiveCompanyLogin = () => {
 /**
  * Trigger activeCompanyLogin event
  */
+
 export const activeCompanyLogin = () => {
   if (hasProperty(window.dataLayer)) {
     window.dataLayer.push({
       event: 'activeCompanyLogin',
-    })
-  }
-}
-
-export const virtualPageView = ({ path, title }) => {
-  if (hasProperty(window.dataLayer)) {
-    window.dataLayer.push({
-      event: 'virtualPageView',
-      pagePath: path,
-      pageTitle: title,
     })
   }
 }
