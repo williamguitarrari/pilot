@@ -1,9 +1,6 @@
 import {
-  gt,
-  identity,
-  ifElse,
+  call,
   path,
-  pipe,
 } from 'ramda'
 
 import {
@@ -24,16 +21,6 @@ const initialState = {
 
 const getLimitsProp = propName => path([propName, 'amount'])
 
-const calculateMaxLimit = getLimitsProp('maximum')
-const calculateMinLimit = pipe(
-  getLimitsProp('minimum'),
-  ifElse(
-    gt(100),
-    () => 100,
-    identity
-  )
-)
-
 export default function anticipationReducer (state = initialState, action) {
   switch (action.type) {
     case ANTICIPABLE_LIMITS_REQUEST: {
@@ -52,8 +39,8 @@ export default function anticipationReducer (state = initialState, action) {
       return {
         error: null,
         limits: {
-          max: calculateMaxLimit(payload),
-          min: calculateMinLimit(payload),
+          max: call(getLimitsProp('maximum'), payload),
+          min: call(getLimitsProp('minimum'), payload),
         },
         loading: false,
       }

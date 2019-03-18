@@ -8,7 +8,6 @@ import {
   ANTICIPABLE_LIMITS_REQUEST,
   DESTROY_ANTICIPATION_REQUEST,
   receiveLimits,
-  requestLimits,
   failLimits,
 } from './actions'
 
@@ -91,8 +90,7 @@ const destroyAnticipationEpic = (action$, state$) =>
                 timeframe: 'start',
               }))
           })
-      }),
-      map(requestLimits)
+      })
     )
 
 export default combineEpics(limitsEpic, destroyAnticipationEpic)

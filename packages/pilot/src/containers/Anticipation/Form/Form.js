@@ -62,7 +62,6 @@ const AnticipationForm = ({
   onChange,
   onDateConfirm,
   onSubmit,
-  onTimeframeChange,
   periodInfo,
   requested,
   t,
@@ -72,7 +71,9 @@ const AnticipationForm = ({
   <Form
     data={{
       dates,
-      requested: requested.toString(),
+      requested: requested
+        ? requested.toString()
+        : '0',
       timeframe,
       transfer: isAutomaticTransfer
         ? 'yes'
@@ -115,7 +116,6 @@ const AnticipationForm = ({
                     value: 'end',
                   },
                 ]}
-                onChange={onTimeframeChange}
               />
             </Col>
           </Row>
@@ -250,9 +250,8 @@ AnticipationForm.propTypes = {
   onChange: PropTypes.func.isRequired,
   onDateConfirm: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  onTimeframeChange: PropTypes.func.isRequired,
   periodInfo: PropTypes.element.isRequired,
-  requested: PropTypes.number.isRequired,
+  requested: PropTypes.number,
   t: PropTypes.func.isRequired,
   timeframe: PropTypes.oneOf(['end', 'start']).isRequired,
   transferInfo: PropTypes.element.isRequired,
@@ -262,6 +261,7 @@ AnticipationForm.defaultProps = {
   error: '',
   maximum: null,
   minimum: null,
+  requested: 0,
 }
 
 export default AnticipationForm

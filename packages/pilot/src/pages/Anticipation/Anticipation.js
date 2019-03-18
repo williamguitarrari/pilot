@@ -13,9 +13,10 @@ import {
   cond,
   contains,
   either,
-  eqProps,
   equals,
+  gt,
   head,
+  identity,
   ifElse,
   isNil,
   map,
@@ -246,27 +247,21 @@ const getStepsStatus = (nextStep, nextStepStatus) => {
   return buildStepsStatus(nextStep)
 }
 
-const getRequestedAmount = (min, max, requested) => {
-  if (requested <= min) {
-    return min
-  }
-
-  if (requested >= max) {
-    return max
-  }
-
-  return requested
-}
-
 const isInvalidRecipientId = anyPass([
   isNil,
   equals('undefined'),
   complement(startsWith('re_')),
 ])
 
-const areEqualLimits = both(
-  eqProps('max'),
-  eqProps('min')
+const areEmptyLimits = both(
+  pipe(prop('max'), either(isNil, equals(0))),
+  pipe(prop('min'), either(isNil, equals(0)))
+)
+
+const getMinLimit = ifElse(
+  gt(100),
+  () => 100,
+  identity
 )
 
 class Anticipation extends Component {
@@ -282,17 +277,32 @@ class Anticipation extends Component {
     this.confirmAnticipation = this.confirmAnticipation.bind(this)
     this.createAnticipation = this.createAnticipation.bind(this)
     this.createOrUpdateAnticipation = this.createOrUpdateAnticipation.bind(this)
+    this.destroyBuildingAnticipations =
+      this.destroyBuildingAnticipations.bind(this)
+    this.getBuildingAnticipations = this.getBuildingAnticipations.bind(this)
     this.getTransferCost = this.getTransferCost.bind(this)
     this.goTo = this.goTo.bind(this)
     this.goToBalance = this.goToBalance.bind(this)
     this.handleCalculateSubmit = this.handleCalculateSubmit.bind(this)
     this.handleConfirmationConfirm = this.handleConfirmationConfirm.bind(this)
-    this.handleDateConfirm = this.handleDateConfirm.bind(this)
     this.handleFormChange = this.handleFormChange.bind(this)
-    this.handleTimeframeChange = this.handleTimeframeChange.bind(this)
     this.resetAnticipation = this.resetAnticipation.bind(this)
     this.updateAnticipation = this.updateAnticipation.bind(this)
     this.updateRecipient = this.updateRecipient.bind(this)
+  }
+
+  static getDerivedStateFromProps (props, state) {
+    if (
+      !areEmptyLimits(props.limits)
+      && (
+        state.requestedAmount < getMinLimit(props.limits.min)
+        || state.requestedAmount > props.limits.max
+      )
+    ) {
+      return { requestedAmount: props.limits.max }
+    }
+
+    return null
   }
 
   componentDidMount () {
@@ -330,13 +340,26 @@ class Anticipation extends Component {
         .then(recipientId => history.replace(`/anticipation/${recipientId}`))
     } else {
       this.updateRecipient(id)
+        .then(() => {
+          this.getBuildingAnticipations(id)
+            .then(this.destroyBuildingAnticipations)
+          const { limits, loading } = this.props
+          if (
+            !areEmptyLimits(limits)
+            && !loading
+            && isNil(this.state.approximateRequested)
+          ) {
+            this.createOrUpdateAnticipation(limits.max)
+          }
+        })
     }
   }
 
-  componentDidUpdate (prevProps) {
+  componentDidUpdate (prevProps, prevState) {
     const {
       history,
       limits,
+      loading: loadingLimits,
       match: {
         params: {
           id,
@@ -345,7 +368,6 @@ class Anticipation extends Component {
     } = this.props
 
     const {
-      limits: oldLimits,
       match: {
         params: {
           id: oldId,
@@ -353,35 +375,45 @@ class Anticipation extends Component {
       },
     } = prevProps
 
+    const {
+      loading,
+      recipient,
+      requestedAmount,
+    } = this.state
+
     if (isInvalidRecipientId(id) && oldId) {
-      history.replace(`/anticipation/${oldId}`)
+      return history.replace(`/anticipation/${oldId}`)
     }
 
-    if (id && id !== oldId) {
-      this.updateRecipient(id)
-    } else if (
-      !areEqualLimits(oldLimits, limits) &&
-      (oldLimits.max === null && limits.max !== null) &&
-      !this.state.error
+    if ((id && id !== oldId) || (!recipient && !loading)) {
+      return this.updateRecipient(id)
+    }
+
+    if (
+      recipient
+      && !prevState.recipient
+      && !loading
+      && !loadingLimits
+      && limits.max === null
     ) {
-      this.createOrUpdateAnticipation(limits.max)
-        .catch(pipe(getErrorMessage, error => this.setState({
-          error,
-          loading: false,
-        })))
-    } else if (this.state.requestedAmount === 0 && limits.max !== null) {
-      this.setState({ // eslint-disable-line react/no-did-update-set-state
-        requestedAmount: limits.max,
-      })
-
-      this.updateRecipient(id)
-        .then(() =>
-          this.createOrUpdateAnticipation(limits.max)
-            .catch(pipe(getErrorMessage, error => this.setState({
-              error,
-              loading: false,
-            }))))
+      return this.calculateLimits()
     }
+
+    const emptyLimits = areEmptyLimits(limits)
+
+    if (!emptyLimits) {
+      if (isNil(requestedAmount) || requestedAmount > limits.max) {
+        this.setState({ // eslint-disable-line react/no-did-update-set-state
+          requestedAmount: limits.max,
+        })
+      }
+
+      if (recipient && areEmptyLimits(prevProps.limits)) {
+        this.createOrUpdateAnticipation(limits.max)
+      }
+    }
+
+    return undefined
   }
 
   componentWillUnmount () {
@@ -408,54 +440,64 @@ class Anticipation extends Component {
   }
 
   getTransferCost (recipientObject) {
-    const {
-      recipient: stateRecipient,
-    } = this.state
-
-    const recipient = recipientObject || stateRecipient
-
-    const bankCode = path(['bank_account', 'bank_code'], recipient)
-
-    if (recipient && bankCode) {
+    const { pricing } = this.props
+    if (pricing) {
       const {
-        pricing: {
-          transfers: {
-            credito_em_conta: creditoEmConta,
-            ted,
-          },
+        recipient: stateRecipient,
+      } = this.state
+
+      const {
+        transfers: {
+          credito_em_conta: creditoEmConta,
+          ted,
         },
-      } = this.props
+      } = pricing
 
-      if (contains(partnersBankCodes, bankCode)) {
-        return creditoEmConta
+      const recipient = recipientObject || stateRecipient
+
+      const bankCode = path(['bank_account', 'bank_code'], recipient)
+
+      if (recipient && bankCode) {
+        if (contains(partnersBankCodes, bankCode)) {
+          return creditoEmConta
+        }
+
+        return -ted
       }
-
-      return -ted
     }
 
     return 0
   }
 
+  getBuildingAnticipations (id) {
+    const { client } = this.props
+
+    return getBuildingBulkAnticipations(client, id)
+  }
+
+  destroyBuildingAnticipations (anticipations) {
+    const { destroyAnticipation } = this.props
+
+    return Promise.resolve(anticipations)
+      .then(buildDeleteBuildingBulkAnticipation(destroyAnticipation))
+      .then(deletePromises => Promise.all(deletePromises))
+  }
+
   updateRecipient (id) {
     const {
       client,
-      destroyAnticipation,
     } = this.props
+
+    this.setState({
+      loading: true,
+    })
 
     return getRecipientById(id, client)
       .then((recipient) => {
         this.setState({
-          loading: true,
+          loading: false,
           recipient,
           transferCost: this.getTransferCost(recipient),
-        }, () => {
-          this.setState({
-            loading: false,
-          })
-
-          getBuildingBulkAnticipations(client, recipient.id)
-            .then(buildDeleteBuildingBulkAnticipation(destroyAnticipation))
-            .then(deletePromises => Promise.all(deletePromises))
         })
       })
   }
@@ -465,35 +507,25 @@ class Anticipation extends Component {
     const {
       paymentDate,
       recipientId,
+      timeframe,
     } = this.state
 
     return requestAnticipationLimits({
       paymentDate,
       recipientId,
-      timeframe: 'start',
+      timeframe,
     })
   }
 
   resetAnticipation () {
     const { limits: { min } } = this.props
 
-    return this.createOrUpdateAnticipation(min)
+    return this.createOrUpdateAnticipation(getMinLimit(min))
       .then(this.calculateLimits)
       .catch(pipe(getErrorMessage, error => this.setState({
         error,
         loading: false,
       })))
-  }
-
-  handleTimeframeChange (timeframe) {
-    this.setState(
-      { timeframe },
-      this.resetAnticipation.bind(this)
-    )
-  }
-
-  handleDateConfirm () {
-    this.resetAnticipation.bind(this)
   }
 
   handleCalculateSubmit ({
@@ -508,12 +540,23 @@ class Anticipation extends Component {
 
     const { t } = this.props
 
-    debugger // eslint-disable-line
-
-    this.resetAnticipation()
-      .then(() => {
+    this.updateAnticipation(requested)
+      .then(({
+        amount,
+        anticipation_fee: anticipationFee,
+        fee,
+        fraud_coverage_fee: fraudCoverageFee,
+        status,
+      }) => {
         this.setState({
+          approximateRequested: amount,
+          bulkAnticipationStatus: status,
           error: null,
+          feesValues: {
+            anticipation: anticipationFee,
+            fraud: fraudCoverageFee,
+            otherFee: fee,
+          },
           isAutomaticTransfer,
           paymentDate: date,
           requestedAmount: requested,
@@ -522,8 +565,6 @@ class Anticipation extends Component {
             ? this.getTransferCost()
             : 0,
         })
-
-        this.updateAnticipation(requested)
       })
       .catch(pipe(
         getInsuficientPayablesError(t),
@@ -583,21 +624,33 @@ class Anticipation extends Component {
   }
 
   handleFormChange (
-    { dates: { start }, requested, transfer },
+    {
+      dates: { start },
+      requested,
+      timeframe,
+      transfer,
+    },
     { requested: requestedError }
   ) {
     const isAutomaticTransfer = transfer === 'yes'
-    this.setState({
-      error: requestedError !== this.state.error
-        ? requestedError
-        : null,
-      isAutomaticTransfer,
-      paymentDate: start,
-      requestedAmount: +requested,
-      transferCost: isAutomaticTransfer
-        ? this.getTransferCost()
-        : 0,
-    })
+    const { paymentDate, timeframe: oldTimeframe } = this.state
+    const mustReset = timeframe !== oldTimeframe || !paymentDate.isSame(start)
+
+    this.setState(
+      {
+        error: requestedError !== this.state.error
+          ? requestedError
+          : null,
+        isAutomaticTransfer,
+        paymentDate: start,
+        requestedAmount: +requested,
+        timeframe,
+        transferCost: isAutomaticTransfer
+          ? this.getTransferCost()
+          : 0,
+      },
+      () => mustReset && this.resetAnticipation()
+    )
   }
 
   goTo (nextStep, nextStepStatus) {
@@ -632,13 +685,7 @@ class Anticipation extends Component {
       timeframe,
     } = this.state
 
-    const {
-      client,
-      limits: {
-        max,
-        min,
-      },
-    } = this.props
+    const { client } = this.props
 
     return updateBulk(client, {
       automaticTransfer: isAutomaticTransfer,
@@ -647,30 +694,14 @@ class Anticipation extends Component {
       recipientId,
       requestedAmount: value || requestedAmount,
       timeframe,
-    })
-      .then(({
-        amount,
-        anticipation_fee: anticipationFee,
-        fee,
-        fraud_coverage_fee: fraudCoverageFee,
-        status,
-      }) => {
-        this.setState({
-          approximateRequested: amount,
-          bulkAnticipationStatus: status,
-          feesValues: {
-            anticipation: anticipationFee,
-            fraud: fraudCoverageFee,
-            otherFee: fee,
-          },
-          loading: false,
-          requestedAmount: getRequestedAmount(
-            min,
-            max,
-            requestedAmount
-          ),
-        })
+    }).then((bulk) => {
+      this.setState({
+        loading: false,
+        requestedAmount,
       })
+
+      return bulk
+    })
   }
 
   confirmAnticipation () {
@@ -791,7 +822,10 @@ class Anticipation extends Component {
     } = this.props
 
     const totalCost = -(anticipation + fraud + otherFee)
-    const amount = approximateRequested + totalCost + transferCost
+    const totalCostAndTransfer = totalCost + transferCost
+    const amount = approximateRequested
+      ? approximateRequested + totalCostAndTransfer
+      : totalCostAndTransfer
 
     if (businessCalendarError) {
       return (
@@ -823,7 +857,7 @@ class Anticipation extends Component {
             error={error}
             loading={loading || limitsLoading}
             maximum={max}
-            minimum={min}
+            minimum={getMinLimit(min)}
             onAnticipationDateConfirm={this.handleDateConfirm}
             onCalculateSubmit={this.handleCalculateSubmit}
             onCancel={this.goToBalance}
@@ -831,7 +865,6 @@ class Anticipation extends Component {
             onConfirmationReturn={() => this.goTo('data', 'current')}
             onDataConfirm={() => this.goTo('confirmation', 'current')}
             onFormChange={this.handleFormChange}
-            onTimeframeChange={this.handleTimeframeChange}
             onTryAgain={() => this.goTo('data', 'current')}
             onViewStatement={this.goToBalance}
             recipient={recipient}
@@ -881,7 +914,7 @@ Anticipation.propTypes = {
       credito_em_conta: PropTypes.number,
       ted: PropTypes.number,
     }),
-  }).isRequired,
+  }),
   requestAnticipationLimits: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
 }
@@ -889,6 +922,7 @@ Anticipation.propTypes = {
 Anticipation.defaultProps = {
   error: '',
   loading: false,
+  pricing: null,
 }
 
 export default enhanced(Anticipation)

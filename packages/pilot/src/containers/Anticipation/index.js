@@ -161,7 +161,6 @@ class Anticipation extends Component {
       onCancel,
       onDataConfirm,
       onFormChange,
-      onTimeframeChange,
       recipient: {
         bank_account: bankAccount,
       },
@@ -191,7 +190,6 @@ class Anticipation extends Component {
         onChange={onFormChange}
         onConfirm={onDataConfirm}
         onDateConfirm={onAnticipationDateConfirm}
-        onTimeframeChange={onTimeframeChange}
         requested={requested}
         t={t}
         timeframe={timeframe}
@@ -225,7 +223,7 @@ class Anticipation extends Component {
       totalCost,
     } = this.props
 
-    const renderDataStep = !loading && maximum === 0
+    const renderDataStep = !loading && !maximum
       ? buildEmptyState(onCancel, t)
       : this.renderAnticipationForm
 
@@ -326,7 +324,6 @@ Anticipation.propTypes = {
   onConfirmationReturn: PropTypes.func.isRequired,
   onDataConfirm: PropTypes.func.isRequired,
   onFormChange: PropTypes.func.isRequired,
-  onTimeframeChange: PropTypes.func.isRequired,
   onTryAgain: PropTypes.func.isRequired,
   onViewStatement: PropTypes.func.isRequired,
   recipient: PropTypes.shape({
@@ -342,7 +339,7 @@ Anticipation.propTypes = {
       type: PropTypes.string,
     }),
   }),
-  requested: PropTypes.number.isRequired,
+  requested: PropTypes.number,
   statusMessage: PropTypes.string,
   stepsStatus: PropTypes.shape({}).isRequired,
   t: PropTypes.func.isRequired,
@@ -357,7 +354,7 @@ Anticipation.propTypes = {
 }
 
 Anticipation.defaultProps = {
-  approximateRequested: null,
+  approximateRequested: 0,
   date: null,
   error: '',
   maximum: null,
@@ -375,6 +372,7 @@ Anticipation.defaultProps = {
       type: '',
     },
   },
+  requested: 0,
   statusMessage: '',
 }
 
