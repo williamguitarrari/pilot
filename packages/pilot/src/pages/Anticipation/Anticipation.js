@@ -508,6 +508,8 @@ class Anticipation extends Component {
 
     const { t } = this.props
 
+    debugger // eslint-disable-line
+
     this.resetAnticipation()
       .then(() => {
         this.setState({
@@ -580,15 +582,18 @@ class Anticipation extends Component {
       })
   }
 
-  handleFormChange ({ dates: { start }, transfer }, { requested }) {
+  handleFormChange (
+    { dates: { start }, requested, transfer },
+    { requested: requestedError }
+  ) {
     const isAutomaticTransfer = transfer === 'yes'
-
     this.setState({
-      error: requested !== this.state.error
-        ? requested
+      error: requestedError !== this.state.error
+        ? requestedError
         : null,
       isAutomaticTransfer,
       paymentDate: start,
+      requestedAmount: +requested,
       transferCost: isAutomaticTransfer
         ? this.getTransferCost()
         : 0,
