@@ -1,12 +1,17 @@
 import { pathOr } from 'ramda'
 import { of } from 'rxjs'
-import { catchError, map, mergeMap } from 'rxjs/operators'
+import {
+  catchError,
+  map,
+  mergeMap,
+} from 'rxjs/operators'
 import { combineEpics, ofType } from 'redux-observable'
 import moment from 'moment'
 import env from '../../environment'
 import {
   ANTICIPABLE_LIMITS_REQUEST,
   DESTROY_ANTICIPATION_REQUEST,
+  requestLimits,
   receiveLimits,
   failLimits,
 } from './actions'
@@ -90,7 +95,8 @@ const destroyAnticipationEpic = (action$, state$) =>
                 timeframe: 'start',
               }))
           })
-      })
+      }),
+      map(requestLimits)
     )
 
 export default combineEpics(limitsEpic, destroyAnticipationEpic)
