@@ -223,7 +223,7 @@ class Anticipation extends Component {
       totalCost,
     } = this.props
 
-    const renderDataStep = !loading && !maximum
+    const renderDataStep = !loading && maximum < 100
       ? buildEmptyState(onCancel, t)
       : this.renderAnticipationForm
 

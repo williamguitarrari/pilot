@@ -105,6 +105,8 @@ const anyDateRange = {
 const formatAmount = (amount = 0) =>
   currencyFormatter(amount)
 
+const MINIMUM_ANTICIPABLE_VALUE = 100
+
 class Balance extends Component {
   constructor (props) {
     super(props)
@@ -326,6 +328,7 @@ class Balance extends Component {
   render () {
     const {
       anticipation: {
+        available,
         error: anticipationError,
         loading: anticipationLoading,
       },
@@ -430,7 +433,12 @@ class Balance extends Component {
                 }
                 amount={formatAmount(outcoming)}
                 detail={this.renderAnticipation()}
-                disabled={disabled || anticipationLoading || anticipationError}
+                disabled={
+                  disabled
+                  || anticipationLoading
+                  || anticipationError
+                  || available < MINIMUM_ANTICIPABLE_VALUE
+                }
                 title={t('pages.balance.anticipation_title')}
               />
             </Col>

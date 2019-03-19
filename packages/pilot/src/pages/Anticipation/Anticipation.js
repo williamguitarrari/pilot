@@ -291,20 +291,6 @@ class Anticipation extends Component {
     this.updateRecipient = this.updateRecipient.bind(this)
   }
 
-  static getDerivedStateFromProps (props, state) {
-    if (
-      !areEmptyLimits(props.limits)
-      && (
-        state.requestedAmount < getMinLimit(props.limits.min)
-        || state.requestedAmount > props.limits.max
-      )
-    ) {
-      return { requestedAmount: props.limits.max }
-    }
-
-    return null
-  }
-
   componentDidMount () {
     const {
       client,
