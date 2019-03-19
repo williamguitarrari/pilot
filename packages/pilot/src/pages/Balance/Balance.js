@@ -400,6 +400,7 @@ class Balance extends Component {
           requests: response,
         },
       }))
+      .then(() => this.requestAnticipationLimits(recipientId))
   }
 
   handleExportData (format) {
