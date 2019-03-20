@@ -92,6 +92,11 @@ const expectedQuery = {
               },
               {
                 term: {
+                  'customer.documents.number': '12345',
+                },
+              },
+              {
+                term: {
                   'customer.document_number': '12345',
                 },
               },
@@ -156,6 +161,11 @@ describe('Transactions from filter', () => {
             {
               term: {
                 id: 12345,
+              },
+            },
+            {
+              term: {
+                'customer.documents.number': '12345',
               },
             },
             {
@@ -552,6 +562,11 @@ describe('Transactions from filter', () => {
       [
         {
           or: [
+            {
+              term: {
+                'customer.documents.number': 'aaaa',
+              },
+            },
             {
               term: {
                 'customer.document_number': 'aaaa',
