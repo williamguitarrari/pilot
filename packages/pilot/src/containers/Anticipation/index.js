@@ -221,6 +221,7 @@ class Anticipation extends Component {
       t,
       timeframe,
       totalCost,
+      transferCost,
     } = this.props
 
     const renderDataStep = !loading && maximum < 100
@@ -251,7 +252,7 @@ class Anticipation extends Component {
                 onReturn={onConfirmationReturn}
                 requested={approximateRequested}
                 t={t}
-                totalCost={totalCost}
+                totalCost={totalCost + transferCost}
               />
             }
 
@@ -268,7 +269,7 @@ class Anticipation extends Component {
                 statusMessage={statusMessage}
                 t={t}
                 timeframe={timeframe}
-                totalCost={totalCost}
+                totalCost={totalCost + transferCost}
               />
             }
           </Col>
