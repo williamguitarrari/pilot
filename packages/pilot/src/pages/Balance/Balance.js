@@ -574,7 +574,7 @@ class Balance extends Component {
 
 Balance.propTypes = {
   anticipation: PropTypes.shape({
-    available: PropTypes.number.isRequired,
+    available: PropTypes.number,
     error: PropTypes.bool.isRequired,
     loading: PropTypes.bool.isRequired,
   }).isRequired,
