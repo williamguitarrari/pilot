@@ -156,7 +156,6 @@ class Anticipation extends Component {
       loading,
       maximum,
       minimum,
-      onAnticipationDateConfirm,
       onCalculateSubmit,
       onCancel,
       onDataConfirm,
@@ -189,7 +188,6 @@ class Anticipation extends Component {
         onCancel={onCancel}
         onChange={onFormChange}
         onConfirm={onDataConfirm}
-        onDateConfirm={onAnticipationDateConfirm}
         requested={requested}
         t={t}
         timeframe={timeframe}
@@ -318,7 +316,6 @@ Anticipation.propTypes = {
   loading: PropTypes.bool.isRequired,
   maximum: PropTypes.number,
   minimum: PropTypes.number,
-  onAnticipationDateConfirm: PropTypes.func.isRequired,
   onCalculateSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   onConfirmationConfirm: PropTypes.func.isRequired,

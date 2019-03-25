@@ -84,7 +84,6 @@ class AnticipationFormContainer extends Component {
       onCancel,
       onChange,
       onConfirm,
-      onDateConfirm,
       requested,
       t,
       timeframe,
@@ -117,7 +116,6 @@ class AnticipationFormContainer extends Component {
                 maximum={maximum}
                 minimum={minimum}
                 onChange={onChange}
-                onDateConfirm={onDateConfirm}
                 onSubmit={this.handleCalculateSubmit}
                 periodInfo={renderInfo(t('pages.anticipation.period.advise'))}
                 requested={requested}
@@ -284,7 +282,6 @@ AnticipationFormContainer.propTypes = {
   onCancel: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
-  onDateConfirm: PropTypes.func.isRequired,
   requested: PropTypes.number.isRequired,
   t: PropTypes.func.isRequired,
   timeframe: PropTypes.oneOf(['end', 'start']),

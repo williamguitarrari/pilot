@@ -844,7 +844,6 @@ class Anticipation extends Component {
             loading={loading || limitsLoading}
             maximum={max}
             minimum={getMinLimit(min)}
-            onAnticipationDateConfirm={this.handleDateConfirm}
             onCalculateSubmit={this.handleCalculateSubmit}
             onCancel={this.goToBalance}
             onConfirmationConfirm={this.handleConfirmationConfirm}

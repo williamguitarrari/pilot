@@ -60,7 +60,6 @@ const AnticipationForm = ({
   maximum,
   minimum,
   onChange,
-  onDateConfirm,
   onSubmit,
   periodInfo,
   requested,
@@ -133,7 +132,6 @@ const AnticipationForm = ({
                 icon={<IconCalendar width={16} height={16} />}
                 isValidDay={isValidDay}
                 name="dates"
-                onConfirm={onDateConfirm}
                 selectionMode="single"
                 showSidebar={false}
                 strings={{
@@ -248,7 +246,6 @@ AnticipationForm.propTypes = {
   maximum: PropTypes.number,
   minimum: PropTypes.number,
   onChange: PropTypes.func.isRequired,
-  onDateConfirm: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   periodInfo: PropTypes.element.isRequired,
   requested: PropTypes.number,
