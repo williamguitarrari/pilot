@@ -40,6 +40,7 @@ const Capture = ({
     payment: {
       authorized_amount: authorizedAmount,
       installments,
+      method: paymentMethod,
     },
   } = transaction
 
@@ -99,6 +100,7 @@ const Capture = ({
             isFromCheckout={isFromCheckout}
             installments={installments}
             onConfirm={onConfirm}
+            paymentMethod={paymentMethod}
             t={t}
           />
       }
@@ -138,6 +140,11 @@ Capture.propTypes = {
     payment: PropTypes.shape({
       authorized_amount: PropTypes.number.isRequired,
       installments: PropTypes.number,
+      method: PropTypes.oneOf([
+        'boleto',
+        'debit_card',
+        'credit_card',
+      ]).isRequired,
       paid_amount: PropTypes.number.isRequired,
     }),
   }).isRequired,

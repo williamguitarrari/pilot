@@ -84,8 +84,6 @@ class AnticipationFormContainer extends Component {
       onCancel,
       onChange,
       onConfirm,
-      onDateConfirm,
-      onTimeframeChange,
       requested,
       t,
       timeframe,
@@ -118,8 +116,6 @@ class AnticipationFormContainer extends Component {
                 maximum={maximum}
                 minimum={minimum}
                 onChange={onChange}
-                onDateConfirm={onDateConfirm}
-                onTimeframeChange={onTimeframeChange}
                 onSubmit={this.handleCalculateSubmit}
                 periodInfo={renderInfo(t('pages.anticipation.period.advise'))}
                 requested={requested}
@@ -280,14 +276,12 @@ AnticipationFormContainer.propTypes = {
   isAutomaticTransfer: PropTypes.bool,
   isValidDay: PropTypes.func,
   loading: PropTypes.bool.isRequired,
-  maximum: PropTypes.number.isRequired,
-  minimum: PropTypes.number.isRequired,
+  maximum: PropTypes.number,
+  minimum: PropTypes.number,
   onCalculateSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
-  onDateConfirm: PropTypes.func.isRequired,
-  onTimeframeChange: PropTypes.func.isRequired,
   requested: PropTypes.number.isRequired,
   t: PropTypes.func.isRequired,
   timeframe: PropTypes.oneOf(['end', 'start']),
@@ -299,6 +293,8 @@ AnticipationFormContainer.defaultProps = {
   error: '',
   isAutomaticTransfer: true,
   isValidDay: always(true),
+  maximum: null,
+  minimum: null,
   timeframe: 'start',
 }
 

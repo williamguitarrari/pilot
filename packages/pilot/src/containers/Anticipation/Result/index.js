@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import moment from 'moment'
 
 import {
   Alert,
@@ -10,6 +9,7 @@ import {
   CardSection,
   Col,
   Grid,
+  isMomentPropValidation,
   Row,
 } from 'former-kit'
 import {
@@ -284,7 +284,7 @@ AnticipationResult.propTypes = {
     legal_name: PropTypes.string,
     type: PropTypes.string,
   }),
-  date: PropTypes.instanceOf(moment).isRequired,
+  date: isMomentPropValidation,
   onTryAgain: PropTypes.func.isRequired,
   onViewStatement: PropTypes.func.isRequired,
   requested: PropTypes.number.isRequired,
@@ -305,6 +305,7 @@ AnticipationResult.propTypes = {
 
 AnticipationResult.defaultProps = {
   bankAccount: null,
+  date: null,
 }
 
 export default AnticipationResult

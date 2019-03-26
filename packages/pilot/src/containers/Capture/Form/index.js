@@ -12,6 +12,7 @@ import {
   Row,
   Spacing,
 } from 'former-kit'
+import { equals } from 'ramda'
 import Form from 'react-vanilla-form'
 import WarningIcon from 'emblematic-icons/svg/Warning32.svg'
 
@@ -35,6 +36,8 @@ const greaterThanAuthorized = (authorizedAmount, t) =>
 const lessThanOrEqualZero = t =>
   lessThanOrEqualValidation(0, t('pages.capture.greater_than_zero'))
 
+const isBoleto = equals('boleto')
+
 const CaptureForm = ({
   authorizedAmount,
   captureAmount,
@@ -47,6 +50,7 @@ const CaptureForm = ({
   installments,
   isFromCheckout,
   onConfirm,
+  paymentMethod,
   t,
 }) => {
   const labels = {
@@ -69,8 +73,10 @@ const CaptureForm = ({
     installments,
   }
 
+  const isBoletoOrFromCheckout = isFromCheckout || isBoleto(paymentMethod)
+
   const renderCaptureAmount = () => (
-    isFromCheckout
+    isBoletoOrFromCheckout
       ? (
         <Property
           title={t('pages.capture.value_to_capture')}
@@ -214,6 +220,11 @@ CaptureForm.propTypes = {
   installments: PropTypes.number,
   isFromCheckout: PropTypes.bool.isRequired,
   onConfirm: PropTypes.func.isRequired,
+  paymentMethod: PropTypes.oneOf([
+    'boleto',
+    'debit_card',
+    'credit_card',
+  ]).isRequired,
   t: PropTypes.func.isRequired,
 }
 

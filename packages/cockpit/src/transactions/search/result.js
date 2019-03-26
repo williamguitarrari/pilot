@@ -8,6 +8,8 @@ import {
   cond,
   defaultTo,
   equals,
+  find,
+  findIndex,
   flatten,
   isEmpty,
   isNil,
@@ -17,6 +19,7 @@ import {
   mergeAll,
   mergeDeepWith,
   objOf,
+  sort,
   path,
   pipe,
   prop,
@@ -26,10 +29,39 @@ import {
 } from 'ramda'
 
 import { transactionSpec } from '../shared'
+import statusOrder from './statusOrder'
 
 const mapSourceToTableRows = applySpec(transactionSpec)
 
-const buildTableRows = map(pipe(prop('_source'), mapSourceToTableRows))
+const orderByStatusLegend = order => (transactionA, transactionB) => {
+  const indexStatusA = findIndex(equals(transactionA.status), statusOrder)
+  const indexStatusB = findIndex(equals(transactionB.status), statusOrder)
+
+  if (order === 'ascending') {
+    return indexStatusA - indexStatusB
+  }
+  return indexStatusB - indexStatusA
+}
+
+const sortByStatusLegend = (formattedTransactions, order) =>
+  sort(orderByStatusLegend(order), formattedTransactions)
+
+const buildTableRows = query => (transactions) => {
+  const formattedTransactions = map(
+    pipe(
+      prop('_source'),
+      mapSourceToTableRows
+    ),
+    transactions
+  )
+
+  const status = equals('status')
+
+  if (query && query.sort && find(status, query.sort.field)) {
+    return sortByStatusLegend(formattedTransactions, query.sort.order)
+  }
+  return formattedTransactions
+}
 
 const parseStatusValue = pipe(
   juxt([
@@ -109,7 +141,7 @@ const buildResult = query => applySpec({
     list: {
       offset: always(query.offset),
       count: pipe(path(['hits', 'hits']), length),
-      rows: pipe(path(['hits', 'hits']), buildTableRows),
+      rows: pipe(path(['hits', 'hits']), buildTableRows(query)),
     },
     chart: {
       dataset: pipe(path([

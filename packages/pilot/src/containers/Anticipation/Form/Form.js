@@ -60,9 +60,7 @@ const AnticipationForm = ({
   maximum,
   minimum,
   onChange,
-  onDateConfirm,
   onSubmit,
-  onTimeframeChange,
   periodInfo,
   requested,
   t,
@@ -72,7 +70,9 @@ const AnticipationForm = ({
   <Form
     data={{
       dates,
-      requested: requested.toString(),
+      requested: requested
+        ? requested.toString()
+        : '0',
       timeframe,
       transfer: isAutomaticTransfer
         ? 'yes'
@@ -115,7 +115,6 @@ const AnticipationForm = ({
                     value: 'end',
                   },
                 ]}
-                onChange={onTimeframeChange}
               />
             </Col>
           </Row>
@@ -128,18 +127,18 @@ const AnticipationForm = ({
                 {anticipationInfo}
               </label>
               <DateInput
-                selectionMode="single"
+                dates={dates}
                 disabled={loading}
                 icon={<IconCalendar width={16} height={16} />}
                 isValidDay={isValidDay}
-                onConfirm={onDateConfirm}
+                name="dates"
+                selectionMode="single"
                 showSidebar={false}
                 strings={{
                   end: t('pages.anticipation.end'),
                   select: t('pages.anticipation.select'),
                   start: t('pages.anticipation.initial'),
                 }}
-                dates={dates}
               />
             </Col>
           </Row>
@@ -244,14 +243,12 @@ AnticipationForm.propTypes = {
   isAutomaticTransfer: PropTypes.bool.isRequired,
   isValidDay: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
-  maximum: PropTypes.number.isRequired,
-  minimum: PropTypes.number.isRequired,
+  maximum: PropTypes.number,
+  minimum: PropTypes.number,
   onChange: PropTypes.func.isRequired,
-  onDateConfirm: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  onTimeframeChange: PropTypes.func.isRequired,
   periodInfo: PropTypes.element.isRequired,
-  requested: PropTypes.number.isRequired,
+  requested: PropTypes.number,
   t: PropTypes.func.isRequired,
   timeframe: PropTypes.oneOf(['end', 'start']).isRequired,
   transferInfo: PropTypes.element.isRequired,
@@ -259,6 +256,9 @@ AnticipationForm.propTypes = {
 
 AnticipationForm.defaultProps = {
   error: '',
+  maximum: null,
+  minimum: null,
+  requested: 0,
 }
 
 export default AnticipationForm
