@@ -18,6 +18,7 @@ import {
   head,
   identity,
   ifElse,
+  isEmpty,
   isNil,
   map,
   partial,
@@ -25,6 +26,7 @@ import {
   pathOr,
   pipe,
   prop,
+  propSatisfies,
   startsWith,
 } from 'ramda'
 import { translate } from 'react-i18next'
@@ -253,9 +255,14 @@ const isInvalidRecipientId = anyPass([
   complement(startsWith('re_')),
 ])
 
+const areNilLimits = both(
+  propSatisfies(isNil, 'max'),
+  propSatisfies(isNil, 'min')
+)
+
 const areEmptyLimits = both(
-  pipe(prop('max'), either(isNil, equals(0))),
-  pipe(prop('min'), either(isNil, equals(0)))
+  propSatisfies(either(isNil, equals(0)), 'max'),
+  propSatisfies(either(isNil, equals(0)), 'min')
 )
 
 const getMinLimit = ifElse(
@@ -327,9 +334,17 @@ class Anticipation extends Component {
     } else {
       this.updateRecipient(id)
         .then(() => {
-          this.getBuildingAnticipations(id)
-            .then(this.destroyBuildingAnticipations)
           const { limits, loading } = this.props
+
+          this.getBuildingAnticipations(id)
+            .then((buildings) => {
+              if (!isEmpty(buildings)) {
+                this.destroyBuildingAnticipations(buildings)
+              } else if (areNilLimits(limits)) {
+                this.calculateLimits()
+              }
+            })
+
           if (
             !areEmptyLimits(limits)
             && !loading

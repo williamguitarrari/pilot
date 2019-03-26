@@ -4,6 +4,7 @@ import {
   assoc,
   identity,
   ifElse,
+  isNil,
   map,
   pipe,
   propEq,
@@ -172,27 +173,29 @@ class Anticipation extends Component {
     } = this.props
 
     return (
-      <AnticipationForm
-        amount={amount}
-        approximateRequested={approximateRequested}
-        bankAccount={bankAccount}
-        cost={totalCost}
-        date={date}
-        error={error}
-        isAutomaticTransfer={automaticTransfer}
-        isValidDay={validateDay}
-        loading={loading}
-        maximum={maximum}
-        minimum={minimum}
-        onCalculateSubmit={onCalculateSubmit}
-        onCancel={onCancel}
-        onChange={onFormChange}
-        onConfirm={onDataConfirm}
-        requested={requested}
-        t={t}
-        timeframe={timeframe}
-        transferCost={transferCost}
-      />
+      maximum
+        ? <AnticipationForm
+          amount={amount}
+          approximateRequested={approximateRequested}
+          bankAccount={bankAccount}
+          cost={totalCost}
+          date={date}
+          error={error}
+          isAutomaticTransfer={automaticTransfer}
+          isValidDay={validateDay}
+          loading={loading}
+          maximum={maximum}
+          minimum={minimum}
+          onCalculateSubmit={onCalculateSubmit}
+          onCancel={onCancel}
+          onChange={onFormChange}
+          onConfirm={onDataConfirm}
+          requested={requested}
+          t={t}
+          timeframe={timeframe}
+          transferCost={transferCost}
+        />
+        : null
     )
   }
 
@@ -222,7 +225,7 @@ class Anticipation extends Component {
       transferCost,
     } = this.props
 
-    const renderDataStep = !loading && maximum < 100
+    const renderDataStep = !loading && !isNil(maximum) && maximum < 100
       ? buildEmptyState(onCancel, t)
       : this.renderAnticipationForm
 
