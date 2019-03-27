@@ -411,7 +411,7 @@ class Balance extends Component {
 
     const recipientId = getRecipientId(company)
     return client
-      .withVersion('2019-02-18')
+      .withVersion('2018-09-10')
       .balanceOperations
       .find({
         endDate,
