@@ -105,8 +105,6 @@ const anyDateRange = {
 const formatAmount = (amount = 0) =>
   currencyFormatter(amount)
 
-const MINIMUM_ANTICIPABLE_VALUE = 100
-
 class Balance extends Component {
   constructor (props) {
     super(props)
@@ -374,6 +372,10 @@ class Balance extends Component {
 
     const filterDatesEqualCurrent = datesEqual(this.state.dates, dates)
 
+    const { ted } = getTransfersPricing(company)
+
+    const MINIMUM_API_VALUE = 100
+
     return (
       <Fragment>
         <Grid>
@@ -415,7 +417,9 @@ class Balance extends Component {
                     <strong> {currencyFormatter(withdrawal)} </strong>
                   </span>
                 }
-                disabled={disabled}
+                disabled={
+                  disabled || withdrawal <= ted + MINIMUM_API_VALUE
+                }
                 title={t('pages.balance.withdrawal_title')}
               />
             </Col>
