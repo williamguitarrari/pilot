@@ -8,6 +8,7 @@ import {
   isNil,
   keys,
   map,
+  path,
   pipe,
   prop,
   propSatisfies,
@@ -104,6 +105,10 @@ const anyDateRange = {
 
 const formatAmount = (amount = 0) =>
   currencyFormatter(amount)
+
+const getTransfersPricing = path(['pricing', 'transfers'])
+
+const MINIMUM_API_VALUE = 100
 
 class Balance extends Component {
   constructor (props) {
@@ -374,8 +379,6 @@ class Balance extends Component {
 
     const { ted } = getTransfersPricing(company)
 
-    const MINIMUM_API_VALUE = 100
-
     return (
       <Fragment>
         <Grid>
@@ -441,7 +444,7 @@ class Balance extends Component {
                   disabled
                   || anticipationLoading
                   || anticipationError
-                  || available < MINIMUM_ANTICIPABLE_VALUE
+                  || available < MINIMUM_API_VALUE
                 }
                 title={t('pages.balance.anticipation_title')}
               />
