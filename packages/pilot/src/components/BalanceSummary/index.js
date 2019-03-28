@@ -28,7 +28,7 @@ const colors = {
   outgoing: '#ff796f',
 }
 
-const BalanceSummary = ({ amount, dates }) => (
+const BalanceSummary = ({ amount, dates, loading }) => (
   <CardSection>
     <CardContent>
       <div className={style.content}>
@@ -49,6 +49,7 @@ const BalanceSummary = ({ amount, dates }) => (
                 title={amount[type].title}
                 titleColor={colors[type]}
                 titleSize="medium"
+                loading={loading}
               />
             ))
           }
@@ -73,6 +74,7 @@ BalanceSummary.propTypes = {
     end: PropTypes.instanceOf(moment).isRequired,
     start: PropTypes.instanceOf(moment).isRequired,
   }).isRequired,
+  loading: PropTypes.bool.isRequired,
 }
 BalanceSummary.defaultProps = {
   amount: {},

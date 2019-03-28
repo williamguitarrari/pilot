@@ -549,6 +549,7 @@ class Balance extends Component {
                   <BalanceSummary
                     amount={this.getSummaryTotal()}
                     dates={dates}
+                    loading={loading}
                   />
                 </CardContent>
               </Card>
