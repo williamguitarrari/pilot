@@ -380,6 +380,7 @@ class Balance extends Component {
       currentPage,
       dates,
       disabled,
+      loading,
       modalConfirmOpened,
       onAnticipationClick,
       onCancelRequestClick,
@@ -568,7 +569,7 @@ class Balance extends Component {
                   disabled={disabled}
                   emptyMessage={t('models.operations.empty_message')}
                   exportLabel={t('models.operations.export')}
-                  loading={disabled}
+                  loading={disabled || loading}
                   ofLabel={t('of')}
                   onExport={() => null}
                   onPageChange={this.handleOperationsPageChange}
@@ -677,6 +678,7 @@ Balance.propTypes = {
   currentPage: PropTypes.number.isRequired,
   dates: datesShape.isRequired, // eslint-disable-line react/no-typos
   disabled: PropTypes.bool.isRequired,
+  loading: PropTypes.bool,
   modalConfirmOpened: PropTypes.bool,
   onAnticipationClick: PropTypes.func.isRequired,
   onCancelRequestClick: PropTypes.func,
@@ -731,6 +733,7 @@ Balance.propTypes = {
 
 Balance.defaultProps = {
   anticipationCancel: null,
+  loading: false,
   modalConfirmOpened: false,
   onCancelRequestClick: null,
   onCancelRequestClose: null,

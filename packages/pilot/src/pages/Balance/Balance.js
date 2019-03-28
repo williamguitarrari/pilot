@@ -576,6 +576,7 @@ class Balance extends Component {
           currentPage={page}
           dates={dates}
           disabled={loading}
+          loading={loading}
           modalConfirmOpened={modalOpened}
           onAnticipationClick={this.handleAnticipation}
           onCancelRequestClick={userIsReadOnly(user)
