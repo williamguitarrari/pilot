@@ -47,13 +47,28 @@ BalanceTotalDisplay.propTypes = {
     title: PropTypes.string.isRequired,
   }),
   amount: PropTypes.string.isRequired,
-  detail: PropTypes.node.isRequired,
+  detail: PropTypes.node,
+  // The detail property was changed to not be required
+  // because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+  // This component is imported in Balance container and need to
+  // not pass this property until this issue is reverted
+  // This code will be used again in the future when ATLAS project implements the anticipation flow
+  // More details in issue #1159
+  // detail: PropTypes.node.isRequired,
   disabled: PropTypes.bool,
   title: PropTypes.string.isRequired,
 }
 
 BalanceTotalDisplay.defaultProps = {
   action: null,
+  // The detail property was changed to not be required
+  // because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+  // This component is imported in Balance container and need to
+  // not pass this property until this issue is reverted
+  // This code will be used again in the future when ATLAS project implements the anticipation flow
+  // More details in issue #1159
+  // detail: PropTypes.node.isRequired,
+  detail: null,
   disabled: false,
 }
 
