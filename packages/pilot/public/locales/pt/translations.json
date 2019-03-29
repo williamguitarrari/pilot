@@ -511,6 +511,7 @@
       "anticipation": "Antecipar",
       "available_anticipation": "Liberado para antecipação",
       "available_withdrawal": "Liberado para saque",
+      "anticipation_call": "Antecipe e receba antes! Veja sua disponibilidade:",
       "bank_code": "Banco",
       "id": "id do recebedor",
       "invalid_recipient": "Você não possui um recebedor padrão configurado para este ambiente",
