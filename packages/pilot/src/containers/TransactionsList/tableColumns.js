@@ -1,5 +1,12 @@
 import React from 'react'
 import {
+  always,
+  applySpec,
+  either,
+  head,
+  ifElse,
+  isEmpty,
+  isNil,
   path,
   pick,
   pipe,
@@ -19,6 +26,28 @@ import renderStatusLegend from '../../containers/TransactionsList/renderStatusLe
 const convertPaymentValue = property => pipe(
   path(['payment', property]),
   formatCurrency
+)
+
+const formatDocument = applySpec({
+  number: pipe(
+    prop('number'),
+    formatCpfCnpj
+  ),
+  type: prop('type'),
+})
+
+const getDefaultDocumentNumber = pipe(
+  prop('documents'),
+  ifElse(
+    either(isNil, isEmpty),
+    always(null),
+    pipe(
+      head,
+      formatDocument,
+      prop('number'),
+      formatCpfCnpj
+    )
+  )
 )
 
 const getDefaultColumns = ({ onDetailsClick, t }) => ([
@@ -42,8 +71,8 @@ const getDefaultColumns = ({ onDetailsClick, t }) => ([
   {
     accessor: ['customer', 'document_number'],
     renderer: pipe(
-      path(['customer', 'document_number']),
-      formatCpfCnpj
+      prop('customer'),
+      getDefaultDocumentNumber
     ),
     title: t('models.transaction.document'),
   },

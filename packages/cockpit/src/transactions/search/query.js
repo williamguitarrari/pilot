@@ -14,6 +14,7 @@ import {
   contains,
   dec,
   defaultTo,
+  either,
   equals,
   flatten,
   has,
@@ -35,12 +36,14 @@ import {
   props,
   reduce,
   reject,
+  replace,
   toPairs,
   when,
 } from 'ramda'
 
 const termsKeys = [
   'id',
+  'customer.documents.number',
   'customer.document_number',
   'customer.email',
   'customer.name',
@@ -150,6 +153,8 @@ const parseFilters = pipe(
   flatten
 )
 
+const compareDocuments = either(equals('customer.documents.number'), equals('customer.document_number'))
+
 const parseSearch = keys => (search) => {
   if (!search) {
     return []
@@ -171,6 +176,17 @@ const parseSearch = keys => (search) => {
       }
 
       return acc
+    }
+
+    if (compareDocuments(key)) {
+      return [
+        ...acc,
+        {
+          term: {
+            [key]: replace(/\.|-|\//gi, '', search),
+          },
+        },
+      ]
     }
 
     return [
