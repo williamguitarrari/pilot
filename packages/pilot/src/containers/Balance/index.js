@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
+
 import {
   complement,
   either,
@@ -14,10 +15,12 @@ import {
   take,
   when,
 } from 'ramda'
+
 import {
   Button,
   Card,
   CardContent,
+  CardSection,
   Col,
   DateInput,
   Grid,
@@ -29,6 +32,7 @@ import {
   Spacing,
   Tooltip,
 } from 'former-kit'
+
 import IconCalendar from 'emblematic-icons/svg/Calendar32.svg'
 import IconClose from 'emblematic-icons/svg/ClearClose32.svg'
 import IconInfo from 'emblematic-icons/svg/Info32.svg'
@@ -402,22 +406,47 @@ class Balance extends Component {
               tablet={6}
               tv={4}
             >
-              <BalanceTotalDisplay
-                action={
-                  isNil(onWithdrawClick)
+              <Card>
+                <BalanceTotalDisplay
+                  action={isNil(onWithdrawClick)
+                      ? null
+                      : withdrawalAction}
+                  amount={formatAmount(amount)}
+                  detail={
+                    <span>
+                      {t('pages.balance.available_withdrawal')}
+                      <strong> {currencyFormatter(withdrawal)} </strong>
+                    </span>
+                  }
+                  disabled={disabled}
+                  title={t('pages.balance.withdrawal_title')}
+                />
+              </Card>
+            </Col>
+            <Col
+              desk={4}
+              palm={12}
+              tablet={6}
+              tv={4}
+            >
+              <Card>
+                <BalanceTotalDisplay
+                  action={
+                    isNil(onAnticipationClick)
                     ? null
-                    : withdrawalAction
-                }
-                amount={formatAmount(amount)}
-                detail={
-                  <span>
-                    {t('pages.balance.available_withdrawal')}
-                    <strong> {currencyFormatter(withdrawal)} </strong>
-                  </span>
-                }
-                disabled={disabled}
-                title={t('pages.balance.withdrawal_title')}
-              />
+                    : anticipationAction
+                  }
+                  amount={formatAmount(outcoming)}
+                  detail={this.renderAnticipation()}
+                  disabled={
+                    disabled
+                    || anticipationLoading
+                    || anticipationError
+                    || available < MINIMUM_ANTICIPABLE_VALUE
+                  }
+                  title={t('pages.balance.anticipation_title')}
+                />
+              </Card>
             </Col>
             <Col
               desk={4}
@@ -425,40 +454,17 @@ class Balance extends Component {
               tablet={6}
               tv={4}
             >
-              <BalanceTotalDisplay
-                action={
-                  isNil(onAnticipationClick)
-                  ? null
-                  : anticipationAction
-                }
-                amount={formatAmount(outcoming)}
-                detail={this.renderAnticipation()}
-                disabled={
-                  disabled
-                  || anticipationLoading
-                  || anticipationError
-                  || available < MINIMUM_ANTICIPABLE_VALUE
-                }
-                title={t('pages.balance.anticipation_title')}
-              />
-            </Col>
-            <Col
-              desk={4}
-              palm={12}
-              tablet={6}
-              tv={4}
-            >
-              <PendingRequests
-                emptyMessage={t('pages.balance.pending_requests_empty_message')}
-                loading={disabled}
-                onCancel={
-                  isNil(onCancelRequestClick)
-                  ? null
-                  : this.handleRequestCancelClick
-                }
-                requests={this.getPendingRequests()}
-                title={t('pages.balance.pending_requests_title')}
-              />
+              <Card>
+                <PendingRequests
+                  emptyMessage={t('pages.balance.pending_requests_empty_message')}
+                  loading={disabled}
+                  onCancel={isNil(onCancelRequestClick)
+                    ? null
+                    : this.handleRequestCancelClick}
+                  requests={this.getPendingRequests()}
+                  title={t('pages.balance.pending_requests_title')}
+                />
+              </Card>
             </Col>
           </Row>
           <Row>
@@ -495,10 +501,14 @@ class Balance extends Component {
                   </div>
                 </CardContent>
                 <CardContent>
-                  <BalanceSummary
-                    amount={this.getSummaryTotal()}
-                    dates={dates}
-                  />
+                  <CardSection>
+                    <CardContent>
+                      <BalanceSummary
+                        amount={this.getSummaryTotal()}
+                        dates={dates}
+                      />
+                    </CardContent>
+                  </CardSection>
                 </CardContent>
               </Card>
             </Col>
