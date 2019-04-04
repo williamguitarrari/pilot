@@ -426,7 +426,13 @@
       "permission": {
         "admin": "Administrador",
         "read_only": "Somente leitura",
-        "read_write": "Leitura e escrita"
+        "read_write": "Leitura e escrita",
+        "errors": {
+          "insufficient_permission": {
+            "message": "Permissão insuficiente para realizar esta operação",
+            "title": "Erro de permissão"
+          }
+        }
       }
     }
   },
