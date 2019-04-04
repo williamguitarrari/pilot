@@ -193,6 +193,7 @@ SidebarContainer.propTypes = {
   // anticipationLimit: PropTypes.number,
   balance: PropTypes.shape({
     available: PropTypes.number,
+    waitingFunds: PropTypes.number,
   }).isRequired,
   companyName: PropTypes.string,
   links: PropTypes.arrayOf(PropTypes.shape({
