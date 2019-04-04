@@ -69,8 +69,10 @@ const LoggedArea = ({
       <Redirect
         to={
           recipientId
-          ? `/balance/${recipientId}`
-          : '/balance/'
+          // ? `/balance/${recipientId}`
+          // : '/balance/'
+          ? `/recipients/${recipientId}`
+          : '/recipients'
         }
       />
     </Switch>

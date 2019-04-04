@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { propOr, __ } from 'ramda'
+// import { propOr, __ } from 'ramda'
 
 import {
   Button,
-  Flexbox,
-  Popover,
-  PopoverContent,
+  // Flexbox,
+  // Popover,
+  // PopoverContent,
   Sidebar,
   SidebarHeader,
   SidebarLink,
@@ -14,21 +14,21 @@ import {
 } from 'former-kit'
 
 import IconMenu from 'emblematic-icons/svg/Menu32.svg'
-import IconWallet from 'emblematic-icons/svg/Wallet32.svg'
+// import IconWallet from 'emblematic-icons/svg/Wallet32.svg'
 
-import style from './style.css'
+// import style from './style.css'
 
-import SidebarSections from '../../components/SidebarSections'
-import SidebarSummary from '../../components/SidebarSummary'
-import formatDecimalCurrency from '../../formatters/decimalCurrency'
-import environment from '../../environment'
+// import SidebarSections from '../../components/SidebarSections'
+// import SidebarSummary from '../../components/SidebarSummary'
+// import formatDecimalCurrency from '../../formatters/decimalCurrency'
+// import environment from '../../environment'
 
 class SidebarContainer extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
       collapsed: false,
-      summaryCollapsed: true,
+      // summaryCollapsed: true,
     }
 
     this.handleToggleSidebar = this.handleToggleSidebar.bind(this)
@@ -39,49 +39,49 @@ class SidebarContainer extends React.Component {
     this.setState({ collapsed: !collapsed })
   }
 
-  renderSections () {
-    const {
-      balance,
-      onAnticipate,
-      onWithdraw,
-      t,
-    } = this.props
+  // renderSections () {
+  //   const {
+  //     balance,
+  //     onAnticipate,
+  //     onWithdraw,
+  //     t,
+  //   } = this.props
 
-    const getFrombalance = propOr(null, __, balance)
-    const available = getFrombalance('available')
-    const waitingFunds = getFrombalance('waitingFunds')
+  //   const getFrombalance = propOr(null, __, balance)
+  //   const available = getFrombalance('available')
+  //   const waitingFunds = getFrombalance('waitingFunds')
 
-    return (
-      <SidebarSections
-        sections={[
-          {
-            action: onWithdraw,
-            actionTitle: t('pages.sidebar.withdraw'),
-            title: t('pages.sidebar.available'),
-            value: <span><small>{t('pages.sidebar.currency_symbol')}</small> {formatDecimalCurrency(available)}</span>,
-          },
-          {
-            action: onAnticipate,
-            actionTitle: t('pages.sidebar.anticipation'),
-            title: t('pages.sidebar.waiting_funds'),
-            value: <span><small>{t('pages.sidebar.currency_symbol')}</small> {formatDecimalCurrency(waitingFunds)}</span>,
-          },
-        ]}
-      />
-    )
-  }
+  //   return (
+  //     <SidebarSections
+  //       sections={[
+  //         {
+  //           action: onWithdraw,
+  //           actionTitle: t('pages.sidebar.withdraw'),
+  //           title: t('pages.sidebar.available'),
+  //           value: <span><small>{t('pages.sidebar.currency_symbol')}</small> {formatDecimalCurrency(available)}</span>,
+  //         },
+  //         {
+  //           action: onAnticipate,
+  //           actionTitle: t('pages.sidebar.anticipation'),
+  //           title: t('pages.sidebar.waiting_funds'),
+  //           value: <span><small>{t('pages.sidebar.currency_symbol')}</small> {formatDecimalCurrency(waitingFunds)}</span>,
+  //         },
+  //       ]}
+  //     />
+  //   )
+  // }
 
   render () {
     const {
       collapsed,
-      summaryCollapsed,
+      // summaryCollapsed,
     } = this.state
     const {
-      companyName,
+      // companyName,
       links,
       logo: Logo,
       onLinkClick,
-      sessionId,
+      // sessionId,
       t,
     } = this.props
 
@@ -98,7 +98,7 @@ class SidebarContainer extends React.Component {
           />
         </SidebarHeader>
 
-        {!collapsed &&
+        {/* {!collapsed &&
           <SidebarSummary
             collapsed={summaryCollapsed}
             onClick={() => this.setState({
@@ -113,9 +113,9 @@ class SidebarContainer extends React.Component {
           >
             {this.renderSections()}
           </SidebarSummary>
-        }
+        } */}
 
-        {collapsed &&
+        {/* {collapsed &&
           <Popover
             base="dark"
             content={
@@ -134,7 +134,7 @@ class SidebarContainer extends React.Component {
               />
             </SidebarLinks>
           </Popover>
-        }
+        } */}
 
         <SidebarLinks>
           {links.map(({
@@ -154,7 +154,7 @@ class SidebarContainer extends React.Component {
             />
           ))}
         </SidebarLinks>
-        {!collapsed &&
+        {/* {!collapsed &&
           <Flexbox
             className={style.backToOldVersion}
             justifyContent="center"
@@ -170,18 +170,18 @@ class SidebarContainer extends React.Component {
               {t('pages.sidebar.back_to_old_version')}
             </Button>
           </Flexbox>
-        }
+        } */}
       </Sidebar>
     )
   }
 }
 
 SidebarContainer.propTypes = {
-  balance: PropTypes.shape({
-    available: PropTypes.number,
-    waitingFunds: PropTypes.number,
-  }).isRequired,
-  companyName: PropTypes.string,
+  // balance: PropTypes.shape({
+  //   available: PropTypes.number,
+  //   waitingFunds: PropTypes.number,
+  // }).isRequired,
+  // companyName: PropTypes.string,
   links: PropTypes.arrayOf(PropTypes.shape({
     active: PropTypes.bool,
     component: PropTypes.func,
@@ -190,18 +190,18 @@ SidebarContainer.propTypes = {
     title: PropTypes.string,
   })).isRequired,
   logo: PropTypes.func.isRequired,
-  onAnticipate: PropTypes.func,
+  // onAnticipate: PropTypes.func,
   onLinkClick: PropTypes.func.isRequired,
-  onWithdraw: PropTypes.func,
-  sessionId: PropTypes.string,
+  // onWithdraw: PropTypes.func,
+  // sessionId: PropTypes.string,
   t: PropTypes.func.isRequired,
 }
 
 SidebarContainer.defaultProps = {
-  companyName: '',
-  onAnticipate: null,
-  onWithdraw: null,
-  sessionId: '',
+  // companyName: '',
+  // onAnticipate: null,
+  // onWithdraw: null,
+  // sessionId: '',
 }
 
 export default SidebarContainer
