@@ -33,10 +33,7 @@ const Capture = ({
       first_digits: cardFirstDigits,
       last_digits: cardLastDigits,
     },
-    customer: {
-      email: customerEmail,
-      name: customerName,
-    },
+    customer,
     payment: {
       authorized_amount: authorizedAmount,
       installments,
@@ -75,8 +72,8 @@ const Capture = ({
             cardBrand={cardBrand}
             cardFirstDigits={cardFirstDigits}
             cardLastDigits={cardLastDigits}
-            customerName={customerName}
-            customerEmail={customerEmail}
+            customerName={customer && customer.name}
+            customerEmail={customer && customer.email}
             image={<ErrorIcon />}
             installments={installments}
             message={t('pages.capture.success')}
@@ -94,8 +91,8 @@ const Capture = ({
             cardBrand={cardBrand}
             cardFirstDigits={cardFirstDigits}
             cardLastDigits={cardLastDigits}
-            customerName={customerName}
-            customerEmail={customerEmail}
+            customerName={customer && customer.name}
+            customerEmail={customer && customer.email}
             disabled={loading}
             isFromCheckout={isFromCheckout}
             installments={installments}
