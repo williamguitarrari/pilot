@@ -561,7 +561,9 @@
       "no_connection_title": "Sem internet?",
       "page_refresh": "Recarregar página",
       "unauthorized": "Parece que sua sessão expirou",
-      "unauthorized_title": "Oh não!"
+      "unauthorized_title": "Oh não!",
+      "unauthorized_live_environment": "Sua conta não está habilitada para o ambiente de produção",
+      "unauthorized_live_environment_title": "Ambiente indisponível"
     },
     "manual_review": {
       "approve_action": "Aprovar transação",

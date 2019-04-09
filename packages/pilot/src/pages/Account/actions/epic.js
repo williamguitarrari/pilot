@@ -2,13 +2,15 @@ import pagarme from 'pagarme'
 import {
   identity,
   pathOr,
+  propEq,
 } from 'ramda'
 import {
+  catchError,
   map,
   mergeMap,
-  onErrorResumeNext,
   tap,
 } from 'rxjs/operators'
+import { of as rxOf } from 'rxjs'
 import { combineEpics, ofType } from 'redux-observable'
 import cockpit from 'cockpit'
 import env from '../../../environment'
@@ -33,6 +35,8 @@ import { store } from '../../../App'
 import { WITHDRAW_RECEIVE } from '../../Withdraw/actions'
 import { receiveError } from '../../ErrorBoundary'
 import { activeCompanyLogin, inactiveCompanyLogin } from '../../../vendor/googleTagManager'
+
+const isActiveCompany = propEq('status', 'active')
 
 const getRecipientId = pathOr(null, ['account', 'company', 'default_recipient_id', env])
 
@@ -97,6 +101,14 @@ const accountEpic = action$ =>
       })
     )
 
+const verifyEnvironmentPermission = (company) => {
+  if (env === 'live' && !isActiveCompany(company)) {
+    throw new Error('Unauthorized environment')
+  }
+
+  return company
+}
+
 const companyEpic = (action$, state$) =>
   action$
     .pipe(
@@ -109,10 +121,11 @@ const companyEpic = (action$, state$) =>
           return Promise.resolve(payload)
         }
 
-        return client.company.current().catch(identity)
+        return client.company.current()
+          .then(verifyEnvironmentPermission)
       }),
       map(receiveCompany),
-      onErrorResumeNext(tap(({ error, payload }) => {
+      tap(({ error, payload }) => {
         if (error) {
           return
         }
@@ -145,7 +158,8 @@ const companyEpic = (action$, state$) =>
         } else {
           inactiveCompanyLogin()
         }
-      }))
+      }),
+      catchError(error => rxOf(receiveError(error)))
     )
 
 const recipientBalanceEpic = (action$, state$) =>
