@@ -144,7 +144,7 @@ CardForm.propTypes = {
   brand: PropTypes.string.isRequired,
   cardFirstDigits: PropTypes.string.isRequired,
   cardLastDigits: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
+  email: PropTypes.string,
   holderName: PropTypes.string.isRequired,
   installments: PropTypes.number.isRequired,
   onConfirm: PropTypes.func.isRequired,
@@ -153,6 +153,7 @@ CardForm.propTypes = {
 }
 
 CardForm.defaultProps = {
+  email: null,
   refundAmount: null,
 }
 
