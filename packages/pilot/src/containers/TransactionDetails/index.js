@@ -271,9 +271,6 @@ const validateReprocessFunction = (props, propName) => {
 class TransactionDetails extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-      expandAllRecipients: false,
-    }
     this.getActions = this.getActions.bind(this)
     this.renderAlertInfo = this.renderAlertInfo.bind(this)
     this.renderBoleto = this.renderBoleto.bind(this)
@@ -281,22 +278,6 @@ class TransactionDetails extends Component {
     this.renderOutAmountSubTitle = this.renderOutAmountSubTitle.bind(this)
     this.renderPayment = this.renderPayment.bind(this)
     this.renderPaymentCard = this.renderPaymentCard.bind(this)
-    this.handleAfterPrint = this.handleAfterPrint.bind(this)
-    this.handleExport = this.handleExport.bind(this)
-  }
-
-  componentDidMount () {
-    /* eslint-disable no-undef */
-    window.addEventListener('afterprint', this.handleAfterPrint)
-    window.addEventListener('beforeprint', this.handleBeforePrint)
-    /* eslint-enable no-undef */
-  }
-
-  componentWillUnmount () {
-    /* eslint-disable no-undef */
-    window.removeEventListener('afterprint', this.handleAfterPrint)
-    window.removeEventListener('beforeprint', this.handleBeforePrint)
-    /* eslint-enable no-undef */
   }
 
   getActions () {
@@ -304,6 +285,7 @@ class TransactionDetails extends Component {
       headerLabels,
       nextTransactionId,
       onCapture,
+      onExport,
       onManualReviewApprove,
       onManualReviewRefuse,
       onRefund,
@@ -323,7 +305,7 @@ class TransactionDetails extends Component {
 
     const onExportAction = {
       icon: <DownloadIcon width={12} height={12} />,
-      onClick: this.handleExport,
+      onClick: onExport,
       title: 'Exportar',
     }
 
@@ -385,21 +367,6 @@ class TransactionDetails extends Component {
     )
 
     return detailsHeadActions(capabilities)
-  }
-
-  handleAfterPrint () {
-    this.setState({
-      expandAllRecipients: false,
-    })
-  }
-
-  handleExport (event) {
-    this.setState(
-      {
-        expandAllRecipients: true,
-      },
-      () => this.props.onExport(event)
-    )
   }
 
   renderAlertInfo () {
@@ -620,6 +587,7 @@ class TransactionDetails extends Component {
       alertLabels,
       customerLabels,
       eventsLabels,
+      expandRecipients,
       headerLabels,
       installmentColumns,
       metadataTitle,
@@ -863,7 +831,7 @@ class TransactionDetails extends Component {
                       collapseInstallmentTitle={
                         recipientsLabels.collapseInstallmentTitle
                       }
-                      expandAllRecipients={this.state.expandAllRecipients}
+                      expandAllRecipients={expandRecipients}
                       expandInstallmentTitle={
                         recipientsLabels.expandInstallmentTitle
                       }
@@ -982,6 +950,7 @@ TransactionDetails.propTypes = {
   eventsLabels: PropTypes.shape({
     title: PropTypes.string,
   }).isRequired,
+  expandRecipients: PropTypes.bool,
   headerLabels: PropTypes.shape({
     installments: PropTypes.string,
     status: PropTypes.string,
@@ -1160,6 +1129,7 @@ TransactionDetails.propTypes = {
 }
 
 TransactionDetails.defaultProps = {
+  expandRecipients: false,
   nextTransactionId: null,
   onCapture: null,
   onCopyBoletoUrl: null,
