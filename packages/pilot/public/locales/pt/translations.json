@@ -559,6 +559,7 @@
       "back_to_login": "Voltar para login",
       "no_connection": "Por favor verifique sua conexão com a internet e recarrege a página",
       "no_connection_title": "Sem internet?",
+      "page_refresh": "Recarregar página",
       "unauthorized": "Parece que sua sessão expirou",
       "unauthorized_title": "Oh não!"
     },
