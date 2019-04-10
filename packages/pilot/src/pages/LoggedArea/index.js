@@ -21,7 +21,11 @@ import Header from './Header'
 
 import routes from './routes'
 
-const getAnticipationLimit = path(['anticipation', 'limits', 'max'])
+// This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+// It was commented on to remove the anticipation limits call on Balance page
+// This code will be used again in the future when ATLAS project implements the anticipation flow
+// More details in issue #1159
+// const getAnticipationLimit = path(['anticipation', 'limits', 'max'])
 const getRecipientId = path(['account', 'company', 'default_recipient_id', env])
 const getBalance = path(['account', 'balance'])
 const getCompanyName = path(['account', 'company', 'name'])
@@ -29,7 +33,11 @@ const getAccountSessionId = path(['account', 'sessionId'])
 const getTransfersPricing = path(['account', 'company', 'pricing', 'transfers'])
 
 const mapStateToProps = applySpec({
-  anticipationLimit: getAnticipationLimit,
+  // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+  // It was commented on to remove the anticipation limits call on Balance page
+  // This code will be used again in the future when ATLAS project implements the anticipation flow
+  // More details in issue #1159
+  // anticipationLimit: getAnticipationLimit,
   balance: getBalance,
   companyName: getCompanyName,
   recipientId: getRecipientId,
@@ -44,7 +52,11 @@ const enhanced = compose(
 )
 
 const LoggedArea = ({
-  anticipationLimit,
+  // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+  // It was commented on to remove the anticipation limits call on Balance page
+  // This code will be used again in the future when ATLAS project implements the anticipation flow
+  // More details in issue #1159
+  // anticipationLimit,
   balance,
   companyName,
   recipientId,
@@ -55,7 +67,11 @@ const LoggedArea = ({
   <Layout
     sidebar={
       <Sidebar
-        anticipationLimit={anticipationLimit}
+        // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+        // It was commented on to remove the anticipation limits call on Balance page
+        // This code will be used again in the future when ATLAS project implements the anticipation flow
+        // More details in issue #1159
+        // anticipationLimit={anticipationLimit}
         companyName={companyName}
         balance={balance}
         recipientId={recipientId}
@@ -86,7 +102,11 @@ const LoggedArea = ({
 )
 
 LoggedArea.propTypes = {
-  anticipationLimit: PropTypes.number,
+  // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+  // It was commented on to remove the anticipation limits call on Balance page
+  // This code will be used again in the future when ATLAS project implements the anticipation flow
+  // More details in issue #1159
+  // anticipationLimit: PropTypes.number,
   balance: PropTypes.shape({
     available: PropTypes.number,
     waitingFunds: PropTypes.number,
@@ -101,7 +121,11 @@ LoggedArea.propTypes = {
 }
 
 LoggedArea.defaultProps = {
-  anticipationLimit: null,
+  // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+  // It was commented on to remove the anticipation limits call on Balance page
+  // This code will be used again in the future when ATLAS project implements the anticipation flow
+  // More details in issue #1159
+  // anticipationLimit: null,
   balance: {},
   companyName: '',
   recipientId: null,

@@ -34,7 +34,11 @@ const handleLinkClick = curry((push, currentPath, route) => {
 })
 
 const Sidebar = ({
-  anticipationLimit,
+  // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+  // It was commented on to remove the anticipation limits call on Balance page
+  // This code will be used again in the future when ATLAS project implements the anticipation flow
+  // More details in issue #1159
+  // anticipationLimit,
   balance,
   companyName,
   history,
@@ -55,7 +59,11 @@ const Sidebar = ({
       }))
     }
     logo={Logo}
-    anticipationLimit={anticipationLimit}
+    // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+    // It was commented on to remove the anticipation limits call on Balance page
+    // This code will be used again in the future when ATLAS project implements the anticipation flow
+    // More details in issue #1159
+    // anticipationLimit={anticipationLimit}
     onAnticipate={() => history.push(`/anticipation/${recipientId}`)}
     onLinkClick={handleLinkClick(history.push, pathname)}
     onWithdraw={() => history.push(`/withdraw/${recipientId}`)}
@@ -66,7 +74,11 @@ const Sidebar = ({
 )
 
 Sidebar.propTypes = {
-  anticipationLimit: PropTypes.number,
+  // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+  // It was commented on to remove the anticipation limits call on Balance page
+  // This code will be used again in the future when ATLAS project implements the anticipation flow
+  // More details in issue #1159
+  // anticipationLimit: PropTypes.number,
   balance: PropTypes.shape({
     available: PropTypes.number,
     waitingFunds: PropTypes.number,
@@ -87,7 +99,11 @@ Sidebar.propTypes = {
 }
 
 Sidebar.defaultProps = {
-  anticipationLimit: null,
+  // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+  // It was commented on to remove the anticipation limits call on Balance page
+  // This code will be used again in the future when ATLAS project implements the anticipation flow
+  // More details in issue #1159
+  // anticipationLimit: null,
   companyName: '',
   recipientId: null,
   sessionId: '',

@@ -43,7 +43,11 @@ class SidebarContainer extends React.Component {
 
   renderSections () {
     const {
-      anticipationLimit,
+      // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+      // It was commented on to remove the anticipation limits call on Balance page
+      // This code will be used again in the future when ATLAS project implements the anticipation flow
+      // More details in issue #1159
+      // anticipationLimit,
       balance,
       onAnticipate,
       onWithdraw,
@@ -70,7 +74,11 @@ class SidebarContainer extends React.Component {
           {
             action: onAnticipate,
             actionTitle: t('pages.sidebar.anticipation'),
-            disabled: anticipationLimit < MINIMUM_API_VALUE,
+            // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+            // It was commented on to remove the anticipation limits call on Balance page
+            // This code will be used again in the future when ATLAS project implements the anticipation flow
+            // More details in issue #1159
+            // disabled: anticipationLimit < MINIMUM_API_VALUE,
             title: t('pages.sidebar.waiting_funds'),
             value: <span><small>{t('pages.sidebar.currency_symbol')}</small> {formatDecimalCurrency(waitingFunds)}</span>,
           },
@@ -185,7 +193,11 @@ class SidebarContainer extends React.Component {
 }
 
 SidebarContainer.propTypes = {
-  anticipationLimit: PropTypes.number,
+  // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+  // It was commented on to remove the anticipation limits call on Balance page
+  // This code will be used again in the future when ATLAS project implements the anticipation flow
+  // More details in issue #1159
+  // anticipationLimit: PropTypes.number,
   balance: PropTypes.shape({
     available: PropTypes.number,
     waitingFunds: PropTypes.number,
@@ -210,7 +222,11 @@ SidebarContainer.propTypes = {
 }
 
 SidebarContainer.defaultProps = {
-  anticipationLimit: null,
+  // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+  // It was commented on to remove the anticipation limits call on Balance page
+  // This code will be used again in the future when ATLAS project implements the anticipation flow
+  // More details in issue #1159
+  // anticipationLimit: null,
   companyName: '',
   onAnticipate: null,
   onWithdraw: null,
