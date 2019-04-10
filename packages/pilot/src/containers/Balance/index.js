@@ -202,17 +202,30 @@ class Balance extends Component {
 
   getPendingRequest ({
     amount,
+    automaticTransfer,
     created_at, // eslint-disable-line camelcase
     status,
     type,
   }) {
-    const { t } = this.props
+    const {
+      company: { pricing },
+      t,
+    } = this.props
+
     const { statuses, types } = bulkAnticipationsLabels
     const title =
       `${t(types[type])} ${t(statuses[status])}` || '-'
 
+    const ted = pricing
+      ? path(['transfers', 'ted'], pricing)
+      : 0
+
+    const netAmount = automaticTransfer
+      ? amount - ted
+      : amount
+
     return {
-      amount: currencyFormatter(amount),
+      amount: currencyFormatter(netAmount),
       created_at: dateFormatter(created_at),
       title,
     }
