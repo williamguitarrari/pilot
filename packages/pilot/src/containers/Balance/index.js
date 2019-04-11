@@ -380,6 +380,7 @@ class Balance extends Component {
       currentPage,
       dates,
       disabled,
+      exporting,
       loading,
       modalConfirmOpened,
       onAnticipationClick,
@@ -564,15 +565,15 @@ class Balance extends Component {
             >
               <Card>
                 <Operations
-                  onExportData={onExport}
                   columns={translateColumns(getColumns(typesLabels))}
                   currentPage={currentPage}
                   disabled={disabled}
                   emptyMessage={t('models.operations.empty_message')}
                   exportLabel={t('models.operations.export')}
+                  exporting={exporting}
                   loading={disabled || loading}
                   ofLabel={t('of')}
-                  onExport={() => null}
+                  onExport={onExport}
                   onPageChange={this.handleOperationsPageChange}
                   rows={operations.rows}
                   subtitle={
@@ -679,6 +680,7 @@ Balance.propTypes = {
   currentPage: PropTypes.number.isRequired,
   dates: datesShape.isRequired, // eslint-disable-line react/no-typos
   disabled: PropTypes.bool.isRequired,
+  exporting: PropTypes.bool.isRequired,
   loading: PropTypes.bool,
   modalConfirmOpened: PropTypes.bool,
   onAnticipationClick: PropTypes.func.isRequired,

@@ -35,8 +35,9 @@ class Operations extends PureComponent {
     const {
       currentPage,
       disabled,
+      exporting,
       ofLabel,
-      onExportData,
+      onExport,
       onPageChange,
       subtitle,
       totalPages,
@@ -46,8 +47,9 @@ class Operations extends PureComponent {
       <div className={style.subtitle}>
         <h3>{subtitle}</h3>
         <ExportData
-          exportOptions={getExportOptions(onExportData)}
+          exportOptions={getExportOptions(onExport)}
           icon={<Download32 width={12} height={12} />}
+          loading={exporting}
           placement="bottomEnd"
           relevance="low"
           size="tiny"
@@ -134,9 +136,10 @@ Operations.propTypes = {
   currentPage: PropTypes.number.isRequired,
   disabled: PropTypes.bool,
   emptyMessage: PropTypes.string.isRequired,
+  exporting: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
   ofLabel: PropTypes.string.isRequired,
-  onExportData: PropTypes.func.isRequired,
+  onExport: PropTypes.func.isRequired,
   onPageChange: PropTypes.func.isRequired,
   rows: PropTypes.arrayOf(PropTypes.shape({
     description: PropTypes.string,
