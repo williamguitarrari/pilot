@@ -23,7 +23,6 @@ import {
   map,
   partial,
   path,
-  pathOr,
   pipe,
   prop,
   propSatisfies,
@@ -327,7 +326,6 @@ class Anticipation extends Component {
           paymentDate: nextAnticipableDay,
         })
       })
-      .catch(error => this.setState({ businessCalendarError: error }))
 
     if (isInvalidRecipientId(id)) {
       getDefaultRecipient(client)
@@ -827,7 +825,6 @@ class Anticipation extends Component {
   render () {
     const {
       approximateRequested,
-      businessCalendarError,
       calendar,
       currentStep,
       error,
@@ -865,7 +862,7 @@ class Anticipation extends Component {
       ? approximateRequested + totalCostAndTransfer
       : totalCostAndTransfer
 
-    if (businessCalendarError) {
+    if (limitsError) {
       return (
         <Alert
           icon={<IconInfo height={16} width={16} />}
@@ -873,11 +870,6 @@ class Anticipation extends Component {
         >
           <span>
             {limitsError && limitsError}
-            {pathOr(
-                t('pages.balance.unknown_error'),
-                ['errors', 0, 'message'],
-                error
-            )}
           </span>
         </Alert>
       )

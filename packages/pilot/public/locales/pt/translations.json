@@ -544,7 +544,7 @@
       "type": "Tipo de conta",
       "withdraw": "Sacar",
       "withdrawal_title": "Saldo atual",
-      "unknown_error": "Olá, para você poder visualizar as informações do seu extrato é necessário que as extensões do tipo AdBlock estejam desabilitadas."
+      "adblock_error": "Para visualizar as informações de antecipação é necessário que as extensões de bloqueio de anúncio estejam desabilitadas."
     },
     "capture": {
       "capture_action": "Capturar",

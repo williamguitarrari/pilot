@@ -549,7 +549,7 @@ class Balance extends Component {
         >
           <span>
             {pathOr(
-              t('pages.balance.unknown_error'),
+              t('pages.balance.adblock_error'),
               ['errors', 0, 'message'],
               error
             )}
