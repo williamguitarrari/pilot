@@ -39,6 +39,11 @@ class BalanceState extends Component {
       },
       company: {
         name: 'Test Company SA',
+        pricing: {
+          transfers: {
+            ted: 1000,
+          },
+        },
       },
       dates: {
         end: moment().add(1, 'month'),

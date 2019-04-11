@@ -8,6 +8,7 @@ import {
   isNil,
   keys,
   map,
+  path,
   pipe,
   prop,
   propSatisfies,
@@ -27,11 +28,19 @@ import {
   ModalTitle,
   Row,
   Spacing,
-  Tooltip,
+  // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+  // It was commented on to remove the anticipation limits call on Balance page
+  // This code will be used again in the future when ATLAS project implements the anticipation flow
+  // More details in issue #1159
+  // Tooltip,
 } from 'former-kit'
 import IconCalendar from 'emblematic-icons/svg/Calendar32.svg'
 import IconClose from 'emblematic-icons/svg/ClearClose32.svg'
-import IconInfo from 'emblematic-icons/svg/Info32.svg'
+// This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+// It was commented on to remove the anticipation limits call on Balance page
+// This code will be used again in the future when ATLAS project implements the anticipation flow
+// More details in issue #1159
+// import IconInfo from 'emblematic-icons/svg/Info32.svg'
 
 import BalanceSummary from '../../components/BalanceSummary'
 import BalanceTotalDisplay from '../../components/BalanceTotalDisplay'
@@ -105,7 +114,9 @@ const anyDateRange = {
 const formatAmount = (amount = 0) =>
   currencyFormatter(amount)
 
-const MINIMUM_ANTICIPABLE_VALUE = 100
+const getTransfersPricing = path(['pricing', 'transfers'])
+
+const MINIMUM_API_VALUE = 100
 
 class Balance extends Component {
   constructor (props) {
@@ -121,7 +132,11 @@ class Balance extends Component {
     this.handleOperationsPageChange = this.handleOperationsPageChange.bind(this)
     this.handlePresetChange = this.handlePresetChange.bind(this)
     this.handleRequestCancelClick = this.handleRequestCancelClick.bind(this)
-    this.renderAnticipation = this.renderAnticipation.bind(this)
+    // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+    // It was commented on to remove the anticipation limits call on Balance page
+    // This code will be used again in the future when ATLAS project implements the anticipation flow
+    // More details in issue #1159
+    // this.renderAnticipation = this.renderAnticipation.bind(this)
 
     this.localizedPresets = dateInputPresets(props.t)
     this.dateLabels = getDateLabels(props.t)
@@ -284,54 +299,62 @@ class Balance extends Component {
     onCancelRequestClick(requests[requestIndex])
   }
 
-  renderAnticipation () {
-    const {
-      anticipation: {
-        available,
-        error,
-        loading,
-      },
-      t,
-    } = this.props
+  // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+  // It was commented on to remove the anticipation limits call on Balance page
+  // This code will be used again in the future when ATLAS project implements the anticipation flow
+  // More details in issue #1159
+  // renderAnticipation () {
+  //   const {
+  //     anticipation: {
+  //       available,
+  //       error,
+  //       loading,
+  //     },
+  //     t,
+  //   } = this.props
 
-    if (loading) {
-      return (
-        <span>
-          {t('pages.balance.anticipation_loading')}
-        </span>
-      )
-    }
+  //   if (loading) {
+  //     return (
+  //       <span>
+  //         {t('pages.balance.anticipation_loading')}
+  //       </span>
+  //     )
+  //   }
 
-    if (error) {
-      return (
-        <span>
-          {t('pages.balance.anticipation_error')}
-          <Spacing size="tiny" />
-          <Tooltip
-            placement="rightMiddle"
-            content={t('pages.balance.anticipation_error_info')}
-          >
-            <IconInfo height={16} width={16} />
-          </Tooltip>
-        </span>
-      )
-    }
+  //   if (error) {
+  //     return (
+  //       <span>
+  //         {t('pages.balance.anticipation_error')}
+  //         <Spacing size="tiny" />
+  //         <Tooltip
+  //           placement="rightMiddle"
+  //           content={t('pages.balance.anticipation_error_info')}
+  //         >
+  //           <IconInfo height={16} width={16} />
+  //         </Tooltip>
+  //       </span>
+  //     )
+  //   }
 
-    return (
-      <span>
-        {t('pages.balance.available_anticipation')}
-        <strong> {formatAmount(available)} </strong>
-      </span>
-    )
-  }
+  //   return (
+  //     <span>
+  //       {t('pages.balance.available_anticipation')}
+  //       <strong> {formatAmount(available)} </strong>
+  //     </span>
+  //   )
+  // }
 
   render () {
     const {
-      anticipation: {
-        available,
-        error: anticipationError,
-        loading: anticipationLoading,
-      },
+      // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+      // It was commented on to remove the anticipation limits call on Balance page
+      // This code will be used again in the future when ATLAS project implements the anticipation flow
+      // More details in issue #1159
+      // anticipation: {
+      //   available,
+      //   error: anticipationError,
+      //   loading: anticipationLoading,
+      // },
       anticipationCancel,
       balance: {
         amount,
@@ -374,6 +397,8 @@ class Balance extends Component {
 
     const filterDatesEqualCurrent = datesEqual(this.state.dates, dates)
 
+    const { ted } = getTransfersPricing(company)
+
     return (
       <Fragment>
         <Grid>
@@ -415,7 +440,9 @@ class Balance extends Component {
                     <strong> {currencyFormatter(withdrawal)} </strong>
                   </span>
                 }
-                disabled={disabled}
+                disabled={
+                  disabled || withdrawal <= ted + MINIMUM_API_VALUE
+                }
                 title={t('pages.balance.withdrawal_title')}
               />
             </Col>
@@ -432,13 +459,23 @@ class Balance extends Component {
                   : anticipationAction
                 }
                 amount={formatAmount(outcoming)}
-                detail={this.renderAnticipation()}
-                disabled={
-                  disabled
-                  || anticipationLoading
-                  || anticipationError
-                  || available < MINIMUM_ANTICIPABLE_VALUE
+                // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+                // It was commented on to remove the anticipation limits call on Balance page
+                // This code will be used again in the future when ATLAS project implements the anticipation flow
+                // More details in issue #1159
+                // detail={this.renderAnticipation()}
+                // disabled={
+                //   disabled
+                //   || anticipationLoading
+                //   || anticipationError
+                //   || available < MINIMUM_API_VALUE
+                // }
+                detail={
+                  <span>
+                    {t('pages.balance.anticipation_call')}
+                  </span>
                 }
+                disabled={disabled}
                 title={t('pages.balance.anticipation_title')}
               />
             </Col>
@@ -600,11 +637,15 @@ const datesShape = PropTypes.shape({
 })
 
 Balance.propTypes = {
-  anticipation: PropTypes.shape({
-    available: PropTypes.number,
-    error: PropTypes.bool.isRequired,
-    loading: PropTypes.bool.isRequired,
-  }).isRequired,
+  // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+  // It was commented on to remove the anticipation limits call on Balance page
+  // This code will be used again in the future when ATLAS project implements the anticipation flow
+  // More details in issue #1159
+  // anticipation: PropTypes.shape({
+  //   available: PropTypes.number,
+  //   error: PropTypes.bool.isRequired,
+  //   loading: PropTypes.bool.isRequired,
+  // }).isRequired,
   anticipationCancel: PropTypes.shape({
     id: PropTypes.string.isRequired,
     payment_date: PropTypes.string.isRequired,

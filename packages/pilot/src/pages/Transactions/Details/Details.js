@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { translate } from 'react-i18next'
 import {
+  equals,
   always,
   complement,
   compose,
@@ -17,8 +18,10 @@ import {
   length,
   pipe,
   prop,
+  tail,
 } from 'ramda'
 import moment from 'moment'
+import qs from 'qs'
 import {
   requestDetails,
   receiveDetails,
@@ -33,6 +36,13 @@ import TransactionDetailsContainer from '../../../containers/TransactionDetails'
 import Refund from '../../Refund'
 import Capture from '../../Capture'
 
+const hasPrintInQueryString = pipe(
+  tail,
+  qs.parse,
+  prop('print'),
+  equals('true')
+)
+
 const mapStateToProps = ({
   account: {
     client,
@@ -40,7 +50,8 @@ const mapStateToProps = ({
       permission,
     },
   },
-  transactions: { loading, query },
+  transactionDetails: { loading },
+  transactions: { query },
 }) => ({
   client,
   loading,
@@ -75,9 +86,6 @@ const copyToClipBoard = (text) => {
   document.body.removeChild(textarea)
   /* eslint-enable no-undef */
 }
-
-// eslint-disable-next-line no-undef
-const handleExportClick = () => window.print()
 
 const getTransactionDetailsLabels = t => ({
   acquirer_name: t('pages.transaction.acquirer_name'),
@@ -173,6 +181,7 @@ class TransactionDetails extends Component {
     const formatColumns = getColumnFormatter(t)
     this.state = {
       eventsLabels: getEventsLabels(t),
+      expandRecipients: false,
       installmentColumns: formatColumns(installmentTableColumns),
       manualReviewAction: null,
       nextId: null,
@@ -211,15 +220,53 @@ class TransactionDetails extends Component {
     this.handleShowBoletoClick = this.handleShowBoletoClick.bind(this)
     this.handleUpdate = this.handleUpdate.bind(this)
     this.requestData = this.requestData.bind(this)
+    this.handleAfterPrint = this.handleAfterPrint.bind(this)
+    this.handleExport = this.handleExport.bind(this)
   }
 
   componentDidMount () {
-    const { match: { params: { id } } } = this.props
+    const {
+      match: {
+        params: {
+          id,
+        },
+      },
+    } = this.props
+
     this.handleUpdate(id, true)
+
+    this.afterPrintListener = window.addEventListener('afterprint', this.handleAfterPrint) // eslint-disable-line no-undef
   }
 
   componentWillReceiveProps ({ match: { params: { id } } }) {
     this.handleUpdate(id)
+  }
+
+  componentDidUpdate (prevProps) {
+    const {
+      loading,
+      location: {
+        search,
+      },
+    } = this.props
+
+    if ((prevProps.loading && !loading) && hasPrintInQueryString(search)) {
+      this.handleExport()
+    }
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('afterprint', this.afterPrintListener) // eslint-disable-line no-undef
+  }
+
+  handleAfterPrint () {
+    this.setState({ expandRecipients: false })
+  }
+
+  handleExport () {
+    this.setState({
+      expandRecipients: true,
+    }, () => window.print()) // eslint-disable-line no-undef
   }
 
   handleUpdate (id, forceUpdate) {
@@ -351,6 +398,7 @@ class TransactionDetails extends Component {
     } = this.props
     const {
       eventsLabels,
+      expandRecipients,
       installmentColumns,
       manualReviewAction,
       nextId,
@@ -450,6 +498,7 @@ class TransactionDetails extends Component {
           boletoWarningMessage={t('pages.transaction.boleto.waiting_payment_warning')}
           customerLabels={customerLabels}
           eventsLabels={eventsLabels}
+          expandRecipients={expandRecipients}
           headerLabels={headerLabels}
           installmentColumns={installmentColumns}
           metadataTitle={t('pages.transaction.metadata')}
@@ -460,7 +509,7 @@ class TransactionDetails extends Component {
           onManualReviewApprove={this.handleManualReviewApprove}
           onManualReviewRefuse={this.handleManualReviewRefuse}
           onRefund={this.handleRefund}
-          onExport={handleExportClick}
+          onExport={this.handleExport}
           onNextTransactionRedirect={this.handleNextTransactionRedirect}
           onPreviousTransactionRedirect={this.handlePreviousTransactionRedirect}
           onReprocess={this.handleReprocessOpen}
@@ -522,6 +571,10 @@ TransactionDetails.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
     replace: PropTypes.func,
+  }).isRequired,
+  loading: PropTypes.bool.isRequired,
+  location: PropTypes.shape({
+    search: PropTypes.string,
   }).isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({

@@ -47,24 +47,32 @@ const mapStateToProps = ({
     sessionId,
     user,
   },
-  anticipation: {
-    error: anticipationError,
-    limits: {
-      max,
-    },
-    loading: anticipationLoading,
-  },
+  // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+  // It was commented on to remove the anticipation limits call on Balance page
+  // This code will be used again in the future when ATLAS project implements the anticipation flow
+  // More details in issue #1159
+  // anticipation: {
+  //   error: anticipationError,
+  //   limits: {
+  //     max,
+  //   },
+  //   loading: anticipationLoading,
+  // },
   balance: {
     error,
     loading,
     query,
   },
 }) => ({
-  anticipation: {
-    available: max,
-    error: !isNil(anticipationError),
-    loading: anticipationLoading,
-  },
+  // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+  // It was commented on to remove the anticipation limits call on Balance page
+  // This code will be used again in the future when ATLAS project implements the anticipation flow
+  // More details in issue #1159
+  // anticipation: {
+  //   available: max,
+  //   error: !isNil(anticipationError),
+  //   loading: anticipationLoading,
+  // },
   client,
   company,
   error,
@@ -223,7 +231,7 @@ class Balance extends Component {
     this.handleOpenConfirmCancel = this.handleOpenConfirmCancel.bind(this)
     this.handlePageChange = this.handlePageChange.bind(this)
     this.handleWithdraw = this.handleWithdraw.bind(this)
-    this.requestAnticipationLimits = this.requestAnticipationLimits.bind(this)
+    // this.requestAnticipationLimits = this.requestAnticipationLimits.bind(this)
     this.requestData = this.requestData.bind(this)
     this.requestTotal = this.requestTotal.bind(this)
     this.updateQuery = this.updateQuery.bind(this)
@@ -231,9 +239,13 @@ class Balance extends Component {
 
   componentDidMount () {
     const {
-      anticipation: {
-        available,
-      },
+      // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+      // It was commented on to remove the anticipation limits call on Balance page
+      // This code will be used again in the future when ATLAS project implements the anticipation flow
+      // More details in issue #1159
+      // anticipation: {
+      //   available,
+      // },
       history: {
         location,
       },
@@ -248,10 +260,13 @@ class Balance extends Component {
     } else {
       this.requestData(params.id, parseQueryUrl(urlBalanceQuery))
       this.requestTotal(params.id, parseQueryUrl(urlBalanceQuery))
-
-      if (available === null) {
-        this.requestAnticipationLimits(params.id)
-      }
+      // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+      // It was commented on to remove the anticipation limits call on Balance page
+      // This code will be used again in the future when ATLAS project implements the anticipation flow
+      // More details in issue #1159
+      // if (available === null) {
+      //   this.requestAnticipationLimits(params.id)
+      // }
     }
   }
 
@@ -263,9 +278,13 @@ class Balance extends Component {
     } = prevProps
 
     const {
-      anticipation: {
-        available,
-      },
+      // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+      // It was commented on to remove the anticipation limits call on Balance page
+      // This code will be used again in the future when ATLAS project implements the anticipation flow
+      // More details in issue #1159
+      // anticipation: {
+      //   available,
+      // },
       company,
       location: {
         search: newSearch,
@@ -280,10 +299,13 @@ class Balance extends Component {
     if (oldSearch !== newSearch) {
       this.requestData(newRecipientId, parseQueryUrl(newSearch))
       this.requestTotal(newRecipientId, parseQueryUrl(newSearch))
-
-      if (available === null) {
-        this.requestAnticipationLimits(newRecipientId)
-      }
+      // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+      // It was commented on to remove the anticipation limits call on Balance page
+      // This code will be used again in the future when ATLAS project implements the anticipation flow
+      // More details in issue #1159
+      // if (available === null) {
+      //   this.requestAnticipationLimits(newRecipientId)
+      // }
     }
 
     if (
@@ -325,7 +347,6 @@ class Balance extends Component {
       history.replace('/balance')
     }
   }
-
   requestAnticipationLimits (id) {
     const { client } = this.props
     const now = moment()
@@ -481,7 +502,11 @@ class Balance extends Component {
 
   render () {
     const {
-      anticipation,
+      // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+      // It was commented on to remove the anticipation limits call on Balance page
+      // This code will be used again in the future when ATLAS project implements the anticipation flow
+      // More details in issue #1159
+      // anticipation,
       company,
       error,
       loading,
@@ -540,7 +565,11 @@ class Balance extends Component {
     if (!isEmptyResult && hasCompany) {
       return (
         <BalanceContainer
-          anticipation={anticipation}
+          // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+          // It was commented on to remove the anticipation limits call on Balance page
+          // This code will be used again in the future when ATLAS project implements the anticipation flow
+          // More details in issue #1159
+          // anticipation={anticipation}
           anticipationCancel={anticipationCancel}
           balance={balance}
           company={company}
@@ -573,11 +602,15 @@ class Balance extends Component {
 }
 
 Balance.propTypes = {
-  anticipation: PropTypes.shape({
-    available: PropTypes.number,
-    error: PropTypes.bool.isRequired,
-    loading: PropTypes.bool.isRequired,
-  }).isRequired,
+  // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+  // It was commented on to remove the anticipation limits call on Balance page
+  // This code will be used again in the future when ATLAS project implements the anticipation flow
+  // More details in issue #1159
+  // anticipation: PropTypes.shape({
+  //   available: PropTypes.number,
+  //   error: PropTypes.bool.isRequired,
+  //   loading: PropTypes.bool.isRequired,
+  // }).isRequired,
   client: PropTypes.shape({
     balance: PropTypes.shape({
       data: PropTypes.func.isRequired,
