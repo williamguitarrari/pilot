@@ -33,8 +33,17 @@ function formatAntecipationAndTransferConfiguration (data) {
     documentType: data.bank_account.document_type,
   }
 
+  let getCpfPhone
+  let getCnpjPhone
   const register = data.register_information
   const phone = pathOr('', ['phone_numbers', 0, 'number'], register)
+
+  if (register !== null) {
+    const { ddd } = register.phone_numbers[0]
+    getCpfPhone = `(${ddd}) ${phone}`
+    getCnpjPhone = `(${ddd}) ${phone}`
+  }
+
 
   if (data.bank_account.document_type === 'cpf') {
     if (register) {
@@ -44,7 +53,7 @@ function formatAntecipationAndTransferConfiguration (data) {
         cpfEmail: register.email,
         cpfInformation: true,
         cpfName: register.name,
-        cpfPhone: phone,
+        cpfPhone: getCpfPhone,
         cpfUrl: register.site_url,
         documentType: 'cpf',
         cnpj: '',
@@ -67,7 +76,7 @@ function formatAntecipationAndTransferConfiguration (data) {
         cnpjEmail: register.email,
         cnpjInformation: true,
         cnpjName: register.company_name,
-        cnpjPhone: phone,
+        cnpjPhone: getCnpjPhone,
         cnpjUrl: register.site_url,
         documentType: 'cnpj',
         partnerNumber: partners.length.toString(),
