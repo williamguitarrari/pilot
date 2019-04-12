@@ -290,6 +290,7 @@ class RecipientDetailConfig extends Component {
           />
         </RecipientItem>
         <HelpModal
+          anticipation={anticipation}
           isOpen={openedModal}
           onExit={this.handleCloseHelpModal}
           title={t('pages.recipient_detail.title_modal')}
