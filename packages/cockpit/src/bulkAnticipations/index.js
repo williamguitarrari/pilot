@@ -20,6 +20,7 @@ const calculateRequestAmount = pipe(
 
 export const buildPendingRequest = map(applySpec({
   amount: calculateRequestAmount,
+  automaticTransfer: prop('automatic_transfer'),
   created_at: prop('date_created'),
   id: prop('id'),
   payment_date: prop('payment_date'),
