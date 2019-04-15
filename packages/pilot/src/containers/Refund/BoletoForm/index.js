@@ -152,7 +152,7 @@ class BoletoForm extends Component {
                       label={t('models.bank_account.agency')}
                       maxLength={5}
                       name="agencia"
-                      size={5}
+                      size={10}
                       type="text"
                     />
                     <span className={style.separator}>-</span>
