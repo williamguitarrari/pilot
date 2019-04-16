@@ -1,17 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Table } from 'former-kit'
-import withLoader from '../withLoader'
+import withSpinner from '../withSpinner'
 
 import style from './style.css'
 
-/* eslint-disable */
-const withSpinner = withLoader(
-  <div className={style.overlay}>
-    <span className={style.spinner} />
-  </div>
-)
-/* eslint-enable */
+const enhance = withSpinner(style.overlay)
 
 const TableData = ({
   columns,
@@ -59,4 +53,4 @@ TableData.propTypes = {
   })).isRequired,
 }
 
-export default withSpinner(TableData)
+export default enhance(TableData)

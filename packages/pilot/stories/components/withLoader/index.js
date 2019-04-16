@@ -11,18 +11,11 @@ import ContentLoader from 'react-content-loader'
 
 import Section from '../../Section'
 import withLoader from '../../../src/components/withLoader'
-import style from './spinner.css'
+import style from './style.css'
 
 const actionLoading = action('loading')
 
-/* eslint-disable function-paren-newline */
-const withSpinner = withLoader(
-  <div className={style.overlay}>
-    <span className={style.spinner} />
-  </div>
-)
-
-const withSkeleton = withLoader(
+const Skeleton = (
   <ContentLoader
     speed={2}
     primaryColor="#f9f9f9"
@@ -34,9 +27,10 @@ const withSkeleton = withLoader(
     <rect x={8} y={55} rx="2" ry="2" width="90%" height="10" />
   </ContentLoader>
 )
-/* eslint-enable */
 
-const CardSample = ({ onClick, text }) => ( // eslint-disable-line
+const withSkeleton = withLoader(Skeleton)
+
+const CardSample = ({ onClick, text }) => ( // eslint-disable-line react/prop-types
   <Card>
     <CardTitle title={<h2>Here we create a card wrapped by withLoader</h2>} />
     <CardContent>
@@ -51,7 +45,6 @@ const CardSample = ({ onClick, text }) => ( // eslint-disable-line
   </Card>
 )
 
-const CardWithSpinner = withSpinner(CardSample)
 const CardWithSkeleton = withSkeleton(CardSample)
 
 class CardExample extends React.Component {
@@ -59,22 +52,10 @@ class CardExample extends React.Component {
     super(props)
 
     this.state = {
-      loading: false,
       loadingSkeleton: false,
     }
 
-    this.handleClick = this.handleClick.bind(this)
     this.handleClickSkeleton = this.handleClickSkeleton.bind(this)
-  }
-
-  handleClick () {
-    this.setState({ loading: true })
-    actionLoading(true)
-
-    setTimeout(() => {
-      this.setState({ loading: false })
-      actionLoading(false)
-    }, 1000)
   }
 
   handleClickSkeleton () {
@@ -89,13 +70,7 @@ class CardExample extends React.Component {
 
   render () {
     return (
-      <Section title="Loader">
-        <CardWithSpinner
-          loading={this.state.loading}
-          onClick={this.handleClick}
-          text="load with spinner"
-        />
-        <br />
+      <Section title="With Loader">
         <CardWithSkeleton
           loading={this.state.loadingSkeleton}
           onClick={this.handleClickSkeleton}

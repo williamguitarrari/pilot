@@ -35,6 +35,7 @@ import Message from './Message'
 import MessageActions from './MessageActions'
 import PasswordInput from './PasswordInput'
 import WithLoader from './withLoader'
+import WithSpinner from './withSpinner'
 
 storiesOf('Components|Custom components', module)
   .addDecorator(checkA11y)
@@ -73,3 +74,4 @@ storiesOf('Components|Custom components', module)
 
 storiesOf('Components|High Order Components', module)
   .add('with loader', () => <WithLoader />)
+  .add('with spinner', () => <WithSpinner />)
