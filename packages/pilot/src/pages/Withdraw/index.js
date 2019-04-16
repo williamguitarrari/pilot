@@ -115,6 +115,7 @@ class Withdraw extends Component {
     this.handleRequestChange = this.handleRequestChange.bind(this)
     this.handleTryAgain = this.handleTryAgain.bind(this)
     this.getTransferCost = this.getTransferCost.bind(this)
+    this.goToPreviousPage = this.goToPreviousPage.bind(this)
   }
 
   componentDidMount () {
@@ -201,6 +202,10 @@ class Withdraw extends Component {
       currentStep: nextStep,
       stepsStatus: getStepsStatus(nextStep, nextStepStatus),
     })
+  }
+
+  goToPreviousPage () {
+    this.props.history.goBack()
   }
 
   handleConfirmationConfirm (password) {
