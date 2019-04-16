@@ -142,6 +142,7 @@ class Withdraw extends Component {
     this.handleRequestChange = this.handleRequestChange.bind(this)
     this.handleTryAgain = this.handleTryAgain.bind(this)
     this.getTransferCost = this.getTransferCost.bind(this)
+    this.goToPreviousPage = this.goToPreviousPage.bind(this)
   }
 
   componentDidMount () {
@@ -238,6 +239,10 @@ class Withdraw extends Component {
     })
   }
 
+  goToPreviousPage () {
+    this.props.history.goBack()
+  }
+
   handleConfirmationConfirm (password) {
     const {
       client,
@@ -319,6 +324,7 @@ class Withdraw extends Component {
             date={moment()}
             disabled={confirmationDisabledButtons}
             maximum={getAvailableAmount(recipient)}
+            onBack={this.goToPreviousPage}
             onConfirmationConfirm={this.handleConfirmationConfirm}
             onConfirmationReturn={() => this.goTo('data', 'current')}
             onFormSubmit={() => this.goTo('confirmation', 'current')}

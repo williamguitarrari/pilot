@@ -879,6 +879,7 @@
     },
     "withdraw": {
       "balance": "Saldo disponível",
+      "back": "voltar",
       "cancel": "Cancelar",
       "conclusion": "Conclusão",
       "confirm": "Confirmar",

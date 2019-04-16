@@ -125,6 +125,7 @@ class Withdraw extends Component {
       date,
       disabled,
       maximum,
+      onBack,
       onConfirmationConfirm,
       onConfirmationReturn,
       onFormSubmit,
@@ -155,6 +156,7 @@ class Withdraw extends Component {
                 available={available}
                 date={date}
                 maximum={maximum}
+                onBack={onBack}
                 onRequestedChange={onRequestedChange}
                 onSubmit={onFormSubmit}
                 requested={requested}
@@ -236,6 +238,7 @@ Withdraw.propTypes = {
   date: PropTypes.instanceOf(moment).isRequired,
   disabled: PropTypes.bool.isRequired,
   maximum: PropTypes.number,
+  onBack: PropTypes.func.isRequired,
   onConfirmationConfirm: PropTypes.func.isRequired,
   onConfirmationReturn: PropTypes.func.isRequired,
   onFormSubmit: PropTypes.func.isRequired,
