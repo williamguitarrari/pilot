@@ -563,6 +563,8 @@
       "application_message": "Por favor recarregue a página",
       "application_title": "Erro de aplicação",
       "back_to_login": "Voltar para login",
+      "internal_title": "Erro Interno",
+      "internal_message": "Houve um erro interno, por favor recarregue a página",
       "no_connection": "Por favor verifique sua conexão com a internet e recarrege a página",
       "no_connection_title": "Sem internet?",
       "page_refresh": "Recarregar página",
