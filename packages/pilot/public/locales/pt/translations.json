@@ -950,6 +950,9 @@
       "details": "Ver detalhes",
       "document": "CPF / CNPJ",
       "email": "E-mail",
+      "errors": {
+        "not_found": "Transação não encontrada"
+      },
       "events_title": "Histórico da transação",
       "header": {
         "approve": "Aprovar",
