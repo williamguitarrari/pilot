@@ -580,8 +580,8 @@ class Balance extends Component {
                   exporting={exporting}
                   loading={disabled || loading}
                   ofLabel={t('of')}
-                  onExport={onExport}
                   onPageChange={this.handleOperationsPageChange}
+                  onExport={onExport}
                   rows={operations.rows}
                   subtitle={
                     <span>
@@ -590,6 +590,7 @@ class Balance extends Component {
                       {t('pages.balance.releases')}
                     </span>
                   }
+                  t={t}
                   title={t('pages.balance.operations_title')}
                   totalPages={operations.count}
                 />
