@@ -40,6 +40,7 @@ class Operations extends PureComponent {
       onExport,
       onPageChange,
       subtitle,
+      t,
       totalPages,
     } = this.props
 
@@ -53,8 +54,8 @@ class Operations extends PureComponent {
           placement="bottomEnd"
           relevance="low"
           size="tiny"
-          subtitle="Exportar para:"
-          title="Exportar tabela"
+          subtitle={t('pages.balance.export.subtitle')}
+          title={t('pages.balance.export.title')}
         />
         <Spacing size="tiny" />
         <Pagination
@@ -160,6 +161,7 @@ Operations.propTypes = {
     type: PropTypes.string.isRequired,
   })).isRequired,
   subtitle: PropTypes.node.isRequired,
+  t: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
   totalPages: PropTypes.number.isRequired,
 }
