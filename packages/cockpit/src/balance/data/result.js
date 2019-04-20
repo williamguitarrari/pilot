@@ -4,6 +4,8 @@ import {
   apply,
   applySpec,
   assoc,
+  both,
+  cond,
   either,
   head,
   ifElse,
@@ -19,9 +21,11 @@ import {
   pipe,
   pluck,
   prop,
+  propEq,
   subtract,
   sum,
   when,
+  T,
 } from 'ramda'
 import { buildPendingRequest } from '../../bulkAnticipations'
 
@@ -112,6 +116,21 @@ const buildOperationOutgoing = ifElse(
   ])
 )
 
+const getType = cond([
+  [
+    both(
+      propEq('type', 'refund'),
+      pathEq(['movement_object', 'type'], 'boleto')
+    ),
+    always('boletoRefundFee'),
+  ],
+  [
+    pathEq(['movement_object', 'type'], 'credit'),
+    path(['movement_object', 'payment_method']),
+  ],
+  [T, path(['movement_object', 'type'])],
+])
+
 const buildOperationsRows = pipe(
   prop('operations'),
   map(applySpec({
@@ -130,7 +149,7 @@ const buildOperationsRows = pipe(
       actual: getOperationDate('payment_date', 'date_created'),
       original: getOperationDate('original_payment_date'),
     },
-    type: path(['movement_object', 'type']),
+    type: getType,
     transactionId: pathOr(null, ['movement_object', 'transaction_id']),
   }))
 )
