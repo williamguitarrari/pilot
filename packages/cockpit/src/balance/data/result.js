@@ -131,6 +131,7 @@ const buildOperationsRows = pipe(
       original: getOperationDate('original_payment_date'),
     },
     type: path(['movement_object', 'type']),
+    transactionId: pathOr(null, ['movement_object', 'transaction_id']),
   }))
 )
 
