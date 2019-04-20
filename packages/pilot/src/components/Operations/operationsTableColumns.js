@@ -157,6 +157,12 @@ const getColumns = labels => ([
     title: 'models.operations.id',
   },
   {
+    accessor: ['transactionId'],
+    align: 'center',
+    orderable: false,
+    title: 'models.operations.transaction_id',
+  },
+  {
     accessor: ['type'],
     align: 'start',
     orderable: false,

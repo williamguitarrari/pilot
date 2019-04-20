@@ -154,6 +154,7 @@ Operations.propTypes = {
       actual: PropTypes.string,
       original: PropTypes.string,
     }).isRequired,
+    transactionId: PropTypes.number,
     type: PropTypes.string.isRequired,
   })).isRequired,
   subtitle: PropTypes.node.isRequired,

@@ -721,6 +721,7 @@ Balance.propTypes = {
           actual: PropTypes.string.isRequired,
           original: PropTypes.string,
         }),
+        transactionId: PropTypes.number,
         type: PropTypes.string.isRequired,
       })),
       total: PropTypes.number.isRequired,
