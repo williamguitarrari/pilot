@@ -8,6 +8,7 @@ import {
   cond,
   either,
   head,
+  includes,
   ifElse,
   isEmpty,
   isNil,
@@ -18,6 +19,7 @@ import {
   path,
   pathEq,
   pathOr,
+  pathSatisfies,
   pipe,
   pluck,
   prop,
@@ -87,34 +89,110 @@ const getOperationDate = (dateType, fallbackDateType) => pipe(
   )
 )
 
-const transformMovementTypePropTo = (propName, to = propName) => pipe(
-  path(['movement_object', propName]),
+const transformMovementTypePropTo = (propPath, to) => pipe(
+  path(propPath),
   when(either(isNil, isEmpty), always(0)),
   Math.abs,
   assoc('amount', __, { type: to })
 )
 
-const buildOperationOutcoming = ifElse(
-  pathEq(['movement_object', 'type'], 'refund'),
-  juxt([
-    transformMovementTypePropTo('fee', 'mdr'),
-  ]),
-  juxt([
-    transformMovementTypePropTo('amount', 'payable'),
-  ])
+const isRefundOrChargeBack = pathSatisfies(
+  includes(__, ['chargeback', 'refund']),
+  ['movement_object', 'type']
 )
 
-const buildOperationOutgoing = ifElse(
-  pathEq(['movement_object', 'type'], 'refund'),
-  juxt([
-    transformMovementTypePropTo('amount', 'payable'),
-    transformMovementTypePropTo('anticipation_fee'),
-  ]),
-  juxt([
-    transformMovementTypePropTo('fee', 'mdr'),
-    transformMovementTypePropTo('anticipation_fee'),
-  ])
+const refundOrChargeBackOutcoming = juxt([
+  transformMovementTypePropTo(['fee'], 'mdr'),
+])
+
+const refundOrChargeBackOutgoing = juxt([
+  transformMovementTypePropTo(['amount'], 'payable'),
+])
+
+const isTransfer = both(
+  propEq('type', 'transfer'),
+  pathEq(['movement_object', 'type'], 'ted')
 )
+
+const transferOutcoming = always([
+  {
+    amount: 0,
+    type: 'payable',
+  },
+])
+
+const transferOutgoing = juxt([
+  transformMovementTypePropTo(['fee'], 'tedFee'),
+  transformMovementTypePropTo(['amount'], 'payable'),
+])
+
+const isBoletoRefundFee = both(
+  propEq('type', 'refund'),
+  pathEq(['movement_object', 'type'], 'boleto')
+)
+
+const boletoRefundFeeOutgoing = juxt([
+  transformMovementTypePropTo(['fee'], 'tedFee'),
+])
+
+const boletoRefundFeeOutcoming = juxt([
+  transformMovementTypePropTo(['amount'], 'payable'),
+])
+
+const isCredit = both(
+  propEq('type', 'payable'),
+  pathEq(['movement_object', 'type'], 'credit')
+)
+
+const creditOutcoming = juxt([
+  transformMovementTypePropTo(['movement_object', 'amount'], 'payable'),
+])
+
+const creditOutgoing = juxt([
+  transformMovementTypePropTo(['movement_object', 'fee'], 'mdr'),
+  transformMovementTypePropTo(
+    ['movement_object', 'anticipation_fee'],
+    'anticipation_fee'
+  ),
+])
+
+const buildOperationOutcoming = cond([
+  [
+    isRefundOrChargeBack,
+    refundOrChargeBackOutcoming,
+  ],
+  [
+    isTransfer,
+    transferOutcoming,
+  ],
+  [
+    isBoletoRefundFee,
+    boletoRefundFeeOutcoming,
+  ],
+  [
+    isCredit,
+    creditOutcoming,
+  ],
+])
+
+const buildOperationOutgoing = cond([
+  [
+    isRefundOrChargeBack,
+    refundOrChargeBackOutgoing,
+  ],
+  [
+    isTransfer,
+    transferOutgoing,
+  ],
+  [
+    isBoletoRefundFee,
+    boletoRefundFeeOutgoing,
+  ],
+  [
+    isCredit,
+    creditOutgoing,
+  ],
+])
 
 const getType = cond([
   [

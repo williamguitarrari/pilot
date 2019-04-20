@@ -51,63 +51,9 @@
         "offset": 0,
         "rows": [
           {
-            "id": 4861,
-            "installment": 1,
-            "type": "payable",
-            "transactionId": 185537,
-            "payment_date": {
-              "original": null,
-              "actual": "2017-03-06T03:00:00.000Z"
-            },
-            "outcoming": [
-              { "type": "payable", "amount": 100000 }
-            ],
-            "outgoing": [
-              { "type": "mdr", "amount": 115 },
-              { "type": "anticipation_fee", "amount": 0 }
-            ],
-            "net": 99885
-          },
-          {
-            "id": 4852,
-            "installment": 1,
-            "type": "payable",
-            "transactionId": 185507,
-            "payment_date": {
-              "original": null,
-              "actual": "2017-03-06T03:00:00.000Z"
-            },
-            "outcoming": [
-              { "type": "payable", "amount": 10000 }
-            ],
-            "outgoing": [
-              { "type": "mdr", "amount": 115 },
-              { "type": "anticipation_fee", "amount": 0 }
-            ],
-            "net": 9885
-          },
-          {
-            "id": 4840,
-            "installment": 1,
-            "type": "payable",
-            "transactionId": 185273,
-            "payment_date": {
-              "original": null,
-              "actual": "2017-03-05T03:00:00.000Z"
-            },
-            "outcoming": [
-              { "type": "payable", "amount": 30000 }
-            ],
-            "outgoing": [
-              { "type": "mdr", "amount": 115 },
-              { "type": "anticipation_fee", "amount": 0 }
-            ],
-            "net": 29885
-          },
-          {
             "id": 2499868,
             "installment": 3,
-            "type": "credit",
+            "type": "credit_card",
             "transactionId": 1785141,
             "payment_date": {
               "original": null,
@@ -135,10 +81,96 @@
               { "type": "mdr", "amount": 115 }
             ],
             "outgoing": [
-              { "type": "payable", "amount": 100000 },
-              { "type": "anticipation_fee", "amount": 100 }
+              { "type": "payable", "amount": 100000 }
             ],
-            "net": -99985
+            "net": -99885
+          },
+          {
+            "id": 8179778,
+            "installment": 1,
+            "type": "chargeback",
+            "transactionId": 6237273,
+            "payment_date": {
+              "original": null,
+              "actual": "2019-04-18T03:00:00.000Z"
+            },
+            "outcoming": [
+              { "type": "mdr", "amount": 900 }
+            ],
+            "outgoing": [
+              { "type": "payable", "amount": 18000 }
+            ],
+            "net": -17100
+          },
+          {
+            "id": 8179772,
+            "installment": null,
+            "type": "refund",
+            "transactionId": 6237281,
+            "payment_date": {
+              "original": "2019-04-23T03:00:00+00:00",
+              "actual": "2019-04-18T03:00:00.000Z"
+            },
+            "outcoming": [
+              { "type": "mdr", "amount": 600 }
+            ],
+            "outgoing": [
+              { "type": "payable", "amount": 12000 }
+            ],
+            "net": -11400
+          },
+          {
+            "id": 8179768,
+            "installment": null,
+            "type": "boleto",
+            "transactionId": 6237321,
+            "payment_date": {
+              "original": null,
+              "actual": "2019-04-18T03:00:00.000Z"
+            },
+            "outcoming": [
+              { "type": "payable", "amount": 10000 }
+            ],
+            "outgoing": [
+              { "type": "mdr", "amount": 380 },
+              { "type": "anticipation_fee", "amount": 0 }
+            ],
+            "net": 9620
+          },
+          {
+            "id": 8176357,
+            "installment": null,
+            "type": "boletoRefundFee",
+            "transactionId": 6232675,
+            "payment_date": {
+              "original": null,
+              "actual": "2019-04-17T21:50:54.308Z"
+            },
+            "outcoming": [
+              { "type": "payable", "amount": 0 }
+            ],
+            "outgoing": [
+              { "type": "tedFee", "amount": 367 }
+            ],
+            "net": -367
+          },
+          {
+            "id": 8156323,
+            "installment": null,
+            "type": "ted",
+            "transactionId": null,
+            "payment_date": {
+              "original": null,
+              "actual": "2019-04-10T21:57:41.238Z"
+            },
+            "outcoming": [
+              { "type": "payable", "amount": 0 }
+            ],
+            "outgoing": [
+              { "type": "tedFee", "amount": 367 },
+              { "type": "payable", "amount": 3233 }
+            ],
+            "net": -3600
           }
         ]
       }
