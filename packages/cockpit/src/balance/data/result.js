@@ -15,6 +15,7 @@ import {
   map,
   path,
   pathEq,
+  pathOr,
   pipe,
   pluck,
   prop,
@@ -115,6 +116,7 @@ const buildOperationsRows = pipe(
   prop('operations'),
   map(applySpec({
     id: prop('id'),
+    installment: pathOr(null, ['movement_object', 'installment']),
     net: pipe(
       juxt([
         pipe(buildOperationOutcoming, pluck('amount'), sum),
