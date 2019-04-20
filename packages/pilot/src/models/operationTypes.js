@@ -10,6 +10,7 @@ const types = {
   mdr: 'models.operations.mdr',
   refund: 'models.operations.refund',
   ted: 'models.operations.transfer',
+  tedFee: 'models.operations.transfer_fee',
   transfer: 'models.operations.transfer',
   withdraw: 'models.operations.withdraw',
 }

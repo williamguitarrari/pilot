@@ -379,6 +379,7 @@
       "refund": "Estorno",
       "transaction_id": "ID da transação",
       "transfer": "Saque",
+      "transfer_fee": "Taxa de transferência",
       "withdraw": "Saque"
     },
     "payment": {
