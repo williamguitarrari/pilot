@@ -157,6 +157,7 @@ class Anticipation extends Component {
       loading,
       maximum,
       minimum,
+      needsRecalculation,
       onCalculateSubmit,
       onCancel,
       onDataConfirm,
@@ -186,6 +187,7 @@ class Anticipation extends Component {
           loading={loading}
           maximum={maximum}
           minimum={minimum}
+          needsRecalculation={needsRecalculation}
           onCalculateSubmit={onCalculateSubmit}
           onCancel={onCancel}
           onChange={onFormChange}
@@ -319,6 +321,7 @@ Anticipation.propTypes = {
   loading: PropTypes.bool.isRequired,
   maximum: PropTypes.number,
   minimum: PropTypes.number,
+  needsRecalculation: PropTypes.bool,
   onCalculateSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   onConfirmationConfirm: PropTypes.func.isRequired,
@@ -360,6 +363,7 @@ Anticipation.defaultProps = {
   error: '',
   maximum: null,
   minimum: null,
+  needsRecalculation: false,
   recipient: {
     bank_account: {
       agencia: '',

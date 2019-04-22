@@ -207,6 +207,7 @@ const initialState = {
   invalidDays: [],
   isAutomaticTransfer: true,
   loading: false,
+  needsRecalculation: false,
   paymentDate: moment(),
   requestedAmount: undefined,
   statusMessage: '',
@@ -377,6 +378,12 @@ class Anticipation extends Component {
     } = prevProps
 
     const {
+      isAutomaticTransfer: prevIsAutomaticTransfer,
+      recipient: prevRecipient,
+    } = prevState
+
+    const {
+      isAutomaticTransfer,
       loading,
       recipient,
       requestedAmount,
@@ -392,7 +399,7 @@ class Anticipation extends Component {
 
     if (
       recipient
-      && !prevState.recipient
+      && !prevRecipient
       && !loading
       && !loadingLimits
       && limits.max === null
@@ -409,7 +416,16 @@ class Anticipation extends Component {
         })
       }
 
-      if (recipient && areEmptyLimits(prevProps.limits)) {
+      const hasReceivedLimits = recipient && areEmptyLimits(prevProps.limits)
+      const hasTransferModeChanged = (
+        isAutomaticTransfer !== prevIsAutomaticTransfer
+      )
+
+      if (hasTransferModeChanged) {
+        this.setState({ // eslint-disable-line react/no-did-update-set-state
+          needsRecalculation: true,
+        })
+      } else if (hasReceivedLimits) {
         this.createOrUpdateAnticipation(limits.max)
       }
     }
@@ -559,6 +575,7 @@ class Anticipation extends Component {
             otherFee: fee,
           },
           isAutomaticTransfer,
+          needsRecalculation: false,
           paymentDate: date,
           requestedAmount: requested,
           timeframe,
@@ -634,15 +651,19 @@ class Anticipation extends Component {
     { requested: requestedError }
   ) {
     const isAutomaticTransfer = transfer === 'yes'
-    const { paymentDate, timeframe: oldTimeframe } = this.state
+    const {
+      paymentDate,
+      requestedAmount: oldRequestedAmount,
+      timeframe: oldTimeframe,
+    } = this.state
     const mustReset = timeframe !== oldTimeframe || !paymentDate.isSame(start)
+    const hasRequestedAmountChanged = +requested !== oldRequestedAmount
 
     this.setState(
       {
-        error: requestedError !== this.state.error
-          ? requestedError
-          : null,
+        error: requestedError,
         isAutomaticTransfer,
+        needsRecalculation: hasRequestedAmountChanged,
         paymentDate: start,
         requestedAmount: +requested,
         timeframe,
@@ -696,9 +717,24 @@ class Anticipation extends Component {
       requestedAmount: value || requestedAmount,
       timeframe,
     }).then((bulk) => {
+      const {
+        amount,
+        anticipation_fee: anticipationFee,
+        fee,
+        fraud_coverage_fee: fraudCovarageFee,
+      } = bulk
+
       this.setState({
+        approximateRequested: amount,
+        error: null,
+        feesValues: {
+          anticipation: anticipationFee,
+          fraud: fraudCovarageFee,
+          otherFee: fee,
+        },
         loading: false,
-        requestedAmount,
+        needsRecalculation: false,
+        requestedAmount: amount,
       })
 
       return bulk
@@ -802,6 +838,7 @@ class Anticipation extends Component {
       },
       isAutomaticTransfer,
       loading,
+      needsRecalculation,
       paymentDate,
       recipient,
       requestedAmount,
@@ -859,6 +896,7 @@ class Anticipation extends Component {
             loading={loading || limitsLoading}
             maximum={max}
             minimum={getMinLimit(min)}
+            needsRecalculation={needsRecalculation}
             onCalculateSubmit={this.handleCalculateSubmit}
             onCancel={this.goToBalance}
             onConfirmationConfirm={this.handleConfirmationConfirm}

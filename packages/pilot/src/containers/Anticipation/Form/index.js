@@ -27,10 +27,6 @@ class AnticipationFormContainer extends Component {
   constructor (props) {
     super(props)
 
-    this.state = {
-      hasErrors: false,
-    }
-
     this.handleCalculateSubmit = this.handleCalculateSubmit.bind(this)
   }
 
@@ -40,8 +36,7 @@ class AnticipationFormContainer extends Component {
     transfer,
     ...values
   }, errors) {
-    const { error } = this.props
-    if (!errors && !error) {
+    if (!errors) {
       const isAutomaticTransfer = transfer === 'yes'
 
       this.props.onCalculateSubmit({
@@ -50,9 +45,6 @@ class AnticipationFormContainer extends Component {
         requested: Number(requested),
         ...values,
       })
-      this.setState({ hasErrors: false })
-    } else {
-      this.setState({ hasErrors: true })
     }
   }
 
@@ -68,6 +60,7 @@ class AnticipationFormContainer extends Component {
       loading,
       maximum,
       minimum,
+      needsRecalculation,
       onCancel,
       onChange,
       onConfirm,
@@ -76,9 +69,6 @@ class AnticipationFormContainer extends Component {
       timeframe,
       transferCost,
     } = this.props
-    const {
-      hasErrors,
-    } = this.state
 
     return (
       <Fragment>
@@ -122,9 +112,10 @@ class AnticipationFormContainer extends Component {
               amount={amount}
               approximateRequested={approximateRequested}
               cost={cost}
-              hasErrors={hasErrors}
+              hasErrors={error}
               isAutomaticTransfer={isAutomaticTransfer}
               loading={loading}
+              needsRecalculation={needsRecalculation}
               onCancel={onCancel}
               onConfirm={onConfirm}
               renderInfo={renderInfo}
@@ -149,6 +140,7 @@ AnticipationFormContainer.propTypes = {
   loading: PropTypes.bool.isRequired,
   maximum: PropTypes.number,
   minimum: PropTypes.number,
+  needsRecalculation: PropTypes.bool,
   onCalculateSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
@@ -166,6 +158,7 @@ AnticipationFormContainer.defaultProps = {
   isValidDay: always(true),
   maximum: null,
   minimum: null,
+  needsRecalculation: false,
   timeframe: 'start',
 }
 

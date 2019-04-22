@@ -52,6 +52,7 @@ const Results = ({
   cost,
   hasErrors,
   isAutomaticTransfer,
+  needsRecalculation,
   onCancel,
   onConfirm,
   renderInfo,
@@ -179,7 +180,7 @@ const Results = ({
         {t('pages.anticipation.cancel')}
       </Button>
       <Button
-        disabled={hasErrors || amount < 0}
+        disabled={hasErrors || amount < 0 || needsRecalculation}
         onClick={onConfirm}
         type="button"
       >
@@ -195,11 +196,16 @@ Results.propTypes = {
   cost: PropTypes.number.isRequired,
   hasErrors: PropTypes.bool.isRequired,
   isAutomaticTransfer: PropTypes.bool.isRequired,
+  needsRecalculation: PropTypes.bool,
   onCancel: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
   renderInfo: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
   transferCost: PropTypes.number.isRequired,
+}
+
+Results.defaultProps = {
+  needsRecalculation: false,
 }
 
 export default withSkeleton(Results)
