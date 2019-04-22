@@ -209,11 +209,17 @@ const getType = cond([
   [T, path(['movement_object', 'type'])],
 ])
 
+const getInstallment = ifElse(
+  pathEq(['movement_object', 'payment_method'], 'boleto'),
+  always(null),
+  pathOr(null, ['movement_object', 'installment'])
+)
+
 const buildOperationsRows = pipe(
   prop('operations'),
   map(applySpec({
     id: prop('id'),
-    installment: pathOr(null, ['movement_object', 'installment']),
+    installment: getInstallment,
     net: pipe(
       juxt([
         pipe(buildOperationOutcoming, pluck('amount'), sum),
