@@ -7,9 +7,10 @@ import {
   CardTitle,
   Pagination,
   Spacing,
-  Table,
 } from 'former-kit'
 import ExportData from '../ExportData'
+import TableData from './TableData'
+
 import style from './style.css'
 
 const getExportOptions = onExport => ([
@@ -34,8 +35,9 @@ class Operations extends PureComponent {
     const {
       currentPage,
       disabled,
+      exporting,
       ofLabel,
-      onExportData,
+      onExport,
       onPageChange,
       subtitle,
       totalPages,
@@ -45,8 +47,9 @@ class Operations extends PureComponent {
       <div className={style.subtitle}>
         <h3>{subtitle}</h3>
         <ExportData
-          exportOptions={getExportOptions(onExportData)}
+          exportOptions={getExportOptions(onExport)}
           icon={<Download32 width={12} height={12} />}
+          loading={exporting}
           placement="bottomEnd"
           relevance="low"
           size="tiny"
@@ -73,6 +76,7 @@ class Operations extends PureComponent {
       currentPage,
       disabled,
       emptyMessage,
+      loading,
       ofLabel,
       onPageChange,
       rows,
@@ -89,11 +93,11 @@ class Operations extends PureComponent {
           />
         </div>
         <CardContent>
-          <Table
+          <TableData
             columns={columns}
             disabled={disabled}
             emptyMessage={emptyMessage}
-            maxColumns={6}
+            loading={loading}
             rows={rows}
           />
         </CardContent>
@@ -132,8 +136,10 @@ Operations.propTypes = {
   currentPage: PropTypes.number.isRequired,
   disabled: PropTypes.bool,
   emptyMessage: PropTypes.string.isRequired,
+  exporting: PropTypes.bool.isRequired,
+  loading: PropTypes.bool.isRequired,
   ofLabel: PropTypes.string.isRequired,
-  onExportData: PropTypes.func.isRequired,
+  onExport: PropTypes.func.isRequired,
   onPageChange: PropTypes.func.isRequired,
   rows: PropTypes.arrayOf(PropTypes.shape({
     description: PropTypes.string,

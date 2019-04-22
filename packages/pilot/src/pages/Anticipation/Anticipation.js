@@ -582,11 +582,11 @@ class Anticipation extends Component {
       requestedAmount,
     } = this.state
 
+    this.setState({ loading: true })
+
     if (!bulkId) {
       return this.createAnticipation(minValue)
     }
-
-    this.setState({ loading: true })
 
     return this.updateAnticipation(minValue || requestedAmount)
   }

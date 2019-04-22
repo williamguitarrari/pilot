@@ -380,6 +380,8 @@ class Balance extends Component {
       currentPage,
       dates,
       disabled,
+      exporting,
+      loading,
       modalConfirmOpened,
       onAnticipationClick,
       onCancelRequestClick,
@@ -548,6 +550,7 @@ class Balance extends Component {
                   <BalanceSummary
                     amount={this.getSummaryTotal()}
                     dates={dates}
+                    loading={loading}
                   />
                 </CardContent>
               </Card>
@@ -562,15 +565,15 @@ class Balance extends Component {
             >
               <Card>
                 <Operations
-                  onExportData={onExport}
                   columns={translateColumns(getColumns(typesLabels))}
                   currentPage={currentPage}
                   disabled={disabled}
                   emptyMessage={t('models.operations.empty_message')}
                   exportLabel={t('models.operations.export')}
-                  loading={disabled}
+                  exporting={exporting}
+                  loading={disabled || loading}
                   ofLabel={t('of')}
-                  onExport={() => null}
+                  onExport={onExport}
                   onPageChange={this.handleOperationsPageChange}
                   rows={operations.rows}
                   subtitle={
@@ -677,6 +680,8 @@ Balance.propTypes = {
   currentPage: PropTypes.number.isRequired,
   dates: datesShape.isRequired, // eslint-disable-line react/no-typos
   disabled: PropTypes.bool.isRequired,
+  exporting: PropTypes.bool.isRequired,
+  loading: PropTypes.bool,
   modalConfirmOpened: PropTypes.bool,
   onAnticipationClick: PropTypes.func.isRequired,
   onCancelRequestClick: PropTypes.func,
@@ -731,6 +736,7 @@ Balance.propTypes = {
 
 Balance.defaultProps = {
   anticipationCancel: null,
+  loading: false,
   modalConfirmOpened: false,
   onCancelRequestClick: null,
   onCancelRequestClose: null,

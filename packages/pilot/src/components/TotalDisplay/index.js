@@ -1,10 +1,26 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import ContentLoader from 'react-content-loader'
 
 import DataDisplay from '../DataDisplay'
+import withLoading from '../withLoader'
 import currency from '../../formatters/currency'
+
 import style from './style.css'
+
+const Skeleton = (
+  <ContentLoader
+    speed={2}
+    primaryColor="#d9d9d9"
+    secondaryColor="#ecebeb"
+    className={style.overlay}
+  >
+    <rect x={0} y={50} rx={4} ry={4} width="100%" height={60} />
+  </ContentLoader>
+)
+
+const withSkeleton = withLoading(Skeleton)
 
 const renderSymbol = (value) => {
   if (value < 0) {
@@ -107,4 +123,4 @@ TotalDisplay.defaultProps = {
   valueSize: 'medium',
 }
 
-export default TotalDisplay
+export default withSkeleton(TotalDisplay)
