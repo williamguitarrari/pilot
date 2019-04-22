@@ -357,6 +357,7 @@
     },
     "operations": {
       "anticipation": "Antecipação",
+      "anticipation_fee": "Antecipação",
       "anticipation_message": "Antecipação efetuada",
       "boleto": "Boleto",
       "boleto_refund_fee": "Taxa de estorno de boleto",
@@ -379,7 +380,7 @@
       "refund": "Estorno",
       "transaction_id": "ID da transação",
       "transfer": "Saque",
-      "transfer_fee": "Taxa de transferência",
+      "transfer_fee": "TED",
       "withdraw": "Saque"
     },
     "payment": {

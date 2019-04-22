@@ -1,5 +1,6 @@
 const types = {
   anticipation: 'models.operations.anticipation',
+  anticipation_fee: 'models.operations.anticipation_fee',
   anticipationMessage: 'models.operations.anticipation_message',
   boleto: 'models.operations.boleto',
   boletoRefundFee: 'models.operations.boleto_refund_fee',
