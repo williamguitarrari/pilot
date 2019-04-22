@@ -7,6 +7,7 @@ const types = {
   credit_card: 'models.operations.credit_card',
   debit: 'models.operations.debit',
   gateway: 'models.operations.gateway_service',
+  installment: 'models.operations.installment',
   mdr: 'models.operations.mdr',
   refund: 'models.operations.refund',
   ted: 'models.operations.transfer',

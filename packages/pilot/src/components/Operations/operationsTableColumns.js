@@ -59,10 +59,12 @@ const getTypeLabel = (type, labels) => {
 const isNotAnticipation = propSatisfies(isNil, 'original')
 
 // eslint-disable-next-line react/prop-types
-const renderDescription = ({ description, type }, labels) => (
+const renderDescription = ({ installment, type }, labels) => (
   <div className={style.descriptionColumn}>
     <div className={style.type}>{getTypeLabel(type, labels)}</div>
-    {!isNil(description) && <div>{description}</div>}
+    {!isNil(installment) &&
+      <div>{`${getTypeLabel('installment', labels)} ${installment}`}</div>
+    }
   </div>
 )
 
