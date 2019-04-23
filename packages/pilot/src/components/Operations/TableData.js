@@ -17,7 +17,7 @@ const TableData = ({
     columns={columns}
     disabled={disabled}
     emptyMessage={emptyMessage}
-    maxColumns={6}
+    maxColumns={7}
     rows={rows}
   />
 )
