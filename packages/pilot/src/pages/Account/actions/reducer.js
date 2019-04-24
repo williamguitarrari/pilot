@@ -15,8 +15,8 @@ import {
 } from '.'
 
 const getBalance = applySpec({
-  available: path(['available', 'amount']),
-  waitingFunds: path(['waiting_funds', 'amount']),
+  available: path(['withdrawal', 'maximum']),
+  waitingFunds: path(['balance', 'waiting_funds', 'amount']),
 })
 
 const initialState = {
