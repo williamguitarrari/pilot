@@ -64,7 +64,7 @@ const buildRecipient = pipe(
 const buildBalance = applySpec({
   amount: path(['balance', 'available', 'amount']),
   available: {
-    withdrawal: path(['balance', 'available', 'amount']),
+    withdrawal: path(['withdrawal', 'maximum']),
   },
   outcoming: path(['balance', 'waiting_funds', 'amount']),
 })

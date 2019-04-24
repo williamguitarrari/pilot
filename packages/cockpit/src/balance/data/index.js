@@ -36,6 +36,7 @@ const data = client => (recipientId, {
       start_date: moment(startDate).valueOf(),
     }),
     recipient: client.recipients.find({ id: recipientId }),
+    withdrawal: client.transfers.limits(recipientId),
   })
     .then(buildResult({
       count,
