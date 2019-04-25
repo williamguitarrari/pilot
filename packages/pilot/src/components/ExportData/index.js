@@ -11,32 +11,48 @@ import style from './style.css'
 const ExportData = ({
   exportOptions,
   icon,
+  loading,
   placement,
   relevance,
   size,
   subtitle,
   title,
-}) => (
-  <Popover
-    content={
-      <div className={style.exportPopover}>
-        <PopoverContent>
-          <strong>{subtitle}</strong>
-        </PopoverContent>
-        <PopoverMenu items={exportOptions} />
-      </div>
-    }
-    placement={placement}
-  >
+}) => (!loading
+  ? (
+    <Popover
+      content={
+        <div className={style.exportPopover}>
+          <PopoverContent>
+            <strong>{subtitle}</strong>
+          </PopoverContent>
+          <PopoverMenu items={exportOptions} />
+        </div>
+      }
+      placement={placement}
+    >
+      <Button
+        fill="outline"
+        icon={icon}
+        loading={loading}
+        relevance={relevance}
+        size={size}
+        displayChildrenWhenLoading
+      >
+        {title}
+      </Button>
+    </Popover>
+  ) : (
     <Button
       fill="outline"
       icon={icon}
+      loading={loading}
       relevance={relevance}
       size={size}
+      displayChildrenWhenLoading
     >
       {title}
     </Button>
-  </Popover>
+  )
 )
 
 ExportData.propTypes = {
@@ -45,6 +61,7 @@ ExportData.propTypes = {
     title: PropTypes.string.isRequired,
   })).isRequired,
   icon: PropTypes.node.isRequired,
+  loading: PropTypes.bool.isRequired,
   placement: PropTypes.string.isRequired,
   relevance: PropTypes.oneOf([
     'high', 'normal', 'low',

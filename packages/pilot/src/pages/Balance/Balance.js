@@ -209,6 +209,7 @@ class Balance extends Component {
 
     this.state = {
       anticipationCancel: null,
+      exporting: false,
       modalOpened: false,
       query: {
         count: 10,
@@ -425,6 +426,8 @@ class Balance extends Component {
   }
 
   handleExportData (format) {
+    this.setState({ exporting: true })
+
     const { client, company } = this.props
     const { query } = this.state
     const startDate = query.dates.start.format('x')
@@ -440,7 +443,10 @@ class Balance extends Component {
         recipientId,
         startDate,
       })
-      .then(res => handleExportDataSuccess(res, format))
+      .then((res) => {
+        this.setState({ exporting: false })
+        handleExportDataSuccess(res, format)
+      })
   }
 
   handleDateChange (dates) {
@@ -516,6 +522,7 @@ class Balance extends Component {
 
     const {
       anticipationCancel,
+      exporting,
       modalOpened,
       query: {
         dates,
@@ -576,6 +583,8 @@ class Balance extends Component {
           currentPage={page}
           dates={dates}
           disabled={loading}
+          exporting={exporting}
+          loading={loading}
           modalConfirmOpened={modalOpened}
           onAnticipationClick={this.handleAnticipation}
           onCancelRequestClick={userIsReadOnly(user)

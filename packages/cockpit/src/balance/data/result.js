@@ -4,8 +4,11 @@ import {
   apply,
   applySpec,
   assoc,
+  both,
+  cond,
   either,
   head,
+  includes,
   ifElse,
   isEmpty,
   isNil,
@@ -15,12 +18,16 @@ import {
   map,
   path,
   pathEq,
+  pathOr,
+  pathSatisfies,
   pipe,
   pluck,
   prop,
+  propEq,
   subtract,
   sum,
   when,
+  T,
 } from 'ramda'
 import { buildPendingRequest } from '../../bulkAnticipations'
 
@@ -82,39 +89,137 @@ const getOperationDate = (dateType, fallbackDateType) => pipe(
   )
 )
 
-const transformMovementTypePropTo = (propName, to = propName) => pipe(
-  path(['movement_object', propName]),
+const transformMovementTypePropTo = (propPath, to) => pipe(
+  path(propPath),
   when(either(isNil, isEmpty), always(0)),
   Math.abs,
   assoc('amount', __, { type: to })
 )
 
-const buildOperationOutcoming = ifElse(
-  pathEq(['movement_object', 'type'], 'refund'),
-  juxt([
-    transformMovementTypePropTo('fee', 'mdr'),
-  ]),
-  juxt([
-    transformMovementTypePropTo('amount', 'payable'),
-  ])
+const isRefundOrChargeBack = pathSatisfies(
+  includes(__, ['chargeback', 'refund']),
+  ['movement_object', 'type']
 )
 
-const buildOperationOutgoing = ifElse(
-  pathEq(['movement_object', 'type'], 'refund'),
-  juxt([
-    transformMovementTypePropTo('amount', 'payable'),
-    transformMovementTypePropTo('anticipation_fee'),
-  ]),
-  juxt([
-    transformMovementTypePropTo('fee', 'mdr'),
-    transformMovementTypePropTo('anticipation_fee'),
-  ])
+const refundOrChargeBackOutcoming = juxt([
+  transformMovementTypePropTo(['fee'], 'mdr'),
+])
+
+const refundOrChargeBackOutgoing = juxt([
+  transformMovementTypePropTo(['amount'], 'payable'),
+])
+
+const isTransfer = both(
+  propEq('type', 'transfer'),
+  pathEq(['movement_object', 'type'], 'ted')
+)
+
+const transferOutcoming = always([
+  {
+    amount: 0,
+    type: 'payable',
+  },
+])
+
+const transferOutgoing = juxt([
+  transformMovementTypePropTo(['fee'], 'tedFee'),
+  transformMovementTypePropTo(['amount'], 'payable'),
+])
+
+const isBoletoRefundFee = both(
+  propEq('type', 'refund'),
+  pathEq(['movement_object', 'type'], 'boleto')
+)
+
+const boletoRefundFeeOutgoing = juxt([
+  transformMovementTypePropTo(['fee'], 'tedFee'),
+])
+
+const boletoRefundFeeOutcoming = juxt([
+  transformMovementTypePropTo(['amount'], 'payable'),
+])
+
+const isCredit = both(
+  propEq('type', 'payable'),
+  pathEq(['movement_object', 'type'], 'credit')
+)
+
+const creditOutcoming = juxt([
+  transformMovementTypePropTo(['movement_object', 'amount'], 'payable'),
+])
+
+const creditOutgoing = juxt([
+  transformMovementTypePropTo(['movement_object', 'fee'], 'mdr'),
+  transformMovementTypePropTo(
+    ['movement_object', 'anticipation_fee'],
+    'anticipation_fee'
+  ),
+])
+
+const buildOperationOutcoming = cond([
+  [
+    isRefundOrChargeBack,
+    refundOrChargeBackOutcoming,
+  ],
+  [
+    isTransfer,
+    transferOutcoming,
+  ],
+  [
+    isBoletoRefundFee,
+    boletoRefundFeeOutcoming,
+  ],
+  [
+    isCredit,
+    creditOutcoming,
+  ],
+])
+
+const buildOperationOutgoing = cond([
+  [
+    isRefundOrChargeBack,
+    refundOrChargeBackOutgoing,
+  ],
+  [
+    isTransfer,
+    transferOutgoing,
+  ],
+  [
+    isBoletoRefundFee,
+    boletoRefundFeeOutgoing,
+  ],
+  [
+    isCredit,
+    creditOutgoing,
+  ],
+])
+
+const getType = cond([
+  [
+    both(
+      propEq('type', 'refund'),
+      pathEq(['movement_object', 'type'], 'boleto')
+    ),
+    always('boletoRefundFee'),
+  ],
+  [
+    pathEq(['movement_object', 'type'], 'credit'),
+    path(['movement_object', 'payment_method']),
+  ],
+  [T, path(['movement_object', 'type'])],
+])
+
+const getInstallment = ifElse(
+  pathEq(['movement_object', 'payment_method'], 'boleto'),
+  always(null),
+  pathOr(null, ['movement_object', 'installment'])
 )
 
 const buildOperationsRows = pipe(
   prop('operations'),
   map(applySpec({
     id: prop('id'),
+    installment: getInstallment,
     net: pipe(
       juxt([
         pipe(buildOperationOutcoming, pluck('amount'), sum),
@@ -128,7 +233,8 @@ const buildOperationsRows = pipe(
       actual: getOperationDate('payment_date', 'date_created'),
       original: getOperationDate('original_payment_date'),
     },
-    type: path(['movement_object', 'type']),
+    type: getType,
+    transactionId: pathOr(null, ['movement_object', 'transaction_id']),
   }))
 )
 

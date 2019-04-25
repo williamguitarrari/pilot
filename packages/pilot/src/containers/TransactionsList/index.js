@@ -30,7 +30,6 @@ import {
   Pagination,
   Row,
   SegmentedSwitch,
-  Table,
   isMomentPropValidation,
 } from 'former-kit'
 
@@ -38,7 +37,9 @@ import style from './style.css'
 
 import Filter from '../Filter'
 import Charts from './Charts'
+import TableList from './TableList'
 import ExportData from '../../components/ExportData'
+
 import tableColumns from './tableColumns'
 
 import itemsPerPage from '../../models/itemsPerPage'
@@ -82,6 +83,7 @@ const TransactionsList = ({
   data,
   dateSelectorPresets,
   expandedRows,
+  exporting,
   filterOptions,
   loading,
   onChangeViewMode,
@@ -216,6 +218,7 @@ const TransactionsList = ({
                     <ExportData
                       exportOptions={getExportOptions(onExport)}
                       icon={<Download32 width={12} height={12} />}
+                      loading={exporting}
                       placement="bottomEnd"
                       relevance="low"
                       size="tiny"
@@ -273,9 +276,10 @@ const TransactionsList = ({
                   />
                 }
                 {viewMode === 'table' &&
-                  <Table
+                  <TableList
                     columns={columns}
                     disabled={loading}
+                    loading={loading}
                     expandable
                     expandedRows={expandedRows}
                     maxColumns={7}
@@ -328,6 +332,7 @@ TransactionsList.propTypes = {
     title: PropTypes.string,
   })).isRequired,
   expandedRows: PropTypes.arrayOf(PropTypes.number).isRequired,
+  exporting: PropTypes.bool.isRequired,
   filterOptions: PropTypes.arrayOf(PropTypes.shape({
     items: PropTypes.arrayOf(PropTypes.shape({
       label: PropTypes.string,

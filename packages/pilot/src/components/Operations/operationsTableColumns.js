@@ -1,5 +1,7 @@
 import React from 'react'
 import {
+  all,
+  always,
   any,
   either,
   equals,
@@ -8,6 +10,7 @@ import {
   pipe,
   prop,
   propSatisfies,
+  when,
 } from 'ramda'
 import classNames from 'classnames'
 import { Tooltip } from 'former-kit'
@@ -59,10 +62,12 @@ const getTypeLabel = (type, labels) => {
 const isNotAnticipation = propSatisfies(isNil, 'original')
 
 // eslint-disable-next-line react/prop-types
-const renderDescription = ({ description, type }, labels) => (
+const renderDescription = ({ installment, type }, labels) => (
   <div className={style.descriptionColumn}>
     <div className={style.type}>{getTypeLabel(type, labels)}</div>
-    {!isNil(description) && <div>{description}</div>}
+    {!isNil(installment) &&
+      <div>{`${getTypeLabel('installment', labels)} ${installment}`}</div>
+    }
   </div>
 )
 
@@ -77,6 +82,10 @@ const renderNet = net => ( // eslint-disable-line react/prop-types
 
 // eslint-disable-next-line react/prop-types
 const renderOperationAmount = (labels, isNegative) => ({ amount, type }) => {
+  if (amount === 0) {
+    return null
+  }
+
   const absoluteAmount = getAbsoluteValue(amount)
   const outAmount = currencyFormatter(absoluteAmount)
   const outType = getTypeLabel(type, labels)
@@ -102,12 +111,22 @@ const isInvalidAmount = pipe(prop('amount'), either(isNil, Number.isNaN))
 
 const hasInvalidAmount = any(isInvalidAmount)
 
+const buildOperationsAmount = when(
+  all(isNil),
+  always(null)
+)
+
 const renderOperationAmounts = (amounts, labels, isNegative) => {
   if (hasInvalidAmount(amounts)) {
     return null
   }
 
-  return map(renderOperationAmount(labels, isNegative), amounts)
+  const operationAmounts = map(
+    renderOperationAmount(labels, isNegative),
+    amounts
+  )
+
+  return buildOperationsAmount(operationAmounts)
 }
 
 const renderOutcoming = (amounts, labels) =>
@@ -155,6 +174,12 @@ const getColumns = labels => ([
     align: 'center',
     orderable: false,
     title: 'models.operations.id',
+  },
+  {
+    accessor: ['transactionId'],
+    align: 'center',
+    orderable: false,
+    title: 'models.operations.transaction_id',
   },
   {
     accessor: ['type'],

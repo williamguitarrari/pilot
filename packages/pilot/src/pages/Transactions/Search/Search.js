@@ -202,6 +202,7 @@ class TransactionsSearch extends React.Component {
       collapsed: true,
       confirmationDisabled: false,
       expandedRows: [],
+      exporting: false,
       pendingReviewsCount: 0,
       query: isEmpty(urlSearchQuery)
         ? props.query
@@ -444,6 +445,8 @@ class TransactionsSearch extends React.Component {
   }
 
   handleExport (exportType) {
+    this.setState({ exporting: true })
+
     const newQuery = {
       ...this.state.query,
       count: this.state.result.total.count,
@@ -458,6 +461,8 @@ class TransactionsSearch extends React.Component {
         } else {
           handleXLSExportDownloadingClick(res, filename)
         }
+
+        this.setState({ exporting: false })
       })
   }
 
@@ -473,6 +478,7 @@ class TransactionsSearch extends React.Component {
       columns,
       confirmationDisabled,
       expandedRows,
+      exporting,
       pendingReviewsCount,
       query,
       query: {
@@ -513,6 +519,7 @@ class TransactionsSearch extends React.Component {
         data={chart.dataset}
         dateSelectorPresets={this.localizedPresets}
         expandedRows={expandedRows}
+        exporting={exporting}
         filterOptions={filterOptions}
         loading={loading}
         onChangeViewMode={this.handleViewModeChange}

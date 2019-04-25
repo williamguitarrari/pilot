@@ -202,17 +202,30 @@ class Balance extends Component {
 
   getPendingRequest ({
     amount,
+    automaticTransfer,
     created_at, // eslint-disable-line camelcase
     status,
     type,
   }) {
-    const { t } = this.props
+    const {
+      company: { pricing },
+      t,
+    } = this.props
+
     const { statuses, types } = bulkAnticipationsLabels
     const title =
       `${t(types[type])} ${t(statuses[status])}` || '-'
 
+    const ted = pricing
+      ? path(['transfers', 'ted'], pricing)
+      : 0
+
+    const netAmount = automaticTransfer
+      ? amount - ted
+      : amount
+
     return {
-      amount: currencyFormatter(amount),
+      amount: currencyFormatter(netAmount),
       created_at: dateFormatter(created_at),
       title,
     }
@@ -367,6 +380,8 @@ class Balance extends Component {
       currentPage,
       dates,
       disabled,
+      exporting,
+      loading,
       modalConfirmOpened,
       onAnticipationClick,
       onCancelRequestClick,
@@ -535,6 +550,7 @@ class Balance extends Component {
                   <BalanceSummary
                     amount={this.getSummaryTotal()}
                     dates={dates}
+                    loading={loading}
                   />
                 </CardContent>
               </Card>
@@ -549,15 +565,15 @@ class Balance extends Component {
             >
               <Card>
                 <Operations
-                  onExportData={onExport}
                   columns={translateColumns(getColumns(typesLabels))}
                   currentPage={currentPage}
                   disabled={disabled}
                   emptyMessage={t('models.operations.empty_message')}
                   exportLabel={t('models.operations.export')}
-                  loading={disabled}
+                  exporting={exporting}
+                  loading={disabled || loading}
                   ofLabel={t('of')}
-                  onExport={() => null}
+                  onExport={onExport}
                   onPageChange={this.handleOperationsPageChange}
                   rows={operations.rows}
                   subtitle={
@@ -664,6 +680,8 @@ Balance.propTypes = {
   currentPage: PropTypes.number.isRequired,
   dates: datesShape.isRequired, // eslint-disable-line react/no-typos
   disabled: PropTypes.bool.isRequired,
+  exporting: PropTypes.bool.isRequired,
+  loading: PropTypes.bool,
   modalConfirmOpened: PropTypes.bool,
   onAnticipationClick: PropTypes.func.isRequired,
   onCancelRequestClick: PropTypes.func,
@@ -703,6 +721,7 @@ Balance.propTypes = {
           actual: PropTypes.string.isRequired,
           original: PropTypes.string,
         }),
+        transactionId: PropTypes.number,
         type: PropTypes.string.isRequired,
       })),
       total: PropTypes.number.isRequired,
@@ -718,6 +737,7 @@ Balance.propTypes = {
 
 Balance.defaultProps = {
   anticipationCancel: null,
+  loading: false,
   modalConfirmOpened: false,
   onCancelRequestClick: null,
   onCancelRequestClose: null,
