@@ -5,6 +5,7 @@ import {
   compose,
   defaultTo,
   equals,
+  identity as t,
   ifElse,
   is,
   path,
@@ -101,18 +102,25 @@ class OperationsState extends Component {
     return (
       <Operations
         columns={columns}
-        emptyMessage="No items found"
-        exportLabel="Export"
+        emptyMessage={t('models.operations.empty_message')}
+        exportLabel={t('models.operations.export')}
         currentPage={offset}
-        ofLabel="of"
+        ofLabel={t('of')}
         onExport={() => null}
         onOrderChange={this.handleOrderChange}
         onPageChange={this.handlePageChange}
         order={order}
         orderColumnIndex={orderColumnIndex}
         rows={rows}
-        subtitle={`Total of ${total} accounting entries`}
-        title="Accounting posting history"
+        subtitle={
+          <span>
+            {t('pages.balance.total.of')}
+            <strong> {total} </strong>
+            {t('pages.balance.releases')}
+          </span>
+        }
+        t={t}
+        title={t('pages.balance.export.title')}
         totalPages={totalPages}
       />
     )
