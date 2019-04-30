@@ -721,6 +721,8 @@ Balance.propTypes = {
           actual: PropTypes.string.isRequired,
           original: PropTypes.string,
         }),
+        sourceId: PropTypes.string,
+        targetId: PropTypes.string,
         transactionId: PropTypes.number,
         type: PropTypes.string.isRequired,
       })),

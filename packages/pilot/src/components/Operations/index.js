@@ -154,6 +154,8 @@ Operations.propTypes = {
       actual: PropTypes.string,
       original: PropTypes.string,
     }).isRequired,
+    sourceId: PropTypes.string,
+    targetId: PropTypes.string,
     transactionId: PropTypes.number,
     type: PropTypes.string.isRequired,
   })).isRequired,
