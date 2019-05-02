@@ -568,6 +568,8 @@
       "no_connection": "Por favor verifique sua conexão com a internet e recarrege a página",
       "no_connection_title": "Sem internet?",
       "page_refresh": "Recarregar página",
+      "rate_limit_message": "Limite de acessos excedido. Tente novamente mais tarde",
+      "rate_limit_title": "Limite de acessos",
       "unauthorized": "Parece que sua sessão expirou",
       "unauthorized_title": "Oh não!",
       "unauthorized_live_environment": "Sua conta não está habilitada para o ambiente de produção",
