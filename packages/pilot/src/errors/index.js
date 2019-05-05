@@ -5,6 +5,7 @@ import unauthorizedEnvironment from './unauthorizedEnvironment'
 import transactions from './transactions'
 import react from './react'
 import anticipation from './anticipation'
+import recipient from './recipient'
 
 export default flatten([
   anticipation,
@@ -13,4 +14,5 @@ export default flatten([
   unauthorizedEnvironment,
   transactions,
   react,
+  recipient,
 ])
