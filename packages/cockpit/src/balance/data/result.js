@@ -15,7 +15,9 @@ import {
   join,
   juxt,
   last,
+  lt,
   map,
+  of as ofRamda,
   path,
   pathEq,
   pathOr,
@@ -24,6 +26,7 @@ import {
   pluck,
   prop,
   propEq,
+  propSatisfies,
   subtract,
   sum,
   when,
@@ -109,21 +112,43 @@ const refundOrChargeBackOutgoing = juxt([
   transformMovementTypePropTo(['amount'], 'payable'),
 ])
 
-const isTransfer = both(
+const isTedTransfer = both(
   propEq('type', 'transfer'),
   pathEq(['movement_object', 'type'], 'ted')
 )
 
-const transferOutcoming = always([
-  {
-    amount: 0,
-    type: 'payable',
-  },
-])
+const zeroTransferAmount = always({
+  amount: 0,
+  type: 'payable',
+})
 
-const transferOutgoing = juxt([
+const tedTransferOutgoing = juxt([
   transformMovementTypePropTo(['fee'], 'tedFee'),
   transformMovementTypePropTo(['amount'], 'payable'),
+])
+
+const isInterRecipientTransfer = both(
+  propEq('type', 'transfer'),
+  pathEq(['movement_object', 'type'], 'inter_recipient')
+)
+
+const lessThanZero = lt(__, 0)
+const isNegative = propSatisfies(lessThanZero)
+
+const interRecipientTransferOutcoming = juxt([
+  ifElse(
+    isNegative('amount'),
+    zeroTransferAmount,
+    transformMovementTypePropTo(['amount'], 'payable')
+  ),
+])
+
+const interRecipientTransferOutgoing = juxt([
+  ifElse(
+    isNegative('amount'),
+    transformMovementTypePropTo(['amount'], 'payable'),
+    zeroTransferAmount
+  ),
 ])
 
 const isBoletoRefundFee = both(
@@ -162,8 +187,15 @@ const buildOperationOutcoming = cond([
     refundOrChargeBackOutcoming,
   ],
   [
-    isTransfer,
-    transferOutcoming,
+    isTedTransfer,
+    pipe(
+      zeroTransferAmount,
+      ofRamda
+    ),
+  ],
+  [
+    isInterRecipientTransfer,
+    interRecipientTransferOutcoming,
   ],
   [
     isBoletoRefundFee,
@@ -181,8 +213,12 @@ const buildOperationOutgoing = cond([
     refundOrChargeBackOutgoing,
   ],
   [
-    isTransfer,
-    transferOutgoing,
+    isTedTransfer,
+    tedTransferOutgoing,
+  ],
+  [
+    isInterRecipientTransfer,
+    interRecipientTransferOutgoing,
   ],
   [
     isBoletoRefundFee,
@@ -215,6 +251,18 @@ const getInstallment = ifElse(
   pathOr(null, ['movement_object', 'installment'])
 )
 
+const getSourceId = ifElse(
+  pathEq(['movement_object', 'type'], 'inter_recipient'),
+  path(['movement_object', 'source_id']),
+  always(null)
+)
+
+const getTarget = ifElse(
+  pathEq(['movement_object', 'type'], 'inter_recipient'),
+  path(['movement_object', 'target_id']),
+  always(null)
+)
+
 const buildOperationsRows = pipe(
   prop('operations'),
   map(applySpec({
@@ -233,6 +281,8 @@ const buildOperationsRows = pipe(
       actual: getOperationDate('payment_date', 'date_created'),
       original: getOperationDate('original_payment_date'),
     },
+    sourceId: getSourceId,
+    targetId: getTarget,
     type: getType,
     transactionId: pathOr(null, ['movement_object', 'transaction_id']),
   }))

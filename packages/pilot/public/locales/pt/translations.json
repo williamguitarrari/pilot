@@ -369,15 +369,18 @@
       "details_title": "Detalhes do extrato",
       "empty_message": "Não foram encontrados lançamentos neste período",
       "export": "Exportar tudo",
+      "from": "De",
       "gateway_service": "Serviços de gateway",
       "id": "Id da operação",
       "installment": "Parcela",
+      "inter_recipient": "Transferência",
       "mdr": "MDR",
       "net": "total",
       "outcoming": "entradas",
       "outgoing": "saídas",
       "payment_date": "data",
       "refund": "Estorno",
+      "to": "Para",
       "transaction_id": "ID da transação",
       "transfer": "Saque",
       "transfer_fee": "TED",
@@ -423,7 +426,13 @@
       "permission": {
         "admin": "Administrador",
         "read_only": "Somente leitura",
-        "read_write": "Leitura e escrita"
+        "read_write": "Leitura e escrita",
+        "errors": {
+          "insufficient_permission": {
+            "message": "Permissão insuficiente para realizar esta operação",
+            "title": "Erro de permissão"
+          }
+        }
       }
     }
   },
@@ -535,7 +544,7 @@
       "type": "Tipo de conta",
       "withdraw": "Sacar",
       "withdrawal_title": "Saldo atual",
-      "unknown_error": "Olá, para você poder visualizar as informações do seu extrato é necessário que as extensões do tipo AdBlock estejam desabilitadas."
+      "adblock_error": "Para visualizar as informações de antecipação é necessário que as extensões de bloqueio de anúncio estejam desabilitadas."
     },
     "capture": {
       "capture_action": "Capturar",
@@ -549,6 +558,22 @@
       "token_capture_warning": "Como esta transação foi criada com sua chave de criptografia, a captura manual pode listar um valor diferente do desejado.",
       "token_capture_link": "Mais informações",
       "value_to_capture": "Valor a ser capturado R$"
+    },
+    "error": {
+      "application_message": "Por favor recarregue a página",
+      "application_title": "Erro de aplicação",
+      "back_to_login": "Voltar para login",
+      "internal_title": "Erro Interno",
+      "internal_message": "Houve um erro interno, por favor recarregue a página",
+      "no_connection": "Por favor verifique sua conexão com a internet e recarrege a página",
+      "no_connection_title": "Sem internet?",
+      "page_refresh": "Recarregar página",
+      "rate_limit_message": "Limite de acessos excedido. Tente novamente mais tarde",
+      "rate_limit_title": "Limite de acessos",
+      "unauthorized": "Parece que sua sessão expirou",
+      "unauthorized_title": "Oh não!",
+      "unauthorized_live_environment": "Sua conta não está habilitada para o ambiente de produção",
+      "unauthorized_live_environment_title": "Ambiente indisponível"
     },
     "manual_review": {
       "approve_action": "Aprovar transação",
@@ -929,6 +954,9 @@
       "details": "Ver detalhes",
       "document": "CPF / CNPJ",
       "email": "E-mail",
+      "errors": {
+        "not_found": "Transação não encontrada"
+      },
       "events_title": "Histórico da transação",
       "header": {
         "approve": "Aprovar",

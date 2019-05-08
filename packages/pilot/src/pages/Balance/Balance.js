@@ -39,6 +39,7 @@ import {
 import { requestLimits } from '../Anticipation'
 import BalanceContainer from '../../containers/Balance'
 import env from '../../environment'
+import { withError } from '../ErrorBoundary'
 
 const mapStateToProps = ({
   account: {
@@ -59,7 +60,7 @@ const mapStateToProps = ({
   //   loading: anticipationLoading,
   // },
   balance: {
-    error,
+    balanceError,
     loading,
     query,
   },
@@ -73,9 +74,9 @@ const mapStateToProps = ({
   //   error: !isNil(anticipationError),
   //   loading: anticipationLoading,
   // },
+  balanceError,
   client,
   company,
-  error,
   loading,
   query,
   sessionId,
@@ -95,7 +96,8 @@ const enhanced = compose(
     mapStateToProps,
     mapDispatchToProps
   ),
-  withRouter
+  withRouter,
+  withError
 )
 
 const isNilOrEmpty = anyPass([isNil, isEmpty])
@@ -513,6 +515,7 @@ class Balance extends Component {
       // This code will be used again in the future when ATLAS project implements the anticipation flow
       // More details in issue #1159
       // anticipation,
+      balanceError,
       company,
       error,
       loading,
@@ -542,16 +545,31 @@ class Balance extends Component {
     const hasCompany = !isNil(company)
 
     if (error) {
+      const message = error.localized
+        ? error.localized.message
+        : error.message
+
       return (
         <Alert
           icon={<IconInfo height={16} width={16} />}
-          type="info"
+          type="error"
+        >
+          <span>{message}</span>
+        </Alert>
+      )
+    }
+
+    if (balanceError) {
+      return (
+        <Alert
+          icon={<IconInfo height={16} width={16} />}
+          type="error"
         >
           <span>
             {pathOr(
-              t('pages.balance.unknown_error'),
+              t('pages.balance.adblock_error'),
               ['errors', 0, 'message'],
-              error
+              balanceError
             )}
           </span>
         </Alert>
@@ -620,6 +638,11 @@ Balance.propTypes = {
   //   error: PropTypes.bool.isRequired,
   //   loading: PropTypes.bool.isRequired,
   // }).isRequired,
+  balanceError: PropTypes.shape({
+    errors: PropTypes.arrayOf(PropTypes.shape({
+      message: PropTypes.string,
+    })),
+  }),
   client: PropTypes.shape({
     balance: PropTypes.shape({
       data: PropTypes.func.isRequired,
@@ -633,9 +656,10 @@ Balance.propTypes = {
     }).isRequired,
   }),
   error: PropTypes.shape({
-    errors: PropTypes.arrayOf(PropTypes.shape({
-      message: PropTypes.string,
-    })),
+    localized: PropTypes.shape({
+      message: PropTypes.string.isRequired,
+    }),
+    message: PropTypes.string,
   }),
   history: PropTypes.shape({
     location: PropTypes.shape({
@@ -672,6 +696,7 @@ Balance.propTypes = {
 }
 
 Balance.defaultProps = {
+  balanceError: null,
   company: null,
   error: null,
   query: null,

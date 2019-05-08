@@ -66,7 +66,9 @@
               { "type": "mdr", "amount": 115 },
               { "type": "anticipation_fee", "amount": 100 }
             ],
-            "net": 29785
+            "net": 29785,
+            "sourceId": null,
+            "targetId": null
           },
           {
             "id": 2499850,
@@ -83,7 +85,9 @@
             "outgoing": [
               { "type": "payable", "amount": 100000 }
             ],
-            "net": -99885
+            "net": -99885,
+            "sourceId": null,
+            "targetId": null
           },
           {
             "id": 8179778,
@@ -100,7 +104,9 @@
             "outgoing": [
               { "type": "payable", "amount": 18000 }
             ],
-            "net": -17100
+            "net": -17100,
+            "sourceId": null,
+            "targetId": null
           },
           {
             "id": 8179772,
@@ -117,7 +123,9 @@
             "outgoing": [
               { "type": "payable", "amount": 12000 }
             ],
-            "net": -11400
+            "net": -11400,
+            "sourceId": null,
+            "targetId": null
           },
           {
             "id": 8179768,
@@ -135,7 +143,9 @@
               { "type": "mdr", "amount": 380 },
               { "type": "anticipation_fee", "amount": 0 }
             ],
-            "net": 9620
+            "net": 9620,
+            "sourceId": null,
+            "targetId": null
           },
           {
             "id": 8176357,
@@ -152,7 +162,9 @@
             "outgoing": [
               { "type": "tedFee", "amount": 367 }
             ],
-            "net": -367
+            "net": -367,
+            "sourceId": null,
+            "targetId": null
           },
           {
             "id": 8156323,
@@ -170,7 +182,47 @@
               { "type": "tedFee", "amount": 367 },
               { "type": "payable", "amount": 3233 }
             ],
-            "net": -3600
+            "net": -3600,
+            "sourceId": null,
+            "targetId": null
+          },
+          {
+            "id": 8199403,
+            "installment": null,
+            "type": "inter_recipient",
+            "transactionId": null,
+            "payment_date": {
+              "original": null,
+              "actual": "2019-04-26T01:14:44.686Z"
+            },
+            "outcoming": [
+              { "type": "payable", "amount": 0 }
+            ],
+            "outgoing": [
+              { "type": "payable", "amount": 20000 }
+            ],
+            "net": -20000,
+            "sourceId": "re_cja5ack8i02fkzr6e6l0d3qll",
+            "targetId": "re_cjabsmtlm01ovla6fks4wju90"
+          },
+          {
+            "id": 8199404,
+            "installment": null,
+            "type": "inter_recipient",
+            "transactionId": null,
+            "payment_date": {
+              "original": null,
+              "actual": "2019-04-26T01:14:44.686Z"
+            },
+            "outcoming": [
+              { "type": "payable", "amount": 20000 }
+            ],
+            "outgoing": [
+              { "type": "payable", "amount": 0 }
+            ],
+            "net": 20000,
+            "sourceId": "re_cja5ack8i02fkzr6e6l0d3qll",
+            "targetId": "re_cjabsmtlm01ovla6fks4wju90"
           }
         ]
       }
