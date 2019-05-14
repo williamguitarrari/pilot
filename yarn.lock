@@ -9672,10 +9672,10 @@ package-json@^4.0.0:
     registry-url "^3.0.3"
     semver "^5.1.0"
 
-pagarme@4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/pagarme/-/pagarme-4.1.0.tgz#8305a5dad318ee1fd6cdfc46681840139cb9ad8c"
-  integrity sha512-SPDeqUGip+Gko10Us5m6v4y6+sHi0TVzu34N53heGov6w9LfzM4Ky8xHWV+JJxYZqy+C0vkegFNm/7tgxdQnOA==
+pagarme@4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/pagarme/-/pagarme-4.1.1.tgz#2f34d8ea61598732b6bf3c033f266e321383db5c"
+  integrity sha512-Z+MLrvoGXHWuPvFznXagFxtSd2Fa7Pj5SQv5STX44jpSyXLFbZLd1LfqrxIJsdKNMu3BFEmwANn0jt6A8+RKTA==
 
 pako@~1.0.5:
   version "1.0.8"
