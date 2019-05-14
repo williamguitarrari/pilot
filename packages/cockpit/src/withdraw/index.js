@@ -5,7 +5,7 @@ const getRecipientById = (id, client) => (
   Promise.all([
     client.recipients.find({ id }),
     client.balance.find({ recipientId: id }),
-    client.transfers.limits(id),
+    client.transfers.limits({ recipient_id: id }),
   ])
     .then(([recipientData, balance, limits]) => (
       { ...recipientData, balance, limits }

@@ -177,7 +177,7 @@ const recipientBalanceEpic = (action$, state$) =>
 
         return Promise.all([
           client.recipient.balance(recipientId),
-          client.transfers.limits(recipientId),
+          client.transfers.limits({ recipient_id: recipientId }),
         ])
           .then(([balance, withdrawal]) => ({
             balance,
