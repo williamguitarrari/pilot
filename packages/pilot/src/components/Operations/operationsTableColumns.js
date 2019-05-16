@@ -105,27 +105,20 @@ const renderNet = net => ( // eslint-disable-line react/prop-types
 )
 
 // eslint-disable-next-line react/prop-types
-const renderOperationAmount = (labels, isNegative) => ({ amount, type }) => {
-  if (amount === 0) {
+const renderOperationAmount = labels => ({ amount, type }) => {
+  if (!amount) {
     return null
   }
 
   const absoluteAmount = getAbsoluteValue(amount)
-  const outAmount = currencyFormatter(absoluteAmount)
+  const formattedAmount = currencyFormatter(absoluteAmount)
   const outType = getTypeLabel(type, labels)
   return (
-    <div
-      key={`${amount}_${type}`}
-      className={style.outAmount}
-    >
+    <div key={`${amount}_${type}`}>
       {outType && <span>({ outType })</span>}
-      {
-        renderValueAndOperator(isNegative
-          ? -absoluteAmount
-          : absoluteAmount)
-      }
+      {renderValueAndOperator(amount)}
       <span>
-        {outAmount}
+        {formattedAmount}
       </span>
     </div>
   )
@@ -140,24 +133,18 @@ const buildOperationsAmount = when(
   always(null)
 )
 
-const renderOperationAmounts = (amounts, labels, isNegative) => {
+const renderOperationAmounts = (amounts, labels) => {
   if (hasInvalidAmount(amounts)) {
     return null
   }
 
   const operationAmounts = map(
-    renderOperationAmount(labels, isNegative),
+    renderOperationAmount(labels),
     amounts
   )
 
   return buildOperationsAmount(operationAmounts)
 }
-
-const renderOutcoming = (amounts, labels) =>
-  renderOperationAmounts(amounts, labels)
-
-const renderOutgoing = (amounts, labels) =>
-  renderOperationAmounts(amounts, labels, true)
 
 const renderPaymentDate = (paymentDate, toolTipText) => {
   if (isNotAnticipation(paymentDate)) {
@@ -216,14 +203,14 @@ const getColumns = labels => ([
     accessor: ['outcoming', 'amount'],
     align: 'end',
     orderable: false,
-    renderer: ({ outcoming }) => renderOutcoming(outcoming, labels),
+    renderer: ({ outcoming }) => renderOperationAmounts(outcoming, labels),
     title: 'models.operations.outcoming',
   },
   {
     accessor: ['outgoing', 'amount'],
     align: 'end',
     orderable: false,
-    renderer: ({ outgoing }) => renderOutgoing(outgoing, labels),
+    renderer: ({ outgoing }) => renderOperationAmounts(outgoing, labels),
     title: 'models.operations.outgoing',
   },
   {

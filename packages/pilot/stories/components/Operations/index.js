@@ -131,6 +131,8 @@ class OperationsState extends Component {
       totalPages,
     } = this.state
 
+    const pageSizeOptions = [15, 30, 60, 100]
+
     return (
       <div>
         <Operations
@@ -142,6 +144,7 @@ class OperationsState extends Component {
             start: moment().subtract(7, 'days'),
           }}
           exporting={exporting}
+          itemsPerPage={15}
           labels={{
             empty: 'No items found',
             exportCall: 'Export table',
@@ -155,6 +158,10 @@ class OperationsState extends Component {
           onPageChange={this.handlePageChange}
           order={order}
           orderColumnIndex={orderColumnIndex}
+          pageSizeOptions={pageSizeOptions.map(i => ({
+            name: `items_per_page ${i}`,
+            value: `${i}`,
+          }))}
           rows={rows}
           totalPages={totalPages}
         />

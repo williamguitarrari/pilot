@@ -7,15 +7,16 @@ import Download32 from 'emblematic-icons/svg/Download32.svg'
 import { isNil } from 'ramda'
 import {
   CardTitle,
+  Dropdown,
   Flexbox,
   isMomentPropValidation,
   Pagination,
   Spacing,
 } from 'former-kit'
+import moment from 'moment'
 import ExportData from '../ExportData'
 import TableData from './TableData'
 import dateFormat from '../../formatters/longDate'
-
 import style from './style.css'
 
 const getExportOptions = onExport => ([
@@ -41,12 +42,15 @@ class Operations extends PureComponent {
       currentPage,
       disabled,
       exporting,
+      itemsPerPage,
       labels: {
         exportCall,
         exportTo,
       },
       onExport,
       onPageChange,
+      onPageCountChange,
+      pageSizeOptions,
       subtitle,
       totalPages,
     } = this.props
@@ -54,15 +58,30 @@ class Operations extends PureComponent {
     return (
       <div className={style.subtitle}>
         {subtitle}
-        <ExportData
-          exportOptions={getExportOptions(onExport)}
-          icon={<Download32 width={12} height={12} />}
-          loading={exporting}
-          placement="bottomEnd"
-          relevance="low"
+        { onExport &&
+          <Fragment>
+            <ExportData
+              exportOptions={getExportOptions(onExport)}
+              icon={<Download32 width={12} height={12} />}
+              loading={exporting}
+              placement="bottomEnd"
+              relevance="low"
+              size="tiny"
+              subtitle={exportTo}
+              title={exportCall}
+            />
+            <Spacing size="tiny" />
+          </Fragment>
+        }
+        <Dropdown
+          disabled={disabled}
+          name="page-count"
+          onChange={e =>
+            onPageCountChange(parseInt(e.target.value, 10))
+          }
+          options={pageSizeOptions}
           size="tiny"
-          subtitle={exportTo}
-          title={exportCall}
+          value={itemsPerPage.toString()}
         />
         <Spacing size="tiny" />
         <Pagination
@@ -95,12 +114,14 @@ class Operations extends PureComponent {
       </Fragment>
     )
 
+    const isTodayPreset = moment(start).isSame(end, 'day')
+
     return (
       <span className={style.title}>
         <strong>{dateFormat(start)}</strong>
-        {separator}
-        <strong>{dateFormat(end)}</strong>
-        {!isNil(count) && results &&
+        {!isTodayPreset && separator}
+        {!isTodayPreset && <strong>{dateFormat(end)}</strong>}
+        {!isNil(count) && count > 0 && results &&
           <span>
             {separator}
             {totalOf}
@@ -179,6 +200,7 @@ Operations.propTypes = {
   }).isRequired,
   disabled: PropTypes.bool,
   exporting: PropTypes.bool.isRequired,
+  itemsPerPage: PropTypes.number.isRequired,
   labels: PropTypes.shape({
     empty: PropTypes.string.isRequired,
     exportCall: PropTypes.string.isRequired,
@@ -187,8 +209,13 @@ Operations.propTypes = {
     totalOf: PropTypes.string,
   }).isRequired,
   loading: PropTypes.bool,
-  onExport: PropTypes.func.isRequired,
+  onExport: PropTypes.func,
   onPageChange: PropTypes.func.isRequired,
+  onPageCountChange: PropTypes.func.isRequired,
+  pageSizeOptions: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+    value: PropTypes.string,
+  })).isRequired,
   rows: PropTypes.arrayOf(PropTypes.shape({
     description: PropTypes.string,
     id: PropTypes.oneOfType([
@@ -215,6 +242,7 @@ Operations.defaultProps = {
   count: null,
   disabled: false,
   loading: false,
+  onExport: null,
   subtitle: null,
 }
 

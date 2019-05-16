@@ -46,15 +46,15 @@ class BalanceState extends Component {
         },
       },
       dates: {
-        end: moment().add(1, 'month'),
-        start: moment(),
+        end: moment(),
+        start: moment().subtract(30, 'day'),
       },
       loading: false,
       ...mock,
       query: {
         dates: {
-          end: moment().add(1, 'month'),
-          start: moment(),
+          end: moment(),
+          start: moment().subtract(30, 'day'),
         },
         page: 1,
         timeframe: 'past',
@@ -62,7 +62,7 @@ class BalanceState extends Component {
       total: {
         net: 1000000,
         outcoming: 1000000,
-        outgoing: 1000000,
+        outgoing: -1000000,
       },
     }
   }
@@ -95,6 +95,7 @@ class BalanceState extends Component {
       <Section>
         <Balance
           anticipation={anticipation}
+          anticipationCancel={null}
           balance={balance}
           company={company}
           currentPage={query.page}
@@ -102,18 +103,27 @@ class BalanceState extends Component {
           disabled={false}
           exporting={false}
           filterDisable={compareMomentDates(query.dates, dates)}
+          hasNextPage={false}
+          itemsPerPage={15}
           loading={loading}
+          modalConfirmOpened={false}
           onAnticipationClick={action('anticipation')}
+          onCancelRequestClick={action('cancel request click')}
+          onCancelRequestClose={action('cancel request close')}
+          onConfirmCancelPendingRequest={action('confirm cancel pending request')}
           onDateChange={this.handleDateChange}
           onExport={action('export click')}
           onFilterClick={action('filter click')}
           onPageChange={action('page click')}
+          onPageCountChange={action('page count change')}
+          onTimeframeChange={action('timeframe change')}
           onWithdrawClick={action('withdraw')}
-          queryDates={query.dates}
           recipient={recipient}
           requests={requests}
           search={search}
+          selectedTab={0}
           t={t => t}
+          timeframe="past"
           total={total}
         />
       </Section>
