@@ -4,6 +4,7 @@ import moment from 'moment'
 import {
   complement,
   either,
+  includes,
   isEmpty,
   isNil,
   keys,
@@ -46,6 +47,7 @@ import BalanceTotalDisplay from '../../components/BalanceTotalDisplay'
 import bulkAnticipationsLabels from '../../models/bulkAnticipationTypes'
 import currencyFormatter from '../../formatters/currency'
 import dateFormatter from '../../formatters/longDate'
+import dateInputPresets from '../../models/dateSelectorPresets'
 import DetailsHead from '../../components/DetailsHead'
 import PendingRequests from '../../components/PendingRequests'
 import BalanceOperations from '../BalanceOperations'
@@ -73,7 +75,7 @@ const isSameDay = date =>
 
 const isNotNullOrEmpty = complement(either(isNil, isEmpty))
 
-const isValidDateAndSameDay = when(
+const isValidDayAndSameDay = when(
   isNotNullOrEmpty,
   pipe(
     prop('payment_date'),
@@ -94,10 +96,31 @@ const getTransfersPricing = path(['pricing', 'transfers'])
 
 const MINIMUM_API_VALUE = 100
 
+const possiblePresets = [7, 15, 30, 60]
+
+const getSelectedPreset = (end, start) => {
+  const today = moment()
+  const daysDiff = Math.abs(moment(start).diff(moment(end), 'day'))
+  if (today.isSame(start, 'day') && today.isSame(end, 'day')) {
+    return 'today'
+  }
+  if (daysDiff <= 1) {
+    return 'day'
+  }
+  if (includes(daysDiff, possiblePresets)) {
+    return `days-${daysDiff}`
+  }
+  return 'period'
+}
+
 class Balance extends Component {
   constructor (props) {
     super(props)
-
+    const {
+      dates,
+      t,
+      timeframe,
+    } = props
     this.getHeadProp = this.getHeadProp.bind(this)
     this.getHeadProperties = this.getHeadProperties.bind(this)
     this.getPendingRequest = this.getPendingRequest.bind(this)
@@ -105,7 +128,6 @@ class Balance extends Component {
     this.getSummaryTotal = this.getSummaryTotal.bind(this)
     this.handleFilterClick = this.handleFilterClick.bind(this)
     this.handleDatesChange = this.handleDatesChange.bind(this)
-    this.handleOperationsPageChange = this.handleOperationsPageChange.bind(this)
     this.handlePresetChange = this.handlePresetChange.bind(this)
     this.handleRequestCancelClick = this.handleRequestCancelClick.bind(this)
     // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
@@ -114,13 +136,24 @@ class Balance extends Component {
     // More details in issue #1159
     // this.renderAnticipation = this.renderAnticipation.bind(this)
     this.renderOperations = this.renderOperations.bind(this)
+    this.updateDatesAndPresets = this.updateDatesAndPresets.bind(this)
+    const { end, start } = dates
 
     this.state = {
       dates: {
-        end: props.dates.end,
-        start: props.dates.start,
+        end,
+        start,
       },
+      presets: dateInputPresets(t, timeframe),
+      selectedPreset: getSelectedPreset(end, start),
       showDateInputCalendar: false,
+    }
+  }
+
+  componentDidUpdate ({ dates: prevDates }) {
+    const { dates, timeframe } = this.props
+    if (!datesEqual(prevDates, dates)) {
+      this.updateDatesAndPresets(dates, timeframe)
     }
   }
 
@@ -239,7 +272,7 @@ class Balance extends Component {
           unit: t('currency'),
           value: disabled
             ? 0
-            : -total.outgoing,
+            : total.outgoing,
         },
         net: { // eslint-disable-line sort-keys
           title: t('pages.balance.total.net'),
@@ -259,16 +292,13 @@ class Balance extends Component {
   }
 
   handleFilterClick () {
-    if (isEmptyDates(this.state.dates)) {
-      this.props.onFilterClick(anyDateRange)
+    const { timeframe } = this.props
+    const { dates } = this.state
+    if (isEmptyDates(dates)) {
+      this.props.onFilterClick(anyDateRange, timeframe)
     } else {
-      this.props.onFilterClick(this.state.dates)
+      this.props.onFilterClick(dates, timeframe)
     }
-  }
-
-  handleOperationsPageChange (pageIndex) {
-    const { onPageChange } = this.props
-    onPageChange(pageIndex)
   }
 
   handlePresetChange () {
@@ -331,40 +361,68 @@ class Balance extends Component {
   //   )
   // }
 
+  updateDatesAndPresets ({ end, start }, timeframe) {
+    const { t } = this.props
+    this.setState({
+      dates: {
+        end,
+        start,
+      },
+      presets: dateInputPresets(t, timeframe),
+      selectedPreset: getSelectedPreset(end, start),
+    })
+  }
+
   renderOperations () {
     const {
       currentPage,
       dates,
       disabled,
       exporting,
+      hasNextPage,
+      itemsPerPage,
       loading,
       onExport,
+      onPageChange,
+      onPageCountChange,
+      pageSizeOptions,
       search: {
         operations,
       },
       t,
+      timeframe,
     } = this.props
-
+    const {
+      dates: stateDates,
+      presets,
+      selectedPreset,
+    } = this.state
     const filterDatesEqualCurrent = datesEqual(this.state.dates, dates)
 
     return (
       <BalanceOperations
         amount={this.getSummaryTotal()}
         currentPage={currentPage}
-        dates={this.state.dates}
+        dates={stateDates}
         disabled={disabled}
         exporting={exporting}
+        hasNextPage={hasNextPage}
         isFilterActive={filterDatesEqualCurrent}
+        itemsPerPage={itemsPerPage}
         loading={loading}
         onDateChange={this.handleDatesChange}
         onDatePresetChange={this.handlePresetChange}
         onExport={onExport}
         onFilterClick={this.handleFilterClick}
-        onPageChange={this.handleOperationsPageChange}
+        onPageChange={onPageChange}
+        onPageCountChange={onPageCountChange}
         operations={operations}
-        selectedPreset="last-7"
+        pageSizeOptions={pageSizeOptions}
+        presets={presets}
+        selectedPreset={selectedPreset}
         showDateInputCalendar={this.state.showDateInputCalendar}
         t={t}
+        timeframe={timeframe}
       />
     )
   }
@@ -549,7 +607,7 @@ class Balance extends Component {
           <ModalContent>
             <div className={style.modalAlignContent}>
               {
-                isValidDateAndSameDay(anticipationCancel)
+                isValidDayAndSameDay(anticipationCancel)
                   ?
                     <Fragment>
                       <span>
@@ -619,7 +677,7 @@ Balance.propTypes = {
     amount: PropTypes.number.isRequired,
     available: PropTypes.shape({
       withdrawal: PropTypes.number.isRequired,
-    }),
+    }).isRequired,
     outcoming: PropTypes.number.isRequired,
   }).isRequired,
   company: PropTypes.shape({
@@ -630,6 +688,8 @@ Balance.propTypes = {
   dates: datesShape.isRequired, // eslint-disable-line react/no-typos
   disabled: PropTypes.bool.isRequired,
   exporting: PropTypes.bool.isRequired,
+  hasNextPage: PropTypes.bool,
+  itemsPerPage: PropTypes.number.isRequired,
   loading: PropTypes.bool,
   modalConfirmOpened: PropTypes.bool,
   onAnticipationClick: PropTypes.func.isRequired,
@@ -639,8 +699,10 @@ Balance.propTypes = {
   onExport: PropTypes.func.isRequired,
   onFilterClick: PropTypes.func.isRequired,
   onPageChange: PropTypes.func.isRequired,
+  onPageCountChange: PropTypes.func.isRequired,
   onTimeframeChange: PropTypes.func.isRequired,
   onWithdrawClick: PropTypes.func.isRequired,
+  pageSizeOptions: PropTypes.arrayOf(PropTypes.number),
   recipient: PropTypes.shape({
     bank_account: PropTypes.shape({
       account: PropTypes.string.isRequired,
@@ -681,6 +743,7 @@ Balance.propTypes = {
   }).isRequired,
   selectedTab: PropTypes.number,
   t: PropTypes.func.isRequired,
+  timeframe: PropTypes.oneOf(['future', 'past']),
   total: PropTypes.shape({
     net: PropTypes.number,
     outcoming: PropTypes.number,
@@ -690,12 +753,15 @@ Balance.propTypes = {
 
 Balance.defaultProps = {
   anticipationCancel: null,
+  hasNextPage: false,
   loading: false,
   modalConfirmOpened: false,
   onCancelRequestClick: null,
   onCancelRequestClose: null,
   onConfirmCancelPendingRequest: null,
+  pageSizeOptions: [15, 30, 60, 100],
   selectedTab: 0,
+  timeframe: 'past',
   total: {},
 }
 

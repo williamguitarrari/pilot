@@ -3,9 +3,12 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import qs from 'qs'
 import {
+  __,
   always,
+  allPass,
   anyPass,
   applySpec,
+  assoc,
   complement,
   compose,
   defaultTo,
@@ -15,17 +18,21 @@ import {
   isEmpty,
   isNil,
   juxt,
+  lt,
   merge,
   mergeAll,
   path,
+  pathEq,
   pathOr,
   pipe,
   propEq,
+  propOr,
   tail,
   test,
   uncurryN,
   unless,
   when,
+  whereEq,
 } from 'ramda'
 import IconInfo from 'emblematic-icons/svg/Info32.svg'
 import { connect } from 'react-redux'
@@ -101,6 +108,8 @@ const enhanced = compose(
 )
 
 const isNilOrEmpty = anyPass([isNil, isEmpty])
+
+const isInvalidNumber = either(isNil, Number.isNaN)
 
 const momentToISOString = unless(
   isNilOrEmpty,
@@ -205,7 +214,48 @@ const handleExportDataSuccess = (res, format) => {
   /* eslint-enable no-undef */
 }
 
-const timeframesQuery = ['past', 'future']
+const defaultTimeframe = 'past'
+const timeframesQuery = [defaultTimeframe, 'future']
+const getTimeframeProp = propOr(defaultTimeframe, 'timeframe')
+
+const findTimeframeIndex = timeframe =>
+  timeframesQuery.findIndex(value => value === timeframe)
+
+const getTimeframeIndex = pipe(
+  findTimeframeIndex,
+  when(
+    lt(__, 0),
+    always(0)
+  )
+)
+
+const mustUpdateTotals = uncurryN(2, ({ count, dates, timeframe }) =>
+  complement(allPass([
+    whereEq({ count }),
+    whereEq({ dates }),
+    whereEq({ timeframe }),
+  ])))
+
+const mustUpdateOperations = uncurryN(2, ({
+  page,
+}) => complement(whereEq({ page })))
+
+const buildNewOperationsQuery = ({
+  query,
+  searchQuery,
+  stateQuery,
+}) => {
+  const timeframe = getTimeframeProp(searchQuery)
+  return assoc(timeframe, query, stateQuery)
+}
+
+const areEqualPages = (query, search) => {
+  const timeframe = getTimeframeProp(search)
+
+  return pathEq([timeframe, 'page'], search.page, query)
+}
+
+const defaultPageNumber = 15
 
 class Balance extends Component {
   constructor (props) {
@@ -213,18 +263,34 @@ class Balance extends Component {
 
     this.state = {
       anticipationCancel: null,
+      balance: {},
       exporting: false,
       modalOpened: false,
+      nextPage: null,
       query: {
-        count: 10,
-        dates: {
-          end: moment(),
-          start: moment().subtract(7, 'days'),
+        future: {
+          count: defaultPageNumber,
+          dates: {
+            end: moment().add(7, 'days'),
+            start: moment(),
+          },
+          page: 1,
+          status: ['waiting_funds', 'prepaid'],
+          timeframe: 'future',
         },
-        page: 1,
-        timeframe: 'future',
+        past: {
+          count: defaultPageNumber,
+          dates: {
+            end: moment(),
+            start: moment().subtract(7, 'days'),
+          },
+          page: 1,
+          status: 'available',
+          timeframe: defaultTimeframe,
+        },
       },
-      result: {},
+      recipient: {},
+      requests: [],
       total: {},
     }
 
@@ -233,15 +299,19 @@ class Balance extends Component {
     this.handleCloseConfirmCancel = this.handleCloseConfirmCancel.bind(this)
     this.handleDateChange = this.handleDateChange.bind(this)
     this.handleExportData = this.handleExportData.bind(this)
-    this.handleFilterClick = this.handleFilterClick.bind(this)
+    this.handleFilter = this.handleFilter.bind(this)
     this.handleOpenConfirmCancel = this.handleOpenConfirmCancel.bind(this)
     this.handlePageChange = this.handlePageChange.bind(this)
+    this.handlePageCountChange = this.handlePageCountChange.bind(this)
     this.handleWithdraw = this.handleWithdraw.bind(this)
     // this.requestAnticipationLimits = this.requestAnticipationLimits.bind(this)
     this.requestData = this.requestData.bind(this)
-    this.requestTotal = this.requestTotal.bind(this)
+    this.requestTotals = this.requestTotals.bind(this)
     this.updateQuery = this.updateQuery.bind(this)
     this.handleTimeframeChange = this.handleTimeframeChange.bind(this)
+    this.getQuery = this.getQuery.bind(this)
+    this.setQuery = this.setQuery.bind(this)
+    this.getQueryObject = this.getQueryObject.bind(this)
   }
 
   componentDidMount () {
@@ -257,16 +327,17 @@ class Balance extends Component {
         location,
       },
       match: {
-        params,
+        params: {
+          id,
+        },
       },
     } = this.props
     const urlBalanceQuery = location.search
 
     if (isEmpty(urlBalanceQuery)) {
-      this.updateQuery(this.state.query, params.id)
+      this.updateQuery(this.getQuery(), id)
     } else {
-      this.requestData(params.id, parseQueryUrl(urlBalanceQuery))
-      this.requestTotal(params.id, parseQueryUrl(urlBalanceQuery))
+      this.requestData(id, parseQueryUrl(urlBalanceQuery))
       // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
       // It was commented on to remove the anticipation limits call on Balance page
       // This code will be used again in the future when ATLAS project implements the anticipation flow
@@ -281,6 +352,11 @@ class Balance extends Component {
     const {
       location: {
         search: oldSearch,
+      },
+      match: {
+        params: {
+          id: oldRecipientId,
+        },
       },
     } = prevProps
 
@@ -303,9 +379,11 @@ class Balance extends Component {
       },
     } = this.props
 
+    if (oldRecipientId !== newRecipientId) {
+      return this.requestData(newRecipientId, parseQueryUrl(newSearch))
+    }
+
     if (oldSearch !== newSearch) {
-      this.requestData(newRecipientId, parseQueryUrl(newSearch))
-      this.requestTotal(newRecipientId, parseQueryUrl(newSearch))
       // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
       // It was commented on to remove the anticipation limits call on Balance page
       // This code will be used again in the future when ATLAS project implements the anticipation flow
@@ -313,6 +391,23 @@ class Balance extends Component {
       // if (available === null) {
       //   this.requestAnticipationLimits(newRecipientId)
       // }
+      const parsedQueries = {
+        new: qs.parse(newSearch),
+        old: qs.parse(oldSearch),
+      }
+      const query = parseQueryUrl(newSearch)
+
+      if (!isEmpty(oldSearch)) {
+        if (mustUpdateTotals(parsedQueries.old, parsedQueries.new)) {
+          return this.requestTotals(newRecipientId, query)
+        }
+
+        if (mustUpdateOperations(parsedQueries.old, parsedQueries.new)) {
+          return this.requestOperations(query)
+        }
+      }
+
+      return this.requestData(newRecipientId, query)
     }
 
     if (
@@ -322,8 +417,43 @@ class Balance extends Component {
       && company.default_recipient_id
     ) {
       const pathId = getValidId(getRecipientId(company), null)
-      this.updateQuery(this.state.query, pathId)
+
+      return this.updateQuery(this.getQuery(), pathId)
     }
+
+    return undefined
+  }
+
+  getQuery (newTimeframe) {
+    const {
+      history: {
+        location: {
+          search,
+        },
+      },
+    } = this.props
+    const timeframe = getTimeframeProp(qs.parse(search))
+    const { query } = this.state
+
+    return query[newTimeframe || timeframe]
+  }
+
+  getQueryObject (query) {
+    if (isNilOrEmpty(query)) {
+      return this.getQuery()
+    }
+    const timeframe = getTimeframeProp(query)
+
+    return query[timeframe] || query
+  }
+
+  setQuery (query) {
+    const { query: stateQuery } = this.state
+    const timeframe = getTimeframeProp(query)
+    const newQuery = assoc(timeframe, query, stateQuery)
+    this.setState({
+      query: newQuery,
+    })
   }
 
   updateQuery (query, id) {
@@ -332,12 +462,6 @@ class Balance extends Component {
       merge(query),
       qs.stringify
     )
-
-    const queryObject = isNilOrEmpty(query)
-      ? this.state.stateQuery
-      : query
-    const pathId = getValidId(getRecipientId(this.props.company), id)
-
     const {
       history,
       match: {
@@ -345,10 +469,16 @@ class Balance extends Component {
       },
     } = this.props
 
+    const queryObject = this.getQueryObject(query)
+
+    const pathId = getValidId(getRecipientId(this.props.company), id)
+
     if (pathId) {
+      const queryString = buildBalanceQuery(queryObject)
+
       history.replace({
         pathname: pathId,
-        search: buildBalanceQuery(queryObject),
+        search: queryString,
       })
     } else if (params.id === ':id') {
       history.replace('/balance')
@@ -373,35 +503,131 @@ class Balance extends Component {
         }))
   }
 
-  requestTotal (id, searchQuery) {
-    return this.props.client
-      .balance
-      .total(id, searchQuery)
-      .then((total) => {
-        this.setState({ total })
+  requestTotals (id, searchQuery) {
+    const { client } = this.props
+    const { nextPage } = this.state
+    if (nextPage) {
+      this.setState({ nextPage: null })
+    }
+
+    const totalPromise = client.balance.total(id, searchQuery)
+    const operationsPromise = client.balance
+      .operations({ recipientId: id, ...searchQuery })
+
+    this.setState({ loading: true })
+
+    return Promise.all([
+      operationsPromise,
+      totalPromise,
+    ]).then(([{ query, result: { search } }, total]) => {
+      const { query: stateQuery } = this.state
+      const operationsRowsLength = search.operations.rows.length
+      const hasNextPage = operationsRowsLength >= searchQuery.count
+      const newQuery = buildNewOperationsQuery({
+        query,
+        searchQuery,
+        stateQuery,
+      })
+      const newState = {
+        loading: false,
+        query: newQuery,
+        search,
+        total,
+      }
+
+      this.setState(newState)
+
+      if (hasNextPage) {
+        this.requestOperations(searchQuery, searchQuery.page + 1)
+      }
+    })
+  }
+
+  requestOperations (searchQuery, newPage) {
+    const { client, company } = this.props
+    const { nextPage } = this.state
+    const recipientId = getRecipientId(company)
+    const page = newPage || searchQuery.page
+
+    if (nextPage) {
+      const { query: nextPageQuery, search: nextPageSearch } = nextPage
+      if (areEqualPages(nextPageQuery, searchQuery) && !newPage) {
+        this.setState({
+          loading: false,
+          nextPage: null,
+          query: nextPageQuery,
+          search: nextPageSearch,
+        })
+        if (nextPage.hasNextPage) {
+          this.requestOperations(searchQuery, searchQuery.page + 1)
+        }
+      }
+    }
+
+    client.balance
+      .operations({ ...searchQuery, page, recipientId })
+      .then(({ query, result: { search: { operations } } }) => {
+        const { query: stateQuery } = this.state
+        const operationsRowsLength = operations.rows.length
+        const hasNextPage = operationsRowsLength >= searchQuery.count
+        const newQuery = buildNewOperationsQuery({
+          query,
+          searchQuery: { ...searchQuery, page },
+          stateQuery,
+        })
+        if (page !== searchQuery.page) {
+          this.setState({
+            nextPage: {
+              hasNextPage,
+              isValid: operationsRowsLength > 0,
+              loading: false,
+              query: newQuery,
+              search: { operations },
+            },
+          })
+        } else {
+          this.setState({
+            loading: false,
+            query: newQuery,
+            search: { operations },
+          })
+          if (hasNextPage) {
+            this.requestOperations(searchQuery, page + 1)
+          }
+        }
       })
   }
 
   requestData (id, searchQuery) {
-    this.props.onRequestBalance({ searchQuery })
-
-    const dataPromise = this.props.client.balance.data(id, searchQuery)
-
-    const operationsPromise = this.props.client.balance
+    const { client, onRequestBalance } = this.props
+    onRequestBalance({ searchQuery })
+    const dataPromise = client.balance.data(id, searchQuery)
+    const totalPromise = client.balance.total(id, searchQuery)
+    const operationsPromise = client.balance
       .operations({ recipientId: id, ...searchQuery })
+    this.setState({ loading: true })
 
-    Promise.all([dataPromise, operationsPromise])
-      .then(([data, operations]) => {
+    Promise.all([dataPromise, operationsPromise, totalPromise])
+      .then(([data, operations, total]) => {
         const { result: { search } } = operations
         const { query, result } = data
+        const { query: stateQuery } = this.state
+        const timeframe = getTimeframeProp(searchQuery)
+        const newQuery = assoc(timeframe, query, stateQuery)
         const newState = {
-          query,
-          result: {
-            search,
-            ...result,
-          },
+          loading: false,
+          query: newQuery,
+          search,
+          ...result,
+          total,
         }
+
         this.setState(newState)
+        const operationsRowsLength = search.operations.rows.length
+        if (operationsRowsLength > 0
+            && operationsRowsLength >= searchQuery.count) {
+          this.requestOperations(searchQuery, searchQuery.page + 1)
+        }
 
         this.props.onReceiveBalance(query)
       })
@@ -432,10 +658,7 @@ class Balance extends Component {
       .then(response => this.setState({
         ...this.state,
         modalOpened: false,
-        result: {
-          ...this.state.result,
-          requests: response,
-        },
+        requests: response,
       }))
       .then(() => this.requestAnticipationLimits(recipientId))
   }
@@ -444,7 +667,7 @@ class Balance extends Component {
     this.setState({ exporting: true })
 
     const { client, company } = this.props
-    const { query } = this.state
+    const query = this.getQuery()
     const startDate = query.dates.start.format('x')
     const endDate = query.dates.end.format('x')
 
@@ -465,23 +688,22 @@ class Balance extends Component {
   }
 
   handleDateChange (dates) {
-    const { query } = this.state
-
-    this.setState({
-      query: merge(query, { dates }),
-    })
+    const query = this.getQuery()
+    this.setQuery(merge(query, { dates, page: 1 }))
   }
 
-  handleFilterClick (dates) {
+  handleFilter (dates, filteredTimeframe) {
     const {
       query,
     } = this.props
+    const timeframe = filteredTimeframe || defaultTimeframe
 
     const nextQuery = {
       ...query,
-      ...this.state.query,
+      ...this.getQuery(timeframe),
       dates,
       page: 1,
+      timeframe,
     }
 
     this.updateQuery(nextQuery)
@@ -489,8 +711,21 @@ class Balance extends Component {
 
   handlePageChange (page) {
     const query = {
-      ...this.state.query,
+      ...this.getQuery(),
       page,
+    }
+
+    this.updateQuery(query)
+  }
+
+  handlePageCountChange (numberOfPages) {
+    const count = isInvalidNumber(numberOfPages)
+      ? defaultPageNumber
+      : +numberOfPages
+    const query = {
+      ...this.getQuery(),
+      count,
+      page: 1,
     }
 
     this.updateQuery(query)
@@ -523,13 +758,7 @@ class Balance extends Component {
 
   handleTimeframeChange (timeframeIndex) {
     const timeframe = timeframesQuery[timeframeIndex]
-
-    const nextQuery = {
-      ...this.state.query,
-      timeframe,
-    }
-
-    this.updateQuery(nextQuery)
+    this.updateQuery(this.getQuery(timeframe))
   }
 
   render () {
@@ -543,31 +772,31 @@ class Balance extends Component {
       company,
       error,
       history: {
-        location,
+        location: {
+          search: urlSearch,
+        },
       },
       loading,
       t,
       user,
     } = this.props
+    const timeframe = getTimeframeProp(qs.parse(urlSearch))
 
     const {
       anticipationCancel,
+      balance,
       exporting,
+      loading: localLoading,
       modalOpened,
-      query: {
-        dates,
-        page,
-      },
-      result: {
-        balance,
-        recipient,
-        requests,
-        search,
-      },
+      nextPage,
+      query,
+      recipient,
+      requests,
+      search,
       total,
     } = this.state
-
-    const isEmptyResult = isNilOrEmpty(this.state.result.search)
+    const { dates, page } = query[timeframe]
+    const isEmptyResult = isNilOrEmpty(this.state.search)
     const hasDefaultRecipient = !isNilOrEmpty(getRecipientId(company))
     const hasCompany = !isNil(company)
 
@@ -614,9 +843,12 @@ class Balance extends Component {
       )
     }
 
-    const { timeframe } = parseQueryUrl(location.search)
-
     if (!isEmptyResult && hasCompany) {
+      const itemsPerPage = query[timeframe]
+        ? query[timeframe].count
+        : defaultPageNumber
+      const hasNextPage = nextPage && nextPage.isValid
+
       return (
         <BalanceContainer
           // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
@@ -629,9 +861,11 @@ class Balance extends Component {
           company={company}
           currentPage={page}
           dates={dates}
-          disabled={loading}
+          disabled={loading || localLoading}
           exporting={exporting}
-          loading={loading}
+          hasNextPage={hasNextPage}
+          itemsPerPage={itemsPerPage}
+          loading={loading || localLoading}
           modalConfirmOpened={modalOpened}
           onAnticipationClick={this.handleAnticipation}
           onCancelRequestClick={userIsReadOnly(user)
@@ -640,20 +874,19 @@ class Balance extends Component {
           }
           onCancelRequestClose={this.handleCloseConfirmCancel}
           onConfirmCancelPendingRequest={this.handleCancelRequest}
+          onDatesChange={this.handleDateChange}
           onExport={this.handleExportData}
-          onFilterClick={this.handleFilterClick}
+          onFilterClick={this.handleFilter}
           onPageChange={this.handlePageChange}
+          onPageCountChange={this.handlePageCountChange}
           onTimeframeChange={this.handleTimeframeChange}
           onWithdrawClick={this.handleWithdraw}
           recipient={recipient}
           requests={requests}
           search={search}
-          selectedTab={
-            timeframe
-            ? timeframesQuery.findIndex(value => value === timeframe)
-            : 0
-          }
+          selectedTab={getTimeframeIndex(timeframe)}
           t={t}
+          timeframe={timeframe}
           total={total}
         />
       )
@@ -726,7 +959,10 @@ Balance.propTypes = {
   t: PropTypes.func.isRequired,
   user: PropTypes.shape({
     permission: PropTypes.oneOf([
-      'admin', 'read_only', 'write',
+      'admin',
+      'read_only',
+      'read_write',
+      'write',
     ]).isRequired,
   }),
 }
