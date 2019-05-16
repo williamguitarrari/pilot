@@ -52,7 +52,7 @@ class Operations extends PureComponent {
           icon={<Download32 width={12} height={12} />}
           loading={exporting}
           placement="bottomEnd"
-          relevance="low"
+          relevance="high"
           size="tiny"
           subtitle={t('pages.balance.export.subtitle')}
           title={t('pages.balance.export.title')}
