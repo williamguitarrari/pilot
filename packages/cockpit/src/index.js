@@ -8,6 +8,7 @@ import company from './company'
 import invites from './invites'
 import recipient from './recipient'
 import transactions from './transactions'
+import withdraw from './withdraw'
 
 const cockpit = applySpec({
   balance,
@@ -18,6 +19,7 @@ const cockpit = applySpec({
   company,
   invites,
   recipient,
+  withdraw,
 })
 
 export default proxy(cockpit)

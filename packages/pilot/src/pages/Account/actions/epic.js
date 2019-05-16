@@ -175,7 +175,15 @@ const recipientBalanceEpic = (action$, state$) =>
           return Promise.resolve(payload)
         }
 
-        return client.recipient.balance(recipientId).catch(identity)
+        return Promise.all([
+          client.recipient.balance(recipientId),
+          client.transfers.limits({ recipient_id: recipientId }),
+        ])
+          .then(([balance, withdrawal]) => ({
+            balance,
+            withdrawal,
+          }))
+          .catch(identity)
       }),
       map(receiveRecipientBalance)
     )

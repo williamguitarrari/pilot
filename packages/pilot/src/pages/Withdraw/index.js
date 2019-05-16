@@ -18,7 +18,6 @@ import { Alert } from 'former-kit'
 import IconError from 'emblematic-icons/svg/ClearClose32.svg'
 import WithdrawContainer from '../../containers/Withdraw'
 import partnersBankCodes from '../../models/partnersBanksCodes'
-import env from '../../environment'
 
 import { receiveWithdraw } from './actions/'
 import { withError } from '../ErrorBoundary'
@@ -49,34 +48,8 @@ const enhanced = compose(
   withError
 )
 
-const getDefaultRecipient = client => (
-  client.company.current()
-    .then(path(['default_recipient_id', env]))
-    .then(id => (
-      Promise.all([
-        client.recipients.find({ id }),
-        client.recipient.balance(id),
-      ])
-        .then(([recipientData, balance]) => (
-          { ...recipientData, balance }
-        ))
-    ))
-)
-
-const getRecipientById = (id, client) => (
-  client.recipients.find({ id })
-    .then(recipient => (
-      Promise.all([
-        Promise.resolve(recipient),
-        client.recipient.balance(id),
-      ])
-        .then(([recipientData, balance]) => (
-          { ...recipientData, balance }
-        ))
-    ))
-)
-
 const getAvailableAmount = pathOr(null, ['balance', 'available', 'amount'])
+const getAvailableTransferAmount = pathOr(null, ['limits', 'maximum'])
 
 const stepsId = {
   confirmation: 'confirmation',
@@ -155,15 +128,7 @@ class Withdraw extends Component {
       },
     } = this.props
 
-    let recipientPromise
-
-    if (!id) {
-      recipientPromise = getDefaultRecipient(client)
-    } else {
-      recipientPromise = getRecipientById(id, client)
-    }
-
-    recipientPromise
+    client.withdraw(id)
       .then((recipient) => {
         this.setState({
           recipient,
@@ -318,7 +283,7 @@ class Withdraw extends Component {
             currentStep={currentStep}
             date={moment()}
             disabled={confirmationDisabledButtons}
-            maximum={getAvailableAmount(recipient)}
+            maximum={getAvailableTransferAmount(recipient)}
             onConfirmationConfirm={this.handleConfirmationConfirm}
             onConfirmationReturn={() => this.goTo('data', 'current')}
             onFormSubmit={() => this.goTo('confirmation', 'current')}
