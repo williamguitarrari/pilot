@@ -26,8 +26,8 @@ const buildOperationsQuery = ({
   ...query
 }) => ({
   ...buildBaseQuery(query),
-  end_date: moment(end).valueOf(),
-  start_date: moment(start).valueOf(),
+  end_date: moment(end).endOf('day').valueOf(),
+  start_date: moment(start).startOf('day').valueOf(),
 })
 
 const buildPayablesQuery = ({
