@@ -101,11 +101,11 @@ CreditCardRefundDetails.propTypes = {
     brand: PropTypes.string.isRequired,
     cardFirstDigits: PropTypes.string.isRequired,
     cardLastDigits: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
+    email: PropTypes.node,
     holderName: PropTypes.string.isRequired,
     installments: PropTypes.string.isRequired,
     refundAmount: PropTypes.string.isRequired,
-  }).isRequired,
+  }),
   labels: PropTypes.shape({
     amount: PropTypes.string.isRequired,
     brand: PropTypes.string.isRequired,
@@ -116,6 +116,12 @@ CreditCardRefundDetails.propTypes = {
     refundAmount: PropTypes.string.isRequired,
   }).isRequired,
   title: PropTypes.string.isRequired,
+}
+
+CreditCardRefundDetails.defaultProps = {
+  contents: PropTypes.shape({
+    email: null,
+  }),
 }
 
 export default CreditCardRefundDetails
