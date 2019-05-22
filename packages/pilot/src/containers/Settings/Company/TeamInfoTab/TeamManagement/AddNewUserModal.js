@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react'
 import PropTypes from 'prop-types'
 import Form from 'react-vanilla-form'
@@ -19,7 +18,11 @@ import Close from 'emblematic-icons/svg/ClearClose32.svg'
 import emailValidation from '../../../../../validation/email'
 
 const isEmail = t => emailValidation(t('validations.isEmail'))
-const required = t => value => (value ? null : t('pages.settings.user.card.access.field_required'))
+const required = t => value => (
+  value
+    ? null
+    : t('pages.settings.user.card.access.field_required')
+)
 const permissions = [
   {
     name: 'Administrador',
@@ -146,9 +149,10 @@ class AddNewUserModal extends React.Component {
                 type="info"
                 icon={<IconInfo height={16} width={16} />}
               >
-                {t('pages.settings.company.card.team.modal.success',
-                  { email: this.state.submittedEmail })
-                }
+                {t(
+                  'pages.settings.company.card.team.modal.success',
+                  { email: (this.state.submittedEmail) }
+                )}
               </Alert>
             }
           </ModalContent>
