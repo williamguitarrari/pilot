@@ -61,6 +61,7 @@ class Operations extends PureComponent {
         <Pagination
           currentPage={currentPage}
           disabled={disabled}
+          format="single"
           onPageChange={onPageChange}
           strings={{
             of: ofLabel,
@@ -110,6 +111,7 @@ class Operations extends PureComponent {
           <Pagination
             currentPage={currentPage}
             disabled={disabled}
+            format="single"
             onPageChange={onPageChange}
             strings={{
               of: ofLabel,
