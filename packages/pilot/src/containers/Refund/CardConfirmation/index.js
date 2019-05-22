@@ -3,9 +3,12 @@ import PropTypes from 'prop-types'
 import {
   Button,
   ModalActions,
+  Truncate,
 } from 'former-kit'
 
 import CreditCardRefundDetails from '../../../components/CreditCardRefundDetails'
+
+import style from './style.css'
 
 class CardConfirmation extends Component {
   constructor (props) {
@@ -34,6 +37,18 @@ class CardConfirmation extends Component {
       t,
     } = this.props
 
+    const applyTruncate = (
+      email
+        ? (
+          <span className={style.value}>
+            <Truncate
+              text={email}
+            />
+          </span>
+        )
+        : null
+    )
+
     return (
       <form onSubmit={this.handleSubmit}>
         <CreditCardRefundDetails
@@ -42,7 +57,7 @@ class CardConfirmation extends Component {
             brand,
             cardFirstDigits,
             cardLastDigits,
-            email,
+            email: applyTruncate,
             holderName,
             installments: t(
               'models.transaction.installments_count',
@@ -89,7 +104,7 @@ CardConfirmation.propTypes = {
   cardFirstDigits: PropTypes.string.isRequired,
   cardLastDigits: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
-  email: PropTypes.string.isRequired,
+  email: PropTypes.string,
   holderName: PropTypes.string.isRequired,
   installments: PropTypes.number.isRequired,
   onBack: PropTypes.func.isRequired,
@@ -100,6 +115,7 @@ CardConfirmation.propTypes = {
 
 CardConfirmation.defaultProps = {
   disabled: false,
+  email: null,
 }
 
 export default CardConfirmation
