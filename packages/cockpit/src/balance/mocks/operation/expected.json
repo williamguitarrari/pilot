@@ -11,8 +11,8 @@
     { "type": "payable", "amount": 30000 }
   ],
   "outgoing": [
-    { "type": "mdr", "amount": 115 },
-    { "type": "anticipation_fee", "amount": 100 }
+    { "type": "mdr", "amount": -115 },
+    { "type": "anticipation_fee", "amount": -100 }
   ],
   "net": 29785,
   "sourceId": null,

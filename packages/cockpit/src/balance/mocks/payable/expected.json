@@ -9,7 +9,7 @@
   },
   "outcoming": [
     {
-      "amount": 1000,
+      "amount": -1000,
       "type": "payable"
     }
   ],
@@ -19,5 +19,5 @@
       "type": "mdr"
     }
   ],
-  "net": 950
+  "net": -950
 }
