@@ -19,7 +19,7 @@ const BalanceTotalDisplayExample = () => (
               title: 'Sacar',
             }}
             detail={
-              <span>Liberado para saque: <strong>R$5.000,00</strong></span>
+              <span>Disponível para saque: <strong>R$5.000,00</strong></span>
             }
             title="Saldo Atual"
           />
@@ -33,7 +33,7 @@ const BalanceTotalDisplayExample = () => (
               title: 'Antecipar',
             }}
             detail={
-              <span>Liberado para saque: <strong>R$5.000,00</strong></span>
+              <span>Disponível para saque: <strong>R$5.000,00</strong></span>
             }
             title="A Receber"
           />
