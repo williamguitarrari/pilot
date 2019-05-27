@@ -18,6 +18,7 @@ import {
 import {
   isNegative,
   transformMovementTypePropTo,
+  transformAndNegateMovementTypePropTo,
   formatRows,
 } from './shared'
 
@@ -29,7 +30,7 @@ export const isRefundOrChargeBack = pathSatisfies(
 )
 
 export const refundOrChargeBackOutcoming = juxt([
-  transformMovementTypePropTo(['fee'], 'mdr'),
+  transformAndNegateMovementTypePropTo(['fee'], 'mdr'),
 ])
 
 export const refundOrChargeBackOutgoing = juxt([
@@ -47,7 +48,7 @@ export const zeroTransferAmount = always({
 })
 
 export const tedTransferOutgoing = juxt([
-  transformMovementTypePropTo(['fee'], 'tedFee'),
+  transformAndNegateMovementTypePropTo(['fee'], 'tedFee'),
   transformMovementTypePropTo(['amount'], 'payable'),
 ])
 
@@ -78,7 +79,7 @@ export const isBoletoRefund = both(
 )
 
 export const boletoRefundFeeOutgoing = juxt([
-  transformMovementTypePropTo(['fee'], 'tedFee'),
+  transformAndNegateMovementTypePropTo(['fee'], 'tedFee'),
 ])
 
 export const boletoRefundFeeOutcoming = juxt([
@@ -96,12 +97,12 @@ export const creditOutcoming = juxt([
 
 export const creditOutgoing = pipe(
   juxt([
-    transformMovementTypePropTo(['movement_object', 'fee'], 'mdr'),
-    transformMovementTypePropTo(
+    transformAndNegateMovementTypePropTo(['movement_object', 'fee'], 'mdr'),
+    transformAndNegateMovementTypePropTo(
       ['movement_object', 'anticipation_fee'],
       'anticipation_fee'
     ),
-    transformMovementTypePropTo(
+    transformAndNegateMovementTypePropTo(
       ['movement_object', 'fraud_coverage_fee'],
       'fraud_coverage_fee'
     ),

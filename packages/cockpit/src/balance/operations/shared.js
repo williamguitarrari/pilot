@@ -1,12 +1,14 @@
 import {
   __,
   always,
-  apply,
   applySpec,
+  ascend,
   assoc,
   both,
   cond,
   either,
+  evolve,
+  equals,
   has,
   ifElse,
   isEmpty,
@@ -14,6 +16,7 @@ import {
   juxt,
   lt,
   map,
+  negate,
   path,
   pathEq,
   pathOr,
@@ -22,18 +25,28 @@ import {
   prop,
   propEq,
   propSatisfies,
-  sortBy,
-  subtract,
+  sortWith,
   sum,
   T,
   when,
+  unless,
 } from 'ramda'
 
-export const transformMovementTypePropTo = (propPath, to) => pipe(
-  path(propPath),
-  when(either(isNil, isEmpty), always(0)),
-  Math.abs,
-  assoc('amount', __, { type: to })
+const negateWhenNotZero = unless(
+  equals(0),
+  negate
+)
+
+export const transformMovementTypePropTo = (propPath, to) =>
+  pipe(
+    path(propPath),
+    when(either(isNil, isEmpty), always(0)),
+    assoc('amount', __, { type: to })
+  )
+
+export const transformAndNegateMovementTypePropTo = (propPath, to) => pipe(
+  transformMovementTypePropTo(propPath, to),
+  evolve({ amount: negateWhenNotZero })
 )
 
 const lessThanZero = lt(__, 0)
@@ -45,7 +58,7 @@ export const buildNetAmount = (buildOutcoming, buildOutgoing) => pipe(
     pipe(buildOutcoming, pluck('amount'), sum),
     pipe(buildOutgoing, pluck('amount'), sum),
   ]),
-  apply(subtract)
+  sum
 )
 
 const isNilProp = type => propSatisfies(isNil, type)
@@ -104,7 +117,6 @@ export const formatRows = ({
   buildOutcoming,
   buildOutgoing,
   getInstallment,
-  sortPath,
 }) => pipe(
   map(applySpec({
     id: prop('id'),
@@ -121,5 +133,8 @@ export const formatRows = ({
     type: getType,
     transactionId: getTransactionId,
   })),
-  sortBy(path(sortPath || ['id']))
+  sortWith([
+    ascend(prop('id')),
+    ascend(path(['paymentDate', 'actual'])),
+  ])
 )

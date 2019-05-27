@@ -69,7 +69,7 @@ describe('Operations table data', () => {
       }
 
       const expected = [{
-        amount: 100,
+        amount: -100,
         type: 'mdr',
       }]
 
@@ -123,7 +123,7 @@ describe('Operations table data', () => {
       const outgoing = tedTransferOutgoing(operation)
       const expectedOutGoing = [{
         type: 'tedFee',
-        amount: 115,
+        amount: -115,
       }, {
         type: 'payable',
         amount: 100,
@@ -190,7 +190,7 @@ describe('Operations table data', () => {
       }
 
       const expected = [{
-        amount: 100,
+        amount: -100,
         type: 'tedFee',
       }]
 

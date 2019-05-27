@@ -8,6 +8,7 @@ import {
 import {
   formatRows,
   transformMovementTypePropTo,
+  transformAndNegateMovementTypePropTo,
 } from './shared'
 
 export const buildOutcoming = juxt([
@@ -16,9 +17,9 @@ export const buildOutcoming = juxt([
 
 export const buildOutgoing = pipe(
   juxt([
-    transformMovementTypePropTo(['fraud_coverage_fee'], 'fraud_coverage_fee'),
-    transformMovementTypePropTo(['fee'], 'mdr'),
-    transformMovementTypePropTo(['anticipation_fee'], 'anticipation_fee'),
+    transformAndNegateMovementTypePropTo(['fraud_coverage_fee'], 'fraud_coverage_fee'),
+    transformAndNegateMovementTypePropTo(['fee'], 'mdr'),
+    transformAndNegateMovementTypePropTo(['anticipation_fee'], 'anticipation_fee'),
   ]),
   reject(propEq('amount', 0))
 )
@@ -29,5 +30,4 @@ export default formatRows({
   buildOutcoming,
   buildOutgoing,
   getInstallment,
-  sortPath: ['paymentDate', 'actual'],
 })
