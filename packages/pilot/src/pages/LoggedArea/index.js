@@ -110,7 +110,6 @@ LoggedArea.propTypes = {
   // anticipationLimit: PropTypes.number,
   balance: PropTypes.shape({
     available: PropTypes.number,
-    waitingFunds: PropTypes.number,
   }),
   companyName: PropTypes.string,
   recipientId: PropTypes.string,

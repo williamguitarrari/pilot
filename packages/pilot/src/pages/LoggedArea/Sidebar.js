@@ -64,7 +64,6 @@ const Sidebar = ({
     // This code will be used again in the future when ATLAS project implements the anticipation flow
     // More details in issue #1159
     // anticipationLimit={anticipationLimit}
-    onAnticipate={() => history.push(`/anticipation/${recipientId}`)}
     onLinkClick={handleLinkClick(history.push, pathname)}
     onWithdraw={() => history.push(`/withdraw/${recipientId}`)}
     sessionId={sessionId}
@@ -81,7 +80,6 @@ Sidebar.propTypes = {
   // anticipationLimit: PropTypes.number,
   balance: PropTypes.shape({
     available: PropTypes.number,
-    waitingFunds: PropTypes.number,
   }).isRequired,
   companyName: PropTypes.string,
   history: PropTypes.shape({

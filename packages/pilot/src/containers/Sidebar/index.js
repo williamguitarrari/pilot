@@ -49,7 +49,6 @@ class SidebarContainer extends React.Component {
       // More details in issue #1159
       // anticipationLimit,
       balance,
-      onAnticipate,
       onWithdraw,
       t,
       transfersPricing,
@@ -57,7 +56,6 @@ class SidebarContainer extends React.Component {
 
     const getFrombalance = propOr(null, __, balance)
     const available = getFrombalance('available')
-    const waitingFunds = getFrombalance('waitingFunds')
 
     const minimumWithdrawalValue = transfersPricing.ted + MINIMUM_API_VALUE
 
@@ -70,17 +68,6 @@ class SidebarContainer extends React.Component {
             disabled: available <= minimumWithdrawalValue,
             title: t('pages.sidebar.available'),
             value: <span><small>{t('pages.sidebar.currency_symbol')}</small> {formatDecimalCurrency(available)}</span>,
-          },
-          {
-            action: onAnticipate,
-            actionTitle: t('pages.sidebar.anticipation'),
-            // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
-            // It was commented on to remove the anticipation limits call on Balance page
-            // This code will be used again in the future when ATLAS project implements the anticipation flow
-            // More details in issue #1159
-            // disabled: anticipationLimit < MINIMUM_API_VALUE,
-            title: t('pages.sidebar.waiting_funds'),
-            value: <span><small>{t('pages.sidebar.currency_symbol')}</small> {formatDecimalCurrency(waitingFunds)}</span>,
           },
         ]}
       />
@@ -200,7 +187,6 @@ SidebarContainer.propTypes = {
   // anticipationLimit: PropTypes.number,
   balance: PropTypes.shape({
     available: PropTypes.number,
-    waitingFunds: PropTypes.number,
   }).isRequired,
   companyName: PropTypes.string,
   links: PropTypes.arrayOf(PropTypes.shape({
@@ -211,7 +197,6 @@ SidebarContainer.propTypes = {
     title: PropTypes.string,
   })).isRequired,
   logo: PropTypes.func.isRequired,
-  onAnticipate: PropTypes.func,
   onLinkClick: PropTypes.func.isRequired,
   onWithdraw: PropTypes.func,
   sessionId: PropTypes.string,
@@ -228,7 +213,6 @@ SidebarContainer.defaultProps = {
   // More details in issue #1159
   // anticipationLimit: null,
   companyName: '',
-  onAnticipate: null,
   onWithdraw: null,
   sessionId: '',
   transfersPricing: {},
