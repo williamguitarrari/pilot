@@ -14,12 +14,6 @@ const sections = {
       title: 'Disponível',
       value: <span><small>R$</small> 15.000,00</span>,
     },
-    {
-      action: action('clicked'),
-      actionTitle: 'Antecipar',
-      title: 'A receber',
-      value: <span><small>R$</small> 70.000,00</span>,
-    },
   ],
   hideMsg: 'Ocultar saldo',
   showMsg: 'Mostrar saldo',

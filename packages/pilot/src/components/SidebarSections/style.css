@@ -17,16 +17,13 @@
     color: var(--color-white);
     display: block;
     font-size: 14px;
-    font-weight: bold;
     margin-top: var(--spacing-small);
-    text-transform: uppercase;
   }
 
   & .value {
     color: var(--color-white);
     font-size: 24px;
-    font-weight: bold;
-    margin-top: 4px;
+    margin-top: var(--spacing-tiny);
     white-space: nowrap;
 
     & small {
@@ -47,6 +44,6 @@
   margin-top: var(--spacing-small);
 
   & button {
-    margin-top: var(--spacing-tiny);
+    margin-top: var(--spacing-small);
   }
 }
