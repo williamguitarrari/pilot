@@ -2,10 +2,10 @@
   {
     "id": 6906129,
     "installment": null,
-    "net": 1000,
+    "net": -1000,
     "outcoming": [
       {
-        "amount": 1000,
+        "amount": -1000,
         "type": "payable"
       }
     ],
@@ -31,7 +31,7 @@
     ],
     "outgoing": [
       {
-        "amount": 380,
+        "amount": -380,
         "type": "mdr"
       }
     ],
@@ -47,10 +47,10 @@
   {
     "id": 6906145,
     "installment": 1,
-    "net": 500,
+    "net": -500,
     "outcoming": [
       {
-        "amount": 500,
+        "amount": -500,
         "type": "payable"
       }
     ],
@@ -67,10 +67,10 @@
   {
     "id": 6911856,
     "installment": null,
-    "net": 950,
+    "net": -950,
     "outcoming": [
       {
-        "amount": 1000,
+        "amount": -1000,
         "type": "payable"
       }
     ],
