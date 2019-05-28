@@ -239,17 +239,23 @@ class TransactionRefund extends Component {
           last_digits,
         },
         payment: {
+          authorized_amount,
           installments,
           paid_amount,
         },
+        status,
       },
     } = this.props
+
+    const amount = status === 'authorized'
+      ? authorized_amount
+      : paid_amount
 
     const refundAmount = getDataAmount(this.state)
 
     return (
       <CardForm
-        amount={paid_amount}
+        amount={amount}
         brand={brand_name}
         cardFirstDigits={first_digits}
         cardLastDigits={last_digits}
