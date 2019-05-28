@@ -21,6 +21,7 @@ import {
   Button,
   Card,
   CardContent,
+  CardSection,
   Col,
   DateInput,
   Grid,
@@ -554,11 +555,13 @@ class Balance extends Component {
                   </div>
                 </CardContent>
                 <CardContent>
-                  <BalanceSummary
-                    amount={this.getSummaryTotal()}
-                    dates={dates}
-                    loading={loading}
-                  />
+                  <CardSection>
+                    <BalanceSummary
+                      amount={this.getSummaryTotal()}
+                      dates={dates}
+                      loading={loading}
+                    />
+                  </CardSection>
                 </CardContent>
               </Card>
             </Col>
@@ -583,13 +586,6 @@ class Balance extends Component {
                   onPageChange={this.handleOperationsPageChange}
                   onExport={onExport}
                   rows={operations.rows}
-                  subtitle={
-                    <span>
-                      {t('pages.balance.total.of')}
-                      <strong> {operations.total} </strong>
-                      {t('pages.balance.releases')}
-                    </span>
-                  }
                   t={t}
                   title={t('pages.balance.operations_title')}
                   totalPages={operations.count}
