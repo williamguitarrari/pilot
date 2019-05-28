@@ -80,6 +80,10 @@
   font-weight: bold;
 }
 
+.tooltip {
+  width: 200px;
+}
+
 .zero {
   color: var(--color-light-steel-100);
 }

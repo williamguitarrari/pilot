@@ -165,6 +165,7 @@ const renderPaymentDate = (paymentDate, toolTipText) => {
   }
   return (
     <Tooltip
+      className={style.tooltip}
       content={toolTipText}
       placement="rightMiddle"
     >
