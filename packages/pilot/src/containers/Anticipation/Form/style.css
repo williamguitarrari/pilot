@@ -54,6 +54,10 @@
   display: flex;
 }
 
+.tooltip {
+  width: 200px;
+}
+
 .overlay {
   align-items: center;
   background-color: var(--color-white);

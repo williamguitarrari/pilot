@@ -14,10 +14,13 @@ import IconInfo from 'emblematic-icons/svg/Info32.svg'
 import Form from './Form'
 import Results from './Results'
 
+import style from './style.css'
+
 const renderInfo = (text, placement) => (
   <Tooltip
     placement={placement || 'rightMiddle'}
     content={text}
+    className={style.tooltip}
   >
     <IconInfo height={16} width={16} />
   </Tooltip>
