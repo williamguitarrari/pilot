@@ -12,7 +12,7 @@ const TestLogo = () => (
       <IconTest width={76} height={88} />
     </div>
     <div className={style.text}>
-      <Logo width={160} height={47} />
+      <Logo width={160} />
       <span className={style.title}>Área de <strong>teste</strong></span>
     </div>
   </div>
