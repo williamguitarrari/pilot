@@ -104,7 +104,7 @@ class SidebarContainer extends React.Component {
     return (
       <Sidebar collapsed={collapsed}>
         <SidebarHeader>
-          {!collapsed && <Logo width="140" />}
+          {!collapsed && <Logo width={140} />}
 
           <Button
             onClick={this.handleToggleSidebar}
