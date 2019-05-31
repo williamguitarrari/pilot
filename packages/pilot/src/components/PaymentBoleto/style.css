@@ -52,6 +52,12 @@
   }
 }
 
+.cardBoletoIssue {
+  display: flex;
+  justify-content: center;
+  margin: auto 0;
+}
+
 .cardDueDate {
   align-items: center;
   display: flex;

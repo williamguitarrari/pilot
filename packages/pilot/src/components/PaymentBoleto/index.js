@@ -3,12 +3,12 @@ import PropTypes from 'prop-types'
 import {
   Card,
   CardContent,
-
   Button,
 } from 'former-kit'
 
 import IconCopy from 'emblematic-icons/svg/Copy24.svg'
 import IconBarCode from 'emblematic-icons/svg/BarCode24.svg'
+import BoletoBarcode from './boletoBarcode.svg'
 
 import CopyButton from '../CopyButton'
 
@@ -37,22 +37,32 @@ const PaymentBoleto = ({
           {showBoletoLabel}
         </Button>
       </div>
-      <div className={style.cardBarCode}>
-        <IconBarCode width={25} height={25} />
-        <strong>{barcode}</strong>
-      </div>
-      <div className={style.cardDueDate}>
-        <p>{dueDateLabel} {dueDate}</p>
-        <CopyButton
-          feedbackText={copyBarcodeFeedback}
-          feedbackTimeout={3000}
-          fill="clean"
-          icon={<IconCopy width="12px" height="12px" />}
-          onClick={() => onCopy(barcode)}
-          size="tiny"
-          title={copyBarcodeLabel}
-        />
-      </div>
+      { barcode
+        ? (
+          <div className={style.cardBarCode}>
+            <IconBarCode width={25} height={25} />
+            <strong>{barcode}</strong>
+          </div>
+        ) : (
+          <div className={style.cardBoletoIssue}>
+            <BoletoBarcode />
+          </div>
+        )
+      }
+      { barcode &&
+        <div className={style.cardDueDate}>
+          <p>{dueDateLabel} {dueDate}</p>
+          <CopyButton
+            feedbackText={copyBarcodeFeedback}
+            feedbackTimeout={3000}
+            fill="clean"
+            icon={<IconCopy width="12px" height="12px" />}
+            onClick={() => onCopy(barcode)}
+            size="tiny"
+            title={copyBarcodeLabel}
+          />
+        </div>
+      }
     </CardContent>
   </Card>
 )

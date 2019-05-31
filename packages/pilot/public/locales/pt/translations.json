@@ -552,17 +552,20 @@
       "adblock_error": "Para visualizar as informações de antecipação é necessário que as extensões de bloqueio de anúncio estejam desabilitadas."
     },
     "capture": {
-      "capture_action": "Capturar",
+      "boleto_title": "Gerar boleto",
+      "capture_action": "Confirmar",
+      "card_title": "Capturar transação",
       "identification": "Identificação",
       "greater_than_zero": "O valor deve ser maior que zero",
       "invalid_amount": "Valor para captura inválido",
       "number": "Deve ser um número",
       "confirmation": "Confirmação",
+      "paid_amount": "Valor confirmado",
       "success": "Transação capturada com sucesso!",
-      "title": "Capturar transação",
+      "success_boleto": "Boleto emitido com sucesso!",
       "token_capture_warning": "Como esta transação foi criada com sua chave de criptografia, a captura manual pode listar um valor diferente do desejado.",
       "token_capture_link": "Mais informações",
-      "value_to_capture": "Valor a ser capturado R$"
+      "value_to_capture": "Valor a ser confirmado R$"
     },
     "error": {
       "application_message": "Por favor recarregue a página",
@@ -902,6 +905,7 @@
         "show": "ver boleto",
         "due_date": "Vencimento:",
         "feedback": "Copiado!",
+        "issue": "Gerar boleto",
         "waiting_payment_warning": "O demonstrativo de parcelas fica disponível após o pagamento do boleto.",
         "url": "Link do boleto"
       },
