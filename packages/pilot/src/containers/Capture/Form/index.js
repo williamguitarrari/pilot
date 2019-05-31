@@ -49,6 +49,7 @@ const CaptureForm = ({
   customerName,
   disabled,
   installments,
+  isCapturable,
   isFromCheckout,
   onConfirm,
   paymentMethod,
@@ -81,6 +82,7 @@ const CaptureForm = ({
   }
 
   const isBoletoOrFromCheckout = isFromCheckout || isBoleto(paymentMethod)
+  const isCapturableBoleto = isCapturable && isBoleto(paymentMethod)
 
   const renderCaptureAmount = () => (
     isBoletoOrFromCheckout
@@ -164,7 +166,10 @@ const CaptureForm = ({
           <Row>
             <Col palm={12} tablet={8} desk={8} tv={8}>
               <Property
-                title={t('pages.transaction.header.card_amount')}
+                title={isCapturableBoleto
+                  ? t('pages.transaction.header.boleto_amount')
+                  : t('pages.capture.paid_amount')
+                }
                 value={currency(authorizedAmount)}
               />
             </Col>
@@ -225,6 +230,7 @@ CaptureForm.propTypes = {
   customerName: PropTypes.string,
   disabled: PropTypes.bool,
   installments: PropTypes.number,
+  isCapturable: PropTypes.bool.isRequired,
   isFromCheckout: PropTypes.bool.isRequired,
   onConfirm: PropTypes.func.isRequired,
   paymentMethod: PropTypes.oneOf([

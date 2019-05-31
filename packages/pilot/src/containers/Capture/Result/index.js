@@ -30,10 +30,12 @@ const Result = ({
   customerName,
   image,
   installments,
+  isCapturable,
   message,
   onRetry,
   onViewTransaction,
   paidAmount,
+  paymentMethod,
   status,
   statusMessage,
   t,
@@ -77,13 +79,16 @@ const Result = ({
               <Row>
                 <Col palm={12} tablet={8} desk={8} tv={8}>
                   <Property
-                    title={t('pages.transaction.header.card_amount')}
+                    title={isCapturable && paymentMethod === 'boleto'
+                      ? t('pages.transaction.header.boleto_amount')
+                      : t('pages.transaction.header.card_amount')
+                    }
                     value={currency(authorizedAmount)}
                   />
                 </Col>
                 <Col palm={12} tablet={4} desk={4} tv={4}>
                   <Property
-                    title={t('pages.transaction.paid_amount')}
+                    title={t('pages.capture.paid_amount')}
                     value={
                       <span className={style.capturedAmount}>
                         {currency(paidAmount)}
@@ -134,10 +139,12 @@ Result.propTypes = {
   customerName: PropTypes.string,
   image: PropTypes.node.isRequired,
   installments: PropTypes.number,
+  isCapturable: PropTypes.bool.isRequired,
   message: PropTypes.node.isRequired,
   onRetry: PropTypes.func.isRequired,
   onViewTransaction: PropTypes.func.isRequired,
   paidAmount: PropTypes.number.isRequired,
+  paymentMethod: PropTypes.string.isRequired,
   status: PropTypes.oneOf([
     'current',
     'error',

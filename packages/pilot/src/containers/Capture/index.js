@@ -28,6 +28,7 @@ const Capture = ({
   transaction,
 }) => {
   const {
+    capabilities,
     card: {
       brand_name: cardBrand,
       first_digits: cardFirstDigits,
@@ -41,6 +42,8 @@ const Capture = ({
     },
   } = transaction
 
+  const isCapturableBoleto = paymentMethod === 'boleto' && capabilities.capturable
+
   return (
     <Modal
       isOpen={isOpen}
@@ -49,7 +52,10 @@ const Capture = ({
       <ModalTitle
         closeIcon={<IconClose height={16} width={16} />}
         onClose={onCancel}
-        title={t('pages.capture.title')}
+        title={paymentMethod === 'boleto' && capabilities.capturable
+          ? t('pages.capture.boleto_title')
+          : t('pages.capture.card_title')
+        }
       />
       <ModalContent>
         <ModalSection>
@@ -76,10 +82,14 @@ const Capture = ({
             customerEmail={customer && customer.email}
             image={<ErrorIcon />}
             installments={installments}
-            message={t('pages.capture.success')}
+            isCapturable={capabilities.capturable}
+            message={isCapturableBoleto
+              ? t('pages.capture.success_boleto')
+              : t('pages.capture.success')}
             onRetry={onRetry}
             onViewTransaction={onViewTransaction}
             paidAmount={Number(captureAmount)}
+            paymentMethod={paymentMethod}
             status={stepStatus.confirmation}
             statusMessage={statusMessage}
             t={t}
@@ -95,6 +105,7 @@ const Capture = ({
             customerEmail={customer && customer.email}
             disabled={loading}
             isFromCheckout={isFromCheckout}
+            isCapturable={capabilities.capturable}
             installments={installments}
             onConfirm={onConfirm}
             paymentMethod={paymentMethod}

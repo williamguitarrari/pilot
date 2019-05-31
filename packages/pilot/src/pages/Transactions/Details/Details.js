@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { translate } from 'react-i18next'
 import {
+  allPass,
   equals,
   always,
   complement,
@@ -16,9 +17,11 @@ import {
   isEmpty,
   isNil,
   length,
+  pathEq,
   pipe,
   prop,
   tail,
+  uncurryN,
 } from 'ramda'
 import moment from 'moment'
 import qs from 'qs'
@@ -132,11 +135,21 @@ const getEventsLabels = t => ({
   title: t('pages.transaction.events_title'),
 })
 
-const getPaymentBoletoLabels = t => ({
+const getShowBoletoLabel = uncurryN(2, t => ifElse(
+  allPass([
+    complement(isNil),
+    pathEq(['capabilities', 'capturable'], true),
+    pathEq(['payment', 'method'], 'boleto'),
+  ]),
+  always(t('pages.transaction.boleto.issue')),
+  always(t('pages.transaction.boleto.show'))
+))
+
+const getPaymentBoletoLabels = (t, transaction) => ({
   copy: t('pages.transaction.copy'),
   due_date: t('pages.transaction.boleto.due_date'),
   feedback: t('pages.transaction.boleto.feedback'),
-  show: t('pages.transaction.boleto.show'),
+  show: getShowBoletoLabel(t, transaction),
   title: t('pages.transaction.boleto.title'),
 })
 
@@ -282,13 +295,23 @@ class TransactionDetails extends Component {
   }
 
   requestData (query) {
-    this.props.onRequestDetails({ query })
+    const {
+      onRequestDetails,
+      t,
+    } = this.props
+
+    onRequestDetails({ query })
 
     return this.props.client
       .transactions
       .details(query)
       .then((result) => {
-        this.setState({ result })
+        const newState = {
+          paymentBoletoLabels: getPaymentBoletoLabels(t, result.transaction),
+          result,
+        }
+
+        this.setState(newState)
         this.props.onReceiveDetails(result)
       })
   }
@@ -383,11 +406,21 @@ class TransactionDetails extends Component {
     const {
       transaction: {
         boleto,
+        capabilities,
+        payment: {
+          method,
+        },
       },
     } = this.state.result
 
-    // eslint-disable-next-line no-undef
-    window.open(boleto.url)
+    if (method === 'boleto' && capabilities.capturable) {
+      this.setState({
+        showCapture: true,
+      })
+    } else {
+      // eslint-disable-next-line no-undef
+      window.open(boleto.url)
+    }
   }
 
   render () {

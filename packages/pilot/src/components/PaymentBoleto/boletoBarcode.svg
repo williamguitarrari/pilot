@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="180" height="72" viewBox="0 0 150 42">
+    <defs>
+        <rect id="a" width="150" height="42" rx="2"/>
+        <filter id="b" width="102%" height="107.1%" x="-1%" y="-3.6%" filterUnits="objectBoundingBox">
+            <feOffset dx="-3" dy="-3" in="SourceAlpha" result="shadowOffsetInner1"/>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" k2="-1" k3="1" operator="arithmetic" result="shadowInnerInner1"/>
+            <feColorMatrix in="shadowInnerInner1" values="0 0 0 0 0.829639668 0 0 0 0 0.829639668 0 0 0 0 0.829639668 0 0 0 0.5 0"/>
+        </filter>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <g>
+            <use fill="#FFF" xlink:href="#a"/>
+            <use fill="#000" filter="url(#b)" xlink:href="#a"/>
+            <rect width="149" height="41" x=".5" y=".5" stroke="#17C9B2" stroke-linejoin="square" rx="2"/>
+        </g>
+        <path stroke="#8459B9" stroke-linecap="square" d="M22 29.5h105.19"/>
+        <g fill="#17C9B2" fill-rule="nonzero">
+            <path d="M23 14.17h.808v9.009H23V14.17zm9.462 0h1.615v9.009h-1.615V14.17zm11.269 0h1.615v9.009h-1.615V14.17zm-7.846 0h.807v9.009h-.807V14.17zm2.615 0h.808v9.009H38.5V14.17zm8.654 0h.808v9.009h-.808V14.17zm-6.039 0h.808v9.009h-.808V14.17zm-15.5 0h2.423v9.009h-2.423V14.17zm24.154 0h2.423v9.009H49.77V14.17zm-19.923 0h.808v9.009h-.808V14.17zM54 14.17h.808v9.009H54V14.17zm9.462 0h1.615v9.009h-1.615V14.17zm11.269 0h1.615v9.009h-1.615V14.17zm-7.846 0h.807v9.009h-.807V14.17zm2.615 0h.808v9.009H69.5V14.17zm8.654 0h.808v9.009h-.808V14.17zm-6.039 0h.808v9.009h-.808V14.17zm-15.5 0h2.423v9.009h-2.423V14.17zm24.154 0h2.423v9.009H80.77V14.17zm-19.923 0h.808v9.009h-.808V14.17zM85 14.17h.808v9.009H85V14.17zm9.462 0h1.615v9.009h-1.615V14.17zm11.269 0h1.615v9.009h-1.615V14.17zm-7.846 0h.807v9.009h-.807V14.17zm2.615 0h.808v9.009h-.808V14.17zm8.654 0h.808v9.009h-.808V14.17zm-6.039 0h.808v9.009h-.808V14.17zm-15.5 0h2.423v9.009h-2.423V14.17zm24.154 0h2.423v9.009h-2.423V14.17zm-19.923 0h.808v9.009h-.808V14.17zM116 14.17h.808v9.009H116V14.17zm9.462 0h1.615v9.009h-1.615V14.17zm-6.847 0h2.423v9.009h-2.423V14.17zm4.231 0h.808v9.009h-.808V14.17z"/>
+        </g>
+    </g>
+</svg>

@@ -295,13 +295,18 @@ class TransactionDetails extends Component {
       transaction,
       transaction: {
         capabilities,
+        payment: {
+          method,
+        },
       },
     } = this.props
 
     const onCaptureAction = {
       icon: <CaptureIcon width={12} height={12} />,
       onClick: onCapture,
-      title: 'Capturar',
+      title: method === 'boleto' && capabilities.capturable
+        ? 'Gerar boleto'
+        : 'Capturar',
     }
 
     const onExportAction = {
