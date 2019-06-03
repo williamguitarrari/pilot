@@ -45,6 +45,7 @@ class CardForm extends Component {
       email,
       holderName,
       installments,
+      isAuthorized,
       refundAmount,
       t,
     } = this.props
@@ -130,15 +131,30 @@ class CardForm extends Component {
               </Col>
 
               <Col palm={12} tablet={5} desk={5} tv={5}>
-                <FormInput
-                  label={t('pages.refund.refund_amount_with_symbol')}
-                  name="amount"
-                  renderer={props => (
-                    <CurrencyInput
-                      {...props}
+                { isAuthorized
+                  ? (
+                    <Property
+                      title={t('pages.refund.refund_amount_with_symbol')}
+                      value={
+                        <span className={style.authorizedAmount}>
+                          {formatterCurrency(amount)}
+                        </span>
+                      }
                     />
-                  )}
-                />
+                  )
+                  : (
+                    <FormInput
+                      label={t('pages.refund.refund_amount_with_symbol')}
+                      name="amount"
+                      renderer={props => (
+                        <CurrencyInput
+                          {...props}
+                        />
+                      )}
+                    />
+                  )
+                }
+
               </Col>
             </Row>
           </Grid>
@@ -164,6 +180,7 @@ CardForm.propTypes = {
   email: PropTypes.string,
   holderName: PropTypes.string.isRequired,
   installments: PropTypes.number.isRequired,
+  isAuthorized: PropTypes.bool,
   onConfirm: PropTypes.func.isRequired,
   refundAmount: PropTypes.string,
   t: PropTypes.func.isRequired,
@@ -171,6 +188,7 @@ CardForm.propTypes = {
 
 CardForm.defaultProps = {
   email: null,
+  isAuthorized: false,
   refundAmount: null,
 }
 
