@@ -239,23 +239,30 @@ class TransactionRefund extends Component {
           last_digits,
         },
         payment: {
+          authorized_amount,
           installments,
           paid_amount,
         },
+        status,
       },
     } = this.props
 
     const refundAmount = getDataAmount(this.state)
+    const isAuthorized = status === 'authorized'
 
     return (
       <CardForm
-        amount={paid_amount}
+        amount={isAuthorized
+          ? authorized_amount
+          : paid_amount
+        }
         brand={brand_name}
         cardFirstDigits={first_digits}
         cardLastDigits={last_digits}
         email={getCustomerEmail(this.props)}
         holderName={holder_name}
         installments={installments}
+        isAuthorized={isAuthorized}
         onConfirm={this.handleConfirmIndentification}
         refundAmount={refundAmount}
         t={t}
@@ -277,9 +284,11 @@ class TransactionRefund extends Component {
           last_digits,
         },
         payment: {
+          authorized_amount,
           installments,
           paid_amount,
         },
+        status,
       },
     } = this.props
     const {
@@ -288,9 +297,14 @@ class TransactionRefund extends Component {
       },
     } = this.state
 
+    const isAuthorized = status === 'authorized'
+
     return (
       <CardConfirmation
-        amount={paid_amount}
+        amount={isAuthorized
+          ? authorized_amount
+          : paid_amount
+        }
         brand={brand_name}
         cardFirstDigits={first_digits}
         cardLastDigits={last_digits}
@@ -322,9 +336,11 @@ class TransactionRefund extends Component {
           last_digits,
         },
         payment: {
+          authorized_amount,
           installments,
           paid_amount,
         },
+        status,
       },
     } = this.props
     const {
@@ -333,9 +349,14 @@ class TransactionRefund extends Component {
       },
     } = this.state
 
+    const isAuthorized = status === 'authorized'
+
     return (
       <CardResult
-        amount={paid_amount}
+        amount={isAuthorized
+          ? authorized_amount
+          : paid_amount
+        }
         brand={brand_name}
         cardFirstDigits={first_digits}
         cardLastDigits={last_digits}
