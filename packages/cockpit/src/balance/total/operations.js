@@ -1,18 +1,66 @@
 import {
-  apply,
+  __,
+  add,
+  always,
   applySpec,
+  converge,
+  gt,
   juxt,
+  lt,
+  map,
   negate,
+  path,
   pipe,
   reduce,
-  subtract,
+  sum,
+  when,
 } from 'ramda'
 
-const buildTotal = direction => reduce((acc, val) => {
-  const available = val.available.amount[direction]
-  const fee = val.available.fee[direction]
+const absSum = pipe(
+  map(Math.abs),
+  sum
+)
 
-  return acc + (available - fee)
+const getPositveOrZero = propPath => pipe(
+  path(propPath),
+  when(
+    lt(__, 0),
+    always(0)
+  )
+)
+
+const getNegativeOrZero = propPath => pipe(
+  path(propPath),
+  when(
+    gt(__, 0),
+    always(0)
+  )
+)
+
+const sumOut = pipe(
+  juxt([
+    path(['amount', 'out']),
+    getPositveOrZero(['fee', 'in']),
+    getPositveOrZero(['fee', 'out']),
+  ]),
+  absSum
+)
+
+const sumIn = pipe(
+  juxt([
+    path(['amount', 'in']),
+    getNegativeOrZero(['fee', 'out']),
+    getNegativeOrZero(['fee', 'in']),
+  ]),
+  absSum
+)
+
+const buildTotal = direction => reduce((acc, { available }) => {
+  if (direction === 'out') {
+    return acc + sumOut(available)
+  }
+
+  return acc + sumIn(available)
 }, 0)
 
 const getOutgoing = pipe(
@@ -21,9 +69,9 @@ const getOutgoing = pipe(
 )
 
 const buildBalanceTotal = applySpec({
-  net: pipe(
-    juxt([buildTotal('in'), getOutgoing]),
-    apply(subtract)
+  net: converge(
+    add,
+    [buildTotal('in'), getOutgoing]
   ),
   outcoming: buildTotal('in'),
   outgoing: getOutgoing,
