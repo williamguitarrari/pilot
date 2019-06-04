@@ -100,6 +100,7 @@ const getAggregationTotal = amountPath => pipe(
 const getPaidAmount = getAggregationTotal([
   'aggregations',
   'total_amount',
+  'amount',
   'value',
 ])
 

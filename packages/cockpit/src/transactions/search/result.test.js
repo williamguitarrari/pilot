@@ -15,8 +15,17 @@ const query = {
   count: 20,
   aggregations: {
     total_amount: {
-      sum: {
-        field: 'amount',
+      filter: {
+        term: {
+          status: 'paid',
+        },
+      },
+      aggregations: {
+        amount: {
+          sum: {
+            field: 'amount',
+          },
+        },
       },
     },
     total_cost: {
