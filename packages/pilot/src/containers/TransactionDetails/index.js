@@ -637,6 +637,7 @@ class TransactionDetails extends Component {
     }
 
     const formattedCustomer = formatCustomerData(customer || {})
+    const isRefundedBeforeCaptured = status === 'refunded' && payment.paid_amount === 0
 
     const applyTruncateCustomerEmail = (
       <span className={style.value}>
@@ -733,7 +734,10 @@ class TransactionDetails extends Component {
             <Card className={style.paidAmountValue}>
               <CardContent className={style.content}>
                 <TotalDisplay
-                  amount={payment.paid_amount}
+                  amount={isRefundedBeforeCaptured
+                    ? payment.authorized_amount
+                    : payment.paid_amount
+                  }
                   amountSize="huge"
                   color="#37cc9a"
                   subtitle={
@@ -741,7 +745,10 @@ class TransactionDetails extends Component {
                       {totalDisplayLabels.captured_at}
                     </div>
                   }
-                  title={totalDisplayLabels.paid_amount}
+                  title={isRefundedBeforeCaptured
+                    ? totalDisplayLabels.authorized_amount
+                    : totalDisplayLabels.paid_amount
+                  }
                   titleSize="medium"
                 />
               </CardContent>
