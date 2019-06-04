@@ -1048,7 +1048,7 @@
       "period": "{{start}} - {{end}}",
       "text_search_placeholder": "Filtre por Id, número do documento, nome ou e-mail",
       "title": "Transações",
-      "total_amount": "total de",
+      "total_amount": "total capturado de",
       "try_again": "Tente novamente com outros filtros."
     }
   },

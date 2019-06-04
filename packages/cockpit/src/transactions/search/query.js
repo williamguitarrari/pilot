@@ -78,8 +78,17 @@ const internationalCreditCardTerm = [
 
 const aggregations = {
   total_amount: {
-    sum: {
-      field: 'amount',
+    filter: {
+      term: {
+        status: 'paid',
+      },
+    },
+    aggregations: {
+      amount: {
+        sum: {
+          field: 'amount',
+        },
+      },
     },
   },
   total_cost: {
