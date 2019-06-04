@@ -37,14 +37,20 @@ const getChargeBackFeeFrom = property =>
 
 const getCreditFeeFrom = property => pathOr(0, [property, 'credit', 'fee'])
 
-const getRefundFraudCoverageFeeFrom = property =>
-  pathOr(0, [property, 'refund', 'fraud_coverage_fee'])
+const getRefundFraudCoverageFeeFrom = property => pipe(
+  pathOr(0, [property, 'refund', 'fraud_coverage_fee']),
+  Math.abs
+)
 
-const getChargebackAmountFrom = property =>
-  pathOr(0, [property, 'chargeback', 'amount'])
+const getChargebackAmountFrom = property => pipe(
+  pathOr(0, [property, 'chargeback', 'amount']),
+  Math.abs
+)
 
-const getRefundAmountFrom = property =>
-  pathOr(0, [property, 'refund', 'amount'])
+const getRefundAmountFrom = property => pipe(
+  pathOr(0, [property, 'refund', 'amount']),
+  Math.abs
+)
 
 const sumFee = property => juxtSum([
   getChargeBackFeeFrom(property),
@@ -59,19 +65,19 @@ const sumChargebackAndRefund = property => juxtSum([
 
 const getOutcoming = getSumFromFunction(getCreditAmount)
 
-const getOutgoing = juxtSum([
-  getSumFromFunction(sumFee),
-  getSumFromFunction(sumChargebackAndRefund),
-])
+const getOutgoing = pipe(
+  juxtSum([
+    getSumFromFunction(sumFee),
+    getSumFromFunction(sumChargebackAndRefund),
+  ]),
+  negate
+)
 
 const getNetAmount = property => pipe(
   prop(property),
   juxtSum([
     getOutcoming,
-    pipe(
-      getOutgoing,
-      negate
-    ),
+    getOutgoing,
   ])
 )
 
