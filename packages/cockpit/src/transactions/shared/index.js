@@ -3,6 +3,7 @@ import {
   always,
   apply,
   applySpec,
+  both,
   complement,
   cond,
   either,
@@ -236,6 +237,11 @@ const getSubscription = applySpec({
   id: propOr(null, 'subscription_id'),
 })
 
+const isRefundedBeforeCaptured = both(
+  propEq('status', 'refunded'),
+  propEq('paid_amount', 0)
+)
+
 const transactionSpec = {
   acquirer: {
     name: prop('acquirer_name'),
@@ -267,7 +273,11 @@ const transactionSpec = {
     method: prop('payment_method'),
     net_amount: pipe(
       juxt([
-        prop('paid_amount'),
+        ifElse(
+          isRefundedBeforeCaptured,
+          prop('authorized_amount'),
+          prop('paid_amount')
+        ),
         pipe(
           props(['cost', 'refunded_amount']),
           sum

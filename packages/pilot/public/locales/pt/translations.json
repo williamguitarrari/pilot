@@ -897,6 +897,7 @@
       },
       "antifraud_score": "Score do antifraude",
       "authorization_code": "Código de autorização",
+      "authorized_amount": "Valor autorizado",
       "boleto": {
         "title": "Boleto",
         "show": "ver boleto",

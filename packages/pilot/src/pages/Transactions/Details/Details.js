@@ -487,6 +487,7 @@ class TransactionDetails extends Component {
     }
 
     const totalDisplayLabels = {
+      authorized_amount: t('pages.transaction.authorized_amount'),
       captured_at: captured_at
         ? t('captured_at', { date: moment(captured_at).format('L') })
         : t('pages.transaction.not_captured'),
