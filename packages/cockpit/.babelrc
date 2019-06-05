@@ -7,7 +7,15 @@
   ],
   "env": {
     "test": {
-      "plugins": ["@babel/plugin-transform-runtime"]
+      "plugins": ["@babel/plugin-transform-runtime"],
+    },
+    "production": {
+      "ignore": [
+        "*.test.js",
+        "**/*.test.js",
+        "**/**/*.test.js",
+      ],
+      "sourceMaps": true,
     }
   }
 }
