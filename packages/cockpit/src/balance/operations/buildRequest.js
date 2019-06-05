@@ -26,7 +26,7 @@ export const buildBaseQuery = ({
 
 export const buildPayablesQuery = query => ({
   ...buildBaseQuery(query),
-  status: ['waiting_funds', 'pre_paid'],
+  status: ['waiting_funds', 'prepaid'],
 })
 
 export const buildPayablesRequest = curry((client, query) => {
