@@ -12,7 +12,7 @@ import {
   Truncate,
 } from 'former-kit'
 import IconError from 'emblematic-icons/svg/ClearClose32.svg'
-
+import SuccessIllustration from './success.svg'
 import Property from '../../../components/Property'
 import currency from '../../../formatters/currency'
 import CaptureDetails from '../../../components/CaptureDetails'
@@ -28,7 +28,6 @@ const Result = ({
   cardLastDigits,
   customerEmail,
   customerName,
-  image,
   installments,
   isCapturable,
   message,
@@ -47,7 +46,7 @@ const Result = ({
           <div>
             <div className={style.image}>
               <Message
-                image={image}
+                image={<SuccessIllustration />}
                 message={message}
               />
             </div>
@@ -137,7 +136,6 @@ Result.propTypes = {
   cardLastDigits: PropTypes.string,
   customerEmail: PropTypes.string,
   customerName: PropTypes.string,
-  image: PropTypes.node.isRequired,
   installments: PropTypes.number,
   isCapturable: PropTypes.bool.isRequired,
   message: PropTypes.node.isRequired,
