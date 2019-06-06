@@ -8,7 +8,6 @@ import {
   Steps,
 } from 'former-kit'
 import IconClose from 'emblematic-icons/svg/ClearClose32.svg'
-import ErrorIcon from '../../components/TransferError/ErrorIcon.svg'
 
 import CaptureForm from './Form'
 import CaptureResult from './Result'
@@ -80,7 +79,6 @@ const Capture = ({
             cardLastDigits={cardLastDigits}
             customerName={customer && customer.name}
             customerEmail={customer && customer.email}
-            image={<ErrorIcon />}
             installments={installments}
             isCapturable={capabilities.capturable}
             message={isCapturableBoleto
