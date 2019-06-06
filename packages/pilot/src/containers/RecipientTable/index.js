@@ -5,6 +5,8 @@ import AddIcon from 'emblematic-icons/svg/Add32.svg'
 import IconInfo from 'emblematic-icons/svg/Info32.svg'
 import Search32 from 'emblematic-icons/svg/Search32.svg'
 
+import { pick } from 'ramda'
+
 import {
   Alert,
   Button,
@@ -25,6 +27,8 @@ import Filter from '../Filter'
 import tableColumns from './tableColumns'
 
 const RecipientTable = ({
+  clearFilterDisabled,
+  confirmationDisabled,
   expandedRows,
   filterOptions,
   loading,
@@ -32,6 +36,7 @@ const RecipientTable = ({
   onExpandRow,
   onFilterChange,
   onFilterClear,
+  onFilterConfirm,
   onOrderChange,
   onPageChange,
   onRowClick,
@@ -41,6 +46,7 @@ const RecipientTable = ({
     total,
   },
   push,
+  query,
   rows,
   selectedRows,
   t,
@@ -61,10 +67,14 @@ const RecipientTable = ({
           tv={12}
         >
           <Filter
+            clearFilterDisabled={clearFilterDisabled}
+            confirmationDisabled={confirmationDisabled}
             disabled={loading}
-            onConfirm={onFilterChange}
+            onConfirm={onFilterConfirm}
+            onChange={onFilterChange}
             onClear={onFilterClear}
             options={filterOptions}
+            query={pick(['filters', 'search'], query)}
             t={t}
           >
             <Input
@@ -160,6 +170,8 @@ const RecipientTable = ({
 }
 
 RecipientTable.propTypes = {
+  clearFilterDisabled: PropTypes.bool,
+  confirmationDisabled: PropTypes.bool,
   expandedRows: PropTypes.arrayOf(PropTypes.number).isRequired,
   filterOptions: PropTypes.arrayOf(PropTypes.shape({
     items: PropTypes.arrayOf(PropTypes.shape({
@@ -174,6 +186,7 @@ RecipientTable.propTypes = {
   onExpandRow: PropTypes.func.isRequired,
   onFilterChange: PropTypes.func.isRequired,
   onFilterClear: PropTypes.func.isRequired,
+  onFilterConfirm: PropTypes.func.isRequired,
   onOrderChange: PropTypes.func.isRequired,
   onPageChange: PropTypes.func.isRequired,
   onRowClick: PropTypes.func.isRequired,
@@ -183,6 +196,10 @@ RecipientTable.propTypes = {
     total: PropTypes.number,
   }).isRequired,
   push: PropTypes.func.isRequired,
+  query: PropTypes.shape({
+    properties: PropTypes.object,
+    search: PropTypes.string,
+  }),
   rows: PropTypes.arrayOf(PropTypes.shape({
     anticipatable_volume_percentage: PropTypes.number,
     automatic_anticipation_days: PropTypes.string,
@@ -203,6 +220,15 @@ RecipientTable.propTypes = {
   })).isRequired,
   selectedRows: PropTypes.arrayOf(PropTypes.number).isRequired,
   t: PropTypes.func.isRequired,
+}
+
+RecipientTable.defaultProps = {
+  clearFilterDisabled: false,
+  confirmationDisabled: false,
+  query: {
+    properties: {},
+    search: '',
+  },
 }
 
 export default RecipientTable
