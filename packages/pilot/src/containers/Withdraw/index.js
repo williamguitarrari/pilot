@@ -2,9 +2,11 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import {
+  Button,
   Card,
   CardContent,
   Col,
+  Flexbox,
   Grid,
   Row,
   Steps,
@@ -13,6 +15,7 @@ import {
   assoc,
   identity,
   ifElse,
+  isNil,
   map,
   pipe,
   propEq,
@@ -25,6 +28,8 @@ import formatCpfCnpj from '../../formatters/cpfCnpj'
 import WithdrawForm from './Form'
 import WithdrawConfirmation from './Confirmation'
 import WithdrawResult from './Result'
+import { Message, MessageActions } from '../../components/Message'
+import EmptyStateIcon from './EmptyStateIcon.svg'
 
 const createStepsStatus = pipe(
   toPairs,
@@ -40,13 +45,36 @@ const setCurrentStep = currentStep => ifElse(
   identity
 )
 
+const buildEmptyState = (onCancel, t) => (
+  <Flexbox
+    alignItems="center"
+    direction="column"
+  >
+    <Message
+      image={<EmptyStateIcon width={365} height={148} />}
+      message={t('pages.withdraw.no_available_limits')}
+    >
+      <MessageActions>
+        <Button
+          fill="gradient"
+          onClick={onCancel}
+        >
+          {t('pages.withdraw.back_to_balance')}
+        </Button>
+      </MessageActions>
+    </Message>
+  </Flexbox>
+)
+
 class Withdraw extends Component {
   constructor () {
     super()
 
     this.getStepsStatus = this.getStepsStatus.bind(this)
     this.renderCurrentStep = this.renderCurrentStep.bind(this)
+    this.renderDataStep = this.renderDataStep.bind(this)
     this.renderRecipient = this.renderRecipient.bind(this)
+    this.renderWithdrawForm = this.renderWithdrawForm.bind(this)
   }
 
   getStepsStatus () {
@@ -116,19 +144,60 @@ class Withdraw extends Component {
     )
   }
 
-  renderCurrentStep () {
+  renderDataStep () {
+    const {
+      maximum,
+      onCancel,
+      t,
+    } = this.props
+
+    return isNil(maximum) || maximum < 100
+      ? buildEmptyState(onCancel, t)
+      : this.renderWithdrawForm()
+  }
+
+  renderWithdrawForm () {
     const {
       amount,
       available,
+      date,
+      maximum,
+      onCancel,
+      onFormSubmit,
+      onRequestedChange,
+      requested,
+      t,
+      transferCost,
+    } = this.props
+
+    return (
+      maximum
+        ? <WithdrawForm
+          amount={amount}
+          available={available}
+          date={date}
+          maximum={maximum}
+          onCancel={onCancel}
+          onRequestedChange={onRequestedChange}
+          onSubmit={onFormSubmit}
+          requested={requested}
+          t={t}
+          transferCost={transferCost}
+        />
+        : null
+    )
+  }
+
+  renderCurrentStep () {
+    const {
+      amount,
       confirmationPasswordError,
       currentStep,
       date,
       disabled,
-      maximum,
+      onCancel,
       onConfirmationConfirm,
       onConfirmationReturn,
-      onFormSubmit,
-      onRequestedChange,
       onTryAgain,
       onViewStatement,
       recipient,
@@ -149,26 +218,14 @@ class Withdraw extends Component {
             tablet={12}
             tv={12}
           >
-            {currentStep === 'data' &&
-              <WithdrawForm
-                amount={amount}
-                available={available}
-                date={date}
-                maximum={maximum}
-                onRequestedChange={onRequestedChange}
-                onSubmit={onFormSubmit}
-                requested={requested}
-                transferCost={transferCost}
-                t={t}
-              />
-            }
-
+            {currentStep === 'data' && this.renderDataStep()}
             {currentStep === 'confirmation' &&
               <WithdrawConfirmation
                 amount={amount}
                 bankAccount={recipient.bank_account}
                 date={date}
                 disabledButtons={disabled}
+                onCancel={onCancel}
                 onConfirm={onConfirmationConfirm}
                 onReturn={onConfirmationReturn}
                 passwordError={confirmationPasswordError}
@@ -236,6 +293,7 @@ Withdraw.propTypes = {
   date: PropTypes.instanceOf(moment).isRequired,
   disabled: PropTypes.bool.isRequired,
   maximum: PropTypes.number,
+  onCancel: PropTypes.func.isRequired,
   onConfirmationConfirm: PropTypes.func.isRequired,
   onConfirmationReturn: PropTypes.func.isRequired,
   onFormSubmit: PropTypes.func.isRequired,
