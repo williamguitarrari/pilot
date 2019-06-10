@@ -656,6 +656,7 @@
       "withdraw": "Sacar"
     },
     "withdraw": {
+      "back_to_balance": "Voltar para o extrato",
       "balance": "Saldo disponível",
       "cancel": "Cancelar",
       "conclusion": "Conclusão",
@@ -669,6 +670,7 @@
       "form_message": "Digite o valor que deseja sacar",
       "max_value_to_be": "Valor máximo a ser",
       "negative_transfer_value": "Valor solicitado é menor do que o custo",
+      "no_available_limits": "Não há valores disponíveis para saque." ,
       "no_recipient": "Este recebedor não foi encontrado. Confira as informações e tente novamente.",
       "number": "Deve ser um número",
       "password": "Senha",
