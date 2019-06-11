@@ -17,7 +17,7 @@ export default {
     exact: true,
     hidden: true,
     icon: Configuration32,
-    path: '/account/settings',
+    path: '/account',
     title: 'pages.settings.user.menu',
   },
   anticipation: {

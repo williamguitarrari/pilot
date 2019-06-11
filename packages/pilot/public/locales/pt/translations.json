@@ -68,7 +68,7 @@
   "view_transaction": "Visualizar transação",
   "header": {
     "account": {
-      "settings": "Configurações da conta",
+      "settings": "Minha conta",
       "logout": "Encerrar sessão"
     },
     "environment": {
