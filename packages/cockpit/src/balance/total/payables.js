@@ -1,128 +1,81 @@
 import {
   applySpec,
-  flatten,
   juxt,
   map,
   negate,
   pathOr,
   pipe,
   pluck,
-  prop,
   sum,
+  when,
+  gt,
+  lt,
+  always,
+  __,
 } from 'ramda'
 
-const juxtSum = (functions = []) => pipe(
+import paths from './payableCashPaths'
+
+const sumFunctionResults = (functions = []) => pipe(
   juxt(functions),
   sum
 )
 
-const applyFunctionsToArray = functions => map(juxt(functions))
-
-const buildDaysSumFunction = functions => pipe(
-  applyFunctionsToArray(functions),
-  flatten,
-  sum
+const getPositveOrZero = propPath => pipe(
+  pathOr(0, propPath),
+  when(
+    lt(__, 0),
+    always(0)
+  )
 )
 
-const getSumFromFunction = sumFunction => juxtSum([
-  sumFunction('boleto'),
-  sumFunction('credit_card'),
-  sumFunction('debit_card'),
-])
-
-const getCreditAmount = property => pathOr(0, [property, 'credit', 'amount'])
-
-const getChargeBackFeeFrom = property =>
-  pathOr(0, [property, 'chargeback', 'anticipation_fee'])
-
-const getCreditFeeFrom = property => pathOr(0, [property, 'credit', 'fee'])
-
-const getRefundFraudCoverageFeeFrom = property => pipe(
-  pathOr(0, [property, 'refund', 'fraud_coverage_fee']),
-  Math.abs
+const getNegativeOrZero = propPath => pipe(
+  pathOr(0, propPath),
+  when(
+    gt(__, 0),
+    always(0)
+  )
 )
 
-const getChargebackAmountFrom = property => pipe(
-  pathOr(0, [property, 'chargeback', 'amount']),
-  Math.abs
-)
-
-const getRefundAmountFrom = property => pipe(
-  pathOr(0, [property, 'refund', 'amount']),
-  Math.abs
-)
-
-const sumFee = property => juxtSum([
-  getChargeBackFeeFrom(property),
-  getCreditFeeFrom(property),
-  getRefundFraudCoverageFeeFrom(property),
-])
-
-const sumChargebackAndRefund = property => juxtSum([
-  getChargebackAmountFrom(property),
-  getRefundAmountFrom(property),
-])
-
-const getOutcoming = getSumFromFunction(getCreditAmount)
-
-const getOutgoing = pipe(
-  juxtSum([
-    getSumFromFunction(sumFee),
-    getSumFromFunction(sumChargebackAndRefund),
-  ]),
+const negateFunction = func => pipe(
+  func,
   negate
 )
 
-const getNetAmount = property => pipe(
-  prop(property),
-  juxtSum([
-    getOutcoming,
-    getOutgoing,
-  ])
-)
+const getCashInFee = feePath => negateFunction(getNegativeOrZero(feePath))
 
-const applySumFunctionToProp = (property, getFunction) => pipe(
-  prop(property),
-  getFunction
-)
+const getCashOutFee = feePath => negateFunction(getPositveOrZero(feePath))
 
-const sumWaitingFundsNet = getNetAmount('waiting_funds')
-
-const sumWaitingFundsOutcoming = applySumFunctionToProp(
-  'waiting_funds',
-  getOutcoming
-)
-
-const sumWaitingFundsOutgoing = applySumFunctionToProp(
-  'waiting_funds',
-  getOutgoing
-)
-
-const sumPrepaidFundsNet = getNetAmount('prepaid')
-
-const sumPrepaidOutcoming = applySumFunctionToProp(
-  'prepaid',
-  getOutcoming
-)
-
-const sumPrepaidOutgoing = applySumFunctionToProp(
-  'prepaid',
-  getOutgoing
-)
-
-const sumNetAmount = buildDaysSumFunction([
-  sumPrepaidFundsNet,
-  sumWaitingFundsNet,
+const getCashOutFrom = propertyPath => sumFunctionResults([
+  getNegativeOrZero([...propertyPath, 'amount']),
+  getCashOutFee([...propertyPath, 'anticipation_fee']),
+  getCashOutFee([...propertyPath, 'fee']),
+  getCashOutFee([...propertyPath, 'fraud_coverage_fee']),
 ])
 
-const sumOutcoming = buildDaysSumFunction([
-  sumPrepaidOutcoming,
-  sumWaitingFundsOutcoming,
+const getCashInFrom = propertyPath => sumFunctionResults([
+  getPositveOrZero([...propertyPath, 'amount']),
+  getCashInFee([...propertyPath, 'anticipation_fee']),
+  getCashInFee([...propertyPath, 'fee']),
+  getCashInFee([...propertyPath, 'fraud_coverage_fee']),
 ])
 
-const sumOutgoing = buildDaysSumFunction([
-  sumPrepaidOutgoing,
-  sumWaitingFundsOutgoing,
+const cashInFunctions = map(getCashInFrom, paths)
+
+const cashOutFunctions = map(getCashOutFrom, paths)
+
+const mapSumFunction = sumFunction => pipe(
+  map(sumFunctionResults(sumFunction)),
+  sum
+)
+
+const sumOutcoming = mapSumFunction(cashInFunctions)
+
+const sumOutgoing = mapSumFunction(cashOutFunctions)
+
+const sumNetAmount = sumFunctionResults([
+  sumOutcoming,
+  sumOutgoing,
 ])
 
 const getDates = pluck('date')
