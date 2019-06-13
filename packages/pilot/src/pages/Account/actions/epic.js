@@ -37,6 +37,8 @@ import { receiveError } from '../../ErrorBoundary'
 import { activeCompanyLogin, inactiveCompanyLogin } from '../../../vendor/googleTagManager'
 
 const isActiveCompany = propEq('status', 'active')
+const isSelfRegister = propEq('type', 'self_register')
+const isPendingRiskAnalysis = propEq('status', 'pending_risk_analysis')
 
 const getRecipientId = pathOr(null, ['account', 'company', 'default_recipient_id', env])
 
@@ -102,6 +104,14 @@ const accountEpic = action$ =>
     )
 
 const verifyEnvironmentPermission = (company) => {
+  if (
+    env === 'live' &&
+    isSelfRegister(company) &&
+    isPendingRiskAnalysis(company)
+  ) {
+    throw new Error('Pending risk analysis')
+  }
+
   if (env === 'live' && !isActiveCompany(company)) {
     throw new Error('Unauthorized environment')
   }

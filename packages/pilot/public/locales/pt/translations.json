@@ -568,6 +568,8 @@
       "no_connection": "Por favor verifique sua conexão com a internet e recarrege a página",
       "no_connection_title": "Sem internet?",
       "page_refresh": "Recarregar página",
+      "pending_risk_analysis": "Nos próximos dias você receberá um e-mail habilitando o acesso à Dashboard",
+      "pending_risk_analysis_title": "Olá, estamos analisando a sua conta",
       "rate_limit_message": "Limite de acessos excedido. Tente novamente mais tarde",
       "rate_limit_title": "Limite de acessos",
       "unauthorized": "Parece que sua sessão expirou",

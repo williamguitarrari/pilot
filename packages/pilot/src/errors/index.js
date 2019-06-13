@@ -6,6 +6,7 @@ import transactions from './transactions'
 import react from './react'
 import anticipation from './anticipation'
 import recipient from './recipient'
+import pendingRiskAnalysis from './pendingRiskAnalysis'
 
 export default flatten([
   anticipation,
@@ -15,4 +16,5 @@ export default flatten([
   transactions,
   react,
   recipient,
+  pendingRiskAnalysis,
 ])
