@@ -109,10 +109,7 @@ class ApiKeyContainer extends React.Component {
   }
 
   render () {
-    const {
-      apiVersion,
-      t,
-    } = this.props
+    const { t } = this.props
 
     return (
       <CardSection>
@@ -123,12 +120,6 @@ class ApiKeyContainer extends React.Component {
           subtitle={
             <Fragment>
               {t('pages.settings.company.card.general.subtitle.api')}
-              &nbsp;
-              <strong>
-                {t('pages.settings.company.card.general.subtitle.api_version')}
-                &nbsp;
-                {apiVersion}
-              </strong>
             </Fragment>
           }
           title={t('pages.settings.company.card.general.title.api')}
@@ -151,7 +142,6 @@ ApiKeyContainer.propTypes = {
     }),
     title: PropTypes.string.isRequired,
   }),
-  apiVersion: PropTypes.string,
   environment: PropTypes.oneOf([
     'live',
     'test',
@@ -161,7 +151,6 @@ ApiKeyContainer.propTypes = {
 
 ApiKeyContainer.defaultProps = {
   apiKeys: null,
-  apiVersion: null,
 }
 
 export default ApiKeyContainer

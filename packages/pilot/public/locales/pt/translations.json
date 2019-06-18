@@ -12,6 +12,7 @@
   },
   "cancel": "cancelar",
   "card_number": "Número do cartão",
+  "confirm": "Confirmar",
   "confirmation": "Confirmação",
   "conta_corrente": "Corrente",
   "conta_corrente_conjunta": "Corrente conjunta",
@@ -1079,5 +1080,13 @@
   "password_rules_min_length": "No mínimo {{length}} caracteres",
   "password_rules_max_length": "No máximo {{length}} caracteres",
   "transactions_export_table": "Exportar tabela",
-  "transactions_export_to": "Exportar para:"
+  "transactions_export_to": "Exportar para:",
+  "version": "Versão",
+  "select_version_title": "Versionamento da API",
+  "select_version_description": "A versão define o comportamento da API, assim como quais parâmetros você pode enviar nas requisições e quais propriedades ela retorna. A versão é automaticamente definida para a mais recente ao criar a conta no Pagar.me.",
+  "select_version_label": "Selecionar versão",
+  "select_version_confirm_title": "Mudança de versionamento",
+  "select_version_confirm_text": "Tem certeza de que deseja alterar a versão da API para a sua conta? Isso pode afetar a sua integração. Para saber mais sobre isso",
+  "select_version_confirm_link": "clique aqui.",
+  "select_version_confirm_version": "Versão da API do modo {{env}}: {{version}}"
 }

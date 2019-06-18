@@ -171,6 +171,7 @@ class CompanySettingsPage extends React.Component {
         error: null,
         success: false,
       },
+      versions: [],
     }
 
     this.getInitialState = this.getInitialState.bind(this)
@@ -185,6 +186,7 @@ class CompanySettingsPage extends React.Component {
     this.handleDeleteUser = this.handleDeleteUser.bind(this)
     this.requestData = this.requestData.bind(this)
     this.resetCreateUserState = this.resetCreateUserState.bind(this)
+    this.handleVersionChange = this.handleVersionChange.bind(this)
   }
 
   getInitialState () {
@@ -246,6 +248,21 @@ class CompanySettingsPage extends React.Component {
   componentDidMount () {
     this.requestData()
     this.getInitialState()
+    this.getVersionsAPI()
+  }
+
+  getVersionsAPI () {
+    this.props.client.versions()
+      .then((results) => {
+        if (results.length) {
+          const versions = results.map((version, index) => ({
+            name: `${this.props.t('version')} ${index + 1} (${version})`,
+            value: version,
+          }))
+
+          this.setState({ versions })
+        }
+      })
   }
 
   requestData () {
@@ -470,6 +487,20 @@ class CompanySettingsPage extends React.Component {
       .catch(handleFailure))
   }
 
+  handleVersionChange (version) {
+    const { companyInfo } = this.state
+
+    const handleSuccess = () => this.setState({
+      companyInfo: {
+        ...companyInfo,
+        apiVersion: version,
+      },
+    })
+
+    this.props.client.company.update({ api_version: version })
+      .then(handleSuccess)
+  }
+
   resetCreateUserState () {
     this.setState({
       createUserStatus: {
@@ -518,6 +549,7 @@ class CompanySettingsPage extends React.Component {
         pricing,
         team,
       },
+      versions,
     } = this.state
 
     return (
@@ -551,10 +583,13 @@ class CompanySettingsPage extends React.Component {
         onBoletoSettingsCancel={this.handleBoletoCancel}
         onBoletoSettingsChange={this.handleBoletoChange}
         onBoletoSettingsSubmit={this.handleBoletoSubmit}
+        onVersionChange={this.handleVersionChange}
         pricing={pricing}
         resetCreateUserState={this.resetCreateUserState}
         t={t}
         team={team}
+        versions={versions}
+        userIsReadOnly={userIsReadOnly(this.props.user)}
       />
     )
   }
@@ -572,6 +607,7 @@ CompanySettingsPage.propTypes = {
     user: PropTypes.shape({
       destroy: PropTypes.func.isRequired,
     }),
+    versions: PropTypes.func.isRequired,
   }).isRequired,
   company: PropTypes.shape({
     boletos: PropTypes.shape({
