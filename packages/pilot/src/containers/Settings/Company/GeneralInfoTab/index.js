@@ -5,13 +5,17 @@ import { CardContent } from 'former-kit'
 
 import ApiKey from './ApiKey'
 import Pricing from './Pricing'
+import Versions from './Versions'
 
 const GeneralInfoTab = ({
   apiKeys,
   apiVersion,
   environment,
+  onVersionChange,
   pricing,
   t,
+  userIsReadOnly,
+  versions,
 }) => (
   <Fragment>
     <CardContent>
@@ -24,11 +28,23 @@ const GeneralInfoTab = ({
     <CardContent>
       <ApiKey
         apiKeys={apiKeys}
-        apiVersion={apiVersion}
         environment={environment}
         t={t}
       />
     </CardContent>
+
+    {!userIsReadOnly &&
+      <CardContent>
+        <Versions
+          current={apiVersion}
+          environment={environment}
+          options={versions}
+          onVersionChange={onVersionChange}
+          t={t}
+          userIsReadOnly={userIsReadOnly}
+        />
+      </CardContent>
+    }
   </Fragment>
 )
 
@@ -45,6 +61,7 @@ GeneralInfoTab.propTypes = {
     'live',
     'test',
   ]).isRequired,
+  onVersionChange: PropTypes.func.isRequired,
   pricing: PropTypes.arrayOf(PropTypes.shape({
     mainTitle: PropTypes.string.isRequired,
     subItems: PropTypes.arrayOf(PropTypes.shape({
@@ -56,6 +73,11 @@ GeneralInfoTab.propTypes = {
     })).isRequired,
   })).isRequired,
   t: PropTypes.func.isRequired,
+  userIsReadOnly: PropTypes.bool.isRequired,
+  versions: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+  })).isRequired,
 }
 
 GeneralInfoTab.defaultProps = {
