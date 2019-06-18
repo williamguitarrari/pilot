@@ -54,10 +54,13 @@ class CompanySettings extends Component {
       onBoletoSettingsCancel,
       onBoletoSettingsChange,
       onBoletoSettingsSubmit,
+      onVersionChange,
       pricing,
       resetCreateUserState,
       t,
       team,
+      userIsReadOnly,
+      versions,
     } = this.props
 
     const {
@@ -83,8 +86,11 @@ class CompanySettings extends Component {
             apiKeys={apiKeys}
             apiVersion={apiVersion}
             environment={environment}
+            onVersionChange={onVersionChange}
             pricing={pricing}
             t={t}
+            userIsReadOnly={userIsReadOnly}
+            versions={versions}
           />
         }
         {selectedIndex === 1 &&
@@ -236,6 +242,7 @@ CompanySettings.propTypes = {
   onBoletoSettingsCancel: PropTypes.func.isRequired,
   onBoletoSettingsChange: PropTypes.func.isRequired,
   onBoletoSettingsSubmit: PropTypes.func.isRequired,
+  onVersionChange: PropTypes.func.isRequired,
   pricing: PropTypes.arrayOf(PropTypes.shape({
     mainTitle: PropTypes.string.isRequired,
     subItems: PropTypes.arrayOf(PropTypes.shape({
@@ -253,6 +260,11 @@ CompanySettings.propTypes = {
     email: PropTypes.string,
     name: PropTypes.string,
     role: PropTypes.string,
+  })).isRequired,
+  userIsReadOnly: PropTypes.bool.isRequired,
+  versions: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
   })).isRequired,
 }
 
