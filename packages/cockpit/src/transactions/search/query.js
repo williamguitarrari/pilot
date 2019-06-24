@@ -86,7 +86,7 @@ const aggregations = {
     aggregations: {
       amount: {
         sum: {
-          field: 'amount',
+          field: 'paid_amount',
         },
       },
     },
