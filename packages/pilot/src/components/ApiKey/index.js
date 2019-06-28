@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import { Button } from 'former-kit'
 import IconCopy from 'emblematic-icons/svg/Copy24.svg'
 
@@ -23,7 +24,7 @@ const ApiKey = ({
         {copyLabel}
       </Button>
     </div>
-    <div className={style.content}>
+    <div className={classNames('fs-block', style.content)}>
       {apiKey}
     </div>
   </div>
