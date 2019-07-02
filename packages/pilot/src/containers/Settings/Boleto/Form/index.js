@@ -27,9 +27,9 @@ class BoletoForm extends Component {
   }
 
   toggleForm () {
-    this.setState({
-      collapsed: !this.state.collapsed,
-    })
+    this.setState(({ collapsed }) => ({
+      collapsed: !collapsed,
+    }))
   }
 
   render () {

@@ -181,8 +181,8 @@ const getValidId = uncurryN(2, defaultId => unless(
 
 const getRecipientId = pathOr(null, ['default_recipient_id', env])
 
-const cancelBulkAnticipation = ({ bulkId, recipientId }, client) =>
-  client.bulkAnticipations.cancel({
+const cancelBulkAnticipation = ({ bulkId, recipientId }, client) => client
+  .bulkAnticipations.cancel({
     id: bulkId,
     recipientId,
   })
@@ -218,8 +218,8 @@ const defaultTimeframe = 'past'
 const timeframesQuery = [defaultTimeframe, 'future']
 const getTimeframeProp = propOr(defaultTimeframe, 'timeframe')
 
-const findTimeframeIndex = timeframe =>
-  timeframesQuery.findIndex(value => value === timeframe)
+const findTimeframeIndex = timeframe => timeframesQuery
+  .findIndex(value => value === timeframe)
 
 const getTimeframeIndex = pipe(
   findTimeframeIndex,
@@ -229,12 +229,13 @@ const getTimeframeIndex = pipe(
   )
 )
 
-const mustUpdateTotals = uncurryN(2, ({ count, dates, timeframe }) =>
+const mustUpdateTotals = uncurryN(2, ({ count, dates, timeframe }) => (
   complement(allPass([
     whereEq({ count }),
     whereEq({ dates }),
     whereEq({ timeframe }),
-  ])))
+  ]))
+))
 
 const mustUpdateOperations = uncurryN(2, ({
   page,
@@ -463,6 +464,7 @@ class Balance extends Component {
       qs.stringify
     )
     const {
+      company,
       history,
       match: {
         params,
@@ -471,7 +473,7 @@ class Balance extends Component {
 
     const queryObject = this.getQueryObject(query)
 
-    const pathId = getValidId(getRecipientId(this.props.company), id)
+    const pathId = getValidId(getRecipientId(company), id)
 
     if (pathId) {
       const queryString = buildBalanceQuery(queryObject)
@@ -486,7 +488,10 @@ class Balance extends Component {
   }
 
   requestAnticipationLimits (id) {
-    const { client } = this.props
+    const {
+      client,
+      onRequestAnticipationLimits,
+    } = this.props
     const now = moment()
 
     return client
@@ -495,12 +500,11 @@ class Balance extends Component {
       .then(calendar => client
         .business
         .nextAnticipableBusinessDay(calendar, { hour: 10 }, now))
-      .then(paymentDate =>
-        this.props.onRequestAnticipationLimits({
-          paymentDate,
-          recipientId: id,
-          timeframe: 'start',
-        }))
+      .then(paymentDate => onRequestAnticipationLimits({
+        paymentDate,
+        recipientId: id,
+        timeframe: 'start',
+      }))
   }
 
   requestTotals (id, searchQuery) {
@@ -611,6 +615,7 @@ class Balance extends Component {
       .then(([data, operations, total]) => {
         const { result: { search } } = operations
         const { query, result } = data
+        const { onReceiveBalance } = this.props
         const { query: stateQuery } = this.state
         const timeframe = getTimeframeProp(searchQuery)
         const newQuery = assoc(timeframe, query, stateQuery)
@@ -629,10 +634,11 @@ class Balance extends Component {
           this.requestOperations(searchQuery, searchQuery.page + 1)
         }
 
-        this.props.onReceiveBalance(query)
+        onReceiveBalance(query)
       })
       .catch((error) => {
-        this.props.onRequestBalanceFail(error)
+        const { onRequestBalanceFail } = this.props
+        onRequestBalanceFail(error)
       })
   }
 
@@ -648,18 +654,22 @@ class Balance extends Component {
   handleCancelRequest () {
     const { client, company } = this.props
     const recipientId = getRecipientId(company)
-    const { id: bulkId } = this.state.anticipationCancel
+    const {
+      anticipationCancel: {
+        id: bulkId,
+      },
+    } = this.state
 
     cancelBulkAnticipation({
       bulkId,
       recipientId,
     }, client)
       .then(() => client.bulkAnticipations.findPendingRequests(recipientId))
-      .then(response => this.setState({
-        ...this.state,
+      .then(response => this.setState(prevState => ({
+        ...prevState,
         modalOpened: false,
         requests: response,
-      }))
+      })))
       .then(() => this.requestAnticipationLimits(recipientId))
   }
 
@@ -741,19 +751,19 @@ class Balance extends Component {
   }
 
   handleOpenConfirmCancel (anticipation) {
-    this.setState({
-      ...this.state,
+    this.setState(prevState => ({
+      ...prevState,
       anticipationCancel: anticipation,
       modalOpened: true,
-    })
+    }))
   }
 
   handleCloseConfirmCancel () {
-    this.setState({
-      ...this.state,
+    this.setState(prevState => ({
+      ...prevState,
       anticipationCancel: null,
       modalOpened: false,
-    })
+    }))
   }
 
   handleTimeframeChange (timeframeIndex) {
@@ -796,7 +806,7 @@ class Balance extends Component {
       total,
     } = this.state
     const { dates, page } = query[timeframe]
-    const isEmptyResult = isNilOrEmpty(this.state.search)
+    const isEmptyResult = isNilOrEmpty(search)
     const hasDefaultRecipient = !isNilOrEmpty(getRecipientId(company))
     const hasCompany = !isNil(company)
 

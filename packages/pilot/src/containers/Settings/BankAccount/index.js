@@ -40,9 +40,9 @@ class BankAccount extends Component {
   }
 
   handleCollapse () {
-    this.setState({
-      collapsed: !this.state.collapsed,
-    })
+    this.setState(({ collapsed }) => ({
+      collapsed: !collapsed,
+    }))
   }
 
   renderSubtitle (account) {
@@ -105,49 +105,55 @@ class BankAccount extends Component {
             subtitle={this.renderSubtitle(selectedAccount)}
             title={t('pages.settings.company.card.register.title.bank')}
           />
-          {!collapsed &&
-            <Fragment>
-              <CardContent>
-                <SegmentedSwitch
-                  name="select"
-                  onChange={this.handleChange}
-                  options={[
-                    {
-                      title: t('pages.settings.company.card.register.title.select'),
-                      value: 'selection',
-                    },
-                    {
-                      title: t('pages.settings.company.card.register.title.add'),
-                      value: 'addition',
-                    },
-                  ]}
-                  value={selected}
-                />
-              </CardContent>
+          {!collapsed
+            && (
+              <Fragment>
+                <CardContent>
+                  <SegmentedSwitch
+                    name="select"
+                    onChange={this.handleChange}
+                    options={[
+                      {
+                        title: t('pages.settings.company.card.register.title.select'),
+                        value: 'selection',
+                      },
+                      {
+                        title: t('pages.settings.company.card.register.title.add'),
+                        value: 'addition',
+                      },
+                    ]}
+                    value={selected}
+                  />
+                </CardContent>
 
-              {viewSelectAccount &&
-                <BankAccountSelector
-                  accounts={accounts}
-                  disabled={changeActionDisabled}
-                  onSelect={onAccountSelect}
-                  selectedAccountId={selectedAccount.id}
-                  t={t}
-                />
-              }
+                {viewSelectAccount
+                  && (
+                    <BankAccountSelector
+                      accounts={accounts}
+                      disabled={changeActionDisabled}
+                      onSelect={onAccountSelect}
+                      selectedAccountId={selectedAccount.id}
+                      t={t}
+                    />
+                  )
+                }
 
-              {viewAddAccount &&
-                <BankAccountForm
-                  actionsDisabled={disabled}
-                  data={data}
-                  disabled={changeActionDisabled}
-                  errors={errors}
-                  onChange={onChange}
-                  onCancel={onCancel}
-                  onSubmit={onSubmit}
-                  t={t}
-                />
-              }
-            </Fragment>
+                {viewAddAccount
+                  && (
+                    <BankAccountForm
+                      actionsDisabled={disabled}
+                      data={data}
+                      disabled={changeActionDisabled}
+                      errors={errors}
+                      onChange={onChange}
+                      onCancel={onCancel}
+                      onSubmit={onSubmit}
+                      t={t}
+                    />
+                  )
+                }
+              </Fragment>
+            )
           }
         </CardSection>
       </Card>

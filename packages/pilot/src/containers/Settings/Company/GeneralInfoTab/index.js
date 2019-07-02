@@ -33,17 +33,19 @@ const GeneralInfoTab = ({
       />
     </CardContent>
 
-    {!userIsReadOnly &&
-      <CardContent>
-        <Versions
-          current={apiVersion}
-          environment={environment}
-          options={versions}
-          onVersionChange={onVersionChange}
-          t={t}
-          userIsReadOnly={userIsReadOnly}
-        />
-      </CardContent>
+    {!userIsReadOnly
+      && (
+        <CardContent>
+          <Versions
+            current={apiVersion}
+            environment={environment}
+            options={versions}
+            onVersionChange={onVersionChange}
+            t={t}
+            userIsReadOnly={userIsReadOnly}
+          />
+        </CardContent>
+      )
     }
   </Fragment>
 )

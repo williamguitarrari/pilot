@@ -23,8 +23,8 @@ import formatCurrency from '../../formatters/currency'
 import formatDate from '../../formatters/longDate'
 import formatPaymentMethod from '../../formatters/paymentMethod'
 import formatRefuseReason from '../../formatters/refuseReason'
-import renderCardBrand from '../../containers/TransactionsList/renderCardBrand'
-import renderStatusLegend from '../../containers/TransactionsList/renderStatusLegend'
+import renderCardBrand from './renderCardBrand'
+import renderStatusLegend from './renderStatusLegend'
 
 const convertPaymentValue = property => pipe(
   path(['payment', property]),

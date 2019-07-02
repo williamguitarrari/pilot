@@ -74,8 +74,8 @@ const BoletoResult = ({
           <span>{statusMessage}</span>
         </Alert>
       </ModalContent>
-      {status === 'success' &&
-        (
+      {status === 'success'
+        && (
           <BoletoRefundDetails
             contents={contents}
             labels={labels}

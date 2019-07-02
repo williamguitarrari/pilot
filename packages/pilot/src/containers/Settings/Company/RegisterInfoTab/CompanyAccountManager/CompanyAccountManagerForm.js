@@ -28,11 +28,11 @@ class CompanyGeneralForm extends Component {
   constructor (props) {
     super(props)
 
-    const initalFormData = formatInitialData(props.managingPartner)
+    const initialFormData = formatInitialData(props.managingPartner)
 
     this.state = {
-      currentFormData: initalFormData,
-      initalFormData,
+      currentFormData: initialFormData,
+      initialFormData,
     }
 
     this.handleCancellation = this.handleCancellation.bind(this)
@@ -47,25 +47,31 @@ class CompanyGeneralForm extends Component {
   }
 
   handleCancellation () {
+    const { initialFormData } = this.state
+
     this.setState({
-      currentFormData: this.state.initalFormData,
+      currentFormData: initialFormData,
     })
   }
 
   handleFormSubmit (data, formErrors) {
+    const { onSubmit } = this.props
+
     if (isEmpty(formErrors)) {
-      this.props.onSubmit(data)
+      onSubmit(data)
     }
   }
+
   render () {
     const {
       t,
     } = this.props
+    const { currentFormData } = this.state
 
     return (
       <Form
         customErrorProp="error"
-        data={this.state.currentFormData}
+        data={currentFormData}
         onSubmit={this.handleFormSubmit}
         onChange={this.handleFormChange}
       >

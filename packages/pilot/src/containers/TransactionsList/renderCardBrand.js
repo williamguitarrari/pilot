@@ -26,11 +26,13 @@ const renderCardBrand = item => (
     className={style.centralizedItem}
     title={item.card.brand_name}
   >
-    {item.card.brand_name &&
-      <span className={style.capitalize}>
-        {renderBrandIcon(item.card.brand_name)}
-        {item.card.brand_name}
-      </span>
+    {item.card.brand_name
+      && (
+        <span className={style.capitalize}>
+          {renderBrandIcon(item.card.brand_name)}
+          {item.card.brand_name}
+        </span>
+      )
     }
   </div>
 )

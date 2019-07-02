@@ -40,63 +40,61 @@ const destroyAnticipation = (client, {
   })
 )
 
-const limitsEpic = (action$, state$) =>
-  action$
-    .pipe(
-      ofType(ANTICIPABLE_LIMITS_REQUEST),
-      mergeMap(({ payload }) => {
-        const state = state$.value
-        const recipientId = payload.recipientId || getRecipientId(state)
-        const { account: { client } } = state
-        const { paymentDate, timeframe } = payload
-        return getAnticipationLimits(client, {
-          payment_date: paymentDate,
-          recipientId,
-          timeframe,
-        })
-      }),
-      map(receiveLimits),
-      catchError((error) => {
-        const { message } = error
-
-        return of(failLimits({ message }))
+const limitsEpic = (action$, state$) => action$
+  .pipe(
+    ofType(ANTICIPABLE_LIMITS_REQUEST),
+    mergeMap(({ payload }) => {
+      const state = state$.value
+      const recipientId = payload.recipientId || getRecipientId(state)
+      const { account: { client } } = state
+      const { paymentDate, timeframe } = payload
+      return getAnticipationLimits(client, {
+        payment_date: paymentDate,
+        recipientId,
+        timeframe,
       })
-    )
+    }),
+    map(receiveLimits),
+    catchError((error) => {
+      const { message } = error
 
-const destroyAnticipationEpic = (action$, state$) =>
-  action$
-    .pipe(
-      ofType(DESTROY_ANTICIPATION_REQUEST),
-      mergeMap(({ payload }) => {
-        const state = state$.value
-        const { anticipationId } = payload
-        const recipientId = payload.recipientId || getRecipientId(state)
-        const { account: { client } } = state
+      return of(failLimits({ message }))
+    })
+  )
 
-        return client
-          .business
-          .requestBusinessCalendar(moment().get('year'))
-          .then((calendar) => {
-            const paymentDate = client
-              .business
-              .nextAnticipableBusinessDay(
-                calendar,
-                { hour: 10, minute: 20 },
-                moment()
-              )
+const destroyAnticipationEpic = (action$, state$) => action$
+  .pipe(
+    ofType(DESTROY_ANTICIPATION_REQUEST),
+    mergeMap(({ payload }) => {
+      const state = state$.value
+      const { anticipationId } = payload
+      const recipientId = payload.recipientId || getRecipientId(state)
+      const { account: { client } } = state
 
-            return destroyAnticipation(client, {
-              anticipationId,
-              recipientId,
-            })
-              .then(() => ({
-                paymentDate,
-                recipientId,
-                timeframe: 'start',
-              }))
+      return client
+        .business
+        .requestBusinessCalendar(moment().get('year'))
+        .then((calendar) => {
+          const paymentDate = client
+            .business
+            .nextAnticipableBusinessDay(
+              calendar,
+              { hour: 10, minute: 20 },
+              moment()
+            )
+
+          return destroyAnticipation(client, {
+            anticipationId,
+            recipientId,
           })
-      }),
-      map(requestLimits)
-    )
+            .then(() => ({
+              paymentDate,
+              recipientId,
+              timeframe: 'start',
+            }))
+        })
+    }),
+    map(requestLimits)
+  )
 
 export default combineEpics(limitsEpic, destroyAnticipationEpic)

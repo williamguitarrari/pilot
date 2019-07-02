@@ -23,18 +23,21 @@ const SidebarSummary = ({
       className={style.title}
       onClick={onClick}
       role="link"
+      type="button"
     >
       {title}
 
-      {subtitle &&
-        <span className={style.subtitle}>
-          {subtitle}
-          <Spacing size="small" />
-          {collapsed
-            ? <IconArrowDown height={16} width={16} />
-            : <IconArrowUp height={16} width={16} />
-          }
-        </span>
+      {subtitle
+        && (
+          <span className={style.subtitle}>
+            {subtitle}
+            <Spacing size="small" />
+            {collapsed
+              ? <IconArrowDown height={16} width={16} />
+              : <IconArrowUp height={16} width={16} />
+            }
+          </span>
+        )
       }
     </button>
 

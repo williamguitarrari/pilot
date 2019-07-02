@@ -31,8 +31,10 @@ class CardForm extends Component {
   }
 
   handleSubmit (data, errors) {
+    const { onConfirm } = this.props
+
     if (!errors) {
-      this.props.onConfirm(data)
+      onConfirm(data)
     }
   }
 
@@ -135,11 +137,11 @@ class CardForm extends Component {
                   ? (
                     <Property
                       title={t('pages.refund.refund_amount_with_symbol')}
-                      value={
+                      value={(
                         <span className={style.authorizedAmount}>
                           {formatterCurrency(amount)}
                         </span>
-                      }
+                      )}
                     />
                   )
                   : (

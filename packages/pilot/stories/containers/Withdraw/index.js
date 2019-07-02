@@ -116,13 +116,20 @@ class WithdrawExample extends Component {
   }
 
   render () {
+    const {
+      currentStep,
+      error,
+      requested,
+      stepsStatus: stateStepsStatus,
+    } = this.state
+
     return (
       <Section>
         <Withdraw
-          amount={Number(this.state.requested) + transferCost}
+          amount={Number(requested) + transferCost}
           available={123456}
-          confirmationPasswordError={this.state.error}
-          currentStep={this.state.currentStep}
+          confirmationPasswordError={error}
+          currentStep={currentStep}
           date={moment()}
           disabled={false}
           maximum={12345}
@@ -133,9 +140,9 @@ class WithdrawExample extends Component {
           onTryAgain={() => this.toTo('data', 'current')}
           onViewStatement={action('See statement')}
           recipient={recipient}
-          requested={Number(this.state.requested)}
+          requested={Number(requested)}
           statusMessage="Success!!!!"
-          stepsStatus={this.state.stepsStatus}
+          stepsStatus={stateStepsStatus}
           t={pipe(split('.'), last)}
           transferCost={transferCost}
         />

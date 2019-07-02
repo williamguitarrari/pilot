@@ -69,10 +69,12 @@ class CardExample extends React.Component {
   }
 
   render () {
+    const { loadingSkeleton } = this.state
+
     return (
       <Section title="With Loader">
         <CardWithSkeleton
-          loading={this.state.loadingSkeleton}
+          loading={loadingSkeleton}
           onClick={this.handleClickSkeleton}
           text="load with skeleton"
         />

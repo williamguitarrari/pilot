@@ -32,10 +32,13 @@ import style from './style.css'
 const isRequired = t => requiredValidation(t('pages.required_error'))
 const isNumber = t => numberValidation(t('pages.capture.number'))
 
-const greaterThanAuthorized = (authorizedAmount, t) =>
+const greaterThanAuthorized = (authorizedAmount, t) => (
   greaterThanValidation(authorizedAmount, t('pages.capture.invalid_amount'))
-const lessThanOrEqualZero = t =>
+)
+
+const lessThanOrEqualZero = t => (
   lessThanOrEqualValidation(0, t('pages.capture.greater_than_zero'))
+)
 
 const isBoleto = equals('boleto')
 
@@ -89,11 +92,11 @@ const CaptureForm = ({
       ? (
         <Property
           title={t('pages.capture.value_to_capture')}
-          value={
+          value={(
             <span className={style.captureAmount}>
               {currency(captureAmount)}
             </span>
-          }
+          )}
         />
       )
       : (
@@ -119,12 +122,12 @@ const CaptureForm = ({
         <Row>
           <Col palm={12} tablet={12} desk={12} tv={12}>
             <Alert
-              icon={
+              icon={(
                 <WarningIcon
                   height={16}
                   width={16}
                 />
-              }
+              )}
               type="warning"
             >
               <Flexbox

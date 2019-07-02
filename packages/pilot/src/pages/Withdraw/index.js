@@ -19,7 +19,7 @@ import IconError from 'emblematic-icons/svg/ClearClose32.svg'
 import WithdrawContainer from '../../containers/Withdraw'
 import partnersBankCodes from '../../models/partnersBanksCodes'
 
-import { receiveWithdraw } from './actions/'
+import { receiveWithdraw } from './actions'
 import { withError } from '../ErrorBoundary'
 
 const mapStateToProps = ({
@@ -290,43 +290,47 @@ class Withdraw extends Component {
 
     return (
       <Fragment>
-        {!isNil(recipient) &&
-          <WithdrawContainer
-            amount={Number(requested) + transferCost}
-            available={getAvailableAmount(recipient)}
-            confirmationPasswordError={confirmationPasswordError}
-            currentStep={currentStep}
-            date={moment()}
-            disabled={confirmationDisabledButtons}
-            maximum={getAvailableTransferAmount(recipient)}
-            onCancel={this.goToBalance}
-            onConfirmationConfirm={this.handleConfirmationConfirm}
-            onConfirmationReturn={() => this.goTo('data', 'current')}
-            onFormSubmit={() => this.goTo('confirmation', 'current')}
-            onRequestedChange={this.handleRequestChange}
-            onTryAgain={this.handleTryAgain}
-            onViewStatement={() => history.push(`/balance/${recipient.id}`)}
-            recipient={recipient}
-            requested={Number(requested)}
-            statusMessage={statusMessage}
-            stepsStatus={stepsStatus}
-            t={t}
-            transferCost={transferCost}
-          />
+        {!isNil(recipient)
+          && (
+            <WithdrawContainer
+              amount={Number(requested) + transferCost}
+              available={getAvailableAmount(recipient)}
+              confirmationPasswordError={confirmationPasswordError}
+              currentStep={currentStep}
+              date={moment()}
+              disabled={confirmationDisabledButtons}
+              maximum={getAvailableTransferAmount(recipient)}
+              onCancel={this.goToBalance}
+              onConfirmationConfirm={this.handleConfirmationConfirm}
+              onConfirmationReturn={() => this.goTo('data', 'current')}
+              onFormSubmit={() => this.goTo('confirmation', 'current')}
+              onRequestedChange={this.handleRequestChange}
+              onTryAgain={this.handleTryAgain}
+              onViewStatement={() => history.push(`/balance/${recipient.id}`)}
+              recipient={recipient}
+              requested={Number(requested)}
+              statusMessage={statusMessage}
+              stepsStatus={stepsStatus}
+              t={t}
+              transferCost={transferCost}
+            />
+          )
         }
-        {error &&
-          <Alert
-            icon={<IconError height={16} width={16} />}
-            type="error"
-          >
-            <span>
-              {
-                error.localized
-                  ? error.localized.message
-                  : error.message
-              }
-            </span>
-          </Alert>
+        {error
+          && (
+            <Alert
+              icon={<IconError height={16} width={16} />}
+              type="error"
+            >
+              <span>
+                {
+                  error.localized
+                    ? error.localized.message
+                    : error.message
+                }
+              </span>
+            </Alert>
+          )
         }
       </Fragment>
     )

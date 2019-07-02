@@ -27,15 +27,17 @@ const renderRequests = (requests, onCancelHandler) => requests.map((
     <td className={style.createdAt}>{created_at}</td>
     <td>{requestTitle}</td>
     <td className={style.amount}>{amount}</td>
-    {onCancelHandler &&
-      <td className={style.cancel}>
-        <Button
-          fill="outline"
-          icon={<IconClose width={12} height={12} />}
-          onClick={() => onCancelHandler(index)}
-          size="tiny"
-        />
-      </td>
+    {onCancelHandler
+      && (
+        <td className={style.cancel}>
+          <Button
+            fill="outline"
+            icon={<IconClose width={12} height={12} />}
+            onClick={() => onCancelHandler(index)}
+            size="tiny"
+          />
+        </td>
+      )
     }
   </tr>
 ))
@@ -50,15 +52,19 @@ const PendingRequests = ({
   <Card>
     <CardTitle className={style.title} title={title} />
     <CardContent>
-      {!isEmpty(requests) &&
-        <table className={style.table}>
-          <tbody>
-            {renderRequests(requests, onCancel)}
-          </tbody>
-        </table>
+      {!isEmpty(requests)
+        && (
+          <table className={style.table}>
+            <tbody>
+              {renderRequests(requests, onCancel)}
+            </tbody>
+          </table>
+        )
       }
-      {isEmpty(requests) &&
-        <p>{emptyMessage}</p>
+      {isEmpty(requests)
+        && (
+          <p>{emptyMessage}</p>
+        )
       }
     </CardContent>
   </Card>

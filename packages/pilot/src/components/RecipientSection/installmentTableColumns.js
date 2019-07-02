@@ -157,9 +157,9 @@ const columns = [
     align: 'end',
     orderable: false,
     renderer: ({ costs }) => (
-      costs.chargeback ?
-        currencyFormatter(costs.chargeback) :
-        currencyFormatter(costs.refund)
+      costs.chargeback
+        ? currencyFormatter(costs.chargeback)
+        : currencyFormatter(costs.refund)
     ),
     title: 'models.installment.chargeback_refund',
   },

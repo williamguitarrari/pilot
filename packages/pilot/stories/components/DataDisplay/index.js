@@ -16,11 +16,11 @@ const DataDisplayExample = () => (
           <DataDisplay
             align="center"
             color="#37cc9a"
-            subtitle={
+            subtitle={(
               <span>
                 Capturado em 10/03/2018 às 14:15h
               </span>
-            }
+            )}
             title="Random number"
             value={1234}
             valueSize="huge"

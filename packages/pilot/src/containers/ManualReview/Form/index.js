@@ -30,8 +30,11 @@ class ManualReviewForm extends Component {
   }
 
   handleSubmit (event) {
+    const { onConfirm } = this.props
+    const { password } = this.state
+
     event.preventDefault()
-    this.props.onConfirm(this.state.password)
+    onConfirm(password)
   }
 
   render () {

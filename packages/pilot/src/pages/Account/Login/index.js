@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 
 import LoginForm from '../../../containers/Account/LoginForm'
 
-import { requestLogin } from '../actions'
+import { requestLogin } from '../actions/actions'
 
 import buildParamErrors from './buildParamErrors'
 
@@ -53,8 +53,10 @@ class LoginPage extends PureComponent {
   }
 
   handlePasswordRecovery (e) {
+    const { history } = this.props
+
     e.preventDefault()
-    this.props.history.push('/account/password/recovery')
+    history.push('/account/password/recovery')
   }
 
   render () {

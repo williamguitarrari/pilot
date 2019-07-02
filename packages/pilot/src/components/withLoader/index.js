@@ -26,12 +26,14 @@ const withLoader = curry((Renderer, Component) => {
             mapStyles={fade.mapStyles}
             springOptions={fade.springOptions}
           >
-            {loading &&
-              React.cloneElement(
-                Renderer,
-                {
-                  key: Renderer.props.id || this.id,
-                }
+            {loading
+              && (
+                React.cloneElement(
+                  Renderer,
+                  {
+                    key: Renderer.props.id || this.id,
+                  }
+                )
               )
             }
           </Transition>

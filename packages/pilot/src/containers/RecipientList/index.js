@@ -71,7 +71,9 @@ class RecipientList extends Component {
         net_amount, // eslint-disable-line camelcase
         status,
       } = recipient
-      const collapsed = notContains(index, this.state.expandedItems)
+      const { expandedItems } = this.state
+
+      const collapsed = notContains(index, expandedItems)
         && !expandAllRecipients
 
       const key = `recipient_${index}`

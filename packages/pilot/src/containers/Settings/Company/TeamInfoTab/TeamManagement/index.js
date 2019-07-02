@@ -32,9 +32,9 @@ class MenagementTeam extends React.Component {
   }
 
   handleSectionTitleClick () {
-    this.setState({
-      collapsed: !this.state.collapsed,
-    })
+    this.setState(({ collapsed }) => ({
+      collapsed: !collapsed,
+    }))
   }
 
   handleModalOpenAddUser () {
@@ -44,7 +44,9 @@ class MenagementTeam extends React.Component {
   }
 
   handleCloseModal () {
-    this.props.resetCreateUserState()
+    const { resetCreateUserState } = this.props
+
+    resetCreateUserState()
     this.setState({
       isModalOpened: false,
     })
@@ -54,18 +56,22 @@ class MenagementTeam extends React.Component {
     const {
       createUserStatus,
       deleteUserStatus,
+      handleCreateUser,
       handleDeleteUser,
       t,
       team,
     } = this.props
 
-    const { loadingCreateUser } = this.state
+    const {
+      isModalOpened,
+      loadingCreateUser,
+    } = this.state
     return (
       <Fragment>
         <AddNewUserModal
-          isOpen={this.state.isModalOpened}
+          isOpen={isModalOpened}
           handleCloseModal={this.handleCloseModal}
-          handleCreateUser={this.props.handleCreateUser}
+          handleCreateUser={handleCreateUser}
           status={createUserStatus}
           loading={loadingCreateUser}
           t={t}
@@ -87,21 +93,25 @@ class MenagementTeam extends React.Component {
         </CardActions>
         {(deleteUserStatus.error || deleteUserStatus.success) && (
           <CardContent>
-            {deleteUserStatus.error &&
-              <Alert
-                type="error"
-                icon={<IconWarning height={16} width={16} />}
-              >
-                <p>{deleteUserStatus.error}</p>
-              </Alert>
+            {deleteUserStatus.error
+              && (
+                <Alert
+                  type="error"
+                  icon={<IconWarning height={16} width={16} />}
+                >
+                  <p>{deleteUserStatus.error}</p>
+                </Alert>
+              )
             }
-            {deleteUserStatus.success &&
-              <Alert
-                type="info"
-                icon={<IconInfo height={16} width={16} />}
-              >
-                <p>{t('pages.settings.company.card.team.delete_user.success')}</p>
-              </Alert>
+            {deleteUserStatus.success
+              && (
+                <Alert
+                  type="info"
+                  icon={<IconInfo height={16} width={16} />}
+                >
+                  <p>{t('pages.settings.company.card.team.delete_user.success')}</p>
+                </Alert>
+              )
             }
           </CardContent>
         )}
@@ -120,12 +130,13 @@ class MenagementTeam extends React.Component {
     const {
       t,
     } = this.props
+    const { collapsed } = this.state
 
     return (
       <CardContent>
         <CardSection>
           <CardSectionDoubleLineTitle
-            collapsed={this.state.collapsed}
+            collapsed={collapsed}
             icon={<IconTeam height={16} width={16} />}
             onClick={
               this.handleSectionTitleClick
@@ -133,8 +144,8 @@ class MenagementTeam extends React.Component {
             subtitle={t('pages.settings.company.card.team.subtitle.management')}
             title={t('pages.settings.company.card.team.title.management')}
           />
-          {!this.state.collapsed &&
-            this.renderContent()
+          {!collapsed
+            && this.renderContent()
           }
         </CardSection>
       </CardContent>

@@ -22,22 +22,22 @@ import RemoveUserModal from './RemoveUserModal'
 
 const isAscending = equals('ascending')
 
-const rowSort = accessor =>
-  sortBy(compose(toLower, defaultTo(''), path(accessor)))
-
-const getSort = (accessor, order) => (
-  isAscending(order) ?
-    rowSort(accessor) :
-    pipe(rowSort(accessor), reverse)
+const rowSort = accessor => sortBy(
+  compose(toLower, defaultTo(''), path(accessor))
 )
 
-const getRowsSort = (rows, columns) =>
-  (orderColumn, order) => {
-    const referenceColumn = columns[orderColumn]
-    const referenceAcessor = referenceColumn.accessor
-    const sort = getSort(referenceAcessor, order)
-    return sort(rows)
-  }
+const getSort = (accessor, order) => (
+  isAscending(order)
+    ? rowSort(accessor)
+    : pipe(rowSort(accessor), reverse)
+)
+
+const getRowsSort = (rows, columns) => (orderColumn, order) => {
+  const referenceColumn = columns[orderColumn]
+  const referenceAcessor = referenceColumn.accessor
+  const sort = getSort(referenceAcessor, order)
+  return sort(rows)
+}
 
 class UserTable extends React.Component {
   constructor (props) {
@@ -71,6 +71,8 @@ class UserTable extends React.Component {
   }
 
   getColumns () {
+    const { t } = this.props
+
     return [
       {
         accessor: ['name'],
@@ -95,8 +97,7 @@ class UserTable extends React.Component {
       {
         accessor: ['role'],
         orderable: true,
-        renderer: user =>
-          this.props.t(`models.user.permission.${user.role}`),
+        renderer: user => t(`models.user.permission.${user.role}`),
         title: 'Permissão',
       },
       { accessor: ['date_created'], orderable: true, title: 'Data de Criação' },
@@ -145,9 +146,11 @@ class UserTable extends React.Component {
   render () {
     const {
       columns,
+      isOpenRemoveUserModal,
       order,
       orderColumn,
       rows,
+      user,
     } = this.state
 
     const {
@@ -157,13 +160,15 @@ class UserTable extends React.Component {
     return (
       <CardSection>
         {
-          this.state.isOpenRemoveUserModal &&
-          <RemoveUserModal
-            handleCloseModal={this.handleCloseModal}
-            handleDeleteUser={handleDeleteUser}
-            isOpen={this.state.isOpenRemoveUserModal}
-            user={this.state.user}
-          />
+          isOpenRemoveUserModal
+          && (
+            <RemoveUserModal
+              handleCloseModal={this.handleCloseModal}
+              handleDeleteUser={handleDeleteUser}
+              isOpen={isOpenRemoveUserModal}
+              user={user}
+            />
+          )
         }
         <Table
           columns={columns}

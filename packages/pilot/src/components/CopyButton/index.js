@@ -12,8 +12,10 @@ class CopyButton extends React.Component {
   constructor (props) {
     super(props)
 
+    const { title } = props
+
     this.state = {
-      text: this.props.title,
+      text: title,
     }
 
     this.handleFeedback = this.handleFeedback.bind(this)
@@ -27,7 +29,11 @@ class CopyButton extends React.Component {
       title,
     } = this.props
 
-    if (this.state.text === title) {
+    const {
+      text,
+    } = this.state
+
+    if (text === title) {
       onClick()
       this.setState({
         text: feedbackText,

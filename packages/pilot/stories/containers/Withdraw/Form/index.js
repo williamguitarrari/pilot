@@ -28,16 +28,18 @@ class WithdrawFormState extends Component {
   }
 
   render () {
+    const { requested } = this.state
+
     return (
       <Section>
         <WithdrawForm
-          amount={Number(this.state.requested) + transferCost}
+          amount={Number(requested) + transferCost}
           available={123456}
           date={new Date()}
           maximum={12345}
           onRequestedChange={this.handleRequestChange}
           onSubmit={action('Submit')}
-          requested={Number(this.state.requested)}
+          requested={Number(requested)}
           t={pipe(split('.'), last)}
           transferCost={transferCost}
         />

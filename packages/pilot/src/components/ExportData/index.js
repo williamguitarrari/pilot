@@ -20,14 +20,14 @@ const ExportData = ({
 }) => (!loading
   ? (
     <Popover
-      content={
+      content={(
         <div className={style.exportPopover}>
           <PopoverContent>
             <strong>{subtitle}</strong>
           </PopoverContent>
           <PopoverMenu items={exportOptions} />
         </div>
-      }
+      )}
       placement={placement}
     >
       <Button

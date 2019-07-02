@@ -42,7 +42,7 @@ const Result = ({
   <Fragment>
     <ModalContent>
       { status !== 'error'
-        ?
+        ? (
           <div>
             <div className={style.image}>
               <Message
@@ -62,8 +62,8 @@ const Result = ({
                 contents={{
                   cardBrand,
                   cardNumber: cardFirstDigits && cardLastDigits
-                  ? `${formatCardNumber(cardFirstDigits)} ${cardLastDigits}`
-                  : '',
+                    ? `${formatCardNumber(cardFirstDigits)} ${cardLastDigits}`
+                    : '',
                   customerEmail: (
                     <span className={style.value}>
                       <Truncate
@@ -88,42 +88,46 @@ const Result = ({
                 <Col palm={12} tablet={4} desk={4} tv={4}>
                   <Property
                     title={t('pages.capture.paid_amount')}
-                    value={
+                    value={(
                       <span className={style.capturedAmount}>
                         {currency(paidAmount)}
                       </span>
-                    }
+                    )}
                   />
                 </Col>
               </Row>
             </Grid>
           </div>
-        :
+        )
+        : (
           <Alert
             icon={<IconError height={16} width={16} />}
             type="error"
           >
             {statusMessage}
           </Alert>
+        )
       }
     </ModalContent>
     <Spacing />
     <ModalActions>
       { status !== 'error'
-        ?
+        ? (
           <Button
             fill="outline"
             onClick={onViewTransaction}
           >
             {t('view_transaction')}
           </Button>
-        :
+        )
+        : (
           <Button
             fill="outline"
             onClick={onRetry}
           >
             {t('try_again')}
           </Button>
+        )
       }
     </ModalActions>
   </Fragment>

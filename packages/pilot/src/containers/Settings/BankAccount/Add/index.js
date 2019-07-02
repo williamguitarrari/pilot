@@ -126,7 +126,7 @@ const BankAccountForm = ({
           <Row>
             <Col palm={12} tablet={8} desk={4} tv={4}>
               <div className={style.agencyAccountContainer}>
-                <div className={style.agencyAccountFields} >
+                <div className={style.agencyAccountFields}>
                   <FormInput
                     disabled={disabled}
                     label={t('models.bank_account.agency')}
@@ -146,7 +146,7 @@ const BankAccountForm = ({
                   />
                 </div>
                 <Spacing size="large" />
-                <div className={style.agencyAccountFields} >
+                <div className={style.agencyAccountFields}>
                   <FormInput
                     disabled={disabled}
                     label={t('models.bank_account.account')}

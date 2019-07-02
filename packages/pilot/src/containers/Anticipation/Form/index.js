@@ -39,10 +39,12 @@ class AnticipationFormContainer extends Component {
     transfer,
     ...values
   }, errors) {
+    const { onCalculateSubmit } = this.props
+
     if (!errors) {
       const isAutomaticTransfer = transfer === 'yes'
 
-      this.props.onCalculateSubmit({
+      onCalculateSubmit({
         date: dates.start,
         isAutomaticTransfer,
         requested: Number(requested),

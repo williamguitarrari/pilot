@@ -27,8 +27,9 @@ const objectFields = (labels, contents) => (
   ), contents)
 )
 
-const fieldsToArray = (labels, contents) =>
-  values(objectFields(labels, contents))
+const fieldsToArray = (labels, contents) => values(
+  objectFields(labels, contents)
+)
 
 const fieldsColumns = (labels, contents) => {
   const fields = fieldsToArray(labels, contents)
@@ -44,7 +45,7 @@ const TransactionDetailsCard = ({ contents, labels, title }) => (
       <Grid>
         <Row className={style.propertyCustom}>
           {
-            fieldsColumns(labels, contents).map((fields, parentIndex) =>
+            fieldsColumns(labels, contents).map((fields, parentIndex) => (
               fields.map((field, index) => (
                 <Col
                   palm={12}
@@ -56,7 +57,7 @@ const TransactionDetailsCard = ({ contents, labels, title }) => (
                 >
                   { field }
                 </Col>
-              )))
+              ))))
           }
         </Row>
       </Grid>

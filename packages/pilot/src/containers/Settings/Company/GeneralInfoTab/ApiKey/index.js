@@ -26,9 +26,9 @@ class ApiKeyContainer extends React.Component {
   }
 
   handleSectionTitleClick () {
-    this.setState({
-      apiKeyCollapsed: !this.state.apiKeyCollapsed,
-    })
+    this.setState(({ apiKeyCollapsed }) => ({
+      apiKeyCollapsed: !apiKeyCollapsed,
+    }))
   }
 
   renderContent () {
@@ -56,11 +56,13 @@ class ApiKeyContainer extends React.Component {
             >
               <p>
                 {t('pages.settings.company.card.general.headline.api')}
-                {environment === 'test' &&
-                  <Fragment>
-                    &nbsp;
-                    <strong>{t('pages.settings.company.card.general.api_key.test_advise')}</strong>
-                  </Fragment>
+                {environment === 'test'
+                  && (
+                    <Fragment>
+                      &nbsp;
+                      <strong>{t('pages.settings.company.card.general.api_key.test_advise')}</strong>
+                    </Fragment>
+                  )
                 }
               </p>
             </Col>
@@ -110,24 +112,25 @@ class ApiKeyContainer extends React.Component {
 
   render () {
     const { t } = this.props
+    const { apiKeyCollapsed } = this.state
 
     return (
       <CardSection>
         <CardSectionDoubleLineTitle
-          collapsed={this.state.apiKeyCollapsed}
+          collapsed={apiKeyCollapsed}
           icon={<IconLock height={16} width={16} />}
           onClick={this.handleSectionTitleClick}
-          subtitle={
+          subtitle={(
             <Fragment>
               {t('pages.settings.company.card.general.subtitle.api')}
             </Fragment>
-          }
+          )}
           title={t('pages.settings.company.card.general.title.api')}
         />
         {
-          !this.state.apiKeyCollapsed ?
-            this.renderContent() :
-            null
+          !apiKeyCollapsed
+            ? this.renderContent()
+            : null
         }
       </CardSection>
     )

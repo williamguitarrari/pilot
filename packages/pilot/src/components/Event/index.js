@@ -30,17 +30,19 @@ class Event extends React.Component {
   constructor (props) {
     super(props)
 
+    const { collapsed } = this.props
+
     this.state = {
-      collapsed: this.props.collapsed,
+      collapsed,
     }
 
     this.handleCollapse = this.handleCollapse.bind(this)
   }
 
   handleCollapse () {
-    this.setState({
-      collapsed: !this.state.collapsed,
-    })
+    this.setState(({ collapsed }) => ({
+      collapsed: !collapsed,
+    }))
   }
 
   render () {

@@ -66,11 +66,13 @@ class AddNewUserModal extends React.Component {
   }
 
   handleFormSubmit (data, errors) {
+    const { handleCreateUser } = this.props
+
     if (!errors) {
       this.setState({
         submittedEmail: data.email,
       })
-      this.props.handleCreateUser(data)
+      handleCreateUser(data)
     }
   }
 
@@ -87,6 +89,10 @@ class AddNewUserModal extends React.Component {
       status,
       t,
     } = this.props
+    const {
+      currentData,
+      submittedEmail,
+    } = this.state
 
     return (
       <Modal
@@ -94,7 +100,7 @@ class AddNewUserModal extends React.Component {
         onRequestClose={handleCloseModal}
       >
         <Form
-          data={this.state.currentData}
+          data={currentData}
           customErrorProp="error"
           onSubmit={this.handleFormSubmit}
           validation={
@@ -136,24 +142,28 @@ class AddNewUserModal extends React.Component {
               name="permission"
             />
 
-            {status.error &&
-              <Alert
-                type="error"
-                icon={<IconWarning height={16} width={16} />}
-              >
-                <p>{status.error}</p>
-              </Alert>
+            {status.error
+              && (
+                <Alert
+                  type="error"
+                  icon={<IconWarning height={16} width={16} />}
+                >
+                  <p>{status.error}</p>
+                </Alert>
+              )
             }
-            {status.success &&
-              <Alert
-                type="info"
-                icon={<IconInfo height={16} width={16} />}
-              >
-                {t(
-                  'pages.settings.company.card.team.modal.success',
-                  { email: (this.state.submittedEmail) }
-                )}
-              </Alert>
+            {status.success
+              && (
+                <Alert
+                  type="info"
+                  icon={<IconInfo height={16} width={16} />}
+                >
+                  {t(
+                    'pages.settings.company.card.team.modal.success',
+                    { email: (submittedEmail) }
+                  )}
+                </Alert>
+              )
             }
           </ModalContent>
 

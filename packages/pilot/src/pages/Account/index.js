@@ -55,7 +55,7 @@ const AccountArea = ({ history: { location }, t }) => {
       t={t}
       logo={getEnvironmentLogo()}
       base={base}
-      primaryContent={
+      primaryContent={(
         <Switch>
           <Route
             path="/account/login"
@@ -83,8 +83,8 @@ const AccountArea = ({ history: { location }, t }) => {
           />
           <Redirect to="/account/login" />
         </Switch>
-      }
-      secondaryContent={
+      )}
+      secondaryContent={(
         <Switch>
           <Route
             path="/account"
@@ -92,7 +92,7 @@ const AccountArea = ({ history: { location }, t }) => {
           />
           <Redirect to="/account/login" />
         </Switch>
-      }
+      )}
     />
   )
 }

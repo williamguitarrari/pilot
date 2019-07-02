@@ -47,8 +47,10 @@ class BoletoForm extends Component {
   }
 
   handleSubmit (data, errors) {
+    const { onSubmit } = this.props
+
     if (!errors) {
-      this.props.onSubmit(data)
+      onSubmit(data)
     }
   }
 
@@ -147,7 +149,7 @@ class BoletoForm extends Component {
                   />
                 </Col>
                 <Col palm={12} tablet={12} desk={3} tv={3}>
-                  <div className={style.agencyAccountFields} >
+                  <div className={style.agencyAccountFields}>
                     <FormInput
                       label={t('models.bank_account.agency')}
                       maxLength={5}
@@ -166,7 +168,7 @@ class BoletoForm extends Component {
                   </div>
                 </Col>
                 <Col palm={12} tablet={12} desk={5} tv={5}>
-                  <div className={style.agencyAccountFields} >
+                  <div className={style.agencyAccountFields}>
                     <FormInput
                       label={t('models.bank_account.account')}
                       maxLength={13}

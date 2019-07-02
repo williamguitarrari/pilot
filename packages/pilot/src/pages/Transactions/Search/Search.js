@@ -237,16 +237,18 @@ class TransactionsSearch extends React.Component {
   }
 
   componentDidMount () {
-    this.requestData(this.state.query)
+    const { query } = this.state
+    this.requestData(query)
   }
 
   componentDidUpdate (prevProps) {
-    if (!equals(prevProps.query, this.props.query)) {
+    const { query } = this.props
+    if (!equals(prevProps.query, query)) {
       this.setState({ // eslint-disable-line react/no-did-update-set-state
-        query: this.props.query,
+        query,
       })
 
-      this.updateQuery(this.props.query)
+      this.updateQuery(query)
     }
   }
 
@@ -310,9 +312,15 @@ class TransactionsSearch extends React.Component {
   }
 
   requestData (query) {
-    this.props.onRequestSearch({ query })
+    const {
+      client,
+      onReceiveSearch,
+      onRequestSearch,
+    } = this.props
 
-    return this.props.client
+    onRequestSearch({ query })
+
+    return client
       .transactions
       .search(query)
       .then((res) => {
@@ -320,14 +328,15 @@ class TransactionsSearch extends React.Component {
           ...res,
           query,
         })
-        this.props.onReceiveSearch(res)
+        onReceiveSearch(res)
       })
   }
 
   handleDatePresetChange (dates) {
+    const { query } = this.state
     this.setState({
       query: {
-        ...this.state.query,
+        ...query,
         dates,
       },
       showDateInputCalendar: true,
@@ -335,8 +344,9 @@ class TransactionsSearch extends React.Component {
   }
 
   handlePageCountChange (count) {
+    const { query: stateQuery } = this.state
     const query = {
-      ...this.state.query,
+      ...stateQuery,
       count,
       offset: 1,
     }
@@ -345,8 +355,9 @@ class TransactionsSearch extends React.Component {
   }
 
   handleOrderChange (field, order) {
+    const { query: stateQuery } = this.state
     const query = {
-      ...this.state.query,
+      ...stateQuery,
       offset: 1,
       sort: {
         field,
@@ -358,7 +369,8 @@ class TransactionsSearch extends React.Component {
   }
 
   handleFilterChange (query) {
-    const newQuery = mergeRight(this.state.query, query)
+    const { query: stateQuery } = this.state
+    const newQuery = mergeRight(stateQuery, query)
 
     this.setState({
       confirmationDisabled: false,
@@ -367,11 +379,12 @@ class TransactionsSearch extends React.Component {
   }
 
   handleFilterClear () {
+    const { onRequestClearSearch } = this.props
     this.setState({
       confirmationDisabled: true,
     })
 
-    this.props.onRequestClearSearch()
+    onRequestClearSearch()
   }
 
   handleFilterConfirm ({
@@ -380,21 +393,23 @@ class TransactionsSearch extends React.Component {
     search,
     sort,
   }) {
+    const { query: stateQuery } = this.state
     const query = {
-      ...this.state.query,
+      ...stateQuery,
       dates,
       filters,
       offset: 1,
       search,
-      sort: sort || this.state.query.sort,
+      sort: sort || stateQuery.sort,
     }
 
     this.updateQuery(query)
   }
 
   handlePageChange (page) {
+    const { query: stateQuery } = this.state
     const query = {
-      ...this.state.query,
+      ...stateQuery,
       offset: page,
     }
 
@@ -411,7 +426,8 @@ class TransactionsSearch extends React.Component {
 
   handleRowDetailsClick (rowIndex) {
     const { history } = this.props
-    const rowData = nth(rowIndex, this.state.result.list.rows)
+    const { result } = this.state
+    const rowData = nth(rowIndex, result.list.rows)
     const { id } = rowData
     history.push(`/transactions/${id}`)
   }
@@ -439,12 +455,17 @@ class TransactionsSearch extends React.Component {
 
   handleExport (exportType) {
     this.setState({ exporting: true })
+    const { client } = this.props
+    const {
+      query,
+      result,
+    } = this.state
 
     const newQuery = {
-      ...this.state.query,
-      count: this.state.result.total.count,
+      ...query,
+      count: result.total.count,
     }
-    return this.props.client
+    return client
       .transactions
       .exportData(newQuery, exportType)
       .then((res) => {

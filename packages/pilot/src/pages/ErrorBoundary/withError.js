@@ -1,5 +1,5 @@
 import React from 'react'
-import { ErrorBoundary } from '.'
+import ErrorBoundary from './ErrorBoundary'
 
 const withError = Component => props => (
   <ErrorBoundary>

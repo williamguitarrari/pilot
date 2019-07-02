@@ -39,7 +39,9 @@ class ReprocessForm extends Component {
   }
 
   handleSubmit (event) {
-    this.props.onConfirm()
+    const { onConfirm } = this.props
+
+    onConfirm()
     event.preventDefault()
     event.stopPropagation()
   }

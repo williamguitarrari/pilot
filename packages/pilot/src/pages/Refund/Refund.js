@@ -254,19 +254,21 @@ class Refund extends Component {
 
     return (
       <Fragment>
-        {!isEmpty(transaction) &&
-          <RefundContainer
-            currentStep={currentStep}
-            isOpen={isOpen}
-            loading={loading}
-            onBack={this.handleBack}
-            onClose={this.handleClose}
-            onConfirm={this.handleConfirm}
-            statusMessage={statusMessage}
-            stepsStatus={stepsStatus}
-            t={t}
-            transaction={transaction}
-          />
+        {!isEmpty(transaction)
+          && (
+            <RefundContainer
+              currentStep={currentStep}
+              isOpen={isOpen}
+              loading={loading}
+              onBack={this.handleBack}
+              onClose={this.handleClose}
+              onConfirm={this.handleConfirm}
+              statusMessage={statusMessage}
+              stepsStatus={stepsStatus}
+              t={t}
+              transaction={transaction}
+            />
+          )
         }
       </Fragment>
     )

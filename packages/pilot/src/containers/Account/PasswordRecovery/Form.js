@@ -54,6 +54,7 @@ const PasswordRecoveryForm = ({
         disabled={loading}
         onClick={onBackToLogin}
         role="link"
+        type="button"
       >
         {t('back_login_action')}
       </button>
