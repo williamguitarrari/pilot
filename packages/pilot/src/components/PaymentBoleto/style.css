@@ -1,6 +1,18 @@
 @import "former-kit-skin-pagarme/dist/styles/spacing.css";
 @import "former-kit-skin-pagarme/dist/styles/colors/light.css";
 
+.cardDueDate {
+  align-items: center;
+  display: flex;
+  height: 26px;
+  justify-content: space-between;
+
+  & p {
+    color: var(--color-light-steel-100);
+    font-size: 12px;
+  }
+}
+
 .card {
   height: 150px;
 
@@ -56,18 +68,6 @@
   display: flex;
   justify-content: center;
   margin: auto 0;
-}
-
-.cardDueDate {
-  align-items: center;
-  display: flex;
-  height: 26px;
-  justify-content: space-between;
-
-  & p {
-    color: var(--color-light-steel-100);
-    font-size: 12px;
-  }
 }
 
 @media print {

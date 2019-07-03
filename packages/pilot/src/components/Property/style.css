@@ -26,6 +26,10 @@
 
 @media print {
 
+  .value {
+    font-size: 14px;
+  }
+
   .value:empty {
     border: 0;
     margin: 0;
@@ -48,9 +52,5 @@
       content: ": ";
       padding-right: 3px;
     }
-  }
-
-  .value {
-    font-size: 14px;
   }
 }

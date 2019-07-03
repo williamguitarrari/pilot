@@ -1,6 +1,5 @@
 @import "former-kit-skin-pagarme/dist/styles/colors/light.css";
 @import "former-kit-skin-pagarme/dist/styles/spacing.css";
-@import "former-kit-skin-pagarme/dist/styles/colors/light.css";
 
 .statusAlert {
   flex: 1;
@@ -33,13 +32,13 @@
     height: 38px;
   }
 
-  & span:first-child:before {
-    content: none;
-  }
-
   & span:before {
     content: "|";
     padding: 4px;
+  }
+
+  & span:first-child:before {
+    content: none;
   }
 }
 
@@ -69,176 +68,6 @@
   main { /* stylelint-disable-line selector-max-type */
     position: relative;
     top: 50px;
-  }
-
-  .paidAmountValue,
-  .outAmountValue,
-  .netAmountValue {
-    border-radius: unset;
-
-    & h2 {
-      font-size: 16px;
-      text-transform: initial;
-    }
-
-    & h3 {
-      font-size: 14px;
-      font-weight: normal;
-      text-transform: initial;
-    }
-
-    & > div {
-      padding: var(--spacing-tiny) 0 0 !important; /* stylelint-disable-line declaration-no-important */
-    }
-  }
-
-  .grid {
-
-    & .transactionInfo .infoCard > div,
-    & * {
-      box-shadow: none;
-      color: var(--color-black);
-      margin-left: 0;
-      margin-bottom: 0; /* stylelint-disable-line declaration-no-important */
-      padding-left: 0 !important; /* stylelint-disable-line declaration-no-important */
-      padding-right: 0;
-    }
-
-    & div > h3,
-    & div > h2 {
-      margin: 0 !important; /* stylelint-disable-line declaration-no-important */
-    }
-  }
-
-  .paidAmountValue {
-    border-top: 3px solid var(--color-light-greenish-100);
-  }
-
-  .outAmountValue {
-    border-top: 3px solid var(--color-light-salmon-100);
-  }
-
-  .netAmountValue {
-    border-top: 3px solid #4ca9d7;
-  }
-
-  .paymentInfo {
-    align-items: baseline;
-    border-bottom: 1px solid var(--color-light-iron-50);
-    flex-wrap: wrap;
-    justify-content: space-around;
-
-    & > div:first-of-type {
-      width: 100%;
-    }
-  }
-
-  .alertCustom {
-    border-bottom: 1px solid var(--color-light-iron-50);
-    padding-top: var(--spacing-small);
-
-    & div {
-      border: none;
-      padding-top: var(--spacing-tiny);
-    }
-
-    & button {
-      display: none;
-    }
-  }
-
-  .detailsInfo {
-    flex-direction: column-reverse;
-    justify-content: space-between;
-
-    & h2 {
-      color: var(--color-black);
-      font-size: 16px;
-      margin: var(--spacing-small) 0;
-      text-transform: inherit;
-    }
-  }
-
-  .recipientsInfo {
-    align-items: flex-start;
-    display: flex;
-    max-height: 1300px;
-    min-height: 1100px;
-    padding-top: 50px;
-    break-before: auto;
-    page-break-before: always;
-    width: 100%;
-
-    & > div {
-      width: 100%;
-    }
-
-    & + .transactionCardInfo {
-      margin-bottom: 300px;
-    }
-
-    & + .transactionCardInfo:not(:last-child) {
-      margin-bottom: 150px;
-    }
-  }
-
-  .customerInfo {
-    border-bottom: 1px solid var(--color-light-iron-50);
-    color: var(--color-black);
-    order: 1;
-
-    & + .transactionCardInfo {
-      margin-bottom: 150px;
-    }
-
-    & + .transactionCardInfo:not(:last-child) {
-      margin-bottom: 0;
-    }
-  }
-
-  .metadataInfo {
-    width: 100%;
-  }
-
-  .transactionCardInfo {
-    color: var(--color-black);
-    min-height: 350px;
-
-    & > div {
-      padding-top: var(--spacing-small);
-    }
-
-    & h2 {
-      color: var(--color-black);
-      font-size: 16px;
-    }
-
-    &:only-child {
-      margin-bottom: 360px;
-    }
-  }
-
-  .transactionInfo {
-
-    & > div {
-      width: 100%;
-      padding-bottom: 0;
-
-      & > div > div {
-        margin: 0;
-        padding: 0 !important; /* stylelint-disable-line declaration-no-important */
-      }
-    }
-  }
-
-  .eventsList {
-    width: 100%;
-
-    & h2 {
-      color: var(--color-black);
-      font-size: 16px;
-      text-transform: inherit;
-    }
   }
 
   /* stylelint-disable selector-max-type, declaration-no-important */
@@ -277,4 +106,174 @@
   }
 
   /* stylelint-enable */
+
+  .paidAmountValue,
+  .outAmountValue,
+  .netAmountValue {
+    border-radius: unset;
+
+    & h2 {
+      font-size: 16px;
+      text-transform: initial;
+    }
+
+    & h3 {
+      font-size: 14px;
+      font-weight: normal;
+      text-transform: initial;
+    }
+
+    & > div {
+      padding: var(--spacing-tiny) 0 0 !important; /* stylelint-disable-line declaration-no-important */
+    }
+  }
+
+  .alertCustom {
+    border-bottom: 1px solid var(--color-light-iron-50);
+    padding-top: var(--spacing-small);
+
+    & div {
+      border: none;
+      padding-top: var(--spacing-tiny);
+    }
+
+    & button {
+      display: none;
+    }
+  }
+
+  .transactionCardInfo {
+    color: var(--color-black);
+    min-height: 350px;
+
+    & > div {
+      padding-top: var(--spacing-small);
+    }
+
+    & h2 {
+      color: var(--color-black);
+      font-size: 16px;
+    }
+
+    &:only-child {
+      margin-bottom: 360px;
+    }
+  }
+
+  .recipientsInfo {
+    align-items: flex-start;
+    display: flex;
+    max-height: 1300px;
+    min-height: 1100px;
+    padding-top: 50px;
+    break-before: auto;
+    page-break-before: always;
+    width: 100%;
+
+    & > div {
+      width: 100%;
+    }
+
+    & + .transactionCardInfo {
+      margin-bottom: 300px;
+    }
+
+    & + .transactionCardInfo:not(:last-child) {
+      margin-bottom: 150px;
+    }
+  }
+
+  .customerInfo {
+    border-bottom: 1px solid var(--color-light-iron-50);
+    color: var(--color-black);
+    order: 1;
+
+    & + .transactionCardInfo { /* stylelint-disable-line no-descending-specificity */
+      margin-bottom: 150px;
+    }
+
+    & + .transactionCardInfo:not(:last-child) {
+      margin-bottom: 0;
+    }
+  }
+
+  .transactionInfo {
+
+    & > div {
+      width: 100%;
+      padding-bottom: 0;
+
+      & > div > div {
+        margin: 0;
+        padding: 0 !important; /* stylelint-disable-line declaration-no-important */
+      }
+    }
+  }
+
+  .paymentInfo {
+    align-items: baseline;
+    border-bottom: 1px solid var(--color-light-iron-50);
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+    & > div:first-of-type {
+      width: 100%;
+    }
+  }
+
+  .detailsInfo {
+    flex-direction: column-reverse;
+    justify-content: space-between;
+
+    & h2 {
+      color: var(--color-black);
+      font-size: 16px;
+      margin: var(--spacing-small) 0;
+      text-transform: inherit;
+    }
+  }
+
+  .eventsList {
+    width: 100%;
+
+    & h2 {
+      color: var(--color-black);
+      font-size: 16px;
+      text-transform: inherit;
+    }
+  }
+
+  .grid {
+
+    & .transactionInfo .infoCard > div,
+    & * {
+      box-shadow: none;
+      color: var(--color-black);
+      margin-left: 0;
+      margin-bottom: 0; /* stylelint-disable-line declaration-no-important */
+      padding-left: 0 !important; /* stylelint-disable-line declaration-no-important */
+      padding-right: 0;
+    }
+
+    & div > h3,
+    & div > h2 {
+      margin: 0 !important; /* stylelint-disable-line declaration-no-important */
+    }
+  }
+
+  .paidAmountValue {
+    border-top: 3px solid var(--color-light-greenish-100);
+  }
+
+  .outAmountValue {
+    border-top: 3px solid var(--color-light-salmon-100);
+  }
+
+  .netAmountValue {
+    border-top: 3px solid #4ca9d7;
+  }
+
+  .metadataInfo {
+    width: 100%;
+  }
 }

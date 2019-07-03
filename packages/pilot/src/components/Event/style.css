@@ -167,6 +167,19 @@
 
 @media print {
 
+  .header {
+    margin-right: var(--spacing-tiny);
+
+    /* stylelint-disable-next-line declaration-no-important */
+    padding-top: 0 !important;
+
+    & * {
+      background: none;
+      font-size: 16px;
+      text-transform: inherit;
+    }
+  }
+
   .event {
     align-items: baseline;
     background: none;
@@ -186,19 +199,6 @@
 
   .title:before {
     content: "-";
-  }
-
-  .header {
-    margin-right: var(--spacing-tiny);
-
-    /* stylelint-disable-next-line declaration-no-important */
-    padding-top: 0 !important;
-
-    & * {
-      background: none;
-      font-size: 16px;
-      text-transform: inherit;
-    }
   }
 
   .indicator {
