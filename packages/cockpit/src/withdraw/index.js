@@ -12,10 +12,10 @@ const getRecipientById = (id, client) => (
     ))
 )
 
-const getDefaultRecipient = client =>
-  client.company.current()
-    .then(path(['default_recipient_id', env]))
-    .then(id => getRecipientById(id, client))
+const getDefaultRecipient = client => client
+  .company.current()
+  .then(path(['default_recipient_id', env]))
+  .then(id => getRecipientById(id, client))
 
 const withdraw = client => (id) => {
   if (id) {

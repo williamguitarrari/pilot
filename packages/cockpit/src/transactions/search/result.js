@@ -43,8 +43,9 @@ const orderByStatusLegend = order => (transactionA, transactionB) => {
   return indexStatusB - indexStatusA
 }
 
-const sortByStatusLegend = (formattedTransactions, order) =>
+const sortByStatusLegend = (formattedTransactions, order) => (
   sort(orderByStatusLegend(order), formattedTransactions)
+)
 
 const buildTableRows = query => (transactions) => {
   const formattedTransactions = map(

@@ -37,12 +37,11 @@ const negateWhenNotZero = unless(
   negate
 )
 
-export const transformMovementTypePropTo = (propPath, to) =>
-  pipe(
-    path(propPath),
-    when(either(isNil, isEmpty), always(0)),
-    assoc('amount', __, { type: to })
-  )
+export const transformMovementTypePropTo = (propPath, to) => pipe(
+  path(propPath),
+  when(either(isNil, isEmpty), always(0)),
+  assoc('amount', __, { type: to })
+)
 
 export const transformAndNegateMovementTypePropTo = (propPath, to) => pipe(
   transformMovementTypePropTo(propPath, to),
