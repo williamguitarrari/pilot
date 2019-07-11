@@ -16,17 +16,11 @@ import style from './style.css'
 class RecipientSection extends PureComponent {
   constructor (props) {
     super(props)
-    this.state = {
-      hasError: false,
-    }
     this.renderInstallmentsTable = this.renderInstallmentsTable.bind(this)
     this.renderInstallments = this.renderInstallments.bind(this)
-    this.renderSingleRecipientInstallments =
+    this.renderSingleRecipientInstallments = (
       this.renderSingleRecipientInstallments.bind(this)
-  }
-
-  componentDidCatch () {
-    this.setState({ hasError: true })
+    )
   }
 
   renderInstallmentsTable (isPrint) {
@@ -84,24 +78,28 @@ class RecipientSection extends PureComponent {
           totalAmount={totalAmount}
           totalLabel={totalLabel}
         />
-        {hasInstallments && !isPrint &&
-          <CardSection>
-            {this.renderInstallmentsTable()}
-            <CardSectionTitle
-              collapsed={collapsed}
-              title={
-                collapsed
-                  ? collapsedTitle
-                  : title
-              }
-              onClick={onDetailsClick}
-            />
-          </CardSection>
+        {hasInstallments && !isPrint
+          && (
+            <CardSection>
+              {this.renderInstallmentsTable()}
+              <CardSectionTitle
+                collapsed={collapsed}
+                title={
+                  collapsed
+                    ? collapsedTitle
+                    : title
+                }
+                onClick={onDetailsClick}
+              />
+            </CardSection>
+          )
         }
-        {hasInstallments && isPrint &&
-          <CardSection>
-            {this.renderInstallmentsTable(isPrint)}
-          </CardSection>
+        {hasInstallments && isPrint
+          && (
+            <CardSection>
+              {this.renderInstallmentsTable(isPrint)}
+            </CardSection>
+          )
         }
       </Fragment>
     )
@@ -119,22 +117,15 @@ class RecipientSection extends PureComponent {
     const {
       className,
     } = this.props
-    const { hasError } = this.state
 
     return (
-      <Card className={classNames(
+      <Card
+        className={classNames(
           style.recipientSection,
           className
         )}
       >
-        {!hasError
-          && this.renderInstallments()
-        }
-        {hasError &&
-          <CardSection>
-            <p> Deu um erro, beleza ? </p>
-          </CardSection>
-        }
+        {this.renderInstallments()}
       </Card>
     )
   }

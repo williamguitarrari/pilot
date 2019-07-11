@@ -15,8 +15,9 @@ const renderProperty = (title, value) => (
   />
 )
 
-const fields = (labels, contents) =>
-  mapObjIndexed((label, key) => renderProperty(label, contents[key]), labels)
+const fields = (labels, contents) => mapObjIndexed(
+  (label, key) => renderProperty(label, contents[key]), labels
+)
 
 const CaptureDetails = ({
   contents, labels,
@@ -31,28 +32,32 @@ const CaptureDetails = ({
 
   return (
     <Fragment>
-      { (contents.customerName || contents.customerEmail) &&
-        <Row>
-          <Col palm={12} tablet={8} desk={8} tv={8}>
-            {customerName}
-          </Col>
-          <Col palm={12} tablet={4} desk={4} tv={4}>
-            {customerEmail}
-          </Col>
-        </Row>
+      { (contents.customerName || contents.customerEmail)
+        && (
+          <Row>
+            <Col palm={12} tablet={8} desk={8} tv={8}>
+              {customerName}
+            </Col>
+            <Col palm={12} tablet={4} desk={4} tv={4}>
+              {customerEmail}
+            </Col>
+          </Row>
+        )
       }
-      { contents.cardNumber &&
-        <Row>
-          <Col palm={12} tablet={4} desk={4} tv={4}>
-            {cardNumber}
-          </Col>
-          <Col palm={12} tablet={4} desk={4} tv={4}>
-            {cardBrand}
-          </Col>
-          <Col palm={12} tablet={4} desk={4} tv={4}>
-            {installments}
-          </Col>
-        </Row>
+      { contents.cardNumber
+        && (
+          <Row>
+            <Col palm={12} tablet={4} desk={4} tv={4}>
+              {cardNumber}
+            </Col>
+            <Col palm={12} tablet={4} desk={4} tv={4}>
+              {cardBrand}
+            </Col>
+            <Col palm={12} tablet={4} desk={4} tv={4}>
+              {installments}
+            </Col>
+          </Row>
+        )
       }
     </Fragment>
   )

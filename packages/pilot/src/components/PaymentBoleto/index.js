@@ -49,19 +49,21 @@ const PaymentBoleto = ({
           </div>
         )
       }
-      { barcode &&
-        <div className={style.cardDueDate}>
-          <p>{dueDateLabel} {dueDate}</p>
-          <CopyButton
-            feedbackText={copyBarcodeFeedback}
-            feedbackTimeout={3000}
-            fill="clean"
-            icon={<IconCopy width="12px" height="12px" />}
-            onClick={() => onCopy(barcode)}
-            size="tiny"
-            title={copyBarcodeLabel}
-          />
-        </div>
+      { barcode
+        && (
+          <div className={style.cardDueDate}>
+            <p>{dueDateLabel} {dueDate}</p>
+            <CopyButton
+              feedbackText={copyBarcodeFeedback}
+              feedbackTimeout={3000}
+              fill="clean"
+              icon={<IconCopy width="12px" height="12px" />}
+              onClick={() => onCopy(barcode)}
+              size="tiny"
+              title={copyBarcodeLabel}
+            />
+          </div>
+        )
       }
     </CardContent>
   </Card>

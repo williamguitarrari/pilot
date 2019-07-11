@@ -28,12 +28,12 @@ export const buildPendingRequest = map(applySpec({
   type: always('anticipation'),
 }))
 
-const findPendingRequests = client => recipientId =>
-  client.bulkAnticipations.find({
+const findPendingRequests = client => recipientId => client
+  .bulkAnticipations.find({
     recipientId,
     status: 'pending',
   })
-    .then(buildPendingRequest)
+  .then(buildPendingRequest)
 
 export default {
   findPendingRequests,

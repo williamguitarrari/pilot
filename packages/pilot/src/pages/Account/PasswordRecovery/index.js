@@ -26,11 +26,14 @@ class PasswordRecoveryPage extends PureComponent {
   }
 
   handleBackToLogin () {
-    this.props.history.replace('/account/login')
+    const { history } = this.props
+    history.replace('/account/login')
   }
 
   handleSubmit (data, formErrors) {
     if (!formErrors) {
+      const { history } = this.props
+
       this.setState({
         errors: null,
         loading: true,
@@ -41,7 +44,7 @@ class PasswordRecoveryPage extends PureComponent {
           loading: false,
         })
 
-        this.props.history.replace('/account/password/recovery/confirmation')
+        history.replace('/account/password/recovery/confirmation')
       }).catch((apiErrors) => {
         const parsedErrors = buildResetParamErrors(apiErrors)
 
@@ -56,14 +59,23 @@ class PasswordRecoveryPage extends PureComponent {
   }
 
   render () {
+    const {
+      base,
+      t,
+    } = this.props
+    const {
+      errors,
+      loading,
+    } = this.state
+
     return (
       <PasswordRecoveryForm
-        base={this.props.base}
-        errors={this.state.errors}
-        loading={this.state.loading}
+        base={base}
+        errors={errors}
+        loading={loading}
         onBackToLogin={this.handleBackToLogin}
         onSubmit={this.handleSubmit}
-        t={this.props.t}
+        t={t}
       />
     )
   }

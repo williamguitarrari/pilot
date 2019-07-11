@@ -37,17 +37,20 @@ class ConfigurationCardFormExample extends Component {
   }
 
   handleSubmit (data, error) {
+    const { data: stateData } = this.state
     if (!error) {
       this.setState({ data })
     }
 
-    confirmAction(this.state.data)
+    confirmAction(stateData)
   }
 
   handleCancel () {
+    const { data } = this.state
+
     this.setState({
       data: initialDataState,
-    }, () => cancelAction(this.state.data))
+    }, () => cancelAction(data))
   }
 
   handleChange (data) {
@@ -60,7 +63,7 @@ class ConfigurationCardFormExample extends Component {
     const { collapsed } = this.state
     this.setState({
       collapsed: !collapsed,
-    }, () => collapsedAction(this.state.collapsed))
+    }, () => collapsedAction(collapsed))
   }
 
   render () {

@@ -27,7 +27,7 @@ const contents = {
 }
 
 const BoletoRefundDetailsExample = () => (
-  <Section className={style.section} >
+  <Section className={style.section}>
     <CreditCardRefundDetails
       title="Dados do estorno"
       labels={labels}

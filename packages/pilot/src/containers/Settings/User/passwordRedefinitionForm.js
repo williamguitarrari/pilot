@@ -62,10 +62,11 @@ class PasswordRedefinitionForm extends Component {
   // @TODO: Precisa refatorar isso aqui, porque este método está obsoleto.
   componentWillReceiveProps (nextProps) {
     const { status: { success } } = nextProps
+    const { initialFormData: initialStateFormData } = this.state
 
     if (success) {
       this.setState({
-        currentFormData: this.state.initialFormData,
+        currentFormData: initialStateFormData,
       })
     }
   }
@@ -73,8 +74,8 @@ class PasswordRedefinitionForm extends Component {
   handleFormChange (data) {
     const validations = validate(pathOr('', ['new_password'], data))
     const saveActionDisabled = (
-      !validations.isValid ||
-      !equals(data.new_password, data.new_password_confirmation)
+      !validations.isValid
+      || !equals(data.new_password, data.new_password_confirmation)
     )
 
     this.setState({
@@ -94,8 +95,10 @@ class PasswordRedefinitionForm extends Component {
   }
 
   handleFormSubmit (data, errors) {
+    const { onSubmit } = this.props
+
     if (!errors) {
-      this.props.onSubmit(data)
+      onSubmit(data)
     }
   }
 
@@ -127,6 +130,7 @@ class PasswordRedefinitionForm extends Component {
     } = this.props
 
     const {
+      currentFormData,
       currentFormData: {
         new_password: password,
       },
@@ -137,7 +141,7 @@ class PasswordRedefinitionForm extends Component {
 
     return (
       <Form
-        data={this.state.currentFormData}
+        data={currentFormData}
         onSubmit={this.handleFormSubmit}
         onChange={this.handleFormChange}
         validation={{
@@ -180,21 +184,25 @@ class PasswordRedefinitionForm extends Component {
             </Row>
             <Row>
               <Col palm={12} tablet={12} desk={12} tv={12}>
-                {status.error &&
-                  <Alert
-                    type="error"
-                    icon={<IconWarning height={16} width={16} />}
-                  >
-                    <p>{status.error}</p>
-                  </Alert>
+                {status.error
+                  && (
+                    <Alert
+                      type="error"
+                      icon={<IconWarning height={16} width={16} />}
+                    >
+                      <p>{status.error}</p>
+                    </Alert>
+                  )
                 }
-                {status.success &&
-                  <Alert
-                    type="info"
-                    icon={<IconInfo height={16} width={16} />}
-                  >
-                    <p>{t('pages.settings.user.card.access.alert.success')}</p>
-                  </Alert>
+                {status.success
+                  && (
+                    <Alert
+                      type="info"
+                      icon={<IconInfo height={16} width={16} />}
+                    >
+                      <p>{t('pages.settings.user.card.access.alert.success')}</p>
+                    </Alert>
+                  )
                 }
               </Col>
             </Row>

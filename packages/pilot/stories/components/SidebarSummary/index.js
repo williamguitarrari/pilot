@@ -39,21 +39,23 @@ class SidebarSummaryExample extends React.Component {
     return (
       <Section title="With base dark">
         <div style={{ backgroundColor: '#383838' }}>
-          {!collapsed &&
-            <SidebarSummary
-              collapsed={summaryCollapsed}
-              onClick={() => this.setState({
-                summaryCollapsed: !summaryCollapsed,
-              })}
-              subtitle={
-                summaryCollapsed
-                  ? `${sections.showMsg}`
-                  : `${sections.hideMsg}`
-              }
-              title={sections.title}
-            >
-              <SidebarSections sections={sections.data} />
-            </SidebarSummary>
+          {!collapsed
+            && (
+              <SidebarSummary
+                collapsed={summaryCollapsed}
+                onClick={() => this.setState({
+                  summaryCollapsed: !summaryCollapsed,
+                })}
+                subtitle={
+                  summaryCollapsed
+                    ? `${sections.showMsg}`
+                    : `${sections.hideMsg}`
+                }
+                title={sections.title}
+              >
+                <SidebarSections sections={sections.data} />
+              </SidebarSummary>
+            )
           }
         </div>
       </Section>

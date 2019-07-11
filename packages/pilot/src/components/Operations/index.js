@@ -58,27 +58,27 @@ class Operations extends PureComponent {
     return (
       <div className={style.subtitle}>
         {subtitle}
-        { onExport &&
-          <Fragment>
-            <ExportData
-              exportOptions={getExportOptions(onExport)}
-              icon={<Download32 width={12} height={12} />}
-              loading={exporting}
-              placement="bottomEnd"
-              relevance="low"
-              size="tiny"
-              subtitle={exportTo}
-              title={exportCall}
-            />
-            <Spacing size="tiny" />
-          </Fragment>
+        { onExport
+          && (
+            <Fragment>
+              <ExportData
+                exportOptions={getExportOptions(onExport)}
+                icon={<Download32 width={12} height={12} />}
+                loading={exporting}
+                placement="bottomEnd"
+                relevance="low"
+                size="tiny"
+                subtitle={exportTo}
+                title={exportCall}
+              />
+              <Spacing size="tiny" />
+            </Fragment>
+          )
         }
         <Dropdown
           disabled={disabled}
           name="page-count"
-          onChange={e =>
-            onPageCountChange(parseInt(e.target.value, 10))
-          }
+          onChange={e => onPageCountChange(parseInt(e.target.value, 10))}
           options={pageSizeOptions}
           size="tiny"
           value={itemsPerPage.toString()}
@@ -121,17 +121,19 @@ class Operations extends PureComponent {
         <strong>{dateFormat(start)}</strong>
         {!isTodayPreset && separator}
         {!isTodayPreset && <strong>{dateFormat(end)}</strong>}
-        {!isNil(count) && count > 0 && results &&
-          <span>
-            {separator}
-            {totalOf}
-            &nbsp;
-            <strong>
-              {count}
-            </strong>
-            &nbsp;
-            {results}
-          </span>
+        {!isNil(count) && count > 0 && results
+          && (
+            <span>
+              {separator}
+              {totalOf}
+              &nbsp;
+              <strong>
+                {count}
+              </strong>
+              &nbsp;
+              {results}
+            </span>
+          )
         }
       </span>
     )

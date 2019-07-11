@@ -16,13 +16,16 @@ class LoaderState extends PureComponent {
   }
 
   handleLoaderToggle () {
+    const { showingLoader } = this.state
+
     this.setState({
-      showingLoader: !this.state.showingLoader,
+      showingLoader: !showingLoader,
     })
   }
 
   render () {
-    const buttonMessage = this.state.showingLoader
+    const { showingLoader } = this.state
+    const buttonMessage = showingLoader
       ? 'hide loader'
       : 'show loader'
 
@@ -38,7 +41,7 @@ class LoaderState extends PureComponent {
             label="Loading"
             position="fixed"
             text="Loading..."
-            visible={this.state.showingLoader}
+            visible={showingLoader}
           />
         </div>
       </Section>

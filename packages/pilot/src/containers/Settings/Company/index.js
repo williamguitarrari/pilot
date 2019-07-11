@@ -81,60 +81,68 @@ class CompanySettings extends Component {
             <TabItem text={t('pages.settings.company.tab.register')} />
           </TabBar>
         </CardContent>
-        {selectedIndex === 0 &&
-          <GeneralInfoTab
-            apiKeys={apiKeys}
-            apiVersion={apiVersion}
-            environment={environment}
-            onVersionChange={onVersionChange}
-            pricing={pricing}
-            t={t}
-            userIsReadOnly={userIsReadOnly}
-            versions={versions}
-          />
+        {selectedIndex === 0
+          && (
+            <GeneralInfoTab
+              apiKeys={apiKeys}
+              apiVersion={apiVersion}
+              environment={environment}
+              onVersionChange={onVersionChange}
+              pricing={pricing}
+              t={t}
+              userIsReadOnly={userIsReadOnly}
+              versions={versions}
+            />
+          )
         }
-        {selectedIndex === 1 &&
-          <ProductInfoTab
-            boletoActionsDisabled={boletoActionsDisabled}
-            boletoDaysToAddInExpirationDate={boletoDaysToAddInExpirationDate}
-            boletoDisabled={boletoDisabled}
-            boletoHandleCancel={onBoletoSettingsCancel}
-            boletoHandleChange={onBoletoSettingsChange}
-            boletoHandleSubmit={onBoletoSettingsSubmit}
-            boletoInstructions={boletoInstructions}
-            boletoInstructionsOptions={boletoInstructionsOptions}
-            t={t}
-          />
+        {selectedIndex === 1
+          && (
+            <ProductInfoTab
+              boletoActionsDisabled={boletoActionsDisabled}
+              boletoDaysToAddInExpirationDate={boletoDaysToAddInExpirationDate}
+              boletoDisabled={boletoDisabled}
+              boletoHandleCancel={onBoletoSettingsCancel}
+              boletoHandleChange={onBoletoSettingsChange}
+              boletoHandleSubmit={onBoletoSettingsSubmit}
+              boletoInstructions={boletoInstructions}
+              boletoInstructionsOptions={boletoInstructionsOptions}
+              t={t}
+            />
+          )
         }
-        {selectedIndex === 2 &&
-          <TeamInfoTab
-            createUserStatus={createUserStatus}
-            deleteUserStatus={deleteUserStatus}
-            handleCreateUser={handleCreateUser}
-            handleDeleteUser={handleDeleteUser}
-            resetCreateUserState={resetCreateUserState}
-            t={t}
-            team={team}
-          />
+        {selectedIndex === 2
+          && (
+            <TeamInfoTab
+              createUserStatus={createUserStatus}
+              deleteUserStatus={deleteUserStatus}
+              handleCreateUser={handleCreateUser}
+              handleDeleteUser={handleDeleteUser}
+              resetCreateUserState={resetCreateUserState}
+              t={t}
+              team={team}
+            />
+          )
         }
-        {selectedIndex === 3 &&
-          <RegisterInfoTab
-            address={address}
-            bankAccounts={bankAccounts}
-            bankAccountActionsDisabled={bankActionsDisabled}
-            bankAccountData={bankData}
-            bankAccountErrors={bankErrors}
-            bankAccountSelected={bankAccountSelected}
-            bankAccountChangeActionDisabled={bankAccountChangeActionDisabled}
-            bankAccountSelectedView={bankAccountSelectedView}
-            general={general}
-            managingPartner={managingPartner}
-            onBankAccountCancel={onBankAccountCancel}
-            onBankAccountChange={onBankAccountChange}
-            onBankAccountCreate={onBankAccountCreate}
-            onBankAccountSelect={onBankAccountSelect}
-            t={t}
-          />
+        {selectedIndex === 3
+          && (
+            <RegisterInfoTab
+              address={address}
+              bankAccounts={bankAccounts}
+              bankAccountActionsDisabled={bankActionsDisabled}
+              bankAccountData={bankData}
+              bankAccountErrors={bankErrors}
+              bankAccountSelected={bankAccountSelected}
+              bankAccountChangeActionDisabled={bankAccountChangeActionDisabled}
+              bankAccountSelectedView={bankAccountSelectedView}
+              general={general}
+              managingPartner={managingPartner}
+              onBankAccountCancel={onBankAccountCancel}
+              onBankAccountChange={onBankAccountChange}
+              onBankAccountCreate={onBankAccountCreate}
+              onBankAccountSelect={onBankAccountSelect}
+              t={t}
+            />
+          )
         }
       </Card>
     )

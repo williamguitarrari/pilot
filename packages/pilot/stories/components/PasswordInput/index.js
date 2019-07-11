@@ -25,10 +25,11 @@ class PasswordStory extends Component {
   }
 
   handleChange ({ target: { value } }) {
+    const { password } = this.state
     this.setState({
       password: value,
       validations: validate(value),
-    }, () => actionChangePassword(this.state.password))
+    }, () => actionChangePassword(password))
   }
 
   handleFocus () {

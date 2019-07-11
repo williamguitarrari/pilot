@@ -20,7 +20,7 @@ import {
 } from 'ramda'
 import { translate } from 'react-i18next'
 
-import { requestLogout } from '../Account/actions'
+import { requestLogout } from '../Account/actions/actions'
 import CompanySettings from '../../containers/Settings/Company'
 import environment from '../../environment'
 
@@ -47,8 +47,9 @@ const formatErrors = pipe(
   head
 )
 
-const getPropFromBoleto = (propName, company) =>
-  pathOr(null, ['boletos', propName], company)
+const getPropFromBoleto = (propName, company) => pathOr(
+  null, ['boletos', propName], company
+)
 
 const getPropExpiration = pipe(
   propOr('', 'expiration'),
@@ -56,23 +57,24 @@ const getPropExpiration = pipe(
   String
 )
 
-const getPropFromInstructions = (search, propName) =>
-  uncurryN(2, instructions => pipe(
+const getPropFromInstructions = (search, propName) => uncurryN(
+  2, instructions => pipe(
     find(propEq(search, instructions)),
     prop(propName)
-  ))
+  )
+)
 
 const getNameFromInstructions = getPropFromInstructions('value', 'name')
 const getValueFromInstructions = getPropFromInstructions('name', 'value')
 
 const getCurrentCompany = client => client.company.current()
 
-const getSelectedAccount = curry((client, id) =>
-  client.recipients.find({ id })
-    .then(path(['bank_account'])))
+const getSelectedAccount = curry((client, id) => client
+  .recipients.find({ id })
+  .then(path(['bank_account'])))
 
-const getBankAccounts = curry((client, bankAccount) =>
-  client.bankAccounts.find({
+const getBankAccounts = curry((client, bankAccount) => client
+  .bankAccounts.find({
     count: 100,
     document_number: bankAccount.document_number,
   }).then(accounts => ({
@@ -91,8 +93,8 @@ const buildBankAccount = account => ({
   type: account.type,
 })
 
-const updateBankAccount = ({ account, client, recipiendId }) =>
-  client.recipients.update({
+const updateBankAccount = ({ account, client, recipiendId }) => client
+  .recipients.update({
     bank_account: buildBankAccount(account),
     id: recipiendId,
   })
@@ -252,11 +254,16 @@ class CompanySettingsPage extends React.Component {
   }
 
   getVersionsAPI () {
-    this.props.client.versions()
+    const {
+      client,
+      t,
+    } = this.props
+
+    client.versions()
       .then((results) => {
         if (results.length) {
           const versions = results.map((version, index) => ({
-            name: `${this.props.t('version')} ${index + 1} (${version})`,
+            name: `${t('version')} ${index + 1} (${version})`,
             value: version,
           }))
 
@@ -266,7 +273,9 @@ class CompanySettingsPage extends React.Component {
   }
 
   requestData () {
-    this.props.client.company.info()
+    const { client } = this.props
+
+    client.company.info()
       .then((companyInfo) => {
         this.setState({ companyInfo })
       })
@@ -457,6 +466,8 @@ class CompanySettingsPage extends React.Component {
   }
 
   handleCreateUser (user) {
+    const { client } = this.props
+
     const handleSuccess = () => this.setState({
       createUserStatus: {
         error: null,
@@ -481,13 +492,14 @@ class CompanySettingsPage extends React.Component {
         loading: true,
         success: false,
       },
-    }, () => this.props.client.invites
+    }, () => client.invites
       .create(user)
       .then(handleSuccess)
       .catch(handleFailure))
   }
 
   handleVersionChange (version) {
+    const { client } = this.props
     const { companyInfo } = this.state
 
     const handleSuccess = () => this.setState({
@@ -497,7 +509,7 @@ class CompanySettingsPage extends React.Component {
       },
     })
 
-    this.props.client.company.update({ api_version: version })
+    client.company.update({ api_version: version })
       .then(handleSuccess)
   }
 
@@ -512,7 +524,9 @@ class CompanySettingsPage extends React.Component {
   }
 
   handleDeleteUser (id) {
-    this.props.client.user.destroy({ id })
+    const { client } = this.props
+
+    client.user.destroy({ id })
       .then(() => {
         this.requestData()
         this.setState({
@@ -535,6 +549,7 @@ class CompanySettingsPage extends React.Component {
   render () {
     const {
       t,
+      user,
     } = this.props
 
     const {
@@ -549,6 +564,8 @@ class CompanySettingsPage extends React.Component {
         pricing,
         team,
       },
+      createUserStatus,
+      deleteUserStatus,
       versions,
     } = this.state
 
@@ -569,8 +586,8 @@ class CompanySettingsPage extends React.Component {
         boletoDisabled={boleto.loading}
         boletoInstructions={boleto.instructions}
         boletoInstructionsOptions={boletoOptions(t)}
-        createUserStatus={this.state.createUserStatus}
-        deleteUserStatus={this.state.deleteUserStatus}
+        createUserStatus={createUserStatus}
+        deleteUserStatus={deleteUserStatus}
         environment={environment}
         general={general}
         handleCreateUser={this.handleCreateUser}
@@ -589,7 +606,7 @@ class CompanySettingsPage extends React.Component {
         t={t}
         team={team}
         versions={versions}
-        userIsReadOnly={userIsReadOnly(this.props.user)}
+        userIsReadOnly={userIsReadOnly(user)}
       />
     )
   }

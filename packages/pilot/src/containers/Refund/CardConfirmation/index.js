@@ -18,8 +18,10 @@ class CardConfirmation extends Component {
   }
 
   handleSubmit (e) {
+    const { onConfirm } = this.props
+
     e.preventDefault()
-    this.props.onConfirm()
+    onConfirm()
   }
 
   render () {

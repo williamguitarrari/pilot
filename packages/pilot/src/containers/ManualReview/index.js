@@ -32,8 +32,8 @@ const ManualReview = ({
       onClose={onCancel}
       title={
         action === 'approve'
-        ? t('pages.manual_review.model_approve_title')
-        : t('pages.manual_review.model_refuse_title')
+          ? t('pages.manual_review.model_approve_title')
+          : t('pages.manual_review.model_refuse_title')
       }
     />
     <ModalContent>
@@ -64,24 +64,26 @@ const ManualReview = ({
     </ModalContent>
     {
       stepStatus.result === 'pending'
-      ?
-        <Form
-          action={action}
-          errorMessage={errorMessage}
-          onConfirm={onConfirm}
-          t={t}
-          transactionId={transactionId}
-        />
-      :
-        <Result
-          action={action}
-          errorMessage={errorMessage}
-          onRetry={onRetry}
-          onViewTransaction={onViewTransaction}
-          status={stepStatus.result}
-          stepStatusResult={stepStatus.result}
-          t={t}
-        />
+        ? (
+          <Form
+            action={action}
+            errorMessage={errorMessage}
+            onConfirm={onConfirm}
+            t={t}
+            transactionId={transactionId}
+          />
+        )
+        : (
+          <Result
+            action={action}
+            errorMessage={errorMessage}
+            onRetry={onRetry}
+            onViewTransaction={onViewTransaction}
+            status={stepStatus.result}
+            stepStatusResult={stepStatus.result}
+            t={t}
+          />
+        )
     }
   </Modal>
 )

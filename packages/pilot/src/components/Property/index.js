@@ -16,7 +16,7 @@ const isStringOrNumber = anyPass([
 ])
 
 const Property = ({ title, value }) => (
-  <div className={style.property} >
+  <div className={style.property}>
     <h4 className={style.title}>{title}</h4>
     {isStringOrNumber(value)
       ? <span className={style.value}>{value}</span>

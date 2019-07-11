@@ -34,34 +34,36 @@ const ConfigurationCardForm = ({
         onClick={onClick}
         icon={icon}
       />
-      {!collapsed &&
-        <Form
-          data={data}
-          onChange={onChange}
-          onSubmit={onSubmit}
-          validateOn="blur"
-          validation={validation}
-        >
-          <CardContent>{children}</CardContent>
+      {!collapsed
+        && (
+          <Form
+            data={data}
+            onChange={onChange}
+            onSubmit={onSubmit}
+            validateOn="blur"
+            validation={validation}
+          >
+            <CardContent>{children}</CardContent>
 
-          <CardActions>
-            <Button
-              disabled={disabled}
-              fill="outline"
-              onClick={onCancel}
-              type="reset"
-            >
-              {t('pages.settings.company.cancel')}
-            </Button>
-            <Button
-              disabled={disabled}
-              fill="gradient"
-              type="submit"
-            >
-              {t('pages.settings.company.confirm')}
-            </Button>
-          </CardActions>
-        </Form>
+            <CardActions>
+              <Button
+                disabled={disabled}
+                fill="outline"
+                onClick={onCancel}
+                type="reset"
+              >
+                {t('pages.settings.company.cancel')}
+              </Button>
+              <Button
+                disabled={disabled}
+                fill="gradient"
+                type="submit"
+              >
+                {t('pages.settings.company.confirm')}
+              </Button>
+            </CardActions>
+          </Form>
+        )
       }
     </CardSection>
   </Card>

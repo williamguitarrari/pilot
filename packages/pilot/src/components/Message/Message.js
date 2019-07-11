@@ -26,30 +26,36 @@ const Message = ({
           <div className={style.image}>
             {image}
           </div>
-          { title &&
-            <div className={style.title}>
-              {isText(title)
-                ? <h2>{title}</h2>
-                : title
-              }
-            </div>
+          { title
+            && (
+              <div className={style.title}>
+                {isText(title)
+                  ? <h2>{title}</h2>
+                  : title
+                }
+              </div>
+            )
           }
-          { message &&
-            <div className={style.message}>
-              {isText(message)
-                ? <span>{message}</span>
-                : message
-              }
-            </div>
+          { message
+            && (
+              <div className={style.message}>
+                {isText(message)
+                  ? <span>{message}</span>
+                  : message
+                }
+              </div>
+            )
           }
         </Col>
       </Row>
-      { children &&
-        <Row flex>
-          <Col align="center">
-            {children}
-          </Col>
-        </Row>
+      { children
+        && (
+          <Row flex>
+            <Col align="center">
+              {children}
+            </Col>
+          </Row>
+        )
       }
     </Grid>
   </div>

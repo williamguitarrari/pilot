@@ -37,18 +37,17 @@ const rowSort = accessor => sortBy(compose(
 ))
 
 const getSort = (accessor, order) => (
-  isAscending(order) ?
-    rowSort(accessor) :
-    pipe(rowSort(accessor), reverse)
+  isAscending(order)
+    ? rowSort(accessor)
+    : pipe(rowSort(accessor), reverse)
 )
 
-const getRowsSort = (rows, columns) =>
-  (orderColumn, order) => {
-    const referenceColumn = columns[orderColumn]
-    const referenceAccessor = referenceColumn.accessor
-    const sort = getSort(referenceAccessor, order)
-    return sort(rows)
-  }
+const getRowsSort = (rows, columns) => (orderColumn, order) => {
+  const referenceColumn = columns[orderColumn]
+  const referenceAccessor = referenceColumn.accessor
+  const sort = getSort(referenceAccessor, order)
+  return sort(rows)
+}
 
 const toggleOrder = ifElse(
   isAscending,
@@ -82,7 +81,8 @@ class OperationsState extends Component {
   }
 
   handleOrderChange (orderColumnIndex) {
-    const order = toggleOrder(this.state.order)
+    const { order: stateOrder } = this.state
+    const order = toggleOrder(stateOrder)
     this.setState({
       order,
       orderColumnIndex,
@@ -91,7 +91,8 @@ class OperationsState extends Component {
   }
 
   handlePageChange () {
-    action(`page changed to ${this.state.offset}`)
+    const { offset } = this.state
+    action(`page changed to ${offset}`)
   }
 
   toggleExporting () {

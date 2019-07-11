@@ -45,8 +45,24 @@
       padding: 0 !important; /* stylelint-disable-line declaration-no-important */
     }
 
-    & > div:last-child > div {
-      display: none;
+    & table tr,
+    & table tr th {
+      font-size: 12px;
+      background-color: var(--color-white);
+      color: var(--color-black);
+      padding: 0 !important; /* stylelint-disable-line declaration-no-important */
+      text-align: center;
+      height: auto;
+
+      &:after {
+        height: 100%;
+      }
+
+      & > div {
+        text-align: center;
+        justify-content: center;
+        padding-bottom: 0;
+      }
     }
 
     & > div:first-child {
@@ -59,6 +75,10 @@
         font-size: 14px;
         font-weight: normal;
       }
+    }
+
+    & > div:last-child > div {
+      display: none;
     }
 
     & div:last-child > div {
@@ -93,26 +113,6 @@
 
     .title {
       font-size: 14px !important; /* stylelint-disable-line declaration-no-important */
-    }
-
-    & table tr,
-    & table tr th {
-      font-size: 12px;
-      background-color: var(--color-white);
-      color: var(--color-black);
-      padding: 0 !important; /* stylelint-disable-line declaration-no-important */
-      text-align: center;
-      height: auto;
-
-      &:after {
-        height: 100%;
-      }
-
-      & > div {
-        text-align: center;
-        justify-content: center;
-        padding-bottom: 0;
-      }
     }
 
     & table tr td {

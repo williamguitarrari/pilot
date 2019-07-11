@@ -27,13 +27,15 @@ const PresentationContainer = ({
       <span className={styles.uppercase}>
         {t(`landing.${environment}.subtitle`)}
 
-        {environment === 'test' &&
-          <Fragment>
-            &nbsp;
-            <strong>{t('landing.test.subtitle_emphasis')}</strong>
-            &nbsp;
-            {t('landing.test.subtitle_company')}
-          </Fragment>
+        {environment === 'test'
+          && (
+            <Fragment>
+              &nbsp;
+              <strong>{t('landing.test.subtitle_emphasis')}</strong>
+              &nbsp;
+              {t('landing.test.subtitle_company')}
+            </Fragment>
+          )
         }
       </span>
     </div>
@@ -41,10 +43,12 @@ const PresentationContainer = ({
       <p className={styles.paragraph}>
         {t(`landing.${environment}.about_dashboard`)}
       </p>
-      {environment === 'test' &&
-        <p className={styles.paragraph}>
-          {t('landing.test.sandbox_disclaimer')}
-        </p>
+      {environment === 'test'
+        && (
+          <p className={styles.paragraph}>
+            {t('landing.test.sandbox_disclaimer')}
+          </p>
+        )
       }
     </div>
     <div className={classNames(styles.uppercase, styles.signInBlock)}>
@@ -57,6 +61,7 @@ const PresentationContainer = ({
             className={styles.link}
             onClick={onRegister}
             role="link"
+            type="button"
           >
             {t('landing.signup_action')}
           </button>
@@ -64,34 +69,38 @@ const PresentationContainer = ({
       </p>
     </div>
     <div className={styles.changeEnvironment}>
-      {environment === 'live' &&
-        <div>
-          <a
-            href={environmentUrl}
-            className={classNames(styles.goToTest, styles.uppercase)}
-          >
-            <IconTest height={60} width={60} />
-            <Spacing size="small" />
-            {t('landing.live.back_link')}
-            &nbsp;
-            <strong>
-              {t('landing.live.back_link_emphasis')}
-            </strong>
-          </a>
-        </div>
+      {environment === 'live'
+        && (
+          <div>
+            <a
+              href={environmentUrl}
+              className={classNames(styles.goToTest, styles.uppercase)}
+            >
+              <IconTest height={60} width={60} />
+              <Spacing size="small" />
+              {t('landing.live.back_link')}
+              &nbsp;
+              <strong>
+                {t('landing.live.back_link_emphasis')}
+              </strong>
+            </a>
+          </div>
+        )
       }
 
-      {environment === 'test' &&
-        <div>
-          <a href={environmentUrl} className={styles.link}>
-            <Button
-              fill="outline"
-              icon={<IconBack width={16} height={16} />}
-            >
-              {t('landing.test.back_button')}
-            </Button>
-          </a>
-        </div>
+      {environment === 'test'
+        && (
+          <div>
+            <a href={environmentUrl} className={styles.link}>
+              <Button
+                fill="outline"
+                icon={<IconBack width={16} height={16} />}
+              >
+                {t('landing.test.back_button')}
+              </Button>
+            </a>
+          </div>
+        )
       }
 
       <div>

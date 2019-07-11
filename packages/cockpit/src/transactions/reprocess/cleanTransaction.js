@@ -89,8 +89,9 @@ const getBlacklist = (key) => {
   return blacklists[key] || blacklists.default
 }
 
-const isValidProp = curry((value, key, fatherKey) =>
-  !contains(key, getBlacklist(fatherKey)) && value !== null)
+const isValidProp = curry((value, key, fatherKey) => (
+  !contains(key, getBlacklist(fatherKey)) && value !== null
+))
 
 const cleanupProps = (object, key) => {
   if (is(Array, object)) {
@@ -117,17 +118,21 @@ const customerLens = lensProp('customer')
 
 const metadataLens = lensProp('metadata')
 
-const setCardId = transaction =>
+const setCardId = transaction => (
   set(cardIdLens, getCardId(transaction), transaction)
+)
 
-const setCustomerId = transaction =>
+const setCustomerId = transaction => (
   set(customerIdLens, getCustomerId(transaction), transaction)
+)
 
-const setMetadata = transaction =>
+const setMetadata = transaction => (
   set(metadataLens, buildNewMetadata(transaction), transaction)
+)
 
-const setCustomer = transaction =>
+const setCustomer = transaction => (
   set(customerLens, getCustomer(transaction), transaction)
+)
 
 export default pipe(
   setCardId,

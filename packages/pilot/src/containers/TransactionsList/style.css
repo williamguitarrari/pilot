@@ -35,6 +35,15 @@
   }
 }
 
+.parentWidth {
+  flex: 1;
+
+  & > * {
+    box-sizing: border-box;
+    width: 100%;
+  }
+}
+
 .toolBar > * {
   margin-left: var(--spacing-small);
 
@@ -87,15 +96,6 @@
   border-left: 1px solid var(--color-light-steel-50);
   margin: 0 10px;
   width: 1px;
-}
-
-.parentWidth {
-  flex: 1;
-
-  & > * {
-    box-sizing: border-box;
-    width: 100%;
-  }
 }
 
 .legendContainer {

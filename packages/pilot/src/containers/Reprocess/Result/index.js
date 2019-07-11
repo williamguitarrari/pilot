@@ -60,38 +60,41 @@ const Result = ({
             </Alert>
           </Col>
         </Row>
-        {status !== 'error' &&
-          <Row stretch>
-            <Col palm={12} tablet={12} desk={12} tv={12}>
-              <ReprocessDetails
-                labels={{
-                  amount: t('amount'),
-                  cardNumber: t('card_number'),
-                  holderName: t('holder_name'),
-                  installments: t('installments'),
-                }}
-                contents={{
-                  amount: formatCurrency(amount),
-                  cardNumber: `${formatCardNumber(cardFirstDigits)} ${cardLastDigits}`,
-                  holderName,
-                  installments: t('installment', { count: installments }),
-                }}
-              />
-            </Col>
-          </Row>
+        {status !== 'error'
+          && (
+            <Row stretch>
+              <Col palm={12} tablet={12} desk={12} tv={12}>
+                <ReprocessDetails
+                  labels={{
+                    amount: t('amount'),
+                    cardNumber: t('card_number'),
+                    holderName: t('holder_name'),
+                    installments: t('installments'),
+                  }}
+                  contents={{
+                    amount: formatCurrency(amount),
+                    cardNumber: `${formatCardNumber(cardFirstDigits)} ${cardLastDigits}`,
+                    holderName,
+                    installments: t('installment', { count: installments }),
+                  }}
+                />
+              </Col>
+            </Row>
+          )
         }
       </Grid>
     </ModalContent>
     <ModalActions>
       {status === 'error'
-        ?
+        ? (
           <Button
             fill="outline"
             onClick={onRestart}
           >
             {t('try_again')}
           </Button>
-        :
+        )
+        : (
           <Fragment>
             <CopyButton
               feedbackText={t('copied_to_clipboard')}
@@ -107,6 +110,7 @@ const Result = ({
               {t('view_transaction')}
             </Button>
           </Fragment>
+        )
       }
     </ModalActions>
   </Fragment>

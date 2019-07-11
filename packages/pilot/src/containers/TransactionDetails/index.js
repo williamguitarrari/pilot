@@ -54,7 +54,7 @@ import DetailsHead from '../../components/DetailsHead'
 import Event from '../../components/Event'
 import PaymentBoleto from '../../components/PaymentBoleto'
 import PaymentCard from '../../components/PaymentCard'
-import RecipientList from '../../containers/RecipientList'
+import RecipientList from '../RecipientList'
 import RiskLevel from '../../components/RiskLevel'
 import statusLegends from '../../models/statusLegends'
 import TotalDisplay from '../../components/TotalDisplay'
@@ -453,7 +453,11 @@ class TransactionDetails extends Component {
   }
 
   renderPayment () {
-    const { payment } = this.props.transaction
+    const {
+      transaction: {
+        payment,
+      },
+    } = this.props
 
     if (payment.method === 'credit_card') {
       return this.renderPaymentCard()
@@ -467,22 +471,28 @@ class TransactionDetails extends Component {
     return (
       <div className={style.subtitle}>
         <div>
-          {totalDisplayLabels.mdr &&
-            <span>
-              {totalDisplayLabels.mdr}
-            </span>
+          {totalDisplayLabels.mdr
+            && (
+              <span>
+                {totalDisplayLabels.mdr}
+              </span>
+            )
           }
-          {totalDisplayLabels.cost &&
-            <span>
-              {totalDisplayLabels.cost}
-            </span>
+          {totalDisplayLabels.cost
+            && (
+              <span>
+                {totalDisplayLabels.cost}
+              </span>
+            )
           }
         </div>
         <div>
-          {totalDisplayLabels.refund &&
-            <span>
-              {totalDisplayLabels.refund}
-            </span>
+          {totalDisplayLabels.refund
+            && (
+              <span>
+                {totalDisplayLabels.refund}
+              </span>
+            )
           }
         </div>
       </div>
@@ -540,49 +550,53 @@ class TransactionDetails extends Component {
 
     return (
       <Fragment>
-        {(nextId && nextId !== transaction.id) &&
-          <Row className={style.alertCustom}>
-            <Col
-              desk={12}
-              palm={12}
-              tablet={12}
-              tv={12}
-            >
-              <Alert
-                action={reprocessLabels.showNext}
-                icon={<IconInfo height={16} width={16} />}
-                onDismiss={onNextTransactionRedirect}
-                type="info"
+        {(nextId && nextId !== transaction.id)
+          && (
+            <Row className={style.alertCustom}>
+              <Col
+                desk={12}
+                palm={12}
+                tablet={12}
+                tv={12}
               >
-                <span className={style.reprocessAlertCustom}>
-                  {reprocessLabels.nextAlert}
-                  <strong> {nextId} </strong>
-                </span>
-              </Alert>
-            </Col>
-          </Row>
+                <Alert
+                  action={reprocessLabels.showNext}
+                  icon={<IconInfo height={16} width={16} />}
+                  onDismiss={onNextTransactionRedirect}
+                  type="info"
+                >
+                  <span className={style.reprocessAlertCustom}>
+                    {reprocessLabels.nextAlert}
+                    <strong> {nextId} </strong>
+                  </span>
+                </Alert>
+              </Col>
+            </Row>
+          )
         }
-        {transaction.previousId &&
-          <Row className={style.alertCustom}>
-            <Col
-              desk={12}
-              tv={12}
-              tablet={12}
-              palm={12}
-            >
-              <Alert
-                action={reprocessLabels.showPrevious}
-                icon={<IconInfo height={16} width={16} />}
-                onDismiss={onPreviousTransactionRedirect}
-                type="info"
+        {transaction.previousId
+          && (
+            <Row className={style.alertCustom}>
+              <Col
+                desk={12}
+                tv={12}
+                tablet={12}
+                palm={12}
               >
-                <span className={style.reprocessAlertCustom}>
-                  {reprocessLabels.previousAlert}
-                  <strong> {transaction.previousId} </strong>
-                </span>
-              </Alert>
-            </Col>
-          </Row>
+                <Alert
+                  action={reprocessLabels.showPrevious}
+                  icon={<IconInfo height={16} width={16} />}
+                  onDismiss={onPreviousTransactionRedirect}
+                  type="info"
+                >
+                  <span className={style.reprocessAlertCustom}>
+                    {reprocessLabels.previousAlert}
+                    <strong> {transaction.previousId} </strong>
+                  </span>
+                </Alert>
+              </Col>
+            </Row>
+          )
         }
       </Fragment>
     )
@@ -745,11 +759,11 @@ class TransactionDetails extends Component {
                   }
                   amountSize="huge"
                   color="#37cc9a"
-                  subtitle={
+                  subtitle={(
                     <div className={style.subtitle}>
                       {totalDisplayLabels.captured_at}
                     </div>
-                  }
+                  )}
                   title={isRefundedBeforeCaptured
                     ? totalDisplayLabels.authorized_amount
                     : totalDisplayLabels.paid_amount
@@ -777,11 +791,11 @@ class TransactionDetails extends Component {
                   }
                   amountSize="huge"
                   color="#ff796f"
-                  subtitle={
+                  subtitle={(
                     <div className={style.subtitle}>
                       {this.renderOutAmountSubTitle()}
                     </div>
-                  }
+                  )}
                   title={totalDisplayLabels.out_amount}
                   titleSize="medium"
                 />
@@ -800,11 +814,11 @@ class TransactionDetails extends Component {
                   amount={payment.net_amount}
                   amountSize="huge"
                   color="#4ca9d7"
-                  subtitle={
+                  subtitle={(
                     <div className={style.subtitle}>
                       {totalDisplayLabels.receive_date}
                     </div>
-                  }
+                  )}
                   title={totalDisplayLabels.net_amount}
                   titleSize="medium"
                 />
@@ -813,23 +827,25 @@ class TransactionDetails extends Component {
           </Col>
         </Row>
 
-        {showStatusAlert(transaction) &&
-          <Row className={style.alertCustom}>
-            <Col
-              desk={12}
-              palm={12}
-              tablet={12}
-              tv={12}
-            >
-              <Alert
-                action={alertLabels.resubmit}
-                icon={<IconInfo height={16} width={16} />}
-                type="info"
+        {showStatusAlert(transaction)
+          && (
+            <Row className={style.alertCustom}>
+              <Col
+                desk={12}
+                palm={12}
+                tablet={12}
+                tv={12}
               >
-                {this.renderAlertInfo()}
-              </Alert>
-            </Col>
-          </Row>
+                <Alert
+                  action={alertLabels.resubmit}
+                  icon={<IconInfo height={16} width={16} />}
+                  type="info"
+                >
+                  {this.renderAlertInfo()}
+                </Alert>
+              </Col>
+            </Row>
+          )
         }
 
         <Row>
@@ -840,58 +856,62 @@ class TransactionDetails extends Component {
             tv={9}
           >
             <Grid className={style.detailsInfo}>
-              {!isEmptyOrNull(recipients) &&
-                <Row className={style.recipientsInfo}>
-                  <Col
-                    desk={12}
-                    palm={12}
-                    tablet={12}
-                    tv={12}
-                  >
-                    <RecipientList
-                      collapseInstallmentTitle={
-                        recipientsLabels.collapseInstallmentTitle
-                      }
-                      expandAllRecipients={expandRecipients}
-                      expandInstallmentTitle={
-                        recipientsLabels.expandInstallmentTitle
-                      }
-                      installmentsTableColumns={installmentColumns}
-                      installmentTotalLabel={
-                        recipientsLabels.installmentTotalLabel
-                      }
-                      liabilitiesLabel={recipientsLabels.liabilitiesLabel}
-                      netAmountLabel={recipientsLabels.netAmountLabel}
-                      noRecipientLabel={recipientsLabels.noRecipientLabel}
-                      outAmountLabel={recipientsLabels.outAmountLabel}
-                      paymentMethod={payment.method}
-                      recipients={recipients}
-                      statusLabel={recipientsLabels.statusLabel}
-                      title={recipientsLabels.title}
-                      total={decimalCurrencyFormatter(payment.paid_amount)}
-                      totalRecipientsLabel={
-                        recipientsLabels.totalRecipientsLabel
-                      }
-                      totalTitle={recipientsLabels.totalTitle}
-                    />
-                  </Col>
-                </Row>
+              {!isEmptyOrNull(recipients)
+                && (
+                  <Row className={style.recipientsInfo}>
+                    <Col
+                      desk={12}
+                      palm={12}
+                      tablet={12}
+                      tv={12}
+                    >
+                      <RecipientList
+                        collapseInstallmentTitle={
+                          recipientsLabels.collapseInstallmentTitle
+                        }
+                        expandAllRecipients={expandRecipients}
+                        expandInstallmentTitle={
+                          recipientsLabels.expandInstallmentTitle
+                        }
+                        installmentsTableColumns={installmentColumns}
+                        installmentTotalLabel={
+                          recipientsLabels.installmentTotalLabel
+                        }
+                        liabilitiesLabel={recipientsLabels.liabilitiesLabel}
+                        netAmountLabel={recipientsLabels.netAmountLabel}
+                        noRecipientLabel={recipientsLabels.noRecipientLabel}
+                        outAmountLabel={recipientsLabels.outAmountLabel}
+                        paymentMethod={payment.method}
+                        recipients={recipients}
+                        statusLabel={recipientsLabels.statusLabel}
+                        title={recipientsLabels.title}
+                        total={decimalCurrencyFormatter(payment.paid_amount)}
+                        totalRecipientsLabel={
+                          recipientsLabels.totalRecipientsLabel
+                        }
+                        totalTitle={recipientsLabels.totalTitle}
+                      />
+                    </Col>
+                  </Row>
+                )
               }
-              {!isEmptyOrNull(customer) &&
-                <Row className={style.customerInfo}>
-                  <Col
-                    desk={12}
-                    palm={12}
-                    tablet={12}
-                    tv={12}
-                  >
-                    <CustomerCard
-                      contents={customerDetailsContent}
-                      labels={customerLabels}
-                      title={customerLabels.title}
-                    />
-                  </Col>
-                </Row>
+              {!isEmptyOrNull(customer)
+                && (
+                  <Row className={style.customerInfo}>
+                    <Col
+                      desk={12}
+                      palm={12}
+                      tablet={12}
+                      tv={12}
+                    >
+                      <CustomerCard
+                        contents={customerDetailsContent}
+                        labels={customerLabels}
+                        title={customerLabels.title}
+                      />
+                    </Col>
+                  </Row>
+                )
               }
               <Row className={style.transactionCardInfo}>
                 <Col
@@ -907,20 +927,22 @@ class TransactionDetails extends Component {
                   />
                 </Col>
               </Row>
-              {!isEmptyOrNull(metadata) &&
-                <Row className={style.metadataInfo}>
-                  <Col
-                    desk={12}
-                    palm={12}
-                    tablet={12}
-                    tv={12}
-                  >
-                    <TreeView
-                      data={metadata}
-                      title={metadataTitle}
-                    />
-                  </Col>
-                </Row>
+              {!isEmptyOrNull(metadata)
+                && (
+                  <Row className={style.metadataInfo}>
+                    <Col
+                      desk={12}
+                      palm={12}
+                      tablet={12}
+                      tv={12}
+                    >
+                      <TreeView
+                        data={metadata}
+                        title={metadataTitle}
+                      />
+                    </Col>
+                  </Row>
+                )
               }
             </Grid>
           </Col>

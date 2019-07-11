@@ -62,28 +62,30 @@ const Versions = ({
           subtitle={name}
           title={t('select_version_title')}
         />
-        {!collapsed &&
-          <CardContent>
-            <Grid>
-              <Row>
-                <Col desk={12} tv={12} palm={12}>
-                  <p>
-                    {t('select_version_description')}
-                  </p>
-                </Col>
+        {!collapsed
+          && (
+            <CardContent>
+              <Grid>
+                <Row>
+                  <Col desk={12} tv={12} palm={12}>
+                    <p>
+                      {t('select_version_description')}
+                    </p>
+                  </Col>
 
-                <Col desk={3} tv={4} palm={12}>
-                  <FormDropdown
-                    label={t('select_version_label')}
-                    name="api-version"
-                    onChange={openModalConfirmation}
-                    options={options}
-                    value={selected}
-                  />
-                </Col>
-              </Row>
-            </Grid>
-          </CardContent>
+                  <Col desk={3} tv={4} palm={12}>
+                    <FormDropdown
+                      label={t('select_version_label')}
+                      name="api-version"
+                      onChange={openModalConfirmation}
+                      options={options}
+                      value={selected}
+                    />
+                  </Col>
+                </Row>
+              </Grid>
+            </CardContent>
+          )
         }
       </CardSection>
 

@@ -34,16 +34,17 @@ const BalanceTotalDisplay = ({
         <div className={style.detail}>
           {detail}
         </div>
-        {
-          action &&
-          <Button
-            disabled={disabled}
-            fill="gradient"
-            onClick={action.onClick}
-            size="default"
-          >
-            {action.title}
-          </Button>
+        { action
+          && (
+            <Button
+              disabled={disabled}
+              fill="gradient"
+              onClick={action.onClick}
+              size="default"
+            >
+              {action.title}
+            </Button>
+          )
         }
       </CardContent>
     </Card>

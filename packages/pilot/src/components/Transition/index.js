@@ -11,8 +11,9 @@ import {
   uncurryN,
 } from 'ramda'
 
-const applySpring = curry((springPreset, val) =>
-  spring(val, springPreset || presets.noWobble))
+const applySpring = curry((springPreset, val) => spring(
+  val, springPreset || presets.noWobble
+))
 
 const applySpringIfNumber = springOptions => ifElse(
   is(Number),
@@ -39,63 +40,89 @@ class Transition extends Component {
   }
 
   getDefaultStyles () {
-    if (!this.props.runOnMount) {
+    const {
+      atEnter,
+      children,
+      runOnMount,
+    } = this.props
+
+    if (!runOnMount) {
       return null
     }
 
-    if (!this.props.children) {
+    if (!children) {
       return []
     }
 
     return [
       {
-        data: this.props.children,
-        key: this.props.children.key,
-        style: this.props.atEnter,
+        data: children,
+        key: children.key,
+        style: atEnter,
       },
     ]
   }
 
   getStyles () {
-    if (!this.props.children) {
+    const {
+      atActive,
+      children,
+      springOptions,
+    } = this.props
+
+    if (!children) {
       return []
     }
 
     return [
       {
-        data: this.props.children,
-        key: this.props.children.key,
-        style: ensureSpring(this.props.springOptions, this.props.atActive),
+        data: children,
+        key: children.key,
+        style: ensureSpring(springOptions, atActive),
       },
     ]
   }
 
   willEnter () {
-    return this.props.atEnter
+    const { atEnter } = this.props
+    return atEnter
   }
 
   willLeave () {
-    return ensureSpring(this.props.springOptions, this.props.atLeave)
+    const {
+      atLeave,
+      springOptions,
+    } = this.props
+
+    return ensureSpring(springOptions, atLeave)
   }
 
   didLeave (styleThatLeft) {
-    if (this.props.didLeave) {
-      this.props.didLeave(styleThatLeft)
+    const {
+      didLeave,
+    } = this.props
+
+    if (didLeave) {
+      didLeave(styleThatLeft)
     }
   }
 
   renderChild (config) {
+    const { mapStyles } = this.props
+
     const props = {
       key: config.key,
-      style: this.props.mapStyles(config.style),
+      style: mapStyles(config.style),
     }
 
     return cloneElement(config.data, props)
   }
 
   renderChildren (interpolatedStyles) {
+    const { className } = this.props
+
     return (
-      <div className={this.props.className}>
+      <div className={className}>
         {interpolatedStyles.map(this.renderChild)}
       </div>
     )

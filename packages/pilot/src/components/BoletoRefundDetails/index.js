@@ -88,11 +88,11 @@ const BoletoRefundDetails = ({ contents, labels, title }) => {
             <Col palm={12} tablet={6} desk={6} tv={6}>
               <Property
                 title={labels.refundAmount}
-                value={
+                value={(
                   <span className={style.refundAmount}>
                     {formatCurrency(refundAmount)}
                   </span>
-                }
+                )}
               />
             </Col>
           </Row>

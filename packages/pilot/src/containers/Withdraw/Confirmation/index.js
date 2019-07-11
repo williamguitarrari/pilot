@@ -42,8 +42,11 @@ class WithdrawConfirmationContainer extends Component {
   }
 
   handleConfirm (e) {
+    const { onConfirm } = this.props
+    const { password } = this.state
+
     e.preventDefault()
-    this.props.onConfirm(this.state.password)
+    onConfirm(password)
   }
 
   renderInformationRow () {
@@ -148,6 +151,7 @@ class WithdrawConfirmationContainer extends Component {
       onReturn,
       t,
     } = this.props
+    const { password } = this.state
 
     return (
       <CardActions>
@@ -161,7 +165,7 @@ class WithdrawConfirmationContainer extends Component {
           {t('pages.withdraw.return')}
         </Button>
         <Button
-          disabled={!this.state.password || disabledButtons}
+          disabled={!password || disabledButtons}
           type="submit"
         >
           {t('pages.withdraw.confirm')}
@@ -229,6 +233,8 @@ class WithdrawConfirmationContainer extends Component {
   }
 
   render () {
+    const { t } = this.props
+
     return (
       <form onSubmit={this.handleConfirm}>
         <Card>
@@ -237,7 +243,7 @@ class WithdrawConfirmationContainer extends Component {
               <Row>
                 <Col>
                   <span className={style.advise}>
-                    {this.props.t('pages.withdraw.confirmation_advise')}
+                    {t('pages.withdraw.confirmation_advise')}
                   </span>
                 </Col>
               </Row>

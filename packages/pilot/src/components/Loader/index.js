@@ -37,19 +37,21 @@ const Loader = ({
       stiffness: 170,
     }}
   >
-    {visible &&
-      <div
-        className={createOverlayStyle(position)}
-        key="overlay"
-      >
+    {visible
+      && (
         <div
-          aria-busy="true"
-          aria-label={label}
-          className={style.loader}
-          role="progressbar"
-        />
-        <h4 className={style.text}>{text}</h4>
-      </div>
+          className={createOverlayStyle(position)}
+          key="overlay"
+        >
+          <div
+            aria-busy="true"
+            aria-label={label}
+            className={style.loader}
+            role="progressbar"
+          />
+          <h4 className={style.text}>{text}</h4>
+        </div>
+      )
     }
   </Transition>
 )

@@ -21,8 +21,10 @@ class RecipientListState extends PureComponent {
   }
 
   handleCollapse () {
+    const { collapsed } = this.state
+
     this.setState({
-      collapsed: !this.state.collapsed,
+      collapsed: !collapsed,
     })
   }
 

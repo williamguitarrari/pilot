@@ -95,42 +95,50 @@ class Filters extends Component {
   }
 
   componentDidUpdate (prevProps, prevState) {
+    const { query } = this.props
+
     const prevQuery = stringifyDates(prevState.query)
-    const currQuery = stringifyDates(this.props.query)
+    const currQuery = stringifyDates(query)
 
     if (!equals(prevQuery, currQuery)) {
       this.setState({ // eslint-disable-line react/no-did-update-set-state
         hasChanged: true,
-        query: this.props.query,
+        query,
       })
     }
   }
 
   handleToogeMoreFilters () {
-    this.setState({
-      collapsed: !this.state.collapsed,
-    })
+    this.setState(({ collapsed }) => ({
+      collapsed: !collapsed,
+    }))
   }
 
   handleFiltersSubmit (filters) {
+    const { onConfirm } = this.props
+
     this.setState({
       collapsed: true,
       hasChanged: false,
     })
 
-    this.props.onConfirm(filters)
+    onConfirm(filters)
   }
 
   handleFiltersChange (query) {
+    const { onChange } = this.props
+
     this.setState({ query })
 
-    this.props.onChange(query)
+    onChange(query)
   }
 
   renderChildrenInput (input, index) {
+    const { disabled } = this.props
+
     return React.cloneElement(input, {
       className: style.search,
-      disabled: this.props.disabled,
+      disabled,
       key: `${input.props.name}-${index}`,
     })
   }
@@ -153,20 +161,22 @@ class Filters extends Component {
     return (
       <CardActions>
         {ensureArray(children).map(this.renderChildrenInput)}
-        {!isNilOrEmpty(options) &&
-          <Button
-            disabled={disabled}
-            relevance="low"
-            fill="outline"
-            iconAlignment="end"
-            icon={collapsed
-              ? <ChevronDown32 width={16} height={16} />
-              : <ChevronUp32 width={16} height={16} />
-            }
-            onClick={this.handleToogeMoreFilters}
-          >
-            {t('components.filter.more')}
-          </Button>
+        {!isNilOrEmpty(options)
+          && (
+            <Button
+              disabled={disabled}
+              relevance="low"
+              fill="outline"
+              iconAlignment="end"
+              icon={collapsed
+                ? <ChevronDown32 width={16} height={16} />
+                : <ChevronUp32 width={16} height={16} />
+              }
+              onClick={this.handleToogeMoreFilters}
+            >
+              {t('components.filter.more')}
+            </Button>
+          )
         }
         <Spacing size="flex" />
         <Button
@@ -205,6 +215,7 @@ class Filters extends Component {
     } = this.state
 
     const {
+      disabled,
       options,
       query: {
         filters,
@@ -231,10 +242,10 @@ class Filters extends Component {
                     <CheckboxGroup
                       columns={
                         items.length > 6
-                        ? 2
-                        : 1
+                          ? 2
+                          : 1
                       }
-                      disabled={this.props.disabled}
+                      disabled={disabled}
                       name={key}
                       options={items}
                       value={selectedFilters}
@@ -279,20 +290,24 @@ class Filters extends Component {
           {t('components.filter.filtering_by')}&nbsp;
         </span>
         {tags.map(({ items, key, name }) => (
-          !isNilOrEmpty(items) &&
-            <Tag key={key}>
-              <strong>{name}</strong>: {join(', ', items)}
-            </Tag>
+          !isNilOrEmpty(items)
+            && (
+              <Tag key={key}>
+                <strong>{name}</strong>: {join(', ', items)}
+              </Tag>
+            )
         ))}
       </CardContent>
     )
   }
 
   render () {
+    const { query } = this.state
+
     return (
       <Card className={style.allowOverflow}>
         <Form
-          data={this.state.query}
+          data={query}
           onChange={this.handleFiltersChange}
           onSubmit={this.handleFiltersSubmit}
         >

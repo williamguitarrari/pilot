@@ -48,7 +48,8 @@ const RemoveUserModal = ({
           Sim, quero excluir
         </Button>
       </ModalActions>
-    </Modal>)
+    </Modal>
+  )
 }
 
 RemoveUserModal.propTypes = {

@@ -175,28 +175,30 @@ class Anticipation extends Component {
 
     return (
       maximum
-        ? <AnticipationForm
-          amount={amount}
-          approximateRequested={approximateRequested}
-          bankAccount={bankAccount}
-          cost={totalCost}
-          date={date}
-          error={error}
-          isAutomaticTransfer={automaticTransfer}
-          isValidDay={validateDay}
-          loading={loading}
-          maximum={maximum}
-          minimum={minimum}
-          needsRecalculation={needsRecalculation}
-          onCalculateSubmit={onCalculateSubmit}
-          onCancel={onCancel}
-          onChange={onFormChange}
-          onConfirm={onDataConfirm}
-          requested={requested}
-          t={t}
-          timeframe={timeframe}
-          transferCost={transferCost}
-        />
+        ? (
+          <AnticipationForm
+            amount={amount}
+            approximateRequested={approximateRequested}
+            bankAccount={bankAccount}
+            cost={totalCost}
+            date={date}
+            error={error}
+            isAutomaticTransfer={automaticTransfer}
+            isValidDay={validateDay}
+            loading={loading}
+            maximum={maximum}
+            minimum={minimum}
+            needsRecalculation={needsRecalculation}
+            onCalculateSubmit={onCalculateSubmit}
+            onCancel={onCancel}
+            onChange={onFormChange}
+            onConfirm={onDataConfirm}
+            requested={requested}
+            t={t}
+            timeframe={timeframe}
+            transferCost={transferCost}
+          />
+        )
         : null
     )
   }
@@ -242,38 +244,42 @@ class Anticipation extends Component {
             tv={12}
           >
             {currentStep === 'data' && renderDataStep()}
-            {currentStep === 'confirmation' &&
-              <AnticipationConfirmation
-                amount={amount}
-                automaticTransfer={automaticTransfer}
-                bankAccount={bankAccount}
-                date={date}
-                disabled={loading}
-                error={error}
-                onCancel={onCancel}
-                onConfirm={onConfirmationConfirm}
-                onReturn={onConfirmationReturn}
-                requested={approximateRequested}
-                t={t}
-                totalCost={totalCost + transferCost}
-              />
+            {currentStep === 'confirmation'
+              && (
+                <AnticipationConfirmation
+                  amount={amount}
+                  automaticTransfer={automaticTransfer}
+                  bankAccount={bankAccount}
+                  date={date}
+                  disabled={loading}
+                  error={error}
+                  onCancel={onCancel}
+                  onConfirm={onConfirmationConfirm}
+                  onReturn={onConfirmationReturn}
+                  requested={approximateRequested}
+                  t={t}
+                  totalCost={totalCost + transferCost}
+                />
+              )
             }
 
-            {currentStep === 'result' &&
-              <AnticipationResult
-                amount={amount}
-                automaticTransfer={automaticTransfer}
-                bankAccount={bankAccount}
-                date={date}
-                onTryAgain={onTryAgain}
-                onViewStatement={onViewStatement}
-                requested={approximateRequested}
-                status={stepsStatus.result}
-                statusMessage={statusMessage}
-                t={t}
-                timeframe={timeframe}
-                totalCost={totalCost + transferCost}
-              />
+            {currentStep === 'result'
+              && (
+                <AnticipationResult
+                  amount={amount}
+                  automaticTransfer={automaticTransfer}
+                  bankAccount={bankAccount}
+                  date={date}
+                  onTryAgain={onTryAgain}
+                  onViewStatement={onViewStatement}
+                  requested={approximateRequested}
+                  status={stepsStatus.result}
+                  statusMessage={statusMessage}
+                  t={t}
+                  timeframe={timeframe}
+                  totalCost={totalCost + transferCost}
+                />
+              )
             }
           </Col>
         </Row>

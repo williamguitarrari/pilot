@@ -59,9 +59,9 @@ class WithdrawFormContainer extends Component {
       <CardActions>
         <Button
           disabled={
-            requested > maximum ||
-            requested <= Math.abs(transferCost) ||
-            !requested
+            requested > maximum
+            || requested <= Math.abs(transferCost)
+            || !requested
           }
           type="submit"
         >
@@ -188,6 +188,7 @@ class WithdrawFormContainer extends Component {
     const {
       maximum,
       onRequestedChange,
+      onSubmit,
       requested,
       t,
       transferCost,
@@ -222,7 +223,7 @@ class WithdrawFormContainer extends Component {
             ],
           }}
           onChange={data => onRequestedChange(Number(data.requested))}
-          onSubmit={this.props.onSubmit}
+          onSubmit={onSubmit}
         >
           <CardContent>
             <Grid>

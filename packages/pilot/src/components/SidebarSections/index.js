@@ -22,15 +22,17 @@ const SidebarSections = ({
         >
           <span className={style.title}>{title}</span>
           <div className={style.value}>{value}</div>
-          {actionTitle &&
-            <Button
-              className={style.action}
-              disabled={disabled}
-              onClick={action}
-              size="tiny"
-            >
-              {actionTitle}
-            </Button>
+          {actionTitle
+            && (
+              <Button
+                className={style.action}
+                disabled={disabled}
+                onClick={action}
+                size="tiny"
+              >
+                {actionTitle}
+              </Button>
+            )
           }
         </li>
       ))}

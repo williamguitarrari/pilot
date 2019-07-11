@@ -37,8 +37,12 @@ class UserSettingsPage extends React.Component {
 
   /* eslint-disable-next-line camelcase */
   handleRedefinePassword ({ current_password, new_password }) {
-    const { id } = this.props.user
-    this.props.client
+    const {
+      client,
+      user: { id },
+    } = this.props
+
+    client
       .user.updatePassword({
         current_password,
         id,
@@ -70,10 +74,11 @@ class UserSettingsPage extends React.Component {
     const {
       t,
     } = this.props
+    const { passwordFormStatus } = this.state
 
     return (
       <UserSettings
-        passwordFormStatus={this.state.passwordFormStatus}
+        passwordFormStatus={passwordFormStatus}
         handlePasswordFormSubmit={this.handleRedefinePassword}
         t={t}
       />

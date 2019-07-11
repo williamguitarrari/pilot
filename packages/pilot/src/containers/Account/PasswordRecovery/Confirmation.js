@@ -9,7 +9,8 @@ const Confirmation = ({
   onBackToLogin,
   t,
 }) => (
-  <div className={classNames(
+  <div
+    className={classNames(
       styles.primaryContent,
       styles.confirmationContent
     )}
@@ -22,7 +23,7 @@ const Confirmation = ({
       </p>
     </div>
     <div className={styles.actions}>
-      <div className={styles.hugeButton} >
+      <div className={styles.hugeButton}>
         <Button
           type="button"
           size="huge"

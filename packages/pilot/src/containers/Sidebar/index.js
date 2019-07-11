@@ -101,42 +101,46 @@ class SidebarContainer extends React.Component {
           />
         </SidebarHeader>
 
-        {!collapsed &&
-          <SidebarSummary
-            collapsed={summaryCollapsed}
-            onClick={() => this.setState({
-              summaryCollapsed: !summaryCollapsed,
-            })}
-            subtitle={
-              summaryCollapsed
-                ? t('pages.sidebar.show_balance')
-                : t('pages.sidebar.hide_balance')
-            }
-            title={companyName}
-          >
-            {this.renderSections()}
-          </SidebarSummary>
+        {!collapsed
+          && (
+            <SidebarSummary
+              collapsed={summaryCollapsed}
+              onClick={() => this.setState({
+                summaryCollapsed: !summaryCollapsed,
+              })}
+              subtitle={
+                summaryCollapsed
+                  ? t('pages.sidebar.show_balance')
+                  : t('pages.sidebar.hide_balance')
+              }
+              title={companyName}
+            >
+              {this.renderSections()}
+            </SidebarSummary>
+          )
         }
 
-        {collapsed &&
-          <Popover
-            base="dark"
-            content={
-              <PopoverContent>
-                {this.renderSections()}
-              </PopoverContent>
-            }
-            placement="rightStart"
-          >
-            <SidebarLinks>
-              <SidebarLink
-                collapsed={collapsed}
-                onClick={() => null}
-                icon={<IconWallet width={16} height={16} />}
-                title={t('pages.sidebar.balance')}
-              />
-            </SidebarLinks>
-          </Popover>
+        {collapsed
+          && (
+            <Popover
+              base="dark"
+              content={(
+                <PopoverContent>
+                  {this.renderSections()}
+                </PopoverContent>
+              )}
+              placement="rightStart"
+            >
+              <SidebarLinks>
+                <SidebarLink
+                  collapsed={collapsed}
+                  onClick={() => null}
+                  icon={<IconWallet width={16} height={16} />}
+                  title={t('pages.sidebar.balance')}
+                />
+              </SidebarLinks>
+            </Popover>
+          )
         }
 
         <SidebarLinks>
@@ -157,22 +161,24 @@ class SidebarContainer extends React.Component {
             />
           ))}
         </SidebarLinks>
-        {!collapsed &&
-          <Flexbox
-            className={style.backToOldVersion}
-            justifyContent="center"
-          >
-            <Button
-              onClick={
-                // eslint-disable-next-line no-undef
-                () => window.open(`https://dashboard.pagar.me/#login?session_id=${sessionId}&redirect_to=dashboard.home&environment=${environment}`)
-              }
-              fill="outline"
-              size="tiny"
+        {!collapsed
+          && (
+            <Flexbox
+              className={style.backToOldVersion}
+              justifyContent="center"
             >
-              {t('pages.sidebar.back_to_old_version')}
-            </Button>
-          </Flexbox>
+              <Button
+                onClick={
+                  // eslint-disable-next-line no-undef
+                  () => window.open(`https://dashboard.pagar.me/#login?session_id=${sessionId}&redirect_to=dashboard.home&environment=${environment}`)
+                }
+                fill="outline"
+                size="tiny"
+              >
+                {t('pages.sidebar.back_to_old_version')}
+              </Button>
+            </Flexbox>
+          )
         }
       </Sidebar>
     )

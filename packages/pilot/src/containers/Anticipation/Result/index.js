@@ -187,83 +187,87 @@ class AnticipationResult extends Component {
             </Alert>
           </Col>
         </Row>
-        {status === 'error' &&
-          <Row>
-            <Col
-              className={style.errorCol}
-              desk={12}
-              palm={12}
-              tablet={12}
-              tv={12}
-            >
-              <TransferError
-                actionLabel={t('pages.anticipation.try_again')}
-                message={t('pages.anticipation.result_error')}
-                onClick={onTryAgain}
-              />
-            </Col>
-          </Row>
+        {status === 'error'
+          && (
+            <Row>
+              <Col
+                className={style.errorCol}
+                desk={12}
+                palm={12}
+                tablet={12}
+                tv={12}
+              >
+                <TransferError
+                  actionLabel={t('pages.anticipation.try_again')}
+                  message={t('pages.anticipation.result_error')}
+                  onClick={onTryAgain}
+                />
+              </Col>
+            </Row>
+          )
         }
-        {status === 'success' &&
-          <Row>
-            <Col
-              desk={12}
-              palm={12}
-              tablet={12}
-              tv={12}
-            >
-              <Card>
-                <CardContent>
-                  <Grid>
-                    <Row>
-                      <Col
-                        desk={12}
-                        palm={12}
-                        tablet={12}
-                        tv={12}
-                      >
-                        <div className={style.head}>
-                          <div className={style.advise}>
-                            {automaticTransfer
-                              ? t('pages.anticipation.result_advise_with_transfer')
-                              : t('pages.anticipation.result_advise_without_transfer')
-                            }
+        {status === 'success'
+          && (
+            <Row>
+              <Col
+                desk={12}
+                palm={12}
+                tablet={12}
+                tv={12}
+              >
+                <Card>
+                  <CardContent>
+                    <Grid>
+                      <Row>
+                        <Col
+                          desk={12}
+                          palm={12}
+                          tablet={12}
+                          tv={12}
+                        >
+                          <div className={style.head}>
+                            <div className={style.advise}>
+                              {automaticTransfer
+                                ? t('pages.anticipation.result_advise_with_transfer')
+                                : t('pages.anticipation.result_advise_without_transfer')
+                              }
+                            </div>
+                            <div className={style.headActions}>
+                              <Button
+                                fill="outline"
+                                icon={<IconExtract width={12} height={12} />}
+                                onClick={onViewStatement}
+                              >
+                                {t('pages.anticipation.view_statement')}
+                              </Button>
+                            </div>
                           </div>
-                          <div className={style.headActions}>
-                            <Button
-                              fill="outline"
-                              icon={<IconExtract width={12} height={12} />}
-                              onClick={onViewStatement}
-                            >
-                              {t('pages.anticipation.view_statement')}
-                            </Button>
-                          </div>
-                        </div>
-                      </Col>
-                    </Row>
-                    {automaticTransfer && this.renderRecipient()}
-                    {this.renderInformationRow()}
-                    <Row>
-                      <Col>
-                        <span className={style.information}>
-                          {t('pages.anticipation.anticipation_timeframe')}
-                          &nbsp;
-                          {t(`pages.anticipation.${timeframe}`)}
-                        </span>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col>
-                        <span className={style.information}>
-                          {t('pages.anticipation.result_information')}
-                        </span>
-                      </Col>
-                    </Row>
-                  </Grid>
-                </CardContent>
-              </Card>
-            </Col>
-          </Row>
+                        </Col>
+                      </Row>
+                      {automaticTransfer && this.renderRecipient()}
+                      {this.renderInformationRow()}
+                      <Row>
+                        <Col>
+                          <span className={style.information}>
+                            {t('pages.anticipation.anticipation_timeframe')}
+                            &nbsp;
+                            {t(`pages.anticipation.${timeframe}`)}
+                          </span>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col>
+                          <span className={style.information}>
+                            {t('pages.anticipation.result_information')}
+                          </span>
+                        </Col>
+                      </Row>
+                    </Grid>
+                  </CardContent>
+                </Card>
+              </Col>
+            </Row>
+          )
         }
       </Grid>
     )

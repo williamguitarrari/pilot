@@ -8,9 +8,14 @@ import {
 } from 'react-router-dom'
 
 import { connect } from 'react-redux'
-import { compose, pipe, startsWith, tail } from 'ramda'
+import {
+  compose,
+  pipe,
+  startsWith,
+  tail,
+} from 'ramda'
 
-import { requestLogin } from './Account/actions'
+import { requestLogin as requestLoginAction } from './Account/actions/actions'
 import { inactiveCompanyLogin } from '../vendor/googleTagManager'
 
 import Account from './Account'
@@ -26,16 +31,15 @@ const mapStateToProps = ({
     sessionId,
     user,
   },
-}) =>
-  ({
-    client,
-    company,
-    sessionId,
-    user,
-  })
+}) => ({
+  client,
+  company,
+  sessionId,
+  user,
+})
 
 const mapDispatchToProps = {
-  requestLogin,
+  requestLogin: requestLoginAction,
 }
 const enhance = compose(
   withRouter,
@@ -43,8 +47,9 @@ const enhance = compose(
 )
 const parseQueryString = pipe(tail, qs.parse)
 
-const getSessionId = (props, queryString) =>
+const getSessionId = (props, queryString) => (
   props.sessionId || queryString.session_id
+)
 
 class Root extends Component {
   componentDidMount () {
@@ -52,6 +57,7 @@ class Root extends Component {
       client,
       history: { listen },
       location: { search: queryString },
+      requestLogin,
     } = this.props
 
     const historyUnlisten = listen(() => {
@@ -69,12 +75,13 @@ class Root extends Component {
     }
 
     if (!client && sessionId) {
-      this.props.requestLogin({ environment, session_id: sessionId })
+      requestLogin({ environment, session_id: sessionId })
     }
   }
 
   componentWillUnmount () {
-    this.state.historyUnlisten()
+    const { historyUnlisten } = this.state
+    historyUnlisten()
   }
 
   render () {

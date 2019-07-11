@@ -8,11 +8,11 @@ const MessageExample = () => (
   <Section>
     <Message
       image={<ErrorIcon />}
-      message={
+      message={(
         <span>
           Algo inesperado aconteceu
         </span>
-      }
+      )}
       title="Erro!"
     />
   </Section>

@@ -262,8 +262,9 @@ const mergeInstallment = (key, left, right) => {
   return right
 }
 
-const aggregateInstallments = (acc, installment) =>
+const aggregateInstallments = (acc, installment) => (
   mergeWithKey(mergeInstallment, acc, installment)
+)
 
 const mapRecipients = map(applySpec({
   amount: sumInstallmentsAmount,
@@ -343,9 +344,8 @@ const buildRecipients = applySpec({
 
 const hasSplitRules = propSatisfies(complement(isEmpty), 'split_rules')
 
-/* eslint-disable-next-line camelcase */
-const groupInstallments = ({ payables, split_rules }) =>
-  split_rules.map(rule => ({
+const groupInstallments = ({ payables, split_rules: splitRules }) => splitRules
+  .map(rule => ({
     ...rule,
     installments: payables.filter(propEq('split_rule_id', rule.id)),
   }))

@@ -65,9 +65,11 @@ class Reprocess extends Component {
 
   componentDidUpdate (prevProps) {
     const { isOpen } = this.props
+    const { transaction } = this.state
+
     if (isOpen
       && prevProps.isOpen !== isOpen
-      && isEmptyOrNull(this.state.transaction)) {
+      && isEmptyOrNull(transaction)) {
       this.requestData()
     }
   }
@@ -101,8 +103,13 @@ class Reprocess extends Component {
 
   handleClose () {
     const { onClose } = this.props
-    if (this.state.stepStatus.result !== 'error') {
-      onClose(this.state.newTransactionId)
+    const {
+      newTransactionId,
+      stepStatus,
+    } = this.state
+
+    if (stepStatus.result !== 'error') {
+      onClose(newTransactionId)
     } else {
       onClose()
     }
@@ -139,7 +146,9 @@ class Reprocess extends Component {
 
   handleCopyId () {
     const { transactionId } = this.props
-    const id = this.state.newTransactionId || transactionId
+    const { newTransactionId } = this.state
+
+    const id = newTransactionId || transactionId
 
     copyToClipBoard(id)
   }
@@ -157,8 +166,9 @@ class Reprocess extends Component {
       history,
       onClose,
     } = this.props
+    const { newTransactionId } = this.state
 
-    history.push(`/transactions/${this.state.newTransactionId}`)
+    history.push(`/transactions/${newTransactionId}`)
     onClose()
   }
 
@@ -180,20 +190,22 @@ class Reprocess extends Component {
 
     return (
       <Fragment>
-        {!isNil(transaction) &&
-          <ReprocessContainer
-            isOpen={isOpen}
-            loading={loading}
-            onCancel={this.handleClose}
-            onConfirm={this.handleConfirm}
-            onCopyId={this.handleCopyId}
-            onRestart={this.handleReprocessRestart}
-            onViewTransaction={this.handleViewTransaction}
-            statusMessage={statusMessage}
-            stepStatus={stepStatus}
-            t={t}
-            transaction={transaction}
-          />
+        {!isNil(transaction)
+          && (
+            <ReprocessContainer
+              isOpen={isOpen}
+              loading={loading}
+              onCancel={this.handleClose}
+              onConfirm={this.handleConfirm}
+              onCopyId={this.handleCopyId}
+              onRestart={this.handleReprocessRestart}
+              onViewTransaction={this.handleViewTransaction}
+              statusMessage={statusMessage}
+              stepStatus={stepStatus}
+              t={t}
+              transaction={transaction}
+            />
+          )
         }
       </Fragment>
     )

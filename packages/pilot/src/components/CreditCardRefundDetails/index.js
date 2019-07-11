@@ -81,11 +81,11 @@ const CreditCardRefundDetails = ({ contents, labels, title }) => {
             <Col palm={12} tablet={5} desk={5} tv={5}>
               <Property
                 title={labels.refundAmount}
-                value={
+                value={(
                   <span className={style.refundAmount}>
                     {formatCurrency(contents.refundAmount)}
                   </span>
-                }
+                )}
               />
             </Col>
           </Row>
