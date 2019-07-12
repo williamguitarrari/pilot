@@ -1,0 +1,91 @@
+{
+  "averageAmount": 8634,
+  "totalAmount": 2970357,
+  "totalTransactions": 344,
+  "paymentMethods": [
+    {
+      "title": "credit_card",
+      "value": 253
+    },
+    {
+      "title": "boleto",
+      "value": 91
+    }
+  ],
+  "cardBrands": [
+    {
+      "title": "visa",
+      "value": 253
+    }
+  ],
+  "refuseReasons": [
+    {
+      "title": "acquirer",
+      "value": 34
+    },
+    {
+      "title": "antifraud",
+      "value": 10
+    },
+    {
+      "title": "capture_timeout",
+      "value": 8
+    },
+    {
+      "title": "manual_review_timeout",
+      "value": 5
+    },
+    {
+      "title": "manual_review",
+      "value": 4
+    }
+  ],
+  "installments": [
+    {
+      "title": "1",
+      "value": 332
+    },
+    {
+      "title": "4",
+      "value": 1
+    },
+    {
+      "title": "7",
+      "value": 9
+    },
+    {
+      "title": "12",
+      "value": 2
+    }
+  ],
+  "status": [
+    {
+      "title": "paid",
+      "value": 154
+    },
+    {
+      "title": "refused",
+      "value": 61
+    },
+    {
+      "title": "waiting_payment",
+      "value": 60
+    },
+    {
+      "title": "refunded",
+      "value": 45
+    },
+    {
+      "title": "pending_refund",
+      "value": 14
+    },
+    {
+      "title": "chargedback",
+      "value": 8
+    },
+    {
+      "title": "authorized",
+      "value": 2
+    }
+  ]
+}
