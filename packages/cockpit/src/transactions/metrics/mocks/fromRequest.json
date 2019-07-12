@@ -1,0 +1,137 @@
+{
+    "took": 6,
+    "timed_out": false,
+    "_shards": {
+        "total": 5,
+        "successful": 5,
+        "failed": 0
+    },
+    "hits": {
+        "total": 344,
+        "max_score": 9.332588,
+        "hits": []
+    },
+    "aggregations": {
+        "metrics": {
+            "buckets": [
+                {
+                    "key": "2019-01-01T00:00:00.000Z-2019-07-01T00:00:00.000Z",
+                    "from": 1546300800000,
+                    "from_as_string": "2019-01-01T00:00:00.000Z",
+                    "to": 1561939200000,
+                    "to_as_string": "2019-07-01T00:00:00.000Z",
+                    "doc_count": 344,
+                    "card_brand": {
+                        "doc_count_error_upper_bound": 0,
+                        "sum_other_doc_count": 0,
+                        "buckets": [
+                            {
+                                "key": "visa",
+                                "doc_count": 253
+                            }
+                        ]
+                    },
+                    "status": {
+                        "doc_count_error_upper_bound": 0,
+                        "sum_other_doc_count": 0,
+                        "buckets": [
+                            {
+                                "key": "paid",
+                                "doc_count": 154
+                            },
+                            {
+                                "key": "refused",
+                                "doc_count": 61
+                            },
+                            {
+                                "key": "waiting_payment",
+                                "doc_count": 60
+                            },
+                            {
+                                "key": "refunded",
+                                "doc_count": 45
+                            },
+                            {
+                                "key": "pending_refund",
+                                "doc_count": 14
+                            },
+                            {
+                                "key": "chargedback",
+                                "doc_count": 8
+                            },
+                            {
+                                "key": "authorized",
+                                "doc_count": 2
+                            }
+                        ]
+                    },
+                    "volume": {
+                        "value": 2970357
+                    },
+                    "refuse_reason": {
+                        "doc_count_error_upper_bound": 0,
+                        "sum_other_doc_count": 0,
+                        "buckets": [
+                            {
+                                "key": "acquirer",
+                                "doc_count": 34
+                            },
+                            {
+                                "key": "antifraud",
+                                "doc_count": 10
+                            },
+                            {
+                                "key": "capture_timeout",
+                                "doc_count": 8
+                            },
+                            {
+                                "key": "manual_review_timeout",
+                                "doc_count": 5
+                            },
+                            {
+                                "key": "manual_review",
+                                "doc_count": 4
+                            }
+                        ]
+                    },
+                    "payment_method": {
+                        "doc_count_error_upper_bound": 0,
+                        "sum_other_doc_count": 0,
+                        "buckets": [
+                            {
+                                "key": "credit_card",
+                                "doc_count": 253
+                            },
+                            {
+                                "key": "boleto",
+                                "doc_count": 91
+                            }
+                        ]
+                    },
+                    "installments": {
+                        "doc_count_error_upper_bound": 0,
+                        "sum_other_doc_count": 0,
+                        "buckets": [
+                            {
+                                "key": 1,
+                                "doc_count": 332
+                            },
+                            {
+                                "key": 7,
+                                "doc_count": 9
+                            },
+                            {
+                                "key": 12,
+                                "doc_count": 2
+                            },
+                            {
+                                "key": 4,
+                                "doc_count": 1
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}
