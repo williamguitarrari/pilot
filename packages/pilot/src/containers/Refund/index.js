@@ -91,7 +91,7 @@ class TransactionRefund extends Component {
     return map(setCurrentStep(currentStep), steps)
   }
 
-  handleConfirmIndentification (data) {
+  handleConfirmIdentification (data) {
     const { onConfirm } = this.props
 
     this.setState({ data })
@@ -122,7 +122,7 @@ class TransactionRefund extends Component {
       <BoletoForm
         {...data}
         amount={paid_amount}
-        onSubmit={this.handleConfirmIndentification}
+        onSubmit={this.handleConfirmIdentification}
         t={t}
       />
     )
@@ -268,7 +268,7 @@ class TransactionRefund extends Component {
         holderName={holder_name}
         installments={installments}
         isAuthorized={isAuthorized}
-        onConfirm={this.handleConfirmIndentification}
+        onConfirm={this.handleConfirmIdentification}
         refundAmount={refundAmount}
         t={t}
       />
