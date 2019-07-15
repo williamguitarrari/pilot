@@ -1,0 +1,11 @@
+.info {
+  display: flex;
+
+  & .value {
+    margin: 0;
+  }
+
+  & .icon {
+    margin-left: auto;
+  }
+}
