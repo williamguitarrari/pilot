@@ -16,6 +16,7 @@ import ExportData from './ExportData'
 import PaymentCards from './PaymentCards'
 import Property from './Property'
 import MetricCard from './MetricCard'
+import MetricList from './MetricList'
 import Operations from './Operations'
 import RecipientSectionState from './RecipientSection'
 import RiskLevel from './RiskLevel'
@@ -73,6 +74,7 @@ storiesOf('Components|Custom components', module)
   .add('Password Input', () => <PasswordInput />)
   .add('TotalDisplay', () => <TotalDisplay />)
   .add('MetricCard', () => <MetricCard />)
+  .add('MetricList', () => <MetricList />)
 
 storiesOf('Components|High Order Components', module)
   .add('with loader', () => <WithLoader />)
