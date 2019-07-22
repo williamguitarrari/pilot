@@ -56,8 +56,11 @@ class AnticipationConfirmation extends Component {
   }
 
   handleConfirm (e) {
+    const { onConfirm } = this.props
+    const { password } = this.state
+
     e.preventDefault()
-    this.props.onConfirm(this.state.password)
+    onConfirm(password)
   }
 
   renderInformationRow () {
@@ -165,6 +168,7 @@ class AnticipationConfirmation extends Component {
       onReturn,
       t,
     } = this.props
+    const { password } = this.state
 
     return (
       <CardActions>
@@ -188,7 +192,7 @@ class AnticipationConfirmation extends Component {
           {t('pages.anticipation.return')}
         </Button>
         <Button
-          disabled={!this.state.password || disabled}
+          disabled={!password || disabled}
           type="submit"
         >
           {t('pages.anticipation.confirm')}

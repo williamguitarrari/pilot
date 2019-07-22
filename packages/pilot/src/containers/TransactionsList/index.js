@@ -42,7 +42,7 @@ import TableList from './TableList'
 
 import tableColumns from './tableColumns'
 
-import { Message } from '../../../src/components/Message'
+import { Message } from '../../components/Message'
 import EmptyStateIcon from './EmptyStateIcon.svg'
 
 import itemsPerPage from '../../models/itemsPerPage'
@@ -87,7 +87,7 @@ const buildEmptyState = t => (
   >
     <Message
       image={<EmptyStateIcon width={365} height={148} />}
-      message={
+      message={(
         <Fragment>
           <div>
             {t('pages.transactions.no_results_title')}
@@ -96,7 +96,7 @@ const buildEmptyState = t => (
             {t('pages.transactions.no_results_message')}
           </div>
         </Fragment>
-      }
+      )}
     />
   </Flexbox>
 )
@@ -139,34 +139,37 @@ const TransactionsList = ({
 }) => {
   const columns = tableColumns({ onDetailsClick, t })
   const orderColumn = findIndex(propEq('accessor', orderField), columns)
-  const handleOrderChange = (columnIndex, tableOrder) =>
-    onOrderChange(columns[columnIndex].accessor, tableOrder)
+  const handleOrderChange = (columnIndex, tableOrder) => onOrderChange(
+    columns[columnIndex].accessor, tableOrder
+  )
 
   return (
     <Grid>
-      {pendingReviewsCount > 0 &&
-        <Row>
-          <Col
-            desk={12}
-            palm={12}
-            tablet={12}
-            tv={12}
-          >
-            <Alert
-              action={t('pages.transaction.view_transactions')}
-              icon={<IconWarning height={16} width={16} />}
-              onDismiss={onPendingReviewsFilter}
-              type="warning"
+      {pendingReviewsCount > 0
+        && (
+          <Row>
+            <Col
+              desk={12}
+              palm={12}
+              tablet={12}
+              tv={12}
             >
-              <p>
-                <strong>{t('pages.transaction.alert.warning')}</strong>&nbsp;
-                {
-                  t('pages.transaction.alert.pending_review', { count: pendingReviewsCount })
-                }
-              </p>
-            </Alert>
-          </Col>
-        </Row>
+              <Alert
+                action={t('pages.transaction.view_transactions')}
+                icon={<IconWarning height={16} width={16} />}
+                onDismiss={onPendingReviewsFilter}
+                type="warning"
+              >
+                <p>
+                  <strong>{t('pages.transaction.alert.warning')}</strong>&nbsp;
+                  {
+                    t('pages.transaction.alert.pending_review', { count: pendingReviewsCount })
+                  }
+                </p>
+              </Alert>
+            </Col>
+          </Row>
+        )
       }
       <Row>
         <Col
@@ -193,10 +196,10 @@ const TransactionsList = ({
               strings={translateDateInput(t)}
               onPresetChange={onDatePresetChange}
               selectionMode={
-                query.dates.start &&
-                query.dates.start.isSame(query.dates.end, 'day')
-                ? 'single'
-                : 'period'
+                query.dates.start
+                && query.dates.start.isSame(query.dates.end, 'day')
+                  ? 'single'
+                  : 'period'
               }
               showCalendar={showDateInputCalendar}
             />
@@ -213,118 +216,126 @@ const TransactionsList = ({
           desk={12}
           tv={12}
         >
-          {!rows.length && !loading && buildEmptyState(t) }
-          {rows.length > 0 &&
-            <Card>
-              <CardTitle
-                title={
-                  <h2 className={style.customTitle}>
-                    {formatSelectedPeriod(t, query.dates)}
-                    <div className={style.verticalDivider} />
-                    {count}&nbsp;
-                    <small>{t('pages.transactions.count')}</small>&nbsp;
-                    <small>-</small>&nbsp;
-                    <small>{t('pages.transactions.total_amount')}</small>&nbsp;
-                    {formatCurrency(amount)}
-                  </h2>
-                }
-                subtitle={
-                  <div className={style.toolBar}>
-                    <ExportData
-                      exportOptions={getExportOptions(onExport)}
-                      icon={<Download32 width={12} height={12} />}
-                      loading={exporting}
-                      placement="bottomEnd"
-                      relevance="low"
-                      size="tiny"
-                      subtitle={t('export_to')}
-                      title={t('export_table')}
-                    />
-                    <SegmentedSwitch
-                      disabled={loading}
-                      name="view-mode"
-                      onChange={onChangeViewMode}
-                      options={[
-                        {
-                          title: <IconTable width={16} height={16} />,
-                          value: 'table',
-                        },
-                        {
-                          title: <IconChart width={16} height={16} />,
-                          value: 'chart',
-                        },
-                      ]}
-                      value={viewMode}
-                    />
-                    <Dropdown
-                      disabled={loading || viewMode === 'graph'}
-                      name="page-count"
-                      onChange={e =>
-                        onPageCountChange(parseInt(e.target.value, 10))
-                      }
-                      options={itemsPerPage.map(i => ({
-                        name: t('items_per_page', { count: i }),
-                        value: `${i}`,
-                      }))}
-                      size="tiny"
-                      value={selectedPage.toString()}
-                    />
-                    <Pagination
-                      currentPage={pagination.offset}
-                      disabled={loading || viewMode === 'graph'}
-                      onPageChange={onPageChange}
-                      size="tiny"
-                      strings={{
-                        of: t('components.pagination.of'),
-                      }}
-                      totalPages={pagination.total}
-                    />
-                  </div>
-                }
-              />
+          {!rows.length && !loading && buildEmptyState(t)}
+          {rows.length > 0
+            && (
+              <Card>
+                <CardTitle
+                  title={(
+                    <h2 className={style.customTitle}>
+                      {formatSelectedPeriod(t, query.dates)}
+                      <div className={style.verticalDivider} />
+                      {count}&nbsp;
+                      <small>{t('pages.transactions.count')}</small>&nbsp;
+                      <small>-</small>&nbsp;
+                      <small>{t('pages.transactions.total_amount')}</small>&nbsp;
+                      {formatCurrency(amount)}
+                    </h2>
+                  )}
+                  subtitle={(
+                    <div className={style.toolBar}>
+                      <ExportData
+                        exportOptions={getExportOptions(onExport)}
+                        icon={<Download32 width={12} height={12} />}
+                        loading={exporting}
+                        placement="bottomEnd"
+                        relevance="low"
+                        size="tiny"
+                        subtitle={t('export_to')}
+                        title={t('export_table')}
+                      />
+                      <SegmentedSwitch
+                        disabled={loading}
+                        name="view-mode"
+                        onChange={onChangeViewMode}
+                        options={[
+                          {
+                            title: <IconTable width={16} height={16} />,
+                            value: 'table',
+                          },
+                          {
+                            title: <IconChart width={16} height={16} />,
+                            value: 'chart',
+                          },
+                        ]}
+                        value={viewMode}
+                      />
+                      <Dropdown
+                        disabled={loading || viewMode === 'graph'}
+                        name="page-count"
+                        onChange={e => onPageCountChange(
+                          parseInt(e.target.value, 10)
+                        )}
+                        options={itemsPerPage.map(i => ({
+                          name: t('items_per_page', { count: i }),
+                          value: `${i}`,
+                        }))}
+                        size="tiny"
+                        value={selectedPage.toString()}
+                      />
+                      <Pagination
+                        currentPage={pagination.offset}
+                        disabled={loading || viewMode === 'graph'}
+                        onPageChange={onPageChange}
+                        size="tiny"
+                        strings={{
+                          of: t('components.pagination.of'),
+                        }}
+                        totalPages={pagination.total}
+                      />
+                    </div>
+                  )}
+                />
 
-              <CardContent>
-                {viewMode === 'chart' &&
-                  <Charts
-                    data={data}
-                    legendsTitle={t('pages.transactions.graphic_legends')}
-                  />
-                }
-                {viewMode === 'table' &&
-                  <TableList
-                    columns={columns}
-                    disabled={loading}
-                    loading={loading}
-                    expandable
-                    expandedRows={expandedRows}
-                    maxColumns={7}
-                    onExpandRow={onExpandRow}
-                    onOrderChange={handleOrderChange}
-                    onRowClick={onRowClick}
-                    onSelectRow={onSelectRow}
-                    orderColumn={orderColumn}
-                    orderSequence={order}
-                    rows={rows}
-                    selectedRows={selectedRows}
-                  />
-                }
-              </CardContent>
+                <CardContent>
+                  {viewMode === 'chart'
+                    && (
+                      <Charts
+                        data={data}
+                        legendsTitle={t('pages.transactions.graphic_legends')}
+                      />
+                    )
+                  }
+                  {viewMode === 'table'
+                    && (
+                      <TableList
+                        columns={columns}
+                        disabled={loading}
+                        loading={loading}
+                        expandable
+                        expandedRows={expandedRows}
+                        maxColumns={7}
+                        onExpandRow={onExpandRow}
+                        onOrderChange={handleOrderChange}
+                        onRowClick={onRowClick}
+                        onSelectRow={onSelectRow}
+                        orderColumn={orderColumn}
+                        orderSequence={order}
+                        rows={rows}
+                        selectedRows={selectedRows}
+                      />
+                    )
+                  }
+                </CardContent>
 
-              {viewMode === 'table' &&
-                <CardActions>
-                  <Pagination
-                    currentPage={pagination.offset}
-                    disabled={loading}
-                    onPageChange={onPageChange}
-                    strings={{
-                      of: t('components.pagination.of'),
-                    }}
-                    size="tiny"
-                    totalPages={pagination.total}
-                  />
-                </CardActions>
-              }
-            </Card>
+                {viewMode === 'table'
+                  && (
+                    <CardActions>
+                      <Pagination
+                        currentPage={pagination.offset}
+                        disabled={loading}
+                        onPageChange={onPageChange}
+                        strings={{
+                          of: t('components.pagination.of'),
+                        }}
+                        size="tiny"
+                        totalPages={pagination.total}
+                      />
+                    </CardActions>
+                  )
+                }
+              </Card>
+            )
           }
         </Col>
       </Row>

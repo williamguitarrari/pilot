@@ -125,8 +125,9 @@ class Capture extends Component {
         id,
       },
     } = this.props
+    const { stepStatus } = this.state
 
-    if (this.state.stepStatus.confirmation === 'success') {
+    if (stepStatus.confirmation === 'success') {
       onSuccess(id)
     }
 

@@ -70,8 +70,7 @@ const isEmptyDates = either(
   propSatisfies(isNil, 'start')
 )
 
-const isSameDay = date =>
-  moment(date).isSame(moment(), 'day')
+const isSameDay = date => moment(date).isSame(moment(), 'day')
 
 const isNotNullOrEmpty = complement(either(isNil, isEmpty))
 
@@ -220,8 +219,7 @@ class Balance extends Component {
     } = this.props
 
     const { statuses, types } = bulkAnticipationsLabels
-    const title =
-      `${t(types[type])} ${t(statuses[status])}` || '-'
+    const title = `${t(types[type])} ${t(statuses[status])}` || '-'
 
     const ted = pricing
       ? path(['transfers', 'ted'], pricing)
@@ -292,12 +290,16 @@ class Balance extends Component {
   }
 
   handleFilterClick () {
-    const { timeframe } = this.props
+    const {
+      onFilterClick,
+      timeframe,
+    } = this.props
+
     const { dates } = this.state
     if (isEmptyDates(dates)) {
-      this.props.onFilterClick(anyDateRange, timeframe)
+      onFilterClick(anyDateRange, timeframe)
     } else {
-      this.props.onFilterClick(dates, timeframe)
+      onFilterClick(dates, timeframe)
     }
   }
 
@@ -396,8 +398,9 @@ class Balance extends Component {
       dates: stateDates,
       presets,
       selectedPreset,
+      showDateInputCalendar,
     } = this.state
-    const filterDatesEqualCurrent = datesEqual(this.state.dates, dates)
+    const filterDatesEqualCurrent = datesEqual(stateDates, dates)
 
     return (
       <BalanceOperations
@@ -420,7 +423,7 @@ class Balance extends Component {
         pageSizeOptions={pageSizeOptions}
         presets={presets}
         selectedPreset={selectedPreset}
-        showDateInputCalendar={this.state.showDateInputCalendar}
+        showDateInputCalendar={showDateInputCalendar}
         t={t}
         timeframe={timeframe}
       />
@@ -508,12 +511,12 @@ class Balance extends Component {
                     : withdrawalAction
                 }
                 amount={amount}
-                detail={
+                detail={(
                   <span>
                     {t('pages.balance.available_withdrawal')}
                     <strong> {currencyFormatter(withdrawal)} </strong>
                   </span>
-                }
+                )}
                 disabled={
                   disabled || withdrawal <= ted + MINIMUM_API_VALUE
                 }
@@ -529,8 +532,8 @@ class Balance extends Component {
               <BalanceTotalDisplay
                 action={
                   isNil(onAnticipationClick)
-                  ? null
-                  : anticipationAction
+                    ? null
+                    : anticipationAction
                 }
                 amount={outcoming}
                 // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
@@ -544,11 +547,11 @@ class Balance extends Component {
                 //   || anticipationError
                 //   || available < MINIMUM_API_VALUE
                 // }
-                detail={
+                detail={(
                   <span>
                     {t('pages.balance.anticipation_call')}
                   </span>
-                }
+                )}
                 disabled={disabled}
                 title={t('pages.balance.waiting_funds')}
               />
@@ -564,8 +567,8 @@ class Balance extends Component {
                 loading={disabled}
                 onCancel={
                   isNil(onCancelRequestClick)
-                  ? null
-                  : this.handleRequestCancelClick
+                    ? null
+                    : this.handleRequestCancelClick
                 }
                 requests={this.getPendingRequests()}
                 title={t('pages.balance.pending_requests_title')}
@@ -608,7 +611,7 @@ class Balance extends Component {
             <div className={style.modalAlignContent}>
               {
                 isValidDayAndSameDay(anticipationCancel)
-                  ?
+                  ? (
                     <Fragment>
                       <span>
                         {t('cancel_pending_request_text_today')}
@@ -617,6 +620,7 @@ class Balance extends Component {
                         {t('cancel_pending_request_text_today_confirm')}
                       </span>
                     </Fragment>
+                  )
                   : t('cancel_pending_request_text')
               }
             </div>

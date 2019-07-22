@@ -35,9 +35,9 @@ class Pricing extends React.Component {
   }
 
   handleSectionTitleClick () {
-    this.setState({
-      pricingCollapsed: !this.state.pricingCollapsed,
-    })
+    this.setState(({ pricingCollapsed }) => ({
+      pricingCollapsed: !pricingCollapsed,
+    }))
   }
 
   renderPricing () {
@@ -111,17 +111,18 @@ class Pricing extends React.Component {
     const {
       t,
     } = this.props
+    const { pricingCollapsed } = this.state
 
     return (
       <CardSection>
         <CardSectionDoubleLineTitle
-          collapsed={this.state.pricingCollapsed}
+          collapsed={pricingCollapsed}
           icon={<IconPercent height={16} width={16} />}
           onClick={this.handleSectionTitleClick}
           subtitle={t('pages.settings.company.card.general.subtitle.rate')}
           title={t('pages.settings.company.card.general.title.rate')}
         />
-        {!this.state.pricingCollapsed
+        {!pricingCollapsed
           && this.renderContent()
         }
       </CardSection>

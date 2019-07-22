@@ -28,7 +28,7 @@ import {
   receiveLogin,
   receiveLogout,
   receiveRecipientBalance,
-} from '.'
+} from './actions'
 
 import { store } from '../../../App'
 
@@ -47,67 +47,65 @@ const errorHandler = (error) => {
   return Promise.reject(error)
 }
 
-const loginEpic = action$ =>
-  action$
-    .pipe(
-      ofType(LOGIN_REQUEST),
-      mergeMap(action => pagarme.client.connect(action.payload)
-        .then(client => cockpit(client, errorHandler))
-        .then(receiveLogin)
-        .catch((error) => {
-          try {
-            // eslint-disable-next-line no-undef
-            localStorage.removeItem('redux_localstorage_simple_account.sessionId')
-          } catch (err) {
-            console.warn(err.message) //eslint-disable-line
-          }
-          return failLogin(error)
-        }))
-    )
-
-const accountEpic = action$ =>
-  action$
-    .pipe(
-      ofType(LOGIN_RECEIVE),
-      mergeMap((action) => {
-        const { error, payload: client } = action
-
-        if (error) {
-          return Promise.resolve(action.payload)
+const loginEpic = action$ => action$
+  .pipe(
+    ofType(LOGIN_REQUEST),
+    mergeMap(action => pagarme.client.connect(action.payload)
+      .then(client => cockpit(client, errorHandler))
+      .then(receiveLogin)
+      .catch((error) => {
+        try {
+          // eslint-disable-next-line no-undef
+          localStorage.removeItem('redux_localstorage_simple_account.sessionId')
+        } catch (err) {
+          console.warn(err.message) //eslint-disable-line
         }
+        return failLogin(error)
+      }))
+  )
 
-        return client.user.current().catch(identity)
-      }),
-      map(receiveAccount),
-      tap(({ error, payload }) => {
-        if (error) {
-          return
-        }
+const accountEpic = action$ => action$
+  .pipe(
+    ofType(LOGIN_RECEIVE),
+    mergeMap((action) => {
+      const { error, payload: client } = action
 
-        const {
-          date_created: dateCreated,
-          email,
-          id,
-          name,
-          permission,
-        } = payload
+      if (error) {
+        return Promise.resolve(action.payload)
+      }
 
-        identifyUser(
-          id,
-          email,
-          name,
-          dateCreated,
-          permission,
-          env
-        )
-      })
-    )
+      return client.user.current().catch(identity)
+    }),
+    map(receiveAccount),
+    tap(({ error, payload }) => {
+      if (error) {
+        return
+      }
+
+      const {
+        date_created: dateCreated,
+        email,
+        id,
+        name,
+        permission,
+      } = payload
+
+      identifyUser(
+        id,
+        email,
+        name,
+        dateCreated,
+        permission,
+        env
+      )
+    })
+  )
 
 const verifyEnvironmentPermission = (company) => {
   if (
-    env === 'live' &&
-    isSelfRegister(company) &&
-    isPendingRiskAnalysis(company)
+    env === 'live'
+    && isSelfRegister(company)
+    && isPendingRiskAnalysis(company)
   ) {
     throw new Error('Pending risk analysis')
   }
@@ -119,103 +117,97 @@ const verifyEnvironmentPermission = (company) => {
   return company
 }
 
-const companyEpic = (action$, state$) =>
-  action$
-    .pipe(
-      ofType(ACCOUNT_RECEIVE),
-      mergeMap(({ error, payload }) => {
-        const { value: state } = state$
-        const { account: { client } } = state
+const companyEpic = (action$, state$) => action$.pipe(
+  ofType(ACCOUNT_RECEIVE),
+  mergeMap(({ error, payload }) => {
+    const { value: state } = state$
+    const { account: { client } } = state
 
-        if (error) {
-          return Promise.resolve(payload)
-        }
+    if (error) {
+      return Promise.resolve(payload)
+    }
 
-        return client.company.current()
-          .then(verifyEnvironmentPermission)
-      }),
-      map(receiveCompany),
-      tap(({ error, payload }) => {
-        if (error) {
-          return
-        }
-        const { value: state } = state$
-        const {
-          dateCreated,
-          id,
-          name,
-          status,
-        } = payload
+    return client.company.current()
+      .then(verifyEnvironmentPermission)
+  }),
+  map(receiveCompany),
+  tap(({ error, payload }) => {
+    if (error) {
+      return
+    }
+    const { value: state } = state$
+    const {
+      dateCreated,
+      id,
+      name,
+      status,
+    } = payload
 
-        const {
-          account: {
-            user: {
-              id: userId,
-            },
-          },
-        } = state
+    const {
+      account: {
+        user: {
+          id: userId,
+        },
+      },
+    } = state
 
-        setCompany(
-          id,
-          name,
-          dateCreated,
-          status,
-          userId
-        )
-
-        if (status === 'active') {
-          activeCompanyLogin()
-        } else {
-          inactiveCompanyLogin()
-        }
-      }),
-      catchError(error => rxOf(receiveError(error)))
+    setCompany(
+      id,
+      name,
+      dateCreated,
+      status,
+      userId
     )
 
-const recipientBalanceEpic = (action$, state$) =>
-  action$
-    .pipe(
-      ofType(COMPANY_RECEIVE, WITHDRAW_RECEIVE),
-      mergeMap(({ error, payload }) => {
-        const state = state$.value
-        const recipientId = getRecipientId(state)
-        const { account: { client } } = state
+    if (status === 'active') {
+      activeCompanyLogin()
+    } else {
+      inactiveCompanyLogin()
+    }
+  }),
+  catchError(error => rxOf(receiveError(error)))
+)
 
-        if (error) {
-          return Promise.resolve(payload)
-        }
+const recipientBalanceEpic = (action$, state$) => action$.pipe(
+  ofType(COMPANY_RECEIVE, WITHDRAW_RECEIVE),
+  mergeMap(({ error, payload }) => {
+    const state = state$.value
+    const recipientId = getRecipientId(state)
+    const { account: { client } } = state
 
-        return Promise.all([
-          client.recipient.balance(recipientId),
-          client.transfers.limits({ recipient_id: recipientId }),
-        ])
-          .then(([balance, withdrawal]) => ({
-            balance,
-            withdrawal,
-          }))
-          .catch(identity)
-      }),
-      map(receiveRecipientBalance)
-    )
+    if (error) {
+      return Promise.resolve(payload)
+    }
 
-const logoutEpic = (action$, state$) =>
-  action$
-    .pipe(
-      ofType(LOGOUT_REQUEST),
-      mergeMap(() => {
-        const state = state$.value
-        const {
-          account: {
-            client,
-            sessionId,
-          },
-        } = state
+    return Promise.all([
+      client.recipient.balance(recipientId),
+      client.transfers.limits({ recipient_id: recipientId }),
+    ])
+      .then(([balance, withdrawal]) => ({
+        balance,
+        withdrawal,
+      }))
+      .catch(identity)
+  }),
+  map(receiveRecipientBalance)
+)
 
-        return client.session
-          .destroy(sessionId)
-      }),
-      map(receiveLogout)
-    )
+const logoutEpic = (action$, state$) => action$.pipe(
+  ofType(LOGOUT_REQUEST),
+  mergeMap(() => {
+    const state = state$.value
+    const {
+      account: {
+        client,
+        sessionId,
+      },
+    } = state
+
+    return client.session
+      .destroy(sessionId)
+  }),
+  map(receiveLogout)
+)
 
 export default combineEpics(
   loginEpic,

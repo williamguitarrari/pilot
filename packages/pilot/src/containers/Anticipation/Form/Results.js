@@ -75,7 +75,7 @@ const Results = ({
               amount={approximateRequested}
               amountSize="huge"
               color={colors.requested}
-              title={
+              title={(
                 <div className={style.titleInfo}>
                   {renderInfo(
                     t('pages.anticipation.requested.advise'),
@@ -84,7 +84,7 @@ const Results = ({
                   <Spacing size="tiny" />
                   <span>{t('pages.anticipation.requested.title')}</span>
                 </div>
-              }
+              )}
               titleColor="#757575"
               titleSize="small"
             />
@@ -103,7 +103,7 @@ const Results = ({
               amount={(cost + transferCost)}
               amountSize="huge"
               color={colors.cost}
-              subtitle={
+              subtitle={(
                 <span>
                   <Spacing size="tiny" />
                   <div>
@@ -112,17 +112,19 @@ const Results = ({
                       { cost: formatCurrency(cost) }
                     )}
                   </div>
-                  {isAutomaticTransfer &&
-                    <div>
-                      {t(
-                        'pages.anticipation.cost.transfer',
-                        { cost: formatCurrency(transferCost) }
-                      )}
-                    </div>
+                  {isAutomaticTransfer
+                    && (
+                      <div>
+                        {t(
+                          'pages.anticipation.cost.transfer',
+                          { cost: formatCurrency(transferCost) }
+                        )}
+                      </div>
+                    )
                   }
                 </span>
-              }
-              title={
+              )}
+              title={(
                 <div className={style.titleInfo}>
                   {renderInfo(
                     t('pages.anticipation.cost.advise'),
@@ -131,7 +133,7 @@ const Results = ({
                   <Spacing size="tiny" />
                   <span>{t('pages.anticipation.cost.title')}</span>
                 </div>
-              }
+              )}
               titleColor="#757575"
               titleSize="small"
             />
@@ -153,7 +155,7 @@ const Results = ({
                 ? colors.amount
                 : colors.cost
               }
-              title={
+              title={(
                 <div className={style.titleInfo}>
                   {renderInfo(
                     t('pages.anticipation.amount.advise'),
@@ -162,7 +164,7 @@ const Results = ({
                   <Spacing size="tiny" />
                   <span>{t('pages.anticipation.amount.title')}</span>
                 </div>
-              }
+              )}
               titleColor="#757575"
               titleSize="small"
             />

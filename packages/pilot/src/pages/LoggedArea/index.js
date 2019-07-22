@@ -64,7 +64,7 @@ const LoggedArea = ({
   transfersPricing,
 }) => (
   <Layout
-    sidebar={
+    sidebar={(
       <Sidebar
         // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
         // It was commented on to remove the anticipation limits call on Balance page
@@ -78,7 +78,7 @@ const LoggedArea = ({
         t={t}
         transfersPricing={transfersPricing}
       />
-    }
+    )}
     header={<Header t={t} />}
   >
     <ErrorBoundary>

@@ -52,19 +52,23 @@ class CompanyGeneralForm extends Component {
   }
 
   handleFormSubmit (data, formErrors) {
+    const { onSubmit } = this.props
+
     if (isEmpty(formErrors)) {
-      this.props.onSubmit(data)
+      onSubmit(data)
     }
   }
+
   render () {
     const {
       t,
     } = this.props
+    const { currentFormData } = this.state
 
     return (
       <Form
         customErrorProp="error"
-        data={this.state.currentFormData}
+        data={currentFormData}
         onSubmit={this.handleFormSubmit}
         onChange={this.handleFormChange}
       >

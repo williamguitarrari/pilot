@@ -6,7 +6,7 @@ import {
 export default applySpec({
   name: propOr('', 'name'),
   phoneNumber: propOr('', 'phone_number'),
-  siteUrl: propOr('', 'siteUrl'),
+  siteUrl: propOr('', 'site_url'),
   statementDescriptor: propOr('', 'statement_descriptor'),
   fullName: propOr('', 'full_name'),
   cnpj: propOr('', 'cnpj'),

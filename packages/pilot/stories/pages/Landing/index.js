@@ -58,14 +58,14 @@ storiesOf('Pages|Login', module)
     <Account
       base="light"
       logo={Placeholder}
-      primaryContent={
+      primaryContent={(
         <LoginForm
           base="light"
           onLogin={action('login')}
           onPasswordRecovery={action('recover password')}
           t={t}
         />
-      }
+      )}
       secondaryContent={LivePresentation}
       t={t}
     />
@@ -74,14 +74,14 @@ storiesOf('Pages|Login', module)
     <Account
       base="dark"
       logo={Placeholder}
-      primaryContent={
+      primaryContent={(
         <LoginForm
           base="dark"
           onLogin={action('login')}
           onPasswordRecovery={action('recover password')}
           t={t}
         />
-      }
+      )}
       secondaryContent={TestPresentation}
       t={t}
     />
@@ -90,14 +90,14 @@ storiesOf('Pages|Login', module)
     <Account
       // eslint-disable-next-line
       logo={Placeholder}
-      primaryContent={
+      primaryContent={(
         <PasswordRecoveryForm
           onPasswordRecovery={action('recover password')}
           onBackToLogin={action('back to login')}
           onSubmit={action('submit')}
           t={t}
         />
-      }
+      )}
       secondaryContent={TestPresentation}
       t={t}
     />
@@ -106,13 +106,13 @@ storiesOf('Pages|Login', module)
     <Account
       // eslint-disable-next-line
       logo={Placeholder}
-      primaryContent={
+      primaryContent={(
         <PasswordRecoveryConfirmation
           onBackToLogin={action('back to login')}
           onPasswordRecovery={action('recover password')}
           t={t}
         />
-      }
+      )}
       secondaryContent={TestPresentation}
       t={t}
     />
@@ -124,13 +124,13 @@ storiesOf('Pages|Signup', module)
     <Account
       // eslint-disable-next-line
       logo={Placeholder}
-      primaryContent={
+      primaryContent={(
         <SignUpForm
           onPasswordRecovery={action('recover password')}
           onSubmit={action('submit')}
           t={t}
         />
-      }
+      )}
       secondaryContent={TestPresentation}
       t={t}
     />
@@ -139,13 +139,13 @@ storiesOf('Pages|Signup', module)
     <Account
       // eslint-disable-next-line
       logo={Placeholder}
-      primaryContent={
+      primaryContent={(
         <SignUpConfirmation
           onPasswordRecovery={action('recover password')}
           onBackToLogin={action('back to login')}
           t={t}
         />
-      }
+      )}
       secondaryContent={TestPresentation}
       t={t}
     />
@@ -154,13 +154,13 @@ storiesOf('Pages|Signup', module)
     <Account
       // eslint-disable-next-line
       logo={Placeholder}
-      primaryContent={
+      primaryContent={(
         <InvalidEmailError
           onPasswordRecovery={action('recover password')}
           onBackToSignUp={action('back to signup')}
           t={t}
         />
-      }
+      )}
       secondaryContent={TestPresentation}
       t={t}
     />

@@ -20,6 +20,8 @@ class BankAccountSelectorExample extends Component {
   }
 
   render () {
+    const { selectedAccountId } = this.state
+
     return (
       <BankAccountSelector
         accounts={[
@@ -45,7 +47,7 @@ class BankAccountSelectorExample extends Component {
           },
         ]}
         onSelect={this.handleSelect}
-        selectedAccountId={this.state.selectedAccountId}
+        selectedAccountId={selectedAccountId}
         t={t => t}
       />
     )

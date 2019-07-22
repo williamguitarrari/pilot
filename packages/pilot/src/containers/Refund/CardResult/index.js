@@ -45,8 +45,8 @@ const CardResult = ({
         </span>
       </Alert>
     </ModalContent>
-    {status === 'success' &&
-      (
+    {status === 'success'
+      && (
         <CreditCardRefundDetails
           contents={{
             amount,

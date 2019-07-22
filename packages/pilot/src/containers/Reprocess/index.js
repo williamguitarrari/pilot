@@ -100,7 +100,7 @@ class Reprocess extends PureComponent {
         {stepStatus
           && stepStatus.result
           && stepStatus.result !== 'pending'
-          ?
+          ? (
             <Result
               amount={amount}
               cardFirstDigits={first_digits} // eslint-disable-line camelcase
@@ -114,15 +114,16 @@ class Reprocess extends PureComponent {
               statusMessage={statusMessage}
               t={t}
             />
-          :
+          )
+          : (
             <Form
               amount={amount}
               cardFirstDigits={first_digits} // eslint-disable-line camelcase
               cardLastDigits={last_digits} // eslint-disable-line camelcase
               error={
                 stepStatus.confirmation === 'error'
-                ? statusMessage
-                : ''
+                  ? statusMessage
+                  : ''
               }
               holderName={holder_name} // eslint-disable-line camelcase
               loading={loading}
@@ -131,6 +132,7 @@ class Reprocess extends PureComponent {
               onConfirm={onConfirm}
               t={t}
             />
+          )
         }
       </Modal>
     )

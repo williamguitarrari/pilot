@@ -70,8 +70,9 @@ class TransactionRefund extends Component {
 
     this.getStepsStatus = this.getStepsStatus.bind(this)
     this.handleConfirmConfirmation = this.handleConfirmConfirmation.bind(this)
-    this.handleConfirmIndentification =
-      this.handleConfirmIndentification.bind(this)
+    this.handleConfirmIdentification = (
+      this.handleConfirmIdentification.bind(this)
+    )
     this.renderBoleto = this.renderBoleto.bind(this)
     this.renderBoletoConfirmation = this.renderBoletoConfirmation.bind(this)
     this.renderBoletoIdentification = this.renderBoletoIdentification.bind(this)
@@ -90,14 +91,18 @@ class TransactionRefund extends Component {
     return map(setCurrentStep(currentStep), steps)
   }
 
-  handleConfirmIndentification (data) {
+  handleConfirmIdentification (data) {
+    const { onConfirm } = this.props
+
     this.setState({ data })
-    this.props.onConfirm()
+    onConfirm()
   }
 
   handleConfirmConfirmation () {
+    const { onConfirm } = this.props
+
     const { data } = this.state
-    this.props.onConfirm(data)
+    onConfirm(data)
   }
 
   /* eslint-disable camelcase */
@@ -117,7 +122,7 @@ class TransactionRefund extends Component {
       <BoletoForm
         {...data}
         amount={paid_amount}
-        onSubmit={this.handleConfirmIndentification}
+        onSubmit={this.handleConfirmIdentification}
         t={t}
       />
     )
@@ -263,7 +268,7 @@ class TransactionRefund extends Component {
         holderName={holder_name}
         installments={installments}
         isAuthorized={isAuthorized}
-        onConfirm={this.handleConfirmIndentification}
+        onConfirm={this.handleConfirmIdentification}
         refundAmount={refundAmount}
         t={t}
       />

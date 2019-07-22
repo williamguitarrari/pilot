@@ -19,7 +19,7 @@ import { Tooltip } from 'former-kit'
 import IconAnticipation from 'emblematic-icons/svg/Undo24.svg'
 import currencyFormatter from '../../formatters/currency'
 import style from './style.css'
-import dateFormatter from '../../../src/formatters/longDate'
+import dateFormatter from '../../formatters/longDate'
 
 const isPayable = equals('payable')
 
@@ -87,8 +87,10 @@ const renderDescription = ({
 }, labels) => (
   <div className={style.descriptionColumn}>
     <div className={style.type}>{getTypeLabel(type, labels)}</div>
-    {!isNil(installment) &&
-      <div>{`${labels.installment} ${installment}`}</div>
+    {!isNil(installment)
+      && (
+        <div>{`${labels.installment} ${installment}`}</div>
+      )
     }
     {renderTargetOrSource(type, net, targetId, sourceId, labels)}
   </div>
@@ -176,8 +178,9 @@ const getColumns = labels => ([
     accessor: ['paymentDate', 'actual'],
     align: 'center',
     orderable: false,
-    renderer: ({ paymentDate }) =>
-      renderPaymentDate(paymentDate, labels.anticipationMessage),
+    renderer: ({ paymentDate }) => renderPaymentDate(
+      paymentDate, labels.anticipationMessage
+    ),
     title: 'models.operations.payment_date',
   },
   {

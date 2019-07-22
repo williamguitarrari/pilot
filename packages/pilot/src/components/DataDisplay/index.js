@@ -21,8 +21,8 @@ const DataDisplay = ({
     }
   >
     <div className={
-      classNames(style.title, {
-        [style[titleSize]]: titleSize,
+        classNames(style.title, {
+          [style[titleSize]]: titleSize,
         })
       }
     >
@@ -39,8 +39,8 @@ const DataDisplay = ({
 
     {children || (
       <div className={
-        classNames(style.value, {
-          [style[valueSize]]: valueSize,
+          classNames(style.value, {
+            [style[valueSize]]: valueSize,
           })
         }
       >

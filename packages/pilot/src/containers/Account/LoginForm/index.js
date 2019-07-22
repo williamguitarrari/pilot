@@ -45,19 +45,21 @@ const LoginContainer = ({
       />
     </div>
     <div className={styles.errorAlert}>
-      {errors &&
-        <Alert
-          base={base}
-          type="error"
-          icon={<IconError height={16} width={16} />}
-        >
-          <span>
-            {errors.null
-              ? errors.null
-              : t('login.network_error')
-            }
-          </span>
-        </Alert>
+      {errors
+        && (
+          <Alert
+            base={base}
+            type="error"
+            icon={<IconError height={16} width={16} />}
+          >
+            <span>
+              {errors.null
+                ? errors.null
+                : t('login.network_error')
+              }
+            </span>
+          </Alert>
+        )
       }
     </div>
 
@@ -76,6 +78,7 @@ const LoginContainer = ({
         role="link"
         disabled={loading}
         onClick={onPasswordRecovery}
+        type="button"
       >
         {t('login.password_recovery_action')}
       </button>

@@ -172,18 +172,20 @@ class Withdraw extends Component {
 
     return (
       maximum
-        ? <WithdrawForm
-          amount={amount}
-          available={available}
-          date={date}
-          maximum={maximum}
-          onCancel={onCancel}
-          onRequestedChange={onRequestedChange}
-          onSubmit={onFormSubmit}
-          requested={requested}
-          t={t}
-          transferCost={transferCost}
-        />
+        ? (
+          <WithdrawForm
+            amount={amount}
+            available={available}
+            date={date}
+            maximum={maximum}
+            onCancel={onCancel}
+            onRequestedChange={onRequestedChange}
+            onSubmit={onFormSubmit}
+            requested={requested}
+            t={t}
+            transferCost={transferCost}
+          />
+        )
         : null
     )
   }
@@ -219,35 +221,39 @@ class Withdraw extends Component {
             tv={12}
           >
             {currentStep === 'data' && this.renderDataStep()}
-            {currentStep === 'confirmation' &&
-              <WithdrawConfirmation
-                amount={amount}
-                bankAccount={recipient.bank_account}
-                date={date}
-                disabledButtons={disabled}
-                onCancel={onCancel}
-                onConfirm={onConfirmationConfirm}
-                onReturn={onConfirmationReturn}
-                passwordError={confirmationPasswordError}
-                requested={requested}
-                t={t}
-                transferCost={transferCost}
-              />
+            {currentStep === 'confirmation'
+              && (
+                <WithdrawConfirmation
+                  amount={amount}
+                  bankAccount={recipient.bank_account}
+                  date={date}
+                  disabledButtons={disabled}
+                  onCancel={onCancel}
+                  onConfirm={onConfirmationConfirm}
+                  onReturn={onConfirmationReturn}
+                  passwordError={confirmationPasswordError}
+                  requested={requested}
+                  t={t}
+                  transferCost={transferCost}
+                />
+              )
             }
 
-            {currentStep === 'result' &&
-              <WithdrawResult
-                amount={amount}
-                bankAccount={recipient.bank_account}
-                date={date}
-                onTryAgain={onTryAgain}
-                onViewStatement={onViewStatement}
-                requested={requested}
-                status={stepsStatus.result}
-                statusMessage={statusMessage}
-                t={t}
-                transferCost={transferCost}
-              />
+            {currentStep === 'result'
+              && (
+                <WithdrawResult
+                  amount={amount}
+                  bankAccount={recipient.bank_account}
+                  date={date}
+                  onTryAgain={onTryAgain}
+                  onViewStatement={onViewStatement}
+                  requested={requested}
+                  status={stepsStatus.result}
+                  statusMessage={statusMessage}
+                  t={t}
+                  transferCost={transferCost}
+                />
+              )
             }
           </Col>
         </Row>

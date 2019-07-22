@@ -19,13 +19,13 @@ module.exports = {
         test: /\.(js|jsx)$/,
         enforce: 'pre',
         use: [
-          {
-            options: {
-              formatter: eslintFormatter,
-              eslintPath: require.resolve('eslint'),
-            },
-            loader: require.resolve('eslint-loader'),
-          },
+          // {
+          //   options: {
+          //     formatter: eslintFormatter,
+          //     eslintPath: require.resolve('eslint'),
+          //   },
+          //   loader: require.resolve('eslint-loader'),
+          // },
         ],
         include: paths.appSrc,
       },
@@ -39,7 +39,7 @@ module.exports = {
             options: {
               formatter: stylelintFormatter,
               plugins: () => [
-                require('stylelint'),
+                // require('stylelint'),
                 ...postCSSPlugins,
                 require('postcss-cssnext')({
                   features: {
@@ -57,15 +57,19 @@ module.exports = {
         test: /.*\.css$/,
         exclude: /react-dates/,
         use: [
-          require.resolve('style-loader'),
-          {
-            loader: require.resolve('css-loader'),
-            options: {
-              importLoaders: 1,
-              modules: true,
-              localIdentName: '[path]-[name]-[local]',
-            },
-          },
+          // We commented this piece of code because it was causing errors
+          // when running storybook after linking with the latest former-kit's
+          // version.
+          // TODO: Verify if it is still relevant.
+          // require.resolve('style-loader'),
+          // {
+          //   loader: require.resolve('css-loader'),
+          //   options: {
+          //     importLoaders: 1,
+          //     modules: true,
+          //     localIdentName: '[path]-[name]-[local]',
+          //   },
+          // },
           {
             loader: require.resolve('postcss-loader'),
             options: {

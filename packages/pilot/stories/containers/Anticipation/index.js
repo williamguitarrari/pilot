@@ -40,8 +40,8 @@ const recipient = {
   transfer_enabled: true,
 }
 
-const isWeekendDay = date =>
-  date && date.weekday && contains(date.weekday(), [0, 6])
+const isWeekendDay = date => date
+  && date.weekday && contains(date.weekday(), [0, 6])
 
 const isWeekDay = complement(isWeekendDay)
 

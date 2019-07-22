@@ -35,32 +35,34 @@ const Result = ({
         <Row>
           <Col palm={12} tablet={12} desk={12} tv={12}>
             {stepStatusResult === 'error'
-                ?
-                  <Alert
-                    icon={<IconError width={16} height={16} />}
-                    type="error"
-                  >
-                    <span>{getErrorMessage(action, errorMessage, t)}</span>
-                  </Alert>
-                :
-                  <Alert
-                    icon={<IconSuccess width={16} height={16} />}
-                    type="success"
-                  >
-                    <span>
-                      {t('pages.manual_review.result_prefix_message')}
-                      &nbsp;
-                      <strong className={style.textHighlight}>
-                        {
-                          action === 'approve'
+              ? (
+                <Alert
+                  icon={<IconError width={16} height={16} />}
+                  type="error"
+                >
+                  <span>{getErrorMessage(action, errorMessage, t)}</span>
+                </Alert>
+              )
+              : (
+                <Alert
+                  icon={<IconSuccess width={16} height={16} />}
+                  type="success"
+                >
+                  <span>
+                    {t('pages.manual_review.result_prefix_message')}
+                    &nbsp;
+                    <strong className={style.textHighlight}>
+                      {
+                        action === 'approve'
                           ? t('models.antifraud_analyses.status.approved')
                           : t('models.antifraud_analyses.status.refused')
-                        }
-                      </strong>
-                      &nbsp;
-                      {t('pages.manual_review.result_suffix_message')}
-                    </span>
-                  </Alert>
+                      }
+                    </strong>
+                    &nbsp;
+                    {t('pages.manual_review.result_suffix_message')}
+                  </span>
+                </Alert>
+              )
               }
           </Col>
         </Row>
@@ -68,20 +70,22 @@ const Result = ({
     </ModalContent>
     <ModalActions>
       {stepStatusResult === 'error'
-        ?
+        ? (
           <Button
             fill="outline"
             onClick={onRetry}
           >
             {t('pages.manual_review.result_error_try_again')}
           </Button>
-        :
+        )
+        : (
           <Button
             fill="outline"
             onClick={onViewTransaction}
           >
             {t('pages.manual_review.result_success_view_transaction')}
           </Button>
+        )
       }
     </ModalActions>
   </Fragment>

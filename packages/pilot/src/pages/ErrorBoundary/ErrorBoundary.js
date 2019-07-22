@@ -24,7 +24,7 @@ import { translate } from 'react-i18next'
 import {
   clearLocalErrors,
   receiveReactError,
-} from '.'
+} from './actions'
 
 const mapStateToProps = ({ errors }) => ({ errors })
 
@@ -74,10 +74,6 @@ class ErrorBoundary extends Component {
     this.handleError = this.handleError.bind(this)
   }
 
-  componentDidCatch (error) {
-    this.props.receiveError(error)
-  }
-
   componentWillUnmount () {
     const {
       clearErrors,
@@ -91,10 +87,18 @@ class ErrorBoundary extends Component {
     }
   }
 
-  handleError (error, affectedRoutes = []) {
-    const { location: { pathname } } = this.props
+  componentDidCatch (error) {
+    const { receiveError } = this.props
+    receiveError(error)
+  }
 
-    this.props.receiveError({
+  handleError (error, affectedRoutes = []) {
+    const {
+      location: { pathname },
+      receiveError,
+    } = this.props
+
+    receiveError({
       affectedRoutes: [...affectedRoutes, pathname],
       error,
     })

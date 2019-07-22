@@ -71,7 +71,7 @@ const Capture = ({
         </ModalSection>
       </ModalContent>
       { stepStatus.confirmation !== 'pending'
-        ?
+        ? (
           <CaptureResult
             authorizedAmount={authorizedAmount}
             cardBrand={cardBrand}
@@ -92,7 +92,8 @@ const Capture = ({
             statusMessage={statusMessage}
             t={t}
           />
-        :
+        )
+        : (
           <CaptureForm
             authorizedAmount={authorizedAmount}
             captureAmount={captureAmount}
@@ -109,6 +110,7 @@ const Capture = ({
             paymentMethod={paymentMethod}
             t={t}
           />
+        )
       }
     </Modal>
   )

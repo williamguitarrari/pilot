@@ -117,13 +117,11 @@ const confirmBulk = (client, {
   })
 )
 
-const getBuildingBulkAnticipations = (client, recipientId) =>
-  client
-    .bulkAnticipations
-    .find({
-      recipientId,
-      status: 'building',
-    })
+const getBuildingBulkAnticipations = (client, recipientId) => client
+  .bulkAnticipations.find({
+    recipientId,
+    status: 'building',
+  })
 
 const buildDeleteOptions = applySpec({ anticipationId: prop('id') })
 
@@ -167,14 +165,12 @@ const getInsuficientPayablesError = t => ifElse(
   getErrorMessage
 )
 
-const isPresent = date =>
-  date.isSame(moment(), 'day')
+const isPresent = date => date.isSame(moment(), 'day')
 
-const isFuture = date =>
-  date.isAfter(moment())
+const isFuture = date => date.isAfter(moment())
 
-const isBefore11AM = () =>
-  moment().isBefore(moment().hours(11).minutes(0).seconds(0))
+const isBefore11AM = () => moment()
+  .isBefore(moment().hours(11).minutes(0).seconds(0))
 
 const isValidDay = (calendar, client) => allPass([
   either(
@@ -286,8 +282,9 @@ class Anticipation extends Component {
     this.confirmAnticipation = this.confirmAnticipation.bind(this)
     this.createAnticipation = this.createAnticipation.bind(this)
     this.createOrUpdateAnticipation = this.createOrUpdateAnticipation.bind(this)
-    this.destroyBuildingAnticipations =
+    this.destroyBuildingAnticipations = (
       this.destroyBuildingAnticipations.bind(this)
+    )
     this.getBuildingAnticipations = this.getBuildingAnticipations.bind(this)
     this.getTransferCost = this.getTransferCost.bind(this)
     this.goTo = this.goTo.bind(this)
@@ -333,6 +330,8 @@ class Anticipation extends Component {
       getDefaultRecipient(client)
         .then(recipientId => history.replace(`/anticipation/${recipientId}`))
     } else {
+      const { approximateRequested } = this.state
+
       this.updateRecipient(id)
         .then(() => {
           const { limits, loading } = this.props
@@ -349,7 +348,7 @@ class Anticipation extends Component {
           if (
             !areEmptyLimits(limits)
             && !loading
-            && isNil(this.state.approximateRequested)
+            && isNil(approximateRequested)
           ) {
             this.createOrUpdateAnticipation(limits.max)
           }
@@ -896,39 +895,41 @@ class Anticipation extends Component {
 
     return (
       <Fragment>
-        {!isNil(recipient) &&
-          <AnticipationContainer
-            amount={amount}
-            approximateRequested={approximateRequested}
-            automaticTransfer={isAutomaticTransfer}
-            currentStep={currentStep}
-            date={paymentDate}
-            error={error}
-            loading={loading || limitsLoading}
-            maximum={max}
-            minimum={getMinLimit(min)}
-            needsRecalculation={needsRecalculation}
-            onCalculateSubmit={this.handleCalculateSubmit}
-            onCancel={this.goToBalance}
-            onConfirmationConfirm={this.handleConfirmationConfirm}
-            onConfirmationReturn={() => this.goTo('data', 'current')}
-            onDataConfirm={() => this.goTo('confirmation', 'current')}
-            onFormChange={this.handleFormChange}
-            onTryAgain={() => this.goTo('data', 'current')}
-            onViewStatement={this.goToBalance}
-            recipient={recipient}
-            requested={requestedAmount}
-            statusMessage={statusMessage}
-            stepsStatus={stepsStatus}
-            t={t}
-            timeframe={timeframe}
-            totalCost={totalCost}
-            transferCost={isAutomaticTransfer && transferCost
-              ? transferCost
-              : 0
-            }
-            validateDay={isValidDay(calendar, client)}
-          />
+        {!isNil(recipient)
+          && (
+            <AnticipationContainer
+              amount={amount}
+              approximateRequested={approximateRequested}
+              automaticTransfer={isAutomaticTransfer}
+              currentStep={currentStep}
+              date={paymentDate}
+              error={error}
+              loading={loading || limitsLoading}
+              maximum={max}
+              minimum={getMinLimit(min)}
+              needsRecalculation={needsRecalculation}
+              onCalculateSubmit={this.handleCalculateSubmit}
+              onCancel={this.goToBalance}
+              onConfirmationConfirm={this.handleConfirmationConfirm}
+              onConfirmationReturn={() => this.goTo('data', 'current')}
+              onDataConfirm={() => this.goTo('confirmation', 'current')}
+              onFormChange={this.handleFormChange}
+              onTryAgain={() => this.goTo('data', 'current')}
+              onViewStatement={this.goToBalance}
+              recipient={recipient}
+              requested={requestedAmount}
+              statusMessage={statusMessage}
+              stepsStatus={stepsStatus}
+              t={t}
+              timeframe={timeframe}
+              totalCost={totalCost}
+              transferCost={isAutomaticTransfer && transferCost
+                ? transferCost
+                : 0
+              }
+              validateDay={isValidDay(calendar, client)}
+            />
+          )
         }
       </Fragment>
     )

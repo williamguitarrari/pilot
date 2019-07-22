@@ -77,7 +77,7 @@ class BankAccountFormExample extends Component {
         actionsDisabled: true,
         data: merge(stateData, data),
         errors: defaultErrorData,
-      }, () => action('Submit')(this.state.data))
+      }, () => action('Submit')(stateData))
     }
   }
 

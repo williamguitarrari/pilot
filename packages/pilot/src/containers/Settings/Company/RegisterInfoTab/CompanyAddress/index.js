@@ -22,9 +22,9 @@ class CompanyInformation extends React.Component {
   }
 
   handleSectionTitleClick () {
-    this.setState({
-      collapsed: !this.state.collapsed,
-    })
+    this.setState(({ collapsed }) => ({
+      collapsed: !collapsed,
+    }))
   }
 
   render () {
@@ -32,17 +32,18 @@ class CompanyInformation extends React.Component {
       address,
       t,
     } = this.props
+    const { collapsed } = this.state
 
     return (
       <CardSection>
         <CardSectionDoubleLineTitle
-          collapsed={this.state.collapsed}
+          collapsed={collapsed}
           icon={<IconLocation height={16} width={16} />}
           onClick={this.handleSectionTitleClick}
           subtitle={t('pages.settings.company.card.register.subtitle.address')}
           title={t('pages.settings.company.card.register.title.address')}
         />
-        {!this.state.collapsed && (
+        {!collapsed && (
           <CardContent>
             <CompanyAddressForm t={t} address={address} />
           </CardContent>

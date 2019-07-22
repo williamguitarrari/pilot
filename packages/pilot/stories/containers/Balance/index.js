@@ -14,8 +14,9 @@ import Balance from '../../../src/containers/Balance'
 import Section from '../../Section'
 import mock from '../../../src/containers/Balance/mock.json'
 
-const compareMomentDate = date => comparableDate =>
+const compareMomentDate = date => comparableDate => (
   date.diff(comparableDate, 'days')
+)
 
 const compareMomentDates = uncurryN(2, dates => pipe(
   juxt([

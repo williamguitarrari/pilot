@@ -36,7 +36,12 @@ class CurrencyInput extends Component {
   }
 
   componentDidUpdate (prevProps, prevState) {
-    const { formatted, normalized } = this.state.value
+    const {
+      value: {
+        formatted,
+        normalized,
+      },
+    } = this.state
     const { onChange, value } = this.props
 
     if (prevState.value.normalized !== normalized) {

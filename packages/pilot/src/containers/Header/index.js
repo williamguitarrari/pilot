@@ -41,7 +41,7 @@ const renderEnvironmentButton = ({
   t,
 }) => (
   <Popover
-    content={
+    content={(
       <PopoverContent>
         <small>
           {t(`header.environment.text_${environment}`)}&nbsp;
@@ -50,20 +50,22 @@ const renderEnvironmentButton = ({
           </a>.
         </small>
       </PopoverContent>
-    }
+    )}
     placement="bottomEnd"
   >
-    {environment === 'test' &&
-      <small className={style.testEnvironmentLabel}>
-        {t('header.environment.test_environment')}
-      </small>
+    {environment === 'test'
+      && (
+        <small className={style.testEnvironmentLabel}>
+          {t('header.environment.test_environment')}
+        </small>
+      )
     }
     <Button
       fill="clean"
       icon={
         environment === 'test'
-        ? <IconTestAmbientOn />
-        : <IconTestAmbientOff />
+          ? <IconTestAmbientOn />
+          : <IconTestAmbientOff />
       }
     />
   </Popover>
@@ -108,7 +110,7 @@ const HeaderContainer = ({
       <Spacing size="small" />
 
       <Popover
-        content={
+        content={(
           <PopoverContent>
             <small>
               <strong className={style.feedback}>{t('header.feedback.text_emphasis')}</strong>
@@ -116,7 +118,7 @@ const HeaderContainer = ({
               <a href="mailto:nova@pagar.me">{t('header.feedback.action')}</a>.
             </small>
           </PopoverContent>
-        }
+        )}
         placement="bottomEnd"
       >
         <Button
@@ -128,12 +130,12 @@ const HeaderContainer = ({
       <Spacing size="small" />
 
       <HeaderMenu
-        title={
+        title={(
           <Fragment>
             <Avatar alt={user.name} />
             <span>{user.name}</span>
           </Fragment>
-        }
+        )}
       >
         <PopoverContent>
           <strong>

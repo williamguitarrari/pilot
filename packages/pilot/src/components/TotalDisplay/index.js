@@ -43,19 +43,19 @@ const renderValue = (amount, amountSize, color) => {
       </small>
       {
         !value || value === 'NaN'
-        ? <div className={style.empty} />
-        : (
-          <div className={style.value}>
-            <span className={style.symbol}>{symbol}</span>
-            <span className={
-              classNames({
-                [style[amountSize]]: amountSize,
-              })}
-            >
-              {value}
-            </span>
-          </div>
-        )
+          ? <div className={style.empty} />
+          : (
+            <div className={style.value}>
+              <span className={style.symbol}>{symbol}</span>
+              <span className={
+                classNames({
+                  [style[amountSize]]: amountSize,
+                })}
+              >
+                {value}
+              </span>
+            </div>
+          )
       }
     </div>
   )
@@ -63,13 +63,12 @@ const renderValue = (amount, amountSize, color) => {
 
 const renderTitle = (title, titleColor, color, titleSize) => (
   <span
-    className={
-      classNames({
-        [style[titleSize]]: titleSize,
+    className={classNames({
+      [style[titleSize]]: titleSize,
     })}
     style={{
       color: titleColor || color,
-     }}
+    }}
   >
     {title}
   </span>

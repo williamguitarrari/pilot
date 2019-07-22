@@ -56,10 +56,12 @@ class CardExample extends React.Component {
   }
 
   render () {
+    const { loading } = this.state
+
     return (
       <Section title="With Spinner">
         <CardWithSpinner
-          loading={this.state.loading}
+          loading={loading}
           onClick={this.handleClick}
           text="load with spinner"
         />

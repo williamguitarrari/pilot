@@ -21,18 +21,24 @@ class UserSettings extends Component {
 
   handleSectionTitleClick (cardSectionStateProp) {
     return () => {
-      const currentCollapseState = this.state[cardSectionStateProp]
+      const {
+        [cardSectionStateProp]: currentCollapseState,
+      } = this.state
 
       this.setState({
         [cardSectionStateProp]: !currentCollapseState,
       })
     }
   }
+
   render () {
     const {
       handlePasswordFormSubmit,
+      passwordFormStatus,
       t,
     } = this.props
+
+    const { passwordInfoSectionCollapsed } = this.state
 
     return (
       <Card>
@@ -43,18 +49,20 @@ class UserSettings extends Component {
         <CardContent>
           <CardSection>
             <CardSectionDoubleLineTitle
-              collapsed={this.state.passwordInfoSectionCollapsed}
+              collapsed={passwordInfoSectionCollapsed}
               icon={<IconInfo height={16} width={16} />}
               onClick={this.handleSectionTitleClick('passwordInfoSectionCollapsed')}
               subtitle={t('pages.settings.user.card.access.subtitle')}
               title={t('pages.settings.user.card.access.title')}
             />
-            {!this.state.passwordInfoSectionCollapsed &&
-              <PasswordRedefinitionForm
-                onSubmit={handlePasswordFormSubmit}
-                status={this.props.passwordFormStatus}
-                t={t}
-              />
+            {!passwordInfoSectionCollapsed
+              && (
+                <PasswordRedefinitionForm
+                  onSubmit={handlePasswordFormSubmit}
+                  status={passwordFormStatus}
+                  t={t}
+                />
+              )
             }
           </CardSection>
         </CardContent>

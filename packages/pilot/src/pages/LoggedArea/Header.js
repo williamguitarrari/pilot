@@ -10,7 +10,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
 import routes from './routes'
-import { requestLogout } from '../Account/actions'
+import { requestLogout } from '../Account/actions/actions'
 
 import HeaderContainer from '../../containers/Header'
 

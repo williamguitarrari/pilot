@@ -12,8 +12,8 @@ import {
 
 import { Message, MessageActions } from '../../../components/Message'
 import Icon from './Icon.svg'
-import { receiveLogout } from '../../Account/actions'
-import { clearAllErrors } from '../../ErrorBoundary'
+import { receiveLogout } from '../../Account/actions/actions'
+import { clearAllErrors } from '../../ErrorBoundary/actions'
 
 const mapDispatchToProps = dispatch => ({
   clearErrors: () => dispatch(clearAllErrors()),
@@ -45,27 +45,29 @@ const GenericError = ({
         message={message}
         title={title}
       >
-        { showActions &&
-          <MessageActions>
-            <Button
-              fill="gradient"
-              onClick={() => {
-                if (action) {
-                  return action({
-                    actions: {
-                      clearErrors,
-                      logout,
-                    },
-                    history,
-                  })
-                }
+        { showActions
+          && (
+            <MessageActions>
+              <Button
+                fill="gradient"
+                onClick={() => {
+                  if (action) {
+                    return action({
+                      actions: {
+                        clearErrors,
+                        logout,
+                      },
+                      history,
+                    })
+                  }
 
-                return logout()
-              }}
-            >
-              {actionText || t('pages.error.back_to_login')}
-            </Button>
-          </MessageActions>
+                  return logout()
+                }}
+              >
+                {actionText || t('pages.error.back_to_login')}
+              </Button>
+            </MessageActions>
+          )
         }
       </Message>
     </ModalContent>

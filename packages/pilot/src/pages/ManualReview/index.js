@@ -52,15 +52,21 @@ class ManualReview extends Component {
   }
 
   handleClose () {
+    const {
+      onClose,
+      onFinish,
+    } = this.props
+
     if (this.transactionAnalyzed()) {
-      this.props.onFinish()
+      onFinish()
     }
 
-    this.props.onClose()
+    onClose()
   }
 
   transactionAnalyzed () {
-    return this.state.stepStatus.result === 'current'
+    const { stepStatus } = this.state
+    return stepStatus.result === 'current'
   }
 
   handleTryAgain () {

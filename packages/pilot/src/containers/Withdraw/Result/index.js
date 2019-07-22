@@ -173,71 +173,75 @@ class WithdrawResult extends Component {
             </Alert>
           </Col>
         </Row>
-        {status === 'error' &&
-          <Row>
-            <Col
-              className={style.errorCol}
-              desk={12}
-              palm={12}
-              tablet={12}
-              tv={12}
-            >
-              <TransferError
-                actionLabel={t('pages.withdraw.try_again')}
-                message={t('pages.withdraw.result_error')}
-                onClick={onTryAgain}
-              />
-            </Col>
-          </Row>
+        {status === 'error'
+          && (
+            <Row>
+              <Col
+                className={style.errorCol}
+                desk={12}
+                palm={12}
+                tablet={12}
+                tv={12}
+              >
+                <TransferError
+                  actionLabel={t('pages.withdraw.try_again')}
+                  message={t('pages.withdraw.result_error')}
+                  onClick={onTryAgain}
+                />
+              </Col>
+            </Row>
+          )
         }
-        {status === 'success' &&
-          <Row>
-            <Col
-              desk={12}
-              palm={12}
-              tablet={12}
-              tv={12}
-            >
-              <Card>
-                <CardContent>
-                  <Grid>
-                    <Row>
-                      <Col
-                        desk={12}
-                        palm={12}
-                        tablet={12}
-                        tv={12}
-                      >
-                        <div className={style.head}>
-                          <div className={style.advise}>
-                            {t('pages.withdraw.result_advise')}
+        {status === 'success'
+          && (
+            <Row>
+              <Col
+                desk={12}
+                palm={12}
+                tablet={12}
+                tv={12}
+              >
+                <Card>
+                  <CardContent>
+                    <Grid>
+                      <Row>
+                        <Col
+                          desk={12}
+                          palm={12}
+                          tablet={12}
+                          tv={12}
+                        >
+                          <div className={style.head}>
+                            <div className={style.advise}>
+                              {t('pages.withdraw.result_advise')}
+                            </div>
+                            <div className={style.headActions}>
+                              <Button
+                                fill="outline"
+                                icon={<IconExtract width={12} height={12} />}
+                                onClick={onViewStatement}
+                              >
+                                {t('pages.withdraw.view_statement')}
+                              </Button>
+                            </div>
                           </div>
-                          <div className={style.headActions}>
-                            <Button
-                              fill="outline"
-                              icon={<IconExtract width={12} height={12} />}
-                              onClick={onViewStatement}
-                            >
-                              {t('pages.withdraw.view_statement')}
-                            </Button>
-                          </div>
-                        </div>
-                      </Col>
-                    </Row>
-                    {this.renderRecipient()}
-                    {this.renderInformationRow()}
-                    <Row>
-                      <Col>
-                        <span className={style.information}>
-                          {t('pages.withdraw.result_information')}
-                        </span>
-                      </Col>
-                    </Row>
-                  </Grid>
-                </CardContent>
-              </Card>
-            </Col>
-          </Row>
+                        </Col>
+                      </Row>
+                      {this.renderRecipient()}
+                      {this.renderInformationRow()}
+                      <Row>
+                        <Col>
+                          <span className={style.information}>
+                            {t('pages.withdraw.result_information')}
+                          </span>
+                        </Col>
+                      </Row>
+                    </Grid>
+                  </CardContent>
+                </Card>
+              </Col>
+            </Row>
+          )
         }
       </Grid>
     )

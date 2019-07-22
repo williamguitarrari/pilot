@@ -12,7 +12,7 @@ import {
   LOGIN_REQUEST,
   LOGOUT_RECEIVE,
   RECIPIENT_BALANCE_RECEIVE,
-} from '.'
+} from './actions'
 
 const getBalance = applySpec({
   available: path(['withdrawal', 'maximum']),

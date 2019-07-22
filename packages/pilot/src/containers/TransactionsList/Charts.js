@@ -41,8 +41,7 @@ const renderLegend = (legendKey) => {
   )
 }
 
-const formatCurrency = value =>
-  currencyFormatter(value)
+const formatCurrency = value => currencyFormatter(value)
 
 const Charts = ({ data, legendsTitle }) => (
   <Fragment>

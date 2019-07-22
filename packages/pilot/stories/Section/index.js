@@ -10,8 +10,8 @@ const Section = ({
   title,
 }) => (
   <section className={classnames(styles.section, className)}>
-    {title &&
-      <h2>{title}</h2>
+    {title
+      && <h2>{title}</h2>
     }
     <div>{children}</div>
   </section>

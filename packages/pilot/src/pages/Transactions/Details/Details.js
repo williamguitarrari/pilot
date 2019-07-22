@@ -296,13 +296,15 @@ class TransactionDetails extends Component {
 
   requestData (query) {
     const {
+      client,
+      onReceiveDetails,
       onRequestDetails,
       t,
     } = this.props
 
     onRequestDetails({ query })
 
-    return this.props.client
+    return client
       .transactions
       .details(query)
       .then((result) => {
@@ -312,7 +314,7 @@ class TransactionDetails extends Component {
         }
 
         this.setState(newState)
-        this.props.onReceiveDetails(result)
+        onReceiveDetails(result)
       })
   }
 
@@ -331,10 +333,12 @@ class TransactionDetails extends Component {
 
   handleCopyBoletoUrlClick () {
     const {
-      transaction: {
-        boleto,
+      result: {
+        transaction: {
+          boleto,
+        },
       },
-    } = this.state.result
+    } = this.state
     copyToClipBoard(boleto.barcode)
   }
 
@@ -404,14 +408,16 @@ class TransactionDetails extends Component {
 
   handleShowBoletoClick () {
     const {
-      transaction: {
-        boleto,
-        capabilities,
-        payment: {
-          method,
+      result: {
+        transaction: {
+          boleto,
+          capabilities,
+          payment: {
+            method,
+          },
         },
       },
-    } = this.state.result
+    } = this.state
 
     if (method === 'boleto' && capabilities.capturable) {
       this.setState({
@@ -579,25 +585,29 @@ class TransactionDetails extends Component {
           transaction={transaction}
           transactionDetailsLabels={transactionDetailsLabels}
         />
-        {showCapture &&
-          <Capture
-            isFromCheckout={transaction.referer === 'encryption_key'}
-            isOpen={showCapture}
-            onClose={this.handleCloseCapture}
-            onSuccess={this.handleUpdate}
-            t={t}
-            transaction={transaction}
-          />
+        {showCapture
+          && (
+            <Capture
+              isFromCheckout={transaction.referer === 'encryption_key'}
+              isOpen={showCapture}
+              onClose={this.handleCloseCapture}
+              onSuccess={this.handleUpdate}
+              t={t}
+              transaction={transaction}
+            />
+          )
         }
-        {showManualReview &&
-          <ManualReview
-            action={manualReviewAction}
-            isOpen={showManualReview}
-            onClose={this.handleCloseManualReview}
-            onFinish={() => { this.handleUpdate(transaction.id) }}
-            t={t}
-            transactionId={transaction.id}
-          />
+        {showManualReview
+          && (
+            <ManualReview
+              action={manualReviewAction}
+              isOpen={showManualReview}
+              onClose={this.handleCloseManualReview}
+              onFinish={() => { this.handleUpdate(transaction.id) }}
+              t={t}
+              transactionId={transaction.id}
+            />
+          )
         }
         <Refund
           isOpen={showRefund}
