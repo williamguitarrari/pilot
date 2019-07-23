@@ -16,7 +16,8 @@ const List = ({
         value,
       }, index) => (
         <ListItem
-          key={`${index}-${value}`} // eslint-disable-line react/no-array-index-key
+          // eslint-disable-next-line react/no-array-index-key
+          key={`${index}-${value}`}
           icon={icon}
           title={itemTitle}
           value={value}

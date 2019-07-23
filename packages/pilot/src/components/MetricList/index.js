@@ -16,19 +16,15 @@ const MetricList = ({
 }) => (
   <Card>
     <CardTitle title={title} />
-    <CardContent
-      className={styles.list}
-    >
-      <List
-        items={items}
-      />
+    <CardContent className={styles.list}>
+      <List items={items} />
     </CardContent>
   </Card>
 )
 
 MetricList.propTypes = {
   items: PropTypes.arrayOf(
-    PropTypes.shape(List.propTypes)
+    PropTypes.shape(List.propTypes.items)
   ).isRequired,
   title: PropTypes.string.isRequired,
 }
