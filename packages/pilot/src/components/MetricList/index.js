@@ -6,7 +6,7 @@ import {
   CardContent,
 } from 'former-kit'
 
-import MetricListItem from './MetricListItem'
+import List from './List'
 
 import styles from './style.css'
 
@@ -19,25 +19,16 @@ const MetricList = ({
     <CardContent
       className={styles.list}
     >
-      {items.map(({
-        icon,
-        title: itemTitle,
-        value,
-      }, index) => (
-        <MetricListItem
-          key={`${index}-${value}`} // eslint-disable-line react/no-array-index-key
-          icon={icon}
-          title={itemTitle}
-          value={value}
-        />
-      ))}
+      <List
+        items={items}
+      />
     </CardContent>
   </Card>
 )
 
 MetricList.propTypes = {
   items: PropTypes.arrayOf(
-    PropTypes.shape(MetricListItem.propTypes)
+    PropTypes.shape(List.propTypes)
   ).isRequired,
   title: PropTypes.string.isRequired,
 }
