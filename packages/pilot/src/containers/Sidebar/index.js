@@ -1,6 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { propOr, __ } from 'ramda'
+import {
+  propOr,
+  __,
+  ifElse,
+  equals,
+  always,
+} from 'ramda'
 
 import {
   Button,
@@ -13,7 +19,9 @@ import {
   SidebarLinks,
 } from 'former-kit'
 
-import IconMenu from 'emblematic-icons/svg/Menu32.svg'
+import IconMenuCollapsed from 'emblematic-icons/svg/MenuCollapsed24.svg'
+import IconMenuNotCollapsed from 'emblematic-icons/svg/MenuNotCollapsed24.svg'
+
 import IconWallet from 'emblematic-icons/svg/Wallet32.svg'
 
 import style from './style.css'
@@ -24,6 +32,12 @@ import formatDecimalCurrency from '../../formatters/decimalCurrency'
 import environment from '../../environment'
 
 const MINIMUM_API_VALUE = 100
+
+const getMenuIcon = ifElse(
+  equals(true),
+  always(IconMenuCollapsed),
+  always(IconMenuNotCollapsed)
+)
 
 class SidebarContainer extends React.Component {
   constructor (props) {
@@ -88,6 +102,8 @@ class SidebarContainer extends React.Component {
       t,
     } = this.props
 
+    const MenuIcon = getMenuIcon(collapsed)
+
     return (
       <Sidebar collapsed={collapsed}>
         <SidebarHeader>
@@ -95,7 +111,13 @@ class SidebarContainer extends React.Component {
 
           <Button
             onClick={this.handleToggleSidebar}
-            icon={<IconMenu width={16} height={16} />}
+            icon={(
+              <MenuIcon
+                width={24}
+                height={24}
+                className={style.sidebarIcon}
+              />
+            )}
             fill="clean"
             relevance="low"
           />
