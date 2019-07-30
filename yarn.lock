@@ -5440,6 +5440,11 @@ emblematic-icons@0.6.1:
   resolved "https://registry.yarnpkg.com/emblematic-icons/-/emblematic-icons-0.6.1.tgz#c9eba3cc90d818cf451cebf35b360e5e3dcf0b06"
   integrity sha512-y9SC6R9wT5B82V0xNNmKswkf6ulB8Fbgs7oenxDsGEqUsMKBFajcwE27BlCwB7WC3bzaRZqSuQjERAI5xINoAw==
 
+emblematic-icons@0.7.1:
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/emblematic-icons/-/emblematic-icons-0.7.1.tgz#2771340af07f31628cb9afc678108fa61542d76e"
+  integrity sha512-ZkPYHOhGtwltmeRHnEOA55PK4Cl5fNmTX8kkFqZ6T2MFsZFBle7h8qBfk5gcGxvfQwc/+iRQrwMOGZ86+DooRw==
+
 emoji-regex@^6.5.1:
   version "6.5.1"
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-6.5.1.tgz#9baea929b155565c11ea41c6626eaa65cef992c2"
