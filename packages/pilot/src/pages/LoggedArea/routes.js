@@ -65,6 +65,10 @@ export default {
     title: 'pages.withdraw.title',
   },
   recipients: {
+    validateVisibility: ({
+      allow_manage_recipient: allowManageRecipient,
+    }) => !!allowManageRecipient,
+    hidden: false,
     title: 'pages.recipients.title',
     path: '/recipients',
     component: Recipients,
