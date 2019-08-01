@@ -29,7 +29,7 @@ import {
   receiveRecipientBalance,
 } from './actions'
 
-import { store } from '../../../App'
+import store from '../../../configureStore'
 
 import { WITHDRAW_RECEIVE } from '../../Withdraw/actions'
 import { receiveError } from '../../ErrorBoundary'
