@@ -5,12 +5,10 @@ import {
   propEq,
 } from 'ramda'
 import {
-  catchError,
   map,
   mergeMap,
   tap,
 } from 'rxjs/operators'
-import { of as rxOf } from 'rxjs'
 import { combineEpics, ofType } from 'redux-observable'
 import cockpit from 'cockpit'
 import env from '../../../environment'
@@ -129,8 +127,18 @@ const companyEpic = (action$, state$) => action$.pipe(
 
     return client.company.current()
       .then(verifyEnvironmentPermission)
+      .catch(errorPayload => ({
+        error: true,
+        payload: errorPayload,
+      }))
   }),
-  map(receiveCompany),
+  map(({ error, payload }) => {
+    if (error) {
+      return receiveError(payload)
+    }
+
+    return receiveCompany(payload)
+  }),
   tap(({ error, payload }) => {
     if (error) {
       return
@@ -164,8 +172,7 @@ const companyEpic = (action$, state$) => action$.pipe(
     } else {
       inactiveCompanyLogin()
     }
-  }),
-  catchError(error => rxOf(receiveError(error)))
+  })
 )
 
 const recipientBalanceEpic = (action$, state$) => action$.pipe(
