@@ -9,6 +9,7 @@ import {
   mergeMap,
   tap,
 } from 'rxjs/operators'
+import { of as rxOf } from 'rxjs'
 import { combineEpics, ofType } from 'redux-observable'
 import cockpit from 'cockpit'
 import env from '../../../environment'
@@ -132,12 +133,12 @@ const companyEpic = (action$, state$) => action$.pipe(
         payload: errorPayload,
       }))
   }),
-  map(({ error, payload }) => {
-    if (error) {
-      return receiveError(payload)
+  mergeMap((action) => {
+    if (action.error) {
+      return rxOf(receiveError(action.payload))
     }
 
-    return receiveCompany(payload)
+    return rxOf(receiveCompany(action))
   }),
   tap(({ error, payload }) => {
     if (error) {
