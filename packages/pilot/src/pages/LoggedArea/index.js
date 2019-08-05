@@ -90,13 +90,7 @@ const LoggedArea = ({
             component={component}
           />
         ))}
-        <Redirect
-          to={
-            recipientId
-              ? `/balance/${recipientId}`
-              : '/balance/'
-          }
-        />
+        <Redirect to="/home" />
       </Switch>
     </ErrorBoundary>
   </Layout>
