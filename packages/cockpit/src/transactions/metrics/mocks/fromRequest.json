@@ -12,6 +12,29 @@
         "hits": []
     },
     "aggregations": {
+        "weekdayVolume": {
+            "doc_count": 3,
+            "weekdays": {
+                "buckets": [
+                    {
+                        "key_as_string": "2019-07-19T00:00:00.000Z",
+                        "key": 1563494400000,
+                        "doc_count": 1,
+                        "volume": {
+                            "value": 1000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-07-22T00:00:00.000Z",
+                        "key": 1563753600000,
+                        "doc_count": 2,
+                        "volume": {
+                            "value": 124456
+                        }
+                    }
+                ]
+            }
+        },
         "metrics": {
             "buckets": [
                 {
