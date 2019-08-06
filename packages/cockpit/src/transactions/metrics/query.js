@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 const query = ({ end, start }) => ({
   filter: {
     range: {
@@ -8,6 +10,31 @@ const query = ({ end, start }) => ({
     },
   },
   aggs: {
+    weekdayVolume: {
+      filter: {
+        range: {
+          date_created: {
+            lte: moment(),
+            gte: moment().subtract(7, 'days'),
+          },
+        },
+      },
+      aggs: {
+        weekdays: {
+          date_histogram: {
+            field: 'date_created',
+            interval: 'day',
+          },
+          aggs: {
+            volume: {
+              sum: {
+                field: 'amount',
+              },
+            },
+          },
+        },
+      },
+    },
     metrics: {
       date_range: {
         field: 'date_created',
