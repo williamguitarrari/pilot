@@ -9,13 +9,11 @@ import {
   XAxis,
   YAxis,
 } from 'recharts'
-import { identity } from 'ramda'
 import YAxisLabel from './YAxisLabel'
 import sizePropValidation from '../sizePropValidation'
 
 const MetricAreaChart = ({
   data,
-  labelFormatter,
   legend,
   styles: {
     colors,
@@ -24,6 +22,11 @@ const MetricAreaChart = ({
     height,
     margin,
     width,
+  },
+  tickFormatter,
+  tooltip: {
+    labelFormatter,
+    valueFormatter = value => [value],
   },
 }) => (
   <ResponsiveContainer
@@ -53,11 +56,12 @@ const MetricAreaChart = ({
         tick={{
           fontSize,
         }}
+        tickFormatter={tickFormatter}
         tickLine={false}
         tickMargin={10}
       />
       <Tooltip
-        formatter={value => [value]}
+        formatter={valueFormatter}
         labelFormatter={labelFormatter}
       />
       <Area
@@ -87,7 +91,6 @@ MetricAreaChart.propTypes = {
       value: PropTypes.number.isRequired,
     })
   ).isRequired,
-  labelFormatter: PropTypes.func,
   legend: PropTypes.string,
   styles: PropTypes.shape({
     colors: PropTypes.shape({
@@ -105,11 +108,17 @@ MetricAreaChart.propTypes = {
     }),
     width: sizePropValidation,
   }).isRequired,
+  tickFormatter: PropTypes.func,
+  tooltip: PropTypes.shape({
+    labelFormatter: PropTypes.func,
+    valueFormatter: PropTypes.func,
+  }),
 }
 
 MetricAreaChart.defaultProps = {
-  labelFormatter: identity,
   legend: null,
+  tickFormatter: null,
+  tooltip: {},
 }
 
 export default MetricAreaChart
