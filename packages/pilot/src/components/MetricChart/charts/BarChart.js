@@ -9,7 +9,6 @@ import {
   XAxis,
   YAxis,
 } from 'recharts'
-import { identity } from 'ramda'
 
 import YAxisLabel from './YAxisLabel'
 import sizePropValidation from '../sizePropValidation'
@@ -20,7 +19,6 @@ const cursorProps = {
 
 const MetricBarChart = ({
   data,
-  labelFormatter,
   legend,
   styles: {
     barSize = 20,
@@ -31,6 +29,11 @@ const MetricBarChart = ({
     height,
     margin,
     width,
+  },
+  tickFormatter,
+  tooltip: {
+    labelFormatter,
+    valueFormatter = value => [value],
   },
 }) => (
   <ResponsiveContainer
@@ -60,12 +63,13 @@ const MetricBarChart = ({
         tick={{
           fontSize,
         }}
+        tickFormatter={tickFormatter}
         tickLine={false}
         tickMargin={10}
       />
       <Tooltip
         cursor={cursor || cursorProps}
-        formatter={value => [value]}
+        formatter={valueFormatter}
         labelFormatter={labelFormatter}
       />
       <Bar
@@ -86,7 +90,6 @@ MetricBarChart.propTypes = {
       value: PropTypes.number.isRequired,
     })
   ).isRequired,
-  labelFormatter: PropTypes.func,
   legend: PropTypes.string,
   styles: PropTypes.shape({
     barSize: PropTypes.number,
@@ -105,11 +108,16 @@ MetricBarChart.propTypes = {
     }),
     width: sizePropValidation,
   }).isRequired,
+  tickFormatter: PropTypes.func,
+  tooltip: PropTypes.shape({
+    labelFormatter: PropTypes.func,
+  }),
 }
 
 MetricBarChart.defaultProps = {
-  labelFormatter: identity,
   legend: null,
+  tickFormatter: null,
+  tooltip: {},
 }
 
 export default MetricBarChart
