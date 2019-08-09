@@ -31,7 +31,7 @@ que você ou outra pessoa possa ter acesso às modificações.
 
 Porém, quando terminamos uma feature, a função do Git se torna manter o
 histórico de modificações no tempo. O comando `git rebase -i` pode ser
-usado para reescrever o histórico do Git, permitindo que o desenvolvedor
+usado para reescrever o histórico do Git, permitindo quem desenvolve
 faça commits bagunçados durante o processo de desenvolvimento, mas que
 após finalizado, mantenha a história concisa e significante.
 
