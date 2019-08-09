@@ -11,6 +11,7 @@ import {
 } from 'recharts'
 import { identity } from 'ramda'
 
+import YAxisLabel from './YAxisLabel'
 import sizePropValidation from '../sizePropValidation'
 
 const cursorProps = {
@@ -55,14 +56,7 @@ const MetricBarChart = ({
       />
       <YAxis
         axisLine={false}
-        label={{
-          angle: -90,
-          dy: 20,
-          fontSize: 14,
-          offset: 15,
-          position: 'insideBottomLeft',
-          value: legend,
-        }}
+        label={<YAxisLabel value={legend} />}
         tick={{
           fontSize,
         }}

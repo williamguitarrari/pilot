@@ -10,7 +10,7 @@ import {
   YAxis,
 } from 'recharts'
 import { identity } from 'ramda'
-
+import YAxisLabel from './YAxisLabel'
 import sizePropValidation from '../sizePropValidation'
 
 const MetricAreaChart = ({
@@ -49,14 +49,7 @@ const MetricAreaChart = ({
       />
       <YAxis
         axisLine={false}
-        label={{
-          angle: -90,
-          dy: 20,
-          fontSize: 14,
-          offset: 15,
-          position: 'insideBottomLeft',
-          value: legend,
-        }}
+        label={<YAxisLabel value={legend} />}
         tick={{
           fontSize,
         }}
