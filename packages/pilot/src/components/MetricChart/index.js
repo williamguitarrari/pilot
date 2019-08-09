@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import {
   apply,
   applySpec,
-  identity,
   map,
   mergeLeft,
   pipe,
@@ -29,8 +28,9 @@ import style from './style.css'
 
 const renderChart = ({
   chartLegend,
-  labelFormatter,
   styles,
+  tickFormatter,
+  tooltip,
   type,
 }, data) => {
   let stylesCopy = styles
@@ -59,9 +59,10 @@ const renderChart = ({
   return ChartComponent && (
     <ChartComponent
       data={data}
-      labelFormatter={labelFormatter}
       legend={chartLegend}
       styles={stylesCopy}
+      tickFormatter={tickFormatter}
+      tooltip={tooltip}
     />
   )
 }
@@ -91,11 +92,12 @@ const buildLegendItems = map(applySpec({
 const MetricChart = ({
   chartLegend,
   data,
-  labelFormatter,
   loading,
   showLegend,
   styles,
+  tickFormatter,
   title,
+  tooltip,
   type,
 }) => (
   <MetricCard loading={loading}>
@@ -107,8 +109,9 @@ const MetricChart = ({
       {renderChart(
         {
           chartLegend,
-          labelFormatter,
           styles,
+          tickFormatter,
+          tooltip,
           type,
         },
         data
@@ -132,7 +135,6 @@ MetricChart.propTypes = {
       value: PropTypes.number.isRequired,
     })
   ).isRequired,
-  labelFormatter: PropTypes.func,
   loading: PropTypes.bool,
   showLegend: PropTypes.bool,
   styles: PropTypes.shape({
@@ -140,7 +142,11 @@ MetricChart.propTypes = {
     height: sizePropValidation,
     width: sizePropValidation,
   }).isRequired,
+  tickFormatter: PropTypes.func,
   title: PropTypes.string.isRequired,
+  tooltip: PropTypes.shape({
+    labelFormatter: PropTypes.func,
+  }),
   type: PropTypes.oneOf([
     'area', 'bar', 'donut', 'pizza',
   ]).isRequired,
@@ -148,9 +154,10 @@ MetricChart.propTypes = {
 
 MetricChart.defaultProps = {
   chartLegend: null,
-  labelFormatter: identity,
   loading: false,
   showLegend: false,
+  tickFormatter: null,
+  tooltip: {},
 }
 
 export default MetricChart
