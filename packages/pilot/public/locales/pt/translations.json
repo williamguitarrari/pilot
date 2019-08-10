@@ -464,6 +464,8 @@
       "automatic_by_volume": "Automático por volume",
       "automatic_by_volume_explanation_1": "Antecipe parte das suas vendas. Nesse caso, você recebe diariamente um percentual do volume financeiro que tem a receber. ATENÇÃO: é preciso levar em conta que o percentual liberado para antecipar foi pré-fixado nas suas negociações, e este percentual varia de acordo com o volume que você já está antecipando. Para mais informações, veja:",
       "automatic_by_volume_explanation_link": " Qual percentual das vendas pode ser recebido antecipadamente?",
+      "compulsory": "Antecipação compulsória",
+      "compulsory_explanation_1": "Na antecipação compulsória todas as suas vendas já nascem com uma data fixa para serem pagas. Por exemplo, se você contratou a pagar.me para receber suas compras em 15 dias, todas as suas vendas já nascem antecipadas para serem pagas daqui a 15 dias.",
       "save": "Salvar alterações",
       "transfer": "Transferência",
       "title": "Detalhes do Recebedor",
@@ -533,8 +535,8 @@
       "field_invalid_cnpj": "O CNPJ digitado não é válido",
       "field_invalid_email": "O email digitado não é válido",
       "field_invalid_phone": "O telefone digitado não é válido",
-      "field_max" : "Este campo só pode ter até {{number}} caracteres",
-      "field_minimum" : "O valor mínimo para este campo é {{number}}",
+      "field_max": "Este campo só pode ter até {{number}} caracteres",
+      "field_minimum": "O valor mínimo para este campo é {{number}}",
       "field_number": "Este campo precisa ser um número",
       "field_repeated_document": "Não é permitido utilizar um número de documento mais de uma vez",
       "field_required": "Este campo é obrigatório",
@@ -593,7 +595,7 @@
     },
     "anticipation": {
       "advise": "Antecipações para o mesmo dia útil precisam ser solicitadas antes das 10:59 da manhã. Esta antecipação será analisada e poderá ser aprovada ou rejeitada. Após a aprovação, o valor a ser antecipado é adicionado ao saldo a partir das 12 horas do dia selecionado.",
-      "amount":{
+      "amount": {
         "advise": "Este é o valor líquido a ser antecipado, já com as taxas descontadas.",
         "title": "Valor a ser antecipado"
       },
@@ -638,7 +640,7 @@
       "no_available_limits": "Não há valores disponíveis a serem antecipados.",
       "number": "Deve ser um número",
       "password": "Senha",
-      "period":{
+      "period": {
         "advise": "Você pode escolher que o valor seja descontado a partir dos recebíveis do início do período vigente, ou a partir do final. Esta opção afeta o custo da sua antecipação.",
         "title": "Ordem de antecipação:"
       },
@@ -677,6 +679,7 @@
       "agency": "Agência",
       "anticipation": "Antecipar",
       "available_anticipation": "Liberado para antecipação",
+      "anticipation_title": "Disponível para antecipação",
       "available_withdrawal": "Disponível para saque",
       "anticipation_call": "Antecipe e receba antes! Veja sua disponibilidade:",
       "automatic_anticipation": "Modelo de antecipação automática configurado.",
@@ -835,6 +838,7 @@
       "anticipation_model": "Modelo",
       "anticipation_model_of": {
         "manual": "Manual por Volume",
+        "compulsory": "Antecipação Compulsória",
         "automatic_volume": "Automática por Volume",
         "automatic_1025": "Automática nos Dias 10/25",
         "automatic_dx": "Automática D+X",
@@ -969,7 +973,7 @@
       "form_message": "Digite o valor que deseja sacar",
       "max_value_to_be": "Valor máximo a ser",
       "negative_transfer_value": "Valor solicitado é menor do que o custo",
-      "no_available_limits": "Não há valores disponíveis para saque." ,
+      "no_available_limits": "Não há valores disponíveis para saque.",
       "no_recipient": "Este recebedor não foi encontrado. Confira as informações e tente novamente.",
       "number": "Deve ser um número",
       "password": "Senha",
