@@ -1,7 +1,16 @@
 import React from 'react'
 import {
+  allPass,
+  always,
+  cond,
+  equals,
+  length,
   pipe,
   prop,
+  propEq,
+  propIs,
+  split,
+  T,
 } from 'ramda'
 
 import {
@@ -29,27 +38,24 @@ const columnData = data => (
   ))
 )
 
-const antecipationModel = (data) => {
-  if (data.automatic_anticipation_enabled === false) {
-    return 'manual'
-  }
+const isDX = allPass([
+  propIs(String, 'automatic_anticipation_days'),
+  pipe(
+    prop('automatic_anticipation_days'),
+    split(','),
+    length,
+    equals(31)
+  ),
+])
 
-  if (data.automatic_anticipation_type === 'full') {
-    return 'automatic_volume'
-  }
-
-  if (data.automatic_anticipation_days === '10,25') {
-    return 'automatic_1025'
-  }
-
-  const antecipationDays = data.automatic_anticipation_days.split(',')
-
-  if (antecipationDays.length === 31) {
-    return 'automatic_dx'
-  }
-
-  return 'custom'
-}
+const anticipationModel = cond([
+  [propEq('automatic_anticipation_type', 'compulsory'), always('compulsory')],
+  [propEq('automatic_anticipation_enabled', false), always('manual')],
+  [propEq('automatic_anticipation_type', 'full'), always('automatic_volume')],
+  [propEq('automatic_anticipation_days', '10,25'), always('automatic_1025')],
+  [isDX, always('automatic_dx')],
+  [T, always('custom')],
+])
 
 const renderColumnTransferDay = (data, t) => {
   const weekDaysMap = {
@@ -138,7 +144,7 @@ const getDefaultColumns = ({
                 title: t('pages.recipients.automatic_anticipation_enabled'),
               },
               {
-                content: t(`pages.recipients.anticipation_model_of.${antecipationModel(data)}`),
+                content: t(`pages.recipients.anticipation_model_of.${anticipationModel(data)}`),
                 title: t('pages.recipients.anticipation_model'),
               },
               {
