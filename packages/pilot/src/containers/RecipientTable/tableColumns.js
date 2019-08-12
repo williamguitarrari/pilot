@@ -38,6 +38,16 @@ const columnData = data => (
   ))
 )
 
+const isCompulsory = propEq('automatic_anticipation_type', 'compulsory')
+
+const isManual = propEq('automatic_anticipation_enabled', false)
+
+const isAutomaticByVolume = propEq('automatic_anticipation_type', 'full')
+
+const is1025 = propEq('automatic_anticipation_days', '10,25')
+
+const isSomeOther = T
+
 const isDX = allPass([
   propIs(String, 'automatic_anticipation_days'),
   pipe(
@@ -49,12 +59,12 @@ const isDX = allPass([
 ])
 
 const anticipationModel = cond([
-  [propEq('automatic_anticipation_type', 'compulsory'), always('compulsory')],
-  [propEq('automatic_anticipation_enabled', false), always('manual')],
-  [propEq('automatic_anticipation_type', 'full'), always('automatic_volume')],
-  [propEq('automatic_anticipation_days', '10,25'), always('automatic_1025')],
+  [isCompulsory, always('compulsory')],
+  [isManual, always('manual')],
+  [isAutomaticByVolume, always('automatic_volume')],
+  [is1025, always('automatic_1025')],
   [isDX, always('automatic_dx')],
-  [T, always('custom')],
+  [isSomeOther, always('custom')],
 ])
 
 const renderColumnTransferDay = (data, t) => {
