@@ -10,7 +10,7 @@ const MetricListItem = ({
 }) => (
   <div className={styles.item}>
     <span className={styles.icon}>{icon}</span>
-    {title}
+    <span className={styles.title}>{title}</span>
     <span className={styles.value}>{value}</span>
   </div>
 )
