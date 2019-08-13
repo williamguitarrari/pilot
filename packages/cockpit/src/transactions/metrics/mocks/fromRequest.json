@@ -17,6 +17,638 @@
             "weekdays": {
                 "buckets": [
                     {
+                        "key_as_string": "2019-01-01T00:00:00.000Z",
+                        "key": 1546300800000,
+                        "doc_count": 1,
+                        "volume": {
+                            "value": 1000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-01-03T00:00:00.000Z",
+                        "key": 1546473600000,
+                        "doc_count": 1,
+                        "volume": {
+                            "value": 2500
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-01-04T00:00:00.000Z",
+                        "key": 1546560000000,
+                        "doc_count": 2,
+                        "volume": {
+                            "value": 3500
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-01-07T00:00:00.000Z",
+                        "key": 1546819200000,
+                        "doc_count": 5,
+                        "volume": {
+                            "value": 9500
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-01-08T00:00:00.000Z",
+                        "key": 1546905600000,
+                        "doc_count": 16,
+                        "volume": {
+                            "value": 16000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-01-09T00:00:00.000Z",
+                        "key": 1546992000000,
+                        "doc_count": 1,
+                        "volume": {
+                            "value": 5000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-01-10T00:00:00.000Z",
+                        "key": 1547078400000,
+                        "doc_count": 23,
+                        "volume": {
+                            "value": 28500
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-01-11T00:00:00.000Z",
+                        "key": 1547164800000,
+                        "doc_count": 10,
+                        "volume": {
+                            "value": 10000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-01-14T00:00:00.000Z",
+                        "key": 1547424000000,
+                        "doc_count": 1,
+                        "volume": {
+                            "value": 1000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-01-15T00:00:00.000Z",
+                        "key": 1547510400000,
+                        "doc_count": 9,
+                        "volume": {
+                            "value": 9250
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-01-16T00:00:00.000Z",
+                        "key": 1547596800000,
+                        "doc_count": 13,
+                        "volume": {
+                            "value": 112000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-01-17T00:00:00.000Z",
+                        "key": 1547683200000,
+                        "doc_count": 1,
+                        "volume": {
+                            "value": 1000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-01-18T00:00:00.000Z",
+                        "key": 1547769600000,
+                        "doc_count": 2,
+                        "volume": {
+                            "value": 2000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-01-21T00:00:00.000Z",
+                        "key": 1548028800000,
+                        "doc_count": 3,
+                        "volume": {
+                            "value": 9278
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-01-22T00:00:00.000Z",
+                        "key": 1548115200000,
+                        "doc_count": 1,
+                        "volume": {
+                            "value": 21000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-01-28T00:00:00.000Z",
+                        "key": 1548633600000,
+                        "doc_count": 2,
+                        "volume": {
+                            "value": 2000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-01-29T00:00:00.000Z",
+                        "key": 1548720000000,
+                        "doc_count": 2,
+                        "volume": {
+                            "value": 1500
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-01-30T00:00:00.000Z",
+                        "key": 1548806400000,
+                        "doc_count": 4,
+                        "volume": {
+                            "value": 125900
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-02-01T00:00:00.000Z",
+                        "key": 1548979200000,
+                        "doc_count": 4,
+                        "volume": {
+                            "value": 44400
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-02-02T00:00:00.000Z",
+                        "key": 1549065600000,
+                        "doc_count": 1,
+                        "volume": {
+                            "value": 2500
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-02-05T00:00:00.000Z",
+                        "key": 1549324800000,
+                        "doc_count": 1,
+                        "volume": {
+                            "value": 1000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-02-06T00:00:00.000Z",
+                        "key": 1549411200000,
+                        "doc_count": 4,
+                        "volume": {
+                            "value": 8500
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-02-07T00:00:00.000Z",
+                        "key": 1549497600000,
+                        "doc_count": 29,
+                        "volume": {
+                            "value": 93780
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-02-08T00:00:00.000Z",
+                        "key": 1549584000000,
+                        "doc_count": 9,
+                        "volume": {
+                            "value": 52946
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-02-13T00:00:00.000Z",
+                        "key": 1550016000000,
+                        "doc_count": 19,
+                        "volume": {
+                            "value": 18550
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-02-14T00:00:00.000Z",
+                        "key": 1550102400000,
+                        "doc_count": 1,
+                        "volume": {
+                            "value": 1000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-02-19T00:00:00.000Z",
+                        "key": 1550534400000,
+                        "doc_count": 3,
+                        "volume": {
+                            "value": 3000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-02-21T00:00:00.000Z",
+                        "key": 1550707200000,
+                        "doc_count": 1,
+                        "volume": {
+                            "value": 1000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-03-01T00:00:00.000Z",
+                        "key": 1551398400000,
+                        "doc_count": 1,
+                        "volume": {
+                            "value": 10000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-03-14T00:00:00.000Z",
+                        "key": 1552521600000,
+                        "doc_count": 1,
+                        "volume": {
+                            "value": 1000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-03-15T00:00:00.000Z",
+                        "key": 1552608000000,
+                        "doc_count": 14,
+                        "volume": {
+                            "value": 27000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-03-20T00:00:00.000Z",
+                        "key": 1553040000000,
+                        "doc_count": 5,
+                        "volume": {
+                            "value": 163822
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-03-21T00:00:00.000Z",
+                        "key": 1553126400000,
+                        "doc_count": 7,
+                        "volume": {
+                            "value": 125311
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-03-22T00:00:00.000Z",
+                        "key": 1553212800000,
+                        "doc_count": 6,
+                        "volume": {
+                            "value": 288822
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-03-23T00:00:00.000Z",
+                        "key": 1553299200000,
+                        "doc_count": 1,
+                        "volume": {
+                            "value": 78911
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-03-24T00:00:00.000Z",
+                        "key": 1553385600000,
+                        "doc_count": 1,
+                        "volume": {
+                            "value": 78911
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-03-25T00:00:00.000Z",
+                        "key": 1553472000000,
+                        "doc_count": 12,
+                        "volume": {
+                            "value": 89911
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-03-26T00:00:00.000Z",
+                        "key": 1553558400000,
+                        "doc_count": 7,
+                        "volume": {
+                            "value": 84911
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-03-27T00:00:00.000Z",
+                        "key": 1553644800000,
+                        "doc_count": 8,
+                        "volume": {
+                            "value": 93911
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-03-29T00:00:00.000Z",
+                        "key": 1553817600000,
+                        "doc_count": 2,
+                        "volume": {
+                            "value": 2000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-03-30T00:00:00.000Z",
+                        "key": 1553904000000,
+                        "doc_count": 1,
+                        "volume": {
+                            "value": 78911
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-04-02T00:00:00.000Z",
+                        "key": 1554163200000,
+                        "doc_count": 4,
+                        "volume": {
+                            "value": 81911
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-04-03T00:00:00.000Z",
+                        "key": 1554249600000,
+                        "doc_count": 1,
+                        "volume": {
+                            "value": 1000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-04-05T00:00:00.000Z",
+                        "key": 1554422400000,
+                        "doc_count": 1,
+                        "volume": {
+                            "value": 78911
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-04-08T00:00:00.000Z",
+                        "key": 1554681600000,
+                        "doc_count": 4,
+                        "volume": {
+                            "value": 4000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-04-10T00:00:00.000Z",
+                        "key": 1554854400000,
+                        "doc_count": 3,
+                        "volume": {
+                            "value": 3000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-04-16T00:00:00.000Z",
+                        "key": 1555372800000,
+                        "doc_count": 8,
+                        "volume": {
+                            "value": 8000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-04-18T00:00:00.000Z",
+                        "key": 1555545600000,
+                        "doc_count": 2,
+                        "volume": {
+                            "value": 1100
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-04-19T00:00:00.000Z",
+                        "key": 1555632000000,
+                        "doc_count": 1,
+                        "volume": {
+                            "value": 78911
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-04-20T00:00:00.000Z",
+                        "key": 1555718400000,
+                        "doc_count": 1,
+                        "volume": {
+                            "value": 78911
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-04-21T00:00:00.000Z",
+                        "key": 1555804800000,
+                        "doc_count": 1,
+                        "volume": {
+                            "value": 78911
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-04-22T00:00:00.000Z",
+                        "key": 1555891200000,
+                        "doc_count": 8,
+                        "volume": {
+                            "value": 283911
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-04-23T00:00:00.000Z",
+                        "key": 1555977600000,
+                        "doc_count": 4,
+                        "volume": {
+                            "value": 81011
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-04-24T00:00:00.000Z",
+                        "key": 1556064000000,
+                        "doc_count": 5,
+                        "volume": {
+                            "value": 82911
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-04-25T00:00:00.000Z",
+                        "key": 1556150400000,
+                        "doc_count": 1,
+                        "volume": {
+                            "value": 78911
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-04-28T00:00:00.000Z",
+                        "key": 1556409600000,
+                        "doc_count": 1,
+                        "volume": {
+                            "value": 78911
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-04-30T00:00:00.000Z",
+                        "key": 1556582400000,
+                        "doc_count": 4,
+                        "volume": {
+                            "value": 4000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-05-01T00:00:00.000Z",
+                        "key": 1556668800000,
+                        "doc_count": 1,
+                        "volume": {
+                            "value": 78911
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-05-02T00:00:00.000Z",
+                        "key": 1556755200000,
+                        "doc_count": 10,
+                        "volume": {
+                            "value": 10000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-05-04T00:00:00.000Z",
+                        "key": 1556928000000,
+                        "doc_count": 1,
+                        "volume": {
+                            "value": 78911
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-05-07T00:00:00.000Z",
+                        "key": 1557187200000,
+                        "doc_count": 2,
+                        "volume": {
+                            "value": 2000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-05-08T00:00:00.000Z",
+                        "key": 1557273600000,
+                        "doc_count": 2,
+                        "volume": {
+                            "value": 2000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-05-10T00:00:00.000Z",
+                        "key": 1557446400000,
+                        "doc_count": 1,
+                        "volume": {
+                            "value": 1000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-05-14T00:00:00.000Z",
+                        "key": 1557792000000,
+                        "doc_count": 6,
+                        "volume": {
+                            "value": 6000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-05-15T00:00:00.000Z",
+                        "key": 1557878400000,
+                        "doc_count": 1,
+                        "volume": {
+                            "value": 1000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-05-21T00:00:00.000Z",
+                        "key": 1558396800000,
+                        "doc_count": 2,
+                        "volume": {
+                            "value": 2000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-05-22T00:00:00.000Z",
+                        "key": 1558483200000,
+                        "doc_count": 4,
+                        "volume": {
+                            "value": 23200
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-05-27T00:00:00.000Z",
+                        "key": 1558915200000,
+                        "doc_count": 1,
+                        "volume": {
+                            "value": 1000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-05-28T00:00:00.000Z",
+                        "key": 1559001600000,
+                        "doc_count": 2,
+                        "volume": {
+                            "value": 2000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-05-29T00:00:00.000Z",
+                        "key": 1559088000000,
+                        "doc_count": 1,
+                        "volume": {
+                            "value": 1000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-05-30T00:00:00.000Z",
+                        "key": 1559174400000,
+                        "doc_count": 3,
+                        "volume": {
+                            "value": 3000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-05-31T00:00:00.000Z",
+                        "key": 1559260800000,
+                        "doc_count": 2,
+                        "volume": {
+                            "value": 2000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-06-04T00:00:00.000Z",
+                        "key": 1559606400000,
+                        "doc_count": 17,
+                        "volume": {
+                            "value": 17000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-06-05T00:00:00.000Z",
+                        "key": 1559692800000,
+                        "doc_count": 4,
+                        "volume": {
+                            "value": 4000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-07-04T00:00:00.000Z",
+                        "key": 1562198400000,
+                        "doc_count": 1,
+                        "volume": {
+                            "value": 2000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-07-11T00:00:00.000Z",
+                        "key": 1562803200000,
+                        "doc_count": 1,
+                        "volume": {
+                            "value": 1000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-07-12T00:00:00.000Z",
+                        "key": 1562889600000,
+                        "doc_count": 1,
+                        "volume": {
+                            "value": 1000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-07-17T00:00:00.000Z",
+                        "key": 1563321600000,
+                        "doc_count": 12,
+                        "volume": {
+                            "value": 39000
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-07-18T00:00:00.000Z",
+                        "key": 1563408000000,
+                        "doc_count": 1,
+                        "volume": {
+                            "value": 1000
+                        }
+                    },
+                    {
                         "key_as_string": "2019-07-19T00:00:00.000Z",
                         "key": 1563494400000,
                         "doc_count": 1,
@@ -30,6 +662,22 @@
                         "doc_count": 2,
                         "volume": {
                             "value": 124456
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-08-05T00:00:00.000Z",
+                        "key": 1564963200000,
+                        "doc_count": 3,
+                        "volume": {
+                            "value": 7500
+                        }
+                    },
+                    {
+                        "key_as_string": "2019-08-09T00:00:00.000Z",
+                        "key": 1565308800000,
+                        "doc_count": 22,
+                        "volume": {
+                            "value": 55000
                         }
                     }
                 ]
