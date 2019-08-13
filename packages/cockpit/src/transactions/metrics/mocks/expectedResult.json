@@ -91,31 +91,31 @@
   "volumeByWeekday": [
     {
       "title": "Sun",
-      "value": 0
+      "value": 236733
     },
     {
       "title": "Mon",
-      "value": 124456
+      "value": 532556
     },
     {
       "title": "Tue",
-      "value": 0
+      "value": 341583
     },
     {
       "title": "Wed",
-      "value": 0
+      "value": 763705
     },
     {
       "title": "Thu",
-      "value": 0
+      "value": 351102
     },
     {
       "title": "Fri",
-      "value": 1000
+      "value": 658490
     },
     {
       "title": "Sat",
-      "value": 0
+      "value": 318144
     }
   ]
 }
