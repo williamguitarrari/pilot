@@ -160,7 +160,8 @@ class AddRecipients extends Component {
   }
 
   handleViewDetails () {
-    const { id } = this.state.fetchData[CONCLUSION]
+    const { fetchData } = this.state
+    const { id } = fetchData[CONCLUSION]
     const { onViewDetails } = this.props
     return onViewDetails(id)
   }
@@ -177,13 +178,14 @@ class AddRecipients extends Component {
   }
 
   createSteps ({ fetchAccounts, submitRecipient, t }) {
+    const { data } = this.state
     return [
       {
         id: IDENTIFICATION,
         title: t('pages.add_recipient.data'),
       },
       {
-        fetch: () => fetchAccounts(this.state.data[IDENTIFICATION]),
+        fetch: () => fetchAccounts(data[IDENTIFICATION]),
         id: BANK_ACCOUNT,
         title: t('pages.add_recipient.bank_account'),
       },
@@ -196,7 +198,7 @@ class AddRecipients extends Component {
         title: t('pages.add_recipient.confirmation'),
       },
       {
-        fetch: () => submitRecipient(this.state.data),
+        fetch: () => submitRecipient(data),
         id: CONCLUSION,
         title: t('pages.add_recipient.conclusion'),
       },

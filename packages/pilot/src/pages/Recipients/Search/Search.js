@@ -32,12 +32,12 @@ import {
   receiveSearch,
 } from './actions'
 
-import { requestLogout } from '../../Account/actions'
+import { requestLogout } from '../../Account/actions/actions'
 
 import dateSelectorPresets from '../../../models/dateSelectorPresets'
 import RecipientTable from '../../../containers/RecipientTable'
 
-import { initialState } from '../../Recipients/Search/reducer'
+import { initialState } from './reducer'
 
 const mapStateToProps = ({
   account: { client },
@@ -136,9 +136,14 @@ class RecipientsSearch extends React.Component {
   }
 
   componentDidMount () {
-    const urlSearchQuery = this.props.history.location.search
+    const {
+      history,
+      query,
+    } = this.props
+
+    const urlSearchQuery = history.location.search
     if (isEmpty(urlSearchQuery)) {
-      this.updateQuery(this.props.query)
+      this.updateQuery(query)
     } else {
       this.requestData(parseQueryUrl(urlSearchQuery))
     }
@@ -173,7 +178,13 @@ class RecipientsSearch extends React.Component {
   }
 
   requestData (query) {
-    this.props.onRequestSearch({ query })
+    const {
+      client,
+      onReceiveSearch,
+      onRequestSearch,
+      onRequestSearchFail,
+    } = this.props
+    onRequestSearch({ query })
 
     const findByQuery = ({
       count,
@@ -190,7 +201,7 @@ class RecipientsSearch extends React.Component {
         }
       }
 
-      return this.props.client
+      return client
         .recipients
         .find({
           count,
@@ -199,7 +210,7 @@ class RecipientsSearch extends React.Component {
         })
         .then(recipients => [recipients])
         .catch((error) => {
-          this.props.onRequestSearchFail(error)
+          onRequestSearchFail(error)
         })
     }
 
@@ -208,9 +219,9 @@ class RecipientsSearch extends React.Component {
       offset,
       search,
     }) => {
-      if (search &&
-          !isRecipientId(search)) {
-        return this.props.client
+      if (search
+        && !isRecipientId(search)) {
+        return client
           .recipients
           .find({
             count,
@@ -218,7 +229,7 @@ class RecipientsSearch extends React.Component {
             page: offset,
           })
           .catch((error) => {
-            this.props.onRequestSearchFail(error)
+            onRequestSearchFail(error)
           })
       }
 
@@ -245,33 +256,35 @@ class RecipientsSearch extends React.Component {
           result,
         })
 
-        this.props.onReceiveSearch({
+        onReceiveSearch({
           query,
           rows: res,
         })
       })
       .catch((error) => {
-        this.props.onRequestSearchFail(error)
+        onRequestSearchFail(error)
       })
   }
 
   handlePageCountChange (count) {
-    const query = {
-      ...this.props.query,
+    const { query } = this.props
+    const newQuery = {
+      ...query,
       count,
       offset: 1,
     }
 
-    this.updateQuery(query)
+    this.updateQuery(newQuery)
   }
 
   handleOrderChange () {
-    const query = {
-      ...this.props.query,
+    const { query } = this.props
+    const newQuery = {
+      ...query,
       offset: 1,
     }
 
-    this.updateQuery(query)
+    this.updateQuery(newQuery)
   }
 
   handleFilterClear () {
@@ -284,8 +297,9 @@ class RecipientsSearch extends React.Component {
     this.updateQuery(initialState.query)
   }
 
-  handleFilterChange (query) {
-    const newQuery = mergeRight(this.state.query, query)
+  handleFilterChange (oldQuery) {
+    const { query } = this.state
+    const newQuery = mergeRight(query, oldQuery)
 
     this.setState({
       clearFilterDisabled: true,
@@ -298,8 +312,9 @@ class RecipientsSearch extends React.Component {
     filters,
     search,
   }) {
-    const query = {
-      ...this.state.query,
+    const { query } = this.state
+    const newQuery = {
+      ...query,
       filters,
       offset: 1,
       search,
@@ -310,20 +325,22 @@ class RecipientsSearch extends React.Component {
       confirmationDisabled: true,
     })
 
-    this.updateQuery(query)
+    this.updateQuery(newQuery)
   }
 
   handlePageChange (page) {
-    const query = {
-      ...this.props.query,
+    const { query } = this.state
+    const newQuery = {
+      ...query,
       offset: page,
     }
 
-    this.updateQuery(query)
+    this.updateQuery(newQuery)
   }
 
   handleRowDetailsClick (row) {
-    const recipient = this.state.result.list.rows[row]
+    const { result } = this.state
+    const recipient = result.list.rows[row]
     const { history } = this.props
     history.push(`/recipients/detail/${recipient.id}`)
   }

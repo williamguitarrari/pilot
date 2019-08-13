@@ -21,11 +21,12 @@ import style from './style.css'
 class RecipientDetailConfig extends Component {
   constructor (props) {
     super(props)
+    const { anticipation, transfer } = this.props
     this.state = {
-      anticipation: this.props.anticipation,
+      anticipation,
       expanded: {},
       openedModal: false,
-      transfer: this.props.transfer,
+      transfer,
     }
 
     this.handleCollapse = this.handleCollapse.bind(this)
@@ -54,24 +55,27 @@ class RecipientDetailConfig extends Component {
   }
 
   toggleChangeTransfer () {
+    const { transfer } = this.state
     this.setState({
       transfer: {
-        ...this.state.transfer,
-        transferEnabled: !this.state.transfer.transferEnabled,
+        ...transfer,
+        transferEnabled: !transfer.transferEnabled,
       },
     })
   }
 
   handleCancel () {
+    const { anticipation, transfer } = this.props
     this.setState({
-      anticipation: this.props.anticipation,
+      anticipation,
       expanded: {},
-      transfer: this.props.transfer,
+      transfer,
     })
   }
 
   handleSaveAnticipation (data) {
-    this.props.handleSaveAnticipation(
+    const { handleSaveAnticipation } = this.props
+    handleSaveAnticipation(
       data,
       this.setState({
         expanded: {},
@@ -80,7 +84,8 @@ class RecipientDetailConfig extends Component {
   }
 
   handleSaveTransfer (data) {
-    this.props.handleSaveTransfer(
+    const { handleSaveTransfer } = this.props
+    handleSaveTransfer(
       data,
       this.setState({
         expanded: {},
@@ -89,7 +94,8 @@ class RecipientDetailConfig extends Component {
   }
 
   handleSaveBankAccount (data) {
-    this.props.handleSaveBankAccount(
+    const { handleSaveBankAccount } = this.props
+    handleSaveBankAccount(
       data,
       this.setState({
         expanded: {},
@@ -98,9 +104,10 @@ class RecipientDetailConfig extends Component {
   }
 
   handleCollapse (id) {
+    const { expanded } = this.state
     this.setState({
       expanded: {
-        [id]: !this.state.expanded[id],
+        [id]: !expanded[id],
       },
     })
   }
@@ -226,6 +233,7 @@ class RecipientDetailConfig extends Component {
 
     const {
       anticipation,
+      expanded,
       openedModal,
       transfer,
     } = this.state
@@ -236,7 +244,7 @@ class RecipientDetailConfig extends Component {
           title={t('pages.recipient_detail.anticipation')}
           subtitle={this.renderAnticipationSub()}
           icon={<AnticipationIcon width={16} height={16} />}
-          collapsed={this.state.expanded.anticipation}
+          collapsed={expanded.anticipation}
           onClick={this.handleCollapse}
           id="anticipation"
         >
@@ -252,7 +260,7 @@ class RecipientDetailConfig extends Component {
           title={t('pages.recipient_detail.transfer')}
           subtitle={this.renderTransferSub()}
           icon={<TransferIcon width={16} height={16} />}
-          collapsed={this.state.expanded.transfer}
+          collapsed={expanded.transfer}
           onClick={this.handleCollapse}
           id="transfer"
         >
@@ -269,7 +277,7 @@ class RecipientDetailConfig extends Component {
           title={t('pages.recipient_detail.bank_account')}
           subtitle={this.renderBankAccountSub()}
           icon={<BackAccountIcon width={16} height={16} />}
-          collapsed={this.state.expanded.bankAccount}
+          collapsed={expanded.bankAccount}
           onClick={this.handleCollapse}
           id="bankAccount"
         >

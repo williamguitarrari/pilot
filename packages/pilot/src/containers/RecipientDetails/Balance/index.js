@@ -78,8 +78,7 @@ const anyDateRange = {
   start: moment().subtract(3, 'months'),
 }
 
-const formatAmount = (amount = 0) =>
-  currencyFormatter(amount)
+const formatAmount = (amount = 0) => currencyFormatter(amount)
 
 // const defaultPageNumber = 15
 
@@ -180,10 +179,12 @@ class RecipientBalance extends Component {
   }
 
   handleFilterClick () {
-    if (isEmptyDates(this.state.dates)) {
-      this.props.onFilterClick(anyDateRange)
+    const { onFilterClick } = this.props
+    const { dates } = this.state
+    if (isEmptyDates(dates)) {
+      onFilterClick(anyDateRange)
     } else {
-      this.props.onFilterClick(this.state.dates)
+      onFilterClick(dates)
     }
   }
 
@@ -295,6 +296,8 @@ class RecipientBalance extends Component {
       t,
     } = this.props
 
+    const { showDateInputCalendar } = this.state
+
     const translateColumns = getColumnsTranslator(t)
     const typesLabels = map(t, operationsTypesLabels)
 
@@ -310,13 +313,13 @@ class RecipientBalance extends Component {
       title: t('pages.balance.withdraw'),
     }
 
-    const filterDatesEqualCurrent = datesEqual(this.state.dates, dates)
+    const filterDatesEqualCurrent = datesEqual(this.state.dates, dates) // eslint-disable-line
 
     const shouldDisableAnticipation = (
-      disabled ||
-      anticipationLoading ||
-      anticipationError ||
-      availableAnticipation === 0
+      disabled
+      || anticipationLoading
+      || anticipationError
+      || availableAnticipation === 0
     )
 
     return (
@@ -335,12 +338,12 @@ class RecipientBalance extends Component {
                     ? null
                     : withdrawalAction}
                   amount={amount}
-                  detail={
+                  detail={(
                     <span>
                       {t('pages.balance.available_withdrawal')}
                       <strong> {formatAmount(withdrawal)} </strong>
                     </span>
-                  }
+                  )}
                   disabled={disabled}
                   title={t('pages.balance.withdrawal_title')}
                 />
@@ -402,9 +405,9 @@ class RecipientBalance extends Component {
                       onPresetChange={this.handlePresetChange}
                       presets={this.localizedPresets}
                       selectedPreset="days-7"
-                      strings={getDateLabels(this.props.t)}
-                      showCalendar={this.state.showDateInputCalendar}
-                      dates={this.state.dates}
+                      strings={getDateLabels(t)}
+                      showCalendar={showDateInputCalendar}
+                      dates={this.state.dates} // eslint-disable-line
                     />
                     <Button
                       disabled={filterDatesEqualCurrent}

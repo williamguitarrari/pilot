@@ -56,8 +56,7 @@ const RecipientTable = ({
     onDetailsClick,
     t,
   })
-  const handleOrderChange = columnIndex =>
-    onOrderChange(columns[columnIndex].accessor)
+  const handleOrderChange = columnIndex => onOrderChange(columns[columnIndex].accessor) // eslint-disable-line
   return (
     <Grid>
       <Row>
@@ -92,7 +91,8 @@ const RecipientTable = ({
           tv={12}
         >
           {loading && <Loader visible />}
-          {rows.length <= 0 && !loading &&
+          {rows.length <= 0 && !loading
+          && (
             <Alert
               icon={<IconInfo height={16} width={16} />}
               type="info"
@@ -102,16 +102,17 @@ const RecipientTable = ({
                 {t('pages.recipients.try_again')}
               </p>
             </Alert>
-          }
-          {rows.length > 0 &&
+          )}
+          {rows.length > 0
+          && (
             <Card>
               <CardTitle
-                title={
+                title={(
                   <h2 className={style.customTitle}>
                     {t('pages.recipients.title')}
                   </h2>
-                }
-                subtitle={
+                )}
+                subtitle={(
                   <div>
                     <div className={style.marginRight}>
                       <Button
@@ -134,7 +135,7 @@ const RecipientTable = ({
                       }}
                     />
                   </div>
-                }
+                )}
               />
               <CardContent>
                 <Table
@@ -164,7 +165,7 @@ const RecipientTable = ({
                 />
               </CardActions>
             </Card>
-          }
+          )}
         </Col>
       </Row>
     </Grid>

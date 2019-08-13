@@ -194,9 +194,9 @@ const getColumns = labels => ([
     accessor: ['paymentDate', 'actual'],
     align: 'center',
     orderable: false,
-    renderer: ({ paymentDate }) => renderPaymentDate(
-      paymentDate, labels.anticipationMessage
-    ),
+    renderer: ({
+      paymentDate,
+    }) => renderPaymentDate(paymentDate, labels.anticipationMessage),
     title: 'models.operations.payment_date',
   },
   {

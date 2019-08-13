@@ -57,11 +57,11 @@ const renderReceiverInfo = (identification, action, t) => {
     <Fragment>
       <Row>
         <Col>
-          {identification.documentType === 'cpf' &&
-          <span className={styles.title}>{cpfTitle}</span>
+          {identification.documentType === 'cpf'
+          && <span className={styles.title}>{cpfTitle}</span>
           }
-          {identification.documentType === 'cnpj' &&
-          <span className={styles.title}>{cnpjTitle}</span>
+          {identification.documentType === 'cnpj'
+          && <span className={styles.title}>{cnpjTitle}</span>
           }
         </Col>
         <Col className={styles.editButtonCol}>
@@ -215,7 +215,8 @@ const renderTransferInterval = (configuration, t) => {
             {transferTypes[transferInterval]}
           </span>
         </Col>
-        { transferInterval !== 'daily' &&
+        { transferInterval !== 'daily'
+        && (
           <Col>
             <span className={styles.infoTitle}>
               {t('pages.add_recipient.transfer_day')}
@@ -228,7 +229,7 @@ const renderTransferInterval = (configuration, t) => {
               }
             </span>
           </Col>
-        }
+        )}
       </Fragment>
     )
   }

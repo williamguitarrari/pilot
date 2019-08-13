@@ -2,14 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Button } from 'former-kit'
 
-const EditButton = props => (
+const EditButton = ({ t, ...props }) => (
   <Button
     type="button"
     size="tiny"
     fill="outline"
     {...props}
   >
-    {props.t('pages.add_recipient.edit')}
+    {t('pages.add_recipient.edit')}
   </Button>
 )
 

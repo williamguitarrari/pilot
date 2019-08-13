@@ -19,9 +19,9 @@ import {
   view,
 } from 'ramda'
 
-import ConfirmModal from '../../../../src/components/ConfirmModal'
-import DetailRecipient from '../../../../src/containers/RecipientDetails'
-import Loader from '../../../../src/components/Loader'
+import ConfirmModal from '../../../components/ConfirmModal'
+import DetailRecipient from '../../../containers/RecipientDetails'
+import Loader from '../../../components/Loader'
 import style from './style.css'
 
 const mapStateToProps = (state = {}) => {
@@ -94,19 +94,19 @@ class DetailRecipientPage extends Component {
     this.handlePageChange = this.handlePageChange.bind(this)
     this.handleSaveAnticipation = this.handleSaveAnticipation.bind(this)
     this.handleSaveBankAccount = this.handleSaveBankAccount.bind(this)
-    this.handleSaveBankAccountWithBank =
-      this.handleSaveBankAccountWithBank.bind(this)
-    this.handleSaveBankAccountWithId =
-      this.handleSaveBankAccountWithId.bind(this)
+    this.handleSaveBankAccountWithBank = this.handleSaveBankAccountWithBank
+      .bind(this)
+    this.handleSaveBankAccountWithId = this.handleSaveBankAccountWithId
+      .bind(this)
     this.handleSaveTransfer = this.handleSaveTransfer.bind(this)
-    this.hideCancelAnticipationModal =
-      this.hideCancelAnticipationModal.bind(this)
+    this.hideCancelAnticipationModal = this.hideCancelAnticipationModal
+      .bind(this)
     this.handleOpenSnackbar = this.handleOpenSnackbar.bind(this)
     this.handleCloseSnackbar = this.handleCloseSnackbar.bind(this)
     this.sendToAnticipationPage = this.sendToAnticipationPage.bind(this)
     this.sendToWithdrawPage = this.sendToWithdrawPage.bind(this)
-    this.showCancelAnticipationModal =
-      this.showCancelAnticipationModal.bind(this)
+    this.showCancelAnticipationModal = this.showCancelAnticipationModal
+      .bind(this)
   }
 
   componentDidMount () {
@@ -122,8 +122,8 @@ class DetailRecipientPage extends Component {
   }
 
   handleSaveAnticipation (anticipationData) {
-    const { client } = this.props
-    const { id } = this.props.match.params
+    const { client, match } = this.props
+    const { id } = match.params
     return client.recipient.update(id, { configuration: anticipationData })
       .then(() => {
         const anticipationPath = [
@@ -141,8 +141,8 @@ class DetailRecipientPage extends Component {
   }
 
   handleSaveTransfer (transferData) {
-    const { client } = this.props
-    const { id } = this.props.match.params
+    const { client, match } = this.props
+    const { id } = match.params
     const updatedData = {
       configuration: {
         ...transferData,
@@ -163,34 +163,35 @@ class DetailRecipientPage extends Component {
   }
 
   handleSaveBankAccountWithId (data) {
-    const { client } = this.props
-    const { id } = this.props.match.params
+    const { client, match } = this.props
+    const { id } = match.params
 
     return client.recipient.update(id, { configuration: data })
   }
 
   handleSaveBankAccountWithBank (data) {
-    const { client } = this.props
-    const { id } = this.props.match.params
+    const { client, match } = this.props
+    const { recipientData } = this.state
+    const { id } = match.params
 
-    const { identification } = this.state.recipientData.informationData
+    const { identification } = recipientData.informationData
     const { documentType } = identification
 
     return client.recipient.createNewAccount({
       bankAccount: data,
       identification: {
         documentType,
-        [documentType]: this.state.recipientData
+        [documentType]: recipientData
           .informationData.identification[documentType],
       },
     })
       .then((bankAccountCreated) => {
-        const { accounts } = this.state.recipientData.configurationData
+        const { accounts } = recipientData.configurationData
         this.setState({
           recipientData: {
-            ...this.state.recipientData,
+            ...recipientData,
             configurationData: {
-              ...this.state.recipientData.configurationData,
+              ...recipientData.configurationData,
               accounts: [...accounts, bankAccountCreated],
             },
           },
@@ -255,13 +256,12 @@ class DetailRecipientPage extends Component {
 
   handleExportData (format) {
     this.setState({ exporting: true })
-
-    const { client } = this.props
+    const { client, match } = this.props
     const { dates } = this.state
     const startDate = dates.start.format('x')
     const endDate = dates.end.format('x')
 
-    const { id: recipientId } = this.props.match.params
+    const { id: recipientId } = match.params
     return client
       .withVersion('2018-09-10')
       .balanceOperations
@@ -292,8 +292,9 @@ class DetailRecipientPage extends Component {
 
   handleAnticipationCancel () {
     const { client, match } = this.props
+    const { anticipationToCancel } = this.state
     const requestBody = {
-      id: this.state.anticipationToCancel,
+      id: anticipationToCancel,
       recipientId: match.params.id,
     }
 
@@ -317,7 +318,7 @@ class DetailRecipientPage extends Component {
       })
       .catch((pageError) => {
         this.setState({
-          ...this.state,
+          ...this.state, // eslint-disable-line
           anticipationToCancel: null,
           pageError,
           showModal: false,
@@ -381,8 +382,8 @@ class DetailRecipientPage extends Component {
   }
 
   fetchRecipientData () {
-    const { client } = this.props
-    const { id } = this.props.match.params
+    const { client, match } = this.props
+    const { id } = match.params
 
     return client.recipient.detail(id)
       .then((recipient) => {
@@ -400,16 +401,16 @@ class DetailRecipientPage extends Component {
   }
 
   fetchAnticipationLimit () {
-    const { client } = this.props
-    const { id } = this.props.match.params
+    const { client, match } = this.props
+    const { id } = match.params
     return client.recipient.anticipationLimits(id)
       .then(limits => ({ amount: limits.maximum.amount, error: false }))
       .catch(error => ({ amount: 0, error }))
   }
 
   fetchBalance (dates, page) {
-    const { client } = this.props
-    const { id } = this.props.match.params
+    const { client, match } = this.props
+    const { id } = match.params
     const query = {
       count: 10,
       dates,
@@ -435,21 +436,21 @@ class DetailRecipientPage extends Component {
   }
 
   fetchBalanceTotal (dates) {
-    const { client } = this.props
-    const { id } = this.props.match.params
+    const { client, match } = this.props
+    const { id } = match.params
     const query = { dates }
     return client.balance.total(id, query)
   }
 
   sendToAnticipationPage () {
-    const { history } = this.props
-    const { id } = this.props.match.params
+    const { history, match } = this.props
+    const { id } = match.params
     history.push(`/anticipation/${id}`)
   }
 
   sendToWithdrawPage () {
-    const { history } = this.props
-    const { id } = this.props.match.params
+    const { history, match } = this.props
+    const { id } = match.params
     history.push(`/withdraw/${id}`)
   }
 
@@ -469,6 +470,7 @@ class DetailRecipientPage extends Component {
     } = this.state
 
     const { t } = this.props
+    const { showSnackbar } = this.state
 
     if (loading) {
       return <Loader visible />
@@ -504,16 +506,18 @@ class DetailRecipientPage extends Component {
 
     return (
       <div className={style.relative}>
-        {this.state.showSnackbar &&
-          <Snackbar
-            icon={<IconClose height={12} width={12} />}
-            dismissTimeout={2500}
-            onDismiss={this.handleCloseSnackbar}
-            type="info"
-          >
-            <p>{t('pages.recipient_detail.configuration_changed')}</p>
-          </Snackbar>
-          }
+        {showSnackbar
+        && (
+        <Snackbar
+          icon={<IconClose height={12} width={12} />}
+          dismissTimeout={2500}
+          onDismiss={this.handleCloseSnackbar}
+          type="info"
+        >
+          <p>{t('pages.recipient_detail.configuration_changed')}</p>
+        </Snackbar>
+        )
+        }
         <DetailRecipient
           informationProps={informationData}
           balanceProps={{

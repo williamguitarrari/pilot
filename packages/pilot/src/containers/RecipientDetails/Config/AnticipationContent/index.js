@@ -9,7 +9,7 @@ import {
   Row,
   Spacing,
 } from 'former-kit'
-import Anticipation from '../../../../../src/containers/AddRecipient/ConfigurationStep/Anticipation'
+import Anticipation from '../../../AddRecipient/ConfigurationStep/Anticipation'
 import createNumberValidation from '../../../../validation/number'
 import createRequiredValidation from '../../../../validation/required'
 import styles from '../style.css'

@@ -57,8 +57,9 @@ class ConfigurationsStep extends Component {
   }
 
   onFormSubmit (formData, formErrors) {
+    const { onContinue } = this.props
     if (!formErrors) {
-      this.props.onContinue(formData)
+      onContinue(formData)
     }
   }
 
@@ -109,15 +110,14 @@ class ConfigurationsStep extends Component {
 
     const start = 1
     const end = 100
-    const betweenMessage =
-      t('pages.add_recipient.field_between', { end, start })
-    const between1and100 =
-      createBetweenValidation(start, end, betweenMessage)
+    const betweenMessage = t('pages.add_recipient.field_between', { end, start })
+    const between1and100 = createBetweenValidation(start, end, betweenMessage)
 
-    const atLeastMessage =
-      t('pages.add_recipient.field_minimum', { number: minimumAnticipationDelay })
-    const atLeastMinimumDays =
-      createLessThanValidation(minimumAnticipationDelay, atLeastMessage)
+    const atLeastMessage = t('pages.add_recipient.field_minimum', { number: minimumAnticipationDelay })
+    const atLeastMinimumDays = createLessThanValidation(
+      minimumAnticipationDelay,
+      atLeastMessage
+    )
 
     return (
       <Fragment>

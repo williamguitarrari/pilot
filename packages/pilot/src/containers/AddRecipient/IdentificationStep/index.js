@@ -44,24 +44,19 @@ const partnerInitialization = {
 }
 
 const getValidations = (data, t) => {
-  const requiredMessage =
-    t('pages.add_recipient.field_required')
+  const requiredMessage = t('pages.add_recipient.field_required')
 
-  let validateCpfCnpjMessage =
-    t('pages.add_recipient.field_invalid_cpf')
+  let validateCpfCnpjMessage = t('pages.add_recipient.field_invalid_cpf')
 
   if (data.documentType === 'cnpj') {
     validateCpfCnpjMessage = t('pages.add_recipient.field_invalid_cnpj')
   }
 
-  const validateEmailMessage =
-    t('pages.add_recipient.field_invalid_email')
+  const validateEmailMessage = t('pages.add_recipient.field_invalid_email')
 
-  const validatePhoneMessage =
-    t('pages.add_recipient.field_invalid_phone')
+  const validatePhoneMessage = t('pages.add_recipient.field_invalid_phone')
 
-  const validateUrlMessage =
-    t('pages.add_recipient.field_url')
+  const validateUrlMessage = t('pages.add_recipient.field_url')
 
   const required = createRequiredValidation(requiredMessage)
   const validateCpfCnpj = createCpfCnpjValidation(validateCpfCnpjMessage)
@@ -151,8 +146,7 @@ class IdentificationStep extends Component {
     this.onFormChange = this.onFormChange.bind(this)
     this.onFormSubmit = this.onFormSubmit.bind(this)
     this.renderDocumentInput = this.renderDocumentInput.bind(this)
-    this.toggleAdditionalInformation =
-      this.toggleAdditionalInformation.bind(this)
+    this.toggleAdditionalInformation = this.toggleAdditionalInformation.bind(this) // eslint-disable-line
     this.validateRepeatedDocuments = this.validateRepeatedDocuments.bind(this)
   }
 
@@ -164,6 +158,7 @@ class IdentificationStep extends Component {
   }
 
   onFormSubmit (formData, formErrors) {
+    const { onContinue } = this.props
     const updatedErrors = this.validateRepeatedDocuments(formErrors)
     if (updatedErrors) {
       this.setState({
@@ -171,14 +166,15 @@ class IdentificationStep extends Component {
       })
       return
     }
-    this.props.onContinue(formData)
+    onContinue(formData)
   }
 
   onFormChange (formData) {
+    // const { formErrors } = this.state
     this.setState({
       formData,
     })
-    this.state.formErrors = []
+    // this.state.formErrors = []
   }
 
   onChangeWithMask (event, partner) {
@@ -187,27 +183,30 @@ class IdentificationStep extends Component {
       value = '',
     } = event.target
 
+    const { formData } = this.state
+
     let data = { [name]: value }
 
     if (partner) {
       data = {
         [partner]: {
-          ...this.state.formData[partner],
+          ...formData[partner],
           [name]: value,
         },
       }
     }
 
-    const formData = {
-      ...this.state.formData,
+    const newFormData = {
+      ...formData,
       ...data,
     }
 
-    this.onFormChange(formData)
+    this.onFormChange(newFormData)
   }
 
   validateRepeatedDocuments (errors) {
     const { t } = this.props
+    const { formData } = this.state
     let formErrors = errors
 
     const {
@@ -216,7 +215,7 @@ class IdentificationStep extends Component {
       partner2,
       partner3,
       partner4,
-    } = this.state.formData
+    } = formData
 
     const partners = {
       partner0,
@@ -227,8 +226,7 @@ class IdentificationStep extends Component {
     }
 
     const uniqueDocuments = {}
-    const repeatedErrorMessage =
-      t('pages.add_recipient.field_repeated_document')
+    const repeatedErrorMessage = t('pages.add_recipient.field_repeated_document')
 
     Object.keys(partners).forEach((partner) => {
       const { cpf } = partners[partner]
@@ -247,20 +245,22 @@ class IdentificationStep extends Component {
   }
 
   toggleAdditionalInformation () {
-    const { documentType } = this.state.formData
+    const { formData } = this.state
+    const { documentType } = formData
     const additionalInfo = `${documentType}Information`
-    const shouldShowInfo = !this.state.formData[additionalInfo]
+    const shouldShowInfo = !formData[additionalInfo]
 
     this.setState({
       formData: {
-        ...this.state.formData,
+        ...formData,
         [additionalInfo]: shouldShowInfo,
       },
     })
   }
 
   renderDocumentInput () {
-    const { documentType } = this.state.formData
+    const { formData } = this.state
+    const { documentType } = formData
     const { t } = this.props
 
     if (documentType === 'cpf') {
@@ -289,7 +289,8 @@ class IdentificationStep extends Component {
   }
 
   renderInformationCheck () {
-    const { documentType } = this.state.formData
+    const { formData } = this.state
+    const { documentType } = formData
     const { t } = this.props
 
     const info = (documentType === 'cpf')
@@ -299,7 +300,7 @@ class IdentificationStep extends Component {
     return (
       <div className={style.changeContext}>
         <FormCheckbox
-          checked={this.state.formData[`${documentType}Information`]}
+          checked={formData[`${documentType}Information`]}
           label={info}
           name={`${documentType}Information`}
           onChange={this.toggleAdditionalInformation}
@@ -382,8 +383,9 @@ class IdentificationStep extends Component {
   }
 
   renderPartnerInput () {
+    const { formData } = this.state
     const { t } = this.props
-    const { partnerNumber } = this.state.formData
+    const { partnerNumber } = formData
 
     return (
       range(0, parseInt(partnerNumber, 10)).map(partnerIndex => (
@@ -406,8 +408,7 @@ class IdentificationStep extends Component {
                 label={t('pages.add_recipient.cpf')}
                 mask={masks.cpf}
                 name="cpf"
-                onChange={event =>
-                  this.onChangeWithMask(event, `partner${partnerIndex}`)}
+                onChange={event => this.onChangeWithMask(event, `partner${partnerIndex}`)}
               />
             </Col>
             <Col>
@@ -415,8 +416,7 @@ class IdentificationStep extends Component {
                 className={style.inputMarginBottom}
                 label={t('pages.add_recipient.email')}
                 name="email"
-                onChange={event =>
-                  this.onChangeWithMask(event, `partner${partnerIndex}`)}
+                onChange={event => this.onChangeWithMask(event, `partner${partnerIndex}`)}
               />
             </Col>
           </Row>
@@ -442,7 +442,7 @@ class IdentificationStep extends Component {
 
     return (
       <Form
-        data={this.state.formData}
+        data={formData}
         errors={formErrors || errors}
         onChange={this.onFormChange}
         onSubmit={this.onFormSubmit}

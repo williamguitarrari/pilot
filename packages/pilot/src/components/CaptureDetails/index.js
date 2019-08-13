@@ -15,9 +15,10 @@ const renderProperty = (title, value) => (
   />
 )
 
-const fields = (labels, contents) => mapObjIndexed(
-  (label, key) => renderProperty(label, contents[key]), labels
-)
+const fields = (
+  labels,
+  contents
+) => mapObjIndexed((label, key) => renderProperty(label, contents[key]), labels)
 
 const CaptureDetails = ({
   contents, labels,

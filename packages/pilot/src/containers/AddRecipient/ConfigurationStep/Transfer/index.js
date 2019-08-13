@@ -93,15 +93,16 @@ const renderTransferInput = (data, t) => {
   }
 
   const shouldDisable = (
-    !transferEnabled ||
-    (transferEnabled && transferInterval !== 'weekly')
+    !transferEnabled
+    || (transferEnabled && transferInterval !== 'weekly')
   )
 
   return (
     <Fragment>
       <span className={style.label}>
         {t('pages.add_recipient.transfer_day')}
-        {!shouldDisable &&
+        {!shouldDisable
+        && (
           <div className={style.tooltip}>
             <Tooltip
               content={t('pages.add_recipient.effective_transfer_day')}
@@ -113,7 +114,7 @@ const renderTransferInput = (data, t) => {
               />
             </Tooltip>
           </div>
-        }
+        )}
       </span>
       <FormDropdown
         disabled={shouldDisable}

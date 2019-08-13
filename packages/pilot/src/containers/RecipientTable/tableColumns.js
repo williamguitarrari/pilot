@@ -171,8 +171,8 @@ const getDefaultColumns = ({
           tv={6}
         >
           <Row>
-            {data.transfer_day !== 0 && data.transfer_interval === 'weekly' &&
-              columnData([
+            {data.transfer_day !== 0 && data.transfer_interval === 'weekly'
+            && columnData([
               {
                 content: t(`pages.recipients.transfer_enabled_boolean.${data.transfer_enabled}`),
                 title: t('pages.recipients.transfer_enabled'),
@@ -183,8 +183,8 @@ const getDefaultColumns = ({
               },
               renderColumnTransferDay(data, t),
             ])}
-            {data.transfer_day === 0 &&
-              columnData([
+            {data.transfer_day === 0
+            && columnData([
               {
                 content: t(`pages.recipients.transfer_enabled_boolean.${data.transfer_enabled}`),
                 title: t('pages.recipients.transfer_enabled'),

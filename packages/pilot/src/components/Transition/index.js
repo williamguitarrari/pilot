@@ -11,9 +11,10 @@ import {
   uncurryN,
 } from 'ramda'
 
-const applySpring = curry((springPreset, val) => spring(
-  val, springPreset || presets.noWobble
-))
+const applySpring = curry((
+  springPreset,
+  val
+) => spring(val, springPreset || presets.noWobble))
 
 const applySpringIfNumber = springOptions => ifElse(
   is(Number),

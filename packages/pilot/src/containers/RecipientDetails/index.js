@@ -87,25 +87,28 @@ class RecipientDetails extends Component {
             <TabItem text={t('pages.recipients.more_information')} />
           </TabBar>
         </CardContent>
-        {selected === 0 &&
+        {selected === 0
+        && (
           <Balance
             {...balanceProps}
             exporting={exporting}
             t={t}
           />
-        }
-        {selected === 1 &&
+        )}
+        {selected === 1
+        && (
           <Configuration
             {...configurationProps}
             t={t}
           />
-        }
-        {selected === 2 &&
+        )}
+        {selected === 2
+        && (
           <Information
             {...informationProps}
             t={t}
           />
-        }
+        )}
       </Card>
     )
   }

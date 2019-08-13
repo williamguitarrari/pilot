@@ -99,20 +99,12 @@ class Filters extends Component {
     const prevQuery = stringifyDates(prevState.query)
     const currQuery = stringifyDates(query)
 
-    if (prevQuery) {
-      return this.setState({ // eslint-disable-line react/no-did-update-set-state
+    if (!equals(prevQuery, currQuery)) {
+      this.setState({ // eslint-disable-line react/no-did-update-set-state
         hasChanged: true,
         query,
       })
     }
-
-    if (currQuery) {
-      return this.setState({ // eslint-disable-line react/no-did-update-set-state
-        hasChanged: true,
-      })
-    }
-
-    return undefined
   }
 
   handleToogeMoreFilters () {

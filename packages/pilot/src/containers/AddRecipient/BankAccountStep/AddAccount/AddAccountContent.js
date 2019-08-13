@@ -8,7 +8,7 @@ import {
   Row,
 } from 'former-kit'
 
-import SearchableDropdown from '../../../../components/SearchableDropdown/'
+import SearchableDropdown from '../../../../components/SearchableDropdown'
 import accountTypes from '../../../../models/accountTypes'
 import bankCodes from '../../../../models/banks'
 
