@@ -31,7 +31,6 @@ const HomeContainer = ({
   labels,
   loading,
   onDateConfirm,
-  onExport,
   paymentMethods,
   presets,
   refuseReasons,
@@ -48,7 +47,6 @@ const HomeContainer = ({
       dates={dates}
       labels={labels}
       onDateConfirm={onDateConfirm}
-      onExport={onExport}
       presets={presets}
       selectedPreset={selectedPreset}
       t={t}
@@ -231,7 +229,6 @@ HomeContainer.propTypes = {
     metrics: PropTypes.bool,
   }),
   onDateConfirm: PropTypes.func.isRequired,
-  onExport: PropTypes.func.isRequired,
   paymentMethods: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.node.isRequired,

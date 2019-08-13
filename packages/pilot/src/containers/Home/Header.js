@@ -21,7 +21,6 @@ import {
   SpacedSegmentedSwitch,
   Spacing,
 } from 'former-kit'
-import Download24 from 'emblematic-icons/svg/Download24.svg'
 import Calendar24 from 'emblematic-icons/svg/Calendar24.svg'
 
 import styles from './style.css'
@@ -66,7 +65,6 @@ const Header = ({
   dates,
   labels,
   onDateConfirm,
-  onExport,
   presets,
   selectedPreset,
   t,
@@ -131,17 +129,6 @@ const Header = ({
         alignItems="center"
         className={styles.dates}
       >
-        <Button
-          fill="clean"
-          icon={(
-            <Download24
-              color="#4d4f62"
-              height={12}
-              width={12}
-            />
-          )}
-          onClick={onExport}
-        />
         <Spacing size="medium" />
         <SpacedSegmentedSwitch
           name="home-date-preset"
@@ -202,7 +189,6 @@ Header.propTypes = {
     greeting: PropTypes.string.isRequired,
   }).isRequired,
   onDateConfirm: PropTypes.func.isRequired,
-  onExport: PropTypes.func.isRequired,
   presets: PropTypes.arrayOf(
     PropTypes.shape({
       date: PropTypes.func,
