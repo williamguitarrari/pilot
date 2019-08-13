@@ -407,10 +407,6 @@ const Home = ({
     updateQuery(datesRange, replace)
   }
 
-  const handleExport = () => {
-    console.log('Export') // eslint-disable-line no-console
-  }
-
   /* Start effects */
   useEffect(() => {
     if (search) {
@@ -501,7 +497,6 @@ const Home = ({
       loading={loading}
       onDateChange={handleDatesChange}
       onDateConfirm={handleDatesConfirm}
-      onExport={handleExport}
       paymentMethods={enhanceIndicators(t, paymentMethods)}
       presets={getPresets(t)}
       refuseReasons={enhanceIndicators(t, refuseReasons)}
