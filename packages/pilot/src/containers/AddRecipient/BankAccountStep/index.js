@@ -26,8 +26,8 @@ import style from './style.css'
 const hasItems = complement(either(isEmpty, isNil))
 
 const isNewAccount = account => (
-  !account.id &&
-  account.number !== ''
+  !account.id
+  && account.number !== ''
 )
 
 const ADD_ACCOUNT = 'addAccount'
@@ -88,6 +88,8 @@ class BankAccountStep extends Component {
       t,
     } = this.props
 
+    const { selectedForm } = this.state
+
     const displaySelectAccount = hasItems(accounts)
 
     if (displaySelectAccount) {
@@ -113,7 +115,7 @@ class BankAccountStep extends Component {
               ]}
               onChange={this.handleFormSelectionChange}
               name="select_form"
-              value={this.state.selectedForm}
+              value={selectedForm}
             />
           </CardContent>
           { this.renderSelectedForm() }

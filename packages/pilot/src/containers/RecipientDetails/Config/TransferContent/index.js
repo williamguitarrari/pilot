@@ -11,7 +11,7 @@ import {
   Spacing,
 } from 'former-kit'
 
-import Transfer from '../../../../../src/containers/AddRecipient/ConfigurationStep/Transfer'
+import Transfer from '../../../AddRecipient/ConfigurationStep/Transfer'
 import createNumberValidation from '../../../../validation/number'
 import createRequiredValidation from '../../../../validation/required'
 import styles from '../style.css'

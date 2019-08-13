@@ -5,20 +5,16 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { compose, pathOr } from 'ramda'
 
-import { requestLogout } from '../../Account/actions'
-import AddRecipient from '../../../../src/containers/AddRecipient'
+import { requestLogout } from '../../Account/actions/actions'
+import AddRecipient from '../../../containers/AddRecipient'
 
-const getUserPermission =
-  pathOr('admin', ['permission'])
+const getUserPermission = pathOr('admin', ['permission'])
 
-const getAnticipationParams =
-  pathOr(true, ['anticipation_config', 'config_anticipation_params'])
+const getAnticipationParams = pathOr(true, ['anticipation_config', 'config_anticipation_params'])
 
-const getMinimumDelay =
-  pathOr(15, ['anticipation_config', 'minimum_delay'])
+const getMinimumDelay = pathOr(15, ['anticipation_config', 'minimum_delay'])
 
-const getMaximumAnticipationDays =
-  pathOr(31, ['anticipation_config', 'max_anticipation_days'])
+const getMaximumAnticipationDays = pathOr(31, ['anticipation_config', 'max_anticipation_days'])
 
 const mapStateToProps = (state) => {
   const { account } = state
@@ -64,15 +60,18 @@ class AddRecipientPage extends Component {
   }
 
   onExit () {
-    this.props.history.replace('/recipients')
+    const { history } = this.props
+    history.replace('/recipients')
   }
 
   onLoginAgain () {
-    this.props.redirectToLoginPage()
+    const { redirectToLoginPage } = this.props
+    redirectToLoginPage()
   }
 
   onViewDetails (recipientId) {
-    this.props.history.replace(`/recipients/detail/${recipientId}`)
+    const { history } = this.props
+    history.replace(`/recipients/detail/${recipientId}`)
   }
 
   submitRecipient (recipient) {
@@ -81,19 +80,24 @@ class AddRecipientPage extends Component {
   }
 
   fetchAccounts (document) {
-    return this.props.client.recipient.bankAccount(document)
+    const { client } = this.props
+    return client.recipient.bankAccount(document)
   }
 
   render () {
+    const {
+      options,
+      t,
+    } = this.props
     return (
       <AddRecipient
         fetchAccounts={this.fetchAccounts}
         onExit={this.onExit}
         onLoginAgain={this.onLoginAgain}
         onViewDetails={this.onViewDetails}
-        options={this.props.options}
+        options={options}
         submitRecipient={this.submitRecipient}
-        t={this.props.t}
+        t={t}
       />
     )
   }

@@ -179,6 +179,7 @@ class Withdraw extends Component {
             available={available}
             date={date}
             maximum={maximum}
+            onBack={onBack}
             onCancel={onCancel}
             onRequestedChange={onRequestedChange}
             onSubmit={onFormSubmit}

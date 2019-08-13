@@ -11,7 +11,7 @@ import {
   Spacing,
 } from 'former-kit'
 
-import style from '../../Config/style.css'
+import style from '../style.css'
 
 import ImageAutomaticOne from './img/automatic_10_25_1.svg'
 import ImageAutomaticTwo from './img/automatic_10_25_2.svg'

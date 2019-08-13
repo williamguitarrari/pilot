@@ -683,7 +683,8 @@ class Anticipation extends Component {
   }
 
   goToBalance () {
-    this.props.history.goBack()
+    const { history } = this.props
+    history.goBack()
   }
 
   updateAnticipation (value) {

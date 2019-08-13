@@ -205,7 +205,8 @@ class Withdraw extends Component {
   }
 
   goToPreviousPage () {
-    this.props.history.goBack()
+    const { history } = this.props
+    history.goBack()
   }
 
   handleConfirmationConfirm (password) {

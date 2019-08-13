@@ -24,11 +24,13 @@ const RecipientItem = ({
         icon={icon}
         onClick={() => onClick(id)}
       />
-      {collapsed &&
+      {collapsed
+      && (
         <CardContent>
-            {children}
+          {children}
         </CardContent>
-      }
+      )
+    }
     </CardSection>
   </CardContent>
 )

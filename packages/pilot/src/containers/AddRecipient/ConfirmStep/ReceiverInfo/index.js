@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import {
@@ -39,18 +40,20 @@ const renderReceiverUrlPhoneInfo = (identification, t) => {
   if (identification.cnpjInformation || identification.cpfInformation) {
     return (
       <Row>
-        {urlType &&
+        {urlType
+        && (
           <Col>
             <span className={styles.infoTitle}>{url}</span>
             <span className={styles.info}>{urlType}</span>
           </Col>
-        }
-        {phoneType &&
+        )}
+        {phoneType
+        && (
           <Col>
             <span className={styles.infoTitle}>{phone}</span>
             <span className={styles.info}>{phoneType}</span>
           </Col>
-        }
+        )}
       </Row>
     )
   }

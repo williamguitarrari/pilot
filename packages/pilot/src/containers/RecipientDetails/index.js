@@ -87,33 +87,36 @@ class RecipientDetails extends Component {
             <TabItem text={t('pages.recipients.more_information')} />
           </TabBar>
         </CardContent>
-        {selected === 0 &&
+        {selected === 0
+        && (
           <Balance
             {...balanceProps}
             exporting={exporting}
             t={t}
           />
-        }
-        {selected === 1 &&
+        )}
+        {selected === 1
+        && (
           <Configuration
             {...configurationProps}
             t={t}
           />
-        }
-        {selected === 2 &&
+        )}
+        {selected === 2
+        && (
           <Information
             {...informationProps}
             t={t}
           />
-        }
+        )}
       </Card>
     )
   }
 }
 
-const infoProps = omit(['t'], Information.propTypes)
-const configProps = omit(['t'], Configuration.propTypes)
-const balanceProps = omit(['t'], Balance.propTypes)
+const infoProps = omit(['t'], Information.propTypes) // eslint-disable-line
+const configProps = omit(['t'], Configuration.propTypes) // eslint-disable-line
+const balanceProps = omit(['t'], Balance.propTypes) // eslint-disable-line
 
 RecipientDetails.propTypes = {
   balanceProps: PropTypes.shape(balanceProps).isRequired,

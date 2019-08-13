@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Col, Row } from 'former-kit'

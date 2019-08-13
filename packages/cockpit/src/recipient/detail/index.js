@@ -49,8 +49,7 @@ const UpdateDetailRecipient = client => (recipientId, data) => {
 const AddNewBankAccount = client => (data) => {
   const newAccount = formatToBankAccount(data)
   return client.bankAccounts.create(newAccount.bank_account)
-    .then(bankAccountCreated =>
-      formatBankAccount([bankAccountCreated]).accounts[0])
+    .then(bankAccountCreated => formatBankAccount([bankAccountCreated]).accounts[0]) // eslint-disable-line
 }
 
 export default {

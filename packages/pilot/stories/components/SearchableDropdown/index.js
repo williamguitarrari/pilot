@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
 import { action } from '@storybook/addon-actions'
-import { Card, CardContent, CardActions, Button } from 'former-kit'
+import {
+  Card,
+  CardContent,
+  CardActions,
+  Button,
+} from 'former-kit'
 import Form from 'react-vanilla-form'
 import Section from '../../Section'
 import SearchableDropdown from '../../../src/components/SearchableDropdown'
@@ -13,8 +18,7 @@ const options = Object.entries(bankCodes)
     name: value,
     value: key,
   }))
-  .sort((a, b) =>
-    parseInt(a.value, 10) - parseInt(b.value, 10))
+  .sort((a, b) => parseInt(a.value, 10) - parseInt(b.value, 10))
 
 const mustChooseBank = value => value === '000' && 'Você precisa escolher um banco!'
 

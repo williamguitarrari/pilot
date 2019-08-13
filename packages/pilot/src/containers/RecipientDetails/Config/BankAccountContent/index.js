@@ -81,8 +81,9 @@ class BankAccountContent extends Component {
   }
 
   handleSubmit (data, errors) {
+    const { onSave } = this.props
+    const { selectedBankAccount, selectedForm } = this.state
     if (!errors) {
-      const { selectedForm } = this.state
       let dataTransformed
       if (selectedForm === ADD_ACCOUNT) {
         dataTransformed = {
@@ -91,10 +92,10 @@ class BankAccountContent extends Component {
         }
       } else {
         dataTransformed = {
-          id: this.state.selectedBankAccount,
+          id: selectedBankAccount,
         }
       }
-      this.props.onSave(dataTransformed)
+      onSave(dataTransformed)
     }
   }
 
@@ -145,7 +146,7 @@ class BankAccountContent extends Component {
   }
 
   renderSelectedForm () {
-    const { selectedForm } = this.state
+    const { selectedBankAccount, selectedForm } = this.state
     const {
       accounts,
       data,
@@ -174,7 +175,7 @@ class BankAccountContent extends Component {
             onChange={this.handleDropdownChange}
             options={accounts.map(toDropdownOptions)}
             t={t}
-            value={this.state.selectedBankAccount}
+            value={selectedBankAccount}
           />
         </Grid>
       </div>
@@ -189,6 +190,7 @@ class BankAccountContent extends Component {
       onChange,
       t,
     } = this.props
+    const { selectedForm } = this.state
 
     const displaySelectAccount = hasItems(accounts)
 
@@ -222,7 +224,7 @@ class BankAccountContent extends Component {
             ]}
             onChange={this.handleFormSelectionChange}
             name="select_form"
-            value={this.state.selectedForm}
+            value={selectedForm}
           />
           <Form
             data={{

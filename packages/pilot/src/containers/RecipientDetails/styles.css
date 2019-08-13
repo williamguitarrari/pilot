@@ -12,12 +12,12 @@
   flex: 1;
   justify-content: flex-start;
 
-  & > *:first-child {
-    margin-left: unset;
-  }
-
   & > * {
     margin-left: 40px;
+  }
+
+  & > *:first-child {
+    margin-left: unset;
   }
 }
 
