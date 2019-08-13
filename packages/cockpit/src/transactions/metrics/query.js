@@ -1,5 +1,3 @@
-import moment from 'moment'
-
 const query = ({ end, start }) => ({
   filter: {
     range: {
@@ -14,8 +12,8 @@ const query = ({ end, start }) => ({
       filter: {
         range: {
           date_created: {
-            lte: moment(),
-            gte: moment().subtract(7, 'days'),
+            lte: end,
+            gte: start,
           },
         },
       },
