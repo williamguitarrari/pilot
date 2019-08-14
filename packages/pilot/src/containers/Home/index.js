@@ -62,13 +62,9 @@ const HomeContainer = ({
           <Flexbox className={styles.column} direction="column">
             <MetricIndicator
               loading={loading.metrics}
-              icon={<AverageAmountIcon />}
-              title={t('pages.home.average_amount')}
-              value={(
-                <SpacedAmount
-                  {...currencyToParts(averageAmount)}
-                />
-              )}
+              icon={<TotalTransactionsIcon />}
+              title={t('pages.home.total_transactions')}
+              value={totalTransactions}
             />
             <MetricList
               items={paymentMethods}
@@ -86,11 +82,11 @@ const HomeContainer = ({
           <Flexbox className={styles.column} direction="column">
             <MetricIndicator
               loading={loading.metrics}
-              icon={<TotalAmountIcon />}
-              title={t('pages.home.total_amount')}
+              icon={<AverageAmountIcon />}
+              title={t('pages.home.average_amount')}
               value={(
                 <SpacedAmount
-                  {...currencyToParts(totalAmount)}
+                  {...currencyToParts(averageAmount)}
                 />
               )}
             />
@@ -110,9 +106,13 @@ const HomeContainer = ({
           <Flexbox className={styles.column} direction="column">
             <MetricIndicator
               loading={loading.metrics}
-              icon={<TotalTransactionsIcon />}
-              title={t('pages.home.total_transactions')}
-              value={totalTransactions}
+              icon={<TotalAmountIcon />}
+              title={t('pages.home.total_amount')}
+              value={(
+                <SpacedAmount
+                  {...currencyToParts(totalAmount)}
+                />
+              )}
             />
             <MetricList
               loading={loading.metrics}
