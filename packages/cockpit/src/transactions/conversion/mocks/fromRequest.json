@@ -1,0 +1,13 @@
+[
+  {
+    "conversion": 100,
+    "paid": 20,
+    "total": 35,
+    "withoutRetries": 80.0
+  },
+  {
+    "total": 48,
+    "paid": 0,
+    "conversion": 0
+  }
+]
