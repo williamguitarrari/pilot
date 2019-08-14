@@ -23,6 +23,7 @@ import {
 } from 'former-kit'
 import Calendar24 from 'emblematic-icons/svg/Calendar24.svg'
 
+import translateDateInput from '../../formatters/dateInputTranslator'
 import styles from './style.css'
 
 const excludeCustomPreset = filter(
@@ -148,6 +149,7 @@ const Header = ({
             onConfirm={handlePeriodChange}
             selectionMode="period"
             showSidebar={false}
+            strings={translateDateInput(t)}
             visible={state.showCalendar}
           >
             <Button
