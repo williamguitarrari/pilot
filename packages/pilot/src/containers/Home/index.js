@@ -69,6 +69,8 @@ const HomeContainer = ({
               value={totalTransactions}
             />
             <MetricList
+              emptyIcon={<NoDataIcon />}
+              emptyText={t('pages.home.empty.payment_methods')}
               items={paymentMethods}
               loading={loading.metrics}
               title={t('pages.home.payment_methods')}
@@ -93,6 +95,8 @@ const HomeContainer = ({
               )}
             />
             <MetricList
+              emptyIcon={<NoDataIcon />}
+              emptyText={t('pages.home.empty.most_used_card_brands')}
               items={cardBrands}
               loading={loading.metrics}
               title={t('pages.home.most_used_card_brands')}
@@ -117,9 +121,11 @@ const HomeContainer = ({
               )}
             />
             <MetricList
+              emptyIcon={<NoDataIcon />}
+              emptyText={t('pages.home.empty.refusal_rate')}
+              items={refuseReasons}
               loading={loading.metrics}
               title={t('pages.home.refusal_rate')}
-              items={refuseReasons}
             />
           </Flexbox>
         </Col>

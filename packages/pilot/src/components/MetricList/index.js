@@ -4,17 +4,34 @@ import {
   CardTitle,
   CardContent,
 } from 'former-kit'
+import {
+  anyPass,
+  isEmpty,
+  isNil,
+} from 'ramda'
+import EmptyState from '../MetricCardEmptyState'
 import MetricCard from '../MetricCard'
 import List from './List'
-
 import styles from './style.css'
 
+const isNilOrEmpty = anyPass([isNil, isEmpty])
+
+const showEmptyState = (emptyIcon, emptyText, items) => (
+  emptyIcon && emptyText && isNilOrEmpty(items)
+)
+
 const MetricList = ({
+  emptyIcon,
+  emptyText,
   items,
   loading,
   title,
 }) => (
-  <MetricCard loading={loading}>
+  <MetricCard
+    emptyState={<EmptyState icon={emptyIcon} text={emptyText} />}
+    isEmpty={showEmptyState(emptyIcon, emptyText, items)}
+    loading={loading}
+  >
     <CardTitle title={title} />
     <CardContent className={styles.list}>
       <List items={items} />
@@ -23,6 +40,8 @@ const MetricList = ({
 )
 
 MetricList.propTypes = {
+  emptyIcon: PropTypes.element,
+  emptyText: PropTypes.string,
   items: PropTypes.arrayOf(
     PropTypes.shape(List.propTypes.items)
   ).isRequired,
@@ -31,6 +50,8 @@ MetricList.propTypes = {
 }
 
 MetricList.defaultProps = {
+  emptyIcon: null,
+  emptyText: null,
   loading: false,
 }
 
