@@ -1,8 +1,11 @@
 import React, { createElement } from 'react'
 import PropTypes from 'prop-types'
 import {
+  anyPass,
   apply,
   applySpec,
+  isEmpty,
+  isNil,
   map,
   mergeLeft,
   pipe,
@@ -14,7 +17,7 @@ import {
   CardContent,
   CardTitle,
 } from 'former-kit'
-
+import EmptyState from '../MetricCardEmptyState'
 import MetricCard from '../MetricCard'
 import List from '../MetricList/List'
 
@@ -25,6 +28,8 @@ import MetricAreaChart from './charts/AreaChart'
 import MetricDonutChart from './charts/DonutChart'
 
 import style from './style.css'
+
+const isNilOrEmpty = anyPass([isNil, isEmpty])
 
 const renderChart = ({
   chartLegend,
@@ -89,9 +94,15 @@ const buildLegendItems = map(applySpec({
   ),
 }))
 
+const showEmptyState = (emptyIcon, emptyText, items) => (
+  emptyIcon && emptyText && isNilOrEmpty(items)
+)
+
 const MetricChart = ({
   chartLegend,
   data,
+  emptyIcon,
+  emptyText,
   loading,
   showLegend,
   styles,
@@ -100,22 +111,24 @@ const MetricChart = ({
   tooltip,
   type,
 }) => (
-  <MetricCard loading={loading}>
+  <MetricCard
+    emptyState={<EmptyState icon={emptyIcon} text={emptyText} />}
+    isEmpty={showEmptyState(emptyIcon, emptyText, data)}
+    loading={loading}
+  >
     <CardTitle
       className={style.title}
       title={title}
     />
     <CardContent className={style.content}>
-      {renderChart(
-        {
-          chartLegend,
-          styles,
-          tickFormatter,
-          tooltip,
-          type,
-        },
-        data
-      )}
+      {renderChart({
+        chartLegend,
+        styles,
+        tickFormatter,
+        tooltip,
+        type,
+      },
+      data)}
     </CardContent>
     {showLegend && (
       <CardContent>
@@ -135,6 +148,8 @@ MetricChart.propTypes = {
       value: PropTypes.number.isRequired,
     })
   ).isRequired,
+  emptyIcon: PropTypes.element,
+  emptyText: PropTypes.string,
   loading: PropTypes.bool,
   showLegend: PropTypes.bool,
   styles: PropTypes.shape({
@@ -154,6 +169,8 @@ MetricChart.propTypes = {
 
 MetricChart.defaultProps = {
   chartLegend: null,
+  emptyIcon: null,
+  emptyText: null,
   loading: false,
   showLegend: false,
   tickFormatter: null,
