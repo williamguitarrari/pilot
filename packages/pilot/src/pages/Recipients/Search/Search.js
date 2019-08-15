@@ -12,6 +12,7 @@ import {
   contains,
   defaultTo,
   either,
+  equals,
   flatten,
   identity,
   isEmpty,
@@ -146,6 +147,17 @@ class RecipientsSearch extends React.Component {
       this.updateQuery(query)
     } else {
       this.requestData(parseQueryUrl(urlSearchQuery))
+    }
+  }
+
+  componentDidUpdate (prevProps) {
+    const { query } = this.props
+    if (!equals(prevProps.query, query)) {
+      this.setState({ // eslint-disable-line react/no-did-update-set-state
+        query,
+      })
+
+      this.updateQuery(query)
     }
   }
 
@@ -379,6 +391,11 @@ class RecipientsSearch extends React.Component {
       columns,
       confirmationDisabled,
       expandedRows,
+      query,
+      query: {
+        count,
+        offset,
+      },
       result: {
         list,
       },
@@ -391,11 +408,6 @@ class RecipientsSearch extends React.Component {
         push,
       },
       loading,
-      query,
-      query: {
-        count,
-        offset,
-      },
       t,
     } = this.props
 
