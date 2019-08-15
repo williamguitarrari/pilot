@@ -7,12 +7,17 @@ import { withRouter } from 'react-router-dom'
 import { translate } from 'react-i18next'
 import {
   __,
+  all,
+  allPass,
   always,
   anyPass,
   applySpec,
   compose,
+  equals,
+  F,
   filter,
   find,
+  gt,
   has,
   head,
   identity,
@@ -24,12 +29,15 @@ import {
   isNil,
   juxt,
   last,
+  length,
+  lte,
   map,
   path,
   pipe,
   prop,
   propEq,
   propOr,
+  propSatisfies,
   reduce,
   reverse,
   sortBy,
@@ -38,6 +46,7 @@ import {
   tail,
   uncurryN,
   unless,
+  values,
 } from 'ramda'
 import {
   Button,
@@ -373,7 +382,46 @@ const enhanceGreetingsDescription = (t, { end, start }) => {
   )
 }
 
+const isEmptyProp = anyPass([
+  propSatisfies(isNilOrEmpty),
+  propSatisfies(lte(0)),
+])
+
+const isEmptyVolumeByWeekday = pipe(
+  propOr([{}], 'volumeByWeekday'),
+  reduce(
+    (acc, { value }) => acc || value <= 0,
+    false
+  )
+)
+
+const verifyEmptyMetrics = allPass([
+  isEmptyProp('averageAmount'),
+  isEmptyProp('cardBrands'),
+  isEmptyProp('installments'),
+  isEmptyProp('paymentMethods'),
+  isEmptyProp('refuseReasons'),
+  isEmptyProp('status'),
+  isEmptyProp('totalAmount'),
+  isEmptyProp('totalTransactions'),
+  isEmptyVolumeByWeekday,
+])
+
 const defaultPreset = 'days-7'
+
+const hasMoreThanOneValue = pipe(
+  length,
+  gt(__, 1)
+)
+
+const isGlobalLoading = pipe(
+  values,
+  ifElse(
+    hasMoreThanOneValue,
+    all(equals(true)),
+    F
+  )
+)
 
 const Home = ({
   error,
@@ -443,7 +491,6 @@ const Home = ({
     totalTransactions = 0,
     volumeByWeekday,
   } = metrics || {}
-
   /*
     This error validation should be simplified when
     ErrorBoundary is able to find error 410, the problem
@@ -490,11 +537,13 @@ const Home = ({
       averageAmount={averageAmount}
       cardBrands={enhanceIndicators(t, cardBrands)}
       dates={dates}
+      isEmptySearch={verifyEmptyMetrics(metrics || {})}
       labels={{
         description: enhanceGreetingsDescription(t, dates),
         greeting: t('pages.home.greeting', { name: userName }),
       }}
-      loading={loading}
+      loading={isGlobalLoading(loading)}
+      localLoading={loading}
       onDateChange={handleDatesChange}
       onDateConfirm={handleDatesConfirm}
       paymentMethods={enhanceIndicators(t, paymentMethods)}
