@@ -433,7 +433,7 @@ class RecipientBalance extends Component {
                     emptyMessage={t('models.operations.empty_message')}
                     exportLabel={t('models.operations.export')}
                     exporting={exporting}
-                    // itemsPerPage={defaultPageNumber}
+                    itemsPerPage={3}
                     loading={disabled || loading}
                     labels={{
                       empty: t('models.operations.empty_message'),
