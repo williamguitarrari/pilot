@@ -20,5 +20,5 @@
 }
 
 .list > .item:not(:last-child) {
-  margin-bottom: var(--spacing-tiny);
+  margin-bottom: var(--spacing-medium);
 }
