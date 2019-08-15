@@ -589,7 +589,7 @@
       "unauthorized_live_environment_title": "Ambiente indisponível"
     },
     "home": {
-      "acquirer": "Adquirente/Banco negou",
+      "acquirer": "Adquirente/Banco",
       "acquirer_timeout": "Adquirente/Banco não respondeu",
       "antifraud": "Negado pelo antifraude",
       "average_amount": "Ticket médio",
@@ -598,6 +598,16 @@
       "capture_timeout": "Tempo de captura expirado",
       "credit_card": "Cartão de crédito",
       "debit_card": "Cartão de débito",
+      "empty": {
+        "general_message": "Não foram encontrados registros de transações no período selecionado.",
+        "general_try_again": "Tente novamente selecionando outra data.",
+        "payment_methods": "Não foram encontrados registros de transações no período selecionado",
+        "most_used_card_brands": "Não foram encontrados registros de transações de cartão de crédito no período selecionado",
+        "refusal_rate": "As transações não tiveram nenhuma recusa nesse período",
+        "transactions_by_status": "Nenhuma transação disponível para o período selecionado",
+        "total_transactions": "Nenhuma transação disponível para o período selecionado",
+        "weekly_volume": "Não há transações disponíveis para o período selecionado"
+      },
       "greeting": "Oi, {{name}}",
       "greeting_summary": "Aqui está o resumo geral da sua conta",
       "installments": "{{count}}x",
