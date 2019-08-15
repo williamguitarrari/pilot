@@ -178,14 +178,16 @@ class AddRecipients extends Component {
   }
 
   createSteps ({ fetchAccounts, submitRecipient, t }) {
-    const { data } = this.state
     return [
       {
         id: IDENTIFICATION,
         title: t('pages.add_recipient.data'),
       },
       {
-        fetch: () => fetchAccounts(data[IDENTIFICATION]),
+        fetch: () => {
+          const { data } = this.state
+          return fetchAccounts(data[IDENTIFICATION])
+        },
         id: BANK_ACCOUNT,
         title: t('pages.add_recipient.bank_account'),
       },
@@ -198,7 +200,10 @@ class AddRecipients extends Component {
         title: t('pages.add_recipient.confirmation'),
       },
       {
-        fetch: () => submitRecipient(data),
+        fetch: () => {
+          const { data } = this.state
+          return submitRecipient(data)
+        },
         id: CONCLUSION,
         title: t('pages.add_recipient.conclusion'),
       },
