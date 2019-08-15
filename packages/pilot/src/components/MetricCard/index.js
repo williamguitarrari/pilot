@@ -18,11 +18,12 @@ const MetricCard = ({ children, emptyState, isEmpty }) => (
 
 MetricCard.propTypes = {
   children: PropTypes.node.isRequired,
-  emptyState: PropTypes.node.isRequired,
+  emptyState: PropTypes.node,
   isEmpty: PropTypes.bool,
 }
 
 MetricCard.defaultProps = {
+  emptyState: null,
   isEmpty: false,
 }
 
