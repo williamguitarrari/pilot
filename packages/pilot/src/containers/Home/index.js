@@ -19,6 +19,8 @@ import AverageAmountIcon from './icons/average-amount-icon.svg'
 import TotalAmountIcon from './icons/total-amount-icon.svg'
 import TotalTransactionsIcon from './icons/total-transactions-icon.svg'
 
+import NoDataIcon from './icons/no-data.svg'
+
 import Header from './Header'
 import SpacedAmount from './SpacedAmount'
 
@@ -130,6 +132,8 @@ const HomeContainer = ({
         >
           <MetricChart
             data={transactionsByStatus}
+            emptyIcon={<NoDataIcon />}
+            emptyText={t('pages.home.empty.transactions_by_status')}
             loading={loading.metrics}
             showLegend
             styles={{
@@ -151,6 +155,8 @@ const HomeContainer = ({
         >
           <MetricChart
             chartLegend={t('pages.home.total_transactions')}
+            emptyIcon={<NoDataIcon />}
+            emptyText={t('pages.home.empty.total_transactions')}
             loading={loading.metrics}
             styles={{
               barSize: 15,
@@ -180,6 +186,8 @@ const HomeContainer = ({
         >
           <MetricChart
             chartLegend={t('pages.home.weekly_volume')}
+            emptyIcon={<NoDataIcon />}
+            emptyText={t('pages.home.empty.weekly_volume')}
             loading={loading.metrics}
             styles={{
               barSize: 15,
