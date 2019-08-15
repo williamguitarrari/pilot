@@ -1,5 +1,6 @@
 @import "former-kit-skin-pagarme/dist/styles/spacing";
 @import "former-kit-skin-pagarme/dist/styles/media.css";
+@import "former-kit-skin-pagarme/dist/styles/colors.css";
 
 .greeting {
   margin-bottom: var(--spacing-small);
@@ -31,6 +32,10 @@
   }
 }
 
+.emptyStateMessage > div {
+  text-align: center;
+}
+
 .column {
   align-content: space-between;
 
@@ -46,4 +51,24 @@
 
 .column > div:first-child {
   margin-bottom: var(--spacing-small);
+}
+
+.emptyState {
+  border-top: 1px solid var(--color-light-iron-50);
+  padding-top: var(--spacing-large);
+  margin-top: var(--spacing-tiny);
+}
+
+.overlay {
+  align-items: center;
+  background-color: var(--color-white);
+  border-radius: 4px;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 5;
 }
