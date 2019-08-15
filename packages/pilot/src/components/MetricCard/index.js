@@ -7,16 +7,23 @@ import styles from './style.css'
 
 const enhance = withSpinner(styles.overlay)
 
-const MetricCard = ({ children }) => (
+const MetricCard = ({ children, emptyState, isEmpty }) => (
   <div className={styles.metricCard}>
     <Card>
-      {children}
+      {isEmpty && emptyState}
+      {!isEmpty && children}
     </Card>
   </div>
 )
 
 MetricCard.propTypes = {
   children: PropTypes.node.isRequired,
+  emptyState: PropTypes.node.isRequired,
+  isEmpty: PropTypes.bool,
+}
+
+MetricCard.defaultProps = {
+  isEmpty: false,
 }
 
 export default enhance(MetricCard)
