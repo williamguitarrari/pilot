@@ -1,13 +1,13 @@
 import Balance32 from 'emblematic-icons/svg/Extract32.svg'
 import Configuration32 from 'emblematic-icons/svg/Configuration32.svg'
-// import Transaction32 from 'emblematic-icons/svg/Transaction32.svg'
+import Transaction32 from 'emblematic-icons/svg/Transaction32.svg'
 import Withdraw32 from 'emblematic-icons/svg/Withdraw32.svg'
 import Store32 from 'emblematic-icons/svg/Store32.svg'
 
 import { Balance } from '../Balance'
 import { Anticipation } from '../Anticipation'
 // import CompanySettings from '../CompanySettings'
-// import Transactions from '../Transactions'
+import Transactions from '../Transactions'
 import UserSettings from '../UserSettings'
 import Withdraw from '../Withdraw'
 import Recipients from '../Recipients'
@@ -37,13 +37,13 @@ export default {
     path: '/balance/:id?',
     title: 'pages.balance.title',
   },
-  // transactions: {
-  //   component: Transactions,
-  //   exact: true,
-  //   icon: Transaction32,
-  //   path: '/transactions',
-  //   title: 'pages.transactions.title',
-  // },
+  transactions: {
+    component: Transactions,
+    exact: true,
+    icon: Transaction32,
+    path: '/transactions',
+    title: 'pages.transactions.title',
+  },
   // companySettings: {
   //   component: CompanySettings,
   //   exact: true,

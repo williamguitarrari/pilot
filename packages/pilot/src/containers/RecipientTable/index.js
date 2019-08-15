@@ -57,6 +57,7 @@ const RecipientTable = ({
     t,
   })
   const handleOrderChange = columnIndex => onOrderChange(columns[columnIndex].accessor) // eslint-disable-line
+
   return (
     <Grid>
       <Row>
