@@ -2,20 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import {
-  CardSection,
   Col,
   Row,
 } from 'former-kit'
 
-import style from './style.css'
-
 const RenderChildren = ({ children }) => ( // eslint-disable-line react/prop-types
   <Col>
-    <CardSection>
-      <div className={style.content}>
-        {children}
-      </div>
-    </CardSection>
+    {children}
   </Col>
 )
 
