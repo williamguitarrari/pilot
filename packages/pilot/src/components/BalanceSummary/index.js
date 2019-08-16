@@ -13,7 +13,7 @@ const colors = {
   outgoing: '#ff796f',
 }
 
-const BalanceSummary = ({ amount, loading }) => (
+const BalanceSummary = ({ amount, base, loading }) => (
   <Summary>
     {
       keys(amount).map(type => (
@@ -21,16 +21,23 @@ const BalanceSummary = ({ amount, loading }) => (
           className={style.summaryContent}
           key={type}
         >
-          <TotalDisplay
-            align="center"
-            amount={amount[type].value}
-            amountSize="huge"
-            color={colors[type]}
-            title={amount[type].title}
-            titleColor={colors[type]}
-            titleSize="medium"
-            loading={loading}
-          />
+          <div className={
+            classNames(style.content, {
+              [style[base]]: base,
+            })
+          }
+          >
+            <TotalDisplay
+              align="center"
+              amount={amount[type].value}
+              amountSize="huge"
+              color={colors[type]}
+              title={amount[type].title}
+              titleColor={colors[type]}
+              titleSize="medium"
+              loading={loading}
+            />
+          </div>
         </div>
       ))
     }
@@ -48,10 +55,12 @@ BalanceSummary.propTypes = {
     outcoming: totalShape,
     outgoing: totalShape,
   }),
+  base: PropTypes.oneOf(['light', 'dark']),
   loading: PropTypes.bool.isRequired,
 }
 BalanceSummary.defaultProps = {
   amount: {},
+  base: 'dark',
 }
 
 export default BalanceSummary

@@ -419,11 +419,14 @@ class RecipientBalance extends Component {
                     </Button>
                   </div>
                 </CardContent>
-                <BalanceSummary
-                  amount={this.getSummaryTotal()}
-                  dates={dates}
-                  loading={loading}
-                />
+                <CardContent>
+                  <BalanceSummary
+                    amount={this.getSummaryTotal()}
+                    dates={dates}
+                    loading={loading}
+                    base="light"
+                  />
+                </CardContent>
                 <CardContent>
                   <Operations
                     columns={translateColumns(getColumns(typesLabels))}

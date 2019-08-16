@@ -4,3 +4,16 @@
 .summaryContent > *:not(:first-child) {
   margin-left: var(--spacing-medium);
 }
+
+.dark {
+  background-color: var(--color-light-smoke-40);
+}
+
+.light {
+  background-color: var(--color-white);
+}
+
+.content {
+  height: 100%;
+  padding: var(--spacing-small);
+}
