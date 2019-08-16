@@ -66,7 +66,7 @@ class Operations extends PureComponent {
                 icon={<Download32 width={12} height={12} />}
                 loading={exporting}
                 placement="bottomEnd"
-                relevance="low"
+                fill="outline"
                 size="tiny"
                 subtitle={exportTo}
                 title={exportCall}
