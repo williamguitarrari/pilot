@@ -17,11 +17,12 @@ const Label = ({ fontSize, value }) => (
 
 Label.propTypes = {
   fontSize: PropTypes.number,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
 }
 
 Label.defaultProps = {
   fontSize: 12,
+  value: '',
 }
 
 export default Label
