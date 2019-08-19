@@ -6,7 +6,7 @@ import Store32 from 'emblematic-icons/svg/Store32.svg'
 
 import { Balance } from '../Balance'
 import { Anticipation } from '../Anticipation'
-// import CompanySettings from '../CompanySettings'
+import CompanySettings from '../CompanySettings'
 import Transactions from '../Transactions'
 import UserSettings from '../UserSettings'
 import Withdraw from '../Withdraw'
@@ -44,13 +44,13 @@ export default {
     path: '/transactions',
     title: 'pages.transactions.title',
   },
-  // companySettings: {
-  //   component: CompanySettings,
-  //   exact: true,
-  //   icon: Configuration32,
-  //   path: '/settings',
-  //   title: 'pages.settings.company.menu',
-  // },
+  companySettings: {
+    component: CompanySettings,
+    exact: true,
+    icon: Configuration32,
+    path: '/settings',
+    title: 'pages.settings.company.menu',
+  },
   transactionsDetails: {
     exact: true,
     hidden: true,

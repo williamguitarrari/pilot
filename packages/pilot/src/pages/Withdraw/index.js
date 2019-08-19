@@ -26,10 +26,14 @@ const mapStateToProps = ({
   account: {
     client,
     company: {
+      capabilities,
       pricing,
-    } = {},
+    } = {
+      capabilities: {},
+    },
   },
 }) => ({
+  capabilities,
   client,
   pricing,
 })
@@ -97,6 +101,8 @@ const getStepsStatus = (nextStep, nextStepStatus) => {
 
   return buildStepsStatus(nextStep)
 }
+
+// const getCurrentCompany = client => client.company.current() // eslint-disable-line
 
 class Withdraw extends Component {
   constructor (props) {
@@ -204,11 +210,6 @@ class Withdraw extends Component {
     })
   }
 
-  goToPreviousPage () {
-    const { history } = this.props
-    history.goBack()
-  }
-
   handleConfirmationConfirm (password) {
     const {
       client,
@@ -260,19 +261,10 @@ class Withdraw extends Component {
     this.goTo('data', 'current')
   }
 
-  // goToBalance () {
-  //   const {
-  //     recipient: {
-  //       id,
-  //     },
-  //   } = this.state
-
-  //   const {
-  //     history,
-  //   } = this.props
-
-  //   history.push(`/balance/${id}`)
-  // }
+  goToPreviousPage () {
+    const { history } = this.props
+    return history.goBack()
+  }
 
   render () {
     const {
@@ -305,7 +297,7 @@ class Withdraw extends Component {
               date={moment()}
               disabled={confirmationDisabledButtons}
               maximum={getAvailableTransferAmount(recipient)}
-              onCancel={this.goToBalance}
+              onBack={this.goToPreviousPage}
               onConfirmationConfirm={this.handleConfirmationConfirm}
               onConfirmationReturn={() => this.goTo('data', 'current')}
               onFormSubmit={() => this.goTo('confirmation', 'current')}
@@ -343,6 +335,9 @@ class Withdraw extends Component {
 }
 
 Withdraw.propTypes = {
+  capabilities: PropTypes.shape({
+    allow_manage_recipients: PropTypes.bool,
+  }).isRequired,
   client: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   error: PropTypes.shape({
     affectedRoute: PropTypes.string.isRequired,
