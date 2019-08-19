@@ -288,7 +288,7 @@ class Anticipation extends Component {
     this.getBuildingAnticipations = this.getBuildingAnticipations.bind(this)
     this.getTransferCost = this.getTransferCost.bind(this)
     this.goTo = this.goTo.bind(this)
-    this.goToBalance = this.goToBalance.bind(this)
+    this.goToPreviousPage = this.goToPreviousPage.bind(this)
     this.handleCalculateSubmit = this.handleCalculateSubmit.bind(this)
     this.handleConfirmationConfirm = this.handleConfirmationConfirm.bind(this)
     this.handleFormChange = this.handleFormChange.bind(this)
@@ -682,7 +682,7 @@ class Anticipation extends Component {
     })
   }
 
-  goToBalance () {
+  goToPreviousPage () {
     const { history } = this.props
     history.goBack()
   }
@@ -901,13 +901,13 @@ class Anticipation extends Component {
               minimum={getMinLimit(min)}
               needsRecalculation={needsRecalculation}
               onCalculateSubmit={this.handleCalculateSubmit}
-              onCancel={this.goToBalance}
+              onCancel={this.goToPreviousPage}
               onConfirmationConfirm={this.handleConfirmationConfirm}
               onConfirmationReturn={() => this.goTo('data', 'current')}
               onDataConfirm={() => this.goTo('confirmation', 'current')}
               onFormChange={this.handleFormChange}
               onTryAgain={() => this.goTo('data', 'current')}
-              onViewStatement={this.goToBalance}
+              onViewStatement={this.goToPreviousPage}
               recipient={recipient}
               requested={requestedAmount}
               statusMessage={statusMessage}
