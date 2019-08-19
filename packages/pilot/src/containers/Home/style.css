@@ -77,3 +77,14 @@
   opacity: 0;
   transition: none;
 }
+
+.conversionChart {
+
+  & .title {
+    flex: 1;
+  }
+
+  & .radialContainer {
+    flex: 3;
+  }
+}
