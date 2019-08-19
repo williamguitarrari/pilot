@@ -26,6 +26,7 @@ import StatusIcon from './status-icon.svg'
 import MetricBarChart from './charts/BarChart'
 import MetricAreaChart from './charts/AreaChart'
 import MetricDonutChart from './charts/DonutChart'
+import RadialChart from './charts/RadialChart'
 
 import style from './style.css'
 
@@ -56,6 +57,9 @@ const renderChart = ({
         innerRadius: 0,
       })
       ChartComponent = MetricDonutChart
+      break
+    case 'radial':
+      ChartComponent = RadialChart
       break
     default:
       ChartComponent = null
@@ -143,7 +147,7 @@ MetricChart.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       color: PropTypes.string,
-      label: PropTypes.string.isRequired,
+      label: PropTypes.string,
       legendRenderer: PropTypes.func,
       value: PropTypes.number.isRequired,
     })
@@ -163,7 +167,11 @@ MetricChart.propTypes = {
     labelFormatter: PropTypes.func,
   }),
   type: PropTypes.oneOf([
-    'area', 'bar', 'donut', 'pizza',
+    'area',
+    'bar',
+    'donut',
+    'pizza',
+    'radial',
   ]).isRequired,
 }
 

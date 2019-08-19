@@ -69,7 +69,23 @@ const transactionsByInstallment = [
   },
 ]
 
+const percentageConversion = [
+  {
+    label: 'Real',
+    value: 70,
+  },
+  {
+    label: 'Sem retentativas',
+    value: 100,
+  },
+  {
+    label: 'Boletos',
+    value: 50,
+  },
+]
+
 export {
+  percentageConversion,
   transactionsByInstallment,
   transactionsByStatus,
 }
