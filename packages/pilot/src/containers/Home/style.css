@@ -17,6 +17,7 @@
 
 .grid {
   margin-top: var(--spacing-large);
+  transition: 0.3s linear all;
 }
 
 .sideColumn > div {
@@ -61,7 +62,6 @@
 
 .overlay {
   align-items: center;
-  background-color: var(--color-white);
   border-radius: 4px;
   display: flex;
   height: 100%;
@@ -71,4 +71,9 @@
   top: 0;
   width: 100%;
   z-index: 5;
+}
+
+.globalLoading {
+  opacity: 0;
+  transition: none;
 }
