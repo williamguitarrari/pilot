@@ -21,6 +21,7 @@ import SpacedAmount from './SpacedAmount'
 import NoDataIcon from './icons/no-data.svg'
 import { Message } from '../../components/Message'
 import EmptyStateIcon from './icons/empty-state-global.svg'
+import ConversionCard from './ConversionCard'
 
 import styles from './style.css'
 
@@ -29,6 +30,7 @@ const enhance = withSpinner(styles.overlay)
 const Content = ({
   averageAmount,
   cardBrands,
+  conversions,
   isEmpty,
   loading,
   localLoading,
@@ -217,6 +219,20 @@ const Content = ({
             />
           </Col>
         </Row>
+        <Row flex stretch>
+          <Col
+            desk={6}
+            palm={12}
+            tablet={12}
+            tv={6}
+          >
+            <ConversionCard
+              data={conversions}
+              loading={localLoading.metrics}
+              title={t('pages.home.conversion_rates')}
+            />
+          </Col>
+        </Row>
       </Grid>
     )}
     {isEmpty && (
@@ -247,6 +263,12 @@ Content.propTypes = {
     PropTypes.shape({
       title: PropTypes.node.isRequired,
       value: PropTypes.string,
+    })
+  ).isRequired,
+  conversions: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      value: PropTypes.number.isRequired,
     })
   ).isRequired,
   isEmpty: PropTypes.bool,
