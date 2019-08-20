@@ -80,8 +80,6 @@ const anyDateRange = {
 
 const formatAmount = (amount = 0) => currencyFormatter(amount)
 
-// const defaultPageNumber = 15
-
 class RecipientBalance extends Component {
   constructor (props) {
     super(props)
@@ -284,10 +282,12 @@ class RecipientBalance extends Component {
       dates,
       disabled,
       exporting,
+      itemsPerPage,
       loading,
       onAnticipationClick,
       onCancelRequestClick,
       onExport,
+      onPageCountChange,
       onWithdrawClick,
       pageSizeOptions,
       search: {
@@ -436,7 +436,7 @@ class RecipientBalance extends Component {
                     emptyMessage={t('models.operations.empty_message')}
                     exportLabel={t('models.operations.export')}
                     exporting={exporting}
-                    itemsPerPage={3}
+                    itemsPerPage={itemsPerPage}
                     loading={disabled || loading}
                     labels={{
                       empty: t('models.operations.empty_message'),
@@ -449,6 +449,7 @@ class RecipientBalance extends Component {
                       totalOf: t('pages.balance.total.of'),
                     }}
                     onPageChange={this.handleOperationsPageChange}
+                    onPageCountChange={onPageCountChange}
                     onExport={onExport}
                     pageSizeOptions={pageSizeOptions}
                     rows={operations.rows}
@@ -496,12 +497,14 @@ RecipientBalance.propTypes = {
   }).isRequired,
   disabled: PropTypes.bool.isRequired,
   exporting: PropTypes.bool.isRequired,
+  itemsPerPage: PropTypes.number.isRequired,
   loading: PropTypes.bool.isRequired,
   onAnticipationClick: PropTypes.func.isRequired,
   onCancelRequestClick: PropTypes.func,
   onExport: PropTypes.func.isRequired,
   onFilterClick: PropTypes.func.isRequired,
   onPageChange: PropTypes.func.isRequired,
+  onPageCountChange: PropTypes.func.isRequired,
   onWithdrawClick: PropTypes.func.isRequired,
   pageSizeOptions: PropTypes.arrayOf(PropTypes.number),
   requests: PropTypes.arrayOf(PropTypes.shape({

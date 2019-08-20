@@ -127,6 +127,7 @@ const mockBalance = {
     start: moment(),
   },
   disabled: false,
+  itemsPerPage: 15,
   onAnticipationClick: action('anticipation'),
   onCancel: action('Cancel'),
   onCancelRequestClick: action('cancel request'),

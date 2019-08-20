@@ -19,6 +19,8 @@ import {
   view,
 } from 'ramda'
 
+import itemsPerPage from '../../../models/itemsPerPage'
+
 import ConfirmModal from '../../../components/ConfirmModal'
 import DetailRecipient from '../../../containers/RecipientDetails'
 import Loader from '../../../components/Loader'
@@ -78,6 +80,7 @@ class DetailRecipientPage extends Component {
       loading: true,
       pageError: false,
       recipientData: {},
+      selectedItemsPerPage: 15,
       showModal: false,
       showSnackbar: false,
       total: {},
@@ -92,6 +95,7 @@ class DetailRecipientPage extends Component {
     this.handleDateFilter = this.handleDateFilter.bind(this)
     this.handleExportData = this.handleExportData.bind(this)
     this.handlePageChange = this.handlePageChange.bind(this)
+    this.handlePageCountChange = this.handlePageCountChange.bind(this)
     this.handleSaveAnticipation = this.handleSaveAnticipation.bind(this)
     this.handleSaveBankAccount = this.handleSaveBankAccount.bind(this)
     this.handleSaveBankAccountWithBank = this.handleSaveBankAccountWithBank
@@ -290,6 +294,24 @@ class DetailRecipientPage extends Component {
       })
   }
 
+  handlePageCountChange (pageCount) {
+    const {
+      currentPage,
+      dates,
+    } = this.state
+
+    this.setState({
+      selectedItemsPerPage: pageCount,
+    }, () => {
+      this.fetchBalance(dates, currentPage)
+        .then((balance) => {
+          this.setState({
+            balance,
+          })
+        })
+    })
+  }
+
   handleAnticipationCancel () {
     const { client, match } = this.props
     const { anticipationToCancel } = this.state
@@ -409,10 +431,11 @@ class DetailRecipientPage extends Component {
   }
 
   fetchBalance (dates, page) {
+    const { selectedItemsPerPage } = this.state
     const { client, match } = this.props
     const { id } = match.params
     const query = {
-      count: 10,
+      count: selectedItemsPerPage,
       dates,
       page,
       timeframe: 'future',
@@ -465,12 +488,18 @@ class DetailRecipientPage extends Component {
       loading,
       pageError,
       recipientData,
+      selectedItemsPerPage,
       showModal,
       total,
     } = this.state
 
     const { t } = this.props
     const { showSnackbar } = this.state
+
+    const itemsPerPageOptions = itemsPerPage.map(i => ({
+      name: t('items_per_page', { count: i }),
+      value: `${i}`,
+    }))
 
     if (loading) {
       return <Loader visible />
@@ -527,13 +556,16 @@ class DetailRecipientPage extends Component {
             dates,
             disabled: loading,
             exporting,
+            itemsPerPage: selectedItemsPerPage,
             loading,
             onAnticipationClick: this.sendToAnticipationPage,
             onCancelRequestClick: this.showCancelAnticipationModal,
             onExport: this.handleExportData,
             onFilterClick: this.handleDateFilter,
             onPageChange: this.handlePageChange,
+            onPageCountChange: this.handlePageCountChange,
             onWithdrawClick: this.sendToWithdrawPage,
+            pageSizeOptions: itemsPerPageOptions,
             total,
           }}
           configurationProps={{

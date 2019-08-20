@@ -70,6 +70,7 @@ class RecipientBalanceState extends Component {
             currentPage={query.page}
             dates={dates}
             disabled={false}
+            itemsPerPage
             onAnticipationClick={action('anticipation')}
             onCancelRequestClick={action('cancel request')}
             onFilterClick={action('filter click')}
