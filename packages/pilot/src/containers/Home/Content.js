@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import {
   Col,
@@ -40,207 +40,201 @@ const Content = ({
   transactionsByInstallment,
   transactionsByStatus,
 }) => (
-  <Grid className={classNames(
-    styles.grid, {
-      [styles.globalLoading]: loading,
-    }
-  )}
-  >
+  <div className={styles.content}>
     {!isEmpty && (
-      <Fragment>
-        <Row flex stretch>
-          <Col
-            desk={3}
-            palm={6}
-            tablet={6}
-            tv={3}
-          >
-            <Flexbox className={styles.column} direction="column">
-              <MetricIndicator
-                loading={localLoading.metrics}
-                icon={<TotalTransactionsIcon />}
-                title={t('pages.home.total_transactions')}
-                value={totalTransactions}
-              />
-              <MetricList
-                emptyIcon={<NoDataIcon />}
-                emptyText={t('pages.home.empty.payment_methods')}
-                items={paymentMethods}
-                loading={localLoading.metrics}
-                title={t('pages.home.payment_methods')}
-              />
-            </Flexbox>
-          </Col>
-          <Col
-            desk={3}
-            palm={6}
-            tablet={6}
-            tv={3}
-          >
-            <Flexbox className={styles.column} direction="column">
-              <MetricIndicator
-                loading={localLoading.metrics}
-                icon={<AverageAmountIcon />}
-                title={t('pages.home.average_amount')}
-                value={(
-                  <SpacedAmount
-                    {...currencyToParts(averageAmount)}
-                  />
-                )}
-              />
-              <MetricList
-                emptyIcon={<NoDataIcon />}
-                emptyText={t('pages.home.empty.most_used_card_brands')}
-                items={cardBrands}
-                loading={localLoading.metrics}
-                title={t('pages.home.most_used_card_brands')}
-              />
-            </Flexbox>
-          </Col>
-          <Col
-            desk={3}
-            palm={6}
-            tablet={6}
-            tv={3}
-          >
-            <Flexbox className={styles.column} direction="column">
-              <MetricIndicator
-                loading={localLoading.metrics}
-                icon={<TotalAmountIcon />}
-                title={t('pages.home.total_amount')}
-                value={(
-                  <SpacedAmount
-                    {...currencyToParts(totalAmount)}
-                  />
-                )}
-              />
-              <MetricList
-                emptyIcon={<NoDataIcon />}
-                emptyText={t('pages.home.empty.refusal_rate')}
-                items={refuseReasons}
-                loading={localLoading.metrics}
-                title={t('pages.home.refusal_rate')}
-              />
-            </Flexbox>
-          </Col>
-          <Col
-            className={styles.sideColumn}
-            desk={3}
-            palm={6}
-            tablet={6}
-            tv={3}
-          >
-            <MetricChart
-              data={transactionsByStatus}
-              emptyIcon={<NoDataIcon />}
-              emptyText={t('pages.home.empty.transactions_by_status')}
+    <Grid className={classNames(
+      styles.grid, {
+        [styles.globalLoading]: loading || isEmpty,
+      }
+    )}
+    >
+      <Row flex stretch>
+        <Col
+          desk={3}
+          palm={6}
+          tablet={6}
+          tv={3}
+        >
+          <Flexbox className={styles.column} direction="column">
+            <MetricIndicator
               loading={localLoading.metrics}
-              showLegend
-              styles={{
-                height: 150,
-                innerRadius: 30,
-              }}
-              title={t('pages.home.transactions_by_status')}
-              type="donut"
+              icon={<TotalTransactionsIcon />}
+              title={t('pages.home.total_transactions')}
+              value={totalTransactions}
             />
-          </Col>
-        </Row>
-        <Row flex stretch>
-          <Col
-            className={styles.bottomColumn}
-            desk={3}
-            palm={6}
-            tablet={6}
-            tv={3}
-          >
-            <MetricChart
-              chartLegend={t('pages.home.total_transactions')}
+            <MetricList
               emptyIcon={<NoDataIcon />}
-              emptyText={t('pages.home.empty.total_transactions')}
+              emptyText={t('pages.home.empty.payment_methods')}
+              items={paymentMethods}
               loading={localLoading.metrics}
-              styles={{
-                barSize: 15,
-                colors: {
-                  fill: '#17c9b2',
-                },
+              title={t('pages.home.payment_methods')}
+            />
+          </Flexbox>
+        </Col>
+        <Col
+          desk={3}
+          palm={6}
+          tablet={6}
+          tv={3}
+        >
+          <Flexbox className={styles.column} direction="column">
+            <MetricIndicator
+              loading={localLoading.metrics}
+              icon={<AverageAmountIcon />}
+              title={t('pages.home.average_amount')}
+              value={(
+                <SpacedAmount
+                  {...currencyToParts(averageAmount)}
+                />
+              )}
+            />
+            <MetricList
+              emptyIcon={<NoDataIcon />}
+              emptyText={t('pages.home.empty.most_used_card_brands')}
+              items={cardBrands}
+              loading={localLoading.metrics}
+              title={t('pages.home.most_used_card_brands')}
+            />
+          </Flexbox>
+        </Col>
+        <Col
+          desk={3}
+          palm={6}
+          tablet={6}
+          tv={3}
+        >
+          <Flexbox className={styles.column} direction="column">
+            <MetricIndicator
+              loading={localLoading.metrics}
+              icon={<TotalAmountIcon />}
+              title={t('pages.home.total_amount')}
+              value={(
+                <SpacedAmount
+                  {...currencyToParts(totalAmount)}
+                />
+              )}
+            />
+            <MetricList
+              emptyIcon={<NoDataIcon />}
+              emptyText={t('pages.home.empty.refusal_rate')}
+              items={refuseReasons}
+              loading={localLoading.metrics}
+              title={t('pages.home.refusal_rate')}
+            />
+          </Flexbox>
+        </Col>
+        <Col
+          className={styles.sideColumn}
+          desk={3}
+          palm={6}
+          tablet={6}
+          tv={3}
+        >
+          <MetricChart
+            data={transactionsByStatus}
+            emptyIcon={<NoDataIcon />}
+            emptyText={t('pages.home.empty.transactions_by_status')}
+            loading={localLoading.metrics}
+            showLegend
+            styles={{
+              height: 150,
+              innerRadius: 30,
+            }}
+            title={t('pages.home.transactions_by_status')}
+            type="donut"
+          />
+        </Col>
+      </Row>
+      <Row flex stretch>
+        <Col
+          className={styles.bottomColumn}
+          desk={3}
+          palm={6}
+          tablet={6}
+          tv={3}
+        >
+          <MetricChart
+            chartLegend={t('pages.home.total_transactions')}
+            emptyIcon={<NoDataIcon />}
+            emptyText={t('pages.home.empty.total_transactions')}
+            loading={localLoading.metrics}
+            styles={{
+              barSize: 15,
+              colors: {
+                fill: '#17c9b2',
+              },
+              fontSize: 11,
+              height: 150,
+              margin: {
+                right: 30,
+              },
+            }}
+            tooltip={{
+              labelFormatter: () => t('pages.home.total_transactions'),
+            }}
+            type="bar"
+            data={transactionsByInstallment}
+            title={t('pages.home.transactions_by_installment')}
+          />
+        </Col>
+        <Col
+          className={styles.bottomColumn}
+          desk={3}
+          palm={6}
+          tablet={6}
+          tv={3}
+        >
+          <MetricChart
+            chartLegend={t('pages.home.weekly_volume')}
+            emptyIcon={<NoDataIcon />}
+            emptyText={t('pages.home.empty.weekly_volume')}
+            loading={localLoading.metrics}
+            styles={{
+              barSize: 15,
+              colors: {
+                dot: '#7052c8',
+                fill: '#7052c8',
                 fontSize: 11,
-                height: 150,
-                margin: {
-                  right: 30,
-                },
-              }}
-              tooltip={{
-                labelFormatter: () => t('pages.home.total_transactions'),
-              }}
-              type="bar"
-              data={transactionsByInstallment}
-              title={t('pages.home.transactions_by_installment')}
-            />
-          </Col>
-          <Col
-            className={styles.bottomColumn}
-            desk={3}
-            palm={6}
-            tablet={6}
-            tv={3}
-          >
-            <MetricChart
-              chartLegend={t('pages.home.weekly_volume')}
-              emptyIcon={<NoDataIcon />}
-              emptyText={t('pages.home.empty.weekly_volume')}
-              loading={localLoading.metrics}
-              styles={{
-                barSize: 15,
-                colors: {
-                  dot: '#7052c8',
-                  fill: '#7052c8',
-                  fontSize: 11,
-                  line: '#7052c8',
-                },
-                height: 150,
-                margin: {
-                  right: 30,
-                },
-              }}
-              tickFormatter={amount => amount / 100}
-              tooltip={{
-                labelFormatter: () => t('pages.home.total_amount'),
-                valueFormatter: amount => [currencyFormatter(amount)],
-              }}
-              type="area"
-              data={totalAmountByWeekday}
-              title={t('pages.home.total_amount_by_weekday')}
-            />
-          </Col>
-        </Row>
-      </Fragment>
+                line: '#7052c8',
+              },
+              height: 150,
+              margin: {
+                right: 30,
+              },
+            }}
+            tickFormatter={amount => amount / 100}
+            tooltip={{
+              labelFormatter: () => t('pages.home.total_amount'),
+              valueFormatter: amount => [currencyFormatter(amount)],
+            }}
+            type="area"
+            data={totalAmountByWeekday}
+            title={t('pages.home.total_amount_by_weekday')}
+          />
+        </Col>
+      </Row>
+    </Grid>
     )}
     {isEmpty && (
-      <Row
-        flex
-        stretch
-        className={classNames({
+      <Flexbox
+        alignItems="center"
+        justifyContent="center"
+        className={classNames(styles.emptyState, {
           [styles.globalLoading]: loading,
         })}
       >
-        <Flexbox
-          alignItems="center"
-          justifyContent="center"
-          className={styles.emptyState}
-        >
-          <Message
-            image={<EmptyStateIcon width={419} height={240} />}
-            message={(
-              <div className={styles.emptyStateMessage}>
-                <div>{t('pages.home.empty.general_message')}</div>
-                <div>{t('pages.home.empty.general_try_again')}</div>
-              </div>
-            )}
-          />
-        </Flexbox>
-      </Row>
+        <Message
+          image={<EmptyStateIcon width={340} height={190} />}
+          message={(
+            <div className={styles.emptyStateMessage}>
+              <div>{t('pages.home.empty.general_message')}</div>
+              <div>{t('pages.home.empty.general_try_again')}</div>
+            </div>
+          )}
+        />
+      </Flexbox>
     )}
-  </Grid>
+  </div>
 )
 
 Content.propTypes = {
