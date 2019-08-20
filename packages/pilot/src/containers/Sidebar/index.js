@@ -44,7 +44,7 @@ class SidebarContainer extends React.Component {
     super(props)
     this.state = {
       collapsed: false,
-      summaryCollapsed: true,
+      summaryCollapsed: false,
     }
 
     this.handleToggleSidebar = this.handleToggleSidebar.bind(this)
