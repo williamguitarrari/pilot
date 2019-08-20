@@ -14,10 +14,8 @@ import {
   applySpec,
   compose,
   equals,
-  F,
   filter,
   find,
-  gt,
   has,
   head,
   identity,
@@ -29,7 +27,6 @@ import {
   isNil,
   juxt,
   last,
-  length,
   lte,
   map,
   path,
@@ -409,18 +406,9 @@ const verifyEmptyMetrics = allPass([
 
 const defaultPreset = 'days-7'
 
-const hasMoreThanOneValue = pipe(
-  length,
-  gt(__, 1)
-)
-
 const isGlobalLoading = pipe(
   values,
-  ifElse(
-    hasMoreThanOneValue,
-    all(equals(true)),
-    F
-  )
+  all(equals(true))
 )
 
 const Home = ({
