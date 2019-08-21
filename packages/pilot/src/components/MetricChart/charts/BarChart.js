@@ -65,7 +65,6 @@ const MetricBarChart = ({
         }}
         tickFormatter={tickFormatter}
         tickLine={false}
-        tickMargin={10}
       />
       <Tooltip
         cursor={cursor || cursorProps}
