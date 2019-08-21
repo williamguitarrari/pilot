@@ -58,7 +58,6 @@ const MetricAreaChart = ({
         }}
         tickFormatter={tickFormatter}
         tickLine={false}
-        tickMargin={10}
       />
       <Tooltip
         formatter={valueFormatter}
