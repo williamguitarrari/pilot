@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { translate } from 'react-i18next'
 import { compose } from 'ramda'
-import { PasswordRecoveryConfirmation } from '../../../containers/Account/PasswordRecovery'
+import { PasswordRecoveryConfirmation } from '../../../../containers/Account/PasswordRecovery/Request'
 
 const enhanced = compose(
   translate(),

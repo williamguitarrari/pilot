@@ -6,9 +6,9 @@ import {
   FormInput,
 } from 'former-kit'
 
-import isEmail from '../../../validation/email'
+import isEmail from '../../../../validation/email'
 
-import styles from '../style.css'
+import styles from '../../style.css'
 
 const PasswordRecoveryForm = ({
   base,
