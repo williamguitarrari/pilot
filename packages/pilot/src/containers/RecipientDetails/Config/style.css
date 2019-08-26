@@ -2,7 +2,7 @@
 @import "former-kit-skin-pagarme/dist/styles/colors.css";
 
 .paddingTop > div {
-  padding: 24px 0 0;
+  padding: var(--spacing-large) 0 0;
 }
 
 .alignItems {
@@ -37,11 +37,6 @@
   width: 800px;
 }
 
-.modalHeight {
-  overflow-y: auto;
-  height: 600px;
-}
-
 .marginBottom {
-  margin-bottom: 20px;
+  margin-bottom: var(--spacing-large);
 }

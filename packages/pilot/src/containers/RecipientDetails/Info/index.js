@@ -23,7 +23,10 @@ const RecipientDetailInfo = ({
   <Fragment>
     <CardContent>
       <CardSection>
-        <CardTitle className={styles.title} title={t('pages.recipient_detail.recipient_information')} />
+        <CardTitle
+          className={styles.title}
+          title={t('pages.recipient_detail.recipient_information')}
+        />
         <CardContent>
           <ReceiverInfo
             identification={pick([
@@ -48,7 +51,10 @@ const RecipientDetailInfo = ({
     </CardContent>
     <CardContent>
       <CardSection>
-        <CardTitle className={styles.title} title={t('pages.recipient_detail.partner_information')} />
+        <CardTitle
+          className={styles.title}
+          title={t('pages.recipient_detail.partner_information')}
+        />
         <CardContent>
           <PartnerInfo
             identification={pick([
@@ -64,25 +70,32 @@ const RecipientDetailInfo = ({
         </CardContent>
       </CardSection>
     </CardContent>
-    <CardContent>
-      <CardSection>
-        <CardTitle className={styles.title} title={t('pages.recipient_detail.metadata')} />
+    { metadata !== null
+      && (
         <CardContent>
-          <Tree
-            data={{
-              ...metadata,
-            }}
-            theme={{
-              arrowSign: () => ({ className: styles.arrow }),
-              tree: () => ({ className: styles.tree }),
-              valueText: () => ({ className: styles.value }),
-            }}
-            getItemString={() => null}
-            hideRoot
-          />
+          <CardSection>
+            <CardTitle
+              className={styles.title}
+              title={t('pages.recipient_detail.metadata')}
+            />
+            <CardContent>
+              <Tree
+                data={{
+                  ...metadata,
+                }}
+                theme={{
+                  arrowSign: () => ({ className: styles.arrow }),
+                  tree: () => ({ className: styles.tree }),
+                  valueText: () => ({ className: styles.value }),
+                }}
+                getItemString={() => null}
+                hideRoot
+              />
+            </CardContent>
+          </CardSection>
         </CardContent>
-      </CardSection>
-    </CardContent>
+      )
+    }
   </Fragment>
 )
 

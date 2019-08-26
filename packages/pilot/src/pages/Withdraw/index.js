@@ -14,8 +14,6 @@ import {
   pathOr,
 } from 'ramda'
 import { translate } from 'react-i18next'
-import { Alert } from 'former-kit'
-import IconError from 'emblematic-icons/svg/ClearClose32.svg'
 import WithdrawContainer from '../../containers/Withdraw'
 import partnersBankCodes from '../../models/partnersBanksCodes'
 
@@ -101,8 +99,6 @@ const getStepsStatus = (nextStep, nextStepStatus) => {
 
   return buildStepsStatus(nextStep)
 }
-
-// const getCurrentCompany = client => client.company.current() // eslint-disable-line
 
 class Withdraw extends Component {
   constructor (props) {
@@ -285,6 +281,14 @@ class Withdraw extends Component {
 
     const transferCost = this.getTransferCost()
 
+    let errorMessage = statusMessage
+
+    if (error) {
+      errorMessage = error.localized
+        ? error.localized.message
+        : error.message
+    }
+
     return (
       <Fragment>
         {!isNil(recipient)
@@ -306,27 +310,11 @@ class Withdraw extends Component {
               onViewStatement={() => history.push(`/balance/${recipient.id}`)}
               recipient={recipient}
               requested={Number(requested)}
-              statusMessage={statusMessage}
+              statusMessage={errorMessage}
               stepsStatus={stepsStatus}
               t={t}
               transferCost={transferCost}
             />
-          )
-        }
-        {error
-          && (
-            <Alert
-              icon={<IconError height={16} width={16} />}
-              type="error"
-            >
-              <span>
-                {
-                  error.localized
-                    ? error.localized.message
-                    : error.message
-                }
-              </span>
-            </Alert>
           )
         }
       </Fragment>

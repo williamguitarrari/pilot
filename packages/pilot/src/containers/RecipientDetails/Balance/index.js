@@ -10,6 +10,7 @@ import {
   pipe,
   propSatisfies,
   take,
+  uncurryN,
 } from 'ramda'
 
 import {
@@ -32,7 +33,7 @@ import BalanceTotalDisplay from '../../../components/BalanceTotalDisplay'
 import bulkAnticipationsLabels from '../../../models/bulkAnticipationTypes'
 import currencyFormatter from '../../../formatters/currency'
 import dateFormatter from '../../../formatters/longDate'
-import dateLimits from '../../../models/dateSelectorLimits'
+import dateLimits, { isValidDay } from '../../../models/dateSelectorLimits'
 import datePresets from '../../../models/dateSelectorPresets'
 import getColumns from '../../../components/Operations/operationsTableColumns'
 import getColumnsTranslator from '../../../formatters/columnTranslator'
@@ -40,6 +41,31 @@ import Operations from '../../../components/Operations'
 import operationsTypesLabels from '../../../models/operationTypes'
 import PendingRequests from '../../../components/PendingRequests'
 import style from './style.css'
+
+const getPendingRequest = t => (
+  {
+    amount,
+    created_at: createdAt,
+    status,
+    type,
+  }
+) => {
+  const {
+    statuses,
+    types,
+  } = bulkAnticipationsLabels
+
+  return {
+    amount: currencyFormatter(amount),
+    created_at: dateFormatter(createdAt),
+    title: `${t(types[type])} ${t(statuses[status])}` || '-',
+  }
+}
+
+const getPendingRequests = uncurryN(2, t => pipe(
+  take(3),
+  map(getPendingRequest(t))
+))
 
 const getDateLabels = t => ({
   anyDate: t('dates.any'),
@@ -84,8 +110,6 @@ class RecipientBalance extends Component {
   constructor (props) {
     super(props)
 
-    this.getPendingRequest = this.getPendingRequest.bind(this)
-    this.getPendingRequests = this.getPendingRequests.bind(this)
     this.getSummaryTotal = this.getSummaryTotal.bind(this)
     this.handleFilterClick = this.handleFilterClick.bind(this)
     this.handleDatesChange = this.handleDatesChange.bind(this)
@@ -100,38 +124,6 @@ class RecipientBalance extends Component {
       dates: props.dates,
       showDateInputCalendar: false,
     }
-  }
-
-  getPendingRequest ({
-    amount,
-    created_at: createdAt,
-    status,
-    type,
-  }) {
-    const { t } = this.props
-    const {
-      statuses,
-      types,
-    } = bulkAnticipationsLabels
-
-    return {
-      amount: currencyFormatter(amount),
-      created_at: dateFormatter(createdAt),
-      title: `${t(types[type])} ${t(statuses[status])}` || '-',
-    }
-  }
-
-  getPendingRequests () {
-    const {
-      requests,
-    } = this.props
-
-    const getRequests = pipe(
-      take(3),
-      map(this.getPendingRequest)
-    )
-
-    return getRequests(requests)
   }
 
   getSummaryTotal () {
@@ -156,7 +148,7 @@ class RecipientBalance extends Component {
           unit: t('currency'),
           value: disabled
             ? 0
-            : -total.outgoing,
+            : total.outgoing,
         },
         net: {
           title: t('pages.balance.total.net'),
@@ -266,11 +258,15 @@ class RecipientBalance extends Component {
 
   render () {
     const {
-      anticipation: {
-        available: availableAnticipation,
-        error: anticipationError,
-        loading: anticipationLoading,
-      },
+      // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+      // It was commented on to remove the anticipation limits call on Balance page
+      // This code will be used again in the future when ATLAS project implements the anticipation flow
+      // More details in issue #1159
+      // anticipation: {
+      //   available: availableAnticipation,
+      //   error: anticipationError,
+      //   loading: anticipationLoading,
+      // },
       balance: {
         amount,
         available: {
@@ -282,6 +278,7 @@ class RecipientBalance extends Component {
       dates,
       disabled,
       exporting,
+      hasNextPage,
       itemsPerPage,
       loading,
       onAnticipationClick,
@@ -290,13 +287,19 @@ class RecipientBalance extends Component {
       onPageCountChange,
       onWithdrawClick,
       pageSizeOptions,
+      requests,
       search: {
         operations,
       },
       t,
+      tableLoading,
+      timeframe,
     } = this.props
 
-    const { showDateInputCalendar } = this.state
+    const {
+      dates: stateDates,
+      showDateInputCalendar,
+    } = this.state
 
     const translateColumns = getColumnsTranslator(t)
     const typesLabels = map(t, operationsTypesLabels)
@@ -313,14 +316,22 @@ class RecipientBalance extends Component {
       title: t('pages.balance.withdraw'),
     }
 
-    const filterDatesEqualCurrent = datesEqual(this.state.dates, dates) // eslint-disable-line
+    const filterDatesEqualCurrent = datesEqual(stateDates, dates)
 
-    const shouldDisableAnticipation = (
-      disabled
-      || anticipationLoading
-      || anticipationError
-      || availableAnticipation === 0
-    )
+    const totalPages = hasNextPage
+      ? currentPage + 1
+      : currentPage
+
+    // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+    // It was commented on to remove the anticipation limits call on Balance page
+    // This code will be used again in the future when ATLAS project implements the anticipation flow
+    // More details in issue #1159
+    // const shouldDisableAnticipation = (
+    //   disabled
+    //   || anticipationLoading
+    //   || anticipationError
+    //   || availableAnticipation === 0
+    // )
 
     return (
       <CardContent>
@@ -344,7 +355,7 @@ class RecipientBalance extends Component {
                       <strong> {formatAmount(withdrawal)} </strong>
                     </span>
                   )}
-                  disabled={disabled}
+                  disabled={disabled || amount === 0}
                   title={t('pages.balance.withdrawal_title')}
                 />
               </CardSection>
@@ -361,9 +372,19 @@ class RecipientBalance extends Component {
                     ? null
                     : anticipationAction}
                   amount={outcoming}
-                  detail={this.renderAnticipation()}
-                  disabled={shouldDisableAnticipation}
-                  title={t('pages.balance.anticipation_title')}
+                  detail={(
+                    <span>
+                      {t('pages.balance.anticipation_call')}
+                    </span>
+                  )}
+                  disabled={disabled || amount === 0}
+                  // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+                  // It was commented on to remove the anticipation limits call on Balance page
+                  // This code will be used again in the future when ATLAS project implements the anticipation flow
+                  // More details in issue #1159
+                  // detail={this.renderAnticipation()}
+                  // disabled={shouldDisableAnticipation}
+                  title={t('pages.balance.waiting_funds')}
                 />
               </CardSection>
             </Col>
@@ -380,7 +401,7 @@ class RecipientBalance extends Component {
                   onCancel={isNil(onCancelRequestClick)
                     ? null
                     : this.handleRequestCancelClick}
-                  requests={this.getPendingRequests()}
+                  requests={getPendingRequests(t, requests)}
                   title={t('pages.balance.pending_requests_title')}
                 />
               </CardSection>
@@ -400,6 +421,7 @@ class RecipientBalance extends Component {
                       active={filterDatesEqualCurrent}
                       disabled={disabled}
                       icon={<IconCalendar width={16} height={16} />}
+                      isValidDay={isValidDay(timeframe)}
                       limits={dateLimits}
                       onChange={this.handleDatesChange}
                       onPresetChange={this.handlePresetChange}
@@ -407,7 +429,7 @@ class RecipientBalance extends Component {
                       selectedPreset="days-7"
                       strings={getDateLabels(t)}
                       showCalendar={showDateInputCalendar}
-                      dates={this.state.dates} // eslint-disable-line
+                      dates={dates} // eslint-disable-line
                     />
                     <Button
                       disabled={filterDatesEqualCurrent}
@@ -437,7 +459,7 @@ class RecipientBalance extends Component {
                     exportLabel={t('models.operations.export')}
                     exporting={exporting}
                     itemsPerPage={itemsPerPage}
-                    loading={disabled || loading}
+                    loading={disabled || loading || tableLoading}
                     labels={{
                       empty: t('models.operations.empty_message'),
                       exportCall: t('export_table'),
@@ -455,7 +477,7 @@ class RecipientBalance extends Component {
                     rows={operations.rows}
                     t={t}
                     title={t('pages.balance.operations_title')}
-                    totalPages={operations.count}
+                    totalPages={totalPages}
                   />
                 </CardContent>
               </CardSection>
@@ -480,8 +502,8 @@ const numberOrStringShape = PropTypes.oneOfType([
 RecipientBalance.propTypes = {
   anticipation: PropTypes.shape({
     available: PropTypes.number,
-    error: PropTypes.bool.isRequired,
-    loading: PropTypes.bool.isRequired,
+    error: PropTypes.bool,
+    loading: PropTypes.bool,
   }).isRequired,
   balance: PropTypes.shape({
     amount: PropTypes.number.isRequired,
@@ -497,6 +519,7 @@ RecipientBalance.propTypes = {
   }).isRequired,
   disabled: PropTypes.bool.isRequired,
   exporting: PropTypes.bool.isRequired,
+  hasNextPage: PropTypes.bool.isRequired,
   itemsPerPage: PropTypes.number.isRequired,
   loading: PropTypes.bool.isRequired,
   onAnticipationClick: PropTypes.func.isRequired,
@@ -506,7 +529,10 @@ RecipientBalance.propTypes = {
   onPageChange: PropTypes.func.isRequired,
   onPageCountChange: PropTypes.func.isRequired,
   onWithdrawClick: PropTypes.func.isRequired,
-  pageSizeOptions: PropTypes.arrayOf(PropTypes.number),
+  pageSizeOptions: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+    value: PropTypes.string,
+  })).isRequired,
   requests: PropTypes.arrayOf(PropTypes.shape({
     amount: PropTypes.number,
     created_at: PropTypes.string,
@@ -534,6 +560,10 @@ RecipientBalance.propTypes = {
     }),
   }).isRequired,
   t: PropTypes.func.isRequired,
+  tableLoading: PropTypes.bool,
+  timeframe: PropTypes.oneOf([
+    'future', 'past',
+  ]),
   total: PropTypes.shape({
     net: PropTypes.number,
     outcoming: PropTypes.number,
@@ -543,7 +573,8 @@ RecipientBalance.propTypes = {
 
 RecipientBalance.defaultProps = {
   onCancelRequestClick: null,
-  pageSizeOptions: [15, 30, 60, 100],
+  tableLoading: false,
+  timeframe: 'past',
   total: {},
 }
 

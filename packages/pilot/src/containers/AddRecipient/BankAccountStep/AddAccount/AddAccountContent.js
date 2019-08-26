@@ -12,7 +12,7 @@ import SearchableDropdown from '../../../../components/SearchableDropdown'
 import accountTypes from '../../../../models/accountTypes'
 import bankCodes from '../../../../models/banks'
 
-import style from './style.css'
+import style from '../style.css'
 
 const AddAccountContent = ({ t }) => {
   const accountTypeOptions = accountTypes.map(accountType => ({

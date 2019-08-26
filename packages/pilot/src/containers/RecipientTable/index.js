@@ -19,13 +19,13 @@ import {
   Input,
   Pagination,
   Row,
-  Table,
 } from 'former-kit'
 
-import Loader from '../../components/Loader'
 import style from './style.css'
 import Filter from '../Filter'
 import tableColumns from './tableColumns'
+
+import TableData from '../../components/Operations/TableData'
 
 const RecipientTable = ({
   clearFilterDisabled,
@@ -38,10 +38,8 @@ const RecipientTable = ({
   onFilterChange,
   onFilterClear,
   onFilterConfirm,
-  onOrderChange,
   onPageChange,
   onRowClick,
-  onSelectRow,
   pagination: {
     offset,
     total,
@@ -56,7 +54,6 @@ const RecipientTable = ({
     onDetailsClick,
     t,
   })
-  const handleOrderChange = columnIndex => onOrderChange(columns[columnIndex].accessor) // eslint-disable-line
 
   return (
     <Grid>
@@ -91,7 +88,6 @@ const RecipientTable = ({
           desk={12}
           tv={12}
         >
-          {loading && <Loader visible />}
           {rows.length <= 0 && !loading
           && (
             <Alert
@@ -131,24 +127,20 @@ const RecipientTable = ({
                       format="single"
                       onPageChange={onPageChange}
                       totalPages={total}
-                      strings={{
-                        of: t('components.pagination.of'),
-                      }}
                     />
                   </div>
                 )}
               />
               <CardContent>
-                <Table
+                <TableData
                   columns={columns}
                   disabled={loading}
                   expandable
                   expandedRows={expandedRows}
+                  loading={loading}
                   maxColumns={6}
                   onExpandRow={onExpandRow}
-                  onOrderChange={handleOrderChange}
                   onRowClick={onRowClick}
-                  onSelectRow={onSelectRow}
                   rows={rows}
                   selectedRows={selectedRows}
                 />
@@ -184,17 +176,15 @@ RecipientTable.propTypes = {
     })),
     key: PropTypes.string,
     name: PropTypes.string,
-  })).isRequired,
+  })),
   loading: PropTypes.bool.isRequired,
   onDetailsClick: PropTypes.func.isRequired,
   onExpandRow: PropTypes.func.isRequired,
   onFilterChange: PropTypes.func.isRequired,
   onFilterClear: PropTypes.func.isRequired,
   onFilterConfirm: PropTypes.func.isRequired,
-  onOrderChange: PropTypes.func.isRequired,
   onPageChange: PropTypes.func.isRequired,
   onRowClick: PropTypes.func.isRequired,
-  onSelectRow: PropTypes.func.isRequired,
   pagination: PropTypes.shape({
     offset: PropTypes.number,
     total: PropTypes.number,
@@ -229,6 +219,7 @@ RecipientTable.propTypes = {
 RecipientTable.defaultProps = {
   clearFilterDisabled: false,
   confirmationDisabled: false,
+  filterOptions: [],
   query: {
     properties: {},
     search: '',

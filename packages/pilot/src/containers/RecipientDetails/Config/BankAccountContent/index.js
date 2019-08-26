@@ -4,6 +4,7 @@ import Form from 'react-vanilla-form'
 
 import {
   Button,
+  CardContent,
   CardActions,
   Col,
   FormInput,
@@ -111,23 +112,9 @@ class BankAccountContent extends Component {
 
   renderDocumentNumber () {
     const { data, t } = this.props
-
-    if (data.documentNumber.length === 11) {
-      return (
-        <Row>
-          <Col tv={2} desk={4} tablet={5} palm={8}>
-            <FormInput
-              disabled
-              className={styles.marginBottom}
-              label={t('pages.add_recipient.document_owner')}
-              type="text"
-              mask={masks.cpf}
-              name="documentNumber"
-            />
-          </Col>
-        </Row>
-      )
-    }
+    const maskDocument = data.documentNumber.length === 11
+      ? masks.cpf
+      : masks.cnpj
 
     return (
       <Row>
@@ -137,7 +124,7 @@ class BankAccountContent extends Component {
             className={styles.marginBottom}
             label={t('pages.add_recipient.document_owner')}
             type="text"
-            mask={masks.cnpj}
+            mask={maskDocument}
             name="documentNumber"
           />
         </Col>
@@ -187,11 +174,9 @@ class BankAccountContent extends Component {
       accounts,
       data,
       onCancel,
-      onChange,
       t,
     } = this.props
     const { selectedForm } = this.state
-
     const displaySelectAccount = hasItems(accounts)
 
     const max30Message = t('pages.add_recipient.field_max', { number: 30 })
@@ -211,6 +196,7 @@ class BankAccountContent extends Component {
     if (displaySelectAccount) {
       return (
         <Fragment>
+          <Spacing size="medium" />
           <SegmentedSwitch
             options={[
               {
@@ -247,9 +233,10 @@ class BankAccountContent extends Component {
               type: [required],
             }}
             onSubmit={this.handleSubmit}
-            onChange={onChange}
           >
-            { this.renderSelectedForm() }
+            <CardContent>
+              { this.renderSelectedForm() }
+            </CardContent>
             <div className={styles.paddingTop}>
               <CardActions>
                 <Button
@@ -281,18 +268,15 @@ BankAccountContent.propTypes = {
     id: PropTypes.string.isRequired,
   })),
   data: PropTypes.shape({
-    [BANK_ACCOUNT]: PropTypes.shape({
-      agency: PropTypes.string,
-      bank: PropTypes.string,
-      documentNumber: PropTypes.string,
-      id: PropTypes.string,
-      name: PropTypes.string,
-      number: PropTypes.string,
-      type: PropTypes.string,
-    }),
+    agency: PropTypes.string,
+    bank: PropTypes.string,
+    documentNumber: PropTypes.string,
+    id: PropTypes.string,
+    name: PropTypes.string,
+    number: PropTypes.string,
+    type: PropTypes.string,
   }),
   onCancel: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
 }

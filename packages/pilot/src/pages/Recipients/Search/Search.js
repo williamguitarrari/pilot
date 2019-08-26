@@ -35,7 +35,6 @@ import {
 
 import { requestLogout } from '../../Account/actions/actions'
 
-import dateSelectorPresets from '../../../models/dateSelectorPresets'
 import RecipientTable from '../../../containers/RecipientTable'
 
 import { initialState } from './reducer'
@@ -125,14 +124,9 @@ class RecipientsSearch extends React.Component {
     this.handleFilterChange = this.handleFilterChange.bind(this)
     this.handleFilterClear = this.handleFilterClear.bind(this)
     this.handleFilterConfirm = this.handleFilterConfirm.bind(this)
-    this.handleOrderChange = this.handleOrderChange.bind(this)
     this.handlePageChange = this.handlePageChange.bind(this)
-    this.handlePageCountChange = this.handlePageCountChange.bind(this)
     this.handleRowClick = this.handleRowClick.bind(this)
     this.handleRowDetailsClick = this.handleRowDetailsClick.bind(this)
-    this.handleSelectRow = this.handleSelectRow.bind(this)
-    this.handleViewModeChange = this.handleViewModeChange.bind(this)
-
     this.requestData = this.requestData.bind(this)
   }
 
@@ -231,8 +225,7 @@ class RecipientsSearch extends React.Component {
       offset,
       search,
     }) => {
-      if (search
-        && !isRecipientId(search)) {
+      if (search && !isRecipientId(search)) {
         return client
           .recipients
           .find({
@@ -276,27 +269,6 @@ class RecipientsSearch extends React.Component {
       .catch((error) => {
         onRequestSearchFail(error)
       })
-  }
-
-  handlePageCountChange (count) {
-    const { query } = this.props
-    const newQuery = {
-      ...query,
-      count,
-      offset: 1,
-    }
-
-    this.updateQuery(newQuery)
-  }
-
-  handleOrderChange () {
-    const { query } = this.props
-    const newQuery = {
-      ...query,
-      offset: 1,
-    }
-
-    this.updateQuery(newQuery)
   }
 
   handleFilterClear () {
@@ -366,29 +338,15 @@ class RecipientsSearch extends React.Component {
     })
   }
 
-  handleViewModeChange (viewMode) {
-    this.setState({
-      viewMode,
-    })
-  }
-
   handleExpandRow (expandedRows) {
     this.setState({
       expandedRows,
     })
   }
 
-  handleSelectRow (selectedRows) {
-    this.setState({
-      selectedRows,
-    })
-  }
-
   render () {
     const {
       clearFilterDisabled,
-      collapsed,
-      columns,
       confirmationDisabled,
       expandedRows,
       query,
@@ -400,7 +358,6 @@ class RecipientsSearch extends React.Component {
         list,
       },
       selectedRows,
-      viewMode,
     } = this.state
 
     const {
@@ -420,15 +377,9 @@ class RecipientsSearch extends React.Component {
 
     return (
       <RecipientTable
-        amount={0}
-        collapsed={collapsed}
-        columns={columns}
-        count={0}
         clearFilterDisabled={clearFilterDisabled}
         confirmationDisabled={confirmationDisabled}
-        dateSelectorPresets={dateSelectorPresets}
         expandedRows={expandedRows}
-        filterOptions={[]}
         loading={loading}
         push={push}
         onChangeViewMode={this.handleViewModeChange}
@@ -437,16 +388,12 @@ class RecipientsSearch extends React.Component {
         onFilterChange={this.handleFilterChange}
         onFilterConfirm={this.handleFilterConfirm}
         onFilterClear={this.handleFilterClear}
-        onOrderChange={this.handleOrderChange}
         onPageChange={this.handlePageChange}
-        onPageCountChange={this.handlePageCountChange}
         onRowClick={this.handleRowClick}
-        onSelectRow={this.handleSelectRow}
         pagination={pagination}
         rows={list.rows}
         selectedRows={selectedRows}
         query={query}
-        viewMode={viewMode}
         t={t}
       />
     )

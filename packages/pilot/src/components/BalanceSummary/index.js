@@ -14,7 +14,7 @@ const colors = {
 }
 
 const BalanceSummary = ({ amount, base, loading }) => (
-  <Summary>
+  <Summary base={base}>
     {
       keys(amount).map(type => (
         <div

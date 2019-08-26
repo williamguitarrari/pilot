@@ -4,6 +4,7 @@ import Form from 'react-vanilla-form'
 import {
   Button,
   CardActions,
+  CardContent,
   Col,
   Grid,
   Row,
@@ -12,6 +13,7 @@ import {
 import Anticipation from '../../../AddRecipient/ConfigurationStep/Anticipation'
 import createNumberValidation from '../../../../validation/number'
 import createRequiredValidation from '../../../../validation/required'
+import greaterThan from '../../../../validation/greaterThan'
 import styles from '../style.css'
 import { ANTICIPATION } from '../contentIds'
 
@@ -24,27 +26,31 @@ const AnticipationContent = ({
 }) => {
   const required = createRequiredValidation(t('pages.recipient_detail.required'))
   const number = createNumberValidation(t('pages.recipient_detail.number'))
+  const greaterThan100 = greaterThan(100, t('pages.recipient_detail.greater_than'))
+
   return (
     <Form
       data={data}
       validation={{
         anticipationDays: [required, number],
         anticipationModel: [required],
-        anticipationVolumePercentage: [required, number],
+        anticipationVolumePercentage: [required, number, greaterThan100],
       }}
       onChange={onChange}
       onSubmit={onSave}
     >
-      <Grid>
-        <Row>
-          <Col>
-            {Anticipation({
-              data,
-              t,
-            })}
-          </Col>
-        </Row>
-      </Grid>
+      <CardContent>
+        <Grid>
+          <Row>
+            <Col>
+              {Anticipation({
+                data,
+                t,
+              })}
+            </Col>
+          </Row>
+        </Grid>
+      </CardContent>
       <div className={styles.paddingTop}>
         <CardActions>
           <Button
@@ -69,11 +75,9 @@ const AnticipationContent = ({
 
 AnticipationContent.propTypes = {
   data: PropTypes.shape({
-    [ANTICIPATION]: PropTypes.shape({
-      anticipationDays: PropTypes.string,
-      anticipationModel: PropTypes.string,
-      anticipationVolumePercentage: PropTypes.string,
-    }),
+    anticipationDays: PropTypes.string,
+    anticipationModel: PropTypes.string,
+    anticipationVolumePercentage: PropTypes.string,
   }),
   onCancel: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,

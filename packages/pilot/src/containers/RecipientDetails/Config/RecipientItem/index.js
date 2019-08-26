@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import {
   CardSection,
@@ -8,9 +8,9 @@ import {
 
 const RecipientItem = ({
   children,
-  collapsed,
   icon,
   id,
+  isOpen,
   onClick,
   subtitle,
   title,
@@ -20,15 +20,15 @@ const RecipientItem = ({
       <CardSectionDoubleLineTitle
         title={title}
         subtitle={subtitle}
-        collapsed={!collapsed}
+        collapsed={!isOpen}
         icon={icon}
         onClick={() => onClick(id)}
       />
-      {collapsed
+      {isOpen
       && (
-        <CardContent>
+        <Fragment>
           {children}
-        </CardContent>
+        </Fragment>
       )
     }
     </CardSection>
@@ -37,17 +37,17 @@ const RecipientItem = ({
 
 RecipientItem.propTypes = {
   children: PropTypes.node.isRequired,
-  collapsed: PropTypes.bool,
   icon: PropTypes.node.isRequired,
   id: PropTypes.string,
+  isOpen: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
   subtitle: PropTypes.node,
   title: PropTypes.string,
 }
 
 RecipientItem.defaultProps = {
-  collapsed: false,
   id: '',
+  isOpen: false,
   subtitle: '',
   title: '',
 }

@@ -45,7 +45,7 @@ const setCurrentStep = currentStep => ifElse(
   identity
 )
 
-const buildEmptyState = (onCancel, t) => (
+const buildEmptyState = (onBack, t) => (
   <Flexbox
     alignItems="center"
     direction="column"
@@ -57,7 +57,7 @@ const buildEmptyState = (onCancel, t) => (
       <MessageActions>
         <Button
           fill="gradient"
-          onClick={onCancel}
+          onClick={onBack}
         >
           {t('pages.withdraw.back_to_balance')}
         </Button>
@@ -147,12 +147,12 @@ class Withdraw extends Component {
   renderDataStep () {
     const {
       maximum,
-      onCancel,
+      onBack,
       t,
     } = this.props
 
     return isNil(maximum) || maximum < 100
-      ? buildEmptyState(onCancel, t)
+      ? buildEmptyState(onBack, t)
       : this.renderWithdrawForm()
   }
 
@@ -163,7 +163,6 @@ class Withdraw extends Component {
       date,
       maximum,
       onBack,
-      onCancel,
       onFormSubmit,
       onRequestedChange,
       requested,
@@ -180,7 +179,6 @@ class Withdraw extends Component {
             date={date}
             maximum={maximum}
             onBack={onBack}
-            onCancel={onCancel}
             onRequestedChange={onRequestedChange}
             onSubmit={onFormSubmit}
             requested={requested}
@@ -199,7 +197,7 @@ class Withdraw extends Component {
       currentStep,
       date,
       disabled,
-      onCancel,
+      onBack,
       onConfirmationConfirm,
       onConfirmationReturn,
       onTryAgain,
@@ -230,7 +228,7 @@ class Withdraw extends Component {
                   bankAccount={recipient.bank_account}
                   date={date}
                   disabledButtons={disabled}
-                  onCancel={onCancel}
+                  onBack={onBack}
                   onConfirm={onConfirmationConfirm}
                   onReturn={onConfirmationReturn}
                   passwordError={confirmationPasswordError}
@@ -302,7 +300,6 @@ Withdraw.propTypes = {
   disabled: PropTypes.bool.isRequired,
   maximum: PropTypes.number,
   onBack: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired,
   onConfirmationConfirm: PropTypes.func.isRequired,
   onConfirmationReturn: PropTypes.func.isRequired,
   onFormSubmit: PropTypes.func.isRequired,

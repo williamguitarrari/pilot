@@ -114,9 +114,11 @@ class RecipientDetails extends Component {
   }
 }
 
-const infoProps = omit(['t'], Information.propTypes) // eslint-disable-line
-const configProps = omit(['t'], Configuration.propTypes) // eslint-disable-line
-const balanceProps = omit(['t'], Balance.propTypes) // eslint-disable-line
+/* eslint-disable react/forbid-foreign-prop-types */
+const infoProps = omit(['t'], Information.propTypes)
+const configProps = omit(['t'], Configuration.propTypes)
+const balanceProps = omit(['t'], Balance.propTypes)
+/* eslint-enable react/forbid-foreign-prop-types */
 
 RecipientDetails.propTypes = {
   balanceProps: PropTypes.shape(balanceProps).isRequired,

@@ -21,24 +21,13 @@ import createMaxLengthValidation from '../../../../validation/maxLength'
 import createAccountDigitValidation from '../../../../validation/accountCheckDigit'
 import createAgencyDigitValidation from '../../../../validation/agencyCheckDigit'
 
-import style from '../style.css'
+import style from '../../style.css'
 
 const renderDocumentNumber = (data, t) => {
-  if (data.identification.documentType === 'cpf') {
-    return (
-      <Row>
-        <Col tv={2} desk={4} tablet={5} palm={8}>
-          <FormInput
-            disabled
-            className={style.marginBottom}
-            label={t('pages.add_recipient.document_owner')}
-            type="text"
-            value={data.identification.cpf}
-          />
-        </Col>
-      </Row>
-    )
-  }
+  const { identification } = data
+  const document = identification.documentType === 'cpf'
+    ? identification.cpf
+    : identification.cnpj
 
   return (
     <Row>
@@ -48,7 +37,8 @@ const renderDocumentNumber = (data, t) => {
           className={style.marginBottom}
           label={t('pages.add_recipient.document_owner')}
           type="text"
-          value={data.identification.cnpj}
+          onChange={value => value}
+          value={document}
         />
       </Col>
     </Row>
@@ -92,9 +82,7 @@ const AddAccount = ({
         number_digit: [required, isAccountDigit],
         type: [required],
       }}
-      onSubmit={(formData, formErrors) => {
-        if (!formErrors) onContinue(formData)
-      }}
+      onSubmit={(formData, formErrors) => !formErrors && onContinue(formData)}
       errors={errors}
     >
       <CardContent>

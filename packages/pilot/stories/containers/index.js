@@ -77,8 +77,6 @@ import Anticipation from './Anticipation'
 import BoletoConfigurationForm from './Settings/Boleto/Form'
 import BankAccount from './Settings/BankAccount'
 import Home from './Home'
-import ConclusionStepSuccess from './AddRecipient/ConclusionStep/Success'
-import ConclusionStepFail from './AddRecipient/ConclusionStep/Fail'
 import ConclusionStep from './AddRecipient/ConclusionStep'
 
 import {

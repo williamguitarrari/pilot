@@ -21,21 +21,10 @@ import style from '../style.css'
 const removeBankCode = replace(/^\d+ - /, '')
 
 const renderDocumentNumber = (data, t) => {
-  if (data.identification.documentType === 'cpf') {
-    return (
-      <Row>
-        <Col tv={2} desk={4} tablet={5} palm={8}>
-          <FormInput
-            disabled
-            className={style.marginBottom}
-            label={t('pages.add_recipient.document_owner')}
-            type="text"
-            value={data.identification.cpf}
-          />
-        </Col>
-      </Row>
-    )
-  }
+  const { identification } = data
+  const document = identification.documentType === 'cpf'
+    ? identification.cpf
+    : identification.cnpj
 
   return (
     <Row>
@@ -45,7 +34,8 @@ const renderDocumentNumber = (data, t) => {
           className={style.marginBottom}
           label={t('pages.add_recipient.document_owner')}
           type="text"
-          value={data.identification.cnpj}
+          onChange={val => val}
+          value={document}
         />
       </Col>
     </Row>

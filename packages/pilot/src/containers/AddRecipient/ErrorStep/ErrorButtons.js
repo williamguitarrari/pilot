@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button, Spacing } from 'former-kit'
+import LoginAgainButton from './LoginAgainButton'
+import ExitButton from './ExitButton'
+import TryAgainAndExitButtons from './TryAgainAndExitButtons'
 
 import {
   possibleErrors,
@@ -17,43 +19,31 @@ const ErrorButtons = ({
   onTryAgain,
   t,
 }) => {
-  const LoginAgainButton = () => (
-    <div>
-      <Button fill="gradient" onClick={onLoginAgain}>
-        {t('pages.add_recipient.login_again')}
-      </Button>
-    </div>
-  )
-
-  const ExitButton = () => (
-    <div>
-      <Button fill="gradient" onClick={onExit}>
-        {t('pages.add_recipient.exit')}
-      </Button>
-    </div>
-  )
-
-  const TryAgainAndExitButtons = () => (
-    <div>
-      <Button fill="outline" onClick={onExit}>
-        {t('pages.add_recipient.exit')}
-      </Button>
-      <Spacing size="large" />
-      <Button fill="gradient" onClick={onTryAgain}>
-        {t('pages.add_recipient.try_again')}
-      </Button>
-    </div>
-  )
-
   if (error === AUTHENTICATION_ERROR) {
-    return <LoginAgainButton />
+    return (
+      <LoginAgainButton
+        onLoginAgain={onLoginAgain}
+        t={t}
+      />
+    )
   }
 
   if (error === PERMISSION_ERROR || error === SERVER_ERROR) {
-    return <ExitButton />
+    return (
+      <ExitButton
+        onExit={onExit}
+        t={t}
+      />
+    )
   }
 
-  return <TryAgainAndExitButtons />
+  return (
+    <TryAgainAndExitButtons
+      onExit={onExit}
+      onTryAgain={onTryAgain}
+      t={t}
+    />
+  )
 }
 
 ErrorButtons.propTypes = {

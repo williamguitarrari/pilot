@@ -62,35 +62,28 @@ const renderAnticipationInput = (data, t) => {
     equals('manual')
   )
 
+  let inputProps = {
+    label: t('pages.add_recipient.anticipation_days'),
+    name: 'anticipationDays',
+  }
+
   if (volumePercentage(anticipationModel)) {
-    return (
-      <Col tv={3} desk={3} tablet={5} palm={5}>
-        <FormInput
-          className={style.marginBottom}
-          label={t('pages.add_recipient.anticipation_volume_percentage')}
-          name="anticipationVolumePercentage"
-          type="number"
-        />
-        <div className={style.heightMedium} />
-      </Col>
-    )
+    inputProps = {
+      label: t('pages.add_recipient.anticipation_volume_percentage'),
+      name: 'anticipationVolumePercentage',
+    }
   }
 
-  if (anticipationModel === 'automatic_dx') {
-    return (
-      <Col tv={3} desk={3} tablet={5} palm={5}>
-        <FormInput
-          className={style.marginBottom}
-          label={t('pages.add_recipient.anticipation_days')}
-          name="anticipationDays"
-          type="number"
-        />
-        <div className={style.heightMedium} />
-      </Col>
-    )
-  }
-
-  return null
+  return (
+    <Col tv={3} desk={3} tablet={5} palm={5}>
+      <FormInput
+        {...inputProps}
+        className={style.marginBottom}
+        type="number"
+      />
+      <div className={style.heightMedium} />
+    </Col>
+  )
 }
 
 const Anticipation = ({

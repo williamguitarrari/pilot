@@ -135,6 +135,24 @@ const mockBalance = {
   onPageChange: action('page click'),
   onSave: action('Saved'),
   onWithdrawClick: action('withdraw'),
+  pageSizeOptions: [
+    {
+      name: '15 itens por página',
+      value: 15,
+    },
+    {
+      name: '30 itens por página',
+      value: 30,
+    },
+    {
+      name: '60 itens por página',
+      value: 60,
+    },
+    {
+      name: '100 itens por página',
+      value: 100,
+    },
+  ],
   query: {
     dates: {
       end: moment().add(1, 'month'),
@@ -142,6 +160,7 @@ const mockBalance = {
     },
     page: 1,
   },
+  requests: [],
   total: {
     net: 1000000,
     outcoming: 1000000,

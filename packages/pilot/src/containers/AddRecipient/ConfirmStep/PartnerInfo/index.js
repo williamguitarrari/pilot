@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Col, Row } from 'former-kit'
@@ -84,7 +83,7 @@ PartnerInfo.propTypes = {
     partner3: partnerPropTypes,
     partner4: partnerPropTypes,
     partnerNumber: PropTypes.string,
-  }).isRequired,
+  }),
   t: PropTypes.func.isRequired,
 
 }

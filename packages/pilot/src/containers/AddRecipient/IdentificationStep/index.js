@@ -146,7 +146,8 @@ class IdentificationStep extends Component {
     this.onFormChange = this.onFormChange.bind(this)
     this.onFormSubmit = this.onFormSubmit.bind(this)
     this.renderDocumentInput = this.renderDocumentInput.bind(this)
-    this.toggleAdditionalInformation = this.toggleAdditionalInformation.bind(this) // eslint-disable-line
+    this.toggleAdditionalInformation = this.toggleAdditionalInformation
+      .bind(this)
     this.validateRepeatedDocuments = this.validateRepeatedDocuments.bind(this)
   }
 
@@ -170,11 +171,9 @@ class IdentificationStep extends Component {
   }
 
   onFormChange (formData) {
-    // const { formErrors } = this.state
     this.setState({
       formData,
     })
-    // this.state.formErrors = []
   }
 
   onChangeWithMask (event, partner) {
@@ -263,26 +262,24 @@ class IdentificationStep extends Component {
     const { documentType } = formData
     const { t } = this.props
 
-    if (documentType === 'cpf') {
-      return (
-        <FormInput
-          className={style.inputMarginBottom}
-          key="cpf"
-          label={t('pages.add_recipient.cpf')}
-          mask={masks.cpf}
-          name="cpf"
-          onChange={this.onChangeWithMask}
-        />
-      )
-    }
+    const keyProps = documentType === 'cpf'
+      ? {
+        key: 'cpf',
+        label: t('pages.add_recipient.cpf'),
+        mask: masks.cpf,
+        name: 'cpf',
+      }
+      : {
+        key: 'cnpj',
+        label: t('pages.add_recipient.cnpj'),
+        mask: masks.cnpj,
+        name: 'cnpj',
+      }
 
     return (
       <FormInput
+        {...keyProps}
         className={style.inputMarginBottom}
-        key="cnpj"
-        label={t('pages.add_recipient.cnpj')}
-        mask={masks.cnpj}
-        name="cnpj"
         onChange={this.onChangeWithMask}
       />
     )
@@ -491,28 +488,28 @@ class IdentificationStep extends Component {
             <Fragment>
               { this.renderDocumentInformationInput()}
               { documentType === 'cnpj' && (
-                <Fragment>
-                  <Row>
-                    <h2 className={style.partnerTitle}>
-                      {t('pages.add_recipient.partners')}
-                    </h2>
-                  </Row>
-                  <Row>
-                    <h3 className={style.subtitle}>
-                      {t('pages.add_recipient.fill_partner_info')}
-                    </h3>
-                  </Row>
-                  <Row>
-                    <Col>
-                      <FormDropdown
-                        label={t('pages.add_recipient.choose_partner_amount')}
-                        name="partnerNumber"
-                        options={partnerOptions}
-                      />
-                    </Col>
-                  </Row>
-                  { this.renderPartnerInput() }
-                </Fragment>
+              <Fragment>
+                <Row>
+                  <h2 className={style.partnerTitle}>
+                    {t('pages.add_recipient.partners')}
+                  </h2>
+                </Row>
+                <Row>
+                  <h3 className={style.subtitle}>
+                    {t('pages.add_recipient.fill_partner_info')}
+                  </h3>
+                </Row>
+                <Row>
+                  <Col>
+                    <FormDropdown
+                      label={t('pages.add_recipient.choose_partner_amount')}
+                      name="partnerNumber"
+                      options={partnerOptions}
+                    />
+                  </Col>
+                </Row>
+                { this.renderPartnerInput() }
+              </Fragment>
               )}
             </Fragment>
             )}

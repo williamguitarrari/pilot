@@ -54,8 +54,12 @@ ConfirmModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onCancel: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
-  size: PropTypes.string.isRequired,
+  size: PropTypes.string,
   title: PropTypes.string.isRequired,
+}
+
+ConfirmModal.defaultProps = {
+  size: 'default',
 }
 
 export default ConfirmModal

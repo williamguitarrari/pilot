@@ -11,46 +11,45 @@ const TableData = ({
   columns,
   disabled,
   emptyMessage,
+  expandable,
+  expandedRows,
+  maxColumns,
+  onExpandRow,
+  onRowClick,
   rows,
 }) => (
   <Table
     columns={columns}
     disabled={disabled}
     emptyMessage={emptyMessage}
-    maxColumns={7}
+    expandable={expandable}
+    expandedRows={expandedRows}
+    maxColumns={maxColumns}
+    onExpandRow={onExpandRow}
+    onRowClick={onRowClick}
     rows={rows}
   />
 )
 
-const outShape = PropTypes.shape({
-  amount: PropTypes.number.isRequired,
-  type: PropTypes.string.isRequired,
-})
-
 TableData.propTypes = {
-  columns: PropTypes.arrayOf(PropTypes.shape({
-    accessor: PropTypes.arrayOf(PropTypes.string).isRequired,
-    orderable: PropTypes.bool.isRequired,
-    renderer: PropTypes.func,
-    title: PropTypes.string.isRequired,
-  })).isRequired,
+  columns: PropTypes.arrayOf(PropTypes.object).isRequired,
   disabled: PropTypes.bool.isRequired,
-  emptyMessage: PropTypes.string.isRequired,
-  rows: PropTypes.arrayOf(PropTypes.shape({
-    description: PropTypes.string,
-    id: PropTypes.oneOfType([
-      PropTypes.string.isRequired,
-      PropTypes.number.isRequired,
-    ]),
-    net: PropTypes.number.isRequired,
-    outcoming: PropTypes.arrayOf(outShape).isRequired,
-    outgoing: PropTypes.arrayOf(outShape).isRequired,
-    paymentDate: PropTypes.shape({
-      actual: PropTypes.string,
-      original: PropTypes.string,
-    }).isRequired,
-    type: PropTypes.string.isRequired,
-  })).isRequired,
+  emptyMessage: PropTypes.string,
+  expandable: PropTypes.bool,
+  expandedRows: PropTypes.arrayOf(PropTypes.number),
+  maxColumns: PropTypes.number,
+  onExpandRow: PropTypes.func,
+  onRowClick: PropTypes.func,
+  rows: PropTypes.arrayOf(PropTypes.object).isRequired,
+}
+
+TableData.defaultProps = {
+  emptyMessage: null,
+  expandable: false,
+  expandedRows: [],
+  maxColumns: 7,
+  onExpandRow: null,
+  onRowClick: null,
 }
 
 export default enhance(TableData)

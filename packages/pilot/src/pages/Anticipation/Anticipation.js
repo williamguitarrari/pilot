@@ -123,10 +123,13 @@ const getBuildingBulkAnticipations = (client, recipientId) => client
     status: 'building',
   })
 
-const buildDeleteOptions = applySpec({ anticipationId: prop('id') })
+const buildDeleteOptions = recipientId => applySpec({
+  anticipationId: prop('id'),
+  recipientId: always(recipientId),
+})
 
-const buildDeleteBuildingBulkAnticipation = destroyFn => pipe(
-  map(buildDeleteOptions),
+const buildDeleteBuildingBulkAnticipation = (recipientId, destroyFn) => pipe(
+  map(buildDeleteOptions(recipientId)),
   map(destroyFn)
 )
 
@@ -493,10 +496,20 @@ class Anticipation extends Component {
   }
 
   destroyBuildingAnticipations (anticipations) {
-    const { destroyAnticipation } = this.props
+    const {
+      destroyAnticipation,
+    } = this.props
+
+    const {
+      recipient: {
+        id: recipientId,
+      },
+    } = this.state
 
     return Promise.resolve(anticipations)
-      .then(buildDeleteBuildingBulkAnticipation(destroyAnticipation))
+      .then(
+        buildDeleteBuildingBulkAnticipation(recipientId, destroyAnticipation)
+      )
       .then(deletePromises => Promise.all(deletePromises))
   }
 
@@ -523,7 +536,9 @@ class Anticipation extends Component {
     const { requestAnticipationLimits } = this.props
     const {
       paymentDate,
-      recipientId,
+      recipient: {
+        id: recipientId,
+      },
       timeframe,
     } = this.state
 

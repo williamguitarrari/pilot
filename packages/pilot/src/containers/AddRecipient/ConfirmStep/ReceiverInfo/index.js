@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import {
@@ -97,7 +96,7 @@ ReceiverInfo.propTypes = {
     cpfPhone: PropTypes.string,
     cpfUrl: PropTypes.string,
     documentType: PropTypes.string,
-  }).isRequired,
+  }),
   t: PropTypes.func.isRequired,
 
 }

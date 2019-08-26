@@ -29,9 +29,9 @@ const renderManualByVolume = t => (
 const renderAutomaticByVolume = t => (
   <Fragment>
     <h5 className={style.modalSubtitles}>{t('pages.recipient_detail.automatic_by_volume')}</h5>
-    <p>{t('pages.recipient_detail.automatic_by_volume_explanation_1')}
+    <p>{t('pages.recipient_detail.automatic_by_volume_explanation')}
       <a
-        href="https://pagarme.zendesk.com/hc/pt-br/articles/217944383-Qual-percentual-das-vendas-pode-ser-recebido-antecipadamente"
+        href={t('pages.recipient_detail.help_link')}
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -44,7 +44,7 @@ const renderAutomaticByVolume = t => (
 const render1025 = t => (
   <Fragment>
     <h5 className={style.modalSubtitles}>{t('pages.recipient_detail.anticipation_1025')}</h5>
-    <p>{t('pages.recipient_detail.anticipation_1025_explanation_1')}</p>
+    <p>{t('pages.recipient_detail.anticipation_1025_explanation')}</p>
     <div className={style.imgSize}>
       <ImageAutomaticOne />
     </div>
@@ -56,7 +56,7 @@ const render1025 = t => (
 const renderDX = t => (
   <Fragment>
     <h5 className={style.modalSubtitles}>{t('pages.recipient_detail.anticipation_dx')}</h5>
-    <p>{t('pages.recipient_detail.anticipation_dx_explanation_1')}</p>
+    <p>{t('pages.recipient_detail.anticipation_dx_explanation')}</p>
     <ImageAutomaticDx />
   </Fragment>
 )
@@ -114,24 +114,22 @@ const HelpModal = ({
       closeIcon={<IconClose width={16} height={16} />}
       onClose={onExit}
     />
-    <div className={style.modalHeight}>
-      <ModalContent>
-        <hr />
-        <small className={style.marginBottomforModal}>
-          {t('pages.recipient_detail.subtitle_modal')}
-        </small>
-        {renderIfManualOrAutomaticModel(anticipationModel, t)}
-        {renderIfDxOr1025(anticipationModel, t)}
-      </ModalContent>
-      <ModalActions>
-        <div className={style.justifyContent}>
-          <Button fill="gradient" onClick={onExit}>
-            {t('pages.recipient_detail.exit_modal')}
-          </Button>
-          <Spacing />
-        </div>
-      </ModalActions>
-    </div>
+    <ModalContent>
+      <hr />
+      <small className={style.marginBottomforModal}>
+        {t('pages.recipient_detail.subtitle_modal')}
+      </small>
+      {renderIfManualOrAutomaticModel(anticipationModel, t)}
+      {renderIfDxOr1025(anticipationModel, t)}
+    </ModalContent>
+    <ModalActions>
+      <div className={style.justifyContent}>
+        <Button fill="gradient" onClick={onExit}>
+          {t('pages.recipient_detail.exit_modal')}
+        </Button>
+        <Spacing />
+      </div>
+    </ModalActions>
   </Modal>
 )
 

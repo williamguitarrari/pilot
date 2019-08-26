@@ -39,7 +39,6 @@ const enhanced = compose(
 )
 
 const handleExportDataSuccess = (res, format) => {
-  /* eslint-disable no-undef */
   let contentType
   if (format === 'xlsx') {
     contentType = 'application/ms-excel'
@@ -48,7 +47,7 @@ const handleExportDataSuccess = (res, format) => {
   }
 
   const blob = new Blob([res], { type: contentType })
-  const filename = `PagarMe_Extrato_${moment().format('DD/MM/YYYY')}.${format}`
+  const filename = `PagarMe_Extrato_${moment().format('L')}.${format}`
 
   const downloadLink = document.createElement('a')
   downloadLink.target = '_blank'
@@ -60,29 +59,35 @@ const handleExportDataSuccess = (res, format) => {
   downloadLink.click()
   document.body.removeChild(downloadLink)
   URL.revokeObjectURL(downloadUrl)
-  /* eslint-enable no-undef */
 }
 
 class DetailRecipientPage extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      anticipationError: false,
-      anticipationLimitAmount: 0,
+      // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+      // It was commented on to remove the anticipation limits call on Balance page
+      // This code will be used again in the future when ATLAS project implements the anticipation flow
+      // More details in issue #1159
+      // anticipationError: false,
+      // anticipationLimitAmount: 0,
       anticipationToCancel: null,
       balance: {},
+      balanceLoading: false,
       currentPage: 1,
       dates: {
         end: moment(),
         start: moment().subtract(7, 'day'),
       },
       exporting: false,
+      hasNextPage: null,
       loading: true,
       pageError: false,
       recipientData: {},
       selectedItemsPerPage: 15,
       showModal: false,
       showSnackbar: false,
+      timeframe: 'past',
       total: {},
     }
 
@@ -96,16 +101,15 @@ class DetailRecipientPage extends Component {
     this.handleExportData = this.handleExportData.bind(this)
     this.handlePageChange = this.handlePageChange.bind(this)
     this.handlePageCountChange = this.handlePageCountChange.bind(this)
-    this.handleSaveAnticipation = this.handleSaveAnticipation.bind(this)
-    this.handleSaveBankAccount = this.handleSaveBankAccount.bind(this)
-    this.handleSaveBankAccountWithBank = this.handleSaveBankAccountWithBank
+    this.onSaveAnticipation = this.onSaveAnticipation.bind(this)
+    this.onSaveBankAccount = this.onSaveBankAccount.bind(this)
+    this.onSaveBankAccountWithBank = this.onSaveBankAccountWithBank
       .bind(this)
-    this.handleSaveBankAccountWithId = this.handleSaveBankAccountWithId
+    this.onSaveBankAccountWithId = this.onSaveBankAccountWithId
       .bind(this)
-    this.handleSaveTransfer = this.handleSaveTransfer.bind(this)
+    this.onSaveTransfer = this.onSaveTransfer.bind(this)
     this.hideCancelAnticipationModal = this.hideCancelAnticipationModal
       .bind(this)
-    this.handleOpenSnackbar = this.handleOpenSnackbar.bind(this)
     this.handleCloseSnackbar = this.handleCloseSnackbar.bind(this)
     this.sendToAnticipationPage = this.sendToAnticipationPage.bind(this)
     this.sendToWithdrawPage = this.sendToWithdrawPage.bind(this)
@@ -117,15 +121,7 @@ class DetailRecipientPage extends Component {
     this.fetchData()
   }
 
-  handleOpenSnackbar () {
-    this.setState({ showSnackbar: true })
-  }
-
-  handleCloseSnackbar () {
-    this.setState({ showSnackbar: false })
-  }
-
-  handleSaveAnticipation (anticipationData) {
+  onSaveAnticipation (anticipationData) {
     const { client, match } = this.props
     const { id } = match.params
     return client.recipient.update(id, { configuration: anticipationData })
@@ -144,7 +140,7 @@ class DetailRecipientPage extends Component {
       })
   }
 
-  handleSaveTransfer (transferData) {
+  onSaveTransfer (transferData) {
     const { client, match } = this.props
     const { id } = match.params
     const updatedData = {
@@ -166,14 +162,14 @@ class DetailRecipientPage extends Component {
       })
   }
 
-  handleSaveBankAccountWithId (data) {
+  onSaveBankAccountWithId (data) {
     const { client, match } = this.props
     const { id } = match.params
 
     return client.recipient.update(id, { configuration: data })
   }
 
-  handleSaveBankAccountWithBank (data) {
+  onSaveBankAccountWithBank (data) {
     const { client, match } = this.props
     const { recipientData } = this.state
     const { id } = match.params
@@ -191,14 +187,12 @@ class DetailRecipientPage extends Component {
     })
       .then((bankAccountCreated) => {
         const { accounts } = recipientData.configurationData
+        const accountsPath = ['configurationData', 'accounts']
+        const newAccounts = [...accounts, bankAccountCreated]
+        const newState = assocPath(accountsPath, newAccounts, recipientData)
+
         this.setState({
-          recipientData: {
-            ...recipientData,
-            configurationData: {
-              ...recipientData.configurationData,
-              accounts: [...accounts, bankAccountCreated],
-            },
-          },
+          recipientData: newState,
         })
 
         return client.recipient.update(id, {
@@ -209,17 +203,18 @@ class DetailRecipientPage extends Component {
       })
   }
 
-  handleSaveBankAccount (data) {
+  onSaveBankAccount (data) {
     let operation = Promise.resolve()
 
     if (data.id) {
-      operation = this.handleSaveBankAccountWithId(data)
+      operation = this.onSaveBankAccountWithId(data)
     } else if (data.bank) {
-      operation = this.handleSaveBankAccountWithBank(data)
+      operation = this.onSaveBankAccountWithBank(data)
     }
+
     return operation
       .then((dataUpdated) => {
-        const newState = pipe(
+        const buildNewState = pipe(
           assocPath(
             ['recipientData', 'configurationData', 'bankAccount'],
             dataUpdated.bank_account
@@ -228,13 +223,19 @@ class DetailRecipientPage extends Component {
             ['recipientData', 'companyData', 'name'],
             dataUpdated.bank_account.name
           )
-        )(this.state)
+        )
+
+        const newState = buildNewState(this.state)
 
         this.setState({
           ...newState,
           showSnackbar: true,
         })
       })
+  }
+
+  handleCloseSnackbar () {
+    this.setState({ showSnackbar: false })
   }
 
   handleDateFilter (dates) {
@@ -244,10 +245,20 @@ class DetailRecipientPage extends Component {
 
     return Promise.all([balancePromise, balanceTotalPromise])
       .then(([balance, total]) => {
+        const {
+          search: {
+            operations,
+            query,
+          },
+        } = balance
+
+        const hasNextPage = operations.rows.length >= query.count
+
         this.setState({
           balance,
           currentPage: firstPage,
           dates,
+          hasNextPage,
           total,
         })
       })
@@ -267,7 +278,7 @@ class DetailRecipientPage extends Component {
 
     const { id: recipientId } = match.params
     return client
-      .withVersion('2018-09-10')
+      .withVersion('2019-09-01')
       .balanceOperations
       .find({
         endDate,
@@ -279,17 +290,37 @@ class DetailRecipientPage extends Component {
         this.setState({ exporting: false })
         handleExportDataSuccess(res, format)
       })
+      .catch((pageError) => {
+        this.setState({
+          pageError,
+        })
+      })
   }
 
   handlePageChange (page) {
     const { dates } = this.state
 
+    this.setState({
+      balanceLoading: true,
+    })
+
     return this.fetchBalance(dates, page)
       .then((balance) => {
+        const {
+          search: {
+            operations,
+            query,
+          },
+        } = balance
+
+        const hasNextPage = operations.rows.length >= query.count
+
         this.setState({
           balance,
+          balanceLoading: false,
           currentPage: page,
           dates,
+          hasNextPage,
         })
       })
   }
@@ -301,12 +332,24 @@ class DetailRecipientPage extends Component {
     } = this.state
 
     this.setState({
+      balanceLoading: true,
       selectedItemsPerPage: pageCount,
     }, () => {
       this.fetchBalance(dates, currentPage)
         .then((balance) => {
+          const {
+            search: {
+              operations,
+              query,
+            },
+          } = balance
+
+          const hasNextPage = operations.rows.length >= query.count
+
           this.setState({
             balance,
+            balanceLoading: false,
+            hasNextPage,
           })
         })
     })
@@ -369,27 +412,57 @@ class DetailRecipientPage extends Component {
     } = this.state
 
     const recipientDataPromise = this.fetchRecipientData()
-    const anticipationLimitPromise = this.fetchAnticipationLimit()
+    // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+    // It was commented on to remove the anticipation limits call on Balance page
+    // This code will be used again in the future when ATLAS project implements the anticipation flow
+    // More details in issue #1159
+    // const anticipationLimitPromise = this.fetchAnticipationLimit()
     const balancePromise = this.fetchBalance(dates, currentPage)
     const balanceTotalPromise = this.fetchBalanceTotal(dates)
 
     return Promise.all([
       recipientDataPromise,
-      anticipationLimitPromise,
+      // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+      // It was commented on to remove the anticipation limits call on Balance page
+      // This code will be used again in the future when ATLAS project implements the anticipation flow
+      // More details in issue #1159
+      // anticipationLimitPromise,
       balancePromise,
       balanceTotalPromise,
     ])
       .then(([
         recipientData,
-        anticipationLimit,
+        // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+        // It was commented on to remove the anticipation limits call on Balance page
+        // This code will be used again in the future when ATLAS project implements the anticipation flow
+        // More details in issue #1159
+        // anticipationLimit,
         balance,
         total,
       ]) => {
-        const { amount, error } = anticipationLimit
+        // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+        // It was commented on to remove the anticipation limits call on Balance page
+        // This code will be used again in the future when ATLAS project implements the anticipation flow
+        // More details in issue #1159
+        // const { amount, error } = anticipationLimit
+        const {
+          search: {
+            operations,
+            query,
+          },
+        } = balance
+
+        const hasNextPage = operations.rows.length >= query.count
+
         this.setState({
-          anticipationError: error,
-          anticipationLimitAmount: amount,
+          // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+          // It was commented on to remove the anticipation limits call on Balance page
+          // This code will be used again in the future when ATLAS project implements the anticipation flow
+          // More details in issue #1159
+          // anticipationError: error,
+          // anticipationLimitAmount: amount,
           balance,
+          hasNextPage,
           loading: false,
           recipientData,
           total,
@@ -431,14 +504,17 @@ class DetailRecipientPage extends Component {
   }
 
   fetchBalance (dates, page) {
-    const { selectedItemsPerPage } = this.state
+    const {
+      selectedItemsPerPage,
+      timeframe,
+    } = this.state
     const { client, match } = this.props
     const { id } = match.params
     const query = {
       count: selectedItemsPerPage,
       dates,
       page,
-      timeframe: 'future',
+      timeframe,
     }
 
     const getOperations = client.balance.operations({
@@ -479,26 +555,33 @@ class DetailRecipientPage extends Component {
 
   render () {
     const {
-      anticipationError,
-      anticipationLimitAmount,
+      // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+      // It was commented on to remove the anticipation limits call on Balance page
+      // This code will be used again in the future when ATLAS project implements the anticipation flow
+      // More details in issue #1159
+      // anticipationError,
+      // anticipationLimitAmount,
       balance,
+      balanceLoading,
       currentPage,
       dates,
       exporting,
+      hasNextPage,
       loading,
       pageError,
       recipientData,
       selectedItemsPerPage,
       showModal,
+      showSnackbar,
+      timeframe,
       total,
     } = this.state
 
     const { t } = this.props
-    const { showSnackbar } = this.state
 
-    const itemsPerPageOptions = itemsPerPage.map(i => ({
-      name: t('items_per_page', { count: i }),
-      value: `${i}`,
+    const itemsPerPageOptions = itemsPerPage.map(count => ({
+      name: t('items_per_page', { count }),
+      value: `${count}`,
     }))
 
     if (loading) {
@@ -528,24 +611,28 @@ class DetailRecipientPage extends Component {
 
     const anticipation = {
       automaticTransfer: transferEnabled,
-      available: anticipationLimitAmount,
-      error: anticipationError,
+      // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+      // It was commented on to remove the anticipation limits call on Balance page
+      // This code will be used again in the future when ATLAS project implements the anticipation flow
+      // More details in issue #1159
+      // available: anticipationLimitAmount,
+      // error: anticipationError,
       loading,
     }
 
     return (
       <div className={style.relative}>
         {showSnackbar
-        && (
-        <Snackbar
-          icon={<IconClose height={12} width={12} />}
-          dismissTimeout={2500}
-          onDismiss={this.handleCloseSnackbar}
-          type="info"
-        >
-          <p>{t('pages.recipient_detail.configuration_changed')}</p>
-        </Snackbar>
-        )
+          && (
+          <Snackbar
+            icon={<IconClose height={12} width={12} />}
+            dismissTimeout={2500}
+            onDismiss={this.handleCloseSnackbar}
+            type="info"
+          >
+            <p>{t('pages.recipient_detail.configuration_changed')}</p>
+          </Snackbar>
+          )
         }
         <DetailRecipient
           informationProps={informationData}
@@ -556,6 +643,7 @@ class DetailRecipientPage extends Component {
             dates,
             disabled: loading,
             exporting,
+            hasNextPage,
             itemsPerPage: selectedItemsPerPage,
             loading,
             onAnticipationClick: this.sendToAnticipationPage,
@@ -566,13 +654,15 @@ class DetailRecipientPage extends Component {
             onPageCountChange: this.handlePageCountChange,
             onWithdrawClick: this.sendToWithdrawPage,
             pageSizeOptions: itemsPerPageOptions,
+            tableLoading: balanceLoading,
+            timeframe,
             total,
           }}
           configurationProps={{
             ...configurationData,
-            handleSaveAnticipation: this.handleSaveAnticipation,
-            handleSaveBankAccount: this.handleSaveBankAccount,
-            handleSaveTransfer: this.handleSaveTransfer,
+            onSaveAnticipation: this.onSaveAnticipation,
+            onSaveBankAccount: this.onSaveBankAccount,
+            onSaveTransfer: this.onSaveTransfer,
           }}
           exporting={exporting}
           recipient={companyData}
@@ -587,7 +677,7 @@ class DetailRecipientPage extends Component {
           size="default"
           title={t('cancel_pending_request_title')}
         >
-          <div style={style}>
+          <div>
             {t('cancel_pending_request_text')}
           </div>
         </ConfirmModal>

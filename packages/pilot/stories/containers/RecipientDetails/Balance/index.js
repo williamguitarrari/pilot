@@ -76,6 +76,24 @@ class RecipientBalanceState extends Component {
             onFilterClick={action('filter click')}
             onPageChange={action('page click')}
             onWithdrawClick={action('withdraw')}
+            pageSizeOptions={[
+              {
+                name: '15 itens por página',
+                value: 15,
+              },
+              {
+                name: '30 itens por página',
+                value: 30,
+              },
+              {
+                name: '60 itens por página',
+                value: 60,
+              },
+              {
+                name: '100 itens por página',
+                value: 100,
+              },
+            ]}
             requests={requests}
             search={search}
             t={t => t}

@@ -49,7 +49,7 @@ class AddRecipients extends Component {
       fetchData: {},
       isLoading: false,
       openModal: false,
-      stepsStatus: [...initialStepStatus],
+      stepsStatus: initialStepStatus,
     }
 
     this.closeExitModal = this.closeExitModal.bind(this)

@@ -35,11 +35,44 @@ class RecipientDetailConfig extends Component {
     this.toggleChangeTransfer = this.toggleChangeTransfer.bind(this)
     this.renderAnticipationSub = this.renderAnticipationSub.bind(this)
     this.handleCancel = this.handleCancel.bind(this)
-    this.handleSaveAnticipation = this.handleSaveAnticipation.bind(this)
-    this.handleSaveTransfer = this.handleSaveTransfer.bind(this)
-    this.handleSaveBankAccount = this.handleSaveBankAccount.bind(this)
+    this.onSaveAnticipation = this.onSaveAnticipation.bind(this)
+    this.onSaveTransfer = this.onSaveTransfer.bind(this)
+    this.onSaveBankAccount = this.onSaveBankAccount.bind(this)
     this.handleOpenHelpModal = this.handleOpenHelpModal.bind(this)
     this.handleCloseHelpModal = this.handleCloseHelpModal.bind(this)
+  }
+
+  onSaveAnticipation (data, errors) {
+    const { onSaveAnticipation } = this.props
+
+    if (!errors) {
+      onSaveAnticipation(
+        data,
+        this.setState({
+          expanded: {},
+        })
+      )
+    }
+  }
+
+  onSaveTransfer (data) {
+    const { onSaveTransfer } = this.props
+    onSaveTransfer(
+      data,
+      this.setState({
+        expanded: {},
+      })
+    )
+  }
+
+  onSaveBankAccount (data) {
+    const { onSaveBankAccount } = this.props
+    onSaveBankAccount(
+      data,
+      this.setState({
+        expanded: {},
+      })
+    )
   }
 
   handleChangeAnticipation (anticipation) {
@@ -54,16 +87,6 @@ class RecipientDetailConfig extends Component {
     })
   }
 
-  toggleChangeTransfer () {
-    const { transfer } = this.state
-    this.setState({
-      transfer: {
-        ...transfer,
-        transferEnabled: !transfer.transferEnabled,
-      },
-    })
-  }
-
   handleCancel () {
     const { anticipation, transfer } = this.props
     this.setState({
@@ -73,34 +96,14 @@ class RecipientDetailConfig extends Component {
     })
   }
 
-  handleSaveAnticipation (data) {
-    const { handleSaveAnticipation } = this.props
-    handleSaveAnticipation(
-      data,
-      this.setState({
-        expanded: {},
-      })
-    )
-  }
-
-  handleSaveTransfer (data) {
-    const { handleSaveTransfer } = this.props
-    handleSaveTransfer(
-      data,
-      this.setState({
-        expanded: {},
-      })
-    )
-  }
-
-  handleSaveBankAccount (data) {
-    const { handleSaveBankAccount } = this.props
-    handleSaveBankAccount(
-      data,
-      this.setState({
-        expanded: {},
-      })
-    )
+  toggleChangeTransfer () {
+    const { transfer } = this.state
+    this.setState({
+      transfer: {
+        ...transfer,
+        transferEnabled: !transfer.transferEnabled,
+      },
+    })
   }
 
   handleCollapse (id) {
@@ -244,14 +247,14 @@ class RecipientDetailConfig extends Component {
           title={t('pages.recipient_detail.anticipation')}
           subtitle={this.renderAnticipationSub()}
           icon={<AnticipationIcon width={16} height={16} />}
-          collapsed={expanded.anticipation}
+          isOpen={expanded.anticipation}
           onClick={this.handleCollapse}
           id="anticipation"
         >
           <AnticipationContent
             data={anticipation}
             t={t}
-            onSave={this.handleSaveAnticipation}
+            onSave={this.onSaveAnticipation}
             onChange={this.handleChangeAnticipation}
             onCancel={this.handleCancel}
           />
@@ -260,7 +263,7 @@ class RecipientDetailConfig extends Component {
           title={t('pages.recipient_detail.transfer')}
           subtitle={this.renderTransferSub()}
           icon={<TransferIcon width={16} height={16} />}
-          collapsed={expanded.transfer}
+          isOpen={expanded.transfer}
           onClick={this.handleCollapse}
           id="transfer"
         >
@@ -268,7 +271,7 @@ class RecipientDetailConfig extends Component {
             data={transfer}
             t={t}
             onCancel={this.handleCancel}
-            onSave={this.handleSaveTransfer}
+            onSave={this.onSaveTransfer}
             onChange={this.handleChangeTransfer}
             onToggle={this.toggleChangeTransfer}
           />
@@ -277,16 +280,15 @@ class RecipientDetailConfig extends Component {
           title={t('pages.recipient_detail.bank_account')}
           subtitle={this.renderBankAccountSub()}
           icon={<BackAccountIcon width={16} height={16} />}
-          collapsed={expanded.bankAccount}
+          isOpen={expanded.bankAccount}
           onClick={this.handleCollapse}
           id="bankAccount"
         >
           <BankAccountContent
             accounts={accounts}
             data={bankAccount}
-            onChange={this.handleChangeBankAccount}
             onCancel={this.handleCancel}
-            onSave={this.handleSaveBankAccount}
+            onSave={this.onSaveBankAccount}
             t={t}
           />
         </RecipientItem>
@@ -313,9 +315,9 @@ RecipientDetailConfig.propTypes = {
     anticipationVolumePercentage: PropTypes.string,
   }),
   bankAccount: userAccountProps,
-  handleSaveAnticipation: PropTypes.func.isRequired,
-  handleSaveBankAccount: PropTypes.func.isRequired,
-  handleSaveTransfer: PropTypes.func.isRequired,
+  onSaveAnticipation: PropTypes.func.isRequired,
+  onSaveBankAccount: PropTypes.func.isRequired,
+  onSaveTransfer: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
   transfer: PropTypes.shape({
     transferDay: PropTypes.string,

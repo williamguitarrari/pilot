@@ -5,6 +5,7 @@ import Form from 'react-vanilla-form'
 import {
   Button,
   CardActions,
+  CardContent,
   Col,
   Grid,
   Row,
@@ -38,17 +39,19 @@ const TransferContent = ({
       onChange={onChange}
       onSubmit={onSave}
     >
-      <Grid>
-        <Row>
-          <Col>
-            {Transfer({
-              data,
-              t,
-              transferHandler: onToggle,
-            })}
-          </Col>
-        </Row>
-      </Grid>
+      <CardContent>
+        <Grid>
+          <Row>
+            <Col>
+              {Transfer({
+                data,
+                t,
+                transferHandler: onToggle,
+              })}
+            </Col>
+          </Row>
+        </Grid>
+      </CardContent>
       <div className={styles.paddingTop}>
         <CardActions>
           <Button

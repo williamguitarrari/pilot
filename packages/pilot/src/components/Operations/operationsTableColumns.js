@@ -67,27 +67,11 @@ const isTransferSource = lt(__, 0)
 
 const renderTargetOrSource = (type, net, targetId, sourceId, labels) => {
   if (type === 'inter_recipient' && isTransferSource(net)) {
-    // return (
-    //   <div>
-    //     <Truncate
-    //       resizableByWindow
-    //       text={`${labels.to} ${targetId}`}
-    //     />
-    //   </div>
-    // )
-    return `${labels.to} ${targetId}`
+    return (<div>{`${labels.to} ${targetId}`}</div>)
   }
 
   if (type === 'inter_recipient' && !isTransferSource(net)) {
-    // return (
-    //   <div>
-    //     <Truncate
-    //       resizableByWindow
-    //       text={`${labels.from} ${sourceId}`}
-    //     />
-    //   </div>
-    // )
-    return `${labels.from} ${sourceId}`
+    return (<div>{`${labels.from} ${sourceId}`}</div>)
   }
 
   return null
