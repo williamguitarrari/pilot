@@ -1,0 +1,5 @@
+@import "former-kit-skin-pagarme/dist/styles/typography.css";
+
+.legend {
+  fill: var(--body-color);
+}

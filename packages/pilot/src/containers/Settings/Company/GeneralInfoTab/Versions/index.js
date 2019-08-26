@@ -52,6 +52,11 @@ const Versions = ({
     setOpened(false)
   }
 
+  const handleCancel = () => {
+    setSelected(current)
+    setOpened(false)
+  }
+
   return (
     <Fragment>
       <CardSection>
@@ -120,7 +125,7 @@ const Versions = ({
           >
             <Button
               fill="outline"
-              onClick={() => setOpened(false)}
+              onClick={handleCancel}
             >
               {t('cancel')}
             </Button>

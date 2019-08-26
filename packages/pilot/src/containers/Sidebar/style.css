@@ -1,5 +1,10 @@
+@import "former-kit-skin-pagarme/dist/styles/colors/light.css";
 @import "former-kit-skin-pagarme/dist/styles/spacing.css";
 
 .backToOldVersion {
   margin-top: var(--spacing-medium);
+}
+
+.sidebarIcon {
+  fill: var(--color-white);
 }

@@ -17,6 +17,4 @@ const App = () => (
   </ThemeProvider>
 )
 
-export { store }
-
 export default App

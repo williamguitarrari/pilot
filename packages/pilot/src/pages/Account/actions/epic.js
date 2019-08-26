@@ -5,7 +5,6 @@ import {
   propEq,
 } from 'ramda'
 import {
-  catchError,
   map,
   mergeMap,
   tap,
@@ -30,7 +29,7 @@ import {
   receiveRecipientBalance,
 } from './actions'
 
-import { store } from '../../../App'
+import store from '../../../configureStore'
 
 import { WITHDRAW_RECEIVE } from '../../Withdraw/actions'
 import { receiveError } from '../../ErrorBoundary'
@@ -129,8 +128,18 @@ const companyEpic = (action$, state$) => action$.pipe(
 
     return client.company.current()
       .then(verifyEnvironmentPermission)
+      .catch(errorPayload => ({
+        error: true,
+        payload: errorPayload,
+      }))
   }),
-  map(receiveCompany),
+  mergeMap((action) => {
+    if (action.error) {
+      return rxOf(receiveError(action.payload))
+    }
+
+    return rxOf(receiveCompany(action))
+  }),
   tap(({ error, payload }) => {
     if (error) {
       return
@@ -164,8 +173,7 @@ const companyEpic = (action$, state$) => action$.pipe(
     } else {
       inactiveCompanyLogin()
     }
-  }),
-  catchError(error => rxOf(receiveError(error)))
+  })
 )
 
 const recipientBalanceEpic = (action$, state$) => action$.pipe(
