@@ -9,7 +9,11 @@ import LoginForm from '../../../src/containers/Account/LoginForm'
 import {
   PasswordRecoveryForm,
   PasswordRecoveryConfirmation,
-} from '../../../src/containers/Account/PasswordRecovery'
+} from '../../../src/containers/Account/PasswordRecovery/Request'
+import {
+  PasswordResetForm,
+  PasswordResetConfirmation,
+} from '../../../src/containers/Account/PasswordRecovery/Reset'
 import {
   SignUpForm,
   SignUpConfirmation,
@@ -92,6 +96,7 @@ storiesOf('Pages|Login', module)
       logo={Placeholder}
       primaryContent={(
         <PasswordRecoveryForm
+          base="dark"
           onPasswordRecovery={action('recover password')}
           onBackToLogin={action('back to login')}
           onSubmit={action('submit')}
@@ -117,6 +122,38 @@ storiesOf('Pages|Login', module)
       t={t}
     />
   ))
+  .add('Password Reset Form', () => (
+    <Account
+      logo={Placeholder}
+      primaryContent={(
+        <PasswordResetForm
+          base="dark"
+          onChange={action('change')}
+          onSubmit={action('submit')}
+          t={t}
+          validations={{
+            errors: [],
+          }}
+        />
+      )}
+      secondaryContent={TestPresentation}
+      t={t}
+    />
+  ))
+  .add('Password Reset Confirmation', () => (
+    <Account
+      logo={Placeholder}
+      primaryContent={(
+        <PasswordResetConfirmation
+          base="dark"
+          onBackToLogin={action('back to login')}
+          t={t}
+        />
+      )}
+      secondaryContent={TestPresentation}
+      t={t}
+    />
+  ))
 
 storiesOf('Pages|Signup', module)
   .addDecorator(checkA11y)
@@ -126,6 +163,7 @@ storiesOf('Pages|Signup', module)
       logo={Placeholder}
       primaryContent={(
         <SignUpForm
+          base="dark"
           onPasswordRecovery={action('recover password')}
           onSubmit={action('submit')}
           t={t}

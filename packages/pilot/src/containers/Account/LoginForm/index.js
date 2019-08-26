@@ -62,7 +62,6 @@ const LoginContainer = ({
         )
       }
     </div>
-
     <div className={styles.actions}>
       <div className={styles.hugeButton}>
         <Button

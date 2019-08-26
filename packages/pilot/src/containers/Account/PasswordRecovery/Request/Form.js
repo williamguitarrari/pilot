@@ -28,7 +28,7 @@ const PasswordRecoveryForm = ({
   >
     <div className={styles.login}>
       <span className={styles.recoveryCall}>
-        {t('password_recovery.recovery_call')}
+        {t('pages.password_recovery.recovery_call')}
       </span>
       <FormInput
         base={base}
@@ -47,7 +47,7 @@ const PasswordRecoveryForm = ({
           size="huge"
           type="submit"
         >
-          {t('password_recovery.recovery_action')}
+          {t('pages.password_recovery.recovery_action')}
         </Button>
       </div>
       <button

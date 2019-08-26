@@ -64,6 +64,7 @@
   "items_per_page": "{{count}} item por página",
   "of": "de",
   "password": "Senha",
+  "password_confirm": "Confirmar senha",
   "recipient": "Recebedor",
   "try_again": "Tentar novamente",
   "view_transaction": "Visualizar transação",
@@ -117,12 +118,6 @@
   },
   "validations": {
     "isEmail": "Não é um e-mail válido"
-  },
-  "password_recovery": {
-    "confirmation": "Em instantes você receberá um e-mail com as instruções para a redefinição de sua senha.",
-    "confirmation_emphasis": "Pronto!",
-    "recovery_call": "Digite o e-mail cadastrado para recuperar sua senha.",
-    "recovery_action": "Enviar"
   },
   "recipients": {
     "account": "C: {{number}}",
@@ -1001,6 +996,18 @@
       "withdraw_success": "Saque realizado com sucesso!",
       "withdraw_value": "Valor do saque (R$)",
       "wrong_pass": "Senha inválida"
+    },
+    "password_recovery": {
+      "confirmation": "Em instantes você receberá um e-mail com as instruções para a redefinição de sua senha.",
+      "confirmation_emphasis": "Pronto!",
+      "recovery_call": "Digite o e-mail cadastrado para recuperar sua senha.",
+      "recovery_action": "Enviar"
+    },
+    "password_reset": {
+      "confirmation": "Sua nova senha foi criada com sucesso! Retorne para a área de Login para começar a utilizá-la.",
+      "confirmation_emphasis": "Pronto!",
+      "reset_action": "Enviar",
+      "reset_call": "Digite sua nova senha para concluir a redefinição."
     },
     "settings": {
       "user": {

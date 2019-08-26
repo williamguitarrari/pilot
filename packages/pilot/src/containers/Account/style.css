@@ -97,7 +97,6 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  justify-content: center;
   margin-top: 20px;
   width: 100%;
 
@@ -151,6 +150,14 @@
 
   & > *:not(:first-child) {
     padding-top: 73px;
+  }
+}
+
+.resetPassword {
+
+  & > .login > div:last-child {
+    margin-top: var(--spacing-large);
+    padding-top: 0;
   }
 }
 
