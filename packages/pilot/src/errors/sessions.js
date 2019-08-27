@@ -10,10 +10,10 @@ export default [
       message: t('pages.error.unauthorized'),
       title: t('pages.error.unauthorized_title'),
     }),
-    message: /Sessão inválida/,
+    message: /Sessão inválida|Sessão expirada/,
     method: /get/,
     name: /ApiError/,
-    status: /401/,
+    status: /401|410/,
     type: /action_forbidden/,
   },
   {
