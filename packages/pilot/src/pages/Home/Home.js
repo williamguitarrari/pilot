@@ -48,7 +48,6 @@ import {
   when,
 } from 'ramda'
 import {
-  Button,
   Flexbox,
 } from 'former-kit'
 import {
@@ -66,7 +65,6 @@ import statusLegends from '../../models/statusLegends'
 
 import {
   Message,
-  MessageActions,
 } from '../../components/Message'
 import GenericErrorIcon from '../Errors/GenericError/Icon.svg'
 
@@ -455,7 +453,6 @@ const Home = ({
     replace,
   },
   loading,
-  logout,
   metrics,
   requestConversion,
   requestMetrics,
@@ -517,19 +514,9 @@ const Home = ({
     volumeByWeekday,
   } = metrics || {}
 
-  /*
-    This error validation should be simplified when
-    ErrorBoundary is able to find error 410, the problem
-    is adressed in this issue https://github.com/pagarme/pilot/issues/1328
-  */
   if (error) {
-    const unauthorized = error.status === 410
-    const message = unauthorized
-      ? t('pages.error.unauthorized')
-      : t('pages.error.internal_message')
-    const title = unauthorized
-      ? t('pages.error.unauthorized_title')
-      : t('pages.error.internal_title')
+    const message = t('pages.error.internal_message')
+    const title = t('pages.error.internal_title')
 
     return (
       <Flexbox
@@ -540,20 +527,7 @@ const Home = ({
           image={<GenericErrorIcon width={365} height={148} />}
           message={message}
           title={title}
-        >
-          {unauthorized
-            && (
-              <MessageActions>
-                <Button
-                  fill="gradient"
-                  onClick={logout}
-                >
-                  {t('pages.error.back_to_login')}
-                </Button>
-              </MessageActions>
-            )
-          }
-        </Message>
+        />
       </Flexbox>
     )
   }
@@ -632,7 +606,6 @@ Home.propTypes = {
   loading: PropTypes.shape({
     metrics: PropTypes.bool,
   }),
-  logout: PropTypes.func.isRequired,
   metrics: PropTypes.shape({
     averageAmount: PropTypes.number,
     cardBrands: PropTypes.arrayOf(indicatorShape),
