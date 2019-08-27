@@ -35,7 +35,8 @@ const conversion = pipe(
     lastEquals(0),
     always(100),
     getPercentage
-  )
+  ),
+  Math.round
 )
 
 const buildResult = applySpec({
