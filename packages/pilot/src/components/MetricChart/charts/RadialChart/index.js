@@ -14,33 +14,25 @@ const RadialChart = ({
   labelFormatter,
   styles,
 }) => (
-  <div className={style.radialChart}>
-    <Flexbox
-      alignItems="center"
-      direction="row"
-      justifyContent="center"
-    >
-      <div className={style.radialContainer}>
-        {data.map(({ fill, label, value }) => (
-          <div
-            key={`${label}-${value}`}
-            className={style.radial}
-          >
-            <Radial
-              data={{
-                fill,
-                value,
-              }}
-              labelFormatter={labelFormatter}
-              styles={styles}
-              title={label}
-            />
-            <span>{label}</span>
-          </div>
-        ))}
+  <Flexbox className={style.radialChart}>
+    {data.map(({ fill, label, value }) => (
+      <div
+        key={`${label}-${value}`}
+        className={style.radial}
+      >
+        <Radial
+          data={{
+            fill,
+            value,
+          }}
+          labelFormatter={labelFormatter}
+          styles={styles}
+          title={label}
+        />
+        <span>{label}</span>
       </div>
-    </Flexbox>
-  </div>
+    ))}
+  </Flexbox>
 )
 
 RadialChart.propTypes = {

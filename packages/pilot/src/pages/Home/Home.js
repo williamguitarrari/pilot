@@ -30,6 +30,7 @@ import {
   lte,
   map,
   path,
+  pathOr,
   pipe,
   prop,
   propEq,
@@ -44,12 +45,16 @@ import {
   uncurryN,
   unless,
   values,
+  when,
 } from 'ramda'
 import {
   Button,
   Flexbox,
 } from 'former-kit'
-import { requestMetrics as requestMetricsAction } from './actions'
+import {
+  requestConversion as requestConversionAction,
+  requestMetrics as requestMetricsAction,
+} from './actions'
 import { requestLogout } from '../Account/actions/actions'
 import { withError } from '../ErrorBoundary'
 import creditCardBrands from '../../models/creditcardBrands'
@@ -70,10 +75,12 @@ const mapStateToProps = ({
     user,
   },
   home: {
+    conversion,
     loading,
     metrics,
   },
 }) => ({
+  conversion,
   loading,
   metrics,
   user,
@@ -81,6 +88,7 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = {
   logout: requestLogout,
+  requestConversion: requestConversionAction,
   requestMetrics: requestMetricsAction,
 }
 
@@ -404,6 +412,32 @@ const verifyEmptyMetrics = allPass([
   isEmptyVolumeByWeekday,
 ])
 
+const enhanceConversion = (label, conversionPath) => applySpec({
+  label: always(label),
+  value: pathOr(0, conversionPath),
+})
+
+const getConversions = uncurryN(2, t => pipe(
+  juxt([
+    enhanceConversion(
+      t('pages.home.conversion.real'),
+      ['card', 'conversion']
+    ),
+    enhanceConversion(
+      t('pages.home.conversion.without_retries'),
+      ['card', 'withoutRetries']
+    ),
+    enhanceConversion(
+      t('pages.home.conversion.boleto'),
+      ['boleto', 'conversion']
+    ),
+  ]),
+  when(
+    isNilOrEmpty,
+    always([])
+  )
+))
+
 const defaultPreset = 'days-7'
 
 const isGlobalLoading = pipe(
@@ -412,6 +446,7 @@ const isGlobalLoading = pipe(
 )
 
 const Home = ({
+  conversion,
   error,
   history: {
     location: {
@@ -422,6 +457,7 @@ const Home = ({
   loading,
   logout,
   metrics,
+  requestConversion,
   requestMetrics,
   t,
   user: {
@@ -448,10 +484,11 @@ const Home = ({
     if (search) {
       const searchDates = getDatesFromUrl(search)
       if (!areInvalidDates(searchDates)) {
+        requestConversion(searchDates)
         requestMetrics(searchDates)
       }
     }
-  }, [search, requestMetrics])
+  }, [search, requestConversion, requestMetrics])
 
   useEffect(() => {
     if (!search) {
@@ -479,6 +516,7 @@ const Home = ({
     totalTransactions = 0,
     volumeByWeekday,
   } = metrics || {}
+
   /*
     This error validation should be simplified when
     ErrorBoundary is able to find error 410, the problem
@@ -524,6 +562,7 @@ const Home = ({
     <HomeContainer
       averageAmount={averageAmount}
       cardBrands={enhanceIndicators(t, cardBrands)}
+      conversions={getConversions(t, conversion)}
       dates={dates}
       isEmptySearch={verifyEmptyMetrics(metrics || {})}
       labels={{
@@ -564,6 +603,19 @@ const graphicDataShape = PropTypes.shape({
 })
 
 Home.propTypes = {
+  conversion: PropTypes.shape({
+    boleto: PropTypes.shape({
+      conversion: PropTypes.number,
+      paid: PropTypes.number,
+      total: PropTypes.number,
+    }),
+    card: PropTypes.shape({
+      conversion: PropTypes.number,
+      paid: PropTypes.number,
+      total: PropTypes.number,
+      withoutRetries: PropTypes.number,
+    }),
+  }),
   error: PropTypes.shape({
     localized: PropTypes.shape({
       message: PropTypes.string.isRequired,
@@ -591,6 +643,7 @@ Home.propTypes = {
     totalAmount: PropTypes.number,
     totalTransactions: PropTypes.number,
   }),
+  requestConversion: PropTypes.func.isRequired,
   requestMetrics: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
   user: PropTypes.shape({
@@ -599,6 +652,10 @@ Home.propTypes = {
 }
 
 Home.defaultProps = {
+  conversion: {
+    boleto: {},
+    card: {},
+  },
   error: null,
   loading: {},
   metrics: {},
