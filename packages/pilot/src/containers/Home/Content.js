@@ -56,7 +56,7 @@ const Content = ({
         <Row flex stretch>
           <Col
             desk={3}
-            palm={6}
+            palm={12}
             tablet={6}
             tv={3}
           >
@@ -78,7 +78,7 @@ const Content = ({
           </Col>
           <Col
             desk={3}
-            palm={6}
+            palm={12}
             tablet={6}
             tv={3}
           >
@@ -104,7 +104,7 @@ const Content = ({
           </Col>
           <Col
             desk={3}
-            palm={6}
+            palm={12}
             tablet={6}
             tv={3}
           >
@@ -131,7 +131,7 @@ const Content = ({
           <Col
             className={styles.sideColumn}
             desk={3}
-            palm={6}
+            palm={12}
             tablet={6}
             tv={3}
           >
@@ -152,11 +152,10 @@ const Content = ({
         </Row>
         <Row flex stretch>
           <Col
-            className={styles.bottomColumn}
-            desk={3}
-            palm={6}
-            tablet={6}
-            tv={3}
+            desk={6}
+            palm={12}
+            tablet={12}
+            tv={6}
           >
             <MetricChart
               chartLegend={t('pages.home.total_transactions')}
@@ -184,11 +183,25 @@ const Content = ({
             />
           </Col>
           <Col
-            className={styles.bottomColumn}
-            desk={3}
-            palm={6}
-            tablet={6}
-            tv={3}
+            desk={6}
+            palm={12}
+            tablet={12}
+            tv={6}
+          >
+            <ConversionCard
+              data={conversions}
+              emptyText={t('pages.home.empty.conversion')}
+              loading={localLoading.metrics}
+              title={t('pages.home.conversion.rates')}
+            />
+          </Col>
+        </Row>
+        <Row flex stretch>
+          <Col
+            desk={6}
+            palm={12}
+            tablet={12}
+            tv={6}
           >
             <MetricChart
               chartLegend={t('pages.home.weekly_volume')}
@@ -216,20 +229,6 @@ const Content = ({
               type="area"
               data={totalAmountByWeekday}
               title={t('pages.home.total_amount_by_weekday')}
-            />
-          </Col>
-        </Row>
-        <Row flex stretch>
-          <Col
-            desk={6}
-            palm={12}
-            tablet={12}
-            tv={6}
-          >
-            <ConversionCard
-              data={conversions}
-              loading={localLoading.metrics}
-              title={t('pages.home.conversion_rates')}
             />
           </Col>
         </Row>

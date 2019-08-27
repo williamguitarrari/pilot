@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {
   evolve,
-  juxt,
   uncurryN,
 } from 'ramda'
 import {
@@ -17,11 +16,9 @@ import CustomLabel from './CustomLabel'
 
 import sizePropValidation from '../../sizePropValidation'
 
-const buildChartData = uncurryN(2, colors => juxt([
-  evolve({
-    fill: dataColor => dataColor || colors.fill,
-  }),
-]))
+const buildChartData = uncurryN(2, colors => evolve({
+  fill: dataColor => dataColor || colors.fill,
+}))
 
 const Radial = ({
   data,
@@ -44,7 +41,7 @@ const Radial = ({
       width={width}
     >
       <RadialBarChart
-        data={chartData}
+        data={[chartData]}
         innerRadius={innerRadius}
         outerRadius={outerRadius}
       >
@@ -56,11 +53,12 @@ const Radial = ({
         <RadialBar
           background
           dataKey="value"
+          isAnimationActive={false}
         >
           <LabelList
-            content={props => (
+            content={(
               <CustomLabel
-                {...props}
+                value={chartData.value}
                 labelFormatter={labelFormatter}
               />
             )}
