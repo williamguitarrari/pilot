@@ -133,12 +133,8 @@ const MetricChart = ({
         type,
       },
       data)}
+      {showLegend && <List items={buildLegendItems(data)} />}
     </CardContent>
-    {showLegend && (
-      <CardContent>
-        <List items={buildLegendItems(data)} />
-      </CardContent>
-    )}
   </MetricCard>
 )
 
