@@ -2,13 +2,8 @@
 
 .metricCard {
   display: flex;
-  justify-content: center;
-  align-items: center;
   height: 100%;
-
-  & > div {
-    height: 100%;
-  }
+  flex-direction: column;
 }
 
 .overlay {
