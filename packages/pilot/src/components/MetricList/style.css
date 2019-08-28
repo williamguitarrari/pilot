@@ -19,6 +19,13 @@
   margin-left: auto;
 }
 
+.list {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+}
+
 .list > .item:not(:last-child) {
   margin-bottom: var(--spacing-small);
 }
