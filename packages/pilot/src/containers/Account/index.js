@@ -30,7 +30,7 @@ const Account = ({
       <div className={styles.columnContainer}>
         <div className={styles.primaryContent}>
           <div className={styles.logo}>
-            <Logo alt={t('landing.logo')} />
+            <Logo alt={t('landing.logo')} base={base} />
           </div>
           {primaryContent}
         </div>
