@@ -2,7 +2,7 @@ import React from 'react'
 
 import IconTest from 'emblematic-icons/svg/TestAmbientOn24.svg'
 
-import Logo from './logo.svg'
+import Logo from '.'
 
 import style from './style.css'
 
