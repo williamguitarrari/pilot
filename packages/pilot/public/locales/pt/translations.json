@@ -20,6 +20,8 @@
   "conta_poupança_conjunta": "Poupança conjunta",
   "copied_to_clipboard": "Copiado!",
   "copy_id": "Copiar id",
+  "copyright_group": "Uma empresa do Grupo Arpex Capital © 2015,",
+  "copyright_company": "Pagar.me Pagamentos S.A. Todos os direitos reservados.",
   "currency_symbol": "R$",
   "currency": "R$",
   "dates": {
@@ -1006,6 +1008,11 @@
     "password_reset": {
       "confirmation": "Sua nova senha foi criada com sucesso! Retorne para a área de Login para começar a utilizá-la.",
       "confirmation_emphasis": "Pronto!",
+      "errors": {
+        "field_required": "Esse campo é obrigatório",
+        "invalid_password": "Senha inválida",
+        "passwords_dont_match": "As senhas não conferem"
+      },
       "reset_action": "Enviar",
       "reset_call": "Digite sua nova senha para concluir a redefinição."
     },

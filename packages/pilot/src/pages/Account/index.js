@@ -20,6 +20,8 @@ import Login from './Login'
 import Logo from '../../components/Logo'
 import PasswordRecovery from './PasswordRecovery/Request'
 import PasswordRecoveryConfirmation from './PasswordRecovery/Request/Confirmation'
+import PasswordReset from './PasswordRecovery/Reset'
+import PasswordResetConfirmation from './PasswordRecovery/Reset/Confirmation'
 import Presentation from './Presentation'
 import SignUp from './SignUp'
 import SignUpConfirmation from './SignUp/Confirmation'
@@ -68,6 +70,14 @@ const AccountArea = ({ history: { location }, t }) => {
           <Route
             path="/account/password/recovery"
             component={() => <PasswordRecovery base={base} />}
+          />
+          <Route
+            path="/account/password/reset/confirmation"
+            component={PasswordResetConfirmation}
+          />
+          <Route
+            path="/account/password/reset/:token"
+            component={() => <PasswordReset base={base} />}
           />
           <Route
             path="/account/signup/confirmation"
