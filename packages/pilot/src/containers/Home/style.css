@@ -1,12 +1,12 @@
 @import "former-kit-skin-pagarme/dist/styles/spacing";
-@import "former-kit-skin-pagarme/dist/styles/media.css";
 @import "former-kit-skin-pagarme/dist/styles/colors.css";
 
 .greeting {
-  margin-bottom: var(--spacing-small);
+  margin-bottom: var(--spacing-tiny);
 
   & > .name {
     margin-bottom: var(--spacing-tiny);
+    margin-top: 0;
   }
 }
 
@@ -16,21 +16,12 @@
 }
 
 .grid {
-  margin-top: var(--spacing-large);
+  margin-top: var(--spacing-tiny);
   transition: 0.3s linear all;
 }
 
 .sideColumn > div {
   max-width: 100%;
-}
-
-.bottomColumn {
-  max-width: 50%;
-  width: 50%;
-
-  & > div {
-    max-width: 100%;
-  }
 }
 
 .emptyStateMessage > div {
@@ -44,14 +35,6 @@
     flex: 1;
     width: 100%;
   }
-}
-
-.dateSelectorContainer > div > div > div {
-  right: -10px;
-}
-
-.column > div:first-child {
-  margin-bottom: var(--spacing-small);
 }
 
 .emptyState {
@@ -76,4 +59,35 @@
 .globalLoading {
   opacity: 0;
   transition: none;
+}
+
+.conversionChart {
+  display: flex;
+  flex: 1;
+  height: 100%;
+
+  & > div {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  & .title {
+    flex: 1;
+  }
+
+  & .radialContainer {
+    display: flex;
+    justify-content: center;
+    flex: 3;
+  }
+}
+
+.dateSelectorContainer > div > div > div {
+  right: -10px;
+}
+
+.column > div:first-child {
+  margin-bottom: var(--spacing-small);
 }

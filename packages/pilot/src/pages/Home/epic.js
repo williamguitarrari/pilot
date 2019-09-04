@@ -6,14 +6,21 @@ import {
 } from 'rxjs/operators'
 import { combineEpics, ofType } from 'redux-observable'
 import {
-  METRICS_REQUEST,
-  receiveMetrics,
+  CONVERSION_REQUEST,
+  failConversion,
   failMetrics,
+  METRICS_REQUEST,
+  receiveConversion,
+  receiveMetrics,
 } from './actions'
 
 const getTransactionsMetrics = (client, dates) => client
   .transactions
   .metrics(dates)
+
+const getTransactionsConversion = (client, dates) => client
+  .transactions
+  .conversion(dates)
 
 const resetDateTime = (date, time) => date.set({
   hour: 0,
@@ -47,4 +54,20 @@ const metricsEpic = (action$, state$) => action$
     })
   )
 
-export default combineEpics(metricsEpic)
+const conversionEpic = (action$, state$) => action$
+  .pipe(
+    ofType(CONVERSION_REQUEST),
+    mergeMap(({ payload: dates }) => {
+      const state = state$.value
+      const { account: { client } } = state
+      return getTransactionsConversion(client, setRangeTimes(dates))
+    }),
+    map(receiveConversion),
+    catchError((error) => {
+      const { message } = error
+
+      return rxOf(failConversion({ message }))
+    })
+  )
+
+export default combineEpics(metricsEpic, conversionEpic)

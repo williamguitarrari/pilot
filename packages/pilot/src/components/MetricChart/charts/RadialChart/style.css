@@ -1,0 +1,32 @@
+@import "former-kit-skin-pagarme/dist/styles/media.css";
+
+.label {
+  font-size: 24px;
+  font-weight: bold;
+
+  & tspan {
+    font-size: 14px;
+  }
+}
+
+.radialChart {
+  justify-content: space-around;
+  align-items: center;
+
+  & .radial {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    width: 100px;
+    text-align: center;
+  }
+}
+
+@media (--media-palm) {
+
+  .radialChart {
+    flex-direction: column;
+    justify-content: center;
+  }
+}

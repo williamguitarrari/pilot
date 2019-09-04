@@ -8,6 +8,10 @@
   display: flex;
   flex-direction: column;
   margin-left: var(--spacing-small);
+
+  & svg {
+    margin-bottom: 5px;
+  }
 }
 
 .title {

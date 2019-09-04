@@ -21,6 +21,7 @@ import SpacedAmount from './SpacedAmount'
 import NoDataIcon from './icons/no-data.svg'
 import { Message } from '../../components/Message'
 import EmptyStateIcon from './icons/empty-state-global.svg'
+import ConversionCard from './ConversionCard'
 
 import styles from './style.css'
 
@@ -29,6 +30,7 @@ const enhance = withSpinner(styles.overlay)
 const Content = ({
   averageAmount,
   cardBrands,
+  conversions,
   isEmpty,
   loading,
   localLoading,
@@ -54,7 +56,7 @@ const Content = ({
         <Row flex stretch>
           <Col
             desk={3}
-            palm={6}
+            palm={12}
             tablet={6}
             tv={3}
           >
@@ -76,7 +78,7 @@ const Content = ({
           </Col>
           <Col
             desk={3}
-            palm={6}
+            palm={12}
             tablet={6}
             tv={3}
           >
@@ -102,7 +104,7 @@ const Content = ({
           </Col>
           <Col
             desk={3}
-            palm={6}
+            palm={12}
             tablet={6}
             tv={3}
           >
@@ -129,7 +131,7 @@ const Content = ({
           <Col
             className={styles.sideColumn}
             desk={3}
-            palm={6}
+            palm={12}
             tablet={6}
             tv={3}
           >
@@ -150,11 +152,10 @@ const Content = ({
         </Row>
         <Row flex stretch>
           <Col
-            className={styles.bottomColumn}
-            desk={3}
-            palm={6}
-            tablet={6}
-            tv={3}
+            desk={6}
+            palm={12}
+            tablet={12}
+            tv={6}
           >
             <MetricChart
               chartLegend={t('pages.home.total_transactions')}
@@ -182,11 +183,25 @@ const Content = ({
             />
           </Col>
           <Col
-            className={styles.bottomColumn}
-            desk={3}
-            palm={6}
-            tablet={6}
-            tv={3}
+            desk={6}
+            palm={12}
+            tablet={12}
+            tv={6}
+          >
+            <ConversionCard
+              data={conversions}
+              emptyText={t('pages.home.empty.conversion')}
+              loading={localLoading.metrics}
+              title={t('pages.home.conversion.rates')}
+            />
+          </Col>
+        </Row>
+        <Row flex stretch>
+          <Col
+            desk={6}
+            palm={12}
+            tablet={12}
+            tv={6}
           >
             <MetricChart
               chartLegend={t('pages.home.weekly_volume')}
@@ -247,6 +262,12 @@ Content.propTypes = {
     PropTypes.shape({
       title: PropTypes.node.isRequired,
       value: PropTypes.string,
+    })
+  ).isRequired,
+  conversions: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      value: PropTypes.number.isRequired,
     })
   ).isRequired,
   isEmpty: PropTypes.bool,

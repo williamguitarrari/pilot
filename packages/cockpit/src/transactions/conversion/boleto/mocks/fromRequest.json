@@ -1,0 +1,22 @@
+{
+  "took": 3,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "failed": 0
+  },
+  "hits": {
+    "total": 83,
+    "max_score": 0,
+    "hits": []
+  },
+  "aggregations": {
+    "boleto": {
+      "doc_count": 48,
+      "paid": {
+        "doc_count": 0
+      }
+    }
+  }
+}

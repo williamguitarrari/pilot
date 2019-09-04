@@ -10,6 +10,7 @@ import { identity } from 'ramda'
 import Section from '../../Section'
 
 import {
+  percentageConversion,
   transactionsByInstallment,
   transactionsByStatus,
 } from './data'
@@ -103,19 +104,35 @@ const MetricChartExample = () => (
           />
         </Col>
       </Row>
+      <Row flex>
+        <Col>
+          <Chart
+            styles={{
+              height: 120,
+            }}
+            data={percentageConversion}
+            showLegend
+            title="Radial chart"
+            type="radial"
+          />
+        </Col>
+      </Row>
     </Grid>
   </Section>
 )
 
+const dataPropType = PropTypes.shape({
+  color: PropTypes.string,
+  label: PropTypes.string.isRequired,
+  legendRenderer: PropTypes.func,
+  value: PropTypes.number.isRequired,
+})
+
 Chart.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      color: PropTypes.string,
-      label: PropTypes.string.isRequired,
-      legendRenderer: PropTypes.func,
-      value: PropTypes.number.isRequired,
-    })
-  ).isRequired,
+  data: PropTypes.oneOfType([
+    PropTypes.arrayOf(dataPropType),
+    dataPropType,
+  ]).isRequired,
   labelFormatter: PropTypes.func,
   showLegend: PropTypes.bool,
   styles: PropTypes.shape({
@@ -131,7 +148,11 @@ Chart.propTypes = {
   }).isRequired,
   title: PropTypes.string.isRequired,
   type: PropTypes.oneOf([
-    'area', 'bar', 'donut', 'pizza',
+    'area',
+    'bar',
+    'donut',
+    'pizza',
+    'radial',
   ]).isRequired,
 }
 

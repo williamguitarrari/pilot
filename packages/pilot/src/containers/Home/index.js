@@ -9,6 +9,7 @@ import Content from './Content'
 const HomeContainer = ({
   averageAmount,
   cardBrands,
+  conversions,
   dates,
   isEmptySearch,
   labels,
@@ -38,6 +39,7 @@ const HomeContainer = ({
     <Content
       averageAmount={averageAmount}
       cardBrands={cardBrands}
+      conversions={conversions}
       isEmpty={isEmptySearch}
       labels={labels}
       loading={loading}
@@ -61,6 +63,12 @@ HomeContainer.propTypes = {
     PropTypes.shape({
       title: PropTypes.node.isRequired,
       value: PropTypes.string,
+    })
+  ).isRequired,
+  conversions: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      value: PropTypes.number.isRequired,
     })
   ).isRequired,
   dates: PropTypes.shape({

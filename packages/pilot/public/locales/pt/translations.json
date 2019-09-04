@@ -596,9 +596,18 @@
       "between": "entre",
       "boleto": "Boleto",
       "capture_timeout": "Tempo de captura expirado",
+      "card_withoutRetries": "Sem retentativas",
       "credit_card": "Cartão de crédito",
+      "conversion": {
+        "boleto": "Boleto",
+        "card": "Cartão",
+        "rates": "Índices de conversão",
+        "real": "Real",
+        "without_retries": "Sem retentativas"
+      },
       "debit_card": "Cartão de débito",
       "empty": {
+        "conversion": "Não há dados disponíveis sobre conversão.",
         "general_message": "Não foram encontrados registros de transações no período selecionado.",
         "general_try_again": "Tente novamente selecionando outra data.",
         "payment_methods": "Não foram encontrados registros de transações no período selecionado",

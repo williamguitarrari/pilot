@@ -13,6 +13,7 @@ import HomeContainer from '../../../src/containers/Home'
 
 import {
   cardBrands,
+  conversions,
   paymentMethods,
   presets,
   refuseReasons,
@@ -91,6 +92,7 @@ class HomeContainerExample extends Component {
         <HomeContainer
           averageAmount={25000}
           cardBrands={cardBrands}
+          conversions={conversions}
           dates={dates}
           labels={{
             description: `Aqui está o resumo geral da sua conta entre ${dateFormat(dates.start)} à ${dateFormat(dates.end)}`,
