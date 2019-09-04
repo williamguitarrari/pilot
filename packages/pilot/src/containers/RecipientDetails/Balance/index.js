@@ -128,7 +128,9 @@ class RecipientBalance extends Component {
 
   getSummaryTotal () {
     const {
-      disabled,
+      disabled: {
+        summary: summaryDisabled,
+      },
       t,
       total,
     } = this.props
@@ -139,21 +141,21 @@ class RecipientBalance extends Component {
         outcoming: {
           title: t('pages.balance.total.outcoming'),
           unit: t('currency'),
-          value: disabled
+          value: summaryDisabled
             ? 0
             : total.outcoming,
         },
         outgoing: {
           title: t('pages.balance.total.outgoing'),
           unit: t('currency'),
-          value: disabled
+          value: summaryDisabled
             ? 0
             : total.outgoing,
         },
         net: {
           title: t('pages.balance.total.net'),
           unit: t('currency'),
-          value: disabled
+          value: summaryDisabled
             ? 0
             : total.net,
         },
@@ -276,7 +278,10 @@ class RecipientBalance extends Component {
       },
       currentPage,
       dates,
-      disabled,
+      disabled: {
+        operations: operationsDisabled,
+        summary: summaryDisabled,
+      },
       exporting,
       hasNextPage,
       itemsPerPage,
@@ -305,13 +310,13 @@ class RecipientBalance extends Component {
     const typesLabels = map(t, operationsTypesLabels)
 
     const anticipationAction = {
-      disabled,
+      disabled: summaryDisabled,
       onClick: onAnticipationClick,
       title: t('pages.balance.anticipation'),
     }
 
     const withdrawalAction = {
-      disabled,
+      disabled: summaryDisabled,
       onClick: onWithdrawClick,
       title: t('pages.balance.withdraw'),
     }
@@ -355,7 +360,7 @@ class RecipientBalance extends Component {
                       <strong> {formatAmount(withdrawal)} </strong>
                     </span>
                   )}
-                  disabled={disabled || amount === 0}
+                  disabled={summaryDisabled || amount === 0}
                   title={t('pages.balance.withdrawal_title')}
                 />
               </CardSection>
@@ -377,7 +382,7 @@ class RecipientBalance extends Component {
                       {t('pages.balance.anticipation_call')}
                     </span>
                   )}
-                  disabled={disabled || amount === 0}
+                  disabled={summaryDisabled || amount === 0}
                   // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
                   // It was commented on to remove the anticipation limits call on Balance page
                   // This code will be used again in the future when ATLAS project implements the anticipation flow
@@ -397,7 +402,7 @@ class RecipientBalance extends Component {
               <CardSection>
                 <PendingRequests
                   emptyMessage={t('pages.balance.pending_requests_empty_message')}
-                  loading={disabled}
+                  loading={summaryDisabled}
                   onCancel={isNil(onCancelRequestClick)
                     ? null
                     : this.handleRequestCancelClick}
@@ -419,7 +424,7 @@ class RecipientBalance extends Component {
                   <div className={style.filter}>
                     <DateInput
                       active={filterDatesEqualCurrent}
-                      disabled={disabled}
+                      disabled={operationsDisabled}
                       icon={<IconCalendar width={16} height={16} />}
                       isValidDay={isValidDay(timeframe)}
                       limits={dateLimits}
@@ -429,7 +434,7 @@ class RecipientBalance extends Component {
                       selectedPreset="days-7"
                       strings={getDateLabels(t)}
                       showCalendar={showDateInputCalendar}
-                      dates={dates} // eslint-disable-line
+                      dates={dates}
                     />
                     <Button
                       disabled={filterDatesEqualCurrent}
@@ -454,12 +459,12 @@ class RecipientBalance extends Component {
                     columns={translateColumns(getColumns(typesLabels))}
                     currentPage={currentPage}
                     dates={dates}
-                    disabled={disabled}
+                    disabled={operationsDisabled}
                     emptyMessage={t('models.operations.empty_message')}
                     exportLabel={t('models.operations.export')}
                     exporting={exporting}
                     itemsPerPage={itemsPerPage}
-                    loading={disabled || loading || tableLoading}
+                    loading={loading || tableLoading}
                     labels={{
                       empty: t('models.operations.empty_message'),
                       exportCall: t('export_table'),
@@ -517,7 +522,10 @@ RecipientBalance.propTypes = {
     end: PropTypes.instanceOf(moment),
     start: PropTypes.instanceOf(moment),
   }).isRequired,
-  disabled: PropTypes.bool.isRequired,
+  disabled: PropTypes.shape({
+    operationsDisabled: PropTypes.bool,
+    summaryDisabled: PropTypes.bool,
+  }).isRequired,
   exporting: PropTypes.bool.isRequired,
   hasNextPage: PropTypes.bool.isRequired,
   itemsPerPage: PropTypes.number.isRequired,

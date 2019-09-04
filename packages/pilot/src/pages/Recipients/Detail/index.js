@@ -12,6 +12,7 @@ import {
   assocPath,
   compose,
   lensPath,
+  mergeLeft,
   pathOr,
   pipe,
   propEq,
@@ -79,9 +80,10 @@ class DetailRecipientPage extends Component {
         end: moment(),
         start: moment().subtract(7, 'day'),
       },
+      disabled: false,
       exporting: false,
-      hasNextPage: null,
       loading: true,
+      nextPage: null,
       pageError: false,
       recipientData: {},
       selectedItemsPerPage: 15,
@@ -93,8 +95,11 @@ class DetailRecipientPage extends Component {
 
     this.fetchAnticipationLimit = this.fetchAnticipationLimit.bind(this)
     this.fetchBalance = this.fetchBalance.bind(this)
+    this.fetchBalanceAndOperations = this.fetchBalanceAndOperations.bind(this)
     this.fetchBalanceTotal = this.fetchBalanceTotal.bind(this)
     this.fetchData = this.fetchData.bind(this)
+    this.fetchOperations = this.fetchOperations.bind(this)
+    this.fetchNextOperations = this.fetchNextOperations.bind(this)
     this.fetchRecipientData = this.fetchRecipientData.bind(this)
     this.handleAnticipationCancel = this.handleAnticipationCancel.bind(this)
     this.handleDateFilter = this.handleDateFilter.bind(this)
@@ -240,33 +245,16 @@ class DetailRecipientPage extends Component {
 
   handleDateFilter (dates) {
     const firstPage = 1
-    const balancePromise = this.fetchBalance(dates, firstPage)
+    const balanceOperations = this.fetchBalanceAndOperations(dates, firstPage)
     const balanceTotalPromise = this.fetchBalanceTotal(dates)
 
-    return Promise.all([balancePromise, balanceTotalPromise])
-      .then(([balance, total]) => {
-        const {
-          search: {
-            operations,
-            query,
-          },
-        } = balance
-
-        const hasNextPage = operations.rows.length >= query.count
-
-        this.setState({
-          balance,
-          currentPage: firstPage,
-          dates,
-          hasNextPage,
-          total,
-        })
-      })
-      .catch((pageError) => {
-        this.setState({
-          pageError,
-        })
-      })
+    return Promise.all([balanceOperations, balanceTotalPromise])
+      .then(([balance, total]) => this.setState({
+        balance,
+        currentPage: firstPage,
+        dates,
+        total,
+      }))
   }
 
   handleExportData (format) {
@@ -298,61 +286,38 @@ class DetailRecipientPage extends Component {
   }
 
   handlePageChange (page) {
-    const { dates } = this.state
+    const {
+      balance,
+      dates,
+    } = this.state
 
-    this.setState({
-      balanceLoading: true,
-    })
-
-    return this.fetchBalance(dates, page)
-      .then((balance) => {
-        const {
-          search: {
-            operations,
-            query,
-          },
-        } = balance
-
-        const hasNextPage = operations.rows.length >= query.count
-
+    this.fetchOperations(dates, page)
+      .then((operations) => {
         this.setState({
-          balance,
-          balanceLoading: false,
+          balance: mergeLeft({
+            search: operations.search,
+          }, balance),
           currentPage: page,
           dates,
-          hasNextPage,
         })
       })
   }
 
   handlePageCountChange (pageCount) {
     const {
-      currentPage,
+      balance,
       dates,
     } = this.state
+    const firstPage = 1
 
-    this.setState({
-      balanceLoading: true,
-      selectedItemsPerPage: pageCount,
-    }, () => {
-      this.fetchBalance(dates, currentPage)
-        .then((balance) => {
-          const {
-            search: {
-              operations,
-              query,
-            },
-          } = balance
-
-          const hasNextPage = operations.rows.length >= query.count
-
-          this.setState({
-            balance,
-            balanceLoading: false,
-            hasNextPage,
-          })
-        })
-    })
+    this.fetchOperations(dates, firstPage, pageCount)
+      .then(operations => this.setState({
+        balance: mergeLeft({
+          search: operations.search,
+        }, balance),
+        currentPage: firstPage,
+        selectedItemsPerPage: pageCount,
+      }))
   }
 
   handleAnticipationCancel () {
@@ -417,7 +382,7 @@ class DetailRecipientPage extends Component {
     // This code will be used again in the future when ATLAS project implements the anticipation flow
     // More details in issue #1159
     // const anticipationLimitPromise = this.fetchAnticipationLimit()
-    const balancePromise = this.fetchBalance(dates, currentPage)
+    const balancePromise = this.fetchBalanceAndOperations(dates, currentPage)
     const balanceTotalPromise = this.fetchBalanceTotal(dates)
 
     return Promise.all([
@@ -503,6 +468,19 @@ class DetailRecipientPage extends Component {
       .catch(error => ({ amount: 0, error }))
   }
 
+  fetchBalanceAndOperations (dates, page) {
+    const balancePromise = this.fetchBalance(dates, page)
+    const operationsPromise = this.fetchOperations(dates, page)
+
+    return Promise.all([operationsPromise, balancePromise])
+      .then(([operations, balance]) => ({
+        ...balance.result,
+        search: {
+          ...operations.search,
+        },
+      }))
+  }
+
   fetchBalance (dates, page) {
     const {
       selectedItemsPerPage,
@@ -517,21 +495,96 @@ class DetailRecipientPage extends Component {
       timeframe,
     }
 
-    const getOperations = client.balance.operations({
-      ...query,
-      recipientId: id,
-    })
-
     const getRecipientData = client.balance.data(id, query)
 
-    return Promise.all([getOperations, getRecipientData])
-      .then(([operations, data]) => ({
-        ...data.result,
-        search: {
-          ...operations.result.search,
-          query: operations.query,
-        },
-      }))
+    return getRecipientData
+  }
+
+  fetchOperations (dates, page, count) {
+    const {
+      nextPage,
+      selectedItemsPerPage,
+      timeframe,
+    } = this.state
+    const { client, match } = this.props
+    const { id: recipientId } = match.params
+    const query = {
+      count: count || selectedItemsPerPage,
+      dates,
+      page,
+      recipientId,
+      timeframe,
+    }
+
+    this.setState({
+      disabled: true,
+    })
+
+    const getOperations = nextPage && nextPage.query.page === page
+      ? Promise.resolve(nextPage)
+      : client.balance.operations(query)
+
+    return getOperations
+      .then((operations) => {
+        this.fetchNextOperations(operations, query)
+
+        return {
+          search: {
+            ...operations.result.search,
+            query: operations.query,
+          },
+        }
+      })
+  }
+
+  fetchNextOperations (operations, query) {
+    const {
+      client,
+    } = this.props
+
+    const {
+      query: {
+        count: operationsCount,
+      },
+      result: {
+        search,
+      },
+    } = operations
+
+    const hasNextPage = search.operations.rows.length >= operationsCount
+
+    if (hasNextPage) {
+      this.setState({
+        disabled: true,
+      })
+
+      client.balance.operations(mergeLeft({
+        page: query.page + 1,
+      }, query))
+        .then((nextPageBalance) => {
+          const {
+            result: {
+              search: {
+                operations: {
+                  rows,
+                },
+              },
+            },
+          } = nextPageBalance
+
+          this.setState({
+            disabled: false,
+            nextPage: rows.length > 0
+              ? nextPageBalance
+              : null,
+          })
+        })
+    } else {
+      this.setState({
+        disabled: false,
+        nextPage: null,
+      })
+    }
   }
 
   fetchBalanceTotal (dates) {
@@ -565,9 +618,10 @@ class DetailRecipientPage extends Component {
       balanceLoading,
       currentPage,
       dates,
+      disabled,
       exporting,
-      hasNextPage,
       loading,
+      nextPage,
       pageError,
       recipientData,
       selectedItemsPerPage,
@@ -641,9 +695,12 @@ class DetailRecipientPage extends Component {
             anticipation,
             currentPage,
             dates,
-            disabled: loading,
+            disabled: {
+              operations: disabled || loading,
+              summary: loading,
+            },
             exporting,
-            hasNextPage,
+            hasNextPage: nextPage !== null,
             itemsPerPage: selectedItemsPerPage,
             loading,
             onAnticipationClick: this.sendToAnticipationPage,
