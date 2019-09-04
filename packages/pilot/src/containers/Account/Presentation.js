@@ -17,6 +17,7 @@ const PresentationContainer = ({
   environment,
   environmentUrl,
   onRegister,
+  shouldShowCopyright,
   t,
 }) => (
   <div className={styles.secondaryContent}>
@@ -69,7 +70,16 @@ const PresentationContainer = ({
       </p>
     </div>
     <div className={styles.changeEnvironment}>
-      {environment === 'live'
+      {shouldShowCopyright
+        && (
+          <span className={styles.copyright}>
+            <p>{t('copyright_group')}</p>
+            <p>{t('copyright_company')}</p>
+          </span>
+        )
+      }
+
+      {!shouldShowCopyright && environment === 'live'
         && (
           <div>
             <a
@@ -88,7 +98,7 @@ const PresentationContainer = ({
         )
       }
 
-      {environment === 'test'
+      {!shouldShowCopyright && environment === 'test'
         && (
           <div>
             <a href={environmentUrl} className={styles.link}>
@@ -116,7 +126,12 @@ PresentationContainer.propTypes = {
   environment: PropTypes.oneOf(['live', 'test']).isRequired,
   environmentUrl: PropTypes.string.isRequired,
   onRegister: PropTypes.func.isRequired,
+  shouldShowCopyright: PropTypes.bool,
   t: PropTypes.func.isRequired,
+}
+
+PresentationContainer.defaultProps = {
+  shouldShowCopyright: true,
 }
 
 export default PresentationContainer
