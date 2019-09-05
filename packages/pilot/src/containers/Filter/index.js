@@ -11,7 +11,6 @@ import {
   Row,
   Col,
   CheckboxGroup,
-  Spacing,
 } from 'former-kit'
 
 import Form from 'react-vanilla-form'
@@ -146,6 +145,7 @@ class Filters extends Component {
   renderToolbar () {
     const {
       children,
+      clearFilterDisabled,
       confirmationDisabled,
       disabled,
       onClear,
@@ -178,7 +178,6 @@ class Filters extends Component {
             </Button>
           )
         }
-        <Spacing size="flex" />
         <Button
           relevance={
             hasChanged
@@ -187,7 +186,7 @@ class Filters extends Component {
           }
           onClick={onClear}
           fill="outline"
-          disabled={disabled}
+          disabled={clearFilterDisabled || disabled}
         >
           {t('components.filter.reset')}
         </Button>
@@ -322,6 +321,7 @@ class Filters extends Component {
 
 Filters.propTypes = {
   children: PropTypes.node.isRequired,
+  clearFilterDisabled: PropTypes.bool,
   confirmationDisabled: PropTypes.bool,
   disabled: PropTypes.bool,
   onChange: PropTypes.func,
@@ -340,6 +340,7 @@ Filters.propTypes = {
 }
 
 Filters.defaultProps = {
+  clearFilterDisabled: false,
   confirmationDisabled: false,
   disabled: false,
   onChange: () => null,

@@ -123,10 +123,13 @@ const getBuildingBulkAnticipations = (client, recipientId) => client
     status: 'building',
   })
 
-const buildDeleteOptions = applySpec({ anticipationId: prop('id') })
+const buildDeleteOptions = recipientId => applySpec({
+  anticipationId: prop('id'),
+  recipientId: always(recipientId),
+})
 
-const buildDeleteBuildingBulkAnticipation = destroyFn => pipe(
-  map(buildDeleteOptions),
+const buildDeleteBuildingBulkAnticipation = (recipientId, destroyFn) => pipe(
+  map(buildDeleteOptions(recipientId)),
   map(destroyFn)
 )
 
@@ -288,7 +291,7 @@ class Anticipation extends Component {
     this.getBuildingAnticipations = this.getBuildingAnticipations.bind(this)
     this.getTransferCost = this.getTransferCost.bind(this)
     this.goTo = this.goTo.bind(this)
-    this.goToBalance = this.goToBalance.bind(this)
+    this.goToPreviousPage = this.goToPreviousPage.bind(this)
     this.handleCalculateSubmit = this.handleCalculateSubmit.bind(this)
     this.handleConfirmationConfirm = this.handleConfirmationConfirm.bind(this)
     this.handleFormChange = this.handleFormChange.bind(this)
@@ -493,10 +496,20 @@ class Anticipation extends Component {
   }
 
   destroyBuildingAnticipations (anticipations) {
-    const { destroyAnticipation } = this.props
+    const {
+      destroyAnticipation,
+    } = this.props
+
+    const {
+      recipient: {
+        id: recipientId,
+      },
+    } = this.state
 
     return Promise.resolve(anticipations)
-      .then(buildDeleteBuildingBulkAnticipation(destroyAnticipation))
+      .then(
+        buildDeleteBuildingBulkAnticipation(recipientId, destroyAnticipation)
+      )
       .then(deletePromises => Promise.all(deletePromises))
   }
 
@@ -523,7 +536,9 @@ class Anticipation extends Component {
     const { requestAnticipationLimits } = this.props
     const {
       paymentDate,
-      recipientId,
+      recipient: {
+        id: recipientId,
+      },
       timeframe,
     } = this.state
 
@@ -682,17 +697,9 @@ class Anticipation extends Component {
     })
   }
 
-  goToBalance () {
-    const {
-      recipient: {
-        id,
-      },
-    } = this.state
-
-    const {
-      history,
-    } = this.props
-    history.push(`/balance/${id}`)
+  goToPreviousPage () {
+    const { history } = this.props
+    history.goBack()
   }
 
   updateAnticipation (value) {
@@ -909,13 +916,13 @@ class Anticipation extends Component {
               minimum={getMinLimit(min)}
               needsRecalculation={needsRecalculation}
               onCalculateSubmit={this.handleCalculateSubmit}
-              onCancel={this.goToBalance}
+              onCancel={this.goToPreviousPage}
               onConfirmationConfirm={this.handleConfirmationConfirm}
               onConfirmationReturn={() => this.goTo('data', 'current')}
               onDataConfirm={() => this.goTo('confirmation', 'current')}
               onFormChange={this.handleFormChange}
               onTryAgain={() => this.goTo('data', 'current')}
-              onViewStatement={this.goToBalance}
+              onViewStatement={this.goToPreviousPage}
               recipient={recipient}
               requested={requestedAmount}
               statusMessage={statusMessage}

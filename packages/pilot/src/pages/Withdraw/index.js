@@ -14,8 +14,6 @@ import {
   pathOr,
 } from 'ramda'
 import { translate } from 'react-i18next'
-import { Alert } from 'former-kit'
-import IconError from 'emblematic-icons/svg/ClearClose32.svg'
 import WithdrawContainer from '../../containers/Withdraw'
 import partnersBankCodes from '../../models/partnersBanksCodes'
 
@@ -26,10 +24,14 @@ const mapStateToProps = ({
   account: {
     client,
     company: {
+      capabilities,
       pricing,
-    } = {},
+    } = {
+      capabilities: {},
+    },
   },
 }) => ({
+  capabilities,
   client,
   pricing,
 })
@@ -115,7 +117,7 @@ class Withdraw extends Component {
     this.handleRequestChange = this.handleRequestChange.bind(this)
     this.handleTryAgain = this.handleTryAgain.bind(this)
     this.getTransferCost = this.getTransferCost.bind(this)
-    this.goToBalance = this.goToBalance.bind(this)
+    this.goToPreviousPage = this.goToPreviousPage.bind(this)
   }
 
   componentDidMount () {
@@ -255,18 +257,9 @@ class Withdraw extends Component {
     this.goTo('data', 'current')
   }
 
-  goToBalance () {
-    const {
-      recipient: {
-        id,
-      },
-    } = this.state
-
-    const {
-      history,
-    } = this.props
-
-    history.push(`/balance/${id}`)
+  goToPreviousPage () {
+    const { history } = this.props
+    return history.goBack()
   }
 
   render () {
@@ -288,6 +281,14 @@ class Withdraw extends Component {
 
     const transferCost = this.getTransferCost()
 
+    let errorMessage = statusMessage
+
+    if (error) {
+      errorMessage = error.localized
+        ? error.localized.message
+        : error.message
+    }
+
     return (
       <Fragment>
         {!isNil(recipient)
@@ -300,7 +301,7 @@ class Withdraw extends Component {
               date={moment()}
               disabled={confirmationDisabledButtons}
               maximum={getAvailableTransferAmount(recipient)}
-              onCancel={this.goToBalance}
+              onBack={this.goToPreviousPage}
               onConfirmationConfirm={this.handleConfirmationConfirm}
               onConfirmationReturn={() => this.goTo('data', 'current')}
               onFormSubmit={() => this.goTo('confirmation', 'current')}
@@ -309,27 +310,11 @@ class Withdraw extends Component {
               onViewStatement={() => history.push(`/balance/${recipient.id}`)}
               recipient={recipient}
               requested={Number(requested)}
-              statusMessage={statusMessage}
+              statusMessage={errorMessage}
               stepsStatus={stepsStatus}
               t={t}
               transferCost={transferCost}
             />
-          )
-        }
-        {error
-          && (
-            <Alert
-              icon={<IconError height={16} width={16} />}
-              type="error"
-            >
-              <span>
-                {
-                  error.localized
-                    ? error.localized.message
-                    : error.message
-                }
-              </span>
-            </Alert>
           )
         }
       </Fragment>
@@ -338,6 +323,9 @@ class Withdraw extends Component {
 }
 
 Withdraw.propTypes = {
+  capabilities: PropTypes.shape({
+    allow_manage_recipients: PropTypes.bool,
+  }).isRequired,
   client: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   error: PropTypes.shape({
     affectedRoute: PropTypes.string.isRequired,

@@ -163,14 +163,14 @@ const AnticipationForm = ({
               />
             </Col>
             <Col>
-              <div className={style.avaiableTitle}>{t('pages.anticipation.avaiable.title')}</div>
-              <div className={style.avaiableContainer}>
-                <span>{t('pages.anticipation.avaiable.min')}</span>
-                <strong className={style.avaiable}>
+              <div className={style.availableTitle}>{t('pages.anticipation.available.title')}</div>
+              <div className={style.availableContainer}>
+                <span>{t('pages.anticipation.available.min')}</span>
+                <strong className={style.available}>
                   {formatCurrency(minimum)}
                 </strong>
-                <span>{t('pages.anticipation.avaiable.max')}</span>
-                <strong className={style.avaiable}>
+                <span>{t('pages.anticipation.available.max')}</span>
+                <strong className={style.available}>
                   {formatCurrency(maximum)}
                 </strong>
               </div>

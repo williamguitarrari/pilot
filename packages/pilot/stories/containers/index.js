@@ -6,6 +6,9 @@ import AnticipationForm from './Anticipation/Form'
 import BankAccountSelector from './Settings/BankAccount/Selector'
 import Balance from './Balance'
 import BankAccountForm from './Settings/BankAccount/Add'
+import AddAccount from './AddRecipient/BankAccountStep/AddAccount'
+import BankAccountStep from './AddRecipient/BankAccountStep'
+import ConfirmRecipientStep from './AddRecipient/ConfirmStep'
 import BoletoForm from './Refund/BoletoForm'
 import BoletoRefundConfirm from './Refund/BoletoConfirmation'
 import BoletoRefundResult from './Refund/BoletoResult'
@@ -13,15 +16,18 @@ import CardConfirmation from './Refund/CardConfirmation'
 import CardForm from './Refund/CardForm'
 import CardResult from './Refund/CardResult'
 import RecipientListState from './RecipientList'
+
 import {
   ManualReviewApproveForm,
   ManualReviewRefuseForm,
 } from './ManualReview/Form'
+
 import {
   ManualReviewApproveResult,
   ManualReviewRefuseResult,
   ManualReviewErrorResult,
 } from './ManualReview/Result'
+
 import {
   ManualReviewStepApproveConfirmation,
   ManualReviewStepApproveResult,
@@ -29,39 +35,71 @@ import {
   ManualReviewStepRefuseResult,
   ManualReviewStepResultError,
 } from './ManualReview'
+
 import {
   BoletoRefund,
   CreditCardRefund,
 } from './Refund'
+
 import Capture from './Capture'
+
 import {
   CaptureFormExample,
   FixedCaptureFormExample,
 } from './Capture/Form'
+
 import CaptureResult from './Capture/Result'
+import IdentificationStep from './AddRecipient/IdentificationStep'
 import Reprocess from './Reprocess'
 import ReprocessForm from './Reprocess/Form'
 import ReprocessResult from './Reprocess/Result'
+import SelectAccount from './AddRecipient/BankAccountStep/SelectAccount'
 import Withdraw from './Withdraw'
 import WithdrawConfirmation from './Withdraw/Confirmation'
 import WithdrawForm from './Withdraw/Form'
 import WithdrawResultSuccess from './Withdraw/Result/Success'
 import WithdrawResultError from './Withdraw/Result/Error'
+
 import {
   AnticipationConfirmationDisabled,
   AnticipationConfirmationWithAutomaticTransfer,
   AnticipationConfirmationWithError,
   AnticipationConfirmationWithoutAutomaticTransfer,
 } from './Anticipation/Confirmation'
+
 import {
   AnticipationResultError,
   AnticipationResultWithAutomaticTransfer,
   AnticipationResultWithoutAutomaticTransfer,
 } from './Anticipation/Result'
+
 import Anticipation from './Anticipation'
 import BoletoConfigurationForm from './Settings/Boleto/Form'
 import BankAccount from './Settings/BankAccount'
 import Home from './Home'
+import ConclusionStep from './AddRecipient/ConclusionStep'
+
+import {
+  ErrorStepSubmit,
+  ErrorStepLogin,
+  ErrorStepPermission,
+  ErrorStepServer,
+  ErrorStepDefault,
+} from './AddRecipient/ErrorStep'
+
+import ConfigurationStep from './AddRecipient/ConfigurationsStep'
+import RecipientBalance from './RecipientDetails/Balance'
+
+import {
+  AddRecipientFetchError,
+  AddRecipientSubmitError,
+  AddRecipientSuccess,
+  AddRecipientSuccessNoAccounts,
+} from './AddRecipient'
+
+import RecipientDetailConfig from './RecipientDetails/Config'
+import RecipientDetailInfo from './RecipientDetails/Info'
+import RecipientDetails from './RecipientDetails'
 
 storiesOf('Containers|Bank/Account', module)
   .add('selector', () => <BankAccountSelector />)
@@ -72,11 +110,68 @@ storiesOf('Containers|Page containers', module)
   .add('Boleto Configuration Form', () => (
     <BoletoConfigurationForm />
   ))
+  .add('Recipient Detail Info', () => (
+    <RecipientDetailInfo />
+  ))
+  .add('Recipient Details', () => (
+    <RecipientDetails />
+  ))
+  .add('Recipient Configuration', () => (
+    <RecipientDetailConfig />
+  ))
+  .add('Recipient Balance', () => (
+    <RecipientBalance />
+  ))
+  .add('Add Recipient', () => (
+    <AddRecipientSuccess />
+  ))
+  .add('Add Recipient no previous accounts', () => (
+    <AddRecipientSuccessNoAccounts />
+  ))
+  .add('Add Recipient fetch accounts error', () => (
+    <AddRecipientFetchError />
+  ))
+  .add('Add Recipient submit error', () => (
+    <AddRecipientSubmitError />
+  ))
+  .add('Recipient Conclusion Step', () => (
+    <ConclusionStep />
+  ))
+  .add('Recipient Error Step default', () => (
+    <ErrorStepDefault />
+  ))
+  .add('Recipient Error Step submit', () => (
+    <ErrorStepSubmit />
+  ))
+  .add('Recipient Error Step login', () => (
+    <ErrorStepLogin />
+  ))
+  .add('Recipient Error Step permission', () => (
+    <ErrorStepPermission />
+  ))
+  .add('Recipient Error Step server', () => (
+    <ErrorStepServer />
+  ))
+  .add('Recipient Configuration Step', () => (
+    <ConfigurationStep />
+  ))
   .add('Anticipation Form', () => (
     <AnticipationForm />
   ))
+  .add('Add Account', () => (
+    <AddAccount />
+  ))
+  .add('Recipient Confirm Step', () => (
+    <ConfirmRecipientStep />
+  ))
+  .add('Bank Account Step', () => (
+    <BankAccountStep />
+  ))
   .add('Recipient list', () => (
     <RecipientListState />
+  ))
+  .add('Recipient identification step', () => (
+    <IdentificationStep />
   ))
   .add('Manual review approve form', () => (
     <ManualReviewApproveForm />
@@ -210,6 +305,9 @@ storiesOf('Containers|Page containers', module)
         result: 'error',
       }}
     />
+  ))
+  .add('Select Account', () => (
+    <SelectAccount />
   ))
   .add('Withdraw', () => (
     <Withdraw />

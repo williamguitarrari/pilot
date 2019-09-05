@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { map } from 'ramda'
-import moment from 'moment'
 import {
   Button,
   CardContent,
@@ -13,7 +12,7 @@ import IconCalendar from 'emblematic-icons/svg/Calendar32.svg'
 
 import BalanceSummary from '../../components/BalanceSummary'
 import Operations from '../../components/Operations'
-import dateLimits from '../../models/dateSelectorLimits'
+import dateLimits, { isValidDay } from '../../models/dateSelectorLimits'
 import getColumns from '../../components/Operations/operationsTableColumns'
 import getColumnsTranslator from '../../formatters/columnTranslator'
 import operationsTypesLabels from '../../models/operationTypes'
@@ -34,14 +33,6 @@ const getDateLabels = t => ({
   start: t('dates.start'),
   today: t('dates.today'),
 })
-
-const isValidDay = timeframe => (date) => {
-  const today = moment()
-  if (timeframe === 'future') {
-    return moment(date).isSameOrAfter(today, 'day')
-  }
-  return moment(date).isSameOrBefore(today, 'day')
-}
 
 const BalanceOperations = ({
   amount,

@@ -1,0 +1,60 @@
+{
+  "bankAccount": {
+    "agency": "888",
+    "agency_digit": "",
+    "bank": "036",
+    "name": "Default",
+    "number": "9999",
+    "number_digit": "6",
+    "type": "conta_corrente"
+  },
+  "configuration": {
+    "anticipationDays": "15",
+    "anticipationModel": "manual",
+    "anticipationVolumePercentage": "100",
+    "transferDay": "1",
+    "transferEnabled": true,
+    "transferInterval": "weekly"
+  },
+  "identification": {
+    "cnpj": "",
+    "cnpjEmail": "",
+    "cnpjInformation": false,
+    "cnpjName": "",
+    "cnpjPhone": "",
+    "cnpjUrl": "",
+    "cpf": "426.872.198-35",
+    "cpfEmail": "",
+    "cpfInformation": false,
+    "cpfName": "",
+    "cpfPhone": "",
+    "cpfUrl": "",
+    "documentType": "cpf",
+    "partner0": {
+      "cpf": "",
+      "name": "",
+      "phone": ""
+    },
+    "partner1": {
+      "cpf": "",
+      "name": "",
+      "phone": ""
+    },
+    "partner2": {
+      "cpf": "",
+      "name": "",
+      "phone": ""
+    },
+    "partner3": {
+      "cpf": "",
+      "name": "",
+      "phone": ""
+    },
+    "partner4": {
+      "cpf": "",
+      "name": "",
+      "phone": ""
+    },
+    "partnerNumber": "0"
+  }
+}

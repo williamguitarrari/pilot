@@ -1,0 +1,37 @@
+{
+  "accounts": [
+    {
+      "agency": "888",
+      "agency_digit": "",
+      "bank": "036",
+      "documentNumber": "42687219835",
+      "id": "17902429",
+      "name": "Bradesco",
+      "number": "9999",
+      "number_digit": "6",
+      "type": "conta_corrente"
+    },
+    {
+      "agency": "777",
+      "agency_digit": "",
+      "bank": "001",
+      "documentNumber": "42687219835",
+      "id": "17902428",
+      "name": "Conta",
+      "number": "00000",
+      "number_digit": "9",
+      "type": "conta_corrente"
+    },
+    {
+      "agency": "0000",
+      "agency_digit": "0",
+      "bank": "001",
+      "documentNumber": "42687219835",
+      "id": "17690435",
+      "name": "Teste",
+      "number": "00000",
+      "number_digit": "0",
+      "type": "conta_corrente"
+    }
+  ]
+}

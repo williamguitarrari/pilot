@@ -5,22 +5,22 @@
   font-size: 11px;
 }
 
-.avaiable {
+.available {
   color: var(--color-light-greenish-100);
   font-size: 12px;
   font-weight: bold;
   padding: 0 4px;
 }
 
-.avaiableContainer {
+.availableContainer {
   font-size: 12px;
 }
 
-.avaiableTitle {
+.availableTitle {
   padding: 0 var(--spacing-tiny) var(--spacing-tiny) 0;
 }
 
-.avaiableTitle,
+.availableTitle,
 .label {
   font-size: 12px;
 }
