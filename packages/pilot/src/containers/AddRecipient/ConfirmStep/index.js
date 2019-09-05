@@ -204,6 +204,14 @@ const renderTransferInterval = (configuration, t) => {
     weekly: t('pages.add_recipient.weekly'),
   }
 
+  const weekDaysMap = {
+    1: t('pages.add_recipient.monday'),
+    2: t('pages.add_recipient.tuesday'),
+    3: t('pages.add_recipient.wednesday'),
+    4: t('pages.add_recipient.thursday'),
+    5: t('pages.add_recipient.friday'),
+  }
+
   if (transferEnabled) {
     return (
       <Fragment>
@@ -224,7 +232,7 @@ const renderTransferInterval = (configuration, t) => {
             <span className={styles.info}>
               {
                 (transferInterval === 'weekly')
-                  ? t(`pages.add_recipient.${transferDay}`)
+                  ? weekDaysMap[transferDay]
                   : transferDay
               }
             </span>

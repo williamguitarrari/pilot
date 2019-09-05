@@ -22,6 +22,7 @@ const TransferContent = ({
   data,
   onCancel,
   onChange,
+  onIntervalChange,
   onSave,
   onToggle,
   t,
@@ -45,6 +46,7 @@ const TransferContent = ({
             <Col>
               {Transfer({
                 data,
+                onIntervalChange,
                 t,
                 transferHandler: onToggle,
               })}
@@ -82,6 +84,7 @@ TransferContent.propTypes = {
   }),
   onCancel: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
+  onIntervalChange: PropTypes.func,
   onSave: PropTypes.func.isRequired,
   onToggle: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
@@ -89,6 +92,7 @@ TransferContent.propTypes = {
 
 TransferContent.defaultProps = {
   data: {},
+  onIntervalChange: null,
 }
 
 export default TransferContent

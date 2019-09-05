@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Button, Spacing } from 'former-kit'
+import { mergeLeft } from 'ramda'
 
 import AnticipationIcon from 'emblematic-icons/svg/Undo32.svg'
 import TransferIcon from 'emblematic-icons/svg/Transaction32.svg'
@@ -32,7 +33,9 @@ class RecipientDetailConfig extends Component {
     this.handleCollapse = this.handleCollapse.bind(this)
     this.handleChangeAnticipation = this.handleChangeAnticipation.bind(this)
     this.handleChangeTransfer = this.handleChangeTransfer.bind(this)
-    this.toggleChangeTransfer = this.toggleChangeTransfer.bind(this)
+    this.toggleChangeTransferEnabled = (
+      this.toggleChangeTransferEnabled.bind(this)
+    )
     this.renderAnticipationSub = this.renderAnticipationSub.bind(this)
     this.handleCancel = this.handleCancel.bind(this)
     this.onSaveAnticipation = this.onSaveAnticipation.bind(this)
@@ -40,6 +43,7 @@ class RecipientDetailConfig extends Component {
     this.onSaveBankAccount = this.onSaveBankAccount.bind(this)
     this.handleOpenHelpModal = this.handleOpenHelpModal.bind(this)
     this.handleCloseHelpModal = this.handleCloseHelpModal.bind(this)
+    this.handleIntervalChange = this.handleIntervalChange.bind(this)
   }
 
   onSaveAnticipation (data, errors) {
@@ -82,9 +86,7 @@ class RecipientDetailConfig extends Component {
   }
 
   handleChangeTransfer (transfer) {
-    this.setState({
-      transfer,
-    })
+    this.setState({ transfer })
   }
 
   handleCancel () {
@@ -96,7 +98,7 @@ class RecipientDetailConfig extends Component {
     })
   }
 
-  toggleChangeTransfer () {
+  toggleChangeTransferEnabled () {
     const { transfer } = this.state
     this.setState({
       transfer: {
@@ -117,6 +119,19 @@ class RecipientDetailConfig extends Component {
 
   handleOpenHelpModal () {
     this.setState({ openedModal: true })
+  }
+
+  handleIntervalChange (transferInterval) {
+    const {
+      transfer,
+    } = this.state
+
+    this.setState({
+      transfer: mergeLeft({
+        transferDay: '1',
+        transferInterval,
+      }, transfer),
+    })
   }
 
   handleCloseHelpModal () {
@@ -273,7 +288,8 @@ class RecipientDetailConfig extends Component {
             onCancel={this.handleCancel}
             onSave={this.onSaveTransfer}
             onChange={this.handleChangeTransfer}
-            onToggle={this.toggleChangeTransfer}
+            onToggle={this.toggleChangeTransferEnabled}
+            onIntervalChange={this.handleIntervalChange}
           />
         </RecipientItem>
         <RecipientItem

@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import Form from 'react-vanilla-form'
+import { mergeLeft } from 'ramda'
 
 import {
   Button,
@@ -45,6 +46,7 @@ class ConfigurationsStep extends Component {
     this.onFormChange = this.onFormChange.bind(this)
     this.onFormSubmit = this.onFormSubmit.bind(this)
     this.transferHandler = this.transferHandler.bind(this)
+    this.handleIntervalChange = this.handleIntervalChange.bind(this)
     this.handleOpenHelpModal = this.handleOpenHelpModal.bind(this)
     this.handleCloseHelpModal = this.handleCloseHelpModal.bind(this)
   }
@@ -78,6 +80,19 @@ class ConfigurationsStep extends Component {
     })
   }
 
+  handleIntervalChange (transferInterval) {
+    const {
+      formData,
+    } = this.state
+
+    this.setState({
+      formData: mergeLeft({
+        transferDay: '1',
+        transferInterval,
+      }, formData),
+    })
+  }
+
   handleOpenHelpModal () {
     this.setState({ openedModal: true })
   }
@@ -100,7 +115,6 @@ class ConfigurationsStep extends Component {
     const { openedModal } = this.state
 
     const { formData: data } = this.state
-    const { transferHandler } = this
 
     const numberMessage = t('pages.add_recipient.field_number')
     const isNumber = createNumberValidation(numberMessage)
@@ -172,7 +186,12 @@ class ConfigurationsStep extends Component {
               <h2 className={style.transferTitle}>
                 {t('pages.add_recipient.transfer_configuration')}
               </h2>
-              { Transfer({ data, t, transferHandler }) }
+              { Transfer({
+                data,
+                onIntervalChange: this.handleIntervalChange,
+                t,
+                transferHandler: this.transferHandler,
+              }) }
             </Grid>
           </CardContent>
           <CardActions>

@@ -127,7 +127,12 @@ const renderTransferInput = (data, t) => {
   )
 }
 
-const Transfer = ({ data, t, transferHandler }) => (
+const Transfer = ({
+  data,
+  onIntervalChange,
+  t,
+  transferHandler,
+}) => (
   <Fragment>
     <Row>
       <div className={style.marginBottom}>
@@ -148,6 +153,9 @@ const Transfer = ({ data, t, transferHandler }) => (
         <RadioGroup
           disabled={!data.transferEnabled}
           name="transferInterval"
+          onChange={
+            ({ target }) => onIntervalChange && onIntervalChange(target.value)
+          }
           options={transferIntervalOptions(t)}
         />
       </Col>
@@ -165,12 +173,14 @@ Transfer.propTypes = {
     transferInterval: PropTypes.string,
     transferWeekday: PropTypes.string,
   }),
+  onIntervalChange: PropTypes.func,
   t: PropTypes.func.isRequired,
   transferHandler: PropTypes.func.isRequired,
 }
 
 Transfer.defaultProps = {
   data: {},
+  onIntervalChange: null,
 }
 
 export default Transfer
