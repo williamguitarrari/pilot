@@ -9,11 +9,11 @@ import {
   append,
   applySpec,
   compose,
+  cond,
   contains,
   defaultTo,
   either,
   equals,
-  flatten,
   identity,
   isEmpty,
   isNil,
@@ -22,7 +22,9 @@ import {
   mergeRight,
   path,
   pipe,
+  prop,
   replace,
+  T,
   tail,
   when,
   without,
@@ -32,8 +34,6 @@ import {
   requestSearch,
   receiveSearch,
 } from './actions'
-
-import { requestLogout } from '../../Account/actions/actions'
 
 import RecipientTable from '../../../containers/RecipientTable'
 
@@ -47,7 +47,6 @@ const mapStateToProps = ({
 const mapDispatchToProps = ({
   onReceiveSearch: receiveSearch,
   onRequestSearch: requestSearch,
-  onRequestSearchFail: requestLogout,
 })
 
 const enhanced = compose(
@@ -89,7 +88,7 @@ const isRecipientId = (recipientText) => {
 }
 
 const isBankAccount = (bankAccount) => {
-  if (bankAccount.length > 10) {
+  if (!bankAccount || bankAccount.length > 10) {
     return false
   }
   const bankNumber = Number.parseInt(bankAccount, 10)
@@ -97,17 +96,39 @@ const isBankAccount = (bankAccount) => {
   return Number.isInteger(bankNumber)
 }
 
+const getKeyFormatter = key => applySpec({ [key]: identity })
+
+const getQueryKey = pipe(
+  prop('search'),
+  cond([
+    [isRecipientId, getKeyFormatter('id')],
+    [isBankAccount, getKeyFormatter('bank_account_id')],
+    [T, getKeyFormatter('name')],
+  ])
+)
+
+const getQueryObject = applySpec({
+  count: prop('count'),
+  page: prop('offset'),
+})
+
+const mountQueryObject = pipe(
+  juxt([
+    getQueryKey,
+    getQueryObject,
+  ]),
+  mergeAll
+)
+
 class RecipientsSearch extends React.Component {
   constructor (props) {
     super(props)
-
-    const urlSearchQuery = props.history.location.search
 
     this.state = {
       clearFilterDisabled: false,
       confirmationDisabled: false,
       expandedRows: [],
-      query: props.query || parseQueryUrl(urlSearchQuery),
+      next: null,
       result: {
         chart: {
           dataset: [],
@@ -183,69 +204,20 @@ class RecipientsSearch extends React.Component {
     }
   }
 
-  requestData (query) {
+  requestRecipients (query, nextPage) {
     const {
       client,
       onReceiveSearch,
       onRequestSearch,
-      onRequestSearchFail,
     } = this.props
-    onRequestSearch({ query })
+    const newQuery = nextPage ? { ...query, offset: nextPage } : query
 
-    const findByQuery = ({
-      count,
-      offset,
-      search,
-    }) => {
-      let key = 'name'
-
-      if (search) {
-        if (isRecipientId(search)) {
-          key = 'id'
-        } else if (isBankAccount(search)) {
-          key = 'bank_account_id'
-        }
-      }
-
-      return client
-        .recipients
-        .find({
-          count,
-          [key]: search,
-          page: offset,
-        })
-        .then(recipients => [recipients])
-        .catch((error) => {
-          onRequestSearchFail(error)
-        })
+    if (!nextPage) {
+      onRequestSearch({ query })
     }
 
-    const findByExternalId = ({
-      count,
-      offset,
-      search,
-    }) => {
-      if (search && !isRecipientId(search)) {
-        return client
-          .recipients
-          .find({
-            count,
-            external_id: search,
-            page: offset,
-          })
-          .catch((error) => {
-            onRequestSearchFail(error)
-          })
-      }
-
-      return Promise.resolve([])
-    }
-
-    return Promise.all([
-      findByExternalId(query),
-      findByQuery(query),
-    ])
-      .then(res => flatten(res))
+    return client.recipients
+      .find(mountQueryObject(newQuery))
       .then((res) => {
         const result = {
           list: {
@@ -257,18 +229,34 @@ class RecipientsSearch extends React.Component {
           },
         }
 
-        this.setState({
-          result,
-        })
+        if (nextPage) {
+          this.setState({
+            next: {
+              page: nextPage,
+              result,
+            },
+          })
+        } else {
+          if (!newQuery && res.length >= query.count) {
+            this.requestRecipients(query, query.offset + 1)
+          }
 
-        onReceiveSearch({
-          query,
-          rows: res,
-        })
+          this.setState({ result })
+
+          onReceiveSearch({ query })
+        }
       })
-      .catch((error) => {
-        onRequestSearchFail(error)
-      })
+  }
+
+  requestData (query) {
+    const { next } = this.state
+
+    if (next && next.page === query.offset) {
+      this.requestRecipients(query, query.offset + 1)
+      return Promise.resolve(next.result)
+    }
+
+    return this.requestRecipients(query)
   }
 
   handleFilterClear () {
@@ -296,7 +284,7 @@ class RecipientsSearch extends React.Component {
     filters,
     search,
   }) {
-    const { query } = this.state
+    const { query } = this.props
     const newQuery = {
       ...query,
       filters,
@@ -313,7 +301,7 @@ class RecipientsSearch extends React.Component {
   }
 
   handlePageChange (page) {
-    const { query } = this.state
+    const { query } = this.props
     const newQuery = {
       ...query,
       offset: page,
@@ -349,11 +337,6 @@ class RecipientsSearch extends React.Component {
       clearFilterDisabled,
       confirmationDisabled,
       expandedRows,
-      query,
-      query: {
-        count,
-        offset,
-      },
       result: {
         list,
       },
@@ -364,6 +347,11 @@ class RecipientsSearch extends React.Component {
       history: {
         push,
       },
+      query,
+      query: {
+        count,
+        offset,
+      } = {},
       loading,
       t,
     } = this.props
@@ -418,14 +406,19 @@ RecipientsSearch.propTypes = {
   }).isRequired,
   onReceiveSearch: PropTypes.func.isRequired,
   onRequestSearch: PropTypes.func.isRequired,
-  onRequestSearchFail: PropTypes.func.isRequired,
   query: PropTypes.shape({
     count: PropTypes.number.isRequired,
     filters: PropTypes.shape({}),
     offset: PropTypes.number.isRequired,
     search: PropTypes.string,
-  }).isRequired,
+  }),
   t: PropTypes.func.isRequired,
+}
+
+RecipientsSearch.defaultProps = {
+  query: {
+    offset: 1,
+  },
 }
 
 export default enhanced(RecipientsSearch)

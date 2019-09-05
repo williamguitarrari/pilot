@@ -1,11 +1,9 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 import AddIcon from 'emblematic-icons/svg/Add32.svg'
 import IconInfo from 'emblematic-icons/svg/Info32.svg'
 import Search32 from 'emblematic-icons/svg/Search32.svg'
-
-import { pick } from 'ramda'
 
 import {
   Alert,
@@ -35,7 +33,6 @@ const RecipientTable = ({
   loading,
   onDetailsClick,
   onExpandRow,
-  onFilterChange,
   onFilterClear,
   onFilterConfirm,
   onPageChange,
@@ -50,10 +47,29 @@ const RecipientTable = ({
   selectedRows,
   t,
 }) => {
+  const [newQuery, setQuery] = useState(query)
+  const [
+    isConfirmationDisabled,
+    setConfirmationDisabled,
+  ] = useState(confirmationDisabled)
+
   const columns = tableColumns({
     onDetailsClick,
     t,
   })
+
+  const handleFilterChange = (value) => {
+    setQuery(value)
+    setConfirmationDisabled(false)
+  }
+
+  useEffect(() => {
+    setQuery(query)
+  }, [query])
+
+  useEffect(() => {
+    setConfirmationDisabled(confirmationDisabled)
+  }, [confirmationDisabled])
 
   return (
     <Grid>
@@ -66,13 +82,13 @@ const RecipientTable = ({
         >
           <Filter
             clearFilterDisabled={clearFilterDisabled}
-            confirmationDisabled={confirmationDisabled}
+            confirmationDisabled={isConfirmationDisabled}
             disabled={loading}
             onConfirm={onFilterConfirm}
-            onChange={onFilterChange}
+            onChange={handleFilterChange}
             onClear={onFilterClear}
             options={filterOptions}
-            query={pick(['filters', 'search'], query)}
+            query={newQuery}
             t={t}
           >
             <Input
@@ -180,7 +196,6 @@ RecipientTable.propTypes = {
   loading: PropTypes.bool.isRequired,
   onDetailsClick: PropTypes.func.isRequired,
   onExpandRow: PropTypes.func.isRequired,
-  onFilterChange: PropTypes.func.isRequired,
   onFilterClear: PropTypes.func.isRequired,
   onFilterConfirm: PropTypes.func.isRequired,
   onPageChange: PropTypes.func.isRequired,
