@@ -15,6 +15,7 @@ import EditButton from './EditButton'
 import ReceiverInfo from './ReceiverInfo'
 import PartnerInfo from './PartnerInfo'
 import styles from './style.css'
+import bankCodes from '../../../models/banks'
 
 import { accountProps, accountDefaultProps } from '../BankAccountStep'
 import { virtualPageView } from '../../../vendor/googleTagManager'
@@ -24,6 +25,8 @@ import {
   CONFIGURATION,
   IDENTIFICATION,
 } from '../stepIds'
+
+const hasBankCode = code => !!bankCodes.find(bank => bank === code)
 
 const renderPartnerInfo = (identification, action, t) => {
   if (identification.documentType === 'cpf') return null
@@ -109,7 +112,10 @@ const renderBankAccount = (bankAccount, action, t) => (
           {t('pages.add_recipient.bank')}
         </span>
         <span className={styles.info}>
-          { t(`models.bank_code.${bankAccount.bank}`) }
+          {hasBankCode(bankAccount.bank)
+            ? t(`models.bank_code.${bankAccount.bank}`)
+            : bankAccount.bank
+          }
         </span>
       </Col>
       <Col>
