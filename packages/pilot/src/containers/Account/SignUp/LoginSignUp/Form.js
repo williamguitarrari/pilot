@@ -7,10 +7,10 @@ import {
   FormInput,
 } from 'former-kit'
 
-import styles from '../style.css'
+import styles from '../../style.css'
 
-import required from '../../../validation/required'
-import isEmail from '../../../validation/email'
+import required from '../../../../validation/required'
+import isEmail from '../../../../validation/email'
 
 const isRequired = t => required(t('sign_up.required'))
 
