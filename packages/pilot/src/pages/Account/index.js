@@ -15,7 +15,6 @@ import {
 import { translate } from 'react-i18next'
 
 import Account from '../../containers/Account'
-import InvalidEmailError from './SignUp/InvalidEmailError'
 import Login from './Login'
 import Logo from '../../components/Logo'
 import PasswordRecovery from './PasswordRecovery/Request'
@@ -23,8 +22,10 @@ import PasswordRecoveryConfirmation from './PasswordRecovery/Request/Confirmatio
 import PasswordReset from './PasswordRecovery/Reset'
 import PasswordResetConfirmation from './PasswordRecovery/Reset/Confirmation'
 import Presentation from './Presentation'
-import SignUp from './SignUp'
-import SignUpConfirmation from './SignUp/Confirmation'
+import CompanySignup from './SignUp/Company'
+import CompanySignupConfirmation from './SignUp/Company/Confirmation'
+import UserSignupConfirmation from './SignUp/User/Confirmation'
+import UserSignUp from './SignUp/User'
 import TestLogo from '../../components/Logo/TestLogo'
 
 import environment from '../../environment'
@@ -69,7 +70,15 @@ const AccountArea = ({ history: { location }, t }) => {
           />
           <Route
             path="/account/password/recovery"
-            component={() => <PasswordRecovery base={base} />}
+            render={() => <PasswordRecovery base={base} />}
+          />
+          <Route
+            path="/account/password/reset/confirmation"
+            component={PasswordResetConfirmation}
+          />
+          <Route
+            path="/account/password/reset/:token"
+            render={() => <PasswordReset base={base} />}
           />
           <Route
             path="/account/password/reset/confirmation"
@@ -81,15 +90,19 @@ const AccountArea = ({ history: { location }, t }) => {
           />
           <Route
             path="/account/signup/confirmation"
-            component={SignUpConfirmation}
+            render={() => <CompanySignupConfirmation />}
           />
           <Route
-            path="/account/signup/error"
-            component={InvalidEmailError}
+            path="/account/signup/invite/confirmation"
+            render={() => <UserSignupConfirmation />}
+          />
+          <Route
+            path="/account/signup/invite"
+            render={() => <UserSignUp base={base} />}
           />
           <Route
             path="/account/signup"
-            component={() => <SignUp base={base} />}
+            render={() => <CompanySignup base={base} />}
           />
           <Redirect to="/account/login" />
         </Switch>

@@ -12,6 +12,7 @@
   },
   "cancel": "cancelar",
   "card_number": "Número do cartão",
+  "company": "Empresa",
   "confirm": "Confirmar",
   "confirmation": "Confirmação",
   "conta_corrente": "Corrente",
@@ -134,9 +135,10 @@
   },
   "sign_up": {
     "back_signup_action": "Voltar para o cadastro",
-    "company": "Empresa",
-    "confirmation": "você receberá um e-mail com as instruções para a ativação de sua conta",
-    "confirmation_emphasis": "pronto!",
+    "company": {
+      "confirmation": "Você receberá um e-mail com as instruções para a ativação de sua conta",
+      "confirmation_emphasis": "Pronto!"
+    },
     "invalid_email_emphasis": "e-mail de cadastro inválido.",
     "invalid_email_error": "Para mais informações entre em contato com o administrador da sua conta.",
     "login_action": "faça login",
@@ -145,7 +147,11 @@
     "required": "Campo obrigatório",
     "sign_up_action": "Cadastrar",
     "subtitle": "na dashboard FormerKit",
-    "title": "crie sua conta"
+    "title": "crie sua conta",
+    "user": {
+      "confirmation": "Seu usuário foi criado com sucesso! Retorne à página de login para começar a utilizá-lo.",
+      "confirmation_emphasis": "Pronto!"
+    }
   },
   "transactions": {
     "list": "Transações",
@@ -1012,7 +1018,8 @@
       "errors": {
         "field_required": "Esse campo é obrigatório",
         "invalid_password": "Senha inválida",
-        "passwords_dont_match": "As senhas não conferem"
+        "passwords_dont_match": "As senhas não conferem",
+        "weak_password": "Senha muito fraca"
       },
       "reset_action": "Enviar",
       "reset_call": "Digite sua nova senha para concluir a redefinição."

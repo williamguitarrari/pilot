@@ -1,5 +1,5 @@
-import React from 'react'
-
+import React, { useState } from 'react'
+import { validate } from 'p4g4rm3'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import { checkA11y } from '@storybook/addon-a11y'
@@ -15,10 +15,13 @@ import {
   PasswordResetConfirmation,
 } from '../../../src/containers/Account/PasswordRecovery/Reset'
 import {
-  SignUpForm,
-  SignUpConfirmation,
-  InvalidEmailError,
-} from '../../../src/containers/Account/SignUp'
+  CompanySignupForm,
+  CompanySignupConfirmation,
+} from '../../../src/containers/Account/SignUp/Company'
+import {
+  UserSignupForm,
+  UserSignupConfirmation,
+} from '../../../src/containers/Account/SignUp/User'
 import Presentation from '../../../src/containers/Account/Presentation'
 
 const t = translation => translation
@@ -46,6 +49,37 @@ const TestPresentation = (
     t={t}
   />
 )
+
+const UserSignup = () => {
+  const initialValidations = validate(' ')
+  const [validations, setValidations] = useState(initialValidations)
+
+  const validatePassword = logger => (data) => {
+    const newValidations = validate(data.password)
+    setValidations(newValidations)
+
+    logger(data)
+  }
+
+  return (
+    <Account
+      logo={Placeholder}
+      primaryContent={(
+        <UserSignupForm
+          base="dark"
+          email="johndoe@pagar.me"
+          onChange={validatePassword(action('onChange'))}
+          onPasswordRecovery={action('recover password')}
+          onSubmit={validatePassword(action('submit'))}
+          passwordValidations={validations}
+          t={t}
+        />
+      )}
+      secondaryContent={TestPresentation}
+      t={t}
+    />
+  )
+}
 
 const LivePresentation = (
   <Presentation
@@ -157,12 +191,12 @@ storiesOf('Pages|Login', module)
 
 storiesOf('Pages|Signup', module)
   .addDecorator(checkA11y)
-  .add('Signup', () => (
+  .add('Company Signup', () => (
     <Account
       // eslint-disable-next-line
       logo={Placeholder}
       primaryContent={(
-        <SignUpForm
+        <CompanySignupForm
           base="dark"
           onPasswordRecovery={action('recover password')}
           onSubmit={action('submit')}
@@ -173,12 +207,12 @@ storiesOf('Pages|Signup', module)
       t={t}
     />
   ))
-  .add('Signup Confirmation', () => (
+  .add('Company Signup Confirmation', () => (
     <Account
       // eslint-disable-next-line
       logo={Placeholder}
       primaryContent={(
-        <SignUpConfirmation
+        <CompanySignupConfirmation
           onPasswordRecovery={action('recover password')}
           onBackToLogin={action('back to login')}
           t={t}
@@ -188,14 +222,14 @@ storiesOf('Pages|Signup', module)
       t={t}
     />
   ))
-  .add('Signup E-mail Invalid', () => (
+  .add('User Signup', () => <UserSignup />)
+  .add('User Signup Confirmation', () => (
     <Account
-      // eslint-disable-next-line
       logo={Placeholder}
       primaryContent={(
-        <InvalidEmailError
+        <UserSignupConfirmation
           onPasswordRecovery={action('recover password')}
-          onBackToSignUp={action('back to signup')}
+          onBackToLogin={action('back to login')}
           t={t}
         />
       )}

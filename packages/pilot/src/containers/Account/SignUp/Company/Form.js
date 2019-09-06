@@ -42,7 +42,7 @@ const SignUpForm = ({
       <FormInput
         base={base}
         disabled={loading}
-        label={t('sign_up.company')}
+        label={t('company')}
         name="company"
         type="text"
       />
