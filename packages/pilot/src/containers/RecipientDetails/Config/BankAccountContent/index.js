@@ -26,6 +26,8 @@ import SelectAccountContent from '../../../AddRecipient/BankAccountStep/SelectAc
 import createNumberValidation from '../../../../validation/number'
 import createRequiredValidation from '../../../../validation/required'
 import createMaxLengthValidation from '../../../../validation/maxLength'
+import createAccountDigitValidation from '../../../../validation/accountCheckDigit'
+import createAgencyDigitValidation from '../../../../validation/agencyCheckDigit'
 import accountTypes from '../../../../models/accountTypes'
 import styles from '../style.css'
 
@@ -145,10 +147,7 @@ class BankAccountContent extends Component {
         <div className={styles.paddingTop}>
           <Grid>
             {this.renderDocumentNumber()}
-            {AddAccountContent({
-              data,
-              t,
-            })}
+            {AddAccountContent({ data, t })}
           </Grid>
         </div>
       )
@@ -182,16 +181,17 @@ class BankAccountContent extends Component {
     const max30Message = t('pages.add_recipient.field_max', { number: 30 })
     const max13Message = t('pages.add_recipient.field_max', { number: 13 })
     const max5Message = t('pages.add_recipient.field_max', { number: 5 })
-    const max2Message = t('pages.add_recipient.field_max', { number: 2 })
-    const max1Message = t('pages.add_recipient.field_max', { number: 1 })
+    const numberMessage = t('pages.add_recipient.field_number')
+    const requiredMessage = t('pages.add_recipient.field_required')
+    const digitMessage = t('pages.add_recipient.field_invalid_digit')
 
-    const required = createRequiredValidation(t('pages.recipient_detail.required'))
-    const number = createNumberValidation(t('pages.recipient_detail.number'))
+    const isNumber = createNumberValidation(numberMessage)
     const max30Characters = createMaxLengthValidation(30, max30Message)
     const max13Characters = createMaxLengthValidation(13, max13Message)
     const max5Characters = createMaxLengthValidation(5, max5Message)
-    const max2Characters = createMaxLengthValidation(2, max2Message)
-    const max1Characters = createMaxLengthValidation(1, max1Message)
+    const required = createRequiredValidation(requiredMessage)
+    const isAccountDigit = createAccountDigitValidation(digitMessage)
+    const isAgencyDigit = createAgencyDigitValidation(digitMessage)
 
     if (displaySelectAccount) {
       return (
@@ -215,6 +215,7 @@ class BankAccountContent extends Component {
           <Form
             data={{
               agency: '',
+              agency_digit: '',
               bank: '',
               documentNumber: data.documentNumber,
               id: accounts[0].id,
@@ -224,12 +225,12 @@ class BankAccountContent extends Component {
             }}
             validateOn="blur"
             validation={{
-              agency: [required, number, max5Characters],
-              agency_digit: [number, max1Characters],
+              agency: [required, isNumber, max5Characters],
+              agency_digit: [isAgencyDigit],
               bank: [required],
               name: [required, max30Characters],
-              number: [required, number, max13Characters],
-              number_digit: [required, number, max2Characters],
+              number: [required, isNumber, max13Characters],
+              number_digit: [required, isAccountDigit],
               type: [required],
             }}
             onSubmit={this.handleSubmit}
