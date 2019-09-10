@@ -19,7 +19,6 @@ import {
   isNil,
   juxt,
   mergeAll,
-  mergeRight,
   path,
   pipe,
   prop,
@@ -142,7 +141,6 @@ class RecipientsSearch extends React.Component {
     }
 
     this.handleExpandRow = this.handleExpandRow.bind(this)
-    this.handleFilterChange = this.handleFilterChange.bind(this)
     this.handleFilterClear = this.handleFilterClear.bind(this)
     this.handleFilterConfirm = this.handleFilterConfirm.bind(this)
     this.handlePageChange = this.handlePageChange.bind(this)
@@ -168,10 +166,6 @@ class RecipientsSearch extends React.Component {
   componentDidUpdate (prevProps) {
     const { query } = this.props
     if (!equals(prevProps.query, query)) {
-      this.setState({ // eslint-disable-line react/no-did-update-set-state
-        query,
-      })
-
       this.updateQuery(query)
     }
   }
@@ -263,21 +257,9 @@ class RecipientsSearch extends React.Component {
     this.setState({
       clearFilterDisabled: true,
       confirmationDisabled: true,
-      query: initialState.query,
     })
 
     this.updateQuery(initialState.query)
-  }
-
-  handleFilterChange (oldQuery) {
-    const { query } = this.state
-    const newQuery = mergeRight(query, oldQuery)
-
-    this.setState({
-      clearFilterDisabled: true,
-      confirmationDisabled: false,
-      query: newQuery,
-    })
   }
 
   handleFilterConfirm ({
@@ -306,6 +288,10 @@ class RecipientsSearch extends React.Component {
       ...query,
       offset: page,
     }
+
+    this.setState({
+      clearFilterDisabled: false,
+    })
 
     this.updateQuery(newQuery)
   }
@@ -373,7 +359,6 @@ class RecipientsSearch extends React.Component {
         onChangeViewMode={this.handleViewModeChange}
         onDetailsClick={this.handleRowDetailsClick}
         onExpandRow={this.handleExpandRow}
-        onFilterChange={this.handleFilterChange}
         onFilterConfirm={this.handleFilterConfirm}
         onFilterClear={this.handleFilterClear}
         onPageChange={this.handlePageChange}
