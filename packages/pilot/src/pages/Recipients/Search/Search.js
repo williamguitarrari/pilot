@@ -213,14 +213,26 @@ class RecipientsSearch extends React.Component {
     return client.recipients
       .find(mountQueryObject(newQuery))
       .then((res) => {
-        const result = {
+        const resultArray = res instanceof Array
+        const total = {
+          count: res.length,
+          offset: query.offset,
+        }
+
+        let result = {
           list: {
             rows: res,
           },
-          total: {
-            count: res.length,
-            offset: query.offset,
-          },
+          total,
+        }
+
+        if (!resultArray) {
+          result = {
+            list: {
+              rows: [res],
+            },
+            total,
+          }
         }
 
         if (nextPage) {
