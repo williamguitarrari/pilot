@@ -14,6 +14,7 @@ import {
   defaultTo,
   either,
   equals,
+  flatten,
   identity,
   isEmpty,
   isNil,
@@ -213,26 +214,16 @@ class RecipientsSearch extends React.Component {
     return client.recipients
       .find(mountQueryObject(newQuery))
       .then((res) => {
-        const resultArray = res instanceof Array
         const total = {
           count: res.length,
           offset: query.offset,
         }
 
-        let result = {
+        const result = {
           list: {
-            rows: res,
+            rows: flatten([res]),
           },
           total,
-        }
-
-        if (!resultArray) {
-          result = {
-            list: {
-              rows: [res],
-            },
-            total,
-          }
         }
 
         if (nextPage) {
@@ -250,6 +241,19 @@ class RecipientsSearch extends React.Component {
           this.setState({ result })
 
           onReceiveSearch({ query })
+        }
+      })
+      .catch((error) => {
+        if (error) {
+          onReceiveSearch({ query })
+
+          this.setState({
+            result: {
+              list: {
+                rows: [],
+              },
+            },
+          })
         }
       })
   }

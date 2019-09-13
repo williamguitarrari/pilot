@@ -148,7 +148,7 @@ ErrorBoundary.propTypes = {
     message: PropTypes.string.isRequired,
     method: PropTypes.string,
     name: PropTypes.string.isRequired,
-    priority: PropTypes.bool.isRequired,
+    priority: PropTypes.bool,
     source: PropTypes.string.isRequired,
     status: PropTypes.number,
     type: PropTypes.string.isRequired,
