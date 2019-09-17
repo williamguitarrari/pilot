@@ -283,8 +283,8 @@ class DetailRecipientPage extends Component {
     this.setState({ exporting: true })
     const { client, match } = this.props
     const { dates } = this.state
-    const startDate = dates.start.format('x')
-    const endDate = dates.end.format('x')
+    const startDate = dates.start.startOf('day').format('x')
+    const endDate = dates.end.endOf('day').format('x')
 
     const { id: recipientId } = match.params
     return client
