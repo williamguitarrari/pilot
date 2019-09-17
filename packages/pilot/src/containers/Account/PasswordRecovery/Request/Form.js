@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Form from 'react-vanilla-form'
+import classNames from 'classnames'
 import {
   Button,
   FormInput,
@@ -19,15 +20,14 @@ const PasswordRecoveryForm = ({
   t,
 }) => (
   <Form
-    className={styles.resetPassword}
     errors={errors}
     onSubmit={onSubmit}
     validation={{
       email: isEmail(t('invalid_email')),
     }}
   >
-    <div className={styles.login}>
-      <span className={styles.recoveryCall}>
+    <div className={classNames(styles.formContent, styles.passwordRecovery)}>
+      <span className={classNames(styles.uppercase, styles.actionCall)}>
         {t('pages.password_recovery.recovery_call')}
       </span>
       <FormInput

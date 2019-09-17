@@ -88,32 +88,42 @@
   max-width: 80ch;
 }
 
-.login .paragraph {
-  text-transform: uppercase;
-}
-
-.login,
-.signIn,
-.resetPassword {
+.formContent,
+.confirmationContent {
   display: flex;
   flex-direction: column;
   flex: 1;
-  margin-top: 20px;
+  min-height: 150px;
+  padding-top: var(--spacing-large);
   width: 100%;
 
-  & .paragraph {
-    text-transform: uppercase;
+  &.signup {
+    min-height: 400px;
   }
 
-  & .recoveryCall {
-    text-transform: uppercase;
+  &.passwordRecovery {
+    min-height: 110px;
+  }
+
+  &.passwordReset {
+    min-height: 300px;
+  }
+}
+
+.confirmationContent {
+  margin-top: 130px;
+}
+
+.formContent {
+  justify-content: space-between;
+
+  & > *:not(:last-child) {
+    margin-bottom: var(--spacing-large);
   }
 }
 
 .errorAlert {
-  align-items: center;
-  display: flex;
-  height: 120px;
+  margin-top: var(--spacing-large);
 }
 
 .hugeButton,
@@ -128,6 +138,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  margin-top: 130px;
   width: 100%;
 }
 
@@ -144,26 +155,6 @@
   &:focus {
     color: #bababa;
   }
-}
-
-.primaryContent .login,
-.primaryContent .signIn {
-
-  & > *:not(:first-child) {
-    padding-top: 73px;
-  }
-}
-
-.resetPassword {
-
-  & > .login > div:last-child {
-    margin-top: var(--spacing-large);
-    padding-top: 0;
-  }
-}
-
-.primaryContent .signIn {
-  padding-bottom: var(--spacing-large);
 }
 
 .link {
@@ -183,10 +174,6 @@
 
 .confirmation .actions {
   padding-bottom: 35px;
-}
-
-.confirmationContent {
-  padding-bottom: 33px;
 }
 
 .changeEnvironment {

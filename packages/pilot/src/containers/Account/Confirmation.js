@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { Button } from 'former-kit'
 
-import styles from '../style.css'
+import styles from './style.css'
 
 const Confirmation = ({
   labels: {
@@ -19,13 +19,11 @@ const Confirmation = ({
       styles.confirmationContent
     )}
   >
-    <div className={styles.login}>
-      <p className={styles.paragraph}>
-        <b>{confirmationEmphasis}</b>
-        {' '}
-        <span>{confirmation}</span>
-      </p>
-    </div>
+    <p className={classNames(styles.uppercase, styles.paragraph)}>
+      <b>{confirmationEmphasis}</b>
+      {' '}
+      <span>{confirmation}</span>
+    </p>
     <div className={styles.actions}>
       <div className={styles.hugeButton}>
         <Button

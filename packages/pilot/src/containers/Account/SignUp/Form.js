@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Form from 'react-vanilla-form'
+import classNames from 'classnames'
 import {
   Button,
   FormInput,
@@ -30,7 +31,7 @@ const SignUpForm = ({
     }}
     onSubmit={onSubmit}
   >
-    <div className={styles.signIn}>
+    <div className={classNames(styles.formContent, styles.signup)}>
       <FormInput
         base={base}
         disabled={loading}

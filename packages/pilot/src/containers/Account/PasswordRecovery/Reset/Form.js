@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import Form from 'react-vanilla-form'
+import classNames from 'classnames'
 import {
   Alert,
   Button,
@@ -17,6 +18,7 @@ const PasswordResetForm = ({
   base,
   errors,
   loading,
+  onBackToLogin,
   onChange,
   onSubmit,
   t,
@@ -26,7 +28,6 @@ const PasswordResetForm = ({
 
   return (
     <Form
-      className={styles.resetPassword}
       errors={errors}
       onChange={onChange}
       onSubmit={onSubmit}
@@ -35,8 +36,8 @@ const PasswordResetForm = ({
         passwordConfirm: required(t('pages.password_reset.errors.field_required')),
       }}
     >
-      <div className={styles.login}>
-        <span className={styles.recoveryCall}>
+      <div className={classNames(styles.formContent, styles.passwordReset)}>
+        <span className={styles.uppercase}>
           {t('pages.password_reset.reset_call')}
         </span>
         <PasswordInput
@@ -58,8 +59,11 @@ const PasswordResetForm = ({
           type="password"
           name="passwordConfirm"
         />
+      </div>
+      <div className={styles.errorAlert}>
         {errors && errors.api && (
           <Alert
+            base={base}
             type="error"
             icon={<IconClear height={16} width={16} />}
           >
@@ -79,6 +83,14 @@ const PasswordResetForm = ({
             {t('pages.password_reset.reset_action')}
           </Button>
         </div>
+        <button
+          disabled={loading}
+          onClick={onBackToLogin}
+          role="link"
+          type="button"
+        >
+          {t('back_login_action')}
+        </button>
       </div>
     </Form>
   )
@@ -91,6 +103,7 @@ PasswordResetForm.propTypes = {
     passwordConfirm: PropTypes.string,
   }),
   loading: PropTypes.bool,
+  onBackToLogin: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,

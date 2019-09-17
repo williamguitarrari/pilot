@@ -66,6 +66,8 @@ const Reset = ({
     setValidations(score)
   }
 
+  const onBackToLogin = () => replace('/account/login')
+
   const onSubmit = ({ password, passwordConfirm }) => {
     validateInputs({
       password,
@@ -101,6 +103,7 @@ const Reset = ({
       base={base}
       errors={errors}
       loading={loading}
+      onBackToLogin={onBackToLogin}
       onChange={validateInputs}
       onSubmit={onSubmit}
       t={t}

@@ -28,7 +28,7 @@ const LoginContainer = ({
       email: isEmail(t('invalid_email')),
     }}
   >
-    <div className={styles.login}>
+    <div className={styles.formContent}>
       <FormInput
         base={base}
         disabled={loading}
