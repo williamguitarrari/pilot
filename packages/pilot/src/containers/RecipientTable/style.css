@@ -13,3 +13,7 @@
 .marginRight {
   margin-right: var(--spacing-medium);
 }
+
+.marginTop {
+  margin-top: var(--spacing-medium);
+}

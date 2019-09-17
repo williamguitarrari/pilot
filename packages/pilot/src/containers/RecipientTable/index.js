@@ -2,11 +2,9 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 import AddIcon from 'emblematic-icons/svg/Add32.svg'
-import IconInfo from 'emblematic-icons/svg/Info32.svg'
 import Search32 from 'emblematic-icons/svg/Search32.svg'
 
 import {
-  Alert,
   Button,
   Card,
   CardActions,
@@ -23,6 +21,7 @@ import style from './style.css'
 import Filter from '../Filter'
 import tableColumns from './tableColumns'
 
+import NotFoundMessage from './NotFoundMessage'
 import TableData from '../../components/Operations/TableData'
 
 const RecipientTable = ({
@@ -104,17 +103,12 @@ const RecipientTable = ({
           desk={12}
           tv={12}
         >
-          {rows.length <= 0 && !loading
+          {rows.length === 0
           && (
-            <Alert
-              icon={<IconInfo height={16} width={16} />}
-              type="info"
-            >
-              <p>
-                <strong>{t('pages.recipients.no_results')}</strong>&nbsp;
-                {t('pages.recipients.try_again')}
-              </p>
-            </Alert>
+            <NotFoundMessage
+              onFilterClear={onFilterClear}
+              t={t}
+            />
           )}
           {rows.length > 0
           && (

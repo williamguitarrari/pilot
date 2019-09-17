@@ -4,7 +4,10 @@ import { translate } from 'react-i18next'
 import withRouter from 'react-router-dom/withRouter'
 import { connect } from 'react-redux'
 import moment from 'moment'
-import { Alert, Snackbar } from 'former-kit'
+import {
+  Alert,
+  Snackbar,
+} from 'former-kit'
 import IconInfo from 'emblematic-icons/svg/Info32.svg'
 import IconClose from 'emblematic-icons/svg/ClearClose32.svg'
 
@@ -13,13 +16,13 @@ import {
   compose,
   lensPath,
   mergeLeft,
-  pathOr,
   pipe,
   propEq,
   reject,
   view,
 } from 'ramda'
 
+import { getErrorMessage } from '../../../formatters/error'
 import itemsPerPage from '../../../models/itemsPerPage'
 
 import ConfirmModal from '../../../components/ConfirmModal'
@@ -81,6 +84,7 @@ class DetailRecipientPage extends Component {
         start: moment().subtract(7, 'day'),
       },
       disabled: false,
+      errorMessage: '',
       exporting: false,
       loading: true,
       nextPage: null,
@@ -103,6 +107,7 @@ class DetailRecipientPage extends Component {
     this.fetchRecipientData = this.fetchRecipientData.bind(this)
     this.handleAnticipationCancel = this.handleAnticipationCancel.bind(this)
     this.handleDateFilter = this.handleDateFilter.bind(this)
+    this.handleErrorMessage = this.handleErrorMessage.bind(this)
     this.handleExportData = this.handleExportData.bind(this)
     this.handlePageChange = this.handlePageChange.bind(this)
     this.handlePageCountChange = this.handlePageCountChange.bind(this)
@@ -143,6 +148,9 @@ class DetailRecipientPage extends Component {
           showSnackbar: true,
         })
       })
+      .catch((error) => {
+        this.handleErrorMessage(error)
+      })
   }
 
   onSaveTransfer (transferData) {
@@ -164,6 +172,9 @@ class DetailRecipientPage extends Component {
           ...newState,
           showSnackbar: true,
         })
+      })
+      .catch((error) => {
+        this.handleErrorMessage(error)
       })
   }
 
@@ -237,6 +248,17 @@ class DetailRecipientPage extends Component {
           showSnackbar: true,
         })
       })
+      .catch((error) => {
+        this.handleErrorMessage(error)
+      })
+  }
+
+  handleErrorMessage (error) {
+    const getError = getErrorMessage(error)
+    this.setState({
+      errorMessage: getError,
+      showSnackbar: true,
+    })
   }
 
   handleCloseSnackbar () {
@@ -261,8 +283,8 @@ class DetailRecipientPage extends Component {
     this.setState({ exporting: true })
     const { client, match } = this.props
     const { dates } = this.state
-    const startDate = dates.start.format('x')
-    const endDate = dates.end.format('x')
+    const startDate = dates.start.startOf('day').format('x')
+    const endDate = dates.end.endOf('day').format('x')
 
     const { id: recipientId } = match.params
     return client
@@ -619,6 +641,7 @@ class DetailRecipientPage extends Component {
       currentPage,
       dates,
       disabled,
+      errorMessage,
       exporting,
       loading,
       nextPage,
@@ -644,13 +667,11 @@ class DetailRecipientPage extends Component {
 
     if (pageError) {
       const unknownErrorMessage = t('unknown_error')
-      const errorMessagePath = ['response', 'errors', 0, 'message']
-      const getErrorMessage = pathOr(unknownErrorMessage, errorMessagePath)
-      const errorMessage = getErrorMessage(pageError)
+      const pageErrorMessage = getErrorMessage(pageError) || unknownErrorMessage
 
       return (
         <Alert icon={<IconInfo height={16} width={16} />} type="info">
-          <span>{errorMessage}</span>
+          <span>{pageErrorMessage}</span>
         </Alert>
       )
     }
@@ -682,9 +703,11 @@ class DetailRecipientPage extends Component {
             icon={<IconClose height={12} width={12} />}
             dismissTimeout={2500}
             onDismiss={this.handleCloseSnackbar}
-            type="info"
+            type={errorMessage ? 'error' : 'info'}
           >
-            <p>{t('pages.recipient_detail.configuration_changed')}</p>
+            <p>
+              {errorMessage || t('pages.recipient_detail.configuration_changed')}
+            </p>
           </Snackbar>
           )
         }
