@@ -305,7 +305,7 @@ const TransactionsList = ({
                         loading={loading}
                         expandable
                         expandedRows={expandedRows}
-                        maxColumns={7}
+                        maxColumns={6}
                         onExpandRow={onExpandRow}
                         onOrderChange={handleOrderChange}
                         onRowClick={onRowClick}

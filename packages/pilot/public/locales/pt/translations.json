@@ -410,7 +410,7 @@
       "card_brand": "Bandeira",
       "created_date": "Data da transação",
       "credit_card": "Cartão de crédito",
-      "customer_name": "Nome do cliente",
+      "customer_name": "Nome",
       "debit_card": "Cartão de débito",
       "details": "Detalhes da transação",
       "document": "CPF / CNPJ",
@@ -421,13 +421,13 @@
       "installments": "Parcelas",
       "international_credit_card": "Cartão de crédito estrangeiro",
       "nsu": "NSU",
-      "paid_amount": "Valor capturado",
       "payment_method": "Forma de pagamento",
       "refuse_reason": "Motivo de recusa",
       "soft_descriptor": "Descrição na fatura",
       "status": "Status",
       "subscription_id": "Id da assinatura",
-      "tid": "TID (ID da transação)"
+      "tid": "TID (ID da transação)",
+      "transaction_amount": "Valor da transação"
     },
     "user": {
       "permission": {
