@@ -2,32 +2,40 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import {
-  CardSection,
   Col,
+  CardContent,
+  CardSection,
   Row,
 } from 'former-kit'
 
-import style from './style.css'
+const BASE_DARK = 'dark'
+const BASE_LIGHT = 'light'
 
-const RenderChildren = ({ children }) => ( // eslint-disable-line react/prop-types
+const RenderChildren = ({ base, children }) => ( // eslint-disable-line react/prop-types
   <Col>
     <CardSection>
-      <div className={style.content}>
-        {children}
-      </div>
+      { base === BASE_DARK && (
+        <CardContent>
+          {children}
+        </CardContent>
+      )}
+      { base === BASE_LIGHT && children }
     </CardSection>
   </Col>
 )
 
 const Summary = ({
+  base,
   children,
 }) => (
   <Row stretch flex>
     {
       Array.isArray(children)
         ? children.map((child, index) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <RenderChildren key={index}>
+          <RenderChildren
+            base={base}
+            key={index} // eslint-disable-line react/no-array-index-key
+          >
             {child}
           </RenderChildren>
         ))
@@ -41,7 +49,12 @@ const Summary = ({
 )
 
 Summary.propTypes = {
+  base: PropTypes.oneOf([BASE_DARK, BASE_LIGHT]),
   children: PropTypes.node.isRequired,
+}
+
+Summary.defaultProps = {
+  base: BASE_DARK,
 }
 
 export default Summary

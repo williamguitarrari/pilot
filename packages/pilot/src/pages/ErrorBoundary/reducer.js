@@ -107,9 +107,9 @@ const matchesReactError = (error, errorTemplate) => {
 }
 
 const findError = (error, errors) => {
-  const sameRouteErrors = errors.filter(({ affectedRoutes }) => passExactRoute(
-    error.affectedRoute, affectedRoutes
-  ))
+  const sameRouteErrors = errors.filter(({
+    affectedRoutes,
+  }) => passExactRoute(error.affectedRoute, affectedRoutes))
 
   const differentRouteErrors = difference(errors, sameRouteErrors)
   const sameRouteErrorsFirst = concat(sameRouteErrors, differentRouteErrors)

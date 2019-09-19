@@ -139,9 +139,10 @@ const TransactionsList = ({
 }) => {
   const columns = tableColumns({ onDetailsClick, t })
   const orderColumn = findIndex(propEq('accessor', orderField), columns)
-  const handleOrderChange = (columnIndex, tableOrder) => onOrderChange(
-    columns[columnIndex].accessor, tableOrder
-  )
+  const handleOrderChange = (
+    columnIndex,
+    tableOrder
+  ) => onOrderChange(columns[columnIndex].accessor, tableOrder)
 
   return (
     <Grid>
@@ -263,9 +264,9 @@ const TransactionsList = ({
                       <Dropdown
                         disabled={loading || viewMode === 'graph'}
                         name="page-count"
-                        onChange={e => onPageCountChange(
-                          parseInt(e.target.value, 10)
-                        )}
+                        onChange={
+                          e => onPageCountChange(parseInt(e.target.value, 10))
+                        }
                         options={itemsPerPage.map(i => ({
                           name: t('items_per_page', { count: i }),
                           value: `${i}`,

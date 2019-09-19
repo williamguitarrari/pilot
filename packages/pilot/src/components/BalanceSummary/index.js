@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { keys } from 'ramda'
-
+import classNames from 'classnames'
 import Summary from '../Summary'
 import TotalDisplay from '../TotalDisplay'
 
@@ -13,24 +13,31 @@ const colors = {
   outgoing: '#ff796f',
 }
 
-const BalanceSummary = ({ amount, loading }) => (
-  <Summary>
+const BalanceSummary = ({ amount, base, loading }) => (
+  <Summary base={base}>
     {
       keys(amount).map(type => (
         <div
           className={style.summaryContent}
           key={type}
         >
-          <TotalDisplay
-            align="center"
-            amount={amount[type].value}
-            amountSize="huge"
-            color={colors[type]}
-            title={amount[type].title}
-            titleColor={colors[type]}
-            titleSize="medium"
-            loading={loading}
-          />
+          <div className={
+            classNames(style.content, {
+              [style[base]]: base,
+            })
+          }
+          >
+            <TotalDisplay
+              align="center"
+              amount={amount[type].value}
+              amountSize="huge"
+              color={colors[type]}
+              title={amount[type].title}
+              titleColor={colors[type]}
+              titleSize="medium"
+              loading={loading}
+            />
+          </div>
         </div>
       ))
     }
@@ -48,10 +55,12 @@ BalanceSummary.propTypes = {
     outcoming: totalShape,
     outgoing: totalShape,
   }),
+  base: PropTypes.oneOf(['light', 'dark']),
   loading: PropTypes.bool.isRequired,
 }
 BalanceSummary.defaultProps = {
   amount: {},
+  base: 'dark',
 }
 
 export default BalanceSummary
