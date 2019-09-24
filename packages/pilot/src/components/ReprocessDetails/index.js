@@ -2,15 +2,18 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { mapObjIndexed } from 'ramda'
 import {
+  CardSection,
   Col,
   Grid,
   Row,
 } from 'former-kit'
 
+import styles from './style.css'
 import Property from '../Property'
 
 const fields = (labels, contents) => mapObjIndexed((label, key) => (
   <Property
+    className={styles.property}
     title={label}
     value={contents[key]}
   />
@@ -22,41 +25,42 @@ const ReprocessDetails = ({
 }) => {
   const {
     amount,
-    cardNumber,
     holderName,
-    installments,
+    transactionId,
   } = fields(labels, contents)
 
   return (
-    <Grid>
-      <Row>
-        <Col palm={12} tablet={4} desk={4} tv={4}>
-          { cardNumber }
-        </Col>
-        <Col palm={12} tablet={4} desk={4} tv={4}>
-          {amount}
-        </Col>
-        <Col palm={12} tablet={4} desk={4} tv={4}>
-          {installments}
-        </Col>
-        <Col palm={12} tablet={12} desk={12} tv={12}>
-          {holderName}
-        </Col>
-      </Row>
-    </Grid>
+    <div className={styles.reprocessDetails}>
+      <CardSection>
+        <Grid>
+          <Row stretch>
+            <Col align="start" palm={3} tablet={3} desk={3} tv={3}>
+              <b>{transactionId}</b>
+            </Col>
+            <Col align="center" palm={6} tablet={6} desk={6} tv={6}>
+              {holderName}
+            </Col>
+            <Col align="end" palm={3} tablet={3} desk={3} tv={3}>
+              <b>{amount}</b>
+            </Col>
+          </Row>
+        </Grid>
+      </CardSection>
+    </div>
   )
 }
 
-const shape = {
-  amount: PropTypes.string.isRequired,
-  cardNumber: PropTypes.string.isRequired,
-  holderName: PropTypes.string.isRequired,
-  installments: PropTypes.string.isRequired,
-}
-
 ReprocessDetails.propTypes = {
-  contents: PropTypes.shape(shape).isRequired,
-  labels: PropTypes.shape(shape).isRequired,
+  contents: PropTypes.shape({
+    amount: PropTypes.node.isRequired,
+    holderName: PropTypes.node.isRequired,
+    transactionId: PropTypes.node.isRequired,
+  }).isRequired,
+  labels: PropTypes.shape({
+    amount: PropTypes.string.isRequired,
+    holderName: PropTypes.string.isRequired,
+    transactionId: PropTypes.string.isRequired,
+  }).isRequired,
 }
 
 export default ReprocessDetails
