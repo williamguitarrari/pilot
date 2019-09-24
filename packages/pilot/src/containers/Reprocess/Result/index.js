@@ -1,20 +1,22 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import IconError from 'emblematic-icons/svg/ClearClose32.svg'
-import IconSuccess from 'emblematic-icons/svg/Check32.svg'
 import {
-  Alert,
   Button,
   Col,
+  Flexbox,
   Grid,
   ModalActions,
   ModalContent,
   Row,
+  Spacing,
 } from 'former-kit'
+import IconSupport from 'emblematic-icons/svg/Support32.svg'
+
 import CopyButton from '../../../components/CopyButton'
-import ReprocessDetails from '../../../components/ReprocessDetails'
-import formatCardNumber from '../../../formatters/cardNumber'
-import formatCurrency from '../../../formatters/currency'
+import { Message } from '../../../components/Message'
+import Success from './success.svg'
+import Failure from './failure.svg'
+import style from './style.css'
 
 const validateOnRestart = ({ onRestart, status }, propName) => {
   if (
@@ -27,11 +29,6 @@ const validateOnRestart = ({ onRestart, status }, propName) => {
 }
 
 const Result = ({
-  amount,
-  cardFirstDigits,
-  cardLastDigits,
-  holderName,
-  installments,
   onCopyIdClick,
   onRestart,
   onViewTransactionClick,
@@ -42,86 +39,76 @@ const Result = ({
   <Fragment>
     <ModalContent>
       <Grid>
-        <Row stretch>
+        <Row stretch flex>
           <Col palm={12} tablet={12} desk={12} tv={12}>
-            <Alert
-              icon={
-                  (status !== 'error')
-                    ? <IconSuccess width={16} height={16} />
-                    : <IconError width={16} height={16} />
-                }
-              type={
-                status !== 'error'
-                  ? 'success'
-                  : 'error'
+            { status === 'error'
+              ? <p className={style.title}>{t('pages.reprocess.failure')}</p>
+              : <p className={style.title}>{t('pages.reprocess.success_reprocess')}</p>
+            }
+            <Message
+              image={status === 'error'
+                ? <Failure />
+                : <Success />
               }
-            >
-              <span>{statusMessage}</span>
-            </Alert>
+            />
+            <div className={style.message}>
+              <div className={style.icon}>
+                <IconSupport width={16} height={16} />
+              </div>
+              {status === 'error'
+                ? <span>{statusMessage}</span>
+                : (
+                  <span>
+                    <b>{t('attention')}</b>
+                    {' '}
+                    {t('pages.reprocess.success_reprocess_disclaimer')}
+                  </span>
+                )
+              }
+            </div>
           </Col>
         </Row>
-        {status !== 'error'
-          && (
-            <Row stretch>
-              <Col palm={12} tablet={12} desk={12} tv={12}>
-                <ReprocessDetails
-                  labels={{
-                    amount: t('amount'),
-                    cardNumber: t('card_number'),
-                    holderName: t('holder_name'),
-                    installments: t('installments'),
-                  }}
-                  contents={{
-                    amount: formatCurrency(amount),
-                    cardNumber: `${formatCardNumber(cardFirstDigits)} ${cardLastDigits}`,
-                    holderName,
-                    installments: t('installment', { count: installments }),
-                  }}
-                />
-              </Col>
-            </Row>
-          )
-        }
       </Grid>
     </ModalContent>
-    <ModalActions>
-      {status === 'error'
-        ? (
-          <Button
-            fill="outline"
-            onClick={onRestart}
-          >
-            {t('try_again')}
-          </Button>
-        )
-        : (
-          <Fragment>
-            <CopyButton
-              feedbackText={t('copied_to_clipboard')}
-              feedbackTimeout={1000}
-              fill="outline"
-              onClick={onCopyIdClick}
-              title={t('copy_id')}
-            />
-            <Button
-              fill="outline"
-              onClick={onViewTransactionClick}
-            >
-              {t('view_transaction')}
-            </Button>
-          </Fragment>
-        )
-      }
-    </ModalActions>
+    <div className={style.actions}>
+      <ModalActions>
+        <Flexbox justifyContent="center">
+          {status === 'error'
+            ? (
+              <Button
+                fill="gradient"
+                onClick={onRestart}
+              >
+                {t('try_again')}
+              </Button>
+            )
+            : (
+              <Fragment>
+                <CopyButton
+                  feedbackText={t('copied_to_clipboard')}
+                  feedbackTimeout={1000}
+                  fill="outline"
+                  icon={null}
+                  onClick={onCopyIdClick}
+                  title={t('copy_id')}
+                />
+                <Spacing size="medium" />
+                <Button
+                  fill="gradient"
+                  onClick={onViewTransactionClick}
+                >
+                  {t('view_transaction')}
+                </Button>
+              </Fragment>
+            )
+          }
+        </Flexbox>
+      </ModalActions>
+    </div>
   </Fragment>
 )
 
 Result.propTypes = {
-  amount: PropTypes.number.isRequired,
-  cardFirstDigits: PropTypes.string.isRequired,
-  cardLastDigits: PropTypes.string.isRequired,
-  holderName: PropTypes.string.isRequired,
-  installments: PropTypes.number.isRequired,
   onCopyIdClick: PropTypes.func.isRequired,
   onRestart: validateOnRestart,
   onViewTransactionClick: PropTypes.func.isRequired,

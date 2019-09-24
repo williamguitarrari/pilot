@@ -1,7 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { path } from 'ramda'
 import { action } from '@storybook/addon-actions'
 import Reprocess from '../../../src/containers/Reprocess'
+
+const translations = {
+  attention: 'Atenção!',
+  pages: {
+    reprocess: {
+      success_reprocess_disclaimer: 'Se você utiliza algum serviço ou plataforma, lembre-se de atualizar o status dessa transação.',
+    },
+  },
+}
 
 const ReprocessState = ({
   statusMessage,
@@ -29,7 +39,7 @@ const ReprocessState = ({
         installments: 48,
       },
     }}
-    t={translations => translations}
+    t={translation => path(translation.split('.'), translations) || translation}
   />
 )
 

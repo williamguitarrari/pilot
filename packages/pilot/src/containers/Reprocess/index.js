@@ -102,11 +102,6 @@ class Reprocess extends PureComponent {
           && stepStatus.result !== 'pending'
           ? (
             <Result
-              amount={amount}
-              cardFirstDigits={first_digits} // eslint-disable-line camelcase
-              cardLastDigits={last_digits} // eslint-disable-line camelcase
-              holderName={holder_name} // eslint-disable-line camelcase
-              installments={installments}
               onCopyIdClick={onCopyId}
               onRestart={onRestart}
               onViewTransactionClick={onViewTransaction}

@@ -1,6 +1,7 @@
 {
   "amount": "Valor",
   "at": "às",
+  "attention": "Atenção!",
   "back_login_action": "Voltar para o login",
   "bank": "Banco",
   "bulk_anticipations": {
@@ -948,10 +949,12 @@
       "wrong_password": "Senha inválida"
     },
     "reprocess": {
-      "submit": "Reprocessar transação",
       "confirmation": "Confirmação",
+      "failure": "Algo deu errado e não foi possível reprocessar essa transação.",
       "result": "Conclusão",
-      "success": "A transação foi reprocessada com sucesso",
+      "submit": "Reprocessar transação",
+      "success_reprocess_disclaimer": "Se você utiliza algum serviço ou plataforma, lembre-se de atualizar o status dessa transação.",
+      "success_reprocess": "A transação foi reprocessada com sucesso",
       "title": "Reprocessar transação"
     },
     "sidebar": {
