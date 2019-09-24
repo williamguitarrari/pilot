@@ -11,6 +11,7 @@ import CurrencyInput from './CurrencyInput'
 import CreditCardRefundDetails from './CreditCardRefundDetails'
 import CustomerCard from './CustomerCard'
 import DataDisplay from './DataDisplay'
+import DescriptionAlert from './DescriptionAlert'
 import DetailsHead from './DetailsHead'
 import EventList from './EventList'
 import ExportData from './ExportData'
@@ -55,6 +56,7 @@ storiesOf('Components|Custom components', module)
   .add('Event list', () => <EventList />)
   .add('Export Data', () => <ExportData />)
   .add('DataDisplay', () => <DataDisplay />)
+  .add('Description Alert', () => <DescriptionAlert />)
   .add('Reprocess details', () => <ReprocessDetails />)
   .add('Capture Details', () => <CaptureDetails />)
   .add('Payment card', () => <PaymentCards />)
