@@ -101,7 +101,7 @@ const getDefaultColumns = ({ onDetailsClick, t }) => ([
     title: t('models.transaction.payment_method'),
   },
   {
-    accessor: ['payment', 'authorized_amount'],
+    accessor: ['authorized_amount'],
     orderable: true,
     renderer: convertPaymentValue('authorized_amount'),
     title: t('models.transaction.transaction_amount'),
