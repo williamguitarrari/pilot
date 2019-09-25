@@ -102,6 +102,7 @@ const getDefaultColumns = ({ onDetailsClick, t }) => ([
   },
   {
     accessor: ['authorized_amount'],
+    align: 'end',
     orderable: true,
     renderer: convertPaymentValue('authorized_amount'),
     title: t('models.transaction.transaction_amount'),
