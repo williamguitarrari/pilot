@@ -49,7 +49,11 @@ const renderPopoverContent = (t, validations) => {
 }
 
 const PasswordInput = ({
+  base,
+  disabled,
+  error,
   label,
+  name,
   onBlur,
   onChange,
   onFocus,
@@ -61,14 +65,20 @@ const PasswordInput = ({
 }) => (
   <div className={style.container}>
     <Popover
+      base={base}
       content={renderPopoverContent(t, validations)}
       closeWhenClickOutside={false}
       onClick={onFocus}
+      onClickOutside={onBlur}
       placement={placement}
       visible={showPopover}
     >
       <FormInput
+        base={base}
+        disabled={disabled}
+        error={error}
         label={label}
+        name={name}
         onBlur={onBlur}
         onChange={onChange}
         onFocus={onFocus}
@@ -80,7 +90,13 @@ const PasswordInput = ({
 )
 
 PasswordInput.propTypes = {
+  base: PropTypes.oneOf([
+    'dark', 'light',
+  ]),
+  disabled: PropTypes.bool,
+  error: PropTypes.string,
   label: PropTypes.string.isRequired,
+  name: PropTypes.string,
   onBlur: PropTypes.func.isRequired,
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
@@ -98,6 +114,10 @@ PasswordInput.propTypes = {
 }
 
 PasswordInput.defaultProps = {
+  base: null,
+  disabled: false,
+  error: '',
+  name: '',
   onChange: null,
   onFocus: null,
   placement: 'bottomCenter',

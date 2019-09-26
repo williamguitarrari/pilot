@@ -4,8 +4,8 @@ import { withRouter } from 'react-router-dom'
 import { translate } from 'react-i18next'
 import { compose } from 'ramda'
 import pagarme from 'pagarme'
-import { SignUpForm } from '../../../containers/Account/SignUp'
-import buildParamErrors from '../Login/buildParamErrors'
+import { SignUpForm } from '../../../../containers/Account/SignUp'
+import buildParamErrors from '../../Login/buildParamErrors'
 
 const enhanced = compose(
   translate(),

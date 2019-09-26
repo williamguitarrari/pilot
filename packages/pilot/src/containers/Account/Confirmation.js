@@ -3,11 +3,15 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { Button } from 'former-kit'
 
-import styles from '../style.css'
+import styles from './style.css'
 
 const Confirmation = ({
+  labels: {
+    backToLogin,
+    confirmation,
+    confirmationEmphasis,
+  },
   onBackToLogin,
-  t,
 }) => (
   <div
     className={classNames(
@@ -15,13 +19,11 @@ const Confirmation = ({
       styles.confirmationContent
     )}
   >
-    <div className={styles.login}>
-      <p className={styles.paragraph}>
-        <b>{t('password_recovery.confirmation_emphasis')}</b>
-        {' '}
-        <span>{t('password_recovery.confirmation')}</span>
-      </p>
-    </div>
+    <p className={classNames(styles.uppercase, styles.paragraph)}>
+      <b>{confirmationEmphasis}</b>
+      {' '}
+      <span>{confirmation}</span>
+    </p>
     <div className={styles.actions}>
       <div className={styles.hugeButton}>
         <Button
@@ -30,7 +32,7 @@ const Confirmation = ({
           fill="gradient"
           onClick={onBackToLogin}
         >
-          {t('back_login_action')}
+          {backToLogin}
         </Button>
       </div>
     </div>
@@ -38,8 +40,12 @@ const Confirmation = ({
 )
 
 Confirmation.propTypes = {
+  labels: PropTypes.shape({
+    backToLogin: PropTypes.string.isRequired,
+    confirmation: PropTypes.string.isRequired,
+    confirmationEmphasis: PropTypes.string.isRequired,
+  }).isRequired,
   onBackToLogin: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired,
 }
 
 export default Confirmation

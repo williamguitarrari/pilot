@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom'
 import { translate } from 'react-i18next'
 import { compose } from 'ramda'
 import pagarme from 'pagarme'
-import { PasswordRecoveryForm } from '../../../containers/Account/PasswordRecovery'
+import { PasswordRecoveryForm } from '../../../../containers/Account/PasswordRecovery/Request'
 import buildResetParamErrors from './buildResetParamErrors'
 
 const enhanced = compose(

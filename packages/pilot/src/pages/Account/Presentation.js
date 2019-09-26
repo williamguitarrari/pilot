@@ -23,14 +23,25 @@ const changeEnvironmentUrl = () => (
     : testUrl
 )
 
-const PresentationPage = ({ history, t }) => {
-  const onRegister = () => history.push('/account/signup')
+const PresentationPage = ({
+  history: {
+    location: {
+      pathname,
+    },
+    push,
+  },
+  t,
+}) => {
+  const onRegister = () => push('/account/signup')
+
+  const shouldShowCopyright = pathname !== '/account/login'
 
   return (
     <Presentation
       environment={environment}
       environmentUrl={changeEnvironmentUrl()}
       onRegister={onRegister}
+      shouldShowCopyright={shouldShowCopyright}
       t={t}
     />
   )

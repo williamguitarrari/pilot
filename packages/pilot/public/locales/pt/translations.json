@@ -12,6 +12,7 @@
   },
   "cancel": "cancelar",
   "card_number": "Número do cartão",
+  "company": "Empresa",
   "confirm": "Confirmar",
   "confirmation": "Confirmação",
   "conta_corrente": "Corrente",
@@ -20,6 +21,8 @@
   "conta_poupança_conjunta": "Poupança conjunta",
   "copied_to_clipboard": "Copiado!",
   "copy_id": "Copiar id",
+  "copyright_group": "Uma empresa do Grupo Arpex Capital © 2015,",
+  "copyright_company": "Pagar.me Pagamentos S.A. Todos os direitos reservados.",
   "currency_symbol": "R$",
   "currency": "R$",
   "dates": {
@@ -64,6 +67,7 @@
   "items_per_page": "{{count}} item por página",
   "of": "de",
   "password": "Senha",
+  "password_confirm": "Confirmar senha",
   "recipient": "Recebedor",
   "try_again": "Tentar novamente",
   "view_transaction": "Visualizar transação",
@@ -118,12 +122,6 @@
   "validations": {
     "isEmail": "Não é um e-mail válido"
   },
-  "password_recovery": {
-    "confirmation": "Em instantes você receberá um e-mail com as instruções para a redefinição de sua senha.",
-    "confirmation_emphasis": "Pronto!",
-    "recovery_call": "Digite o e-mail cadastrado para recuperar sua senha.",
-    "recovery_action": "Enviar"
-  },
   "recipients": {
     "account": "C: {{number}}",
     "agency_account": "agência / conta",
@@ -137,9 +135,10 @@
   },
   "sign_up": {
     "back_signup_action": "Voltar para o cadastro",
-    "company": "Empresa",
-    "confirmation": "você receberá um e-mail com as instruções para a ativação de sua conta",
-    "confirmation_emphasis": "pronto!",
+    "company": {
+      "confirmation": "Você receberá um e-mail com as instruções para a ativação de sua conta",
+      "confirmation_emphasis": "Pronto!"
+    },
     "invalid_email_emphasis": "e-mail de cadastro inválido.",
     "invalid_email_error": "Para mais informações entre em contato com o administrador da sua conta.",
     "login_action": "faça login",
@@ -148,7 +147,11 @@
     "required": "Campo obrigatório",
     "sign_up_action": "Cadastrar",
     "subtitle": "na dashboard FormerKit",
-    "title": "crie sua conta"
+    "title": "crie sua conta",
+    "user": {
+      "confirmation": "Seu usuário foi criado com sucesso! Retorne à página de login para começar a utilizá-lo.",
+      "confirmation_emphasis": "Pronto!"
+    }
   },
   "transactions": {
     "list": "Transações",
@@ -275,6 +278,7 @@
       "300": "300 - Banco de La Nacion Argentina",
       "318": "318 - Banco BMG S.A.",
       "320": "320 - China Construction Bank (Brasil) Banco Múltiplo S.A.",
+      "336": "336 - Banco C6 S.A",
       "341": "341 - Itaú Unibanco S.A.",
       "366": "366 - Banco Société Générale Brasil S.A.",
       "370": "370 - Banco Mizuho do Brasil S.A.",
@@ -410,7 +414,7 @@
       "card_brand": "Bandeira",
       "created_date": "Data da transação",
       "credit_card": "Cartão de crédito",
-      "customer_name": "Nome do cliente",
+      "customer_name": "Nome",
       "debit_card": "Cartão de débito",
       "details": "Detalhes da transação",
       "document": "CPF / CNPJ",
@@ -421,13 +425,13 @@
       "installments": "Parcelas",
       "international_credit_card": "Cartão de crédito estrangeiro",
       "nsu": "NSU",
-      "paid_amount": "Valor capturado",
       "payment_method": "Forma de pagamento",
       "refuse_reason": "Motivo de recusa",
       "soft_descriptor": "Descrição na fatura",
       "status": "Status",
       "subscription_id": "Id da assinatura",
-      "tid": "TID (ID da transação)"
+      "tid": "TID (ID da transação)",
+      "transaction_amount": "Valor da transação"
     },
     "user": {
       "permission": {
@@ -1001,6 +1005,24 @@
       "withdraw_success": "Saque realizado com sucesso!",
       "withdraw_value": "Valor do saque (R$)",
       "wrong_pass": "Senha inválida"
+    },
+    "password_recovery": {
+      "confirmation": "Em instantes você receberá um e-mail com as instruções para a redefinição de sua senha.",
+      "confirmation_emphasis": "Pronto!",
+      "recovery_call": "Digite o e-mail cadastrado para recuperar sua senha.",
+      "recovery_action": "Enviar"
+    },
+    "password_reset": {
+      "confirmation": "Sua nova senha foi criada com sucesso! Retorne para a área de Login para começar a utilizá-la.",
+      "confirmation_emphasis": "Pronto!",
+      "errors": {
+        "field_required": "Esse campo é obrigatório",
+        "invalid_password": "Senha inválida",
+        "passwords_dont_match": "As senhas não conferem",
+        "weak_password": "Senha muito fraca"
+      },
+      "reset_action": "Enviar",
+      "reset_call": "Digite sua nova senha para concluir a redefinição."
     },
     "settings": {
       "user": {

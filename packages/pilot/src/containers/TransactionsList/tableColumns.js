@@ -53,8 +53,8 @@ const getDefaultDocumentNumber = pipe(
   )
 )
 
-const applyTruncateCustomerEmail = (item) => {
-  const value = path(['customer', 'email'], item)
+const applyTruncateCustomerName = (item) => {
+  const value = path(['customer', 'name'], item)
 
   return value
     ? (
@@ -73,23 +73,21 @@ const getDefaultColumns = ({ onDetailsClick, t }) => ([
     title: t('models.transaction.status'),
   },
   {
-    accessor: ['id'],
-    orderable: true,
-    title: t('models.transaction.id'),
-  },
-  {
     accessor: ['created_at'],
     orderable: true,
     renderer: pipe(prop('created_at'), formatDate),
     title: t('models.transaction.created_date'),
   },
   {
-    accessor: ['customer', 'document_number'],
-    renderer: pipe(
-      prop('customer'),
-      getDefaultDocumentNumber
-    ),
-    title: t('models.transaction.document'),
+    accessor: ['id'],
+    orderable: true,
+    title: t('models.transaction.id'),
+  },
+  {
+    accessor: ['customer', 'name'],
+    orderable: true,
+    renderer: applyTruncateCustomerName,
+    title: t('models.transaction.customer_name'),
   },
   {
     accessor: ['payment', 'method'],
@@ -103,16 +101,19 @@ const getDefaultColumns = ({ onDetailsClick, t }) => ([
     title: t('models.transaction.payment_method'),
   },
   {
-    accessor: ['payment', 'paid_amount'],
+    accessor: ['authorized_amount'],
+    align: 'end',
     orderable: true,
-    renderer: convertPaymentValue('paid_amount'),
-    title: t('models.transaction.paid_amount'),
+    renderer: convertPaymentValue('authorized_amount'),
+    title: t('models.transaction.transaction_amount'),
   },
   {
-    accessor: ['customer', 'email'],
-    orderable: true,
-    renderer: applyTruncateCustomerEmail,
-    title: t('models.transaction.email'),
+    accessor: ['customer', 'document_number'],
+    renderer: pipe(
+      prop('customer'),
+      getDefaultDocumentNumber
+    ),
+    title: t('models.transaction.document'),
   },
   {
     accessor: ['refuse_reason'],
@@ -129,9 +130,8 @@ const getDefaultColumns = ({ onDetailsClick, t }) => ([
     title: t('models.transaction.installments'),
   },
   {
-    accessor: ['customer', 'name'],
-    orderable: true,
-    title: t('models.transaction.customer_name'),
+    accessor: ['customer', 'email'],
+    title: t('email'),
   },
   {
     accessor: ['card', 'brand_name'],

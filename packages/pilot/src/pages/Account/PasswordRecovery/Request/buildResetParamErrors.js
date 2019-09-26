@@ -4,7 +4,7 @@ import {
   zipObj,
 } from 'ramda'
 
-import buildParamErrors from '../Login/buildParamErrors'
+import buildParamErrors from '../../Login/buildParamErrors'
 
 const buildResetParamErrors = pipe(
   buildParamErrors,

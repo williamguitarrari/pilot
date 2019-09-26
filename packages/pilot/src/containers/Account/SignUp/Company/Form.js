@@ -1,15 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Form from 'react-vanilla-form'
+import classNames from 'classnames'
 import {
   Button,
   FormInput,
 } from 'former-kit'
 
-import styles from '../style.css'
+import styles from '../../style.css'
 
-import required from '../../../validation/required'
-import isEmail from '../../../validation/email'
+import required from '../../../../validation/required'
+import isEmail from '../../../../validation/email'
 
 const isRequired = t => required(t('sign_up.required'))
 
@@ -30,7 +31,7 @@ const SignUpForm = ({
     }}
     onSubmit={onSubmit}
   >
-    <div className={styles.signIn}>
+    <div className={classNames(styles.formContent, styles.signup)}>
       <FormInput
         base={base}
         disabled={loading}
@@ -41,7 +42,7 @@ const SignUpForm = ({
       <FormInput
         base={base}
         disabled={loading}
-        label={t('sign_up.company')}
+        label={t('company')}
         name="company"
         type="text"
       />

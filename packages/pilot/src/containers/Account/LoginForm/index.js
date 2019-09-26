@@ -28,7 +28,7 @@ const LoginContainer = ({
       email: isEmail(t('invalid_email')),
     }}
   >
-    <div className={styles.login}>
+    <div className={styles.formContent}>
       <FormInput
         base={base}
         disabled={loading}
@@ -62,7 +62,6 @@ const LoginContainer = ({
         )
       }
     </div>
-
     <div className={styles.actions}>
       <div className={styles.hugeButton}>
         <Button
