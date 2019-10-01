@@ -276,6 +276,18 @@ storiesOf('Containers|Page containers', module)
   .add('Reprocess form', () => (
     <ReprocessForm />
   ))
+  .add('Reprocess form without antifraud', () => (
+    <ReprocessForm
+      allowReprocessWithoutAntifraud
+    />
+  ))
+  .add('Reprocess form without antifraud disabled', () => (
+    <ReprocessForm
+      allowReprocessWithoutAntifraud
+      disableWithoutAntifraudReprocess
+      lockReason="chargeback_rate"
+    />
+  ))
   .add('Reprocess result', () => (
     <ReprocessResult />
   ))

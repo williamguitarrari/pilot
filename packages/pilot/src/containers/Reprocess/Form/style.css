@@ -1,0 +1,27 @@
+@import "former-kit-skin-pagarme/dist/styles/spacing.css";
+@import "former-kit-skin-pagarme/dist/styles/colors.css";
+
+.title {
+  flex: 1;
+  justify-content: center;
+}
+
+.holderName {
+  font-size: 14px;
+}
+
+.numericValue {
+  font-size: 18px;
+}
+
+.alertColumn {
+  padding-bottom: var(--spacing-tiny);
+}
+
+.actions > div {
+  justify-content: center;
+
+  & > button:first-child {
+    margin-left: 0;
+  }
+}
