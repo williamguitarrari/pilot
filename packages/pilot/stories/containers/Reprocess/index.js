@@ -14,15 +14,19 @@ const translations = {
 }
 
 const ReprocessState = ({
+  allowReprocessWithoutAntifraud,
   statusMessage,
   stepStatus,
 }) => (
   <Reprocess
+    allowReprocessWithoutAntifraud={allowReprocessWithoutAntifraud}
     isOpen
     loading={false}
     onCancel={action('cancel')}
     onConfirm={action('submit')}
     onCopyId={action('copy id')}
+    onBack={action('on back')}
+    onReprocess={action('reprocess')}
     onRestart={action('reprocess restart')}
     onViewTransaction={action('view transaction')}
     statusMessage={statusMessage}
@@ -44,6 +48,7 @@ const ReprocessState = ({
 )
 
 ReprocessState.propTypes = {
+  allowReprocessWithoutAntifraud: PropTypes.bool.isRequired,
   statusMessage: PropTypes.string,
   stepStatus: PropTypes.shape({
     confirmation: PropTypes.string,

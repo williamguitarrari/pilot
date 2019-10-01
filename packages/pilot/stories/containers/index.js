@@ -52,6 +52,7 @@ import CaptureResult from './Capture/Result'
 import IdentificationStep from './AddRecipient/IdentificationStep'
 import Reprocess from './Reprocess'
 import ReprocessForm from './Reprocess/Form'
+import ReprocessConfirmation from './Reprocess/Confirmation'
 import ReprocessResult from './Reprocess/Result'
 import SelectAccount from './AddRecipient/BankAccountStep/SelectAccount'
 import Withdraw from './Withdraw'
@@ -290,6 +291,14 @@ storiesOf('Containers|Page containers', module)
   ))
   .add('Reprocess result', () => (
     <ReprocessResult />
+  ))
+  .add('Reprocess confirmation', () => (
+    <ReprocessConfirmation />
+  ))
+  .add('Reprocess confirmation without antifraud', () => (
+    <ReprocessConfirmation
+      allowReprocessWithoutAntifraud
+    />
   ))
   .add('Reprocess step confirmation', () => (
     <Reprocess
