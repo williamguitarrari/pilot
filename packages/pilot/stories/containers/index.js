@@ -289,40 +289,78 @@ storiesOf('Containers|Page containers', module)
       lockReason="chargeback_rate"
     />
   ))
-  .add('Reprocess result', () => (
-    <ReprocessResult />
-  ))
   .add('Reprocess confirmation', () => (
     <ReprocessConfirmation />
   ))
   .add('Reprocess confirmation without antifraud', () => (
     <ReprocessConfirmation
+      isReprocessingWithoutAntifraud
+    />
+  ))
+  .add('Reprocess result', () => (
+    <ReprocessResult />
+  ))
+  .add('Reprocess result with error', () => (
+    <ReprocessResult status="error" />
+  ))
+  .add('Reprocess step identification', () => (
+    <Reprocess
+      stepStatus={{
+        confirmation: 'pending',
+        identification: 'current',
+        result: 'pending',
+      }}
+    />
+  ))
+  .add('Reprocess step identification without antifraud', () => (
+    <Reprocess
       allowReprocessWithoutAntifraud
+      stepStatus={{
+        confirmation: 'pending',
+        identification: 'current',
+        result: 'pending',
+      }}
+    />
+  ))
+  .add('Reprocess step identification without antifraud disabled', () => (
+    <Reprocess
+      allowReprocessWithoutAntifraud
+      lockReason="chargeback_rate"
+      stepStatus={{
+        confirmation: 'pending',
+        identification: 'current',
+        result: 'pending',
+      }}
     />
   ))
   .add('Reprocess step confirmation', () => (
     <Reprocess
-      statusMessage=""
+      allowReprocessWithoutAntifraud
+      currentStep="confirmation"
       stepStatus={{
         confirmation: 'current',
-        result: null,
+        identification: 'success',
+        result: 'pending',
       }}
     />
   ))
   .add('Reprocess step result', () => (
     <Reprocess
-      statusMessage="Success!"
+      allowReprocessWithoutAntifraud
       stepStatus={{
         confirmation: 'success',
-        result: 'current',
+        identification: 'success',
+        result: 'success',
       }}
     />
   ))
   .add('Reprocess step result error', () => (
     <Reprocess
+      allowReprocessWithoutAntifraud
       statusMessage="Internal server error"
       stepStatus={{
         confirmation: 'success',
+        identification: 'success',
         result: 'error',
       }}
     />

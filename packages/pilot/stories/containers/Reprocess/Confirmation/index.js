@@ -4,9 +4,9 @@ import { action } from '@storybook/addon-actions'
 
 import ReprocessConfirmation from '../../../../src/containers/Reprocess/Confirmation'
 
-const Reprocess = ({ allowReprocessWithoutAntifraud }) => (
+const Reprocess = ({ isReprocessingWithoutAntifraud }) => (
   <ReprocessConfirmation
-    allowReprocessWithoutAntifraud={allowReprocessWithoutAntifraud}
+    isReprocessingWithoutAntifraud={isReprocessingWithoutAntifraud}
     onReprocess={action('reprocess')}
     onBack={action('back')}
     t={translations => translations}
@@ -14,11 +14,11 @@ const Reprocess = ({ allowReprocessWithoutAntifraud }) => (
 )
 
 Reprocess.propTypes = {
-  allowReprocessWithoutAntifraud: PropTypes.bool,
+  isReprocessingWithoutAntifraud: PropTypes.bool,
 }
 
 Reprocess.defaultProps = {
-  allowReprocessWithoutAntifraud: false,
+  isReprocessingWithoutAntifraud: false,
 }
 
 export default Reprocess
