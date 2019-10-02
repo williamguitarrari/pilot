@@ -165,11 +165,12 @@ const ReprocessForm = ({
         <Button
           disabled={loading}
           fill="gradient"
+          loading={loading}
           onClick={onReprocessWithAntifraud}
         >
           {allowReprocessWithoutAntifraud
             ? t('pages.reprocess.reprocess_with_antifraud')
-            : t('pages.reprocess.reprocess')
+            : t('pages.reprocess.reprocess_transaction')
           }
         </Button>
       </ModalActions>
