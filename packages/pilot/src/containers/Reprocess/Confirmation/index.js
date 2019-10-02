@@ -32,8 +32,8 @@ const Confirmation = ({
     : t('pages.reprocess.confirm_with_antifraud')
 
   const handleSubmit = () => {
-    const submitAllowed = (allowReprocessWithoutAntifraud && accepted)
-      || !allowReprocessWithoutAntifraud
+    const submitAllowed = (isReprocessingWithoutAntifraud && accepted)
+      || !isReprocessingWithoutAntifraud
 
     if (submitAllowed) {
       return onReprocess()
