@@ -1,16 +1,18 @@
 @import "former-kit-skin-pagarme/dist/styles/spacing.css";
 @import "former-kit-skin-pagarme/dist/styles/colors/light.css";
+@import "former-kit-skin-pagarme/dist/styles/typography.css";
 
 .amount {
-  color: var(--color-light-steel-100);
-  font-size: 28px;
-  font-weight: 900;
+  color: var(--color-light-noir-100);
+  font-size: 24px;
+  font-weight: 600;
   margin: 0;
 }
 
 .detail {
   margin-bottom: var(--spacing-medium);
   margin-top: var(--spacing-tiny);
+  font-size: 14px;
 
   & strong {
     color: var(--color-light-steel-100);
@@ -18,10 +20,10 @@
 }
 
 .symbol {
-  color: var(--color-light-steel-100);
-  font-size: 12px;
-  font-weight: lighter;
-  margin-right: 2px;
+  color: var(--color-light-noir-100);
+  font-size: 24px;
+  font-weight: 600;
+  margin-right: var(--spacing-tiny);
 }
 
 .title {
