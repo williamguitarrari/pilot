@@ -16,7 +16,8 @@ import DescriptionAlert from '../../../components/DescriptionAlert'
 import styles from './style.css'
 
 const Confirmation = ({
-  allowReprocessWithoutAntifraud,
+  isReprocessingWithoutAntifraud,
+  loading,
   onBack,
   onReprocess,
   t,
@@ -24,19 +25,21 @@ const Confirmation = ({
   const [accepted, setAccepted] = useState(false)
   const [error, setError] = useState('')
 
-  const buttons = allowReprocessWithoutAntifraud
-    ? t('pages.reprocess.confirm_without_antifraud_step_submit')
-    : t('pages.reprocess.confirm_with_antifraud_step_submit')
+  let buttonText = t('pages.reprocess.confirm')
+
+  buttonText = isReprocessingWithoutAntifraud
+    ? t('pages.reprocess.confirm_without_antifraud')
+    : t('pages.reprocess.confirm_with_antifraud')
 
   const handleSubmit = () => {
     const submitAllowed = (allowReprocessWithoutAntifraud && accepted)
-    || !allowReprocessWithoutAntifraud
+      || !allowReprocessWithoutAntifraud
 
     if (submitAllowed) {
       return onReprocess()
     }
 
-    return setError(t('confirm_agreement_required'))
+    return setError(t('pages.reprocess.confirm_agreement_required'))
   }
 
   useEffect(() => {
@@ -57,24 +60,25 @@ const Confirmation = ({
                 </strong>
               </div>
               <DescriptionAlert
-                content={t('pages.reprocess.confirm_with_antifraud_text')}
+                content={t('pages.reprocess.confirm_with_antifraud_disclaimer')}
                 icon={<WarningIcon height={32} width={32} />}
-                title={t('pages.reprocess.confirm_with_antifraud_title')}
+                title={t('pages.reprocess.confirm_with_antifraud_disclaimer_title')}
                 type="warning"
               />
-              {allowReprocessWithoutAntifraud
+              {isReprocessingWithoutAntifraud
                 && (
                   <Fragment>
                     <div className={styles.withoutAntifraudAlert}>
                       <DescriptionAlert
-                        content={t('pages.reprocess.confirm_without_antifraud_text')}
+                        content={t('pages.reprocess.confirm_without_antifraud_disclaimer')}
                         icon={<WarningIcon height={32} width={32} />}
-                        title={t('pages.reprocess.confirm_without_antifraud_title')}
+                        title={t('pages.reprocess.confirm_without_antifraud_disclaimer_title')}
                         type="error"
                       />
                     </div>
                     <FormCheckbox
-                      label={t('pages.reprocess.confirm_without_antifraud_checkbox')}
+                      disabled={loading}
+                      label={t('pages.reprocess.confirm_without_antifraud_agreement')}
                       name="acceptTerms"
                       onChange={() => setAccepted(!accepted)}
                       error={error}
@@ -91,6 +95,7 @@ const Confirmation = ({
       <div>
         <ModalActions>
           <Button
+            disabled={loading}
             fill="outline"
             onClick={onBack}
             type="button"
@@ -98,11 +103,13 @@ const Confirmation = ({
             {t('pages.reprocess.go_back')}
           </Button>
           <Button
+            disabled={loading}
             fill="gradient"
             type="button"
+            loading={loading}
             onClick={handleSubmit}
           >
-            {buttons}
+            {buttonText}
           </Button>
         </ModalActions>
       </div>
@@ -111,14 +118,16 @@ const Confirmation = ({
 }
 
 Confirmation.propTypes = {
-  allowReprocessWithoutAntifraud: PropTypes.bool,
+  isReprocessingWithoutAntifraud: PropTypes.bool,
+  loading: PropTypes.bool,
   onBack: PropTypes.func.isRequired,
   onReprocess: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
 }
 
 Confirmation.defaultProps = {
-  allowReprocessWithoutAntifraud: false,
+  isReprocessingWithoutAntifraud: false,
+  loading: false,
 }
 
 export default Confirmation
