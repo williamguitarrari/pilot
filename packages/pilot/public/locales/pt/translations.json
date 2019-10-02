@@ -70,6 +70,7 @@
   "password": "Senha",
   "password_confirm": "Confirmar senha",
   "recipient": "Recebedor",
+  "transaction": "Transação",
   "try_again": "Tentar novamente",
   "view_transaction": "Visualizar transação",
   "header": {
@@ -949,13 +950,40 @@
       "wrong_password": "Senha inválida"
     },
     "reprocess": {
+      "action_confirm": "Tem certeza que deseja reprocessar essa transação?",
+      "confirm_agreement_required": "Você deve validar que está ciente dos riscos atrelados ao reprocessamento",
+      "confirm_question": "Você está reprocessando uma transação de alto risco, deseja continuar?",
+      "confirm_with_antifraud_disclaimer_title": "Não se esqueça de entrar em contato com o comprador",
+      "confirm_with_antifraud_disclaimer": "Antes de solicitar um reprocessamento, é indispensável que você valide os dados do cartão, endereço de entrega e veracidade da transação com o seu cliente.",
+      "confirm_with_antifraud": "Confirmar reprocessamento com antifraude",
+      "confirm_without_antifraud_agreement": "Estou ciente de que estarei assumindo o risco de chargeback desta transação",
+      "confirm_without_antifraud_disclaimer_title": "Você está assumindo o risco de chargeback desta transação",
+      "confirm_without_antifraud_disclaimer": "O Pagar.me não se responsabilizará por quaisquer prejuízos decorrentes desta transação, ao reprocessá-la você estará assumindo todo o risco inerente a ela.",
+      "confirm_without_antifraud": "Confirmar reprocessamento sem antifraude",
+      "confirm": "Confirmar",
       "confirmation": "Confirmação",
       "failure": "Algo deu errado e não foi possível reprocessar essa transação.",
+      "go_back": "Voltar",
+      "identification": "Identificação",
+      "reprocess_transaction": "Reprocessar transação",
+      "reprocess_with_antifraud": "Reprocessar com antifraude",
+      "reprocess_without_antifraud": "Reprocessar sem antifraude",
       "result": "Conclusão",
       "submit": "Reprocessar transação",
       "success_reprocess_disclaimer": "Se você utiliza algum serviço ou plataforma, lembre-se de atualizar o status dessa transação.",
       "success_reprocess": "A transação foi reprocessada com sucesso",
-      "title": "Reprocessar transação"
+      "title": "Reprocessar transação",
+      "type_selection": "Como você deseja reprocessar essa transação?",
+      "without_antifraud_disclaimer_1": "Atenção! Ao prosseguir com a opção ",
+      "without_antifraud_disclaimer_2": "sem antifraude",
+      "without_antifraud_disclaimer_3": ", você reprocessará uma transação com potencial risco de fraude e as consequências decorrentes da decisão serão de sua integral responsabilidade. Leia mais sobre reprocessamento na ",
+      "without_antifraud_disclaimer_4": "nossa documentação.",
+      "without_antifraud_documentation_link": "https://docs.pagar.me/page/reprocessamento-sem-antifraude",
+      "without_antifraud_requirements": {
+        "chargeback_rate": "Não é possível reprocessar sem o antifraude pois o seu índice de chargeback nos últimos 30 dias está acima de 1%.",
+        "multiple_reprocess": "Não é possível reprocessar uma transação originada de um reprocessamento.",
+        "time_limit": "Não é possível reprocessar transações criadas a mais de 3 dias sem o antifraude."
+      }
     },
     "sidebar": {
       "available": "Disponível para saque",
