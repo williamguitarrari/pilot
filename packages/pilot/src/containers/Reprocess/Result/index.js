@@ -113,9 +113,7 @@ Result.propTypes = {
   onRestart: validateOnRestart,
   onViewTransactionClick: PropTypes.func.isRequired,
   status: PropTypes.oneOf([
-    'current',
     'error',
-    'pending',
     'success',
   ]).isRequired,
   statusMessage: PropTypes.string.isRequired,
