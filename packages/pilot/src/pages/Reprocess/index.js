@@ -127,7 +127,7 @@ class Reprocess extends Component {
     })
 
     return client.transactions
-      .reprocess(transactionId)
+      .reprocessWithAntifraud(transactionId)
       .then((transaction) => {
         this.setState({
           loading: false,
