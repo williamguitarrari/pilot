@@ -759,7 +759,7 @@ class TransactionDetails extends Component {
                     ? payment.authorized_amount
                     : payment.paid_amount
                   }
-                  amountSize="huge"
+                  amountSize="large"
                   color="#37cc9a"
                   subtitle={(
                     <div className={style.subtitle}>
@@ -791,7 +791,7 @@ class TransactionDetails extends Component {
                       payment.mdr_amount,
                     ])
                   }
-                  amountSize="huge"
+                  amountSize="large"
                   color="#ff796f"
                   subtitle={(
                     <div className={style.subtitle}>
@@ -814,7 +814,7 @@ class TransactionDetails extends Component {
               <CardContent className={style.content}>
                 <TotalDisplay
                   amount={payment.net_amount}
-                  amountSize="huge"
+                  amountSize="large"
                   color="#4ca9d7"
                   subtitle={(
                     <div className={style.subtitle}>
