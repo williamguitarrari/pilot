@@ -21,7 +21,6 @@
 
 .title {
   font-weight: bold;
-  height: 18px;
   text-transform: uppercase;
 
   & > span {

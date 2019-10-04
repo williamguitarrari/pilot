@@ -21,7 +21,7 @@
   }
 
   & span {
-    color: var(--color-light-steel-100);
+    color: var(--color-light-noir-100);
     font-weight: bold;
   }
 
@@ -47,6 +47,7 @@
 
   & .value {
     display: flex;
+    align-items: baseline;
   }
 }
 
