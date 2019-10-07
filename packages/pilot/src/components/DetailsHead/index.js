@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button } from 'former-kit'
-import { Textfit } from 'react-textfit'
+import {
+  Button,
+  Truncate,
+} from 'former-kit'
 import style from './style.css'
 
 const DetailsHead = ({
@@ -14,14 +16,9 @@ const DetailsHead = ({
     <div>
       <div className={style.item}>
         <span>{title}</span>
-        <Textfit
-          mode="single"
-          min={10}
-          max={40}
-          className={style.identifier}
-        >
-          {identifier}
-        </Textfit>
+        <div className={style.identifier}>
+          <Truncate text={identifier} />
+        </div>
       </div>
 
       {properties.map(property => (
