@@ -28,6 +28,7 @@ import buildResult from './result'
 import isCapturable from './isCapturable'
 import isRefundable from './isRefundable'
 import isReprocessable from './isReprocessable'
+import findReprocessedTransactions from './reprocessedTransactions'
 
 const fetchRecipient = client => object => client
   .recipients.find({ id: object.recipient_id })
@@ -88,12 +89,7 @@ const details = client => transactionId => props({
   chargebackOperations: client.chargebackOperations.find({ transactionId }),
   gatewayOperations: client.gatewayOperations.find({ transactionId }),
   payables: client.payables.find({ transactionId }),
-  reprocessed: client.transactions
-    .find({
-      metadata: {
-        pagarme_original_transaction_id: transactionId,
-      },
-    }),
+  reprocessed: findReprocessedTransactions({ client, transactionId }),
   transaction: client.transactions.find({ id: transactionId }),
 })
   .then(data => fetchRecipients(client, data)
