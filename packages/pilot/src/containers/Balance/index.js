@@ -195,7 +195,6 @@ class Balance extends Component {
           bank_code, // eslint-disable-line camelcase
           type,
         },
-        id,
       },
     } = this.props
 
@@ -203,7 +202,6 @@ class Balance extends Component {
       account,
       agency,
       bank_code,
-      id,
       type,
     }))
   }
