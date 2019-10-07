@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { translate } from 'react-i18next'
 import {
   allPass,
+  contains,
   equals,
   always,
   complement,
@@ -21,6 +22,7 @@ import {
   pipe,
   prop,
   tail,
+  values,
   uncurryN,
 } from 'ramda'
 import moment from 'moment'
@@ -189,6 +191,11 @@ const removeCustomerUnusedPhones = (transaction) => {
     },
   }
 }
+
+const anyPropEqual = value => pipe(
+  values,
+  contains(value)
+)
 
 class TransactionDetails extends Component {
   constructor (props) {
@@ -432,7 +439,6 @@ class TransactionDetails extends Component {
   render () {
     const {
       error,
-      match: { params: { id } },
       permission,
       t,
     } = this.props
@@ -453,17 +459,29 @@ class TransactionDetails extends Component {
       transactionDetailsLabels,
     } = this.state
 
-    if (error) {
-      const message = error.localized
-        ? error.localized.message
-        : error.message
+    const modals = {
+      showCapture,
+      showManualReview,
+      showRefund,
+      showReprocess,
+    }
+
+    const isShowingModal = anyPropEqual(true)
+
+    if (error && !isShowingModal(modals)) {
+      const {
+        localized: {
+          message: localizedMessage,
+        } = {},
+        message,
+      } = error
 
       return (
         <Alert
           icon={<IconInfo height={16} width={16} />}
           type="error"
         >
-          <span>{message}</span>
+          <span>{localizedMessage || message }</span>
         </Alert>
       )
     }
@@ -618,7 +636,6 @@ class TransactionDetails extends Component {
         <Reprocess
           isOpen={showReprocess}
           onClose={this.handleReprocessClose}
-          transactionId={id}
           transaction={transaction}
         />
       </Fragment>

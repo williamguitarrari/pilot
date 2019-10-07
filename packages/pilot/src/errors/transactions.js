@@ -8,7 +8,7 @@ export default [
     message: /./,
     method: /./,
     name: /./,
-    status: /400|404|500/,
-    type: /not_found|invalid_parameter|internal_error|unknown/,
+    status: /404|500/,
+    type: /not_found|internal_error|unknown/,
   },
 ]

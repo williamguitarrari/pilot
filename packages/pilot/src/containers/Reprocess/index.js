@@ -84,7 +84,6 @@ const Reprocess = ({
   const currentSteps = stepsBuilder(t, stepStatus)
 
   const handleReprocess = withoutAntifraud => onReprocess({
-    amount,
     transactionId,
     withoutAntifraud,
   })

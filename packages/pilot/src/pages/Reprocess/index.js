@@ -1,234 +1,220 @@
-import React, { Component, Fragment } from 'react'
+import React, { useState, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import copyToClipBoard from 'clipboard-copy'
 import { connect } from 'react-redux'
 import { translate } from 'react-i18next'
 import { withRouter } from 'react-router-dom'
 import {
+  always,
+  complement,
   compose,
+  cond,
   either,
+  equals,
   isEmpty,
   isNil,
 } from 'ramda'
 
 import ReprocessContainer from '../../containers/Reprocess'
-import { getResponseErrorMessage } from '../../formatters/apiError'
+import { withError } from '../ErrorBoundary'
 
 const mapStateToProps = ({
-  account: { client },
-}) => ({ client })
+  account: {
+    client,
+    company: {
+      capabilities: {
+        allow_reprocess_without_antifraud: allowReprocessWithoutAntifraud,
+      },
+    } = { capabilities: {} },
+  },
+}) => ({
+  allowReprocessWithoutAntifraud,
+  client,
+})
 
 const enhanced = compose(
   translate(),
   connect(mapStateToProps, null),
-  withRouter
+  withRouter,
+  withError
 )
 
-const isEmptyOrNull = either(isEmpty, isNil)
+const isNilOrEmpty = either(isNil, isEmpty)
 
-const reprocessStepStatuses = {
+const stepStatuses = {
   confirmation: {
     confirmation: 'current',
+    identification: 'success',
     result: 'pending',
   },
-  confirmationError: {
-    confirmation: 'error',
+  identification: {
+    confirmation: 'pending',
+    identification: 'current',
     result: 'pending',
   },
   result: {
     confirmation: 'success',
-    result: 'current',
+    identification: 'success',
+    result: 'success',
   },
   resultError: {
     confirmation: 'success',
+    identification: 'success',
     result: 'error',
   },
 }
 
-class Reprocess extends Component {
-  constructor (props) {
-    super(props)
+const equalsIdentification = equals('identification')
+const equalsConfirmation = equals('confirmation')
 
-    this.state = {
-      error: null,
-      loading: false,
-      stepStatus: reprocessStepStatuses.confirmation,
-      transaction: null,
-    }
-    this.handleClose = this.handleClose.bind(this)
-    this.handleConfirm = this.handleConfirm.bind(this)
-    this.handleCopyId = this.handleCopyId.bind(this)
-    this.handleReprocessRestart = this.handleReprocessRestart.bind(this)
-    this.handleViewTransaction = this.handleViewTransaction.bind(this)
-    this.requestData = this.requestData.bind(this)
+const getPreviousStep = cond([
+  [equalsConfirmation, always('identification')],
+])
+
+const getNextStep = cond([
+  [equalsIdentification, always('confirmation')],
+  [equalsConfirmation, always('result')],
+])
+
+const Reprocess = ({
+  allowReprocessWithoutAntifraud,
+  client,
+  error,
+  history,
+  isOpen,
+  onClose,
+  t,
+  transaction,
+}) => {
+  const [loading, setLoading] = useState(false)
+  const [stepStatus, setStepStatus] = useState(stepStatuses.identification)
+  const [currentStep, setCurrentStep] = useState('identification')
+  const [reprocessedTransactionId, setReprocessedTransactionId] = useState(null)
+
+  const handleBack = () => {
+    const previousStep = getPreviousStep(currentStep)
+
+    setStepStatus(stepStatuses[previousStep])
+    setCurrentStep(previousStep)
   }
 
-  componentDidUpdate (prevProps) {
-    const { isOpen } = this.props
-    const { transaction } = this.state
+  const handleForward = () => {
+    const nextStep = getNextStep(currentStep)
 
-    if (isOpen
-      && prevProps.isOpen !== isOpen
-      && isEmptyOrNull(transaction)) {
-      this.requestData()
-    }
+    setStepStatus(stepStatuses[nextStep])
+    setCurrentStep(nextStep)
   }
 
-  requestData () {
-    const {
-      client,
-      transactionId,
-    } = this.props
-    this.setState({
-      error: null,
-      loading: true,
-    })
-
-    client.transactions
-      .details(transactionId)
-      .then(({ transaction }) => {
-        this.setState({
-          loading: false,
-          transaction,
-        })
-      })
-      .catch((error) => {
-        this.setState({
-          error,
-          loading: false,
-          stepStatus: reprocessStepStatuses.confirmationError,
-        })
-      })
-  }
-
-  handleClose () {
-    const { onClose } = this.props
-    const {
-      newTransactionId,
-      stepStatus,
-    } = this.state
-
+  const handleClose = () => {
     if (stepStatus.result !== 'error') {
-      onClose(newTransactionId)
+      onClose(reprocessedTransactionId)
     } else {
       onClose()
     }
   }
 
-  handleConfirm () {
-    const {
-      client,
-      transactionId,
-    } = this.props
+  const handleReprocess = ({ transactionId, withoutAntifraud }) => {
+    setLoading(true)
 
-    this.setState({
-      error: null,
-      loading: true,
-    })
+    const reprocessRequest = withoutAntifraud
+      ? client.transactions.reprocess({ capture: true, id: transactionId })
+      : client.transactions.reprocessWithAntifraud(transactionId)
 
-    return client.transactions
-      .reprocessWithAntifraud(transactionId)
-      .then((transaction) => {
-        this.setState({
-          loading: false,
-          newTransactionId: transaction.id,
-          stepStatus: reprocessStepStatuses.result,
-        })
+    reprocessRequest
+      .then(({ id }) => {
+        setLoading(false)
+        setReprocessedTransactionId(id)
+        setStepStatus(stepStatuses.result)
       })
-      .catch((error) => {
-        this.setState({
-          error,
-          loading: false,
-          stepStatus: reprocessStepStatuses.resultError,
-        })
+      .catch(() => {
+        setLoading(false)
+        setStepStatus(stepStatuses.resultError)
       })
   }
 
-  handleCopyId () {
-    const { transactionId } = this.props
-    const { newTransactionId } = this.state
+  const handleCopyId = () => {
+    const {
+      id: transactionId,
+    } = transaction
 
-    const id = newTransactionId || transactionId
+    const id = reprocessedTransactionId || transactionId
 
     copyToClipBoard(id)
   }
 
-  handleReprocessRestart () {
-    this.setState({
-      error: null,
-      loading: false,
-      stepStatus: reprocessStepStatuses.confirmation,
-    })
+  const handleReprocessRestart = () => {
+    setCurrentStep('identification')
+    setStepStatus(stepStatuses.identification)
   }
 
-  handleViewTransaction () {
-    const {
-      history,
-      onClose,
-    } = this.props
-    const { newTransactionId } = this.state
-
-    history.push(`/transactions/${newTransactionId}`)
+  const handleViewTransaction = () => {
+    history.push(`/transactions/${reprocessedTransactionId}`)
     onClose()
   }
 
-  render () {
-    const {
-      isOpen,
-      t,
-    } = this.props
-    const {
-      error,
-      loading,
-      stepStatus,
-      transaction,
-    } = this.state
-
-    const statusMessage = error
-      ? getResponseErrorMessage(error)
-      : t('pages.reprocess.success')
-
-    return (
-      <Fragment>
-        {!isNil(transaction)
-          && (
-            <ReprocessContainer
-              isOpen={isOpen}
-              loading={loading}
-              onCancel={this.handleClose}
-              onConfirm={this.handleConfirm}
-              onCopyId={this.handleCopyId}
-              onRestart={this.handleReprocessRestart}
-              onViewTransaction={this.handleViewTransaction}
-              statusMessage={statusMessage}
-              stepStatus={stepStatus}
-              t={t}
-              transaction={transaction}
-            />
-          )
-        }
-      </Fragment>
-    )
+  let statusMessage = ''
+  if (error) {
+    statusMessage = error.localized
+      ? error.localized.message
+      : error.message
   }
+
+  return (
+    <Fragment>
+      {!isNilOrEmpty(transaction)
+        && (
+          <ReprocessContainer
+            allowReprocessWithoutAntifraud={!allowReprocessWithoutAntifraud}
+            isOpen={isOpen}
+            loading={loading}
+            onBack={handleBack}
+            onCancel={handleClose}
+            onCopyId={handleCopyId}
+            onForward={handleForward}
+            onRestart={handleReprocessRestart}
+            onReprocess={handleReprocess}
+            onViewTransaction={handleViewTransaction}
+            statusMessage={statusMessage}
+            stepStatus={stepStatus}
+            t={t}
+            transaction={transaction}
+          />
+        )
+      }
+    </Fragment>
+  )
 }
 
 Reprocess.propTypes = {
+  allowReprocessWithoutAntifraud: PropTypes.bool.isRequired,
   client: PropTypes.shape({
     transactions: PropTypes.shape({
       details: PropTypes.func.isRequired,
       reprocess: PropTypes.func.isRequired,
     }).isRequired,
   }).isRequired,
+  error: PropTypes.shape({
+    localized: PropTypes.shape({
+      message: PropTypes.string.isRequired,
+    }),
+  }),
   history: PropTypes.shape({
     replace: PropTypes.func,
   }).isRequired,
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
-  transactionId: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.string,
-  ]).isRequired,
+  transaction: PropTypes.shape({
+    amount: PropTypes.number,
+    card: PropTypes.shape({
+      holder_name: PropTypes.string.isRequired,
+    }),
+    id: PropTypes.number,
+  }).isRequired,
+}
+
+Reprocess.defaultProps = {
+  error: null,
 }
 
 export default enhanced(Reprocess)
