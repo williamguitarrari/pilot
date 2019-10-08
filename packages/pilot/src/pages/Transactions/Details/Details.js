@@ -197,12 +197,22 @@ const anyPropEqual = value => pipe(
   contains(value)
 )
 
+const requestChargebackRate = (client) => {
+  const range = {
+    from: moment.utc().subtract(30, 'days'),
+    to: moment.utc(),
+  }
+
+  return client.transactions.chargebackRate(range)
+}
+
 class TransactionDetails extends Component {
   constructor (props) {
     super(props)
     const { t } = this.props
     const formatColumns = getColumnFormatter(t)
     this.state = {
+      chargebackRate: 0,
       eventsLabels: getEventsLabels(t),
       expandRecipients: false,
       installmentColumns: formatColumns(installmentTableColumns),
@@ -311,11 +321,15 @@ class TransactionDetails extends Component {
 
     onRequestDetails({ query })
 
-    return client
-      .transactions
-      .details(query)
-      .then((result) => {
+    const transactionRequests = [
+      client.transactions.details(query),
+      requestChargebackRate(client),
+    ]
+
+    return Promise.all(transactionRequests)
+      .then(([result, { chargebackRate }]) => {
         const newState = {
+          chargebackRate,
           paymentBoletoLabels: getPaymentBoletoLabels(t, result.transaction),
           result,
         }
@@ -443,6 +457,7 @@ class TransactionDetails extends Component {
       t,
     } = this.props
     const {
+      chargebackRate,
       eventsLabels,
       expandRecipients,
       installmentColumns,
@@ -634,6 +649,7 @@ class TransactionDetails extends Component {
           transaction={transaction}
         />
         <Reprocess
+          chargebackRate={chargebackRate}
           isOpen={showReprocess}
           onClose={this.handleReprocessClose}
           transaction={transaction}
