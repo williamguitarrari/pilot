@@ -5,13 +5,15 @@ import reprocessWithAntifraud from './reprocess'
 import search from './search'
 import exportData from './export'
 import metrics from './metrics'
+import chargebackRate from './chargebackRate'
 
 export default {
+  chargebackRate,
   conversion,
   countPendingReviews,
   details,
+  exportData,
   metrics,
   reprocessWithAntifraud,
   search,
-  exportData,
 }
