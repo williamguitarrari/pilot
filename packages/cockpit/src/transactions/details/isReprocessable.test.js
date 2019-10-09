@@ -4,6 +4,8 @@ import {
   of,
   pipe,
 } from 'ramda'
+import moment from 'moment'
+
 import isReprocessable from './isReprocessable'
 import { transaction as transactionMock } from './mocks/fromRequests.json'
 
@@ -59,16 +61,21 @@ describe('isReprocessable', () => {
     expect(isReprocessable(transaction, emptyData)).toBe(false)
   })
 
-  it('should return false if status is refused and date_created greater than 24h', () => {
-    const transaction = assoc('status', 'refused', transactionMock)
+  it('should return false if status is refused and date_created greater than 3d', () => {
+    const transaction = pipe(
+      assoc('status', 'refused'),
+      assoc('date_created', moment().subtract(4, 'days'))
+    )(transactionMock)
+
     expect(isReprocessable(transaction, emptyData)).toBe(false)
   })
 
-  it('should return true if status is refused and date_created less than 24h', () => {
+  it('should return true if status is refused and date_created less than 3d', () => {
     const transaction = pipe(
       assoc('status', 'refused'),
       assoc('date_created', now)
     )(transactionMock)
+
     expect(isReprocessable(transaction, emptyData)).toBe(true)
   })
 

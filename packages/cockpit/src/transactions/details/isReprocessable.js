@@ -13,7 +13,7 @@ const canReprocess = (transaction, data) => {
     return false
   }
 
-  if (moment(transaction.date_created).isBefore(moment().subtract(24, 'hours'))) {
+  if (moment(transaction.date_created).isBefore(moment().subtract(3, 'days'))) {
     return false
   }
 
