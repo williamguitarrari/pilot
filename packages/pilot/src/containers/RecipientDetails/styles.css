@@ -35,7 +35,7 @@
 
 .companyName {
   color: var(--color-light-steel-100);
-  font-size: 28px;
+  font-size: 24px;
   font-style: normal;
   font-weight: bold;
   margin-bottom: 0;
@@ -45,15 +45,14 @@
 
 .label {
   color: var(--color-light-steel-100);
-  font-size: 12px;
+  font-size: 14px;
   font-style: normal;
   margin: 0;
-  text-transform: uppercase;
 }
 
 .labelBottom {
   color: var(--color-light-steel-100);
-  font-size: 12px;
+  font-size: 14px;
   font-style: normal;
   margin-top: var(--spacing-tiny);
 }
