@@ -183,6 +183,7 @@ const lockReasonValidation = (props, propName, componentName) => {
     'chargeback_rate',
     'multiple_reprocess',
     'time_limit',
+    'not_antifraud',
   ]
 
   const {

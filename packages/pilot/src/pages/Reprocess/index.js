@@ -7,6 +7,7 @@ import { withRouter } from 'react-router-dom'
 import {
   __,
   always,
+  complement,
   compose,
   cond,
   either,
@@ -14,6 +15,7 @@ import {
   gt,
   isEmpty,
   isNil,
+  path,
   pipe,
   prop,
 } from 'ramda'
@@ -84,8 +86,14 @@ const hasSurpassedChargebackRate = pipe(
   gt(__, 1)
 )
 
+const isNotRefusedByAntifraud = pipe(
+  path(['transaction', 'status_reason']),
+  complement(equals('antifraud'))
+)
+
 const getLockReason = cond([
   [hasSurpassedChargebackRate, always('chargeback_rate')],
+  [isNotRefusedByAntifraud, always('not_antifraud')],
 ])
 
 const Reprocess = ({
