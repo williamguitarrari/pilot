@@ -18,7 +18,12 @@ import {
 import currencyFormatter from '../../formatters/currency'
 import formatDate from '../../formatters/longDate'
 import statusLegends from '../../models/statusLegends'
+
+import withSpinner from '../../components/withSpinner'
+
 import style from './style.css'
+
+const enhance = withSpinner(style.overlay)
 
 const renderLegend = (legendKey) => {
   const status = statusLegends[legendKey]
@@ -108,4 +113,4 @@ Charts.defaultProps = {
   legendsTitle: '',
 }
 
-export default Charts
+export default enhance(Charts)
