@@ -235,16 +235,45 @@ const TransactionsList = ({
                   )}
                   subtitle={(
                     <div className={style.toolBar}>
-                      <ExportData
-                        exportOptions={getExportOptions(onExport)}
-                        icon={<Download32 width={12} height={12} />}
-                        loading={exporting}
-                        placement="bottomEnd"
-                        relevance="low"
-                        size="tiny"
-                        subtitle={t('export_to')}
-                        title={t('export_table')}
-                      />
+                      {viewMode === 'table'
+                        && (
+                          <Fragment>
+                            <ExportData
+                              exportOptions={getExportOptions(onExport)}
+                              icon={<Download32 width={12} height={12} />}
+                              loading={exporting}
+                              placement="bottomEnd"
+                              relevance="low"
+                              size="tiny"
+                              subtitle={t('export_to')}
+                              title={t('export_table')}
+                            />
+                            <Dropdown
+                              disabled={loading || viewMode === 'graph'}
+                              name="page-count"
+                              onChange={({ target: { value } }) => (
+                                onPageCountChange(parseInt(value, 10))
+                              )}
+                              options={itemsPerPage.map(i => ({
+                                name: t('items_per_page', { count: i }),
+                                value: `${i}`,
+                              }))}
+                              size="tiny"
+                              value={selectedPage.toString()}
+                            />
+                            <Pagination
+                              currentPage={pagination.offset}
+                              disabled={loading || viewMode === 'graph'}
+                              onPageChange={onPageChange}
+                              size="tiny"
+                              strings={{
+                                of: t('components.pagination.of'),
+                              }}
+                              totalPages={pagination.total}
+                            />
+                          </Fragment>
+                        )
+                      }
                       <SegmentedSwitch
                         disabled={loading}
                         name="view-mode"
@@ -261,29 +290,6 @@ const TransactionsList = ({
                         ]}
                         value={viewMode}
                       />
-                      <Dropdown
-                        disabled={loading || viewMode === 'graph'}
-                        name="page-count"
-                        onChange={
-                          e => onPageCountChange(parseInt(e.target.value, 10))
-                        }
-                        options={itemsPerPage.map(i => ({
-                          name: t('items_per_page', { count: i }),
-                          value: `${i}`,
-                        }))}
-                        size="tiny"
-                        value={selectedPage.toString()}
-                      />
-                      <Pagination
-                        currentPage={pagination.offset}
-                        disabled={loading || viewMode === 'graph'}
-                        onPageChange={onPageChange}
-                        size="tiny"
-                        strings={{
-                          of: t('components.pagination.of'),
-                        }}
-                        totalPages={pagination.total}
-                      />
                     </div>
                   )}
                 />
@@ -292,6 +298,7 @@ const TransactionsList = ({
                   {viewMode === 'chart'
                     && (
                       <Charts
+                        loading={loading}
                         data={data}
                         legendsTitle={t('pages.transactions.graphic_legends')}
                       />
