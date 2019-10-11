@@ -52,6 +52,7 @@ import {
 import moment from 'moment'
 import isReprocessable from './isReprocessable'
 import isRefundable from './isRefundable'
+import isCapturable from './isCapturable'
 import { transactionSpec } from '../shared'
 
 const isNilOrEmpty = either(isNil, isEmpty)
@@ -372,11 +373,11 @@ const buildReasonCode = pipe(
 )
 
 const getOriginalId = either(
-  path(['reprocessed', 0, 'original_transaction_id']),
+  path(['reprocessed', 'original_transaction_id']),
   pathOr(null, ['transaction', 'metadata', 'pagarme_original_transaction_id'])
 )
 
-const getReprocessedId = pathOr(null, ['reprocessed', 0, 'id'])
+const getReprocessedId = pathOr(null, ['reprocessed', 'id'])
 
 const getReprocessedTransactionIds = relatedIdGetter => juxt([
   relatedIdGetter,
@@ -399,6 +400,7 @@ const buildReprocessIds = applySpec({
 
 const buildCapabilities = ({ reprocessed, transaction }) => ({
   capabilities: {
+    capturable: isCapturable(transaction),
     refundable: isRefundable(transaction),
     reprocessable: isReprocessable(transaction, reprocessed),
   },

@@ -3,9 +3,12 @@ import {
   either,
   flatten,
   has,
+  head,
   ifElse,
   map,
+  mergeLeft,
   path,
+  pick,
   pipe,
   pluck,
   prop,
@@ -44,6 +47,7 @@ const getOriginalTransactionId = either(
 
 const formatReprocessedTransaction = applySpec({
   id: getReprocessId,
+  status: prop('status'),
   original_transaction_id: getOriginalTransactionId,
 })
 
@@ -64,23 +68,43 @@ const sortByDate = pipe(
   reverse
 )
 
+const getReprocess = (client, transactionId) => client.search({
+  type: 'reprocessed_transaction',
+  query: buildQuery(transactionId),
+})
+  .then(formatElasticSearchResponse)
+  .then(head)
+
+const pickStatus = pick(['status'])
+
+const getReprocessStatus = (client, reprocess) => client.transactions.find({
+  id: reprocess.transaction_id,
+})
+  .then(pickStatus)
+  .then(mergeLeft(reprocess))
+
+const getReprocessWithStatus = (client, transactionId) => getReprocess(
+  client,
+  transactionId
+)
+  .then(reprocess => (
+    reprocess
+      ? getReprocessStatus(client, reprocess)
+      : []
+  ))
+
 const findReprocessedTransactions = ({ client, transactionId }) => Promise.all([
   client.transactions.find({
     metadata: {
       pagarme_original_transaction_id: transactionId,
     },
   }),
-  client.search({
-    type: 'reprocessed_transaction',
-    query: buildQuery(transactionId),
-  }).then(formatElasticSearchResponse),
+  getReprocessWithStatus(client, transactionId),
 ])
   .then(flatten)
   .then(sortByDate)
   .then(formatReprocessedTransactions)
+  .then(head)
 
 export default findReprocessedTransactions
-export {
-  formatReprocessedTransaction,
-  formatReprocessedTransactions,
-}
+export { formatReprocessedTransaction }
