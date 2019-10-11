@@ -6,7 +6,8 @@
     "analyzed": false,
     "created_at": "2019-10-07T17:21:39.601Z",
     "updated_at": "2019-10-07T17:21:39.601Z",
-    "id": "rt_ck1gomuc10004ydp6scj6i836"
+    "id": "rt_ck1gomuc10004ydp6scj6i836",
+    "status": "refused"
   },
   "transaction": {
     "acquirer_id": "123456",
@@ -135,7 +136,7 @@
       }
     ],
     "status_reason": "acquirer",
-    "status": "chargedback",
+    "status": "refused",
     "subscription_id": null,
     "tid": 7
   }

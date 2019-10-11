@@ -10,6 +10,7 @@
     "antifraud": null,
     "boleto": null,
     "capabilities": {
+      "capturable": false,
       "refundable": false,
       "reprocessable": false
     },

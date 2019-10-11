@@ -1,7 +1,6 @@
 import {
   assoc,
   assocPath,
-  of,
   pipe,
 } from 'ramda'
 import moment from 'moment'
@@ -9,13 +8,6 @@ import moment from 'moment'
 import isReprocessable from './isReprocessable'
 import { transaction as transactionMock } from './mocks/fromRequests.json'
 
-const dataWithMetadata = pipe(
-  assocPath(
-    ['metadata', 'pagarme_original_transaction_id'],
-    123456789
-  ),
-  of
-)(transactionMock)
 const emptyData = []
 
 const now = (new Date()).toISOString()
@@ -121,21 +113,18 @@ describe('isReprocessable', () => {
     expect(isReprocessable(transaction, emptyData)).toBe(true)
   })
 
-  it('should return false if status is refused and data.length !== 0', () => {
-    const transaction = pipe(
-      assoc('status', 'refused'),
-      assoc('date_created', now)
-    )(transactionMock)
-    expect(isReprocessable(transaction, dataWithMetadata)).toBe(false)
-  })
-
   it('should return false if status is paid and data.length === 0', () => {
     const transaction = assoc('status', 'paid', transactionMock)
     expect(isReprocessable(transaction, emptyData)).toBe(false)
   })
 
-  it('should return false if status is paid and data.length !== 0', () => {
+  it('should return false if status is refused and reprocess.status is paid', () => {
     const transaction = assoc('status', 'paid', transactionMock)
-    expect(isReprocessable(transaction, dataWithMetadata)).toBe(false)
+    expect(isReprocessable(transaction, { status: 'paid' })).toBe(false)
+  })
+
+  it('should return true if status is refused and reprocess.status is refused', () => {
+    const transaction = assoc('status', 'paid', transactionMock)
+    expect(isReprocessable(transaction, { status: 'refused' })).toBe(false)
   })
 })

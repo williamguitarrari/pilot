@@ -1,6 +1,17 @@
+import { includes } from 'ramda'
 import moment from 'moment'
 
-const canReprocess = (transaction, data) => {
+const wasSuccessfullyPaid = status => includes(status, [
+  'analyzing',
+  'pending_review',
+  'authorized',
+  'paid',
+  'pending_refund',
+  'refunded',
+  'chargedback',
+])
+
+const canReprocess = (transaction, reprocessed = {}) => {
   if (transaction.status !== 'refused') {
     return false
   }
@@ -21,7 +32,9 @@ const canReprocess = (transaction, data) => {
     return false
   }
 
-  return data.length === 0
+  const paidReprocessing = wasSuccessfullyPaid(reprocessed.status)
+
+  return !paidReprocessing
 }
 
 const isReprocessable = (transaction, data) => {

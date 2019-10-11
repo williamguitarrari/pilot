@@ -1039,12 +1039,10 @@
       "type": "credit"
     }
   ],
-  "reprocessed": [
-    {
-      "original_transaction_id": 3082517,
-      "id": 3082518
-    }
-  ],
+  "reprocessed": {
+    "original_transaction_id": 3082517,
+    "id": 3082518
+  },
   "status": {
     "environment": "test",
     "status": "ok"
