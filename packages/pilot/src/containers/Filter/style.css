@@ -28,7 +28,6 @@
 .filtersTitle {
   color: var(--color-light-steel-100);
   font-size: 14px;
-  font-weight: bold;
   margin-bottom: var(--spacing-tiny);
   text-transform: uppercase;
 }

@@ -112,7 +112,6 @@ const TransactionsList = ({
   loading,
   onChangeViewMode,
   onDatePresetChange,
-  onDetailsClick,
   onExport,
   onFilterChange,
   onFilterClear,
@@ -135,7 +134,7 @@ const TransactionsList = ({
   t,
   viewMode,
 }) => {
-  const columns = tableColumns({ onDetailsClick, t })
+  const columns = tableColumns({ t })
   const orderColumn = findIndex(propEq('accessor', orderField), columns)
   const handleOrderChange = (
     columnIndex,
@@ -379,7 +378,6 @@ TransactionsList.propTypes = {
   loading: PropTypes.bool.isRequired,
   onChangeViewMode: PropTypes.func.isRequired,
   onDatePresetChange: PropTypes.func.isRequired,
-  onDetailsClick: PropTypes.func.isRequired,
   onExport: PropTypes.func.isRequired,
   onFilterChange: PropTypes.func.isRequired,
   onFilterClear: PropTypes.func.isRequired,

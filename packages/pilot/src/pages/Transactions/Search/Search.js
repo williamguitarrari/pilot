@@ -9,11 +9,9 @@ import XLSX from 'xlsx'
 import {
   __,
   always,
-  append,
   applySpec,
   assoc,
   compose,
-  contains,
   defaultTo,
   either,
   equals,
@@ -32,7 +30,6 @@ import {
   replace,
   tail,
   unless,
-  without,
   when,
 } from 'ramda'
 import { isMomentPropValidation } from 'former-kit'
@@ -219,7 +216,6 @@ class TransactionsSearch extends React.Component {
 
     this.handleChartsCollapse = this.handleChartsCollapse.bind(this)
     this.handleDatePresetChange = this.handleDatePresetChange.bind(this)
-    this.handleExpandRow = this.handleExpandRow.bind(this)
     this.handleExport = this.handleExport.bind(this)
     this.handleFilterChange = this.handleFilterChange.bind(this)
     this.handleFilterConfirm = this.handleFilterConfirm.bind(this)
@@ -228,7 +224,6 @@ class TransactionsSearch extends React.Component {
     this.handlePageChange = this.handlePageChange.bind(this)
     this.handlePageCountChange = this.handlePageCountChange.bind(this)
     this.handlePendingReviewsFilter = this.handlePendingReviewsFilter.bind(this)
-    this.handleRowClick = this.handleRowClick.bind(this)
     this.handleRowDetailsClick = this.handleRowDetailsClick.bind(this)
     this.handleSelectRow = this.handleSelectRow.bind(this)
     this.handleViewModeChange = this.handleViewModeChange.bind(this)
@@ -432,24 +427,9 @@ class TransactionsSearch extends React.Component {
     history.push(`/transactions/${id}`)
   }
 
-  handleRowClick (index) {
-    const { expandedRows } = this.state
-    this.setState({
-      expandedRows: contains(index, expandedRows)
-        ? without([index], expandedRows)
-        : append(index, expandedRows),
-    })
-  }
-
   handleViewModeChange (viewMode) {
     this.setState({
       viewMode,
-    })
-  }
-
-  handleExpandRow (expandedRows) {
-    this.setState({
-      expandedRows,
     })
   }
 
@@ -539,8 +519,6 @@ class TransactionsSearch extends React.Component {
         onChangeViewMode={this.handleViewModeChange}
         onChartsCollapse={this.handleChartsCollapse}
         onDatePresetChange={this.handleDatePresetChange}
-        onDetailsClick={this.handleRowDetailsClick}
-        onExpandRow={this.handleExpandRow}
         onExport={this.handleExport}
         onFilterChange={this.handleFilterChange}
         onFilterConfirm={this.handleFilterConfirm}
@@ -549,7 +527,7 @@ class TransactionsSearch extends React.Component {
         onPageChange={this.handlePageChange}
         onPageCountChange={this.handlePageCountChange}
         onPendingReviewsFilter={this.handlePendingReviewsFilter}
-        onRowClick={this.handleRowClick}
+        onRowClick={this.handleRowDetailsClick}
         onSelectRow={this.handleSelectRow}
         order={sort.order}
         orderField={sort.field}
