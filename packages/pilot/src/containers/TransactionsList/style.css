@@ -74,6 +74,10 @@
     color: var(--color-light-salmon-100);
     font-weight: bold;
   }
+
+  & .type {
+    font-weight: bold;
+  }
 }
 
 .verticalDivider {

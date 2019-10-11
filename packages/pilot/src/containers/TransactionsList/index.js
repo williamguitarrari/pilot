@@ -107,14 +107,12 @@ const TransactionsList = ({
   count,
   data,
   dateSelectorPresets,
-  expandedRows,
   exporting,
   filterOptions,
   loading,
   onChangeViewMode,
   onDatePresetChange,
   onDetailsClick,
-  onExpandRow,
   onExport,
   onFilterChange,
   onFilterClear,
@@ -224,13 +222,19 @@ const TransactionsList = ({
                 <CardTitle
                   title={(
                     <h2 className={style.customTitle}>
-                      {formatSelectedPeriod(t, query.dates)}
+                      <span className={style.type}>
+                        {formatSelectedPeriod(t, query.dates)}
+                      </span>
                       <div className={style.verticalDivider} />
-                      {count}&nbsp;
+                      <span className={style.type}>
+                        {count}&nbsp;
+                      </span>
                       <small>{t('pages.transactions.count')}</small>&nbsp;
                       <small>-</small>&nbsp;
                       <small>{t('pages.transactions.total_amount')}</small>&nbsp;
-                      {formatCurrency(amount)}
+                      <span className={style.type}>
+                        {formatCurrency(amount)}
+                      </span>
                     </h2>
                   )}
                   subtitle={(
@@ -301,6 +305,7 @@ const TransactionsList = ({
                         loading={loading}
                         data={data}
                         legendsTitle={t('pages.transactions.graphic_legends')}
+                        t={t}
                       />
                     )
                   }
@@ -310,10 +315,7 @@ const TransactionsList = ({
                         columns={columns}
                         disabled={loading}
                         loading={loading}
-                        expandable
-                        expandedRows={expandedRows}
                         maxColumns={6}
-                        onExpandRow={onExpandRow}
                         onOrderChange={handleOrderChange}
                         onRowClick={onRowClick}
                         onSelectRow={onSelectRow}
@@ -365,7 +367,6 @@ TransactionsList.propTypes = {
     key: PropTypes.string,
     title: PropTypes.string,
   })).isRequired,
-  expandedRows: PropTypes.arrayOf(PropTypes.number).isRequired,
   exporting: PropTypes.bool.isRequired,
   filterOptions: PropTypes.arrayOf(PropTypes.shape({
     items: PropTypes.arrayOf(PropTypes.shape({
@@ -379,7 +380,6 @@ TransactionsList.propTypes = {
   onChangeViewMode: PropTypes.func.isRequired,
   onDatePresetChange: PropTypes.func.isRequired,
   onDetailsClick: PropTypes.func.isRequired,
-  onExpandRow: PropTypes.func.isRequired,
   onExport: PropTypes.func.isRequired,
   onFilterChange: PropTypes.func.isRequired,
   onFilterClear: PropTypes.func.isRequired,

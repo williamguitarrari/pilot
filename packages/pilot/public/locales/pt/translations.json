@@ -1397,6 +1397,7 @@
     },
     "transactions": {
       "count": "transações",
+      "chart_amount": "Valor em reais (R$)",
       "graphic": "Gráfico",
       "graphic_legends": "Legendas",
       "no_results_message": "Tente novamente com outros filtros.",
