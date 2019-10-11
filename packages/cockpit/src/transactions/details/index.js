@@ -1,7 +1,6 @@
 import {
   all,
   props,
-  resolve,
 } from 'bluebird'
 
 import {
@@ -25,9 +24,6 @@ import {
 } from 'ramda'
 
 import buildResult from './result'
-import isCapturable from './isCapturable'
-import isRefundable from './isRefundable'
-import isReprocessable from './isReprocessable'
 import findReprocessedTransactions from './reprocessedTransactions'
 
 const fetchRecipient = client => object => client
@@ -62,28 +58,6 @@ const fetchRecipients = uncurryN(2, client => pipe(
   all
 ))
 
-const findReprocessedTransaction = ({ id }) => ({
-  metadata: {
-    pagarme_original_transaction_id: id,
-  },
-})
-
-const addCapabilities = client => (data) => {
-  const canReprocess = client
-    .transactions
-    .find(findReprocessedTransaction(data.transaction))
-    .then(res => (
-      isReprocessable(data.transaction, res)
-    ))
-
-  return props({
-    capturable: resolve(isCapturable(data.transaction)),
-    refundable: resolve(isRefundable(data.transaction)),
-    reprocessable: canReprocess,
-  })
-    .then(assoc('capabilities', __, data))
-}
-
 const details = client => transactionId => props({
   antifraudAnalyses: client.antifraudAnalyses.find({ transactionId }),
   chargebackOperations: client.chargebackOperations.find({ transactionId }),
@@ -94,7 +68,6 @@ const details = client => transactionId => props({
 })
   .then(data => fetchRecipients(client, data)
     .then(assoc('split_rules', __, data)))
-  .then(addCapabilities(client))
   .then(buildResult)
 
 export default details
