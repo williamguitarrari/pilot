@@ -17,9 +17,11 @@ import {
 } from 'former-kit'
 import currencyFormatter from '../../formatters/currency'
 import formatDate from '../../formatters/longDate'
+import sufixNumber from '../../formatters/sufixNumber'
 import statusLegends from '../../models/statusLegends'
 
 import withSpinner from '../../components/withSpinner'
+import YAxisLabel from '../../components/MetricChart/charts/YAxisLabel'
 
 import style from './style.css'
 
@@ -48,33 +50,39 @@ const renderLegend = (legendKey) => {
 
 const formatCurrency = value => currencyFormatter(value)
 
-const Charts = ({ data, legendsTitle }) => (
+const Charts = ({ data, legendsTitle, t }) => (
   <Fragment>
     <ResponsiveContainer width="100%" height={380}>
       <BarChart
         data={data}
         height={380}
+        margin={{
+          left: 15,
+        }}
         maxBarSize={17}
-        width={600}
       >
         <XAxis
           axisLine={false}
           dataKey="name"
-          tick={{ fontSize: 11 }}
+          tick={{ fontSize: 13 }}
           tickFormatter={formatDate}
           tickMargin={10}
         />
         <YAxis
           axisLine={false}
           height={50}
-          tick={{ fontSize: 11 }}
-          tickFormatter={formatCurrency}
+          label={<YAxisLabel textAnchor="end" value={t('pages.transactions.chart_amount')} />}
+          tick={{ fontSize: 13 }}
+          tickFormatter={amount => sufixNumber(amount / 100)}
         />
         <CartesianGrid
           stroke="#d7d7d7"
           vertical={false}
         />
         <Tooltip
+          cursor={{
+            fillOpacity: 0.3,
+          }}
           formatter={formatCurrency}
           labelFormatter={formatDate}
         />
@@ -107,6 +115,7 @@ const Charts = ({ data, legendsTitle }) => (
 Charts.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   legendsTitle: PropTypes.string,
+  t: PropTypes.func.isRequired,
 }
 
 Charts.defaultProps = {
