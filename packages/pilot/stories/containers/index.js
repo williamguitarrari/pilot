@@ -52,6 +52,7 @@ import CaptureResult from './Capture/Result'
 import IdentificationStep from './AddRecipient/IdentificationStep'
 import Reprocess from './Reprocess'
 import ReprocessForm from './Reprocess/Form'
+import ReprocessConfirmation from './Reprocess/Confirmation'
 import ReprocessResult from './Reprocess/Result'
 import SelectAccount from './AddRecipient/BankAccountStep/SelectAccount'
 import Withdraw from './Withdraw'
@@ -276,32 +277,90 @@ storiesOf('Containers|Page containers', module)
   .add('Reprocess form', () => (
     <ReprocessForm />
   ))
+  .add('Reprocess form without antifraud', () => (
+    <ReprocessForm
+      allowReprocessWithoutAntifraud
+    />
+  ))
+  .add('Reprocess form without antifraud disabled', () => (
+    <ReprocessForm
+      allowReprocessWithoutAntifraud
+      disableWithoutAntifraudReprocess
+      lockReason="chargeback_rate"
+    />
+  ))
+  .add('Reprocess confirmation', () => (
+    <ReprocessConfirmation />
+  ))
+  .add('Reprocess confirmation without antifraud', () => (
+    <ReprocessConfirmation
+      isReprocessingWithoutAntifraud
+    />
+  ))
   .add('Reprocess result', () => (
     <ReprocessResult />
   ))
+  .add('Reprocess result with error', () => (
+    <ReprocessResult status="error" />
+  ))
+  .add('Reprocess step identification', () => (
+    <Reprocess
+      stepStatus={{
+        confirmation: 'pending',
+        identification: 'current',
+        result: 'pending',
+      }}
+    />
+  ))
+  .add('Reprocess step identification without antifraud', () => (
+    <Reprocess
+      allowReprocessWithoutAntifraud
+      stepStatus={{
+        confirmation: 'pending',
+        identification: 'current',
+        result: 'pending',
+      }}
+    />
+  ))
+  .add('Reprocess step identification without antifraud disabled', () => (
+    <Reprocess
+      allowReprocessWithoutAntifraud
+      lockReason="chargeback_rate"
+      stepStatus={{
+        confirmation: 'pending',
+        identification: 'current',
+        result: 'pending',
+      }}
+    />
+  ))
   .add('Reprocess step confirmation', () => (
     <Reprocess
-      statusMessage=""
+      allowReprocessWithoutAntifraud
+      currentStep="confirmation"
       stepStatus={{
         confirmation: 'current',
-        result: null,
+        identification: 'success',
+        result: 'pending',
       }}
     />
   ))
   .add('Reprocess step result', () => (
     <Reprocess
-      statusMessage="Success!"
+      allowReprocessWithoutAntifraud
       stepStatus={{
         confirmation: 'success',
-        result: 'current',
+        identification: 'success',
+        result: 'success',
       }}
     />
   ))
   .add('Reprocess step result error', () => (
     <Reprocess
+      allowReprocessWithoutAntifraud
       statusMessage="Internal server error"
       stepStatus={{
         confirmation: 'success',
+        identification: 'success',
         result: 'error',
       }}
     />

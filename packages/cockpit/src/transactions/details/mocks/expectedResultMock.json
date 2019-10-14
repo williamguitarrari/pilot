@@ -10,6 +10,7 @@
     "antifraud": null,
     "boleto": null,
     "capabilities": {
+      "capturable": false,
       "refundable": false,
       "reprocessable": false
     },
@@ -50,7 +51,7 @@
     "external_id": null,
     "id": 3082517,
     "metadata": {},
-    "nextId": null,
+    "nextId": 3082518,
     "operations": [
       {
         "cycle": 2,

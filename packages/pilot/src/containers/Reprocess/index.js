@@ -1,11 +1,16 @@
-import React, { PureComponent } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import {
   always,
-  cond,
-  either,
-  equals,
-  T,
+  applySpec,
+  juxt,
+  isNil,
+  pipe,
+  prop,
+  propEq,
+  reject,
+  uncurryN,
+  when,
 } from 'ramda'
 import {
   Modal,
@@ -16,13 +21,8 @@ import {
 } from 'former-kit'
 import IconClose from 'emblematic-icons/svg/ClearClose32.svg'
 import Form from './Form'
+import Confirmation from './Confirmation'
 import Result from './Result'
-
-const formatStepStatus = cond([
-  [either(equals('current'), equals('error')), always('current')],
-  [equals('success'), always('success')],
-  [T, always('pending')],
-])
 
 const validateOnRestart = ({ onRestart, stepStatus }, propName) => {
   if (
@@ -34,148 +34,176 @@ const validateOnRestart = ({ onRestart, stepStatus }, propName) => {
   }
 }
 
-class Reprocess extends PureComponent {
-  render () {
-    const {
-      isOpen,
-      loading,
-      onCancel,
-      onConfirm,
-      onCopyId,
-      onRestart,
-      onViewTransaction,
-      statusMessage,
-      stepStatus,
-      t,
-      transaction: {
-        amount,
-        card: {
-          first_digits, // eslint-disable-line camelcase
-          holder_name, // eslint-disable-line camelcase
-          last_digits, // eslint-disable-line camelcase
-        },
-        payment: {
-          installments,
-        },
-      },
-    } = this.props
+const buildStep = (stepName, translation) => applySpec({
+  id: always(stepName),
+  status: prop(stepName),
+  title: () => translation(`pages.reprocess.${stepName}`),
+})
 
-    return (
-      <Modal
-        isOpen={isOpen}
-        loading={loading}
-        onRequestClose={onCancel}
-      >
-        <ModalTitle
-          closeIcon={<IconClose height={16} width={16} />}
-          onClose={onCancel}
-          title={t('pages.reprocess.title')}
-        />
-        <ModalContent>
-          <ModalSection>
-            <Steps
-              status={[
-                {
-                  id: 'confirmation',
-                  status: formatStepStatus(stepStatus.confirmation),
-                },
-                {
-                  id: 'result',
-                  status: formatStepStatus(stepStatus.result),
-                },
-              ]}
-              steps={[
-                {
-                  id: 'confirmation',
-                  title: t('pages.reprocess.confirmation'),
-                },
-                {
-                  id: 'result',
-                  title: t('pages.reprocess.result'),
-                },
-              ]}
-            />
-          </ModalSection>
-        </ModalContent>
-        {stepStatus
-          && stepStatus.result
-          && stepStatus.result !== 'pending'
-          ? (
-            <Result
-              amount={amount}
-              cardFirstDigits={first_digits} // eslint-disable-line camelcase
-              cardLastDigits={last_digits} // eslint-disable-line camelcase
-              holderName={holder_name} // eslint-disable-line camelcase
-              installments={installments}
-              onCopyIdClick={onCopyId}
-              onRestart={onRestart}
-              onViewTransactionClick={onViewTransaction}
-              status={stepStatus.result}
-              statusMessage={statusMessage}
-              t={t}
-            />
-          )
-          : (
-            <Form
-              amount={amount}
-              cardFirstDigits={first_digits} // eslint-disable-line camelcase
-              cardLastDigits={last_digits} // eslint-disable-line camelcase
-              error={
-                stepStatus.confirmation === 'error'
-                  ? statusMessage
-                  : ''
-              }
-              holderName={holder_name} // eslint-disable-line camelcase
-              loading={loading}
-              installments={installments}
-              onCancel={onCancel}
-              onConfirm={onConfirm}
-              t={t}
-            />
-          )
-        }
-      </Modal>
+const buildSteps = translation => juxt([
+  buildStep('identification', translation),
+  buildStep('confirmation', translation),
+  buildStep('result', translation),
+])
+
+const getSteps = allowReprocessWithoutAntifraud => uncurryN(2,
+  translation => pipe(
+    buildSteps(translation),
+    when(
+      always(!allowReprocessWithoutAntifraud),
+      reject(propEq('id', 'confirmation'))
     )
+  ))
+
+const Reprocess = ({
+  allowReprocessWithoutAntifraud,
+  isOpen,
+  loading,
+  lockReason,
+  onBack,
+  onCancel,
+  onCopyId,
+  onForward,
+  onRestart,
+  onReprocess,
+  onViewTransaction,
+  statusMessage,
+  stepStatus = {},
+  t,
+  transaction: {
+    amount,
+    card: {
+      holder_name: holderName,
+    },
+    id: transactionId,
+  },
+}) => {
+  const [isWithoutAntifraud, setIsWithoutAntifraud] = useState(false)
+  const stepsBuilder = getSteps(allowReprocessWithoutAntifraud)
+
+  const currentSteps = stepsBuilder(t, stepStatus)
+
+  const handleReprocess = withoutAntifraud => onReprocess({
+    transactionId,
+    withoutAntifraud,
+  })
+
+  const onReprocessTypeSelection = withoutAntifraud => () => {
+    setIsWithoutAntifraud(withoutAntifraud)
+
+    if (allowReprocessWithoutAntifraud) {
+      return onForward()
+    }
+
+    return handleReprocess(isWithoutAntifraud)
   }
+
+  return (
+    <Modal
+      isOpen={isOpen}
+      loading={loading}
+      onRequestClose={onCancel}
+    >
+      <ModalTitle
+        closeIcon={<IconClose height={16} width={16} />}
+        onClose={onCancel}
+        title={t('pages.reprocess.title')}
+      />
+      <ModalContent>
+        <ModalSection>
+          <Steps
+            status={currentSteps}
+            steps={currentSteps}
+          />
+        </ModalSection>
+      </ModalContent>
+      {stepStatus.identification === 'current' && (
+        <Form
+          allowReprocessWithoutAntifraud={allowReprocessWithoutAntifraud}
+          disableWithoutAntifraudReprocess={!isNil(lockReason)}
+          amount={amount}
+          error={
+            stepStatus.confirmation === 'error'
+              ? statusMessage
+              : ''
+          }
+          holderName={holderName}
+          loading={loading}
+          lockReason={lockReason}
+          onReprocessWithAntifraud={onReprocessTypeSelection(false)}
+          onReprocessWithoutAntifraud={onReprocessTypeSelection(true)}
+          t={t}
+          transactionId={transactionId}
+        />
+      )}
+      {stepStatus.confirmation === 'current' && (
+        <Confirmation
+          isReprocessingWithoutAntifraud={isWithoutAntifraud}
+          loading={loading}
+          onBack={onBack}
+          onReprocess={() => handleReprocess(isWithoutAntifraud)}
+          t={t}
+        />
+      )}
+      {(stepStatus.result === 'success' || stepStatus.result === 'error') && (
+        <Result
+          onCopyIdClick={onCopyId}
+          onRestart={onRestart}
+          onViewTransactionClick={onViewTransaction}
+          status={stepStatus.result}
+          statusMessage={statusMessage}
+          t={t}
+        />
+      )}
+    </Modal>
+  )
 }
 
 Reprocess.propTypes = {
+  allowReprocessWithoutAntifraud: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
+  lockReason: PropTypes.string,
+  onBack: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
-  onConfirm: PropTypes.func.isRequired,
   onCopyId: PropTypes.func.isRequired,
+  onForward: PropTypes.func.isRequired,
+  onReprocess: PropTypes.func.isRequired,
   onRestart: validateOnRestart,
   onViewTransaction: PropTypes.func.isRequired,
   statusMessage: PropTypes.string,
   stepStatus: PropTypes.shape({
-    confirmation: PropTypes.string,
-    result: PropTypes.string,
+    confirmation: PropTypes.oneOf([
+      'current', 'pending', 'success',
+    ]),
+    identification: PropTypes.oneOf([
+      'current', 'success',
+    ]),
+    result: PropTypes.oneOf([
+      'error', 'pending', 'success',
+    ]),
   }),
   t: PropTypes.func.isRequired,
   transaction: PropTypes.shape({
     amount: PropTypes.number.isRequired,
     card: PropTypes.shape({
-      first_digits: PropTypes.string.isRequired,
       holder_name: PropTypes.string.isRequired,
-      last_digits: PropTypes.string.isRequired,
     }).isRequired,
     id: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.string,
     ]).isRequired,
-    payment: PropTypes.shape({
-      installments: PropTypes.number.isRequired,
-    }).isRequired,
   }).isRequired,
 }
 
 Reprocess.defaultProps = {
+  lockReason: null,
   onRestart: null,
   statusMessage: '',
   stepStatus: {
-    confirmation: 'current',
-    result: null,
+    confirmation: 'pending',
+    identification: 'current',
+    result: 'pending',
   },
 }
 

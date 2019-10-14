@@ -1,103 +1,238 @@
-import React, { Component } from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import {
   Button,
+  CardTitle,
   Col,
   Grid,
   ModalActions,
   ModalContent,
   Row,
+  Tooltip,
+  Truncate,
 } from 'former-kit'
-import formatCardNumber from '../../../formatters/cardNumber'
+import {
+  equals,
+  find,
+} from 'ramda'
+import WarningIcon from 'emblematic-icons/svg/Warning32.svg'
+
 import formatCurrency from '../../../formatters/currency'
 import ReprocessDetails from '../../../components/ReprocessDetails'
+import DescriptionAlert from '../../../components/DescriptionAlert'
 
-class ReprocessForm extends Component {
-  constructor (props) {
-    super(props)
+import styles from './style.css'
 
-    this.getFormattedTransaction = this.getFormattedTransaction.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
-  }
-
-  getFormattedTransaction () {
-    const {
-      amount,
-      cardFirstDigits,
-      cardLastDigits,
-      holderName,
-      installments,
-      t,
-    } = this.props
-
-    return {
-      amount: formatCurrency(amount),
-      cardNumber: `${formatCardNumber(cardFirstDigits)} ${cardLastDigits}`,
-      holderName,
-      installments: t('installment', { count: installments }),
+const WithoutAntifraudButton = ({
+  allowReprocessWithoutAntifraud,
+  disableWithoutAntifraudReprocess,
+  lockReason,
+  onReprocessWithoutAntifraud,
+  t,
+}) => (
+  <Fragment>
+    { allowReprocessWithoutAntifraud && disableWithoutAntifraudReprocess
+      && (
+        <Tooltip
+          content={t(`pages.reprocess.without_antifraud_requirements.${lockReason}`)}
+          placement="topStart"
+        >
+          <Button
+            disabled={disableWithoutAntifraudReprocess}
+            fill="outline"
+            onClick={onReprocessWithoutAntifraud}
+          >
+            {t('pages.reprocess.reprocess_without_antifraud')}
+          </Button>
+        </Tooltip>
+      )
     }
-  }
+    { allowReprocessWithoutAntifraud && !disableWithoutAntifraudReprocess
+      && (
+        <Button
+          disabled={disableWithoutAntifraudReprocess}
+          fill="outline"
+          onClick={onReprocessWithoutAntifraud}
+        >
+          {t('pages.reprocess.reprocess_without_antifraud')}
+        </Button>
+      )
+    }
+  </Fragment>
+)
 
-  handleSubmit (event) {
-    const { onConfirm } = this.props
+const getFormattedTransaction = ({
+  amount,
+  holderName,
+  transactionId,
+}) => ({
+  amount: (
+    <span className={styles.numericValue}>
+      {formatCurrency(amount)}
+    </span>
+  ),
+  holderName: (
+    <span className={styles.holderName}>
+      <Truncate text={holderName} />
+    </span>
+  ),
+  transactionId: (
+    <span className={styles.numericValue}>
+      #{transactionId}
+    </span>
+  ),
+})
 
-    onConfirm()
-    event.preventDefault()
-    event.stopPropagation()
-  }
-
-  render () {
-    const {
-      loading,
-      t,
-    } = this.props
-
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <ModalContent>
-          <Grid>
-            <Row stretch>
-              <Col palm={12} tablet={12} desk={12} tv={12}>
-                <ReprocessDetails
-                  contents={this.getFormattedTransaction()}
-                  labels={{
-                    amount: t('amount'),
-                    cardNumber: t('card_number'),
-                    holderName: t('holder_name'),
-                    installments: t('installments'),
-                  }}
+const ReprocessForm = ({
+  allowReprocessWithoutAntifraud,
+  amount,
+  disableWithoutAntifraudReprocess,
+  holderName,
+  loading,
+  lockReason,
+  onReprocessWithAntifraud,
+  onReprocessWithoutAntifraud,
+  t,
+  transactionId,
+}) => (
+  <Fragment>
+    <ModalContent>
+      <Grid>
+        <Row stretch>
+          <CardTitle
+            className={styles.title}
+            title={
+              allowReprocessWithoutAntifraud
+                ? t('pages.reprocess.type_selection')
+                : t('pages.reprocess.action_confirm')
+            }
+          />
+        </Row>
+        <Row stretch>
+          <Col palm={12} tablet={12} desk={12} tv={12}>
+            <ReprocessDetails
+              contents={getFormattedTransaction({
+                amount,
+                holderName,
+                transactionId,
+              })}
+              labels={{
+                amount: t('amount'),
+                holderName: t('holder_name'),
+                transactionId: t('transaction'),
+              }}
+            />
+          </Col>
+        </Row>
+        {allowReprocessWithoutAntifraud
+          && (
+            <Row flex>
+              <Col className={styles.alertColumn}>
+                <DescriptionAlert
+                  content={(
+                    <span>
+                      {t('pages.reprocess.without_antifraud_disclaimer_1')}
+                      <b>{t('pages.reprocess.without_antifraud_disclaimer_2')}</b>
+                      {t('pages.reprocess.without_antifraud_disclaimer_3')}
+                      <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href={t('pages.reprocess.without_antifraud_documentation_link')}
+                      >
+                        {t('pages.reprocess.without_antifraud_disclaimer_4')}
+                      </a>
+                    </span>
+                  )}
+                  icon={<WarningIcon />}
+                  title={t('attention')}
+                  type="error"
                 />
               </Col>
             </Row>
-          </Grid>
-        </ModalContent>
-        <ModalActions>
-          <Button
-            disabled={loading}
-            fill="gradient"
-            type="submit"
-          >
-            {t('pages.reprocess.submit')}
-          </Button>
-        </ModalActions>
-      </form>
-    )
+          )
+        }
+      </Grid>
+    </ModalContent>
+    <div className={styles.actions}>
+      <ModalActions>
+        <WithoutAntifraudButton
+          allowReprocessWithoutAntifraud={allowReprocessWithoutAntifraud}
+          disableWithoutAntifraudReprocess={disableWithoutAntifraudReprocess}
+          lockReason={lockReason}
+          onReprocessWithoutAntifraud={onReprocessWithoutAntifraud}
+          t={t}
+        />
+        <Button
+          disabled={loading}
+          fill="gradient"
+          loading={loading}
+          onClick={onReprocessWithAntifraud}
+        >
+          {allowReprocessWithoutAntifraud
+            ? t('pages.reprocess.reprocess_with_antifraud')
+            : t('pages.reprocess.reprocess_transaction')
+          }
+        </Button>
+      </ModalActions>
+    </div>
+  </Fragment>
+)
+
+const lockReasonValidation = (props, propName, componentName) => {
+  const oneOf = [
+    'chargeback_rate',
+    'multiple_reprocess',
+    'time_limit',
+    'not_antifraud',
+  ]
+
+  const {
+    disableWithoutAntifraudReprocess,
+    lockReason,
+  } = props
+
+  const errorMessage = message => `Invalid prop '${propName}' supplied to ${componentName}. ${message}`
+
+  if (disableWithoutAntifraudReprocess && !lockReason) {
+    return new Error(errorMessage('It should be supplied when \'disableWithoutAntifraudReprocess\' is true'))
   }
+
+  if (lockReason && !find(equals(lockReason), oneOf)) {
+    return new Error(errorMessage(`It should be one of [${oneOf.join(', ')}]`))
+  }
+
+  return null
 }
 
-ReprocessForm.propTypes = {
-  amount: PropTypes.number.isRequired,
-  cardFirstDigits: PropTypes.string.isRequired,
-  cardLastDigits: PropTypes.string.isRequired,
-  holderName: PropTypes.string.isRequired,
-  installments: PropTypes.number.isRequired,
-  loading: PropTypes.bool,
-  onConfirm: PropTypes.func.isRequired,
+WithoutAntifraudButton.propTypes = {
+  allowReprocessWithoutAntifraud: PropTypes.bool.isRequired,
+  disableWithoutAntifraudReprocess: PropTypes.bool.isRequired,
+  lockReason: lockReasonValidation,
+  onReprocessWithoutAntifraud: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
 }
 
+WithoutAntifraudButton.defaultProps = {
+  lockReason: null,
+}
+
+ReprocessForm.propTypes = {
+  allowReprocessWithoutAntifraud: PropTypes.bool.isRequired,
+  amount: PropTypes.number.isRequired,
+  disableWithoutAntifraudReprocess: PropTypes.bool,
+  holderName: PropTypes.string.isRequired,
+  loading: PropTypes.bool,
+  lockReason: lockReasonValidation,
+  onReprocessWithAntifraud: PropTypes.func.isRequired,
+  onReprocessWithoutAntifraud: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired,
+  transactionId: PropTypes.number.isRequired,
+}
+
 ReprocessForm.defaultProps = {
+  disableWithoutAntifraudReprocess: false,
   loading: false,
+  lockReason: null,
 }
 
 export default ReprocessForm

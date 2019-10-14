@@ -9,6 +9,7 @@ import {
   complement,
   contains,
   either,
+  equals,
   find,
   flatten,
   groupBy,
@@ -51,6 +52,7 @@ import {
 import moment from 'moment'
 import isReprocessable from './isReprocessable'
 import isRefundable from './isRefundable'
+import isCapturable from './isCapturable'
 import { transactionSpec } from '../shared'
 
 const isNilOrEmpty = either(isNil, isEmpty)
@@ -370,20 +372,35 @@ const buildReasonCode = pipe(
   objOf('reason_code')
 )
 
-const getOriginalId = pathOr(
-  null,
-  ['transaction', 'metadata', 'pagarme_original_transaction_id']
+const getOriginalId = either(
+  path(['reprocessed', 'original_transaction_id']),
+  pathOr(null, ['transaction', 'metadata', 'pagarme_original_transaction_id'])
 )
 
-const getReprocessedId = pathOr(null, ['reprocessed', 0, 'id'])
+const getReprocessedId = pathOr(null, ['reprocessed', 'id'])
+
+const getReprocessedTransactionIds = relatedIdGetter => juxt([
+  relatedIdGetter,
+  path(['transaction', 'id']),
+])
+
+const getRelatedTransactionId = relatedIdGetter => pipe(
+  getReprocessedTransactionIds(relatedIdGetter),
+  ifElse(
+    apply(equals),
+    always(null),
+    head
+  )
+)
 
 const buildReprocessIds = applySpec({
-  nextId: getReprocessedId,
-  previousId: getOriginalId,
+  nextId: getRelatedTransactionId(getReprocessedId),
+  previousId: getRelatedTransactionId(getOriginalId),
 })
 
 const buildCapabilities = ({ reprocessed, transaction }) => ({
   capabilities: {
+    capturable: isCapturable(transaction),
     refundable: isRefundable(transaction),
     reprocessable: isReprocessable(transaction, reprocessed),
   },

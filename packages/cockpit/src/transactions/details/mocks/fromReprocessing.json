@@ -1,0 +1,143 @@
+{
+  "reprocessedTransaction": {
+    "object": "reprocessed_transaction",
+    "original_transaction_id": 6,
+    "transaction_id": 7,
+    "analyzed": false,
+    "created_at": "2019-10-07T17:21:39.601Z",
+    "updated_at": "2019-10-07T17:21:39.601Z",
+    "id": "rt_ck1gomuc10004ydp6scj6i836",
+    "status": "refused"
+  },
+  "transaction": {
+    "acquirer_id": "123456",
+    "acquirer_name": "pagarme",
+    "acquirer_response_code": "0000",
+    "address": {
+      "street": "Gomes de Carvalho"
+    },
+    "amount": 985172498,
+    "antifraud_metadata": {},
+    "antifraud_score": null,
+    "authorization_code": "123456",
+    "authorized_amount": 985172498,
+    "billing": null,
+    "boleto_barcode": null,
+    "boleto_expiration_date": null,
+    "boleto_url": null,
+    "capture_method": "ecommerce",
+    "card": {
+      "brand": "visa",
+      "country": "UNITED STATES",
+      "date_created": "2018-03-14T13:40:28.455Z",
+      "date_updated": "2018-03-14T13:40:29.404Z",
+      "expiration_date": "0922",
+      "fingerprint": "abcdefghi",
+      "first_digits": "987654",
+      "holder_name": "Derek",
+      "id": "card_aaaaaaaaaaaa",
+      "last_digits": "123456",
+      "object": "card",
+      "valid": true
+    },
+    "card_brand": "visa",
+    "card_first_digits": "987654",
+    "card_holder_name": "Derek",
+    "card_last_digits": "123456",
+    "card_pin_mode": null,
+    "cost": 0,
+    "customer": {
+      "birthday": "1999-01-01T00:00:00.000Z",
+      "born_at": null,
+      "country": "us",
+      "date_created": "2018-03-14T13:40:28.431Z",
+      "document_number": "123456789",
+      "document_type": "cpf",
+      "documents": [],
+      "email": "markzuckerberg@gmail.com",
+      "external_id": "#4433",
+      "gender": null,
+      "id": 517958,
+      "name": "Lalala",
+      "object": "customer",
+      "phone_numbers": [
+        "+554299993333"
+      ],
+      "type": "individual"
+    },
+    "date_created": "2018-03-14T13:40:28.465Z",
+    "date_updated": "2018-03-14T16:11:52.057Z",
+    "device": null,
+    "fraud_covered": false,
+    "id": 7,
+    "installments": 12,
+    "ip": "179.191.110.178",
+    "items": [],
+    "local_time": null,
+    "local_transaction_id": null,
+    "metadata": {
+      "pagarme_original_transaction_id": 6
+    },
+    "nsu": 7,
+    "object": "transaction",
+    "order_id": null,
+    "paid_amount": 985172498,
+    "payment_method": "credit_card",
+    "phone": {
+      "ddd": "42",
+      "ddi": "55",
+      "id": 136016,
+      "number": "36243958",
+      "object": "phone"
+    },
+    "postback_url": null,
+    "reference_key": null,
+    "referer": "api_key",
+    "refunded_amount": 0,
+    "refuse_reason": null,
+    "shipping": null,
+    "soft_descriptor": null,
+    "split_rules": [
+      {
+        "amount": null,
+        "charge_processing_fee": true,
+        "charge_remainder": false,
+        "date_created": "2018-03-14T13:40:28.475Z",
+        "date_updated": "2018-03-14T13:40:28.475Z",
+        "id": "sr_1",
+        "liable": false,
+        "object": "split_rule",
+        "percentage": 40,
+        "recipient_id": "re_1"
+      },
+      {
+        "amount": null,
+        "charge_processing_fee": false,
+        "charge_remainder": false,
+        "date_created": "2018-03-14T13:40:28.475Z",
+        "date_updated": "2018-03-14T13:40:28.475Z",
+        "id": "sr_2",
+        "liable": true,
+        "object": "split_rule",
+        "percentage": 30,
+        "recipient_id": "re_2"
+      },
+      {
+        "amount": null,
+        "charge_processing_fee": false,
+        "charge_remainder": true,
+        "date_created": "2018-03-14T13:40:28.475Z",
+        "date_updated": "2018-03-14T13:40:28.475Z",
+        "id": "sr_3",
+        "liable": false,
+        "object": "split_rule",
+        "percentage": 30,
+        "recipient_id": "re_3"
+      }
+    ],
+    "status_reason": "acquirer",
+    "status": "refused",
+    "subscription_id": null,
+    "tid": 7
+  }
+}

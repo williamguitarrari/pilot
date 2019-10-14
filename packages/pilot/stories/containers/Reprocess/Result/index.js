@@ -1,9 +1,10 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { identity } from 'ramda'
 import { action } from '@storybook/addon-actions'
 import ReprocessResult from '../../../../src/containers/Reprocess/Result'
 
-const Reprocess = () => (
+const Reprocess = ({ status }) => (
   <ReprocessResult
     amount={234567}
     cardFirstDigits="123456"
@@ -14,10 +15,18 @@ const Reprocess = () => (
     onCopyIdClick={action('copy id')}
     onRestart={action('reprocess restart')}
     onViewTransactionClick={action('view transaction')}
-    status="success"
-    statusMessage="Transação foi reprocessada com sucesso."
+    status={status}
+    statusMessage="Houve um erro no reprocessamento da transação"
     t={identity}
   />
 )
+
+Reprocess.propTypes = {
+  status: PropTypes.string,
+}
+
+Reprocess.defaultProps = {
+  status: 'success',
+}
 
 export default Reprocess

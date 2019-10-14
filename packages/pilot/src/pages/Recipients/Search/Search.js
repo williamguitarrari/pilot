@@ -91,7 +91,7 @@ const isBankAccount = (bankAccount) => {
   if (!bankAccount || bankAccount.length > 10) {
     return false
   }
-  const bankNumber = Number.parseInt(bankAccount, 10)
+  const bankNumber = Number(bankAccount)
 
   return Number.isInteger(bankNumber)
 }

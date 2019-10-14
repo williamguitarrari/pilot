@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 
 import {
   anyPass,
@@ -15,8 +16,8 @@ const isStringOrNumber = anyPass([
   isNil,
 ])
 
-const Property = ({ title, value }) => (
-  <div className={style.property}>
+const Property = ({ className, title, value }) => (
+  <div className={classNames(style.property, className)}>
     <h4 className={style.title}>{title}</h4>
     {isStringOrNumber(value)
       ? <span className={style.value}>{value}</span>
@@ -25,12 +26,15 @@ const Property = ({ title, value }) => (
   </div>
 )
 
-Property.defaultProps = {
-  value: null,
-}
-
 Property.propTypes = {
+  className: PropTypes.string,
   title: PropTypes.string.isRequired,
   value: PropTypes.node,
 }
+
+Property.defaultProps = {
+  className: '',
+  value: null,
+}
+
 export default Property

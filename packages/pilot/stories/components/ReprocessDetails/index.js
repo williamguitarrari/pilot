@@ -1,30 +1,33 @@
 import React from 'react'
-import { Card } from 'former-kit'
+import {
+  Card,
+  CardContent,
+} from 'former-kit'
 import Section from '../../Section'
 import ReprocessDetails from '../../../src/components/ReprocessDetails'
 
 const labels = {
-  amount: 'Valor R$',
-  cardNumber: 'Número do cartão',
+  amount: 'Valor',
   holderName: 'Portador do cartão',
-  installments: 'Qtd de parcelas',
+  transactionId: 'Transação',
 }
 
 const contents = {
-  amount: '20.000,00',
-  cardNumber: '1234 **** **** 4444',
+  amount: 'R$ 20.000,00',
   holderName: 'José da Silva',
-  installments: 'Qtd de parcelas',
+  transactionId: '#1234567',
 }
 
 const ReprocessDetailsExample = () => (
   <Section>
     <Card>
-      <ReprocessDetails
-        contents={contents}
-        id={123456}
-        labels={labels}
-      />
+      <CardContent>
+        <ReprocessDetails
+          contents={contents}
+          id={123456}
+          labels={labels}
+        />
+      </CardContent>
     </Card>
   </Section>
 )

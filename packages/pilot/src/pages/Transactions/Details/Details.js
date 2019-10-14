@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { translate } from 'react-i18next'
 import {
   allPass,
+  contains,
   equals,
   always,
   complement,
@@ -21,6 +22,7 @@ import {
   pipe,
   prop,
   tail,
+  values,
   uncurryN,
 } from 'ramda'
 import moment from 'moment'
@@ -190,12 +192,27 @@ const removeCustomerUnusedPhones = (transaction) => {
   }
 }
 
+const anyPropEqual = value => pipe(
+  values,
+  contains(value)
+)
+
+const requestChargebackRate = (client) => {
+  const range = {
+    from: moment.utc().subtract(30, 'days'),
+    to: moment.utc(),
+  }
+
+  return client.transactions.chargebackRate(range)
+}
+
 class TransactionDetails extends Component {
   constructor (props) {
     super(props)
     const { t } = this.props
     const formatColumns = getColumnFormatter(t)
     this.state = {
+      chargebackRate: 0,
       eventsLabels: getEventsLabels(t),
       expandRecipients: false,
       installmentColumns: formatColumns(installmentTableColumns),
@@ -304,11 +321,15 @@ class TransactionDetails extends Component {
 
     onRequestDetails({ query })
 
-    return client
-      .transactions
-      .details(query)
-      .then((result) => {
+    const transactionRequests = [
+      client.transactions.details(query),
+      requestChargebackRate(client),
+    ]
+
+    return Promise.all(transactionRequests)
+      .then(([result, { chargebackRate }]) => {
         const newState = {
+          chargebackRate,
           paymentBoletoLabels: getPaymentBoletoLabels(t, result.transaction),
           result,
         }
@@ -432,11 +453,11 @@ class TransactionDetails extends Component {
   render () {
     const {
       error,
-      match: { params: { id } },
       permission,
       t,
     } = this.props
     const {
+      chargebackRate,
       eventsLabels,
       expandRecipients,
       installmentColumns,
@@ -453,17 +474,29 @@ class TransactionDetails extends Component {
       transactionDetailsLabels,
     } = this.state
 
-    if (error) {
-      const message = error.localized
-        ? error.localized.message
-        : error.message
+    const modals = {
+      showCapture,
+      showManualReview,
+      showRefund,
+      showReprocess,
+    }
+
+    const isShowingModal = anyPropEqual(true)
+
+    if (error && !isShowingModal(modals)) {
+      const {
+        localized: {
+          message: localizedMessage,
+        } = {},
+        message,
+      } = error
 
       return (
         <Alert
           icon={<IconInfo height={16} width={16} />}
           type="error"
         >
-          <span>{message}</span>
+          <span>{localizedMessage || message }</span>
         </Alert>
       )
     }
@@ -616,9 +649,9 @@ class TransactionDetails extends Component {
           transaction={transaction}
         />
         <Reprocess
+          chargebackRate={chargebackRate}
           isOpen={showReprocess}
           onClose={this.handleReprocessClose}
-          transactionId={id}
           transaction={transaction}
         />
       </Fragment>

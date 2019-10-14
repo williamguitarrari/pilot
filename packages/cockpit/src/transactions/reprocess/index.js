@@ -1,9 +1,9 @@
 import cleanTransaction from './cleanTransaction'
 
-const reprocess = client => transactionId => client
+const reprocessWithAntifraud = client => transactionId => client
   .transactions
   .find({ id: transactionId })
   .then(cleanTransaction)
   .then(client.transactions.create)
 
-export default reprocess
+export default reprocessWithAntifraud

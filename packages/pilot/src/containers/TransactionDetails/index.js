@@ -284,7 +284,6 @@ class TransactionDetails extends Component {
   getActions () {
     const {
       headerLabels,
-      nextTransactionId,
       onCapture,
       onExport,
       onManualReviewApprove,
@@ -353,10 +352,7 @@ class TransactionDetails extends Component {
           always(null)
         ),
         ifElse(
-          both(
-            propEq('reprocessable', true),
-            always(isEmptyOrNull(nextTransactionId))
-          ),
+          propEq('reprocessable', true),
           always(onReprocessAction),
           always(null)
         ),
