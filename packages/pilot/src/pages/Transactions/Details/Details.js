@@ -217,7 +217,6 @@ class TransactionDetails extends Component {
       expandRecipients: false,
       installmentColumns: formatColumns(installmentTableColumns),
       manualReviewAction: null,
-      nextId: null,
       paymentBoletoLabels: getPaymentBoletoLabels(t),
       paymentCardLabels: getPaymentCardLabels(t),
       result: {
@@ -391,12 +390,11 @@ class TransactionDetails extends Component {
 
   handleNextTransactionRedirect () {
     const {
-      nextId,
       result: {
         transaction,
       },
     } = this.state
-    const nextTransactionId = transaction.nextId || nextId
+    const nextTransactionId = transaction.nextId
     const { history } = this.props
     history.push(`/transactions/${nextTransactionId}`)
   }
@@ -414,9 +412,8 @@ class TransactionDetails extends Component {
     history.push(`/transactions/${previousId}`)
   }
 
-  handleReprocessClose (nextId) {
+  handleReprocessClose () {
     this.setState({
-      nextId,
       showReprocess: false,
     })
   }
@@ -462,7 +459,6 @@ class TransactionDetails extends Component {
       expandRecipients,
       installmentColumns,
       manualReviewAction,
-      nextId,
       paymentBoletoLabels,
       paymentCardLabels,
       result,
@@ -577,7 +573,7 @@ class TransactionDetails extends Component {
       }),
     }
 
-    const nextTransactionId = transaction.nextId || nextId
+    const nextTransactionId = transaction.nextId
 
     return (
       <Fragment>
@@ -652,6 +648,7 @@ class TransactionDetails extends Component {
           chargebackRate={chargebackRate}
           isOpen={showReprocess}
           onClose={this.handleReprocessClose}
+          onSuccess={this.handleUpdate}
           transaction={transaction}
         />
       </Fragment>
