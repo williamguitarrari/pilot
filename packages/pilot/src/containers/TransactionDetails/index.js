@@ -284,6 +284,9 @@ class TransactionDetails extends Component {
   getActions () {
     const {
       headerLabels,
+      loading: {
+        reprocess,
+      },
       onCapture,
       onExport,
       onManualReviewApprove,
@@ -316,8 +319,11 @@ class TransactionDetails extends Component {
 
     const onReprocessAction = {
       icon: <ReprocessIcon width={12} height={12} />,
+      loading: reprocess,
       onClick: onReprocess,
-      title: 'Reprocessar',
+      title: reprocess
+        ? 'Reprocessando'
+        : 'Reprocessar',
     }
 
     const onRefundAction = {
@@ -1008,6 +1014,9 @@ TransactionDetails.propTypes = {
     payment_date: PropTypes.instanceOf(moment),
     status: PropTypes.string,
   })).isRequired,
+  loading: PropTypes.shape({
+    reprocess: PropTypes.bool,
+  }),
   metadataTitle: PropTypes.string.isRequired,
   nextTransactionId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   onCapture: validateCaptureFunction,
@@ -1169,6 +1178,9 @@ TransactionDetails.propTypes = {
 
 TransactionDetails.defaultProps = {
   expandRecipients: false,
+  loading: {
+    reprocess: false,
+  },
   nextTransactionId: null,
   onCapture: null,
   onCopyBoletoUrl: null,
