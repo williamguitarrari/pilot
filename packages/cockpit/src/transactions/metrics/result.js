@@ -22,7 +22,7 @@ import {
   unless,
   when,
 } from 'ramda'
-import moment from 'moment'
+import moment from 'moment-timezone'
 
 const getBucketsPropFrom = propName => path([propName, 'buckets'])
 

@@ -1,5 +1,5 @@
 /* eslint-disable */
-import moment from 'moment'
+import moment from 'moment-timezone'
 
 const transaction = {
   "acquirer": {

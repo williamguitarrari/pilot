@@ -2,7 +2,7 @@ import {
   ifElse,
   propEq,
 } from 'ramda'
-import moment from 'moment'
+import moment from 'moment-timezone'
 
 const isAuthorized = propEq('status', 'authorized')
 const isFromCheckout = propEq('referer', 'encryption_key')

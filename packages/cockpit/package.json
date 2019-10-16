@@ -4,9 +4,9 @@
   "devDependencies": {
     "@babel/cli": "7.4.4",
     "@babel/core": "7.4.4",
+    "@babel/plugin-transform-runtime": "7.4.4",
     "@babel/preset-env": "7.4.4",
     "@babel/runtime": "7.4.4",
-    "@babel/plugin-transform-runtime": "7.4.4",
     "babel-jest": "24.8.0",
     "babel-loader": "8.0.5",
     "babel-plugin-add-module-exports": "0.2.1",
@@ -21,12 +21,13 @@
     "jest": "24.8.0",
     "jest-cli": "24.8.0",
     "jest-diff": "24.8.0",
-    "moment": "2.24.0",
+    "moment-timezone": "0.5.27",
     "npm-run-all": "4.1.2",
     "rimraf": "2.6.2"
   },
   "peerDependencies": {
-    "moment": "^2.24.0"
+    "moment": "^2.24.0",
+    "moment-timezone": "^0.5.27"
   },
   "dependencies": {
     "bluebird": "3.5.3",

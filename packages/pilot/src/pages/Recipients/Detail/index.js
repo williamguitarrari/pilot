@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { translate } from 'react-i18next'
 import withRouter from 'react-router-dom/withRouter'
 import { connect } from 'react-redux'
-import moment from 'moment'
+import moment from 'moment-timezone'
 import {
   Alert,
   Snackbar,

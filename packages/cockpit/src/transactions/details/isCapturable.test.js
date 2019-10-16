@@ -2,7 +2,7 @@ import {
   assoc,
   pipe,
 } from 'ramda'
-import moment from 'moment'
+import moment from 'moment-timezone'
 
 import isCapturable from './isCapturable'
 import { transaction as transactionMock } from './mocks/fromRequests.json'

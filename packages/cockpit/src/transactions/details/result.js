@@ -49,7 +49,7 @@ import {
   values,
   when,
 } from 'ramda'
-import moment from 'moment'
+import moment from 'moment-timezone'
 import isReprocessable from './isReprocessable'
 import isRefundable from './isRefundable'
 import isCapturable from './isCapturable'

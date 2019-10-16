@@ -25,7 +25,7 @@ import {
   values,
   uncurryN,
 } from 'ramda'
-import moment from 'moment'
+import moment from 'moment-timezone'
 import qs from 'qs'
 import IconInfo from 'emblematic-icons/svg/Info32.svg'
 import { Alert } from 'former-kit'

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import moment from 'moment'
+import moment from 'moment-timezone'
 import qs from 'qs'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
