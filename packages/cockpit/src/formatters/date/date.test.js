@@ -1,4 +1,4 @@
-import moment from 'moment'
+import moment from 'moment-timezone'
 import getTimestampFromDate from './index'
 
 describe('Date Formatter', () => {

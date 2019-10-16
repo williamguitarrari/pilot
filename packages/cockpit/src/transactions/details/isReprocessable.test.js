@@ -3,7 +3,7 @@ import {
   assocPath,
   pipe,
 } from 'ramda'
-import moment from 'moment'
+import moment from 'moment-timezone'
 
 import isReprocessable from './isReprocessable'
 import { transaction as transactionMock } from './mocks/fromRequests.json'

@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import moment from 'moment'
+import moment from 'moment-timezone'
 import {
   __,
   always,

@@ -1,3 +1,3 @@
-import moment from 'moment'
+import moment from 'moment-timezone'
 
 export default d => moment(d).format('L')

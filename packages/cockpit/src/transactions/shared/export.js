@@ -30,7 +30,7 @@ import {
   values,
   when,
 } from 'ramda'
-import moment from 'moment'
+import moment from 'moment-timezone'
 import Intl from 'intl'
 import 'intl/locale-data/jsonp/pt'
 

@@ -6,7 +6,7 @@ import {
 import {
   action,
 } from '@storybook/addon-actions'
-import moment from 'moment'
+import moment from 'moment-timezone'
 
 import Section from '../../Section'
 import HomeContainer from '../../../src/containers/Home'

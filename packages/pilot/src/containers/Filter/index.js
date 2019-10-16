@@ -39,7 +39,7 @@ import {
   values,
 } from 'ramda'
 
-import moment from 'moment'
+import moment from 'moment-timezone'
 
 import compileTags from './compileTags'
 import style from './style.css'

@@ -13,7 +13,7 @@ import {
   Pagination,
   Spacing,
 } from 'former-kit'
-import moment from 'moment'
+import moment from 'moment-timezone'
 import ExportData from '../ExportData'
 import TableData from './TableData'
 import dateFormat from '../../formatters/longDate'

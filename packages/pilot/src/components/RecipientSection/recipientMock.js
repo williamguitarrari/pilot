@@ -1,4 +1,4 @@
-import moment from 'moment'
+import moment from 'moment-timezone'
 
 const recipient = {
   amount: 4000000123, // SplitRule

@@ -14,7 +14,7 @@ import {
   toLower,
 } from 'ramda'
 import { Button } from 'former-kit'
-import moment from 'moment'
+import moment from 'moment-timezone'
 
 import Operations from '../../../src/components/Operations'
 import getColumns from '../../../src/components/Operations/operationsTableColumns'

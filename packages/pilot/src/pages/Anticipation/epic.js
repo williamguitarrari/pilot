@@ -6,7 +6,7 @@ import {
   mergeMap,
 } from 'rxjs/operators'
 import { combineEpics, ofType } from 'redux-observable'
-import moment from 'moment'
+import moment from 'moment-timezone'
 import env from '../../environment'
 import {
   ANTICIPABLE_LIMITS_REQUEST,
