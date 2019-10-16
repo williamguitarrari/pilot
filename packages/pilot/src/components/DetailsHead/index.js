@@ -37,9 +37,12 @@ const DetailsHead = ({
     <div className={style.actions}>
       {actions.map(action => (
         <Button
+          disabled={action.loading}
+          displayChildrenWhenLoading
           fill="outline"
           icon={action.icon}
           key={action.title}
+          loading={action.loading}
           onClick={action.onClick}
           size="default"
         >
@@ -53,6 +56,7 @@ const DetailsHead = ({
 DetailsHead.propTypes = {
   actions: PropTypes.arrayOf(PropTypes.shape({
     icon: PropTypes.element,
+    loading: PropTypes.bool,
     onClick: PropTypes.func.isRequired,
     title: PropTypes.string.isRequired,
   })),

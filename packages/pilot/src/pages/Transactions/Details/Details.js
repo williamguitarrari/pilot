@@ -206,6 +206,34 @@ const requestChargebackRate = (client) => {
   return client.transactions.chargebackRate(range)
 }
 
+const promiseDelay = timeout => new Promise(
+  resolve => setTimeout(resolve, timeout)
+)
+
+const hasChangedNextId = ({
+  client,
+  transaction,
+}) => promiseDelay(1000)
+  .then(() => client.transactions.details(transaction.id))
+  .then((result) => {
+    const {
+      transaction: updatedTransaction,
+    } = result
+
+    const hasChangedReprocess = (
+      updatedTransaction.nextId !== transaction.nextId
+    )
+
+    if (hasChangedReprocess) {
+      return result
+    }
+
+    return hasChangedNextId({
+      client,
+      transaction,
+    })
+  })
+
 class TransactionDetails extends Component {
   constructor (props) {
     super(props)
@@ -216,8 +244,10 @@ class TransactionDetails extends Component {
       eventsLabels: getEventsLabels(t),
       expandRecipients: false,
       installmentColumns: formatColumns(installmentTableColumns),
+      loading: {
+        reprocess: false,
+      },
       manualReviewAction: null,
-      nextId: null,
       paymentBoletoLabels: getPaymentBoletoLabels(t),
       paymentCardLabels: getPaymentCardLabels(t),
       result: {
@@ -250,6 +280,7 @@ class TransactionDetails extends Component {
     this.handleRefund = this.handleRefund.bind(this)
     this.handleReprocessClose = this.handleReprocessClose.bind(this)
     this.handleReprocessOpen = this.handleReprocessOpen.bind(this)
+    this.handleReprocessSuccess = this.handleReprocessSuccess.bind(this)
     this.handleShowBoletoClick = this.handleShowBoletoClick.bind(this)
     this.handleUpdate = this.handleUpdate.bind(this)
     this.requestData = this.requestData.bind(this)
@@ -391,12 +422,11 @@ class TransactionDetails extends Component {
 
   handleNextTransactionRedirect () {
     const {
-      nextId,
       result: {
         transaction,
       },
     } = this.state
-    const nextTransactionId = transaction.nextId || nextId
+    const nextTransactionId = transaction.nextId
     const { history } = this.props
     history.push(`/transactions/${nextTransactionId}`)
   }
@@ -414,9 +444,8 @@ class TransactionDetails extends Component {
     history.push(`/transactions/${previousId}`)
   }
 
-  handleReprocessClose (nextId) {
+  handleReprocessClose () {
     this.setState({
-      nextId,
       showReprocess: false,
     })
   }
@@ -425,6 +454,32 @@ class TransactionDetails extends Component {
     this.setState({
       showReprocess: true,
     })
+  }
+
+  handleReprocessSuccess () {
+    const { client } = this.props
+    const {
+      result: {
+        transaction,
+      },
+    } = this.state
+
+    this.setState({
+      loading: {
+        reprocess: true,
+      },
+    })
+
+    hasChangedNextId({
+      client,
+      transaction,
+    })
+      .then(result => this.setState({
+        loading: {
+          reprocess: false,
+        },
+        result,
+      }))
   }
 
   handleShowBoletoClick () {
@@ -461,8 +516,8 @@ class TransactionDetails extends Component {
       eventsLabels,
       expandRecipients,
       installmentColumns,
+      loading,
       manualReviewAction,
-      nextId,
       paymentBoletoLabels,
       paymentCardLabels,
       result,
@@ -577,7 +632,7 @@ class TransactionDetails extends Component {
       }),
     }
 
-    const nextTransactionId = transaction.nextId || nextId
+    const nextTransactionId = transaction.nextId
 
     return (
       <Fragment>
@@ -590,6 +645,7 @@ class TransactionDetails extends Component {
           expandRecipients={expandRecipients}
           headerLabels={headerLabels}
           installmentColumns={installmentColumns}
+          loading={loading}
           metadataTitle={t('pages.transaction.metadata')}
           nextTransactionId={nextTransactionId}
           onCapture={this.handleCapture}
@@ -652,6 +708,7 @@ class TransactionDetails extends Component {
           chargebackRate={chargebackRate}
           isOpen={showReprocess}
           onClose={this.handleReprocessClose}
+          onSuccess={this.handleReprocessSuccess}
           transaction={transaction}
         />
       </Fragment>

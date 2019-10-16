@@ -104,6 +104,7 @@ const Reprocess = ({
   history,
   isOpen,
   onClose,
+  onSuccess,
   t,
   transaction,
 }) => {
@@ -126,12 +127,18 @@ const Reprocess = ({
     setCurrentStep(nextStep)
   }
 
+  const resetSteps = () => {
+    setCurrentStep('identification')
+    setStepStatus(stepStatuses.identification)
+  }
+
   const handleClose = () => {
-    if (stepStatus.result !== 'error') {
-      onClose(reprocessedTransactionId)
-    } else {
-      onClose()
+    if (stepStatus.result === 'success') {
+      onSuccess(transaction.id, true)
     }
+
+    resetSteps()
+    onClose()
   }
 
   const handleReprocess = ({ transactionId, withoutAntifraud }) => {
@@ -163,13 +170,9 @@ const Reprocess = ({
     copyToClipBoard(id)
   }
 
-  const handleReprocessRestart = () => {
-    setCurrentStep('identification')
-    setStepStatus(stepStatuses.identification)
-  }
-
   const handleViewTransaction = () => {
     history.push(`/transactions/${reprocessedTransactionId}`)
+    resetSteps()
     onClose()
   }
 
@@ -195,7 +198,7 @@ const Reprocess = ({
             onCancel={handleClose}
             onCopyId={handleCopyId}
             onForward={handleForward}
-            onRestart={handleReprocessRestart}
+            onRestart={resetSteps}
             onReprocess={handleReprocess}
             onViewTransaction={handleViewTransaction}
             statusMessage={statusMessage}
@@ -228,6 +231,7 @@ Reprocess.propTypes = {
   }).isRequired,
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
+  onSuccess: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
   transaction: PropTypes.shape({
     amount: PropTypes.number,
