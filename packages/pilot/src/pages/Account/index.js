@@ -34,7 +34,7 @@ const DARK_BASE = 'dark'
 const LIGHT_BASE = 'light'
 
 const getBaseByPath = (pathname) => {
-  if (contains('account/login', pathname) && environment === 'live') {
+  if (contains('account', pathname) && environment === 'live') {
     return LIGHT_BASE
   }
   return DARK_BASE
@@ -66,7 +66,7 @@ const AccountArea = ({ history: { location }, t }) => {
           />
           <Route
             path="/account/password/recovery/confirmation"
-            component={PasswordRecoveryConfirmation}
+            render={() => <PasswordRecoveryConfirmation base={base} />}
           />
           <Route
             path="/account/password/recovery"
@@ -74,19 +74,11 @@ const AccountArea = ({ history: { location }, t }) => {
           />
           <Route
             path="/account/password/reset/confirmation"
-            component={PasswordResetConfirmation}
+            render={() => <PasswordResetConfirmation base={base} />}
           />
           <Route
             path="/account/password/reset/:token"
             render={() => <PasswordReset base={base} />}
-          />
-          <Route
-            path="/account/password/reset/confirmation"
-            component={PasswordResetConfirmation}
-          />
-          <Route
-            path="/account/password/reset/:token"
-            component={() => <PasswordReset base={base} />}
           />
           <Route
             path="/account/signup/confirmation"
