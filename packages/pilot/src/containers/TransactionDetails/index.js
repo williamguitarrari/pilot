@@ -283,6 +283,7 @@ class TransactionDetails extends Component {
 
   getActions () {
     const {
+      actionLabels,
       headerLabels,
       loading: {
         reprocess,
@@ -307,14 +308,14 @@ class TransactionDetails extends Component {
       icon: <CaptureIcon width={12} height={12} />,
       onClick: onCapture,
       title: method === 'boleto' && capabilities.capturable
-        ? 'Gerar boleto'
-        : 'Capturar',
+        ? actionLabels.boleto
+        : actionLabels.capture,
     }
 
     const onExportAction = {
       icon: <DownloadIcon width={12} height={12} />,
       onClick: onExport,
-      title: 'Exportar',
+      title: actionLabels.export,
     }
 
     const onReprocessAction = {
@@ -322,14 +323,14 @@ class TransactionDetails extends Component {
       loading: reprocess,
       onClick: onReprocess,
       title: reprocess
-        ? 'Reprocessando'
-        : 'Reprocessar',
+        ? actionLabels.reprocessing
+        : actionLabels.reprocess,
     }
 
     const onRefundAction = {
       icon: <IconReverse width={12} height={12} />,
       onClick: onRefund,
-      title: 'Estornar',
+      title: actionLabels.refund,
     }
 
     const getManualReviewTransactionActions = (trx) => {
@@ -969,6 +970,14 @@ class TransactionDetails extends Component {
 }
 
 TransactionDetails.propTypes = {
+  actionLabels: PropTypes.shape({
+    boleto: PropTypes.string,
+    capture: PropTypes.string,
+    export: PropTypes.string,
+    refund: PropTypes.string,
+    reprocess: PropTypes.string,
+    reprocessing: PropTypes.string,
+  }).isRequired,
   alertLabels: PropTypes.shape({
     chargeback_reason: PropTypes.string,
     chargeback_reason_label: PropTypes.string,
