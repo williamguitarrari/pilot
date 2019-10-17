@@ -1249,6 +1249,11 @@
     "transaction": {
       "acquirer_name": "Operadora do cartão",
       "acquirer_response_code": "Resposta da operadora",
+      "action_boleto": "Gerar boleto",
+      "action_capture": "Capturar",
+      "action_refund":"Estornar",
+      "action_reprocess": "Reprocessar",
+      "action_reprocessing": "Reprocessando",
       "alert": {
         "chargeback_reason": "Motivo do chargeback:",
         "pending_review": "Existe {{count}} transação pendente de revisão.",
