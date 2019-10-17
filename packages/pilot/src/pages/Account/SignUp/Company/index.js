@@ -21,7 +21,15 @@ class SignUpPage extends PureComponent {
       loading: false,
     }
 
+    this.handleBackToLogin = this.handleBackToLogin.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  handleBackToLogin () {
+    const {
+      history,
+    } = this.props
+    history.replace('/account/login')
   }
 
   handleSubmit (data, validationErrors) {
@@ -68,6 +76,7 @@ class SignUpPage extends PureComponent {
         base={base}
         errors={buildParamErrors(error)}
         loading={loading}
+        onBackToLogin={this.handleBackToLogin}
         onSubmit={this.handleSubmit}
         t={t}
       />

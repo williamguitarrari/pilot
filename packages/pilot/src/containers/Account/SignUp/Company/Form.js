@@ -18,6 +18,7 @@ const SignUpForm = ({
   base,
   errors,
   loading,
+  onBackToLogin,
   onSubmit,
   t,
 }) => (
@@ -72,6 +73,14 @@ const SignUpForm = ({
           {t('sign_up.sign_up_action')}
         </Button>
       </div>
+      <button
+        disabled={loading}
+        onClick={onBackToLogin}
+        role="link"
+        type="button"
+      >
+        {t('back_login_action')}
+      </button>
     </div>
   </Form>
 )
@@ -94,6 +103,7 @@ SignUpForm.propTypes = {
     PropTypes.instanceOf(Error),
   ]),
   loading: PropTypes.bool,
+  onBackToLogin: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   t: PropTypes.func,
 }
