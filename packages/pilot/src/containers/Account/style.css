@@ -26,13 +26,10 @@
 }
 
 .secondaryContent {
-  flex: 1;
   justify-content: space-between;
 }
 
 .primaryContent {
-  justify-content: flex-start;
-  flex: 1;
   max-width: 375px;
   width: 100%;
 }
@@ -46,6 +43,7 @@
   align-items: baseline;
   display: flex;
   flex-direction: column;
+  height: 600px;
 }
 
 .title {
@@ -98,7 +96,7 @@
   width: 100%;
 
   &.signup {
-    min-height: 400px;
+    min-height: 300px;
   }
 
   &.passwordRecovery {
@@ -116,10 +114,6 @@
 
 .formContent {
   justify-content: space-between;
-
-  & > *:not(:last-child) {
-    margin-bottom: var(--spacing-large);
-  }
 }
 
 .errorAlert {
@@ -138,7 +132,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  margin-top: 130px;
+  margin-top: 65px;
   width: 100%;
 }
 
