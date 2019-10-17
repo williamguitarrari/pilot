@@ -16,6 +16,15 @@ const t = tr => tr
 
 const formatColumns = getColumnFormatter(t)
 
+const actionLabels = {
+  boleto: 'Gerar boleto',
+  capture: 'Capturar',
+  export: 'Exportar',
+  refund: 'Estornar',
+  reprocess: 'Reprocessar',
+  reprocessing: 'Reprocessando',
+}
+
 const alertLabels = {
   chargeback_reason: 'Motivo do chargeback:',
   reason_code: `Código ${transactionMock.reason_code}`,
@@ -125,6 +134,7 @@ storiesOf('Pages|Transaction', module)
   .add('details', () => (
     <Layout>
       <TransactionDetails
+        actionLabels={actionLabels}
         alertLabels={alertLabels}
         atLabel={t('at')}
         boletoWarningMessage={t('boleto.waiting_payment_warning')}
