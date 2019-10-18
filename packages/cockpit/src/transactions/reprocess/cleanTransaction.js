@@ -2,11 +2,13 @@ import {
   __,
   always,
   applySpec,
+  complement,
   contains,
   curry,
   hasPath,
   ifElse,
   is,
+  isNil,
   lensProp,
   map,
   mapObjIndexed,
@@ -16,6 +18,7 @@ import {
   pathOr,
   pickBy,
   pipe,
+  prop,
   propEq,
   set,
 } from 'ramda'
@@ -35,27 +38,30 @@ const getCustomerId = pathOr(null, ['customer', 'id'])
 
 const hasCustomerDocuments = hasPath(['customer', 'documents', 0])
 
-const buildCustomerObject = ({ address, phone, customer }) => ({
+const buildCustomerObject = ({ address, customer, phone }) => ({
   address,
   phone,
-  ...customer
+  ...customer,
 })
 
 const customerBuilder = ifElse(
   hasCustomerDocuments,
   applySpec({
-    id: path(['customer', 'id'])
+    id: path(['customer', 'id']),
   }),
   buildCustomerObject
 )
 
-const getCustomer = (transaction) => {
-  if (transaction.customer === null) {
-    return null
-  }
+const hasCustomer = pipe(
+  prop('customer'),
+  complement(isNil)
+)
 
-  return customerBuilder(transaction)
-}
+const getCustomer = ifElse(
+  hasCustomer,
+  customerBuilder,
+  always(null)
+)
 
 const ignoredProps = [
   'acquirer_id',
