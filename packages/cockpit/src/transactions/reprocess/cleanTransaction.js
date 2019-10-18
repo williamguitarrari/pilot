@@ -1,10 +1,14 @@
 import {
   __,
   always,
+  applySpec,
+  complement,
   contains,
   curry,
+  hasPath,
   ifElse,
   is,
+  isNil,
   lensProp,
   map,
   mapObjIndexed,
@@ -12,7 +16,6 @@ import {
   omit,
   path,
   pathOr,
-  pick,
   pickBy,
   pipe,
   prop,
@@ -33,13 +36,31 @@ const getCardId = ifElse(
 
 const getCustomerId = pathOr(null, ['customer', 'id'])
 
+const hasCustomerDocuments = hasPath(['customer', 'documents', 0])
+
+const buildCustomerObject = ({ address, customer, phone }) => ({
+  address,
+  phone,
+  ...customer,
+})
+
+const customerBuilder = ifElse(
+  hasCustomerDocuments,
+  applySpec({
+    id: path(['customer', 'id']),
+  }),
+  buildCustomerObject
+)
+
+const hasCustomer = pipe(
+  prop('customer'),
+  complement(isNil)
+)
+
 const getCustomer = ifElse(
-  propEq('customer', null),
-  always(null),
-  pipe(
-    prop('customer'),
-    pick(['id'])
-  )
+  hasCustomer,
+  customerBuilder,
+  always(null)
 )
 
 const ignoredProps = [

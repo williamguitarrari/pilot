@@ -29,7 +29,7 @@ import {
   startsWith,
 } from 'ramda'
 import { translate } from 'react-i18next'
-import moment from 'moment'
+import moment from 'moment-timezone'
 import { Alert } from 'former-kit'
 import IconInfo from 'emblematic-icons/svg/Info32.svg'
 import {

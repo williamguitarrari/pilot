@@ -84,6 +84,31 @@ const renderColumnTransferDay = (data, t) => {
   )
 }
 
+const renderTransferColumn = (data, t) => {
+  const columns = [{
+    content: t(`pages.recipients.transfer_enabled_boolean.${data.transfer_enabled}`),
+    title: t('pages.recipients.transfer_enabled'),
+  }]
+
+  if (data.transfer_enabled) {
+    columns.push({
+      content: t(`pages.recipients.transfer_interval_of.${data.transfer_interval}`),
+      title: t('pages.recipients.transfer_interval'),
+    })
+
+    if (data.transfer_interval === 'weekly') {
+      columns.push(renderColumnTransferDay(data, t))
+    } else if (data.transfer_interval === 'monthly') {
+      columns.push({
+        content: data.transfer_day,
+        title: t('pages.recipients.transfer_day'),
+      })
+    }
+  }
+
+  return columnData(columns)
+}
+
 const getDefaultColumns = ({
   onDetailsClick,
   t,
@@ -171,29 +196,7 @@ const getDefaultColumns = ({
           tv={6}
         >
           <Row>
-            {data.transfer_day !== 0 && data.transfer_interval === 'weekly'
-            && columnData([
-              {
-                content: t(`pages.recipients.transfer_enabled_boolean.${data.transfer_enabled}`),
-                title: t('pages.recipients.transfer_enabled'),
-              },
-              {
-                content: t(`pages.recipients.transfer_interval_of.${data.transfer_interval}`),
-                title: t('pages.recipients.transfer_interval'),
-              },
-              renderColumnTransferDay(data, t),
-            ])}
-            {data.transfer_day === 0
-            && columnData([
-              {
-                content: t(`pages.recipients.transfer_enabled_boolean.${data.transfer_enabled}`),
-                title: t('pages.recipients.transfer_enabled'),
-              }, {
-                content: t(`pages.recipients.transfer_interval_of.${data.transfer_interval}`),
-                title: t('pages.recipients.transfer_interval'),
-              },
-            ])
-            }
+            {renderTransferColumn(data, t)}
           </Row>
         </Col>
       </Grid>

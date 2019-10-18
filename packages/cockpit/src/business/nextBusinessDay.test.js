@@ -1,4 +1,4 @@
-import moment from 'moment'
+import moment from 'moment-timezone'
 import nextBusinessDay from './nextBusinessDay'
 import mock from './mocks/brazil2016.json'
 

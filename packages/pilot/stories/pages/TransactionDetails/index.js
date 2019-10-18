@@ -1,5 +1,5 @@
 import React from 'react'
-import moment from 'moment'
+import moment from 'moment-timezone'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import { checkA11y } from '@storybook/addon-a11y'

@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import moment from 'moment'
+import moment from 'moment-timezone'
 
 import IconChart from 'emblematic-icons/svg/TrendingUp32.svg'
 import IconTable from 'emblematic-icons/svg/Menu32.svg'

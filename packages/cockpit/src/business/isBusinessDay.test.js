@@ -1,4 +1,4 @@
-import moment from 'moment'
+import moment from 'moment-timezone'
 import isBusinessDay from './isBusinessDay'
 import mock from './mocks/brazil2016.json'
 

@@ -1,6 +1,6 @@
 import React, { PureComponent, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import moment from 'moment'
+import moment from 'moment-timezone'
 import classNames from 'classnames'
 import { isEmpty } from 'ramda'
 import {

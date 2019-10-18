@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import moment from 'moment'
+import moment from 'moment-timezone'
 import {
   always,
   compose,

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { action } from '@storybook/addon-actions'
-import moment from 'moment'
+import moment from 'moment-timezone'
 import { merge } from 'ramda'
 
 import { Card } from 'former-kit'
