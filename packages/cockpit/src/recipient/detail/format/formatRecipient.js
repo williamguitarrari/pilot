@@ -24,24 +24,29 @@ export function formatHeaderData (data) {
 
 export function formatAnticipationData (data) {
   const anticipation = {
-    anticipationDays: data.automatic_anticipation_days || '',
+    anticipationDays: JSON.parse(data.automatic_anticipation_days || '[]'),
     anticipationModel: '',
     anticipationVolumePercentage: data
       .anticipatable_volume_percentage.toString(),
+    anticipationDelay: data.automatic_anticipation_1025_delay || '',
   }
 
   if (data.automatic_anticipation_type === 'full' &&
       data.automatic_anticipation_enabled) {
     anticipation.anticipationModel = 'automatic_volume'
   } else if (data.automatic_anticipation_type === '1025' &&
-      data.automatic_anticipation_enabled) {
-    anticipation.anticipationModel = 'automatic_dx'
-  } else if (data.automatic_anticipation_type === '1025' &&
-      data.automatic_anticipation_1025_delay === 15) {
+      data.automatic_anticipation_1025_delay === 15 &&
+      anticipation.anticipationDays.length === 2) {
     anticipation.anticipationModel = 'automatic_1025'
+  } else if (data.automatic_anticipation_type === '1025' &&
+      data.automatic_anticipation_enabled &&
+      anticipation.anticipationDays.length === 31) {
+    anticipation.anticipationModel = 'automatic_dx'
   } else if (data.automatic_anticipation_type === 'full' &&
       data.automatic_anticipation_enabled === false) {
     anticipation.anticipationModel = 'manual'
+  } else {
+    anticipation.anticipationModel = 'custom'
   }
   return anticipation
 }
