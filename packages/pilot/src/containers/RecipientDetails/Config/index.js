@@ -149,6 +149,7 @@ class RecipientDetailConfig extends Component {
     const anticipationVolume = t('pages.add_recipient.automatic_volume')
     const anticipation1025 = t('pages.add_recipient.automatic_1025')
     const anticipationDx = t('pages.add_recipient.automatic_dx')
+    const ancitipationCustom = t('pages.add_recipient.custom_anticipation')
     const HelpButton = (
       <Button
         type="button"
@@ -195,6 +196,15 @@ class RecipientDetailConfig extends Component {
       return (
         <div className={style.alignItems}>
           {`${model}: ${anticipationDx}`}
+          <Spacing size="large" />
+          {HelpButton}
+        </div>
+      )
+    }
+    if (anticipation.anticipationModel === 'custom') {
+      return (
+        <div className={style.alignItems}>
+          {`${model}: ${ancitipationCustom}`}
           <Spacing size="large" />
           {HelpButton}
         </div>

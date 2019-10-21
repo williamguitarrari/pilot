@@ -484,7 +484,8 @@
       "required": "Este campo é obrigatório",
       "subtitle_modal": "Veja abaixo uma explicação sobre todos os modelos de antecipação disponíveis",
       "no_results_title": "Não foram encontrados resultados para essa busca",
-      "no_results_message": "Você pode limpar os filtros ou tentar novamente com outras opções."
+      "no_results_message": "Você pode limpar os filtros ou tentar novamente com outras opções.",
+      "invalid_anticipation_days_format": "Formato Inválido. Exemplo: 1,2,3,4 ..."
     },
     "add_recipient": {
       "account_digit": "Dígito",

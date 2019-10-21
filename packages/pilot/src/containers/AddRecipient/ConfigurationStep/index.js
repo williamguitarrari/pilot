@@ -19,6 +19,7 @@ import createNumberValidation from '../../../validation/number'
 import createRequiredValidation from '../../../validation/required'
 import createBetweenValidation from '../../../validation/between'
 import createLessThanValidation from '../../../validation/lessThan'
+import createAnticipationDaysValidation from '../../../validation/anticipationDays'
 
 import HelpModal from '../../RecipientDetails/Config/HelpModal'
 import { virtualPageView } from '../../../vendor/googleTagManager'
@@ -133,6 +134,11 @@ class ConfigurationsStep extends Component {
       atLeastMessage
     )
 
+    const anticipationDaysMessage = 'Formato incorreto'
+    const validateAnticipationDays = createAnticipationDaysValidation(
+      anticipationDaysMessage
+    )
+
     return (
       <Fragment>
         <Form
@@ -142,7 +148,8 @@ class ConfigurationsStep extends Component {
           onSubmit={this.onFormSubmit}
           validateOn="blur"
           validation={{
-            anticipationDays: [required, isNumber, atLeastMinimumDays],
+            anticipationDays: [required, validateAnticipationDays],
+            anticipationDelay: [required, isNumber, atLeastMinimumDays],
             anticipationModel: [required],
             anticipationVolumePercentage: [required, isNumber, between1and100],
             transferDay: [required, isNumber],

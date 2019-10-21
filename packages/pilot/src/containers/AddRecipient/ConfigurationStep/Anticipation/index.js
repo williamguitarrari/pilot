@@ -5,6 +5,7 @@ import {
   Col,
   FormInput,
   RadioGroup,
+  Row,
 } from 'former-kit'
 
 import {
@@ -39,13 +40,20 @@ const anticipationModelOptions = ({
     value: 'automatic_dx',
   }
 
+  const custom = {
+    name: 'Customizado',
+    value: 'custom',
+  }
+
   const availableOptions = [
     manualByVolume,
     automaticByVolume,
   ]
 
-  if (canConfigureAnticipation) {
+  if (!canConfigureAnticipation) {
     availableOptions.push(automaticAtDays10And25)
+    availableOptions.push(automaticDX)
+    availableOptions.push(custom)
   }
 
   if (canConfigureAnticipation && maximumAnticipationDays >= 31) {
@@ -62,27 +70,101 @@ const renderAnticipationInput = (data, t) => {
     equals('manual')
   )
 
-  let inputProps = {
-    label: t('pages.add_recipient.anticipation_days'),
-    name: 'anticipationDays',
-  }
+  let inputProps
 
-  if (volumePercentage(anticipationModel)) {
+  if (volumePercentage(anticipationModel) || anticipationModel === 'custom') {
     inputProps = {
       label: t('pages.add_recipient.anticipation_volume_percentage'),
       name: 'anticipationVolumePercentage',
     }
+  } else {
+    inputProps = {
+      disabled: true,
+      label: t('pages.add_recipient.anticipation_volume_percentage'),
+      value: '100',
+    }
   }
 
   return (
-    <Col tv={3} desk={3} tablet={5} palm={5}>
-      <FormInput
-        {...inputProps}
-        className={style.marginBottom}
-        type="number"
-      />
+    <Row>
+      {!volumePercentage(anticipationModel) && anticipationModel === 'automatic_1025'
+        && (
+        <Fragment>
+          <Col>
+            <FormInput
+              disabled
+              label="Delay (em dias)"
+              className={style.marginBottom}
+              type="number"
+              value="15"
+            />
+          </Col>
+          <Col>
+            <FormInput
+              disabled
+              label="Dias de Antecipação"
+              className={style.marginBottom}
+              type="text"
+              name="anticipationDays"
+            />
+          </Col>
+        </Fragment>
+        )
+      }
+      {!volumePercentage(anticipationModel) && anticipationModel === 'automatic_dx'
+        && (
+        <Fragment>
+          <Col>
+            <FormInput
+              label="Delay (em dias)"
+              className={style.marginBottom}
+              type="number"
+              name="anticipationDelay"
+            />
+          </Col>
+          <Col>
+            <FormInput
+              disabled
+              label="Dias de Antecipação"
+              className={style.marginBottom}
+              type="text"
+              value="todos os dias"
+            />
+          </Col>
+        </Fragment>
+        )
+      }
+      {!volumePercentage(anticipationModel) && anticipationModel === 'custom'
+        && (
+        <Fragment>
+          <Col>
+            <FormInput
+              label="Delay (em dias)"
+              className={style.marginBottom}
+              type="number"
+              name="anticipationDelay"
+            />
+          </Col>
+          <Col>
+            <FormInput
+              label="Dias de Antecipação"
+              className={style.marginBottom}
+              type="text"
+              name="anticipationDays"
+            />
+          </Col>
+        </Fragment>
+        )
+      }
+      <Col>
+        <FormInput
+          {...inputProps}
+          className={style.marginBottom}
+          type="number"
+        />
+      </Col>
       <div className={style.heightMedium} />
-    </Col>
+    </Row>
   )
 }
 
@@ -91,7 +173,7 @@ const Anticipation = ({
   data,
   maximumAnticipationDays,
   t,
-}) => (
+}) => console.log(canConfigureAnticipation, data) || (
   <Fragment>
     <Col tv={12} desk={12} tablet={12} palm={12}>
       <span className={style.label}>
