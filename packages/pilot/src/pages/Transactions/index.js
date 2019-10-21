@@ -4,8 +4,13 @@ import {
   Switch,
 } from 'react-router-dom'
 
-import details, { TransactionDetails } from './Details'
-import search, { TransactionsSearch } from './Search'
+import details from './Details'
+import search from './Search'
+
+import {
+  TransactionDetails,
+  TransactionsSearch,
+} from './dynamicImports'
 
 export const reducers = {
   details,

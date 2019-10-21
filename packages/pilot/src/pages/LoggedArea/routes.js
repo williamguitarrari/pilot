@@ -5,14 +5,16 @@ import Transaction32 from 'emblematic-icons/svg/Transaction32.svg'
 import Withdraw32 from 'emblematic-icons/svg/Withdraw32.svg'
 import Store32 from 'emblematic-icons/svg/Store32.svg'
 
-import { Balance } from '../Balance'
-import { Anticipation } from '../Anticipation'
-import { Home } from '../Home'
-import CompanySettings from '../CompanySettings'
-import Transactions from '../Transactions'
-import UserSettings from '../UserSettings'
-import Withdraw from '../Withdraw'
-import Recipients from '../Recipients'
+import {
+  Anticipation,
+  Balance,
+  CompanySettings,
+  Home,
+  Recipients,
+  Transactions,
+  UserSettings,
+  Withdraw,
+} from './dynamicImports'
 
 /* eslint-disable sort-keys */
 export default {
