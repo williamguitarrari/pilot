@@ -12,7 +12,6 @@
   --loader-margin: 5px;
   --loader-size: calc(calc(var(--loader-animation-size) * 3) + calc(var(--loader-margin) * 2));
   --loader-z-index: 2;
-  --overlay-background-color: rgba(255, 255, 255, 0.8);
 }
 
 .loader {
@@ -316,12 +315,23 @@
   padding: 0;
   right: 0;
   top: 0;
-}
-
-.loaderOverlay {
-  background-color: var(--overlay-background-color);
+  width: 100%;
 }
 
 .highZIndex {
   z-index: var(--loader-high-z-index);
+}
+
+.dark {
+
+  & > .text {
+    color: var(--color-light-silver-50);
+  }
+}
+
+.light {
+
+  & > .text {
+    color: var(--color-light-carbon-40);
+  }
 }
