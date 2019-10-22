@@ -12445,10 +12445,10 @@ react-router@5.1.2:
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
 
-react-scripts-former-kit-dashboard@2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/react-scripts-former-kit-dashboard/-/react-scripts-former-kit-dashboard-2.1.0.tgz#4c63cc5283f585b0501e15a443fae4ef1e6b9ff4"
-  integrity sha512-qtGK9aFKdFfc4D6IbUZGQ8u8Ps3Fx799B1/p15sxBJQvoDfuof+pMrvvdO9Odf9wqSBTnQK4OxXlunZsQMpQ2A==
+react-scripts-former-kit-dashboard@2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/react-scripts-former-kit-dashboard/-/react-scripts-former-kit-dashboard-2.1.1.tgz#c7eb308812cbd64439ab0e3a20f8e1d93aaa3d8d"
+  integrity sha512-BIGk4ehj5vNNNqytj+HzE/mdmUElTTTQ7LeI/iXIYLDyGrTP4RrPN7QKF57iM5MthsM2zI0cnqKaMsesQ2rG6w==
   dependencies:
     "@babel/core" "7.5.5"
     "@babel/plugin-syntax-dynamic-import" "7.2.0"
