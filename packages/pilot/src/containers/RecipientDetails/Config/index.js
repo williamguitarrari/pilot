@@ -150,6 +150,7 @@ class RecipientDetailConfig extends Component {
     const anticipation1025 = t('pages.add_recipient.automatic_1025')
     const anticipationDx = t('pages.add_recipient.automatic_dx')
     const ancitipationCustom = t('pages.add_recipient.custom_anticipation')
+
     const HelpButton = (
       <Button
         type="button"

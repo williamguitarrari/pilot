@@ -30,11 +30,12 @@
 }
 
 .imgSize {
-  width: 250px;
+  width: 450px;
 }
 
-.modalWidth {
-  width: 800px;
+.modalHeight {
+  overflow-y : auto;
+  height: 600px;
 }
 
 .marginBottom {
