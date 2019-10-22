@@ -30,7 +30,7 @@ import TransferError from './TransferError'
 import TransactionDetailsCard from './TransactionDetailsCard'
 import TreeView from './TreeView'
 import ApiKeySection from './ApiKey'
-import PendingRequests from './PendingRequests'
+import PendingAnticipations from './PendingAnticipations'
 import BalanceTotalDisplay from './BalanceTotalDisplay'
 import BalanceSummary from './BalanceSummary'
 import SidebarSections from './SidebarSections'
@@ -66,7 +66,7 @@ storiesOf('Components|Custom components', module)
   .add('Boleto Refund Details', () => <BoletoRefundDetails />)
   .add('CreditCardRefundDetails', () => <CreditCardRefundDetails />)
   .add('ApiKey', () => <ApiKeySection />)
-  .add('Pending Requests', () => <PendingRequests />)
+  .add('Pending Anticipations', () => <PendingAnticipations />)
   .add('Operations', () => <Operations />)
   .add('Balance total display', () => <BalanceTotalDisplay />)
   .add('Balance summary', () => <BalanceSummary />)

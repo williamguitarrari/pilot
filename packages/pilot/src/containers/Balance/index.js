@@ -51,7 +51,7 @@ import currencyFormatter from '../../formatters/currency'
 import dateFormatter from '../../formatters/longDate'
 import dateInputPresets from '../../models/dateSelectorPresets'
 import DetailsHead from '../../components/DetailsHead'
-import PendingRequests from '../../components/PendingRequests'
+import PendingAnticipations from '../../components/PendingAnticipations'
 import BalanceOperations from '../BalanceOperations'
 
 import style from './style.css'
@@ -124,8 +124,8 @@ class Balance extends Component {
     } = props
     this.getHeadProp = this.getHeadProp.bind(this)
     this.getHeadProperties = this.getHeadProperties.bind(this)
-    this.getPendingRequest = this.getPendingRequest.bind(this)
-    this.getPendingRequests = this.getPendingRequests.bind(this)
+    this.getPendingAnticipation = this.getPendingAnticipation.bind(this)
+    this.getPendingAnticipations = this.getPendingAnticipations.bind(this)
     this.getSummaryTotal = this.getSummaryTotal.bind(this)
     this.handleFilterClick = this.handleFilterClick.bind(this)
     this.handleDatesChange = this.handleDatesChange.bind(this)
@@ -206,7 +206,7 @@ class Balance extends Component {
     }))
   }
 
-  getPendingRequest ({
+  getPendingAnticipation ({
     amount,
     automaticTransfer,
     created_at, // eslint-disable-line camelcase
@@ -236,14 +236,14 @@ class Balance extends Component {
     }
   }
 
-  getPendingRequests () {
+  getPendingAnticipations () {
     const {
       requests,
     } = this.props
 
     const getRequests = pipe(
       take(3),
-      map(this.getPendingRequest)
+      map(this.getPendingAnticipation)
     )
 
     return getRequests(requests)
@@ -567,16 +567,16 @@ class Balance extends Component {
               tv={4}
             >
               <Card>
-                <PendingRequests
-                  emptyMessage={t('pages.balance.pending_requests_empty_message')}
+                <PendingAnticipations
+                  emptyMessage={t('pages.balance.pending_anticipations_empty_message')}
                   loading={disabled}
                   onCancel={
                     isNil(onCancelRequestClick)
                       ? null
                       : this.handleRequestCancelClick
                   }
-                  requests={this.getPendingRequests()}
-                  title={t('pages.balance.pending_requests_title')}
+                  requests={this.getPendingAnticipations()}
+                  title={t('pages.balance.pending_anticipations_title')}
                 />
               </Card>
             </Col>
@@ -611,7 +611,7 @@ class Balance extends Component {
           <ModalTitle
             closeIcon={<IconClose width={16} height={16} />}
             onClose={onCancelRequestClose}
-            title={t('cancel_pending_request_title')}
+            title={t('cancel_pending_anticipations_title')}
           />
           <ModalContent>
             <div className={style.modalAlignContent}>
@@ -620,14 +620,14 @@ class Balance extends Component {
                   ? (
                     <Fragment>
                       <span>
-                        {t('cancel_pending_request_text_today')}
+                        {t('cancel_pending_anticipations_text_today')}
                         <br />
                         <br />
-                        {t('cancel_pending_request_text_today_confirm')}
+                        {t('cancel_pending_anticipations_text_today_confirm')}
                       </span>
                     </Fragment>
                   )
-                  : t('cancel_pending_request_text')
+                  : t('cancel_pending_anticipations_text')
               }
             </div>
           </ModalContent>
@@ -637,14 +637,14 @@ class Balance extends Component {
                 fill="outline"
                 onClick={onCancelRequestClose}
               >
-                {t('cancel_pending_request_cancel')}
+                {t('cancel_pending_anticipations_cancel')}
               </Button>
               <Spacing size="small" />
               <Button
                 fill="gradient"
                 onClick={onConfirmCancelPendingRequest}
               >
-                {t('cancel_pending_request_confirm')}
+                {t('cancel_pending_anticipations_confirm')}
               </Button>
             </div>
           </ModalActions>

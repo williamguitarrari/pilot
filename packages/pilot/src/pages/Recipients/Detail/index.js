@@ -749,16 +749,16 @@ class DetailRecipientPage extends Component {
           t={t}
         />
         <ConfirmModal
-          cancelText={t('cancel_pending_request_cancel')}
-          confirmText={t('cancel_pending_request_confirm')}
+          cancelText={t('cancel_pending_anticipations_cancel')}
+          confirmText={t('cancel_pending_anticipations_confirm')}
           isOpen={showModal}
           onCancel={this.hideCancelAnticipationModal}
           onConfirm={this.handleAnticipationCancel}
           size="default"
-          title={t('cancel_pending_request_title')}
+          title={t('cancel_pending_anticipations_title')}
         >
           <div>
-            {t('cancel_pending_request_text')}
+            {t('cancel_pending_anticipations_text')}
           </div>
         </ConfirmModal>
       </div>

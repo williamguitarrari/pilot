@@ -39,10 +39,10 @@ import getColumns from '../../../components/Operations/operationsTableColumns'
 import getColumnsTranslator from '../../../formatters/columnTranslator'
 import Operations from '../../../components/Operations'
 import operationsTypesLabels from '../../../models/operationTypes'
-import PendingRequests from '../../../components/PendingRequests'
+import PendingAnticipations from '../../../components/PendingAnticipations'
 import style from './style.css'
 
-const getPendingRequest = t => (
+const getPendingAnticipation = t => (
   {
     amount,
     created_at: createdAt,
@@ -62,9 +62,9 @@ const getPendingRequest = t => (
   }
 }
 
-const getPendingRequests = uncurryN(2, t => pipe(
+const getPendingAnticipations = uncurryN(2, t => pipe(
   take(3),
-  map(getPendingRequest(t))
+  map(getPendingAnticipation(t))
 ))
 
 const getDateLabels = t => ({
@@ -400,14 +400,14 @@ class RecipientBalance extends Component {
               tv={4}
             >
               <CardSection>
-                <PendingRequests
-                  emptyMessage={t('pages.balance.pending_requests_empty_message')}
+                <PendingAnticipations
+                  emptyMessage={t('pages.balance.pending_anticipations_empty_message')}
                   loading={summaryDisabled}
                   onCancel={isNil(onCancelRequestClick)
                     ? null
                     : this.handleRequestCancelClick}
-                  requests={getPendingRequests(t, requests)}
-                  title={t('pages.balance.pending_requests_title')}
+                  requests={getPendingAnticipations(t, requests)}
+                  title={t('pages.balance.pending_anticipations_title')}
                 />
               </CardSection>
             </Col>
