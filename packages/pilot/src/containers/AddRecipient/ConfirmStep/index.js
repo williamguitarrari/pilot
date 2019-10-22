@@ -152,11 +152,16 @@ const renderBankAccount = (bankAccount, action, t) => (
 )
 
 const renderAnticipationConfig = (configuration, action, t) => {
-  const { anticipationModel } = configuration
+  const {
+    anticipationDays,
+    anticipationDelay,
+    anticipationModel,
+  } = configuration
   const anticipationTranslations = {
     automatic_1025: t('pages.add_recipient.automatic_1025'),
     automatic_dx: t('pages.add_recipient.automatic_dx'),
     automatic_volume: t('pages.add_recipient.automatic_volume'),
+    custom: t('pages.add_recipient.custom_anticipation'),
     manual: t('pages.add_recipient.manual_volume'),
   }
   const anticipationType = anticipationTranslations[anticipationModel]
@@ -174,24 +179,142 @@ const renderAnticipationConfig = (configuration, action, t) => {
           />
         </Col>
       </Row>
-      <Row>
-        <Col>
-          <span className={styles.infoTitle}>
-            {t('pages.add_recipient.anticipation_model')}
-          </span>
-          <span className={styles.info}>
-            {anticipationType}
-          </span>
-        </Col>
-        <Col>
-          <span className={styles.infoTitle}>
-            {t('pages.add_recipient.anticipation_volume_percentage')}
-          </span>
-          <span className={styles.info}>
-            {configuration.anticipationVolumePercentage}
-          </span>
-        </Col>
-      </Row>
+      {(anticipationModel === 'manual' || anticipationModel === 'automatic_volume')
+        && (
+        <Row>
+          <Col>
+            <span className={styles.infoTitle}>
+              {t('pages.add_recipient.anticipation_model')}
+            </span>
+            <span className={styles.info}>
+              {anticipationType}
+            </span>
+          </Col>
+          <Col>
+            <span className={styles.infoTitle}>
+              {t('pages.add_recipient.anticipation_volume_percentage')}
+            </span>
+            <span className={styles.info}>
+              {configuration.anticipationVolumePercentage}
+            </span>
+          </Col>
+        </Row>
+        )
+      }
+      {anticipationModel === 'automatic_1025'
+        && (
+        <Row>
+          <Col>
+            <span className={styles.infoTitle}>
+              {t('pages.add_recipient.anticipation_model')}
+            </span>
+            <span className={styles.info}>
+              {anticipationType}
+            </span>
+          </Col>
+          <Col>
+            <span className={styles.infoTitle}>
+              {t('pages.add_recipient.anticipation_delay')}
+            </span>
+            <span className={styles.info}>
+              {t('pages.add_recipient.anticipation_1025_delay')}
+            </span>
+          </Col>
+          <Col>
+            <span className={styles.infoTitle}>
+              {t('pages.add_recipient.anticipation_days')}
+            </span>
+            <span className={styles.info}>
+              {t('pages.add_recipient.anticipation_1025_days')}
+            </span>
+          </Col>
+          <Col>
+            <span className={styles.infoTitle}>
+              {t('pages.add_recipient.anticipation_volume_percentage')}
+            </span>
+            <span className={styles.info}>
+              {t('pages.add_recipient.anticipation_volume_percentage_1025_dx')}
+            </span>
+          </Col>
+        </Row>
+        )
+      }
+      {anticipationModel === 'automatic_dx'
+        && (
+        <Row>
+          <Col>
+            <span className={styles.infoTitle}>
+              {t('pages.add_recipient.anticipation_model')}
+            </span>
+            <span className={styles.info}>
+              {anticipationType}
+            </span>
+          </Col>
+          <Col>
+            <span className={styles.infoTitle}>
+              {t('pages.add_recipient.anticipation_delay')}
+            </span>
+            <span className={styles.info}>
+              {anticipationDelay}
+            </span>
+          </Col>
+          <Col>
+            <span className={styles.infoTitle}>
+              {t('pages.add_recipient.anticipation_days')}
+            </span>
+            <span className={styles.info}>
+              {t('pages.add_recipient.anticipation_dx_days')}
+            </span>
+          </Col>
+          <Col>
+            <span className={styles.infoTitle}>
+              {t('pages.add_recipient.anticipation_volume_percentage')}
+            </span>
+            <span className={styles.info}>
+              {t('pages.add_recipient.anticipation_volume_percentage_1025_dx')}
+            </span>
+          </Col>
+        </Row>
+        )
+      }
+      {anticipationModel === 'custom'
+        && (
+        <Row>
+          <Col>
+            <span className={styles.infoTitle}>
+              {t('pages.add_recipient.anticipation_model')}
+            </span>
+            <span className={styles.info}>
+              {anticipationType}
+            </span>
+          </Col>
+          <Col>
+            <span className={styles.infoTitle}>
+              {t('pages.add_recipient.anticipation_days')}
+            </span>
+            <span className={styles.info}>
+              {anticipationDelay}
+            </span>
+          </Col>
+          <Col>
+            <span className={styles.infoTitle}>
+              {t('pages.add_recipient.anticipation_days')}
+            </span>
+            <span className={styles.info}>
+              {anticipationDays}
+            </span>
+          </Col>
+          <Col>
+            <span className={styles.infoTitle}>
+              {t('pages.add_recipient.anticipation_volume_percentage')}
+            </span>
+            <span className={styles.info}>
+              {t('pages.add_recipient.anticipation_volume_percentage_1025_dx')}
+            </span>
+          </Col>
+        </Row>
+        )
+      }
       <hr className={styles.line} />
     </Fragment>
   )

@@ -57,7 +57,9 @@ const anticipationModelOptions = ({
   }
 
   if (canConfigureAnticipation && maximumAnticipationDays >= 31) {
+    availableOptions.push(automaticAtDays10And25)
     availableOptions.push(automaticDX)
+    availableOptions.push(custom)
   }
 
   return availableOptions
@@ -81,7 +83,7 @@ const renderAnticipationInput = (data, t) => {
     inputProps = {
       disabled: true,
       label: t('pages.add_recipient.anticipation_volume_percentage'),
-      value: '100',
+      value: t('pages.add_recipient.anticipation_volume_percentage_1025_dx'),
     }
   }
 
@@ -93,19 +95,19 @@ const renderAnticipationInput = (data, t) => {
           <Col>
             <FormInput
               disabled
-              label="Delay (em dias)"
+              label={t('pages.add_recipient.anticipation_delay')}
               className={style.marginBottom}
               type="number"
-              value="15"
+              value={t('pages.add_recipient.anticipation_1025_delay')}
             />
           </Col>
           <Col>
             <FormInput
               disabled
-              label="Dias de Antecipação"
+              label={t('pages.add_recipient.anticipation_days')}
               className={style.marginBottom}
               type="text"
-              name="anticipationDays"
+              value={t('pages.add_recipient.anticipation_1025_days')}
             />
           </Col>
         </Fragment>
@@ -116,7 +118,7 @@ const renderAnticipationInput = (data, t) => {
         <Fragment>
           <Col>
             <FormInput
-              label="Delay (em dias)"
+              label={t('pages.add_recipient.anticipation_delay')}
               className={style.marginBottom}
               type="number"
               name="anticipationDelay"
@@ -125,10 +127,10 @@ const renderAnticipationInput = (data, t) => {
           <Col>
             <FormInput
               disabled
-              label="Dias de Antecipação"
+              label={t('pages.add_recipient.anticipation_days')}
               className={style.marginBottom}
               type="text"
-              value="todos os dias"
+              value={t('pages.add_recipient.automatic_dx_days')}
             />
           </Col>
         </Fragment>
@@ -139,7 +141,7 @@ const renderAnticipationInput = (data, t) => {
         <Fragment>
           <Col>
             <FormInput
-              label="Delay (em dias)"
+              label={t('pages.add_recipient.anticipation_delay')}
               className={style.marginBottom}
               type="number"
               name="anticipationDelay"
@@ -147,7 +149,7 @@ const renderAnticipationInput = (data, t) => {
           </Col>
           <Col>
             <FormInput
-              label="Dias de Antecipação"
+              label={t('pages.add_recipient.anticipation_days')}
               className={style.marginBottom}
               type="text"
               name="anticipationDays"
@@ -173,7 +175,7 @@ const Anticipation = ({
   data,
   maximumAnticipationDays,
   t,
-}) => console.log(canConfigureAnticipation, data) || (
+}) => (
   <Fragment>
     <Col tv={12} desk={12} tablet={12} palm={12}>
       <span className={style.label}>
