@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { validate } from 'p4g4rm3'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
-import { checkA11y } from '@storybook/addon-a11y'
+import { withA11y } from '@storybook/addon-a11y'
 
 import Account from '../../../src/containers/Account'
 import LoginForm from '../../../src/containers/Account/LoginForm'
@@ -91,7 +91,7 @@ const LivePresentation = (
 )
 
 storiesOf('Pages|Login', module)
-  .addDecorator(checkA11y)
+  .addDecorator(withA11y)
   .add('Login Live', () => (
     <Account
       base="light"
@@ -190,7 +190,7 @@ storiesOf('Pages|Login', module)
   ))
 
 storiesOf('Pages|Signup', module)
-  .addDecorator(checkA11y)
+  .addDecorator(withA11y)
   .add('Company Signup', () => (
     <Account
       // eslint-disable-next-line

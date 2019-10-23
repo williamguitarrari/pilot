@@ -12,149 +12,136 @@ const postCSSPlugins = [
   }),
 ]
 
-module.exports = {
-  module: {
-    rules: [
+module.exports = ({ config }) => {
+  config.module.rules.push({
+    test: /\.(js|jsx)$/,
+    enforce: 'pre',
+    use: [
       {
-        test: /\.(js|jsx)$/,
-        enforce: 'pre',
-        use: [
-          // {
-          //   options: {
-          //     formatter: eslintFormatter,
-          //     eslintPath: require.resolve('eslint'),
-          //   },
-          //   loader: require.resolve('eslint-loader'),
-          // },
-        ],
-        include: paths.appSrc,
+        options: {
+          formatter: eslintFormatter,
+          eslintPath: require.resolve('eslint'),
+        },
+        loader: require.resolve('eslint-loader'),
       },
+    ],
+    include: paths.appSrc,
+  })
+
+  config.module.rules.push({
+    test: /\.css$/,
+    exclude: /react-dates/,
+    enforce: 'pre',
+    use: [
       {
-        test: /\.css$/,
-        exclude: /react-dates/,
-        enforce: 'pre',
-        use: [
-          {
-            loader: require.resolve('postcss-loader'),
-            options: {
-              formatter: stylelintFormatter,
-              plugins: () => [
-                // require('stylelint'),
-                ...postCSSPlugins,
-                require('postcss-cssnext')({
-                  features: {
-                    customProperties: {
-                      strict: false,
-                    },
-                  },
-                }),
-              ],
-            },
-          },
-        ],
-      },
-      {
-        test: /.*\.css$/,
-        exclude: /react-dates/,
-        use: [
-          // We commented this piece of code because it was causing errors
-          // when running storybook after linking with the latest former-kit's
-          // version.
-          // TODO: Verify if it is still relevant.
-          // require.resolve('style-loader'),
-          // {
-          //   loader: require.resolve('css-loader'),
-          //   options: {
-          //     importLoaders: 1,
-          //     modules: true,
-          //     localIdentName: '[path]-[name]-[local]',
-          //   },
-          // },
-          {
-            loader: require.resolve('postcss-loader'),
-            options: {
-              ident: 'postcss',
-              plugins: () => [
-                ...postCSSPlugins,
-                require('postcss-cssnext')({
-                  // We don't transpile CSS variables module in Storybook
-                  features: {
-                    customProperties: false,
-                  },
-                }),
-              ],
-            },
-          },
-        ],
-      },
-      {
-        // This block matches only react-dates styles and extract them
-        // separately, in a pipeline without CSS modules, as react-dates
-        // uses global CSS. This is the place where all global CSS libraries
-        // should be matched. Be sure to also edit the exclude regex from
-        // previous test.
-        test: /.*react-dates.*\.css$/,
-        use: [
-          require.resolve('style-loader'),
-          {
-            loader: require.resolve('css-loader'),
-            options: {
-              importLoaders: 1,
-            },
-          },
-          {
-            loader: require.resolve('postcss-loader'),
-            options: {
-              ident: 'postcss',
-              plugins: () => [
-                ...postCSSPlugins,
-                require('postcss-cssnext')({
-                  // We don't transpile CSS variables module in Storybook
-                  features: {
-                    customProperties: false,
-                  },
-                }),
-              ],
-            },
-          },
-        ],
-      },
-      {
-        test: /\.svg$/,
-        use: [
-          {
-            loader: require.resolve('babel-loader'),
-            options: {
-              // This is a feature of `babel-loader` for webpack (not Babel itself).
-              // It enables caching results in ./node_modules/.cache/babel-loader/
-              // directory for faster rebuilds.
-              cacheDirectory: true,
-            },
-          },
-          {
-            loader: require.resolve('@svgr/webpack'),
-            options: {
-              replaceAttrValues: {
-                '#000': 'currentColor',
-                '#000000;': 'currentColor',
-              },
-              svgoConfig: {
-                plugins: {
-                  removeViewBox: false,
+        loader: require.resolve('postcss-loader'),
+        options: {
+          formatter: stylelintFormatter,
+          plugins: () => [
+            require('stylelint'),
+            ...postCSSPlugins,
+            require('postcss-cssnext')({
+              features: {
+                customProperties: {
+                  strict: false,
                 },
               },
-              titleProp: true,
-            },
-          },
-        ],
-      },
-      {
-        test: /\.(woff|woff2|eot|ttf)$/,
-        loader: require.resolve('file-loader'),
-        options: {
-          name: 'static/media/[name].[hash:8].[ext]',
+            }),
+          ],
         },
       },
     ],
-  },
+  })
+
+  config.module.rules.push({
+    test: /.*\.css$/,
+    exclude: /react-dates/,
+    use: [
+      {
+        loader: require.resolve('postcss-loader'),
+        options: {
+          ident: 'postcss',
+          plugins: () => [
+            ...postCSSPlugins,
+            require('postcss-cssnext')({
+              // We don't transpile CSS variables module in Storybook
+              features: {
+                customProperties: false,
+              },
+            }),
+          ],
+        },
+      },
+    ],
+  })
+
+  config.module.rules.push({
+    // This block matches only react-dates styles and extract them
+    // separately, in a pipeline without CSS modules, as react-dates
+    // uses global CSS. This is the place where all global CSS libraries
+    // should be matched. Be sure to also edit the exclude regex from
+    // previous test.
+    test: /.*react-dates.*\.css$/,
+    use: [
+      require.resolve('style-loader'),
+      {
+        loader: require.resolve('css-loader'),
+        options: {
+          importLoaders: 1,
+        },
+      },
+      {
+        loader: require.resolve('postcss-loader'),
+        options: {
+          ident: 'postcss',
+          plugins: () => [
+            ...postCSSPlugins,
+            require('postcss-cssnext')({
+              // We don't transpile CSS variables module in Storybook
+              features: {
+                customProperties: false,
+              },
+            }),
+          ],
+        },
+      },
+    ],
+  })
+
+  // We remove Storybook's default svg loader so that
+  // it doesn't conflict with ours
+  const fileLoaderRule = config.module.rules.find(rule => rule.test.test('.svg'));
+  fileLoaderRule.exclude = /\.svg$/
+
+  config.module.rules.push({
+    test: /\.svg$/,
+    use: [
+      {
+        loader: require.resolve('babel-loader'),
+        options: {
+          // This is a feature of `babel-loader` for webpack (not Babel itself).
+          // It enables caching results in ./node_modules/.cache/babel-loader/
+          // directory for faster rebuilds.
+          cacheDirectory: true,
+        },
+      },
+      {
+        loader: require.resolve('@svgr/webpack'),
+        options: {
+          replaceAttrValues: {
+            '#000': 'currentColor',
+            '#000000;': 'currentColor',
+          },
+          svgoConfig: {
+            plugins: {
+              removeViewBox: false,
+            },
+          },
+          titleProp: true,
+        },
+      },
+    ],
+  })
+
+  return config
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { checkA11y } from '@storybook/addon-a11y'
+import { withA11y } from '@storybook/addon-a11y'
 
 import SearchableDropdown from './SearchableDropdown'
 import BoletoRefundDetails from './BoletoRefundDetails'
@@ -44,7 +44,7 @@ import WithLoader from './withLoader'
 import WithSpinner from './withSpinner'
 
 storiesOf('Components|Custom components', module)
-  .addDecorator(checkA11y)
+  .addDecorator(withA11y)
   .add('Searchable Dropdown', () => <SearchableDropdown />)
   .add('Configuration card form', () => <ConfigurationCardForm />)
   .add('Copy button', () => <CopyButton />)
