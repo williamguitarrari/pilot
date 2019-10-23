@@ -20,7 +20,6 @@ import {
   Spacing,
 } from 'former-kit'
 
-import IconFeedback from 'emblematic-icons/svg/Feedback24.svg'
 import IconTestAmbientOff from 'emblematic-icons/svg/TestAmbientOff24.svg'
 import IconTestAmbientOn from 'emblematic-icons/svg/TestAmbientOn24.svg'
 
@@ -106,26 +105,6 @@ const HeaderContainer = ({
 
     <HeaderContent>
       {renderEnvironmentButton({ t })}
-
-      <Spacing size="small" />
-
-      <Popover
-        content={(
-          <PopoverContent>
-            <small>
-              <strong className={style.feedback}>{t('header.feedback.text_emphasis')}</strong>
-              {t('header.feedback.text')}&nbsp;
-              <a href="mailto:nova@pagar.me">{t('header.feedback.action')}</a>.
-            </small>
-          </PopoverContent>
-        )}
-        placement="bottomEnd"
-      >
-        <Button
-          fill="clean"
-          icon={<IconFeedback color="#37cc9a" />}
-        />
-      </Popover>
 
       <Spacing size="small" />
 
