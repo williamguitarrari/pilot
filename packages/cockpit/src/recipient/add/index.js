@@ -1,7 +1,7 @@
 import { formatToRecipient } from './recipientBuilders'
 
-const AddRecipient = client => (data, options) => {
-  const recipient = formatToRecipient(data, options)
+const AddRecipient = client => (data) => {
+  const recipient = formatToRecipient(data)
   return client.recipients.create(recipient)
 }
 

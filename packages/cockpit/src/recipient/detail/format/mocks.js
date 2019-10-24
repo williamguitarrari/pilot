@@ -167,6 +167,7 @@ const recipientCNPJDataWithRegister = {
 
 const recipientAnticipationDataUpdated = {
   anticipationDays: '',
+  anticipationDelay: '',
   anticipationModel: 'automatic_volume',
   anticipationVolumePercentage: '85',
 }

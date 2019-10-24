@@ -2,50 +2,54 @@ import { range } from 'ramda'
 
 const getOnlyNumbers = string => string.replace(/\D/g, '')
 
-export const formatToAnticipation = (data, options = {}) => {
+export const formatToAnticipation = (data) => {
   const recipientAnticipationData = {}
-  const { canConfigureAnticipation } = options
 
   switch (data.configuration.anticipationModel) {
     case 'automatic_dx':
       recipientAnticipationData.anticipatable_volume_percentage = 100
       recipientAnticipationData.automatic_anticipation_enabled = true
-      recipientAnticipationData.automatic_anticipation_days = range(1, 32)
+      recipientAnticipationData.automatic_anticipation_days =
+        JSON.stringify(range(1, 32))
       recipientAnticipationData.automatic_anticipation_1025_delay =
-        data.configuration.anticipationDays
+        data.configuration.anticipationDelay
+      recipientAnticipationData.automatic_anticipation_type = '1025'
 
-      if (canConfigureAnticipation) {
-        recipientAnticipationData.automatic_anticipation_type = '1025'
-      }
       break
     case 'automatic_volume':
       recipientAnticipationData.anticipatable_volume_percentage =
         data.configuration.anticipationVolumePercentage
       recipientAnticipationData.automatic_anticipation_enabled = true
+      recipientAnticipationData.automatic_anticipation_type = 'full'
 
-      if (canConfigureAnticipation) {
-        recipientAnticipationData.automatic_anticipation_type = 'full'
-      }
       break
     case 'automatic_1025':
       recipientAnticipationData.anticipatable_volume_percentage = 100
       recipientAnticipationData.automatic_anticipation_enabled = true
-      recipientAnticipationData.automatic_anticipation_days = [10, 25]
+      recipientAnticipationData.automatic_anticipation_days = '[10,25]'
       recipientAnticipationData.automatic_anticipation_1025_delay = 15
+      recipientAnticipationData.automatic_anticipation_type = '1025'
 
-      if (canConfigureAnticipation) {
-        recipientAnticipationData.automatic_anticipation_type = '1025'
-      }
+      break
+    case 'custom':
+      recipientAnticipationData.anticipatable_volume_percentage =
+        data.configuration.anticipationVolumePercentage ||
+        data.anticipationVolumePercentage
+      recipientAnticipationData.automatic_anticipation_enabled = true
+      recipientAnticipationData.automatic_anticipation_days =
+        `[${data.configuration.anticipationDays}]`
+      recipientAnticipationData.automatic_anticipation_1025_delay =
+        data.configuration.anticipationDelay
+      recipientAnticipationData.automatic_anticipation_type = '1025'
+
       break
     default:
       recipientAnticipationData.anticipatable_volume_percentage =
         data.configuration.anticipationVolumePercentage ||
         data.anticipationVolumePercentage
       recipientAnticipationData.automatic_anticipation_enabled = false
+      recipientAnticipationData.automatic_anticipation_type = 'full'
 
-      if (canConfigureAnticipation) {
-        recipientAnticipationData.automatic_anticipation_type = 'full'
-      }
       break
   }
   return recipientAnticipationData
@@ -106,9 +110,9 @@ export const formatToBankAccount = (data) => {
   return format(data)
 }
 
-export const formatToRecipient = (data, options) => {
+export const formatToRecipient = (data) => {
   const recipientData = {
-    ...formatToAnticipation(data, options),
+    ...formatToAnticipation(data),
     ...formatToTransfer(data),
     ...formatToBankAccount(data),
   }
