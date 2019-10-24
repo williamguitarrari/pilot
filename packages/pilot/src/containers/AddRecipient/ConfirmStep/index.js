@@ -28,6 +28,19 @@ import {
 
 const hasBankCode = code => !!bankCodes.find(bank => bank === code)
 
+const renderSingleColumn = (title, data) => (
+  <Col>
+    <span className={styles.infoTitle}>
+      {title}
+    </span>
+    {data && (
+      <span className={styles.info}>
+        {data}
+      </span>
+    )}
+  </Col>
+)
+
 const renderPartnerInfo = (identification, action, t) => {
   if (identification.documentType === 'cpf') return null
   return (
@@ -56,17 +69,14 @@ const renderReceiverInfo = (identification, action, t) => {
   const cpfTitle = t('pages.add_recipient.recipient_data')
   const cnpjTitle = t('pages.add_recipient.company_data')
 
+  const documentTitle = identification.documentType === 'cpf'
+    ? cpfTitle
+    : cnpjTitle
+
   return (
     <Fragment>
       <Row>
-        <Col>
-          {identification.documentType === 'cpf'
-          && <span className={styles.title}>{cpfTitle}</span>
-          }
-          {identification.documentType === 'cnpj'
-          && <span className={styles.title}>{cnpjTitle}</span>
-          }
-        </Col>
+        {renderSingleColumn(documentTitle)}
         <Col className={styles.editButtonCol}>
           <EditButton
             onClick={() => action(IDENTIFICATION)}
@@ -86,11 +96,7 @@ const renderReceiverInfo = (identification, action, t) => {
 const renderBankAccount = (bankAccount, action, t) => (
   <Fragment>
     <Row>
-      <Col>
-        <span className={styles.title}>
-          {t('pages.add_recipient.bank_account')}
-        </span>
-      </Col>
+      {renderSingleColumn(t('pages.add_recipient.bank_account'))}
       <Col className={styles.editButtonCol}>
         <EditButton
           onClick={() => action(BANK_ACCOUNT)}
@@ -99,64 +105,46 @@ const renderBankAccount = (bankAccount, action, t) => (
       </Col>
     </Row>
     <Row>
-      <Col>
-        <span className={styles.infoTitle}>
-          {t('pages.add_recipient.account_name')}
-        </span>
-        <span className={styles.info}>
-          {bankAccount.name}
-        </span>
-      </Col>
-      <Col>
-        <span className={styles.infoTitle}>
-          {t('pages.add_recipient.bank')}
-        </span>
-        <span className={styles.info}>
-          {hasBankCode(bankAccount.bank)
-            ? t(`models.bank_code.${bankAccount.bank}`)
-            : bankAccount.bank
-          }
-        </span>
-      </Col>
-      <Col>
-        <span className={styles.infoTitle}>
-          {t('pages.add_recipient.agency')}
-        </span>
-        <span className={styles.info}>
-          {
-            (bankAccount.agency_digit)
-              ? `${bankAccount.agency}-${bankAccount.agency_digit}`
-              : bankAccount.agency
-          }
-        </span>
-      </Col>
-      <Col>
-        <span className={styles.infoTitle}>
-          {t('pages.add_recipient.account')}
-        </span>
-        <span className={styles.info}>
-          {`${bankAccount.number}-${bankAccount.number_digit}`}
-        </span>
-      </Col>
-      <Col>
-        <span className={styles.infoTitle}>
-          {t('pages.add_recipient.account_type')}
-        </span>
-        <span className={styles.info}>
-          {t(`models.account_type.${bankAccount.type}`)}
-        </span>
-      </Col>
+      {renderSingleColumn(
+        t('pages.add_recipient.account_name'),
+        bankAccount.name
+      )}
+      {renderSingleColumn(
+        t('pages.add_recipient.bank'),
+        hasBankCode(bankAccount.bank)
+          ? t(`models.bank_code.${bankAccount.bank}`)
+          : bankAccount.bank
+      )}
+      {renderSingleColumn(
+        t('pages.add_recipient.agency'),
+        (bankAccount.agency_digit)
+          ? `${bankAccount.agency}-${bankAccount.agency_digit}`
+          : bankAccount.agency
+      )}
+      {renderSingleColumn(
+        t('pages.add_recipient.account'),
+        `${bankAccount.number}-${bankAccount.number_digit}`
+      )}
+      {renderSingleColumn(
+        t('pages.add_recipient.account_type'),
+        t(`models.account_type.${bankAccount.type}`)
+      )}
     </Row>
     <hr className={styles.line} />
   </Fragment>
 )
 
 const renderAnticipationConfig = (configuration, action, t) => {
-  const { anticipationModel } = configuration
+  const {
+    anticipationDays,
+    anticipationDelay,
+    anticipationModel,
+  } = configuration
   const anticipationTranslations = {
     automatic_1025: t('pages.add_recipient.automatic_1025'),
     automatic_dx: t('pages.add_recipient.automatic_dx'),
     automatic_volume: t('pages.add_recipient.automatic_volume'),
+    custom: t('pages.add_recipient.custom_anticipation'),
     manual: t('pages.add_recipient.manual_volume'),
   }
   const anticipationType = anticipationTranslations[anticipationModel]
@@ -174,24 +162,86 @@ const renderAnticipationConfig = (configuration, action, t) => {
           />
         </Col>
       </Row>
-      <Row>
-        <Col>
-          <span className={styles.infoTitle}>
-            {t('pages.add_recipient.anticipation_model')}
-          </span>
-          <span className={styles.info}>
-            {anticipationType}
-          </span>
-        </Col>
-        <Col>
-          <span className={styles.infoTitle}>
-            {t('pages.add_recipient.anticipation_volume_percentage')}
-          </span>
-          <span className={styles.info}>
-            {configuration.anticipationVolumePercentage}
-          </span>
-        </Col>
-      </Row>
+      {(anticipationModel === 'manual' || anticipationModel === 'automatic_volume')
+        && (
+        <Row>
+          {renderSingleColumn(
+            t('pages.add_recipient.anticipation_model'),
+            anticipationType
+          )}
+          {renderSingleColumn(
+            t('pages.add_recipient.anticipation_volume_percentage'),
+            configuration.anticipationVolumePercentage
+          )}
+        </Row>
+        )
+      }
+      {anticipationModel === 'automatic_1025'
+        && (
+        <Row>
+          {renderSingleColumn(
+            t('pages.add_recipient.anticipation_model'),
+            anticipationType
+          )}
+          {renderSingleColumn(
+            t('pages.add_recipient.anticipation_delay'),
+            '15'
+          )}
+          {renderSingleColumn(
+            t('pages.add_recipient.anticipation_days'),
+            '10,25'
+          )}
+          {renderSingleColumn(
+            t('pages.add_recipient.anticipation_volume_percentage'),
+            '100'
+          )}
+        </Row>
+        )
+      }
+      {anticipationModel === 'automatic_dx'
+        && (
+        <Row>
+          {renderSingleColumn(
+            t('pages.add_recipient.anticipation_model'),
+            anticipationType
+          )}
+          {renderSingleColumn(
+            t('pages.add_recipient.anticipation_delay'),
+            anticipationDelay
+          )}
+          {renderSingleColumn(
+            t('pages.add_recipient.anticipation_days'),
+            t('pages.add_recipient.automatic_dx_days')
+          )}
+          {renderSingleColumn(
+            t('pages.add_recipient.anticipation_volume_percentage'),
+            '100'
+          )}
+        </Row>
+        )
+      }
+      {anticipationModel === 'custom'
+        && (
+        <Row>
+          {renderSingleColumn(
+            t('pages.add_recipient.anticipation_model'),
+            anticipationType
+          )}
+          {renderSingleColumn(
+            t('pages.add_recipient.anticipation_days'),
+            anticipationDelay
+          )}
+          {renderSingleColumn(
+            t('pages.add_recipient.anticipation_days'),
+            anticipationDays
+          )}
+          {renderSingleColumn(
+            t('pages.add_recipient.anticipation_volume_percentage'),
+            '100'
+          )}
+        </Row>
+        )
+      }
       <hr className={styles.line} />
     </Fragment>
   )
@@ -221,28 +271,13 @@ const renderTransferInterval = (configuration, t) => {
   if (transferEnabled) {
     return (
       <Fragment>
-        <Col>
-          <span className={styles.infoTitle}>
-            {t('pages.add_recipient.automatic_transfer_interval')}
-          </span>
-          <span className={styles.info}>
-            {transferTypes[transferInterval]}
-          </span>
-        </Col>
-        { transferInterval !== 'daily'
-        && (
-          <Col>
-            <span className={styles.infoTitle}>
-              {t('pages.add_recipient.transfer_day')}
-            </span>
-            <span className={styles.info}>
-              {
-                (transferInterval === 'weekly')
-                  ? weekDaysMap[transferDay]
-                  : transferDay
-              }
-            </span>
-          </Col>
+        {renderSingleColumn(
+          t('pages.add_recipient.automatic_transfer_interval'),
+          transferTypes[transferInterval]
+        )}
+        {transferInterval !== 'daily' && renderSingleColumn(
+          t('pages.add_recipient.transfer_day'),
+          transferInterval === 'weekly' ? weekDaysMap[transferDay] : transferDay
         )}
       </Fragment>
     )

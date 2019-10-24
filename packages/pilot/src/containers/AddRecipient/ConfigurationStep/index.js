@@ -19,6 +19,7 @@ import createNumberValidation from '../../../validation/number'
 import createRequiredValidation from '../../../validation/required'
 import createBetweenValidation from '../../../validation/between'
 import createLessThanValidation from '../../../validation/lessThan'
+import createAnticipationDaysValidation from '../../../validation/anticipationDays'
 
 import HelpModal from '../../RecipientDetails/Config/HelpModal'
 import { virtualPageView } from '../../../vendor/googleTagManager'
@@ -128,9 +129,14 @@ class ConfigurationsStep extends Component {
     const between1and100 = createBetweenValidation(start, end, betweenMessage)
 
     const atLeastMessage = t('pages.add_recipient.field_minimum', { number: minimumAnticipationDelay })
-    const atLeastMinimumDays = createLessThanValidation(
+    const atLeastMinimumDelay = createLessThanValidation(
       minimumAnticipationDelay,
       atLeastMessage
+    )
+
+    const anticipationDaysMessage = t('pages.recipient_detail.invalid_anticipation_days_format')
+    const validateAnticipationDays = createAnticipationDaysValidation(
+      anticipationDaysMessage
     )
 
     return (
@@ -142,7 +148,8 @@ class ConfigurationsStep extends Component {
           onSubmit={this.onFormSubmit}
           validateOn="blur"
           validation={{
-            anticipationDays: [required, isNumber, atLeastMinimumDays],
+            anticipationDays: [required, validateAnticipationDays],
+            anticipationDelay: [required, isNumber, atLeastMinimumDelay],
             anticipationModel: [required],
             anticipationVolumePercentage: [required, isNumber, between1and100],
             transferDay: [required, isNumber],
