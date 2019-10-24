@@ -4,6 +4,7 @@ import IconClose from 'emblematic-icons/svg/ClearClose32.svg'
 
 import {
   Button,
+  Flexbox,
   Modal,
   ModalActions,
   ModalContent,
@@ -45,11 +46,11 @@ const render1025 = t => (
   <Fragment>
     <h5 className={style.modalSubtitles}>{t('pages.recipient_detail.anticipation_1025')}</h5>
     <p>{t('pages.recipient_detail.anticipation_1025_explanation')}</p>
-    <div className={style.imgSize}>
-      <ImageAutomaticOne />
-    </div>
-    <ImageAutomaticTwo />
-    <ImageAutomaticThree />
+    <Flexbox justifyContent="center">
+      <ImageAutomaticOne className={style.imgSize} />
+      <ImageAutomaticTwo className={style.imgSize} />
+      <ImageAutomaticThree className={style.imgSize} />
+    </Flexbox>
   </Fragment>
 )
 
@@ -57,7 +58,9 @@ const renderDX = t => (
   <Fragment>
     <h5 className={style.modalSubtitles}>{t('pages.recipient_detail.anticipation_dx')}</h5>
     <p>{t('pages.recipient_detail.anticipation_dx_explanation')}</p>
-    <ImageAutomaticDx />
+    <Flexbox justifyContent="center">
+      <ImageAutomaticDx className={style.imgSize} />
+    </Flexbox>
   </Fragment>
 )
 
@@ -79,7 +82,8 @@ const renderIfManualOrAutomaticModel = (anticipationModel, t) => {
 const renderIfDxOr1025 = (anticipationModel, t) => {
   const automaticDx = (anticipationModel === 'automatic_dx')
   const automatic1025 = (anticipationModel === 'automatic_1025')
-  if (automaticDx || automatic1025) {
+  const automaticCustom = (anticipationModel === 'custom')
+  if (automaticDx || automatic1025 || automaticCustom) {
     return (
       <Fragment>
         {renderManualByVolume(t)}
@@ -106,7 +110,6 @@ const HelpModal = ({
   <Modal
     isOpen={isOpen}
     onRequestClose={onExit}
-    className={style.modalWidth}
     size={size}
   >
     <ModalTitle
@@ -114,22 +117,24 @@ const HelpModal = ({
       closeIcon={<IconClose width={16} height={16} />}
       onClose={onExit}
     />
-    <ModalContent>
-      <hr />
-      <small className={style.marginBottomforModal}>
-        {t('pages.recipient_detail.subtitle_modal')}
-      </small>
-      {renderIfManualOrAutomaticModel(anticipationModel, t)}
-      {renderIfDxOr1025(anticipationModel, t)}
-    </ModalContent>
-    <ModalActions>
-      <div className={style.justifyContent}>
-        <Button fill="gradient" onClick={onExit}>
-          {t('pages.recipient_detail.exit_modal')}
-        </Button>
-        <Spacing />
-      </div>
-    </ModalActions>
+    <hr />
+    <div className={style.modalHeight}>
+      <ModalContent>
+        <small className={style.marginBottomforModal}>
+          {t('pages.recipient_detail.subtitle_modal')}
+        </small>
+        {renderIfManualOrAutomaticModel(anticipationModel, t)}
+        {renderIfDxOr1025(anticipationModel, t)}
+      </ModalContent>
+      <ModalActions>
+        <div className={style.justifyContent}>
+          <Button fill="gradient" onClick={onExit}>
+            {t('pages.recipient_detail.exit_modal')}
+          </Button>
+          <Spacing />
+        </div>
+      </ModalActions>
+    </div>
   </Modal>
 )
 

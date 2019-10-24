@@ -1,7 +1,12 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Button, Spacing } from 'former-kit'
-import { mergeLeft } from 'ramda'
+import {
+  always,
+  cond,
+  equals,
+  mergeLeft,
+} from 'ramda'
 
 import AnticipationIcon from 'emblematic-icons/svg/Undo32.svg'
 import TransferIcon from 'emblematic-icons/svg/Transaction32.svg'
@@ -18,6 +23,22 @@ import {
 } from '../../AddRecipient/BankAccountStep'
 
 import style from './style.css'
+
+const getAnticipationModelTranslation = (t) => {
+  const anticipationManual = t('pages.add_recipient.manual_volume')
+  const anticipationVolume = t('pages.add_recipient.automatic_volume')
+  const anticipation1025 = t('pages.add_recipient.automatic_1025')
+  const anticipationDx = t('pages.add_recipient.automatic_dx')
+  const anticipationCustom = t('pages.add_recipient.custom_anticipation')
+
+  return cond([
+    [equals('manual'), always(anticipationManual)],
+    [equals('automatic_volume'), always(anticipationVolume)],
+    [equals('automatic_1025'), always(anticipation1025)],
+    [equals('automatic_dx'), always(anticipationDx)],
+    [equals('custom'), always(anticipationCustom)],
+  ])
+}
 
 class RecipientDetailConfig extends Component {
   constructor (props) {
@@ -145,10 +166,12 @@ class RecipientDetailConfig extends Component {
     } = this.props
     const model = t('pages.add_recipient.anticipation_model')
     const volume = t('pages.add_recipient.anticipation_volume')
-    const anticipationManual = t('pages.add_recipient.manual_volume')
-    const anticipationVolume = t('pages.add_recipient.automatic_volume')
-    const anticipation1025 = t('pages.add_recipient.automatic_1025')
-    const anticipationDx = t('pages.add_recipient.automatic_dx')
+
+    const getAnticipationModelName = getAnticipationModelTranslation(t)
+    const anticipationModelName = getAnticipationModelName(
+      anticipation.anticipationModel
+    )
+
     const HelpButton = (
       <Button
         type="button"
@@ -160,47 +183,19 @@ class RecipientDetailConfig extends Component {
       </Button>
     )
 
-    if (anticipation.anticipationModel === 'manual') {
-      return (
-        <div className={style.alignItems}>
-          {`${model}: ${anticipationManual}`}
-          <Spacing size="large" />
-          {`${volume}: ${anticipation.anticipationVolumePercentage}%`}
-          <Spacing size="large" />
-          {HelpButton}
-        </div>
-      )
-    }
-    if (anticipation.anticipationModel === 'automatic_volume') {
-      return (
-        <div className={style.alignItems}>
-          {`${model}: ${anticipationVolume}`}
-          <Spacing size="large" />
-          {`${volume}: ${anticipation.anticipationVolumePercentage}%`}
-          <Spacing size="large" />
-          {HelpButton}
-        </div>
-      )
-    }
-    if (anticipation.anticipationModel === 'automatic_1025') {
-      return (
-        <div className={style.alignItems}>
-          {`${model}: ${anticipation1025}`}
-          <Spacing size="large" />
-          {HelpButton}
-        </div>
-      )
-    }
-    if (anticipation.anticipationModel === 'automatic_dx') {
-      return (
-        <div className={style.alignItems}>
-          {`${model}: ${anticipationDx}`}
-          <Spacing size="large" />
-          {HelpButton}
-        </div>
-      )
-    }
-    return null
+    return (
+      <div className={style.alignItems}>
+        {`${model}: ${anticipationModelName}`}
+        { anticipation.anticipationVolumePercentage && (
+          <Fragment>
+            <Spacing size="large" />
+            {`${volume}: ${anticipation.anticipationVolumePercentage}%`}
+          </Fragment>
+        )}
+        <Spacing size="large" />
+        {HelpButton}
+      </div>
+    )
   }
 
   renderTransferSub () {
