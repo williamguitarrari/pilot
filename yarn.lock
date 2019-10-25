@@ -10920,10 +10920,10 @@ package-json@^4.0.0:
     registry-url "^3.0.3"
     semver "^5.1.0"
 
-pagarme@4.5.0:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/pagarme/-/pagarme-4.5.0.tgz#d4d66dd3af77a4f7e8f9d714f649e1691ecf6d2a"
-  integrity sha512-7naJXgp0lOaJoeAZzsaTyPOOYX1VhLag+ZTw0EAFtwUCF963F1gsj/0Xio8XYhL5TcVddfdsZK/EhsbokjTHFg==
+pagarme@4.5.1:
+  version "4.5.1"
+  resolved "https://registry.yarnpkg.com/pagarme/-/pagarme-4.5.1.tgz#a027780c3bf0084b39249d922552f495fa7f4ec2"
+  integrity sha512-ma78et0v15WaJtELdXvEAomHPXAOSRVAUxa02pWZDrS7N9JrztGMX6j2TbxgzuGahwUnTHrWnZlwtDIuq30Tgg==
 
 pako@~1.0.5:
   version "1.0.10"
