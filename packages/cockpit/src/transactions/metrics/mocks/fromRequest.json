@@ -736,8 +736,26 @@
                             }
                         ]
                     },
-                    "volume": {
-                        "value": 2970357
+                    "paidTransactions": {
+                        "doc_count_error_upper_bound": 0,
+                        "sum_other_doc_count": 0,
+                        "buckets": [
+                            {
+                                "key": "paid",
+                                "doc_count": 70,
+                                "volume": { "value": 484278 }
+                            },
+                            {
+                                "key": "refunded",
+                                "doc_count": 2,
+                                "volume": { "value": 12548 }
+                            },
+                            {
+                                "key": "chargedback",
+                                "doc_count": 30,
+                                "volume": { "value": 30000 }
+                            }
+                        ]
                     },
                     "refuse_reason": {
                         "doc_count_error_upper_bound": 0,
