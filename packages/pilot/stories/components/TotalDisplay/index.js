@@ -80,7 +80,7 @@ const TotalDisplayExample = () => (
             <TotalDisplay
               align="center"
               amount={1000000000}
-              amountSize="huge"
+              amountSize="large"
               color="#37cc9a"
               subtitle={(
                 <span>
@@ -99,7 +99,7 @@ const TotalDisplayExample = () => (
             <TotalDisplay
               align="start"
               amount={-500000}
-              amountSize="huge"
+              amountSize="large"
               color="#ff796f"
               subtitle={(
                 <span>
@@ -119,7 +119,7 @@ const TotalDisplayExample = () => (
             <TotalDisplay
               align="end"
               amount={9995000000}
-              amountSize="huge"
+              amountSize="large"
               color="#4ca9d7"
               subtitle={(
                 <span>

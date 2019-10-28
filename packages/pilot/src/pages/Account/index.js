@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import PropTypes from 'prop-types'
 import {
   Redirect,
@@ -15,26 +15,29 @@ import {
 import { translate } from 'react-i18next'
 
 import Account from '../../containers/Account'
-import Login from './Login'
 import Logo from '../../components/Logo'
-import PasswordRecovery from './PasswordRecovery/Request'
-import PasswordRecoveryConfirmation from './PasswordRecovery/Request/Confirmation'
-import PasswordReset from './PasswordRecovery/Reset'
-import PasswordResetConfirmation from './PasswordRecovery/Reset/Confirmation'
 import Presentation from './Presentation'
-import CompanySignup from './SignUp/Company'
-import CompanySignupConfirmation from './SignUp/Company/Confirmation'
-import UserSignupConfirmation from './SignUp/User/Confirmation'
-import UserSignUp from './SignUp/User'
 import TestLogo from '../../components/Logo/TestLogo'
+import Loader from '../../components/Loader'
 
 import environment from '../../environment'
+import {
+  Login,
+  PasswordRecovery,
+  PasswordRecoveryConfirmation,
+  PasswordReset,
+  PasswordResetConfirmation,
+  CompanySignup,
+  CompanySignupConfirmation,
+  UserSignUp,
+  UserSignupConfirmation,
+} from './dynamicImports'
 
 const DARK_BASE = 'dark'
 const LIGHT_BASE = 'light'
 
 const getBaseByPath = (pathname) => {
-  if (contains('account/login', pathname) && environment === 'live') {
+  if (contains('account', pathname) && environment === 'live') {
     return LIGHT_BASE
   }
   return DARK_BASE
@@ -59,53 +62,56 @@ const AccountArea = ({ history: { location }, t }) => {
       logo={getEnvironmentLogo()}
       base={base}
       primaryContent={(
-        <Switch>
-          <Route
-            path="/account/login"
-            render={() => <Login base={base} />}
-          />
-          <Route
-            path="/account/password/recovery/confirmation"
-            component={PasswordRecoveryConfirmation}
-          />
-          <Route
-            path="/account/password/recovery"
-            render={() => <PasswordRecovery base={base} />}
-          />
-          <Route
-            path="/account/password/reset/confirmation"
-            component={PasswordResetConfirmation}
-          />
-          <Route
-            path="/account/password/reset/:token"
-            render={() => <PasswordReset base={base} />}
-          />
-          <Route
-            path="/account/password/reset/confirmation"
-            component={PasswordResetConfirmation}
-          />
-          <Route
-            path="/account/password/reset/:token"
-            component={() => <PasswordReset base={base} />}
-          />
-          <Route
-            path="/account/signup/confirmation"
-            render={() => <CompanySignupConfirmation />}
-          />
-          <Route
-            path="/account/signup/invite/confirmation"
-            render={() => <UserSignupConfirmation />}
-          />
-          <Route
-            path="/account/signup/invite"
-            render={() => <UserSignUp base={base} />}
-          />
-          <Route
-            path="/account/signup"
-            render={() => <CompanySignup base={base} />}
-          />
-          <Redirect to="/account/login" />
-        </Switch>
+        <Suspense
+          fallback={(
+            <Loader
+              base={base}
+              position="relative"
+              text={t('loading')}
+              visible
+            />
+          )}
+        >
+          <Switch>
+            <Route
+              path="/account/login"
+              render={() => <Login base={base} />}
+            />
+            <Route
+              path="/account/password/recovery/confirmation"
+              render={() => <PasswordRecoveryConfirmation base={base} />}
+            />
+            <Route
+              path="/account/password/recovery"
+              render={() => <PasswordRecovery base={base} />}
+            />
+            <Route
+              path="/account/password/reset/confirmation"
+              render={() => <PasswordResetConfirmation base={base} />}
+            />
+            <Route
+              path="/account/password/reset/:token"
+              render={() => <PasswordReset base={base} />}
+            />
+            <Route
+              path="/account/signup/confirmation"
+              render={() => <CompanySignupConfirmation />}
+            />
+            <Route
+              path="/account/signup/invite/confirmation"
+              render={() => <UserSignupConfirmation />}
+            />
+            <Route
+              path="/account/signup/invite"
+              render={() => <UserSignUp base={base} />}
+            />
+            <Route
+              path="/account/signup"
+              render={() => <CompanySignup base={base} />}
+            />
+            <Redirect to="/account/login" />
+          </Switch>
+        </Suspense>
       )}
       secondaryContent={(
         <Switch>

@@ -107,14 +107,11 @@ const TransactionsList = ({
   count,
   data,
   dateSelectorPresets,
-  expandedRows,
   exporting,
   filterOptions,
   loading,
   onChangeViewMode,
   onDatePresetChange,
-  onDetailsClick,
-  onExpandRow,
   onExport,
   onFilterChange,
   onFilterClear,
@@ -137,7 +134,7 @@ const TransactionsList = ({
   t,
   viewMode,
 }) => {
-  const columns = tableColumns({ onDetailsClick, t })
+  const columns = tableColumns({ t })
   const orderColumn = findIndex(propEq('accessor', orderField), columns)
   const handleOrderChange = (
     columnIndex,
@@ -224,27 +221,62 @@ const TransactionsList = ({
                 <CardTitle
                   title={(
                     <h2 className={style.customTitle}>
-                      {formatSelectedPeriod(t, query.dates)}
+                      <span className={style.type}>
+                        {formatSelectedPeriod(t, query.dates)}
+                      </span>
                       <div className={style.verticalDivider} />
-                      {count}&nbsp;
+                      <span className={style.type}>
+                        {count}&nbsp;
+                      </span>
                       <small>{t('pages.transactions.count')}</small>&nbsp;
                       <small>-</small>&nbsp;
                       <small>{t('pages.transactions.total_amount')}</small>&nbsp;
-                      {formatCurrency(amount)}
+                      <span className={style.type}>
+                        {formatCurrency(amount)}
+                      </span>
                     </h2>
                   )}
                   subtitle={(
                     <div className={style.toolBar}>
-                      <ExportData
-                        exportOptions={getExportOptions(onExport)}
-                        icon={<Download32 width={12} height={12} />}
-                        loading={exporting}
-                        placement="bottomEnd"
-                        relevance="low"
-                        size="tiny"
-                        subtitle={t('export_to')}
-                        title={t('export_table')}
-                      />
+                      {viewMode === 'table'
+                        && (
+                          <Fragment>
+                            <ExportData
+                              exportOptions={getExportOptions(onExport)}
+                              icon={<Download32 width={12} height={12} />}
+                              loading={exporting}
+                              placement="bottomEnd"
+                              relevance="low"
+                              size="tiny"
+                              subtitle={t('export_to')}
+                              title={t('export_table')}
+                            />
+                            <Dropdown
+                              disabled={loading || viewMode === 'graph'}
+                              name="page-count"
+                              onChange={({ target: { value } }) => (
+                                onPageCountChange(parseInt(value, 10))
+                              )}
+                              options={itemsPerPage.map(i => ({
+                                name: t('items_per_page', { count: i }),
+                                value: `${i}`,
+                              }))}
+                              size="tiny"
+                              value={selectedPage.toString()}
+                            />
+                            <Pagination
+                              currentPage={pagination.offset}
+                              disabled={loading || viewMode === 'graph'}
+                              onPageChange={onPageChange}
+                              size="tiny"
+                              strings={{
+                                of: t('components.pagination.of'),
+                              }}
+                              totalPages={pagination.total}
+                            />
+                          </Fragment>
+                        )
+                      }
                       <SegmentedSwitch
                         disabled={loading}
                         name="view-mode"
@@ -261,29 +293,6 @@ const TransactionsList = ({
                         ]}
                         value={viewMode}
                       />
-                      <Dropdown
-                        disabled={loading || viewMode === 'graph'}
-                        name="page-count"
-                        onChange={
-                          e => onPageCountChange(parseInt(e.target.value, 10))
-                        }
-                        options={itemsPerPage.map(i => ({
-                          name: t('items_per_page', { count: i }),
-                          value: `${i}`,
-                        }))}
-                        size="tiny"
-                        value={selectedPage.toString()}
-                      />
-                      <Pagination
-                        currentPage={pagination.offset}
-                        disabled={loading || viewMode === 'graph'}
-                        onPageChange={onPageChange}
-                        size="tiny"
-                        strings={{
-                          of: t('components.pagination.of'),
-                        }}
-                        totalPages={pagination.total}
-                      />
                     </div>
                   )}
                 />
@@ -292,8 +301,10 @@ const TransactionsList = ({
                   {viewMode === 'chart'
                     && (
                       <Charts
+                        loading={loading}
                         data={data}
                         legendsTitle={t('pages.transactions.graphic_legends')}
+                        t={t}
                       />
                     )
                   }
@@ -303,10 +314,7 @@ const TransactionsList = ({
                         columns={columns}
                         disabled={loading}
                         loading={loading}
-                        expandable
-                        expandedRows={expandedRows}
                         maxColumns={6}
-                        onExpandRow={onExpandRow}
                         onOrderChange={handleOrderChange}
                         onRowClick={onRowClick}
                         onSelectRow={onSelectRow}
@@ -358,7 +366,6 @@ TransactionsList.propTypes = {
     key: PropTypes.string,
     title: PropTypes.string,
   })).isRequired,
-  expandedRows: PropTypes.arrayOf(PropTypes.number).isRequired,
   exporting: PropTypes.bool.isRequired,
   filterOptions: PropTypes.arrayOf(PropTypes.shape({
     items: PropTypes.arrayOf(PropTypes.shape({
@@ -371,8 +378,6 @@ TransactionsList.propTypes = {
   loading: PropTypes.bool.isRequired,
   onChangeViewMode: PropTypes.func.isRequired,
   onDatePresetChange: PropTypes.func.isRequired,
-  onDetailsClick: PropTypes.func.isRequired,
-  onExpandRow: PropTypes.func.isRequired,
   onExport: PropTypes.func.isRequired,
   onFilterChange: PropTypes.func.isRequired,
   onFilterClear: PropTypes.func.isRequired,

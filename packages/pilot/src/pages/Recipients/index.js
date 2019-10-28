@@ -4,9 +4,13 @@ import {
   Switch,
 } from 'react-router-dom'
 
-import search, { RecipientsSearch } from './Search'
-import RecipientsAdd from './Add'
-import RecipientDetail from './Detail'
+import search from './Search'
+
+import {
+  RecipientDetail,
+  RecipientsAdd,
+  RecipientsSearch,
+} from './dynamicImports'
 
 export const reducers = {
   search,

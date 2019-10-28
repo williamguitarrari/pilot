@@ -44,9 +44,17 @@ const query = ({ end, start }) => ({
         ],
       },
       aggs: {
-        volume: {
-          sum: {
-            field: 'amount',
+        paidTransactions: {
+          terms: {
+            field: 'status',
+            include: ['paid', 'pending_refund', 'refunded', 'chargedback'],
+          },
+          aggs: {
+            volume: {
+              sum: {
+                field: 'amount',
+              },
+            },
           },
         },
         payment_method: {

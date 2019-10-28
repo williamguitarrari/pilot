@@ -135,4 +135,19 @@ describe('isReprocessable', () => {
 
     expect(isReprocessable(transaction, { status: 'refused' })).toBe(true)
   })
+
+  it('should return false if transaction is from reprocessement', () => {
+    const transaction = pipe(
+      assoc('id', 1),
+      assoc('status', 'refused'),
+      assoc('date_created', now)
+    )(transactionMock)
+
+    const reprocessed = {
+      status: 'refused',
+      original_transaction_id: 123,
+    }
+
+    expect(isReprocessable(transaction, reprocessed)).toBe(false)
+  })
 })

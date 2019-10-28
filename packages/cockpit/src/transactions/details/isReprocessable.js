@@ -32,6 +32,13 @@ const canReprocess = (transaction, reprocessed = {}) => {
     return false
   }
 
+  if (
+    reprocessed.original_transaction_id &&
+    reprocessed.original_transaction_id !== transaction.id
+  ) {
+    return false
+  }
+
   const paidReprocessing = wasSuccessfullyPaid(reprocessed.status)
 
   return !paidReprocessing

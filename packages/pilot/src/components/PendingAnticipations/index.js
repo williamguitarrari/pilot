@@ -12,7 +12,7 @@ import IconClose from 'emblematic-icons/svg/ClearClose24.svg'
 import style from './style.css'
 
 /* eslint-disable camelcase */
-const renderRequests = (requests, onCancelHandler) => requests.map((
+const renderAnticipations = (requests, onCancelHandler) => requests.map((
   {
     amount,
     created_at,
@@ -42,7 +42,7 @@ const renderRequests = (requests, onCancelHandler) => requests.map((
 ))
 /* eslint-enable camelcase */
 
-const PendingRequests = ({
+const PendingAnticipations = ({
   emptyMessage,
   onCancel,
   requests,
@@ -55,7 +55,7 @@ const PendingRequests = ({
         && (
           <table className={style.table}>
             <tbody>
-              {renderRequests(requests, onCancel)}
+              {renderAnticipations(requests, onCancel)}
             </tbody>
           </table>
         )
@@ -69,11 +69,11 @@ const PendingRequests = ({
   </Fragment>
 )
 
-PendingRequests.defaultProps = {
+PendingAnticipations.defaultProps = {
   onCancel: null,
 }
 
-PendingRequests.propTypes = {
+PendingAnticipations.propTypes = {
   emptyMessage: PropTypes.string.isRequired,
   onCancel: PropTypes.func,
   requests: PropTypes.arrayOf(PropTypes.shape({
@@ -84,4 +84,4 @@ PendingRequests.propTypes = {
   title: PropTypes.string.isRequired,
 }
 
-export default PendingRequests
+export default PendingAnticipations

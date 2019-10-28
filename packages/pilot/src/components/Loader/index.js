@@ -12,6 +12,7 @@ const createOverlayStyle = position => classNames(
 )
 
 const Loader = ({
+  base,
   label,
   position,
   text,
@@ -40,7 +41,7 @@ const Loader = ({
     {visible
       && (
         <div
-          className={createOverlayStyle(position)}
+          className={classNames(createOverlayStyle(position), style[base])}
           key="overlay"
         >
           <div
@@ -57,13 +58,17 @@ const Loader = ({
 )
 
 Loader.propTypes = {
+  base: PropTypes.oneOf([
+    'dark', 'light',
+  ]),
   label: PropTypes.string,
-  position: PropTypes.oneOf(['fixed', 'absolute']),
+  position: PropTypes.oneOf(['fixed', 'absolute', 'relative']),
   text: PropTypes.string,
   visible: PropTypes.bool,
 }
 
 Loader.defaultProps = {
+  base: 'light',
   label: 'Loading',
   position: 'fixed',
   text: '',

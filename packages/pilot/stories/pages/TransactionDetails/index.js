@@ -2,7 +2,7 @@ import React from 'react'
 import moment from 'moment-timezone'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
-import { checkA11y } from '@storybook/addon-a11y'
+import { withA11y } from '@storybook/addon-a11y'
 
 import { Layout } from 'former-kit'
 
@@ -15,6 +15,15 @@ import transactionMock from './transactionMock'
 const t = tr => tr
 
 const formatColumns = getColumnFormatter(t)
+
+const actionLabels = {
+  boleto: 'Gerar boleto',
+  capture: 'Capturar',
+  export: 'Exportar',
+  refund: 'Estornar',
+  reprocess: 'Reprocessar',
+  reprocessing: 'Reprocessando',
+}
 
 const alertLabels = {
   chargeback_reason: 'Motivo do chargeback:',
@@ -121,10 +130,11 @@ const riskLevelsLabels = {
 }
 
 storiesOf('Pages|Transaction', module)
-  .addDecorator(checkA11y)
+  .addDecorator(withA11y)
   .add('details', () => (
     <Layout>
       <TransactionDetails
+        actionLabels={actionLabels}
         alertLabels={alertLabels}
         atLabel={t('at')}
         boletoWarningMessage={t('boleto.waiting_payment_warning')}

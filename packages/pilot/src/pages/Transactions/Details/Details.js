@@ -95,6 +95,15 @@ const copyToClipBoard = (text) => {
   /* eslint-enable no-undef */
 }
 
+const getActionLabels = t => ({
+  boleto: t('pages.transaction.action_boleto'),
+  capture: t('pages.transaction.action_capture'),
+  export: t('export'),
+  refund: t('pages.transaction.action_refund'),
+  reprocess: t('pages.transaction.action_reprocess'),
+  reprocessing: t('pages.transaction.action_reprocessing'),
+})
+
 const getTransactionDetailsLabels = t => ({
   acquirer_name: t('pages.transaction.acquirer_name'),
   acquirer_response_code: t('pages.transaction.acquirer_response_code'),
@@ -240,6 +249,7 @@ class TransactionDetails extends Component {
     const { t } = this.props
     const formatColumns = getColumnFormatter(t)
     this.state = {
+      actionLabels: getActionLabels(t),
       chargebackRate: 0,
       eventsLabels: getEventsLabels(t),
       expandRecipients: false,
@@ -512,6 +522,7 @@ class TransactionDetails extends Component {
       t,
     } = this.props
     const {
+      actionLabels,
       chargebackRate,
       eventsLabels,
       expandRecipients,
@@ -637,6 +648,7 @@ class TransactionDetails extends Component {
     return (
       <Fragment>
         <TransactionDetailsContainer
+          actionLabels={actionLabels}
           alertLabels={alertLabels}
           atLabel={t('at')}
           boletoWarningMessage={t('pages.transaction.boleto.waiting_payment_warning')}

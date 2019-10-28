@@ -59,5 +59,7 @@ typings/
 
 # distribution files
 dist
+build
+storybook-static
 
 .vscode

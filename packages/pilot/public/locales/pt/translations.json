@@ -66,6 +66,7 @@
   "invalid_recipient": "Recebedor inválido",
   "items_per_page_plural": "{{count}} itens por página",
   "items_per_page": "{{count}} item por página",
+  "loading": "Carregando...",
   "of": "de",
   "password": "Senha",
   "password_confirm": "Confirmar senha",
@@ -83,11 +84,6 @@
       "test_environment": "Ambiente de teste",
       "text_live": "Você está no ambiente Live. Para ir para o ambiente Test",
       "text_test": "Você está no ambiente Test. Para ir para o ambiente Live"
-    },
-    "feedback": {
-      "action": "aqui",
-      "text": "sobre o uso da nossa nova dashboard",
-      "text_emphasis": "Envie seus comentários"
     },
     "title": "Transações",
     "alerts": "Notificações",
@@ -705,8 +701,8 @@
       "invalid_recipient": "Você não possui um recebedor padrão configurado para este ambiente",
       "no_anticipation": "Não há valores disponíveis para antecipação.",
       "operations_title": "Lançamentos do período",
-      "pending_requests_empty_message": "Nenhuma solicitação disponível",
-      "pending_requests_title": "Solicitações recentes",
+      "pending_anticipations_empty_message": "Nenhuma antecipação disponível",
+      "pending_anticipations_title": "Antecipações pendentes",
       "previous": "Anteriores",
       "recipient": "Recebedor",
       "results": "lançamento",
@@ -1249,6 +1245,11 @@
     "transaction": {
       "acquirer_name": "Operadora do cartão",
       "acquirer_response_code": "Resposta da operadora",
+      "action_boleto": "Gerar boleto",
+      "action_capture": "Capturar",
+      "action_refund":"Estornar",
+      "action_reprocess": "Reprocessar",
+      "action_reprocessing": "Reprocessando",
       "alert": {
         "chargeback_reason": "Motivo do chargeback:",
         "pending_review": "Existe {{count}} transação pendente de revisão.",
@@ -1397,6 +1398,7 @@
     },
     "transactions": {
       "count": "transações",
+      "chart_amount": "Valor em reais (R$)",
       "graphic": "Gráfico",
       "graphic_legends": "Legendas",
       "no_results_message": "Tente novamente com outros filtros.",
@@ -1446,12 +1448,12 @@
       }
     }
   },
-  "cancel_pending_request_cancel": "Não quero cancelar",
-  "cancel_pending_request_confirm": "Sim, quero cancelar",
-  "cancel_pending_request_text_today_confirm": "Quer cancelar mesmo assim?",
-  "cancel_pending_request_text_today": "Atenção: caso queira antecipar nesta mesma data, você precisará criar outro pedido antes das 10:50 de hoje.",
-  "cancel_pending_request_text": "Você tem certeza de que deseja cancelar esta antecipação?",
-  "cancel_pending_request_title": "Cancelar antecipação",
+  "cancel_pending_anticipations_cancel": "Não quero cancelar",
+  "cancel_pending_anticipations_confirm": "Sim, quero cancelar",
+  "cancel_pending_anticipations_text_today_confirm": "Quer cancelar mesmo assim?",
+  "cancel_pending_anticipations_text_today": "Atenção: caso queira antecipar nesta mesma data, você precisará criar outro pedido antes das 10:50 de hoje.",
+  "cancel_pending_anticipations_text": "Você tem certeza de que deseja cancelar esta antecipação?",
+  "cancel_pending_anticipations_title": "Cancelar antecipação",
   "password_strength": "Força",
   "password_rules_title": "Sua senha precisa ter:",
   "password_rules_min_length": "No mínimo {{length}} caracteres",

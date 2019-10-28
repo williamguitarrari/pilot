@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { checkA11y } from '@storybook/addon-a11y'
+import { withA11y } from '@storybook/addon-a11y'
 
 import SearchableDropdown from './SearchableDropdown'
 import BoletoRefundDetails from './BoletoRefundDetails'
@@ -30,7 +30,7 @@ import TransferError from './TransferError'
 import TransactionDetailsCard from './TransactionDetailsCard'
 import TreeView from './TreeView'
 import ApiKeySection from './ApiKey'
-import PendingRequests from './PendingRequests'
+import PendingAnticipations from './PendingAnticipations'
 import BalanceTotalDisplay from './BalanceTotalDisplay'
 import BalanceSummary from './BalanceSummary'
 import SidebarSections from './SidebarSections'
@@ -44,7 +44,7 @@ import WithLoader from './withLoader'
 import WithSpinner from './withSpinner'
 
 storiesOf('Components|Custom components', module)
-  .addDecorator(checkA11y)
+  .addDecorator(withA11y)
   .add('Searchable Dropdown', () => <SearchableDropdown />)
   .add('Configuration card form', () => <ConfigurationCardForm />)
   .add('Copy button', () => <CopyButton />)
@@ -66,7 +66,7 @@ storiesOf('Components|Custom components', module)
   .add('Boleto Refund Details', () => <BoletoRefundDetails />)
   .add('CreditCardRefundDetails', () => <CreditCardRefundDetails />)
   .add('ApiKey', () => <ApiKeySection />)
-  .add('Pending Requests', () => <PendingRequests />)
+  .add('Pending Anticipations', () => <PendingAnticipations />)
   .add('Operations', () => <Operations />)
   .add('Balance total display', () => <BalanceTotalDisplay />)
   .add('Balance summary', () => <BalanceSummary />)

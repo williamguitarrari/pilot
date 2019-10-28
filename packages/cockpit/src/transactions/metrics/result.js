@@ -17,6 +17,7 @@ import {
   range,
   reduce,
   sortBy,
+  sum,
   toPairs,
   toString,
   unless,
@@ -47,9 +48,13 @@ const getMetrics = pipe(
   head
 )
 
-const getVolume = pipe(
+const getVolume = path(['volume', 'value'])
+
+const sumPaidTransactions = pipe(
   getMetrics,
-  path(['volume', 'value'])
+  getBucketsPropFrom('paidTransactions'),
+  map(getVolume),
+  sum
 )
 
 const getTotalTransactions = path(['hits', 'total'])
@@ -122,7 +127,7 @@ const incrementIfZero = when(
 
 const getAverageAmount = converge(
   divideTruncate,
-  [getVolume, pipe(
+  [sumPaidTransactions, pipe(
     getTotalTransactions,
     incrementIfZero
   )]
@@ -152,7 +157,7 @@ const buildResult = applySpec({
   paymentMethods: buildAggregationBuckets('payment_method'),
   refuseReasons: buildAggregationBuckets('refuse_reason'),
   status: buildAggregationBuckets('status'),
-  totalAmount: getVolume,
+  totalAmount: sumPaidTransactions,
   totalTransactions: getTotalTransactions,
   volumeByWeekday: getVolumeByWeekday,
 })

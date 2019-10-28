@@ -6,8 +6,3 @@
   cursor: pointer;
   user-select: none;
 }
-
-.feedback {
-  display: block;
-  white-space: nowrap;
-}

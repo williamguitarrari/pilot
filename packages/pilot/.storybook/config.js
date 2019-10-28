@@ -1,9 +1,9 @@
 import './themeDecorator'
 import './percyIntegration'
-import { setOptions } from '@storybook/addon-options'
+import { withOptions } from '@storybook/addon-options'
 
-setOptions({
-  name: 'Pilot',
-  url: 'https://github.com/pagarme/pilot',
+withOptions({
+  brandTitle: 'Pilot',
+  brandUrl: 'https://github.com/pagarme/pilot',
   hierarchyRootSeparator: /\|/,
 })

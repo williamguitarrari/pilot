@@ -30,7 +30,7 @@ const BalanceSummary = ({ amount, base, loading }) => (
             <TotalDisplay
               align="center"
               amount={amount[type].value}
-              amountSize="huge"
+              amountSize="large"
               color={colors[type]}
               title={amount[type].title}
               titleColor={colors[type]}

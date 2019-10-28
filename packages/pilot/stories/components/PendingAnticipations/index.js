@@ -3,7 +3,7 @@ import { Card } from 'former-kit'
 import { action } from '@storybook/addon-actions'
 
 import Section from '../../Section'
-import PendingRequests from '../../../src/components/PendingRequests'
+import PendingAnticipations from '../../../src/components/PendingAnticipations'
 
 const requests = [
   {
@@ -22,11 +22,12 @@ const requests = [
     title: 'Antecipação',
   },
 ]
-const PendingRequestsExample = () => (
+const PendingAnticipationsExample = () => (
   <Section>
     <Card>
-      <PendingRequests
-        title="Solicitações pendentes"
+      <PendingAnticipations
+        emptyMessage="Nenhuma antecipação disponível"
+        title="Antecipações pendentes"
         requests={requests}
         onCancel={action('cancel-request')}
       />
@@ -34,4 +35,4 @@ const PendingRequestsExample = () => (
   </Section>
 )
 
-export default PendingRequestsExample
+export default PendingAnticipationsExample
