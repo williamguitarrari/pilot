@@ -91,12 +91,13 @@ const ignoredProps = [
   'paid_amount',
   'payment',
   'receipt_url',
+  'reference_key',
   'refunded_amount',
   'refuse_reason',
   'risk_level',
   'soft_descriptor',
-  'status_reason',
   'status',
+  'status_reason',
   'tid',
 ]
 

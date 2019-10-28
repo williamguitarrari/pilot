@@ -61,4 +61,11 @@ describe('Reprocess', () => {
 
     expect(cleanTransaction(withoutCustomer)).toEqual(toRequestExpected)
   })
+
+  it('should not have reference key', () => {
+    const withReferenceKey = assoc('reference_key', '123', fromRequest)
+    const withoutReferenceKey = dissoc('reference_key', toRequest)
+
+    expect(cleanTransaction(withReferenceKey)).toEqual(withoutReferenceKey)
+  })
 })
