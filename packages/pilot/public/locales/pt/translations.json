@@ -70,6 +70,12 @@
   "of": "de",
   "password": "Senha",
   "password_confirm": "Confirmar senha",
+  "prompt": {
+    "title": "Atenção!",
+    "message": "Tem certeza que deseja cancelar o fluxo atual? Todas as informações serão perdidas.",
+    "confirm": "Sim, quero sair",
+    "deny": "Não quero sair"
+  },
   "recipient": "Recebedor",
   "transaction": "Transação",
   "try_again": "Tentar novamente",
