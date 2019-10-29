@@ -12,7 +12,8 @@
 .amount {
   align-items: center;
   display: flex;
-  margin: var(--spacing-tiny) 0;
+  margin-bottom: var(--spacing-small);
+  margin-top: var(--spacing-medium);
 
   & small {
     font-size: 18px;
@@ -25,17 +26,8 @@
     font-weight: bold;
   }
 
-  & small,
-  & span,
   & .symbol {
-    align-items: center;
-    display: inline-flex;
-    height: 33px;
-  }
-
-  & .symbol {
-    font-size: 12px;
-    font-weight: lighter;
+    font-size: 24px;
     margin-right: 2px;
   }
 
