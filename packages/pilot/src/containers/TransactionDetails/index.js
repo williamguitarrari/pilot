@@ -490,7 +490,7 @@ class TransactionDetails extends Component {
           }
         </div>
         <div>
-          {totalDisplayLabels.refund
+          {totalDisplayLabels.refund > 0
             && (
               <span>
                 {totalDisplayLabels.refund}
@@ -759,12 +759,13 @@ class TransactionDetails extends Component {
             <Card className={style.paidAmountValue}>
               <CardContent className={style.content}>
                 <TotalDisplay
+                  align="start"
                   amount={isRefundedBeforeCaptured
                     ? payment.authorized_amount
                     : payment.paid_amount
                   }
                   amountSize="large"
-                  color="#37cc9a"
+                  color="#4d4f62"
                   subtitle={(
                     <div className={style.subtitle}>
                       {totalDisplayLabels.captured_at}
@@ -788,6 +789,7 @@ class TransactionDetails extends Component {
             <Card className={style.outAmountValue}>
               <CardContent className={style.content}>
                 <TotalDisplay
+                  align="start"
                   amount={
                     getOutAmount([
                       payment.refund_amount,
@@ -796,7 +798,7 @@ class TransactionDetails extends Component {
                     ])
                   }
                   amountSize="large"
-                  color="#ff796f"
+                  color="#4d4f62"
                   subtitle={(
                     <div className={style.subtitle}>
                       {this.renderOutAmountSubTitle()}
@@ -817,9 +819,10 @@ class TransactionDetails extends Component {
             <Card className={style.netAmountValue}>
               <CardContent className={style.content}>
                 <TotalDisplay
+                  align="start"
                   amount={payment.net_amount}
                   amountSize="large"
-                  color="#4ca9d7"
+                  color="#4d4f62"
                   subtitle={(
                     <div className={style.subtitle}>
                       {totalDisplayLabels.receive_date}

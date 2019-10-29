@@ -15,7 +15,6 @@
   height: 100%;
 
   & :first-child {
-    text-align: center;
     width: 100%;
   }
 }
