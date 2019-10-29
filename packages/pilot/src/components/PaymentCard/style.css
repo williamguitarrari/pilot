@@ -14,11 +14,9 @@
   height: 150px;
 
   & h2 {
-    color: var(--color-light-steel-100);
+    color: var(--color-light-noir-100);
     font-size: 14px;
-    font-weight: bold;
     margin: 0;
-    text-transform: uppercase;
   }
 
   & p {
@@ -40,16 +38,15 @@
 .cardTitle {
   align-items: center;
   display: flex;
-  height: 32px;
   justify-content: space-between;
 }
 
 .cardNumber {
   align-items: center;
-  color: var(--color-light-steel-100);
+  color: var(--color-light-noir-100);
   display: flex;
-  font-size: 18px;
-  margin-right: var(--spacing-small);
+  font-size: 22px;
+  margin: var(--spacing-medium) 0;
 
   & svg {
     margin-right: var(--spacing-tiny);
