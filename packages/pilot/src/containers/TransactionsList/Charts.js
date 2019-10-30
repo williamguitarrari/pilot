@@ -39,11 +39,10 @@ const renderLegend = (legendKey) => {
       tv={1}
     >
       <Legend
-        acronym={status.acronym}
+        acronym={status.text}
         color={status.color}
-      >
-        {status.text}
-      </Legend>
+        textColor={status.textColor}
+      />
     </Col>
   )
 }
