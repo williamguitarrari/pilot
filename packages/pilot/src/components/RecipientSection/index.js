@@ -2,7 +2,10 @@ import React, { PureComponent, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment-timezone'
 import classNames from 'classnames'
-import { isEmpty } from 'ramda'
+import {
+  isEmpty,
+  take,
+} from 'ramda'
 import {
   Card,
   CardSection,
@@ -13,103 +16,117 @@ import { matchToPrint } from '../../validation/matchToMediaQuery'
 import RecipientCard from '../RecipientCard'
 import style from './style.css'
 
+const minimumInstallmentsRows = 5
+
 class RecipientSection extends PureComponent {
   constructor (props) {
     super(props)
     this.renderInstallmentsTable = this.renderInstallmentsTable.bind(this)
     this.renderInstallments = this.renderInstallments.bind(this)
-    this.renderSingleRecipientInstallments = (
-      this.renderSingleRecipientInstallments.bind(this)
-    )
   }
 
-  renderInstallmentsTable (isPrint) {
-    const {
-      collapsed,
-      columns,
-      installments,
-    } = this.props
-    const isMultipleInstallments = installments.length >= 1
-
-    if (!collapsed || !isMultipleInstallments || isPrint) {
-      return (
-        <Table
-          columns={columns}
-          rows={installments}
-          showAggregationRow={isMultipleInstallments}
-        />
-      )
-    }
-    return null
-  }
-
-  renderInstallments () {
+  renderInstallmentsTable ({
+    installmentsRowSize,
+    isMultipleInstallments,
+    isSingleRecipient,
+  }) {
     const {
       collapsed,
       collapsedTitle,
+      columns,
       installments,
-      liabilities,
-      liabilitiesLabel,
-      name,
-      netAmount,
-      netAmountLabel,
       onDetailsClick,
-      outAmountLabel,
-      status,
-      statusLabel,
       title,
-      totalAmount,
-      totalLabel,
     } = this.props
+
     const isPrint = matchToPrint()
-    const hasInstallments = !isEmpty(installments)
+    const rows = isPrint
+      ? installments
+      : take(installmentsRowSize, installments)
 
     return (
       <Fragment>
-        <RecipientCard
-          liabilities={liabilities}
-          liabilitiesLabel={liabilitiesLabel}
-          name={name}
-          netAmount={netAmount}
-          netAmountLabel={netAmountLabel}
-          outAmountLabel={outAmountLabel}
-          status={status}
-          statusLabel={statusLabel}
-          totalAmount={totalAmount}
-          totalLabel={totalLabel}
-        />
-        {hasInstallments && !isPrint
+        {((!isSingleRecipient && !collapsed) || isSingleRecipient)
           && (
-            <CardSection>
-              {this.renderInstallmentsTable()}
-              <CardSectionTitle
-                collapsed={collapsed}
-                title={
-                  collapsed
-                    ? collapsedTitle
-                    : title
-                }
-                onClick={onDetailsClick}
-              />
-            </CardSection>
+            <Table
+              columns={columns}
+              rows={rows}
+              showAggregationRow={
+                rows.length === installments.length && isMultipleInstallments
+              }
+            />
           )
         }
-        {hasInstallments && isPrint
+        {(installments.length > minimumInstallmentsRows || !isSingleRecipient)
           && (
-            <CardSection>
-              {this.renderInstallmentsTable(isPrint)}
-            </CardSection>
+            <CardSectionTitle
+              collapsed={collapsed}
+              title={
+                collapsed
+                  ? collapsedTitle
+                  : title
+              }
+              onClick={onDetailsClick}
+            />
           )
         }
       </Fragment>
     )
   }
 
-  renderSingleRecipientInstallments () {
+  renderInstallments () {
+    const {
+      collapsed,
+      installments,
+      isSingleRecipient,
+      liabilities,
+      liabilitiesLabel,
+      name,
+      netAmount,
+      netAmountLabel,
+      outAmountLabel,
+      status,
+      statusLabel,
+      totalAmount,
+      totalLabel,
+    } = this.props
+
+    const hasInstallments = !isEmpty(installments)
+    const isMultipleInstallments = installments.length > 1
+    const installmentsRowSize = collapsed
+      ? minimumInstallmentsRows
+      : installments.length
+
     return (
-      <CardSection>
-        {this.renderInstallmentsTable()}
-      </CardSection>
+      <Fragment>
+        {!isSingleRecipient
+          && (
+            <RecipientCard
+              liabilities={liabilities}
+              liabilitiesLabel={liabilitiesLabel}
+              name={name}
+              netAmount={netAmount}
+              netAmountLabel={netAmountLabel}
+              outAmountLabel={outAmountLabel}
+              status={status}
+              statusLabel={statusLabel}
+              totalAmount={totalAmount}
+              totalLabel={totalLabel}
+            />
+          )
+        }
+        <CardSection>
+          {hasInstallments
+            && (
+              this.renderInstallmentsTable({
+                installmentsRowSize,
+                isMultipleInstallments,
+                isSingleRecipient,
+              })
+            )
+          }
+        </CardSection>
+      </Fragment>
     )
   }
 
@@ -153,6 +170,7 @@ RecipientSection.propTypes = {
     payment_date: PropTypes.instanceOf(moment),
     status: PropTypes.string,
   })).isRequired,
+  isSingleRecipient: PropTypes.bool.isRequired,
   liabilities: PropTypes.arrayOf(PropTypes.string).isRequired,
   liabilitiesLabel: PropTypes.string,
   name: PropTypes.string.isRequired,

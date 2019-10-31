@@ -1356,7 +1356,7 @@
         "agency": "Ag: {{number}}",
         "amount": "Total bruto (R$)",
         "bank": "banco",
-        "collapsedInstallments": "Visualizar parcelas",
+        "collapsedInstallments": "Visualizar todas parcelas",
         "empty": "Nenhum recebedor",
         "expandedInstallments": "Ocultar parcelas",
         "filter_by_name_or_legal_name": "Filtre por nome ou razão social",
