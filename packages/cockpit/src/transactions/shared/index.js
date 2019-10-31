@@ -246,8 +246,8 @@ const transactionSpec = {
   acquirer: {
     name: prop('acquirer_name'),
     response_code: prop('acquirer_response_code'),
-    sequence_number: unless(isNil, pipe(prop('nsu'), String)),
-    transaction_id: unless(isNil, pipe(prop('tid'), String)),
+    sequence_number: prop('nsu'),
+    transaction_id: prop('tid'),
   },
   amount: prop('amount'),
   antifraud: getAntifraudProp,

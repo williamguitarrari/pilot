@@ -628,12 +628,15 @@ class TransactionDetails extends Component {
       customer,
       id,
       metadata,
+      operations,
       payment,
       recipients,
       soft_descriptor,
       status,
       subscription,
     } = transaction
+
+    const hasOperations = operations && operations.length > 1
 
     const transactionDetailsContent = {
       acquirer_name: acquirer
@@ -853,10 +856,18 @@ class TransactionDetails extends Component {
 
         <Row>
           <Col
-            desk={9}
+            desk={
+              hasOperations
+                ? 9
+                : 12
+            }
             palm={12}
             tablet={12}
-            tv={9}
+            tv={
+              hasOperations
+                ? 9
+                : 12
+            }
           >
             <Grid className={style.detailsInfo}>
               {!isEmptyOrNull(recipients)
@@ -949,20 +960,24 @@ class TransactionDetails extends Component {
               }
             </Grid>
           </Col>
-          <Col
-            desk={3}
-            palm={12}
-            tablet={12}
-            tv={3}
-            className={style.eventsList}
-          >
-            <Card>
-              <CardTitle title={eventsLabels.title} />
-              <div>
-                {this.renderEvents()}
-              </div>
-            </Card>
-          </Col>
+          { hasOperations
+            && (
+              <Col
+                desk={3}
+                palm={12}
+                tablet={12}
+                tv={3}
+                className={style.eventsList}
+              >
+                <Card>
+                  <CardTitle title={eventsLabels.title} />
+                  <div>
+                    {this.renderEvents()}
+                  </div>
+                </Card>
+              </Col>
+            )
+          }
         </Row>
       </Grid>
     )
