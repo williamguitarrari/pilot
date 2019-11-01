@@ -35,7 +35,7 @@ const RecipientCard = ({
           <span className={style.statusLabel}>{statusLabel}</span>
           <Legend
             color={legendStatus[status || unavailableStatus].color}
-            acronym={legendStatus[status || unavailableStatus].acronym}
+            acronym={legendStatus[status || unavailableStatus].text}
             hideLabel
           >
             {legendStatus[status || unavailableStatus].text}
@@ -68,7 +68,15 @@ RecipientCard.propTypes = {
   netAmount: PropTypes.number.isRequired,
   netAmountLabel: PropTypes.string,
   outAmountLabel: PropTypes.string,
-  status: PropTypes.string,
+  status: PropTypes.oneOf([
+    'cancelled',
+    'confirmed',
+    'paid',
+    'prepaid',
+    'suspended',
+    'unavailable',
+    'waiting_funds',
+  ]),
   statusLabel: PropTypes.string,
   totalAmount: PropTypes.number.isRequired,
   totalLabel: PropTypes.string,

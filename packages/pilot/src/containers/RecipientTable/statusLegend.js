@@ -17,9 +17,10 @@ const StatusLegend = ({
   return (
     <div className={style.centralizedItem}>
       <Legend
-        color={status[item.status].color}
         acronym={t(`${localePath}.${item.status}`)}
+        color={status[item.status].color}
         hideLabel
+        textColor={status[item.status].textColor}
       >
         {t(`pages.recipients.status_of.${item.status}`)}
       </Legend>
