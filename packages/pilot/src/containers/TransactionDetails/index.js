@@ -185,11 +185,12 @@ const getHeaderAmountLabel = (transaction, headerLabels) => {
 
 const renderLegend = status => (
   <Legend
-    color={statusLegends[status].color}
     acronym={statusLegends[status].text}
+    color={statusLegends[status].color}
     hideLabel
+    textColor={statusLegends[status].textColor}
   >
-    { statusLegends[status].acronym }
+    { statusLegends[status].text }
   </Legend>
 )
 
