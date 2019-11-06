@@ -201,8 +201,10 @@ const parseSearch = keys => (search) => {
     return [
       ...acc,
       {
-        term: {
-          [key]: search,
+        query: {
+          match_phrase: {
+            [key]: search,
+          },
         },
       },
     ]
