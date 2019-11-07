@@ -8,7 +8,9 @@ import afterBankFormatID from './mocks/afterBankFormatID.json'
 
 describe('Format To Recipient', () => {
   it('formats data correctly', () => {
-    expect(formatToRecipient(beforeFormat)).toEqual(afterFormat)
+    expect(formatToRecipient(beforeFormat, {
+      canConfigureAnticipation: true,
+    })).toEqual(afterFormat)
   })
   it('format bank accounts', () => {
     expect(formatToBankAccount(beforeBankFormat)).toEqual(afterBankFormat)
