@@ -241,6 +241,9 @@ class RecipientDetailConfig extends Component {
     const {
       accounts,
       bankAccount,
+      capabilities: {
+        canConfigureAnticipation,
+      },
       t,
     } = this.props
 
@@ -262,6 +265,7 @@ class RecipientDetailConfig extends Component {
           id="anticipation"
         >
           <AnticipationContent
+            canConfigureAnticipation={canConfigureAnticipation}
             data={anticipation}
             t={t}
             onSave={this.onSaveAnticipation}
@@ -326,6 +330,9 @@ RecipientDetailConfig.propTypes = {
     anticipationVolumePercentage: PropTypes.string,
   }),
   bankAccount: userAccountProps,
+  capabilities: PropTypes.shape({
+    canConfigureAnticipation: PropTypes.bool.isRequired,
+  }).isRequired,
   onSaveAnticipation: PropTypes.func.isRequired,
   onSaveBankAccount: PropTypes.func.isRequired,
   onSaveTransfer: PropTypes.func.isRequired,

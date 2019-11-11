@@ -18,7 +18,6 @@ import style from '../style.css'
 
 const anticipationModelOptions = ({
   canConfigureAnticipation,
-  maximumAnticipationDays,
   t,
 }) => {
   const manualByVolume = {
@@ -51,10 +50,7 @@ const anticipationModelOptions = ({
     automaticByVolume,
   ]
 
-  if (
-    !canConfigureAnticipation
-    || (canConfigureAnticipation && maximumAnticipationDays >= 31)
-  ) {
+  if (canConfigureAnticipation) {
     availableOptions.push(automaticAtDays10And25)
     availableOptions.push(automaticDX)
     availableOptions.push(custom)
@@ -65,14 +61,14 @@ const anticipationModelOptions = ({
 
 const renderAnticipationInput = (data, t) => {
   const { anticipationModel } = data
-  const volumePercentage = either(
+  const isVolumePercentage = either(
     equals('automatic_volume'),
     equals('manual')
   )
 
   let inputProps
 
-  if (volumePercentage(anticipationModel) || anticipationModel === 'custom') {
+  if (isVolumePercentage(anticipationModel) || anticipationModel === 'custom') {
     inputProps = {
       label: t('pages.add_recipient.anticipation_volume_percentage'),
       name: 'anticipationVolumePercentage',
@@ -87,7 +83,7 @@ const renderAnticipationInput = (data, t) => {
 
   return (
     <Row>
-      {!volumePercentage(anticipationModel) && anticipationModel === 'automatic_1025'
+      {!isVolumePercentage(anticipationModel) && anticipationModel === 'automatic_1025'
         && (
         <Fragment>
           <Col>
@@ -113,7 +109,7 @@ const renderAnticipationInput = (data, t) => {
         </Fragment>
         )
       }
-      {!volumePercentage(anticipationModel) && anticipationModel === 'automatic_dx'
+      {!isVolumePercentage(anticipationModel) && anticipationModel === 'automatic_dx'
         && (
         <Fragment>
           <Col>
@@ -138,7 +134,7 @@ const renderAnticipationInput = (data, t) => {
         </Fragment>
         )
       }
-      {!volumePercentage(anticipationModel) && anticipationModel === 'custom'
+      {!isVolumePercentage(anticipationModel) && anticipationModel === 'custom'
         && (
         <Fragment>
           <Col>
@@ -200,7 +196,7 @@ const Anticipation = ({
 )
 
 Anticipation.propTypes = {
-  canConfigureAnticipation: PropTypes.bool,
+  canConfigureAnticipation: PropTypes.bool.isRequired,
   data: PropTypes.shape({
     anticipationDays: PropTypes.string,
     anticipationDelay: PropTypes.string,
@@ -212,7 +208,6 @@ Anticipation.propTypes = {
 }
 
 Anticipation.defaultProps = {
-  canConfigureAnticipation: true,
   data: {},
   maximumAnticipationDays: 31,
 }

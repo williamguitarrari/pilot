@@ -17,11 +17,11 @@ const formatRecipient = recipient => ({
   bank_account: formatBankAccount([recipient.bank_account]).accounts[0],
 })
 
-const UpdateDetailRecipient = client => (recipientId, data) => {
+const UpdateDetailRecipient = client => (recipientId, data, options) => {
   if (data.configuration.anticipationModel) {
     return client.recipients.update({
       id: recipientId,
-      ...formatToAnticipation(data),
+      ...formatToAnticipation(data, options),
     })
   }
   if (data.configuration.transferInterval) {

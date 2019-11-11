@@ -19,6 +19,7 @@ import styles from '../style.css'
 import { ANTICIPATION } from '../contentIds'
 
 const AnticipationContent = ({
+  canConfigureAnticipation,
   data,
   onCancel,
   onChange,
@@ -50,6 +51,7 @@ const AnticipationContent = ({
           <Row>
             <Col>
               {Anticipation({
+                canConfigureAnticipation,
                 data,
                 t,
               })}
@@ -80,6 +82,7 @@ const AnticipationContent = ({
 }
 
 AnticipationContent.propTypes = {
+  canConfigureAnticipation: PropTypes.bool.isRequired,
   data: PropTypes.shape({
     anticipationDays: PropTypes.string,
     anticipationModel: PropTypes.string,
