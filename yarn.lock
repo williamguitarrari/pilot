@@ -7023,6 +7023,14 @@ former-kit-skin-pagarme@1.5.2:
     emblematic-icons "0.7.1"
     react-dates "18.4.1"
 
+former-kit-skin-pagarme@1.5.3:
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/former-kit-skin-pagarme/-/former-kit-skin-pagarme-1.5.3.tgz#1d3e599c3ab434cb0d35ff0db603b8b705bc6644"
+  integrity sha512-tuVK/5iy7v/bLfm8xRVKyjAHrXoDgCx/h6lYmXPzd70t/OjImWPEz9tWx7IzlAgXIOfpTkkadS7IlLjxBbR3Yw==
+  dependencies:
+    emblematic-icons "0.7.1"
+    react-dates "18.4.1"
+
 former-kit@1.7.2:
   version "1.7.2"
   resolved "https://registry.yarnpkg.com/former-kit/-/former-kit-1.7.2.tgz#3ccb2f9a9cd58e0d3e177ea75d8c500fffd41576"
