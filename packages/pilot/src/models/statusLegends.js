@@ -18,7 +18,7 @@ const status = {
   },
   chargedback_refund: {
     color: '#984141',
-    text: 'Chargeback reapresentado',
+    text: 'Cbk reapresentado',
   },
   paid: {
     color: '#17c9b2',
@@ -54,11 +54,11 @@ const status = {
   },
   waiting_funds: {
     color: '#f29f03',
-    text: 'Aguardando pagamento',
+    text: 'Aguardando pgto',
   },
   waiting_payment: {
     color: '#f29f03',
-    text: 'Aguardando pagamento',
+    text: 'Aguardando pgto',
   },
 }
 
