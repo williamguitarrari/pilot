@@ -309,6 +309,7 @@ class RecipientDetailConfig extends Component {
         </RecipientItem>
         <HelpModal
           anticipationModel={anticipation.anticipationModel}
+          capabilities={canConfigureAnticipation}
           isOpen={openedModal}
           onExit={this.handleCloseHelpModal}
           size="huge"

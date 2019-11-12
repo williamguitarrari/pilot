@@ -64,26 +64,8 @@ const renderDX = t => (
   </Fragment>
 )
 
-const renderIfManualOrAutomaticModel = (anticipationModel, t) => {
-  const manual = (anticipationModel === 'manual')
-  const automatic = (anticipationModel === 'automatic_volume')
-  if (manual || automatic) {
-    return (
-      <Fragment>
-        {renderManualByVolume(t)}
-        <Spacing />
-        {renderAutomaticByVolume(t)}
-      </Fragment>
-    )
-  }
-  return null
-}
-
-const renderIfDxOr1025 = (anticipationModel, t) => {
-  const automaticDx = (anticipationModel === 'automatic_dx')
-  const automatic1025 = (anticipationModel === 'automatic_1025')
-  const automaticCustom = (anticipationModel === 'custom')
-  if (automaticDx || automatic1025 || automaticCustom) {
+const renderAllAnticipationModels = (capabilities, t) => {
+  if (capabilities) {
     return (
       <Fragment>
         {renderManualByVolume(t)}
@@ -96,11 +78,17 @@ const renderIfDxOr1025 = (anticipationModel, t) => {
       </Fragment>
     )
   }
-  return null
+  return (
+    <Fragment>
+      {renderManualByVolume(t)}
+      <Spacing />
+      {renderAutomaticByVolume(t)}
+    </Fragment>
+  )
 }
 
 const HelpModal = ({
-  anticipationModel,
+  capabilities,
   isOpen,
   onExit,
   size,
@@ -123,8 +111,7 @@ const HelpModal = ({
         <small className={style.marginBottomforModal}>
           {t('pages.recipient_detail.subtitle_modal')}
         </small>
-        {renderIfManualOrAutomaticModel(anticipationModel, t)}
-        {renderIfDxOr1025(anticipationModel, t)}
+        {renderAllAnticipationModels(capabilities, t)}
       </ModalContent>
       <ModalActions>
         <div className={style.justifyContent}>
@@ -139,16 +126,14 @@ const HelpModal = ({
 )
 
 HelpModal.propTypes = {
-  anticipationModel: PropTypes.string,
+  capabilities: PropTypes.shape({
+    canConfigureAnticipation: PropTypes.bool.isRequired,
+  }).isRequired,
   isOpen: PropTypes.bool.isRequired,
   onExit: PropTypes.func.isRequired,
   size: PropTypes.string.isRequired,
   t: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
-}
-
-HelpModal.defaultProps = {
-  anticipationModel: '',
 }
 
 export default HelpModal
