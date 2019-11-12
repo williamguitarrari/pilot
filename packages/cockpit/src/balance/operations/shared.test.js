@@ -1,3 +1,4 @@
+import { mergeLeft } from 'ramda'
 
 import {
   isNegative,
@@ -7,6 +8,7 @@ import {
   getSourceId,
   getTargetId,
   getTransactionId,
+  getTransferId,
   getType,
 } from './shared'
 import operationMock from '../mocks/operation/received.json'
@@ -129,6 +131,19 @@ describe('Get transaction id', () => {
     const transacitonId = getTransactionId(payableMock)
 
     expect(transacitonId).toBe(6293604)
+  })
+})
+
+describe('Get transfer id', () => {
+  it('should get the transfer id correctly from an operation', () => {
+    const transferId = getTransferId(mergeLeft({
+      movement_object: {
+        object: 'transfer',
+        id: 123,
+      },
+    }, operationMock))
+
+    expect(transferId).toBe(123)
   })
 })
 

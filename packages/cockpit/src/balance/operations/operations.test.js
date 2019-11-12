@@ -12,6 +12,7 @@ import operations, {
   refundOrChargeBackOutcoming,
   refundOrChargeBackOutgoing,
   tedTransferOutgoing,
+  creditTransferOutgoing,
   zeroTransferAmount,
   creditOutcoming,
   creditOutgoing,
@@ -130,6 +131,24 @@ describe('Operations table data', () => {
       }]
 
       expect(outgoing).toEqual(expectedOutGoing)
+    })
+
+    it('should return a credit transfer outgoing array', () => {
+      const outgoing = creditTransferOutgoing({
+        ...operationMock,
+        type: 'transfer',
+        amount: -30000,
+        movement_object: {
+          type: 'credito_em_conta',
+        },
+      })
+
+      const expected = [{
+        amount: -30000,
+        type: 'payable',
+      }]
+
+      expect(outgoing).toEqual(expected)
     })
 
     it('should validate if is a transfer between recipients', () => {
