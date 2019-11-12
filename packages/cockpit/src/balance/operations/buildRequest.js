@@ -1,7 +1,6 @@
 import moment from 'moment-timezone'
 import {
   curry,
-  defaultTo,
   ifElse,
   propEq,
   uncurryN,
@@ -54,14 +53,11 @@ const buildPayablesRequest = curry((client, query) => {
     .then(formatPayablesRows)
 })
 
-const defaultToArray = defaultTo([])
-
 const buildOperationsRequest = curry((client, query) => {
   const operationsQuery = buildOperationsQuery(query)
 
   return client.balanceOperations
     .find(operationsQuery)
-    .then(defaultToArray)
     .then(formatOperationsRows)
 })
 
