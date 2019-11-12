@@ -93,6 +93,12 @@ export const getTransactionId = ifElse(
   prop('transaction_id')
 )
 
+export const getTransferId = ifElse(
+  pathEq(['movement_object', 'object'], 'transfer'),
+  path(['movement_object', 'id']),
+  always(null)
+)
+
 export const getType = cond([
   [
     propEq('object', 'payable'),
@@ -112,6 +118,8 @@ export const getType = cond([
   [T, path(['movement_object', 'type'])],
 ])
 
+const getMovementObjectStatus = path(['movement_object', 'status'])
+
 export const formatRows = ({
   buildOutcoming,
   buildOutgoing,
@@ -128,9 +136,11 @@ export const formatRows = ({
       original: getOperationDate('original_payment_date'),
     },
     sourceId: getSourceId,
+    status: getMovementObjectStatus,
     targetId: getTargetId,
     type: getType,
     transactionId: getTransactionId,
+    transferId: getTransferId,
   })),
   sortWith([
     ascend(prop('id')),
