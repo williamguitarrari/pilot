@@ -378,6 +378,7 @@
       "details_title": "Detalhes do extrato",
       "empty_message": "Não foram encontrados lançamentos neste período",
       "export": "Exportar tudo",
+      "failed": "Estorno por falha na transferência",
       "from": "De",
       "gateway_service": "Serviços de gateway",
       "id": "Id da operação",
@@ -392,6 +393,7 @@
       "to": "Para",
       "transaction_id": "ID da transação",
       "transfer": "Saque",
+      "transfer_id": "Transferência",
       "transfer_fee": "TED",
       "withdraw": "Saque"
     },
