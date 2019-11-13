@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import {
+  applySpec,
   compose,
   curry,
   defaultTo,
@@ -12,6 +13,7 @@ import {
   merge,
   path,
   pathOr,
+  pick,
   pipe,
   prop,
   propEq,
@@ -137,6 +139,9 @@ class CompanySettingsPage extends React.Component {
     super(props)
 
     this.state = {
+      antifraud: {
+        fraud_covered: false,
+      },
       bankAccount: {
         accounts: [],
         actionsDisabled: true,
@@ -213,13 +218,20 @@ class CompanySettingsPage extends React.Component {
 
     const getDefaultRecipientId = path(['default_recipient_id', environment])
 
+    const getAntifraudOptions = pipe(
+      path(['antifraud', environment]),
+      pick(['fraud_covered'])
+    )
+
     getCurrentCompany(client)
-      .then(company => ({
-        boletoInstructions: getBoletoOptions(company),
-        defaultRecipientId: getDefaultRecipientId(company),
+      .then(applySpec({
+        antifraud: getAntifraudOptions,
+        boletoInstructions: getBoletoOptions,
+        defaultRecipientId: getDefaultRecipientId,
       }))
-      .then(({ boletoInstructions, defaultRecipientId }) => {
+      .then(({ antifraud, boletoInstructions, defaultRecipientId }) => {
         this.setState({
+          antifraud,
           boleto: {
             ...boleto,
             actionsDisabled: true,
@@ -553,6 +565,7 @@ class CompanySettingsPage extends React.Component {
     } = this.props
 
     const {
+      antifraud,
       bankAccount,
       boleto,
       companyInfo: {
@@ -571,6 +584,7 @@ class CompanySettingsPage extends React.Component {
 
     return (
       <CompanySettings
+        antifraud={antifraud}
         address={address}
         apiKeys={apiKeys}
         apiVersion={apiVersion}

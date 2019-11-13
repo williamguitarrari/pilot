@@ -26,6 +26,7 @@ class CompanySettings extends Component {
   render () {
     const {
       address,
+      antifraud,
       apiKeys,
       apiVersion,
       bankAccountChangeActionDisabled,
@@ -98,6 +99,7 @@ class CompanySettings extends Component {
         {selectedIndex === 1
           && (
             <ProductInfoTab
+              antifraud={antifraud}
               boletoActionsDisabled={boletoActionsDisabled}
               boletoDaysToAddInExpirationDate={boletoDaysToAddInExpirationDate}
               boletoDisabled={boletoDisabled}
@@ -171,6 +173,9 @@ CompanySettings.propTypes = {
     street: PropTypes.string,
     streetNumber: PropTypes.string,
     zipcode: PropTypes.string,
+  }).isRequired,
+  antifraud: PropTypes.shape({
+    fraud_covered: PropTypes.bool.isRequired,
   }).isRequired,
   apiKeys: PropTypes.shape({
     keys: PropTypes.shape({
