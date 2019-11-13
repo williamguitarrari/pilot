@@ -1072,6 +1072,16 @@
         }
       },
       "company": {
+        "antifraud": {
+          "title": "Antifraude",
+          "subtitle": {
+            "fraud_coverage_enabled": "Garantia de chargebacks: ativa"
+          },
+          "fraud_coverage": {
+            "title": "Garantia de chargebacks",
+            "description": "Suas transações estão asseguradas de chargebacks por fraude."
+          }
+        },
         "boleto": {
           "title": "Boletos",
           "subtitle": "Vencimento padrão: {{count}} dia global de seus boletos.",
