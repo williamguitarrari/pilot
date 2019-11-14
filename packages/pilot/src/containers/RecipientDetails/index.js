@@ -32,6 +32,7 @@ class RecipientDetails extends Component {
   render () {
     const {
       balanceProps,
+      capabilities,
       configurationProps,
       exporting,
       informationProps,
@@ -99,6 +100,7 @@ class RecipientDetails extends Component {
         && (
           <Configuration
             {...configurationProps}
+            capabilities={capabilities}
             t={t}
           />
         )}
@@ -122,6 +124,9 @@ const balanceProps = omit(['t'], Balance.propTypes)
 
 RecipientDetails.propTypes = {
   balanceProps: PropTypes.shape(balanceProps).isRequired,
+  capabilities: PropTypes.shape({
+    canConfigureAnticipation: PropTypes.bool.isRequired,
+  }).isRequired,
   configurationProps: PropTypes.shape(configProps).isRequired,
   exporting: PropTypes.bool.isRequired,
   informationProps: PropTypes.shape(infoProps).isRequired,
