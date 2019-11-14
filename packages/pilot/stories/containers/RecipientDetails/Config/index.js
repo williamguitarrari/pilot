@@ -42,6 +42,7 @@ const mockBankAccount = {
   agency: '1111',
   agency_digit: '',
   bank: '001',
+  documentNumber: '99999999999',
   id: '1',
   name: 'Conta Bancária',
   number: '11111',
@@ -56,6 +57,9 @@ const RecipientDetailConfigExample = () => (
         accounts={mockAccounts}
         bankAccount={mockBankAccount}
         anticipation={mockAnticipation}
+        capabilities={{
+          canConfigureAnticipation: true,
+        }}
         transfer={mockTransfer}
         onSaveAnticipation={action('Saved Anticipation Data')}
         onSaveTransfer={action('Saved Transfer Data')}
