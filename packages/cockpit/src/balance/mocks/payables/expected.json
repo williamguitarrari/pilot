@@ -17,6 +17,7 @@
     "sourceId": null,
     "targetId": null,
     "transactionId": 6318091,
+    "transferId": null,
     "type": "boleto"
   },
   {
@@ -42,6 +43,7 @@
     "sourceId": null,
     "targetId": null,
     "transactionId": 6318105,
+    "transferId": null,
     "type": "boleto"
   },
   {
@@ -62,6 +64,7 @@
     "sourceId": null,
     "targetId": null,
     "transactionId": 6318105,
+    "transferId": null,
     "type": "boleto"
   },
   {
@@ -87,6 +90,7 @@
     "sourceId": null,
     "targetId": null,
     "transactionId": 6293604,
+    "transferId": null,
     "type": "credit_card"
   }
 ]

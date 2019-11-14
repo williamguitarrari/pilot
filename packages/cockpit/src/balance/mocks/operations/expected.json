@@ -19,9 +19,11 @@
       "actual": "2017-09-03T03:00:00.000Z",
       "original": null
     },
+    "status": "paid",
     "sourceId": null,
     "targetId": null,
     "transactionId": 1785151,
+    "transferId": null,
     "type": "refund"
   },
   {
@@ -48,9 +50,11 @@
       "actual": "2017-03-03T03:00:00.000Z",
       "original": null
     },
+    "status": "paid",
     "sourceId": null,
     "targetId": null,
     "transactionId": 1785141,
+    "transferId": null,
     "type": "credit_card"
   },
   {
@@ -77,9 +81,11 @@
       "actual": "2019-04-10T21:57:41.238Z",
       "original": null
     },
+    "status": "pending_transfer",
     "sourceId": null,
     "targetId": null,
     "transactionId": null,
+    "transferId": 204762,
     "type": "ted"
   },
   {
@@ -102,9 +108,11 @@
       "actual": "2019-04-17T21:50:54.308Z",
       "original": null
     },
+    "status": "pending_refund",
     "sourceId": null,
     "targetId": null,
     "transactionId": 6232675,
+    "transferId": null,
     "type": "boletoRefundFee"
   },
   {
@@ -127,9 +135,11 @@
       "actual": "2019-04-18T03:00:00.000Z",
       "original": null
     },
+    "status": "paid",
     "sourceId": null,
     "targetId": null,
     "transactionId": 6237321,
+    "transferId": null,
     "type": "boleto"
   },
   {
@@ -152,9 +162,11 @@
       "actual": "2019-04-18T03:00:00.000Z",
       "original": "2019-04-23T03:00:00.000Z"
     },
+    "status": "paid",
     "sourceId": null,
     "targetId": null,
     "transactionId": 6237281,
+    "transferId": null,
     "type": "refund"
   },
   {
@@ -177,9 +189,11 @@
       "actual": "2019-04-18T03:00:00.000Z",
       "original": null
     },
+    "status": "paid",
     "sourceId": null,
     "targetId": null,
     "transactionId": 6237273,
+    "transferId": null,
     "type": "chargeback"
   },
   {
@@ -202,9 +216,11 @@
       "actual": "2019-04-26T01:14:44.686Z",
       "original": null
     },
+    "status": "transferred",
     "sourceId": "re_abc",
     "targetId": "re_bcd",
     "transactionId": null,
+    "transferId": 208028,
     "type": "inter_recipient"
   },
   {
@@ -227,9 +243,11 @@
       "actual": "2019-04-26T01:14:44.686Z",
       "original": null
     },
+    "status": "transferred",
     "sourceId": "re_abc",
     "targetId": "re_bcd",
     "transactionId": null,
+    "transferId": 208028,
     "type": "inter_recipient"
   }
 ]
