@@ -64,8 +64,8 @@ const renderDX = t => (
   </Fragment>
 )
 
-const renderAllAnticipationModels = (capabilities, t) => {
-  if (capabilities) {
+const renderAllAnticipationModels = (canConfigureAnticipation, t) => {
+  if (canConfigureAnticipation) {
     return (
       <Fragment>
         {renderManualByVolume(t)}
@@ -78,6 +78,7 @@ const renderAllAnticipationModels = (capabilities, t) => {
       </Fragment>
     )
   }
+
   return (
     <Fragment>
       {renderManualByVolume(t)}
@@ -88,7 +89,7 @@ const renderAllAnticipationModels = (capabilities, t) => {
 }
 
 const HelpModal = ({
-  capabilities,
+  canConfigureAnticipation,
   isOpen,
   onExit,
   size,
@@ -111,7 +112,7 @@ const HelpModal = ({
         <small className={style.marginBottomforModal}>
           {t('pages.recipient_detail.subtitle_modal')}
         </small>
-        {renderAllAnticipationModels(capabilities, t)}
+        {renderAllAnticipationModels(canConfigureAnticipation, t)}
       </ModalContent>
       <ModalActions>
         <div className={style.justifyContent}>
@@ -126,9 +127,7 @@ const HelpModal = ({
 )
 
 HelpModal.propTypes = {
-  capabilities: PropTypes.shape({
-    canConfigureAnticipation: PropTypes.bool.isRequired,
-  }).isRequired,
+  canConfigureAnticipation: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
   onExit: PropTypes.func.isRequired,
   size: PropTypes.string.isRequired,
