@@ -3,6 +3,7 @@ import {
   always,
   both,
   cond,
+  either,
   ifElse,
   includes,
   juxt,
@@ -42,6 +43,11 @@ export const isTedTransfer = both(
   compareMovementTypeTo('ted')
 )
 
+export const isCreditTransfer = both(
+  propEq('type', 'transfer'),
+  compareMovementTypeTo('credito_em_conta')
+)
+
 export const zeroTransferAmount = always({
   amount: 0,
   type: 'payable',
@@ -49,6 +55,10 @@ export const zeroTransferAmount = always({
 
 export const tedTransferOutgoing = juxt([
   transformAndNegateMovementTypePropTo(['fee'], 'tedFee'),
+  transformMovementTypePropTo(['amount'], 'payable'),
+])
+
+export const creditTransferOutgoing = juxt([
   transformMovementTypePropTo(['amount'], 'payable'),
 ])
 
@@ -116,7 +126,7 @@ export const buildOutcoming = cond([
     refundOrChargeBackOutcoming,
   ],
   [
-    isTedTransfer,
+    either(isTedTransfer, isCreditTransfer),
     pipe(
       zeroTransferAmount,
       ofRamda
@@ -144,6 +154,10 @@ export const buildOutgoing = cond([
   [
     isTedTransfer,
     tedTransferOutgoing,
+  ],
+  [
+    isCreditTransfer,
+    creditTransferOutgoing,
   ],
   [
     isInterRecipientTransfer,

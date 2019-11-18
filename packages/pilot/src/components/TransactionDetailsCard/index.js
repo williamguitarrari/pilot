@@ -70,7 +70,10 @@ const shape = {
   acquirer_response_code: PropTypes.string,
   authorization_code: PropTypes.string,
   capture_method: PropTypes.string,
-  nsu: PropTypes.string,
+  nsu: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
   soft_descriptor: PropTypes.string,
   subscription_id: PropTypes.string,
   tid: PropTypes.oneOfType([

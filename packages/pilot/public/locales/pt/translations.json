@@ -378,6 +378,7 @@
       "details_title": "Detalhes do extrato",
       "empty_message": "Não foram encontrados lançamentos neste período",
       "export": "Exportar tudo",
+      "failed": "Estorno por falha na transferência",
       "from": "De",
       "gateway_service": "Serviços de gateway",
       "id": "Id da operação",
@@ -392,12 +393,13 @@
       "to": "Para",
       "transaction_id": "ID da transação",
       "transfer": "Saque",
+      "transfer_id": "Transferência",
       "transfer_fee": "TED",
       "withdraw": "Saque"
     },
     "payment": {
       "mdr": "MDR: R$ {{value}}",
-      "cost": "Custo de processamento: R$ {{value}}",
+      "cost": "Custo de processamento: R$ {{value}}*",
       "refund": "Valor estornado: R$ {{value}}"
     },
     "transaction": {
@@ -480,7 +482,8 @@
       "required": "Este campo é obrigatório",
       "subtitle_modal": "Veja abaixo uma explicação sobre todos os modelos de antecipação disponíveis",
       "no_results_title": "Não foram encontrados resultados para essa busca",
-      "no_results_message": "Você pode limpar os filtros ou tentar novamente com outras opções."
+      "no_results_message": "Você pode limpar os filtros ou tentar novamente com outras opções.",
+      "invalid_anticipation_days_format": "Insira os dias da seguinte forma: 1,2,3,4..."
     },
     "add_recipient": {
       "account_digit": "Dígito",
@@ -492,12 +495,14 @@
       "agency_digit": "Dígito (Opcional)",
       "agency": "Agência",
       "anticipation_configuration": "Configurações de antecipação",
-      "anticipation_days": "Prazo de recebimento (dias)",
+      "anticipation_days": "Dias de Antecipação",
+      "anticipation_delay": "Delay (em dias)",
       "anticipation_model": "Modelo de antecipação",
       "anticipation_volume_percentage": "Volume antecipável (%)",
       "anticipation_volume": "Volume antecipável",
       "automatic_1025": "Automática nos Dias 10/25",
       "automatic_dx": "Automática D+X",
+      "automatic_dx_days": "Todos os dias",
       "automatic_transfer_interval": "Intervalo de transferências automáticas",
       "automatic_transfer": "Transferência automática",
       "automatic_volume": "Automática por Volume",
@@ -523,6 +528,7 @@
       "continue": "Continuar",
       "cpf": "CPF",
       "create_recipient": "Criar recebedor",
+      "custom_anticipation": "Customizado",
       "daily": "Diária",
       "data": "Dados",
       "document_owner": "Documento do titular",
@@ -551,6 +557,7 @@
       "fill_recipient_info": "Preencha abaixo as informações sobre o seu recebedor",
       "friday": "Sexta-feira",
       "identification": "Identificação",
+      "invalid_anticipation_days_format": "Insira os dias da seguinte forma: 1,2,3,4...",
       "legal_person": "Pessoa Jurídica",
       "login_again": "Fazer login",
       "manual_volume": "Manual por Volume",
@@ -1072,6 +1079,16 @@
         }
       },
       "company": {
+        "antifraud": {
+          "title": "Antifraude",
+          "subtitle": {
+            "fraud_coverage_enabled": "Garantia de chargebacks: ativa"
+          },
+          "fraud_coverage": {
+            "title": "Garantia de chargebacks",
+            "description": "Suas transações estão asseguradas de chargebacks por fraude."
+          }
+        },
         "boleto": {
           "title": "Boletos",
           "subtitle": "Vencimento padrão: {{count}} dia global de seus boletos.",
@@ -1356,7 +1373,7 @@
         "agency": "Ag: {{number}}",
         "amount": "Total bruto (R$)",
         "bank": "banco",
-        "collapsedInstallments": "Visualizar parcelas",
+        "collapsedInstallments": "Visualizar todas parcelas",
         "empty": "Nenhum recebedor",
         "expandedInstallments": "Ocultar parcelas",
         "filter_by_name_or_legal_name": "Filtre por nome ou razão social",
@@ -1393,6 +1410,10 @@
       "subscription_id": "Id da assinatura",
       "tid": "TID (ID da transação)",
       "title": "Detalhes da transação",
+      "tooltip": {
+        "description": "* O custo de processamento não será somado ao total de saídas dessa transação. Ele será debitado ao final do mês, junto aos custos de processamento das demais transações do período.",
+        "title": "Custo de processamento"
+      },
       "view_details": "Ver detalhes",
       "view_transactions": "Visualizar Transações"
     },

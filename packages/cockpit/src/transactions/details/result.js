@@ -84,7 +84,9 @@ const findPreviousOperation = (groupId, operations) => (
 
 const sortGatewayOperations = (operations) => {
   const lastOperation = operations.find(propEq('next_group_id', null))
-  let list = [lastOperation]
+  let list = lastOperation
+    ? [lastOperation]
+    : []
 
   operations.forEach(() => {
     const operation = findPreviousOperation(head(list).group_id, operations)

@@ -6,7 +6,6 @@ import {
   CardContent,
 } from 'former-kit'
 
-import IconChip from './IconChip.svg'
 import CardBrand from '../../formatters/cardBrand'
 import cardNumberFormatter from '../../formatters/cardNumber'
 
@@ -25,7 +24,6 @@ const PaymentCard = ({
         <h2>{title}</h2>
       </div>
       <div className={style.cardNumber}>
-        <IconChip className={style.cardChip} />
         <strong>
           { cardNumberFormatter(first) } { last }
         </strong>

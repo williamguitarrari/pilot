@@ -6,7 +6,9 @@ const types = {
   boletoRefundFee: 'models.operations.boleto_refund_fee',
   chargeback: 'models.operations.chargeback',
   credit_card: 'models.operations.credit_card',
+  credito_em_conta: 'models.operations.transfer',
   debit: 'models.operations.debit',
+  failed: 'models.operations.failed',
   from: 'models.operations.from',
   gateway: 'models.operations.gateway_service',
   installment: 'models.operations.installment',
@@ -17,6 +19,7 @@ const types = {
   tedFee: 'models.operations.transfer_fee',
   to: 'models.operations.to',
   transfer: 'models.operations.transfer',
+  transferId: 'models.operations.transfer_id',
   withdraw: 'models.operations.withdraw',
 }
 

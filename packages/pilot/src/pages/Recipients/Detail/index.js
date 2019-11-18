@@ -32,8 +32,20 @@ import style from './style.css'
 
 const mapStateToProps = (state = {}) => {
   const { account } = state
-  const { client } = account || {}
-  return { client }
+  const {
+    client,
+    company: {
+      anticipation_config: {
+        config_anticipation_params: canConfigureAnticipation,
+      },
+    } = {
+      anticipation_config: {
+        config_anticipation_params: false,
+      },
+    },
+  } = account || {}
+
+  return { canConfigureAnticipation, client }
 }
 
 const enhanced = compose(
@@ -132,9 +144,17 @@ class DetailRecipientPage extends Component {
   }
 
   onSaveAnticipation (anticipationData) {
-    const { client, match } = this.props
+    const {
+      canConfigureAnticipation,
+      client,
+      match,
+    } = this.props
     const { id } = match.params
-    return client.recipient.update(id, { configuration: anticipationData })
+    return client.recipient.update(
+      id,
+      { configuration: anticipationData },
+      { canConfigureAnticipation }
+    )
       .then(() => {
         const anticipationPath = [
           'recipientData',
@@ -154,7 +174,11 @@ class DetailRecipientPage extends Component {
   }
 
   onSaveTransfer (transferData) {
-    const { client, match } = this.props
+    const {
+      canConfigureAnticipation,
+      client,
+      match,
+    } = this.props
     const { id } = match.params
     const updatedData = {
       configuration: {
@@ -163,7 +187,11 @@ class DetailRecipientPage extends Component {
       },
     }
 
-    return client.recipient.update(id, updatedData)
+    return client.recipient.update(
+      id,
+      updatedData,
+      { canConfigureAnticipation }
+    )
       .then(() => {
         const transferPath = ['recipientData', 'configurationData', 'transfer']
         const updateTransfer = assocPath(transferPath, transferData)
@@ -179,14 +207,26 @@ class DetailRecipientPage extends Component {
   }
 
   onSaveBankAccountWithId (data) {
-    const { client, match } = this.props
+    const {
+      canConfigureAnticipation,
+      client,
+      match,
+    } = this.props
     const { id } = match.params
 
-    return client.recipient.update(id, { configuration: data })
+    return client.recipient.update(
+      id,
+      { configuration: data },
+      { canConfigureAnticipation }
+    )
   }
 
   onSaveBankAccountWithBank (data) {
-    const { client, match } = this.props
+    const {
+      canConfigureAnticipation,
+      client,
+      match,
+    } = this.props
     const { recipientData } = this.state
     const { id } = match.params
 
@@ -211,11 +251,17 @@ class DetailRecipientPage extends Component {
           recipientData: newState,
         })
 
-        return client.recipient.update(id, {
-          configuration: {
-            id: bankAccountCreated.id,
+        return client.recipient.update(
+          id,
+          {
+            configuration: {
+              id: bankAccountCreated.id,
+            },
           },
-        })
+          {
+            canConfigureAnticipation,
+          }
+        )
       })
   }
 
@@ -654,7 +700,10 @@ class DetailRecipientPage extends Component {
       total,
     } = this.state
 
-    const { t } = this.props
+    const {
+      canConfigureAnticipation,
+      t,
+    } = this.props
 
     const itemsPerPageOptions = itemsPerPage.map(count => ({
       name: t('items_per_page', { count }),
@@ -747,6 +796,9 @@ class DetailRecipientPage extends Component {
           exporting={exporting}
           recipient={companyData}
           t={t}
+          capabilities={{
+            canConfigureAnticipation,
+          }}
         />
         <ConfirmModal
           cancelText={t('cancel_pending_anticipations_cancel')}
@@ -767,6 +819,7 @@ class DetailRecipientPage extends Component {
 }
 
 DetailRecipientPage.propTypes = {
+  canConfigureAnticipation: PropTypes.bool.isRequired,
   client: PropTypes.shape({
     bulkAnticipations: PropTypes.shape({
       cancel: PropTypes.func.isRequired,

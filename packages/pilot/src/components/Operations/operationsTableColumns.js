@@ -1,14 +1,18 @@
 import React from 'react'
 import {
   all,
+  allPass,
   always,
   any,
   either,
   equals,
+  gt,
+  head,
   isNil,
   map,
   pipe,
   prop,
+  propEq,
   propSatisfies,
   lt,
   when,
@@ -77,24 +81,80 @@ const renderTargetOrSource = (type, net, targetId, sourceId, labels) => {
   return null
 }
 
+const greaterThanZero = gt(__, 0)
+
+const isFailedTransfer = allPass([
+  either(
+    propEq('type', 'credito_em_conta'),
+    propEq('type', 'transfer')
+  ),
+  propEq('status', 'failed'),
+  pipe(
+    prop('amount'),
+    greaterThanZero
+  ),
+])
+
+const getOutgoingAmount = pipe(
+  head,
+  prop('amount')
+)
+
+const renderCreditTransferStatus = (
+  type,
+  status,
+  outgoing,
+  transferId,
+  labels
+) => {
+  const amount = getOutgoingAmount(outgoing)
+  const hasFailed = isFailedTransfer({ amount, status, type })
+
+  if (hasFailed) {
+    return (
+      <span>{`${labels.failed} ${transferId}`}</span>
+    )
+  }
+
+  if (type === 'credito_em_conta' || type === 'transfer') {
+    return (
+      <span>{`${labels.transferId} ${transferId}`}</span>
+    )
+  }
+
+  return null
+}
+
 /* eslint-disable react/prop-types */
 const renderDescription = ({
   installment,
   net,
+  outgoing,
   sourceId,
+  status,
   targetId,
+  transferId,
   type,
-}, labels) => (
-  <div className={style.descriptionColumn}>
-    <div className={style.type}>{getTypeLabel(type, labels)}</div>
-    {!isNil(installment)
-      && (
-        <div>{`${labels.installment} ${installment}`}</div>
-      )
-    }
-    {renderTargetOrSource(type, net, targetId, sourceId, labels)}
-  </div>
-)
+}, labels) => {
+  const amount = getOutgoingAmount(outgoing)
+
+  return (
+    <div className={style.descriptionColumn}>
+      {!isFailedTransfer({ amount, status, type })
+        && (
+          <div className={style.type}>{getTypeLabel(type, labels)}</div>
+        )
+      }
+      {!isNil(installment)
+        && (
+          <div>{`${labels.installment} ${installment}`}</div>
+        )
+      }
+      {renderCreditTransferStatus(type, status, outgoing, transferId, labels)}
+      {renderTargetOrSource(type, net, targetId, sourceId, labels)}
+    </div>
+  )
+}
 /* eslint-enable react/prop-types */
 
 const getAbsoluteValue = Math.abs

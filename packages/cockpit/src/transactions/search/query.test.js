@@ -110,13 +110,17 @@ const expectedQuery = {
                 },
               },
               {
-                term: {
-                  'customer.email': '12345',
+                query: {
+                  match_phrase: {
+                    'customer.email': '12345',
+                  },
                 },
               },
               {
-                term: {
-                  'customer.name': '12345',
+                query: {
+                  match_phrase: {
+                    'customer.name': '12345',
+                  },
                 },
               },
             ],
@@ -183,13 +187,17 @@ describe('Transactions from filter', () => {
               },
             },
             {
-              term: {
-                'customer.email': '12345',
+              query: {
+                match_phrase: {
+                  'customer.email': '12345',
+                },
               },
             },
             {
-              term: {
-                'customer.name': '12345',
+              query: {
+                match_phrase: {
+                  'customer.name': '12345',
+                },
               },
             },
           ],
@@ -582,13 +590,17 @@ describe('Transactions from filter', () => {
               },
             },
             {
-              term: {
-                'customer.email': 'aaaa',
+              query: {
+                match_phrase: {
+                  'customer.email': 'aaaa',
+                },
               },
             },
             {
-              term: {
-                'customer.name': 'aaaa',
+              query: {
+                match_phrase: {
+                  'customer.name': 'aaaa',
+                },
               },
             },
 

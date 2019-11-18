@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import BoletoForm from '../../Boleto/Form'
+import Antifraud from '../../Antifraud'
 
 const ProductInfo = ({
+  antifraud,
   boletoActionsDisabled,
   boletoDaysToAddInExpirationDate,
   boletoDisabled,
@@ -13,20 +15,27 @@ const ProductInfo = ({
   boletoInstructionsOptions,
   t,
 }) => (
-  <BoletoForm
-    actionsDisabled={boletoActionsDisabled}
-    daysToAddInExpirationDate={boletoDaysToAddInExpirationDate}
-    disabled={boletoDisabled}
-    instructions={boletoInstructions}
-    instructionsOptions={boletoInstructionsOptions}
-    onCancel={boletoHandleCancel}
-    onChange={boletoHandleChange}
-    onSubmit={boletoHandleSubmit}
-    t={t}
-  />
+  <Fragment>
+    <BoletoForm
+      actionsDisabled={boletoActionsDisabled}
+      daysToAddInExpirationDate={boletoDaysToAddInExpirationDate}
+      disabled={boletoDisabled}
+      instructions={boletoInstructions}
+      instructionsOptions={boletoInstructionsOptions}
+      onCancel={boletoHandleCancel}
+      onChange={boletoHandleChange}
+      onSubmit={boletoHandleSubmit}
+      t={t}
+    />
+
+    {antifraud.fraud_covered && <Antifraud t={t} />}
+  </Fragment>
 )
 
 ProductInfo.propTypes = {
+  antifraud: PropTypes.shape({
+    fraud_covered: PropTypes.bool.isRequired,
+  }).isRequired,
   boletoActionsDisabled: PropTypes.bool.isRequired,
   boletoDaysToAddInExpirationDate: PropTypes.string.isRequired,
   boletoDisabled: PropTypes.bool.isRequired,

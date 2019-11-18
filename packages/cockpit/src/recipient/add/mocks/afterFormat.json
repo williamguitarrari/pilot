@@ -1,6 +1,7 @@
 {
   "anticipatable_volume_percentage": "100",
   "automatic_anticipation_enabled": false,
+  "automatic_anticipation_type": "full",
   "bank_account": {
     "agencia": "888",
     "bank_code": "036",

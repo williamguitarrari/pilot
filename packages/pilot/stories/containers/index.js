@@ -16,6 +16,7 @@ import CardConfirmation from './Refund/CardConfirmation'
 import CardForm from './Refund/CardForm'
 import CardResult from './Refund/CardResult'
 import RecipientListState from './RecipientList'
+import AntifraudSettings from './Settings/Antifraud'
 
 import {
   ManualReviewApproveForm,
@@ -206,6 +207,9 @@ storiesOf('Containers|Page containers', module)
   ))
   .add('Boleto form', () => (
     <BoletoForm />
+  ))
+  .add('Antifraud settings', () => (
+    <AntifraudSettings />
   ))
   .add('Boleto refund confirm', () => (
     <BoletoRefundConfirm />

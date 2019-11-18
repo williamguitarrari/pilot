@@ -3,8 +3,8 @@
     "acquirer": {
       "name": "pagarme",
       "response_code": "0000",
-      "sequence_number": "3514521",
-      "transaction_id": "3514521"
+      "sequence_number": 3514521,
+      "transaction_id": 3514521
     },
     "amount": 21050,
     "antifraud": null,

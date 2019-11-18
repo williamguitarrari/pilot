@@ -12,6 +12,7 @@ import {
   mergeRight,
   path,
   pipe,
+  pluck,
   prop,
   propOr,
   range,
@@ -58,6 +59,13 @@ const sumPaidTransactions = pipe(
 )
 
 const getTotalTransactions = path(['hits', 'total'])
+
+const getTotalPaidTransactions = pipe(
+  getMetrics,
+  getBucketsPropFrom('paidTransactions'),
+  pluck('doc_count'),
+  sum
+)
 
 const getLocalizedWeekdayName = date => date.format('ddd')
 
@@ -115,20 +123,18 @@ const getVolumeByWeekday = pipe(
   buildWeekdays
 )
 
-const divideTruncate = pipe(
-  divide,
-  Math.trunc
-)
-
 const incrementIfZero = when(
   equals(0),
   inc
 )
 
 const getAverageAmount = converge(
-  divideTruncate,
+  pipe(
+    divide,
+    Math.round
+  ),
   [sumPaidTransactions, pipe(
-    getTotalTransactions,
+    getTotalPaidTransactions,
     incrementIfZero
   )]
 )

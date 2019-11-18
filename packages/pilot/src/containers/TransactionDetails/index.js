@@ -35,9 +35,11 @@ import {
   CardContent,
   CardTitle,
   Col,
+  Flexbox,
   Grid,
   Legend,
   Row,
+  Tooltip,
   Truncate,
 } from 'former-kit'
 import IconInfo from 'emblematic-icons/svg/Info32.svg'
@@ -185,11 +187,12 @@ const getHeaderAmountLabel = (transaction, headerLabels) => {
 
 const renderLegend = status => (
   <Legend
-    color={statusLegends[status].color}
     acronym={statusLegends[status].text}
+    color={statusLegends[status].color}
     hideLabel
+    textColor={statusLegends[status].textColor}
   >
-    { statusLegends[status].acronym }
+    { statusLegends[status].text }
   </Legend>
 )
 
@@ -469,35 +472,58 @@ class TransactionDetails extends Component {
   }
 
   renderOutAmountSubTitle () {
-    const { totalDisplayLabels } = this.props
+    const {
+      tooltipLabels,
+      totalDisplayLabels,
+      transaction: { payment },
+    } = this.props
 
     return (
       <div className={style.subtitle}>
-        <div>
+        <Flexbox>
           {totalDisplayLabels.mdr
             && (
-              <span>
+              <p className={style.mdr}>
                 {totalDisplayLabels.mdr}
-              </span>
+              </p>
             )
           }
-          {totalDisplayLabels.cost
+          {payment.refund_amount > 0
             && (
-              <span>
-                {totalDisplayLabels.cost}
-              </span>
-            )
-          }
-        </div>
-        <div>
-          {totalDisplayLabels.refund
-            && (
-              <span>
+              <span className={style.refund}>
                 {totalDisplayLabels.refund}
               </span>
             )
           }
-        </div>
+        </Flexbox>
+        {totalDisplayLabels.cost && payment.method !== 'boleto'
+          && (
+            <Flexbox className={style.processCost}>
+              <span>
+                {totalDisplayLabels.cost}
+              </span>
+              <Tooltip
+                className={style.tooltip}
+                content={(
+                  <div className={style.content}>
+                    <p className={style.title}>{tooltipLabels.title}</p>
+                    <p className={style.description}>
+                      {tooltipLabels.description}
+                    </p>
+                  </div>
+                )}
+                placement="bottomEnd"
+              >
+                <IconInfo
+                  className={style.iconInfo}
+                  color="#7052c8"
+                  height={12}
+                  width={12}
+                />
+              </Tooltip>
+            </Flexbox>
+          )
+        }
       </div>
     )
   }
@@ -628,12 +654,15 @@ class TransactionDetails extends Component {
       customer,
       id,
       metadata,
+      operations,
       payment,
       recipients,
       soft_descriptor,
       status,
       subscription,
     } = transaction
+
+    const hasOperations = operations && operations.length > 1
 
     const transactionDetailsContent = {
       acquirer_name: acquirer
@@ -756,12 +785,13 @@ class TransactionDetails extends Component {
             <Card className={style.paidAmountValue}>
               <CardContent className={style.content}>
                 <TotalDisplay
+                  align="start"
                   amount={isRefundedBeforeCaptured
                     ? payment.authorized_amount
                     : payment.paid_amount
                   }
                   amountSize="large"
-                  color="#37cc9a"
+                  color="#4d4f62"
                   subtitle={(
                     <div className={style.subtitle}>
                       {totalDisplayLabels.captured_at}
@@ -785,20 +815,16 @@ class TransactionDetails extends Component {
             <Card className={style.outAmountValue}>
               <CardContent className={style.content}>
                 <TotalDisplay
+                  align="start"
                   amount={
                     getOutAmount([
                       payment.refund_amount,
-                      payment.cost_amount,
                       payment.mdr_amount,
                     ])
                   }
                   amountSize="large"
-                  color="#ff796f"
-                  subtitle={(
-                    <div className={style.subtitle}>
-                      {this.renderOutAmountSubTitle()}
-                    </div>
-                  )}
+                  color="#4d4f62"
+                  subtitle={this.renderOutAmountSubTitle()}
                   title={totalDisplayLabels.out_amount}
                   titleSize="medium"
                 />
@@ -814,9 +840,10 @@ class TransactionDetails extends Component {
             <Card className={style.netAmountValue}>
               <CardContent className={style.content}>
                 <TotalDisplay
-                  amount={payment.net_amount}
+                  align="start"
+                  amount={(payment.net_amount + payment.cost_amount)}
                   amountSize="large"
-                  color="#4ca9d7"
+                  color="#4d4f62"
                   subtitle={(
                     <div className={style.subtitle}>
                       {totalDisplayLabels.receive_date}
@@ -853,10 +880,18 @@ class TransactionDetails extends Component {
 
         <Row>
           <Col
-            desk={9}
+            desk={
+              hasOperations
+                ? 9
+                : 12
+            }
             palm={12}
             tablet={12}
-            tv={9}
+            tv={
+              hasOperations
+                ? 9
+                : 12
+            }
           >
             <Grid className={style.detailsInfo}>
               {!isEmptyOrNull(recipients)
@@ -949,20 +984,24 @@ class TransactionDetails extends Component {
               }
             </Grid>
           </Col>
-          <Col
-            desk={3}
-            palm={12}
-            tablet={12}
-            tv={3}
-            className={style.eventsList}
-          >
-            <Card>
-              <CardTitle title={eventsLabels.title} />
-              <div>
-                {this.renderEvents()}
-              </div>
-            </Card>
-          </Col>
+          { hasOperations
+            && (
+              <Col
+                desk={3}
+                palm={12}
+                tablet={12}
+                tv={3}
+                className={style.eventsList}
+              >
+                <Card>
+                  <CardTitle title={eventsLabels.title} />
+                  <div>
+                    {this.renderEvents()}
+                  </div>
+                </Card>
+              </Col>
+            )
+          }
         </Row>
       </Grid>
     )
@@ -1079,6 +1118,10 @@ TransactionDetails.propTypes = {
     moderated: PropTypes.string,
     very_high: PropTypes.string,
     very_low: PropTypes.string,
+  }).isRequired,
+  tooltipLabels: PropTypes.shape({
+    description: PropTypes.string,
+    title: PropTypes.string,
   }).isRequired,
   totalDisplayLabels: PropTypes.shape({
     captured_at: PropTypes.string,

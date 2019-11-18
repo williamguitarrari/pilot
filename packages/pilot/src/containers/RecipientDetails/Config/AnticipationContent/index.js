@@ -14,10 +14,12 @@ import Anticipation from '../../../AddRecipient/ConfigurationStep/Anticipation'
 import createNumberValidation from '../../../../validation/number'
 import createRequiredValidation from '../../../../validation/required'
 import greaterThan from '../../../../validation/greaterThan'
+import createAnticipationDaysValidation from '../../../../validation/anticipationDays'
 import styles from '../style.css'
 import { ANTICIPATION } from '../contentIds'
 
 const AnticipationContent = ({
+  canConfigureAnticipation,
   data,
   onCancel,
   onChange,
@@ -28,11 +30,16 @@ const AnticipationContent = ({
   const number = createNumberValidation(t('pages.recipient_detail.number'))
   const greaterThan100 = greaterThan(100, t('pages.recipient_detail.greater_than'))
 
+  const anticipationDaysMessage = t('pages.recipient_detail.invalid_anticipation_days_format')
+  const validateAnticipationDays = createAnticipationDaysValidation(
+    anticipationDaysMessage
+  )
+
   return (
     <Form
       data={data}
       validation={{
-        anticipationDays: [required, number],
+        anticipationDays: [required, validateAnticipationDays],
         anticipationModel: [required],
         anticipationVolumePercentage: [required, number, greaterThan100],
       }}
@@ -44,6 +51,7 @@ const AnticipationContent = ({
           <Row>
             <Col>
               {Anticipation({
+                canConfigureAnticipation,
                 data,
                 t,
               })}
@@ -74,6 +82,7 @@ const AnticipationContent = ({
 }
 
 AnticipationContent.propTypes = {
+  canConfigureAnticipation: PropTypes.bool.isRequired,
   data: PropTypes.shape({
     anticipationDays: PropTypes.string,
     anticipationModel: PropTypes.string,

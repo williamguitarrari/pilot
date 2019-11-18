@@ -19,16 +19,6 @@
   margin: 0;
 }
 
-.title {
-  font-weight: bold;
-  text-transform: uppercase;
-
-  & > span {
-    font-weight: bold;
-    margin-left: calc(var(--spacing-tiny) - 4px);
-  }
-}
-
 .value {
   align-items: center;
   display: flex;

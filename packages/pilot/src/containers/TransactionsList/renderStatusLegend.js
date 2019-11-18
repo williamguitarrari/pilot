@@ -8,9 +8,10 @@ import status from '../../models/statusLegends'
 const renderStatusLegend = item => (
   <div className={style.centralizedItem}>
     <Legend
+      acronym={status[item.status].text}
       color={status[item.status].color}
-      acronym={status[item.status].acronym}
       hideLabel
+      textColor={status[item.status].textColor}
     >
       {status[item.status].text}
     </Legend>

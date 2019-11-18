@@ -1,78 +1,64 @@
 const status = {
   analyzing: {
-    acronym: 'EA',
     color: '#0b6e69',
     text: 'Em análise',
   },
   authorized: {
-    acronym: 'A',
-    color: '#b6ca2d',
+    color: '#f2cb03',
     text: 'Autorizada',
+    textColor: '#000000',
   },
   cancelled: {
-    acronym: 'CA',
     color: '#da272c',
     text: 'Cancelada',
   },
   chargedback: {
-    acronym: 'CB',
-    color: '#f16f27',
+    color: '#2d2d2d',
     text: 'Chargeback',
   },
   chargedback_refund: {
-    acronym: 'CBR',
-    color: '#ac4e19',
-    text: 'Chargeback reapresentado',
+    color: '#984141',
+    text: 'Cbk reapresentado',
   },
   paid: {
-    acronym: 'P',
     color: '#17c9b2',
     text: 'Paga',
   },
   pending_refund: {
-    acronym: 'EP',
-    color: '#33206c',
+    color: '#5d3f90',
     text: 'Estorno pendente',
   },
   pending_review: {
-    acronym: 'RP',
-    color: '#fbbb27',
+    color: '#d588f2',
     text: 'Revisão pendente',
   },
   processing: {
-    acronym: 'PR',
-    color: '#561e6a',
+    color: '#5da0fc',
     text: 'Processando',
   },
   refunded: {
-    acronym: 'E',
-    color: '#613fc7',
+    color: '#7250d8',
     text: 'Estornada',
   },
   refused: {
-    acronym: 'R',
-    color: '#da272c',
+    color: '#ea5656',
     text: 'Recusada',
   },
   suspended: {
-    acronym: 'SU',
     color: '#bf5316',
     text: 'Suspensa',
   },
   unavailable: {
-    acronym: 'IN',
     color: '#a0a0a0',
     text: 'Indisponível',
   },
   waiting_funds: {
-    acronym: 'AP',
-    color: '#0b6e69',
-    text: 'Aguardando pagamento',
+    color: '#f29f03',
+    text: 'Aguardando pgto',
   },
   waiting_payment: {
-    acronym: 'AP',
-    color: '#0b6e69',
-    text: 'Aguardando pagamento',
+    color: '#f29f03',
+    text: 'Aguardando pgto',
   },
 }
 
