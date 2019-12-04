@@ -29,6 +29,11 @@ class BankAccount extends Component {
     this.renderSubtitle = this.renderSubtitle.bind(this)
   }
 
+  componentDidMount () {
+    const { getInstitutions } = this.props
+    getInstitutions()
+  }
+
   componentWillReceiveProps ({ selectedView }) {
     this.handleChange(selectedView)
   }
@@ -84,6 +89,7 @@ class BankAccount extends Component {
       data,
       disabled,
       errors,
+      institutions,
       onAccountSelect,
       onCancel,
       onChange,
@@ -131,6 +137,7 @@ class BankAccount extends Component {
                     <BankAccountSelector
                       accounts={accounts}
                       disabled={changeActionDisabled}
+                      institutions={institutions}
                       onSelect={onAccountSelect}
                       selectedAccountId={selectedAccount.id}
                       t={t}
@@ -145,6 +152,7 @@ class BankAccount extends Component {
                       data={data}
                       disabled={changeActionDisabled}
                       errors={errors}
+                      institutions={institutions}
                       onChange={onChange}
                       onCancel={onCancel}
                       onSubmit={onSubmit}
@@ -196,6 +204,11 @@ BankAccount.propTypes = {
     bankCode: PropTypes.string,
     type: PropTypes.string,
   }),
+  getInstitutions: PropTypes.func.isRequired,
+  institutions: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+  })).isRequired,
   onAccountSelect: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,

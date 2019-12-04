@@ -18,7 +18,6 @@ import { map } from 'ramda'
 import accountCDValidation from '../../../../validation/accountCheckDigit'
 import accountTypes from '../../../../models/accountTypes'
 import agencyCDValidation from '../../../../validation/agencyCheckDigit'
-import banks from '../../../../models/banks'
 import formatCpfCnpj from '../../../../formatters/cpfCnpj'
 import numberValidation from '../../../../validation/number'
 import Property from '../../../../components/Property'
@@ -44,13 +43,12 @@ const BankAccountForm = ({
   },
   disabled,
   errors,
+  institutions,
   onCancel,
   onChange,
   onSubmit,
   t,
 }) => {
-  const bankGenerator = optionGenerator(t, 'models.bank_code')
-  const bankOptions = map(bankGenerator, banks)
   const accountTypeGenerator = optionGenerator(t, 'models.account_type')
   const accountTypeOptions = map(accountTypeGenerator, accountTypes)
 
@@ -110,7 +108,7 @@ const BankAccountForm = ({
                 key={bankCode}
                 label={t('models.bank_account.bank')}
                 name="bankCode"
-                options={bankOptions}
+                options={institutions}
               />
             </Col>
             <Col palm={12} tablet={3} desk={3} tv={3}>
@@ -212,6 +210,10 @@ BankAccountForm.propTypes = {
     bankCode: PropTypes.string,
     type: PropTypes.string,
   }),
+  institutions: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+  })).isRequired,
   onCancel: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,

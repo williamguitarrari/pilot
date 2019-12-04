@@ -7,12 +7,24 @@ import {
   Table,
 } from 'former-kit'
 
+import { map } from 'ramda'
+
 import IconCheck from 'emblematic-icons/svg/Check32.svg'
 
 import agencyAccountFormetter from '../../../../formatters/agencyAccount'
 import accountTypeFormatter from '../../../../formatters/accountType'
 
-const getColumns = (selectedAccountId, onSelect, t, disabled) => [
+const buildInstitutionHash = map(institution => ({
+  [institution.value]: institution.name,
+}))
+
+const getColumns = (
+  selectedAccountId,
+  onSelect,
+  t,
+  disabled,
+  institutionsHash
+) => [
   {
     accessor: ['legal_name'],
     orderable: false,
@@ -21,7 +33,7 @@ const getColumns = (selectedAccountId, onSelect, t, disabled) => [
   {
     accessor: ['bank_code'],
     orderable: false,
-    renderer: item => t(`models.bank_code.${item.bank_code}`),
+    renderer: item => institutionsHash[item.bank_code],
     title: t('pages.settings.company.card.register.bank.name'),
   },
   {
@@ -76,17 +88,28 @@ const getColumns = (selectedAccountId, onSelect, t, disabled) => [
 const BankAccountSelector = ({
   accounts,
   disabled,
+  institutions,
   onSelect,
   selectedAccountId,
   t,
-}) => (
-  <CardContent>
-    <Table
-      columns={getColumns(selectedAccountId, onSelect, t, disabled)}
-      rows={accounts}
-    />
-  </CardContent>
-)
+}) => {
+  const institutionsHash = institutions
+    ? buildInstitutionHash(institutions)
+    : []
+
+  console.log({ institutionsHash })
+
+  return (
+    <CardContent>
+      <Table
+        columns={
+          getColumns(selectedAccountId, onSelect, t, disabled, institutionsHash)
+        }
+        rows={accounts}
+      />
+    </CardContent>
+  )
+}
 
 BankAccountSelector.propTypes = {
   accounts: PropTypes.arrayOf(PropTypes.shape({
@@ -102,6 +125,10 @@ BankAccountSelector.propTypes = {
     type: PropTypes.string.isRequired,
   }).isRequired).isRequired,
   disabled: PropTypes.bool,
+  institutions: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+  })).isRequired,
   onSelect: PropTypes.func.isRequired,
   selectedAccountId: PropTypes.number.isRequired,
   t: PropTypes.func.isRequired,

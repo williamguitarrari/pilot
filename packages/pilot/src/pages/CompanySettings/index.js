@@ -178,10 +178,12 @@ class CompanySettingsPage extends React.Component {
         error: null,
         success: false,
       },
+      institutions: [],
       versions: [],
     }
 
     this.getInitialState = this.getInitialState.bind(this)
+    this.getInstitutions = this.getInstitutions.bind(this)
     this.handleAccountCancel = this.handleAccountCancel.bind(this)
     this.handleAccountChange = this.handleAccountChange.bind(this)
     this.handleAccountCreate = this.handleAccountCreate.bind(this)
@@ -191,9 +193,9 @@ class CompanySettingsPage extends React.Component {
     this.handleBoletoSubmit = this.handleBoletoSubmit.bind(this)
     this.handleCreateUser = this.handleCreateUser.bind(this)
     this.handleDeleteUser = this.handleDeleteUser.bind(this)
+    this.handleVersionChange = this.handleVersionChange.bind(this)
     this.requestData = this.requestData.bind(this)
     this.resetCreateUserState = this.resetCreateUserState.bind(this)
-    this.handleVersionChange = this.handleVersionChange.bind(this)
   }
 
   getInitialState () {
@@ -263,6 +265,17 @@ class CompanySettingsPage extends React.Component {
     this.requestData()
     this.getInitialState()
     this.getVersionsAPI()
+  }
+
+  getInstitutions () {
+    const { client } = this.props
+
+    console.log('getInstitutions')
+    client.institutions
+      .all()
+      .then((institutions) => {
+        this.setState({ institutions })
+      })
   }
 
   getVersionsAPI () {
@@ -579,6 +592,7 @@ class CompanySettingsPage extends React.Component {
       },
       createUserStatus,
       deleteUserStatus,
+      institutions,
       versions,
     } = this.state
 
@@ -604,8 +618,10 @@ class CompanySettingsPage extends React.Component {
         deleteUserStatus={deleteUserStatus}
         environment={environment}
         general={general}
+        getInstitutions={this.getInstitutions}
         handleCreateUser={this.handleCreateUser}
         handleDeleteUser={this.handleDeleteUser}
+        institutions={institutions}
         managingPartner={managingPartner}
         onBankAccountCancel={this.handleAccountCancel}
         onBankAccountChange={this.handleAccountChange}
@@ -631,6 +647,9 @@ CompanySettingsPage.propTypes = {
     company: PropTypes.shape({
       info: PropTypes.func.isRequired,
       update: PropTypes.func.isRequired,
+    }),
+    institutions: PropTypes.shape({
+      all: PropTypes.func.isRequired,
     }),
     invites: PropTypes.shape({
       create: PropTypes.func.isRequired,

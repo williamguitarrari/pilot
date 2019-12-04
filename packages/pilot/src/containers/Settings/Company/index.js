@@ -45,8 +45,10 @@ class CompanySettings extends Component {
       deleteUserStatus,
       environment,
       general,
+      getInstitutions,
       handleCreateUser,
       handleDeleteUser,
+      institutions,
       managingPartner,
       onBankAccountCancel,
       onBankAccountChange,
@@ -137,6 +139,8 @@ class CompanySettings extends Component {
               bankAccountChangeActionDisabled={bankAccountChangeActionDisabled}
               bankAccountSelectedView={bankAccountSelectedView}
               general={general}
+              getInstitutions={getInstitutions}
+              institutions={institutions}
               managingPartner={managingPartner}
               onBankAccountCancel={onBankAccountCancel}
               onBankAccountChange={onBankAccountChange}
@@ -241,8 +245,13 @@ CompanySettings.propTypes = {
     name: PropTypes.string,
     siteUrl: PropTypes.string,
   }).isRequired,
+  getInstitutions: PropTypes.func.isRequired,
   handleCreateUser: PropTypes.func.isRequired,
   handleDeleteUser: PropTypes.func.isRequired,
+  institutions: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+  })).isRequired,
   managingPartner: PropTypes.shape({
     cpf: PropTypes.string,
     email: PropTypes.string,

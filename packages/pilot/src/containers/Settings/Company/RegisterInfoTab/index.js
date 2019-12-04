@@ -19,6 +19,8 @@ const RegisterInfoTab = ({
   bankAccountSelectedView,
   bankAccounts,
   general,
+  getInstitutions,
+  institutions,
   managingPartner,
   onBankAccountCancel,
   onBankAccountChange,
@@ -60,6 +62,8 @@ const RegisterInfoTab = ({
         data={bankAccountData}
         disabled={bankAccountActionsDisabled}
         errors={bankAccountErrors}
+        getInstitutions={getInstitutions}
+        institutions={institutions}
         onAccountSelect={onBankAccountSelect}
         onCancel={onBankAccountCancel}
         onChange={onBankAccountChange}
@@ -140,6 +144,11 @@ RegisterInfoTab.propTypes = {
     name: PropTypes.string,
     siteUrl: PropTypes.string,
   }).isRequired,
+  getInstitutions: PropTypes.func.isRequired,
+  institutions: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+  })).isRequired,
   managingPartner: PropTypes.shape({
     cpf: PropTypes.string,
     email: PropTypes.string,
