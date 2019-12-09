@@ -34,7 +34,7 @@ const getDefaultColumns = ({ t }) => ([
   {
     accessor: ['status'],
     orderable: true,
-    renderer: renderStatusLegend,
+    renderer: renderStatusLegend(t),
     title: t('models.transaction.status'),
   },
   {

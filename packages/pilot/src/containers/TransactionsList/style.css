@@ -19,9 +19,35 @@
   z-index: 5;
 }
 
+.tooltip {
+  font-size: 13px;
+
+  & .title {
+    text-align: center;
+  }
+
+  & .responseCode:after {
+    content: " - ";
+  }
+
+  & .description {
+    width: 295px;
+  }
+
+  & .descriptionTitle {
+    color: #ea5673;
+    font-weight: 600;
+  }
+}
+
 .centralizedItem {
-  margin: 0 auto;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & .helpIcon {
+    margin-left: 8px;
+  }
 }
 
 .tableHeader {
