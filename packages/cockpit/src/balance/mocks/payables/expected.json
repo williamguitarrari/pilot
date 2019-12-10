@@ -1,5 +1,6 @@
 [
   {
+    "description": "",
     "id": 6906129,
     "installment": null,
     "net": -1000,
@@ -21,6 +22,7 @@
     "type": "boleto"
   },
   {
+    "description": "",
     "id": 6906144,
     "installment": null,
     "net": 620,
@@ -47,6 +49,7 @@
     "type": "boleto"
   },
   {
+    "description": "",
     "id": 6906145,
     "installment": 1,
     "net": -500,
@@ -68,6 +71,7 @@
     "type": "boleto"
   },
   {
+    "description": "",
     "id": 6911856,
     "installment": null,
     "net": -950,

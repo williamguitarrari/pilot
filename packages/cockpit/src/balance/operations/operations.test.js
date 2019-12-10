@@ -9,11 +9,13 @@ import operations, {
   isInterRecipientTransfer,
   isRefundOrChargeBack,
   isTedTransfer,
+  isGatewayFeeCollection,
+  gatewayFeeCollectionOutgoing,
   refundOrChargeBackOutcoming,
   refundOrChargeBackOutgoing,
   tedTransferOutgoing,
   creditTransferOutgoing,
-  zeroTransferAmount,
+  zeroMovementAmount,
   creditOutcoming,
   creditOutgoing,
   buildOutcoming,
@@ -107,7 +109,7 @@ describe('Operations table data', () => {
     })
 
     it('should return a transfer with zero amount', () => {
-      const zeroAmountTransfer = zeroTransferAmount()
+      const zeroAmountTransfer = zeroMovementAmount()
       const expected = {
         amount: 0,
         type: 'payable',
@@ -271,6 +273,38 @@ describe('Operations table data', () => {
       const expected = operationExpectedMock.outgoing
 
       expect(outcoming).toEqual(expected)
+    })
+
+    it('should validate if it is a gateway fee collection', () => {
+      const isGateway = isGatewayFeeCollection({
+        type: 'fee_collection',
+        movement_object: {
+          movement_object: {
+            type: 'gateway',
+          },
+        },
+      })
+
+      expect(isGateway).toBe(true)
+    })
+
+    it('should build a correct gateway collection outgoing', () => {
+      const outgoing = gatewayFeeCollectionOutgoing({
+        type: 'fee_collection',
+        movement_object: {
+          amount: -6755,
+          movement_object: {
+            type: 'gateway',
+          },
+        },
+      })
+
+      const expected = [{
+        amount: -6755,
+        type: 'gateway',
+      }]
+
+      expect(outgoing).toEqual(expected)
     })
   })
 })
