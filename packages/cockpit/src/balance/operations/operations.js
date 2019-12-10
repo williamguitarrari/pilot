@@ -1,6 +1,7 @@
 import {
   __,
   always,
+  allPass,
   both,
   cond,
   either,
@@ -12,6 +13,7 @@ import {
   pathOr,
   pathSatisfies,
   pipe,
+  prop,
   propEq,
   reject,
 } from 'ramda'
@@ -48,7 +50,7 @@ export const isCreditTransfer = both(
   compareMovementTypeTo('credito_em_conta')
 )
 
-export const zeroTransferAmount = always({
+export const zeroMovementAmount = always({
   amount: 0,
   type: 'payable',
 })
@@ -70,7 +72,7 @@ export const isInterRecipientTransfer = both(
 export const interRecipientTransferOutcoming = juxt([
   ifElse(
     isNegative('amount'),
-    zeroTransferAmount,
+    zeroMovementAmount,
     transformMovementTypePropTo(['amount'], 'payable')
   ),
 ])
@@ -79,7 +81,7 @@ export const interRecipientTransferOutgoing = juxt([
   ifElse(
     isNegative('amount'),
     transformMovementTypePropTo(['amount'], 'payable'),
-    zeroTransferAmount
+    zeroMovementAmount
   ),
 ])
 
@@ -120,6 +122,18 @@ export const creditOutgoing = pipe(
   reject(propEq('amount', 0))
 )
 
+export const isGatewayFeeCollection = allPass([
+  propEq('type', 'fee_collection'),
+  pipe(
+    prop('movement_object'),
+    compareMovementTypeTo('gateway')
+  ),
+])
+
+export const gatewayFeeCollectionOutgoing = juxt([
+  transformMovementTypePropTo(['movement_object', 'amount'], 'gateway'),
+])
+
 export const buildOutcoming = cond([
   [
     isRefundOrChargeBack,
@@ -128,7 +142,7 @@ export const buildOutcoming = cond([
   [
     either(isTedTransfer, isCreditTransfer),
     pipe(
-      zeroTransferAmount,
+      zeroMovementAmount,
       ofRamda
     ),
   ],
@@ -143,6 +157,13 @@ export const buildOutcoming = cond([
   [
     isCredit,
     creditOutcoming,
+  ],
+  [
+    isGatewayFeeCollection,
+    pipe(
+      zeroMovementAmount,
+      ofRamda
+    ),
   ],
 ])
 
@@ -170,6 +191,10 @@ export const buildOutgoing = cond([
   [
     isCredit,
     creditOutgoing,
+  ],
+  [
+    isGatewayFeeCollection,
+    gatewayFeeCollectionOutgoing,
   ],
 ])
 
