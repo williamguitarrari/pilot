@@ -115,9 +115,14 @@ export const getType = cond([
     pathEq(['movement_object', 'type'], 'credit'),
     path(['movement_object', 'payment_method']),
   ],
+  [
+    propEq('type', 'fee_collection'),
+    prop('type'),
+  ],
   [T, path(['movement_object', 'type'])],
 ])
 
+const getMovementObjectDescription = pathOr('', ['movement_object', 'description'])
 const getMovementObjectStatus = path(['movement_object', 'status'])
 
 export const formatRows = ({
@@ -126,6 +131,7 @@ export const formatRows = ({
   getInstallment,
 }) => pipe(
   map(applySpec({
+    description: getMovementObjectDescription,
     id: prop('id'),
     installment: getInstallment,
     net: buildNetAmount(buildOutcoming, buildOutgoing),

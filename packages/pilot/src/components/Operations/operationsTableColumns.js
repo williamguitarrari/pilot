@@ -100,6 +100,11 @@ const getOutgoingAmount = pipe(
   prop('amount')
 )
 
+const getOutgoingType = pipe(
+  head,
+  prop('type')
+)
+
 const renderCreditTransferStatus = (
   type,
   status,
@@ -125,8 +130,21 @@ const renderCreditTransferStatus = (
   return null
 }
 
+const renderGatewayFeeCollection = (type, outgoing, description) => {
+  const outgoingType = getOutgoingType(outgoing)
+
+  if (type === 'fee_collection' && outgoingType === 'gateway' && description) {
+    return (
+      <span>{description}</span>
+    )
+  }
+
+  return null
+}
+
 /* eslint-disable react/prop-types */
 const renderDescription = ({
+  description,
   installment,
   net,
   outgoing,
@@ -152,6 +170,7 @@ const renderDescription = ({
       }
       {renderCreditTransferStatus(type, status, outgoing, transferId, labels)}
       {renderTargetOrSource(type, net, targetId, sourceId, labels)}
+      {renderGatewayFeeCollection(type, outgoing, description)}
     </div>
   )
 }

@@ -1,5 +1,6 @@
 [
   {
+    "description": "",
     "id": 2499850,
     "installment": 1,
     "net": -99885,
@@ -27,6 +28,7 @@
     "type": "refund"
   },
   {
+    "description": "",
     "id": 2499868,
     "installment": 3,
     "net": 29785,
@@ -58,6 +60,7 @@
     "type": "credit_card"
   },
   {
+    "description": "",
     "id": 8156323,
     "installment": null,
     "net": -3600,
@@ -89,6 +92,7 @@
     "type": "ted"
   },
   {
+    "description": "",
     "id": 8176357,
     "installment": null,
     "net": -367,
@@ -116,6 +120,7 @@
     "type": "boletoRefundFee"
   },
   {
+    "description": "",
     "id": 8179768,
     "installment": null,
     "net": 9620,
@@ -143,6 +148,7 @@
     "type": "boleto"
   },
   {
+    "description": "",
     "id": 8179772,
     "installment": null,
     "net": -11400,
@@ -170,6 +176,7 @@
     "type": "refund"
   },
   {
+    "description": "",
     "id": 8179778,
     "installment": 1,
     "net": -17100,
@@ -197,6 +204,7 @@
     "type": "chargeback"
   },
   {
+    "description": "",
     "id": 8199403,
     "installment": null,
     "net": -20000,
@@ -224,6 +232,7 @@
     "type": "inter_recipient"
   },
   {
+    "description": "",
     "id": 8199404,
     "installment": null,
     "net": 20000,
