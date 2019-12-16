@@ -955,7 +955,7 @@
       "title": "Resumo",
       "total_amount_by_weekday": "Volume por dia da semana",
       "total_amount": "Volume transacionado",
-      "total_transactions": "Quantidade de transações",
+      "total_transactions": "Nº de transações",
       "transactions_by_installment": "Quantidade de parcelas no cartão de crédito",
       "transactions_by_status": "Transações por status",
       "transactions_total": "Número de parcelas",

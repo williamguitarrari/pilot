@@ -3,7 +3,10 @@
 
 .greeting {
   margin-bottom: var(--spacing-tiny);
-  font-size: 12px;
+
+  & .description {
+    font-size: 12px;
+  }
 
   & > .name {
     margin-bottom: var(--spacing-tiny);
@@ -80,7 +83,7 @@
 
   & .title {
     flex: 1;
-    color: #454545;
+    color: var(--color-light-coal-100);
   }
 
   & .radialContainer {

@@ -124,7 +124,7 @@ const Header = ({
     >
       <div className={styles.greeting}>
         <h3 className={styles.name}>{labels.greeting}</h3>
-        <span>{labels.description}</span>
+        <span className={styles.description}>{labels.description}</span>
       </div>
       <Flexbox
         alignItems="center"
