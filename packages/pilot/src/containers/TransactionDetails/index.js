@@ -1,9 +1,8 @@
 /* eslint-disable camelcase */
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment-timezone'
 import {
-  __,
   always,
   applySpec,
   anyPass,
@@ -20,7 +19,6 @@ import {
   map,
   negate,
   path,
-  pathOr,
   pipe,
   prop,
   propEq,
@@ -35,11 +33,9 @@ import {
   CardContent,
   CardTitle,
   Col,
-  Flexbox,
   Grid,
   Legend,
   Row,
-  Tooltip,
   Truncate,
 } from 'former-kit'
 import IconInfo from 'emblematic-icons/svg/Info32.svg'
@@ -53,16 +49,17 @@ import currencyFormatter from '../../formatters/currency'
 import CustomerCard from '../../components/CustomerCard'
 import decimalCurrencyFormatter from '../../formatters/decimalCurrency'
 import DetailsHead from '../../components/DetailsHead'
-import Event from '../../components/Event'
-import PaymentBoleto from '../../components/PaymentBoleto'
-import PaymentCard from '../../components/PaymentCard'
 import RecipientList from '../RecipientList'
-import RiskLevel from '../../components/RiskLevel'
 import statusLegends from '../../models/statusLegends'
 import TotalDisplay from '../../components/TotalDisplay'
 import TransactionDetailsCard from '../../components/TransactionDetailsCard'
-import transactionOperationTypes from '../../models/transactionOperationTypes'
 import TreeView from '../../components/TreeView'
+import Events from './Events'
+import AlertInfo from './AlertInfo'
+import ReprocessAlerts from './ReprocessAlerts'
+import RefuseAlert from './RefuseAlert'
+import RenderPayment from './RenderPayment'
+import RenderOutAmountSubTitle from './RenderOutAmountSubtitle'
 import style from './style.css'
 import formatCpfCnpj from '../../formatters/cpfCnpj'
 import formatDate from '../../formatters/longDate'
@@ -81,15 +78,6 @@ const getOutAmount = pipe(
     isZeroOrNegative,
     negate
   )
-)
-
-const getOperationLegendStatus = pipe(
-  juxt([
-    prop('type'),
-    always('status'),
-    prop('status'),
-  ]),
-  pathOr({}, __, transactionOperationTypes)
 )
 
 const isEmptyOrNull = anyPass([isEmpty, isNil])
@@ -276,12 +264,6 @@ class TransactionDetails extends Component {
   constructor (props) {
     super(props)
     this.getActions = this.getActions.bind(this)
-    this.renderAlertInfo = this.renderAlertInfo.bind(this)
-    this.renderBoleto = this.renderBoleto.bind(this)
-    this.renderEvents = this.renderEvents.bind(this)
-    this.renderOutAmountSubTitle = this.renderOutAmountSubTitle.bind(this)
-    this.renderPayment = this.renderPayment.bind(this)
-    this.renderPaymentCard = this.renderPaymentCard.bind(this)
   }
 
   getActions () {
@@ -381,267 +363,26 @@ class TransactionDetails extends Component {
     return detailsHeadActions(capabilities)
   }
 
-  renderAlertInfo () {
-    const {
-      alertLabels,
-      boletoWarningMessage,
-      transaction,
-    } = this.props
-
-    if (isBoletoWaitingPayment(transaction)) {
-      return (
-        <span>
-          {boletoWarningMessage}
-        </span>
-      )
-    }
-    return (
-      <span>
-        <strong> {alertLabels.chargeback_reason_label} </strong>
-        <span> {alertLabels.chargeback_reason} </span>
-        <strong>
-          {alertLabels.reason_code}
-        </strong>
-      </span>
-    )
-  }
-
-  renderBoleto () {
-    const {
-      onCopyBoletoUrl,
-      onShowBoleto,
-      paymentBoletoLabels,
-      transaction: {
-        boleto: {
-          barcode,
-          due_date,
-        },
-      },
-    } = this.props
-
-    return (
-      <PaymentBoleto
-        barcode={barcode}
-        copyBarcodeFeedback={paymentBoletoLabels.feedback}
-        copyBarcodeLabel={paymentBoletoLabels.copy}
-        dueDate={moment(due_date).format('L')}
-        dueDateLabel={paymentBoletoLabels.due_date}
-        onCopy={onCopyBoletoUrl}
-        onShow={onShowBoleto}
-        showBoletoLabel={paymentBoletoLabels.show}
-        title={paymentBoletoLabels.title}
-      />
-    )
-  }
-
-  renderPaymentCard () {
-    const {
-      paymentCardLabels,
-      transaction: {
-        card: {
-          brand_name,
-          first_digits,
-          holder_name,
-          last_digits,
-        },
-      },
-    } = this.props
-
-    return (
-      <PaymentCard
-        title={paymentCardLabels.title}
-        first={first_digits}
-        last={last_digits}
-        holderName={holder_name}
-        brand={brand_name}
-      />
-    )
-  }
-
-  renderPayment () {
-    const {
-      transaction: {
-        payment,
-      },
-    } = this.props
-
-    if (payment.method === 'credit_card') {
-      return this.renderPaymentCard()
-    }
-    return this.renderBoleto()
-  }
-
-  renderOutAmountSubTitle () {
-    const {
-      tooltipLabels,
-      totalDisplayLabels,
-      transaction: { payment },
-    } = this.props
-
-    return (
-      <div className={style.subtitle}>
-        <Flexbox>
-          {totalDisplayLabels.mdr
-            && (
-              <p className={style.mdr}>
-                {totalDisplayLabels.mdr}
-              </p>
-            )
-          }
-          {payment.refund_amount > 0
-            && (
-              <span className={style.refund}>
-                {totalDisplayLabels.refund}
-              </span>
-            )
-          }
-        </Flexbox>
-        {totalDisplayLabels.cost && payment.method !== 'boleto'
-          && (
-            <Flexbox className={style.processCost}>
-              <span>
-                {totalDisplayLabels.cost}
-              </span>
-              <Tooltip
-                className={style.tooltip}
-                content={(
-                  <div className={style.content}>
-                    <p className={style.title}>{tooltipLabels.title}</p>
-                    <p className={style.description}>
-                      {tooltipLabels.description}
-                    </p>
-                  </div>
-                )}
-                placement="bottomEnd"
-              >
-                <IconInfo
-                  className={style.iconInfo}
-                  color="#7052c8"
-                  height={12}
-                  width={12}
-                />
-              </Tooltip>
-            </Flexbox>
-          )
-        }
-      </div>
-    )
-  }
-
-  renderEvents () {
-    const {
-      atLabel,
-      transaction: { operations },
-    } = this.props
-
-    return operations.map((operation, index) => {
-      const {
-        created_at,
-        cycle,
-        status,
-        type,
-      } = operation
-      const date = moment(created_at)
-      const key = `${type}_${status}_${(cycle || 0)}_${index}`
-      const legendStatus = getOperationLegendStatus(operation)
-      const number = operations.length - index
-
-      return (
-        <Event
-          active={index === 0}
-          collapsed={index !== 0}
-          color={legendStatus.color}
-          key={key}
-          number={number}
-          title={legendStatus.title}
-        >
-          <section>
-            <p>
-              {
-                `${date.format('L')} ${atLabel} ${date.format('HH:mm')}`
-              }
-            </p>
-          </section>
-        </Event>
-      )
-    })
-  }
-
-  renderReprocessAlerts () {
-    const {
-      nextTransactionId,
-      onNextTransactionRedirect,
-      onPreviousTransactionRedirect,
-      reprocessLabels,
-      transaction,
-    } = this.props
-    const nextId = transaction.nextId || nextTransactionId
-
-    return (
-      <Fragment>
-        {(nextId && nextId !== transaction.id)
-          && (
-            <Row className={style.alertCustom}>
-              <Col
-                desk={12}
-                palm={12}
-                tablet={12}
-                tv={12}
-              >
-                <Alert
-                  action={reprocessLabels.showNext}
-                  icon={<IconInfo height={16} width={16} />}
-                  onDismiss={onNextTransactionRedirect}
-                  type="info"
-                >
-                  <span className={style.reprocessAlertCustom}>
-                    {reprocessLabels.nextAlert}
-                    <strong> {nextId} </strong>
-                  </span>
-                </Alert>
-              </Col>
-            </Row>
-          )
-        }
-        {transaction.previousId
-          && (
-            <Row className={style.alertCustom}>
-              <Col
-                desk={12}
-                tv={12}
-                tablet={12}
-                palm={12}
-              >
-                <Alert
-                  action={reprocessLabels.showPrevious}
-                  icon={<IconInfo height={16} width={16} />}
-                  onDismiss={onPreviousTransactionRedirect}
-                  type="info"
-                >
-                  <span className={style.reprocessAlertCustom}>
-                    {reprocessLabels.previousAlert}
-                    <strong> {transaction.previousId} </strong>
-                  </span>
-                </Alert>
-              </Col>
-            </Row>
-          )
-        }
-      </Fragment>
-    )
-  }
-
   render () {
     const {
       alertLabels,
+      boletoWarningMessage,
       customerLabels,
-      eventsLabels,
       expandRecipients,
       headerLabels,
       installmentColumns,
       metadataTitle,
+      nextTransactionId,
+      onCopyBoletoUrl,
+      onNextTransactionRedirect,
+      onPreviousTransactionRedirect,
+      onShowBoleto,
+      paymentBoletoLabels,
+      paymentCardLabels,
       recipientsLabels,
-      riskLevelsLabels,
+      reprocessLabels,
+      t,
+      tooltipLabels,
       totalDisplayLabels,
       transaction,
       transactionDetailsLabels,
@@ -650,6 +391,7 @@ class TransactionDetails extends Component {
     const {
       acquirer,
       amount,
+      boleto,
       card,
       customer,
       id,
@@ -657,12 +399,12 @@ class TransactionDetails extends Component {
       operations,
       payment,
       recipients,
+      risk_level,
       soft_descriptor,
       status,
+      status_reason,
       subscription,
     } = transaction
-
-    const hasOperations = operations && operations.length > 1
 
     const transactionDetailsContent = {
       acquirer_name: acquirer
@@ -736,15 +478,15 @@ class TransactionDetails extends Component {
       },
     ]
 
-    if (transaction.risk_level !== 'unknown') {
-      detailsHeadProperties.push({
-        children: <RiskLevel level={transaction.risk_level} />,
-        title: riskLevelsLabels[transaction.risk_level],
-      })
-    }
-
     return (
       <Grid className={style.grid}>
+        <ReprocessAlerts
+          nextTransactionId={nextTransactionId}
+          onNextTransactionRedirect={onNextTransactionRedirect}
+          onPreviousTransactionRedirect={onPreviousTransactionRedirect}
+          reprocessLabels={reprocessLabels}
+          transaction={transaction}
+        />
         <Row stretch className={style.transactionInfo}>
           <Col
             desk={12}
@@ -764,9 +506,12 @@ class TransactionDetails extends Component {
             </Card>
           </Col>
         </Row>
-
-        {this.renderReprocessAlerts()}
-
+        <RefuseAlert
+          acquirer={acquirer}
+          status={status}
+          statusReason={status_reason}
+          t={t}
+        />
         <Row stretch className={style.paymentInfo}>
           <Col
             desk={3}
@@ -774,7 +519,15 @@ class TransactionDetails extends Component {
             tablet={6}
             tv={3}
           >
-            { this.renderPayment() }
+            <RenderPayment
+              boleto={boleto}
+              card={card}
+              onCopyBoletoUrl={onCopyBoletoUrl}
+              onShowBoleto={onShowBoleto}
+              payment={payment}
+              paymentBoletoLabels={paymentBoletoLabels}
+              paymentCardLabels={paymentCardLabels}
+            />
           </Col>
           <Col
             desk={3}
@@ -824,7 +577,13 @@ class TransactionDetails extends Component {
                   }
                   amountSize="large"
                   color="#4d4f62"
-                  subtitle={this.renderOutAmountSubTitle()}
+                  subtitle={(
+                    <RenderOutAmountSubTitle
+                      payment={payment}
+                      tooltipLabels={tooltipLabels}
+                      totalDisplayLabels={totalDisplayLabels}
+                    />
+                  )}
                   title={totalDisplayLabels.out_amount}
                   titleSize="medium"
                 />
@@ -871,7 +630,11 @@ class TransactionDetails extends Component {
                   icon={<IconInfo height={16} width={16} />}
                   type="info"
                 >
-                  {this.renderAlertInfo()}
+                  <AlertInfo
+                    alertLabels={alertLabels}
+                    boletoWarningMessage={boletoWarningMessage}
+                    isBoletoWaitingPayment={isBoletoWaitingPayment(transaction)}
+                  />
                 </Alert>
               </Col>
             </Row>
@@ -880,18 +643,10 @@ class TransactionDetails extends Component {
 
         <Row>
           <Col
-            desk={
-              hasOperations
-                ? 9
-                : 12
-            }
+            desk={9}
             palm={12}
             tablet={12}
-            tv={
-              hasOperations
-                ? 9
-                : 12
-            }
+            tv={9}
           >
             <Grid className={style.detailsInfo}>
               {!isEmptyOrNull(recipients)
@@ -984,24 +739,31 @@ class TransactionDetails extends Component {
               }
             </Grid>
           </Col>
-          { hasOperations
-            && (
-              <Col
-                desk={3}
-                palm={12}
-                tablet={12}
-                tv={3}
-                className={style.eventsList}
-              >
-                <Card>
-                  <CardTitle title={eventsLabels.title} />
-                  <div>
-                    {this.renderEvents()}
-                  </div>
-                </Card>
-              </Col>
-            )
-          }
+          <Col
+            desk={3}
+            palm={12}
+            tablet={12}
+            tv={3}
+            className={style.eventsList}
+          >
+            <Card>
+              <CardTitle
+                className={style.eventCardTitle}
+                title={t('pages.transaction.events.title')}
+              />
+              <div>
+                <Events
+                  boleto={boleto}
+                  color={statusLegends[status].color}
+                  t={t}
+                  id={id}
+                  operations={operations}
+                  payment={payment}
+                  riskLevel={risk_level}
+                />
+              </div>
+            </Card>
+          </Col>
         </Row>
       </Grid>
     )
@@ -1023,7 +785,6 @@ TransactionDetails.propTypes = {
     reason_code: PropTypes.string,
     resubmit: PropTypes.string,
   }).isRequired,
-  atLabel: PropTypes.string.isRequired,
   boletoWarningMessage: PropTypes.string.isRequired,
   customerLabels: PropTypes.shape({
     birthday: PropTypes.string,
@@ -1039,9 +800,6 @@ TransactionDetails.propTypes = {
     street: PropTypes.string,
     title: PropTypes.string,
     zip_code: PropTypes.string,
-  }).isRequired,
-  eventsLabels: PropTypes.shape({
-    title: PropTypes.string,
   }).isRequired,
   expandRecipients: PropTypes.bool,
   headerLabels: PropTypes.shape({
@@ -1119,6 +877,7 @@ TransactionDetails.propTypes = {
     very_high: PropTypes.string,
     very_low: PropTypes.string,
   }).isRequired,
+  t: PropTypes.func.isRequired,
   tooltipLabels: PropTypes.shape({
     description: PropTypes.string,
     title: PropTypes.string,
