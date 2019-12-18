@@ -116,7 +116,7 @@
       "invalid_savings_card": "Cartão poupança inválido.",
       "invalid_transaction": "Transação inválida.",
       "invalid_value": "Valor inválido.",
-      "manual_review": "Recusado por revisão manual",
+      "manual_review": "Recusado por revisão manual.",
       "manual_review_timeout": "Tempo de revisão manual expirado.",
       "missing_cvv": "Código de segurança (CVV) do cartão não foi enviado.",
       "no_acquirer": "Erro com a adquirente.",
@@ -1493,7 +1493,11 @@
       "errors": {
         "not_found": "Transação não encontrada"
       },
-      "events_title": "Histórico da transação",
+      "events": {
+        "title": "Histórico da transação",
+        "value": "Valor: ",
+        "tid": "TID: "
+      },
       "header": {
         "approve": "Aprovar",
         "boleto_amount": "Valor emitido",
@@ -1538,7 +1542,7 @@
         "total_recipient_plural": "{{count}} recebedores",
         "total_recipient": "{{count}} recebedor"
       },
-      "refuse_reason": "Motivo da recusa",
+      "refuse_reason": "Motivo da recusa: ",
       "reprocess": {
         "next": "Esta transação foi reprocessadada gerando a transação",
         "previous": "Esta transação foi criada através do reprocessamento da transação",
