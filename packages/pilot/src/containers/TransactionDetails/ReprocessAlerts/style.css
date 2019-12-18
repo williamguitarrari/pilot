@@ -1,0 +1,19 @@
+@import "former-kit-skin-pagarme/dist/styles/colors/light.css";
+@import "former-kit-skin-pagarme/dist/styles/spacing.css";
+
+@media print {
+
+  .alertCustom {
+    border-bottom: 1px solid var(--color-light-iron-50);
+    padding-top: var(--spacing-small);
+
+    & div {
+      border: none;
+      padding-top: var(--spacing-tiny);
+    }
+
+    & button {
+      display: none;
+    }
+  }
+}
