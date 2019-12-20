@@ -7015,22 +7015,22 @@ format@^0.2.2:
   resolved "https://registry.yarnpkg.com/format/-/format-0.2.2.tgz#d6170107e9efdc4ed30c9dc39016df942b5cb58b"
   integrity sha1-1hcBB+nv3E7TDJ3DkBbflCtctYs=
 
-former-kit-skin-pagarme@1.5.3:
-  version "1.5.3"
-  resolved "https://registry.yarnpkg.com/former-kit-skin-pagarme/-/former-kit-skin-pagarme-1.5.3.tgz#1d3e599c3ab434cb0d35ff0db603b8b705bc6644"
-  integrity sha512-tuVK/5iy7v/bLfm8xRVKyjAHrXoDgCx/h6lYmXPzd70t/OjImWPEz9tWx7IzlAgXIOfpTkkadS7IlLjxBbR3Yw==
+former-kit-skin-pagarme@1.5.4:
+  version "1.5.4"
+  resolved "https://registry.yarnpkg.com/former-kit-skin-pagarme/-/former-kit-skin-pagarme-1.5.4.tgz#1cb48877cb28d3e0719807d0909ee63fc7ca01cc"
+  integrity sha512-bVO8amHSDbDQAYuUUzHlIUTPNVIc/+f4977+kUnJb9/wKAKqj3D6F1AjgpzW8oTn9Wi8eS7HzUdnD4tDxk1IGQ==
   dependencies:
     emblematic-icons "0.7.1"
     react-dates "18.4.1"
 
-former-kit@1.7.3:
-  version "1.7.3"
-  resolved "https://registry.yarnpkg.com/former-kit/-/former-kit-1.7.3.tgz#4166b35080c9560ce1b385473dde9e19626002e5"
-  integrity sha512-1vo8Q/Py6yywazg4ZcufvxVx883e6KmTkn+VQThpHTE8ZqAsb4ffTODA8HtukUQQ/017fk3lnyLVtxTXmdMuiQ==
+former-kit@1.7.4:
+  version "1.7.4"
+  resolved "https://registry.yarnpkg.com/former-kit/-/former-kit-1.7.4.tgz#747b914fce4ba96ab90c5b05c8b8e50fa98adf85"
+  integrity sha512-CEj3oLxKY7HEkOxyO8CCoCl6uN2aRBS8JBT864E+BGA5dtNhk4i8PxKlRYfPjnp+4Hx93jgLmnaANuNFGB634w==
   dependencies:
     classnames "2.2.6"
     emblematic-icons "0.7.1"
-    former-kit-skin-pagarme "1.5.3"
+    former-kit-skin-pagarme "1.5.4"
     promise "8.0.2"
     prop-types "15.6.2"
     ramda "0.26.1"

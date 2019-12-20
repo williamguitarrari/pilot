@@ -142,10 +142,6 @@ const getCustomerLabels = (customer, t) => ({
   zipcode: t('models.customer.zip_code'),
 })
 
-const getEventsLabels = t => ({
-  title: t('pages.transaction.events_title'),
-})
-
 const getShowBoletoLabel = uncurryN(2, t => ifElse(
   allPass([
     complement(isNil),
@@ -251,7 +247,6 @@ class TransactionDetails extends Component {
     this.state = {
       actionLabels: getActionLabels(t),
       chargebackRate: 0,
-      eventsLabels: getEventsLabels(t),
       expandRecipients: false,
       installmentColumns: formatColumns(installmentTableColumns),
       loading: {
@@ -524,7 +519,6 @@ class TransactionDetails extends Component {
     const {
       actionLabels,
       chargebackRate,
-      eventsLabels,
       expandRecipients,
       installmentColumns,
       loading,
@@ -655,10 +649,8 @@ class TransactionDetails extends Component {
         <TransactionDetailsContainer
           actionLabels={actionLabels}
           alertLabels={alertLabels}
-          atLabel={t('at')}
           boletoWarningMessage={t('pages.transaction.boleto.waiting_payment_warning')}
           customerLabels={customerLabels}
-          eventsLabels={eventsLabels}
           expandRecipients={expandRecipients}
           headerLabels={headerLabels}
           installmentColumns={installmentColumns}
@@ -687,6 +679,7 @@ class TransactionDetails extends Component {
           recipientsLabels={recipientsLabels}
           riskLevelsLabels={riskLevelsLabels}
           reprocessLabels={reprocessLabels}
+          t={t}
           tooltipLabels={tooltipLabels}
           totalDisplayLabels={totalDisplayLabels}
           transaction={transaction}

@@ -96,10 +96,16 @@ const reprocessLabels = {
   showPrevious: 'Visualizar transação original',
 }
 
+const tooltipLabels = {
+  description: '* O custo de processamento não será somado ao total de saídas dessa transação. Ele será debitado ao final do mês, junto aos custos de processamento das demais transações do período.',
+  title: 'Custo de processamento',
+}
+
 const totalDisplayLabels = {
   captured_at: `Capturado em ${
     moment(transactionMock.captured_at).format('L')
   }`,
+  cost: 'Custo de processamento: R$ 1,20',
   mdr: `MDR: R$ ${
     currencyFormatter(transactionMock.payment.cost_amount || 0)
   }`,
@@ -155,13 +161,16 @@ storiesOf('Pages|Transaction', module)
         paymentBoletoLabels={paymentBoletoLabels}
         paymentCardLabels={paymentCardLabels}
         permissions={{
+          manualReview: false,
           refund: true,
           reprocess: true,
         }}
         recipientsLabels={recipientsLabels}
         riskLevelsLabels={riskLevelsLabels}
         reprocessLabels={reprocessLabels}
+        t={t}
         totalDisplayLabels={totalDisplayLabels}
+        tooltipLabels={tooltipLabels}
         transaction={transactionMock}
         transactionDetailsLabels={transactionDetailsLabels}
       />

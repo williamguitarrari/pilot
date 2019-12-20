@@ -2,43 +2,42 @@ const types = {
   analyze: {
     status: {
       approved: {
-        color: '#4ca9d7',
-        title: 'Aprovada na análise do antifraude',
+        status: 'Aprovada',
+        title: 'Análise de antifraude',
       },
       deferred: {
-        color: '#41535b',
-        title: 'Processando análise do antifraude',
+        status: 'Processando',
+        title: 'Análise de antifraude',
       },
       failed: {
-        color: '#e00403',
-        title: 'Análise do antifraude falhou',
+        status: 'Falhou',
+        title: 'Análise de antifraude',
       },
       processing: {
-        color: '#951d3c',
-        title: 'Processando análise do antifraude',
+        status: 'Processando',
+        title: 'Análise de antifraude',
       },
       refused: {
-        color: '#e00403',
-        title: 'Recusada na análise do antifraude',
+        status: 'Negada com risco alto',
+        title: 'Análise de antifraude',
       },
     },
   },
   authorize: {
     status: {
       deferred: {
-        color: '#41535b',
-        title: 'Autorização pendente',
+        status: 'Pendente',
+        title: 'Autorização',
       },
       failed: {
-        color: '#e00403',
-        title: 'Autorização falhou',
+        status: 'Falhou',
+        title: 'Autorização',
       },
       processing: {
-        color: '#951d3c',
-        title: 'Autorização em processamento',
+        status: 'Em processamento',
+        title: 'Autorização',
       },
       success: {
-        color: '#fcb20a',
         title: 'Autorizada',
       },
     },
@@ -46,19 +45,18 @@ const types = {
   capture: {
     status: {
       deferred: {
-        color: '#41535b',
-        title: 'Captura pendente',
+        status: 'Pendente',
+        title: 'Captura',
       },
       failed: {
-        color: '#e00403',
-        title: 'Captura falhou',
+        status: 'Falhou',
+        title: 'Captura',
       },
       processing: {
-        color: '#951d3c',
-        title: 'Captura em processamento',
+        status: 'Em processamento',
+        title: 'Captura',
       },
       success: {
-        color: '#53be76',
         title: 'Capturada',
       },
     },
@@ -66,119 +64,114 @@ const types = {
   chargeback: {
     status: {
       deferred: {
-        color: '#41535b',
-        title: 'Chargeback pendente',
+        status: 'Pendente',
+        title: 'Chargeback',
       },
       failed: {
-        color: '#e00403',
-        title: 'Chargeback falhou',
+        status: 'Falhou',
+        title: 'Chargeback',
       },
       processing: {
-        color: '#951d3c',
-        title: 'Chargeback em processamento',
+        status: 'Em processamento',
+        title: 'Chargeback',
       },
       success: {
-        color: '#f16518',
-        title: 'Chargeback recebido',
+        title: 'Chargeback Recebido',
       },
     },
   },
   chargeback_refund: {
     status: {
       deferred: {
-        color: '#41535b',
-        title: 'Reapresentação do chargeback pendente',
+        status: 'Reapresentação pendente',
+        title: 'Chargeback',
       },
       failed: {
-        color: '#e00403',
-        title: 'Reapresentação do chargedback falhou',
+        status: 'Reapresentação falhou',
+        title: 'Chargeback',
       },
       processing: {
-        color: '#951d3c',
-        title: 'Reapresentação do chargeback em processamento',
+        status: 'Reapresentação em processamento',
+        title: 'Chargeback',
       },
       success: {
-        color: '#bf5316',
-        title: 'Chargeback reapresentado',
+        title: 'Chargeback Reapresentado',
       },
     },
   },
   conciliate: {
     status: {
       deferred: {
-        color: '#8c68d4',
-        title: 'Conciliação pendente',
+        status: 'Pendente',
+        title: 'Conciliação',
       },
       failed: {
-        color: '#e00403',
-        title: 'Conciliação falhou',
+        status: 'Falhou',
+        title: 'Conciliação',
       },
       processing: {
-        color: '#951d3c',
-        title: 'Conciliação em processamento',
+        status: 'Em processamento',
+        title: 'Conciliação',
       },
       success: {
-        color: '#53be76',
-        title: 'Boleto pago',
+        title: 'Boleto Pago',
       },
     },
   },
   issue: {
     status: {
       deferred: {
-        color: '#41535b',
-        title: 'Emissão pendente',
+        status: 'Pendente',
+        title: 'Emissão',
       },
       failed: {
-        color: '#e00403',
-        title: 'Emissão falhou',
+        status: 'Falhou',
+        title: 'Emissão',
       },
       processing: {
-        color: '#951d3c',
-        title: 'Emissão em processamento',
+        status: 'Em processamento',
+        title: 'Emissão',
       },
       success: {
-        color: '#8c68d4',
-        title: 'Boleto emitido',
+        title: 'Boleto Emitido',
       },
     },
   },
   manual_review: {
     status: {
       approved: {
-        color: '#4ca9d7',
-        title: 'Aprovada por revisão manual',
+        status: 'Aprovada',
+        title: 'Revisão manual',
       },
       pending: {
-        color: '#41535b',
-        title: 'Revisão pendente',
+        status: 'Pendente',
+        title: 'Revisão manual',
       },
       refused: {
-        color: '#e00403',
-        title: 'Recusada por revisão manual',
+        status: 'Recusada',
+        title: 'Revisão manual',
       },
       timeout: {
-        color: '#e00403',
-        title: 'Revisão manual expirada',
+        status: 'Expirada',
+        title: 'Revisão manual',
       },
     },
   },
   refund: {
     status: {
       deferred: {
-        color: '#41535b',
-        title: 'Estorno pendente',
+        status: 'Pendente',
+        title: 'Estorno',
       },
       failed: {
-        color: '#e00403',
-        title: 'Estorno falhou',
+        status: 'Falhou',
+        title: 'Estorno',
       },
       processing: {
-        color: '#951d3c',
-        title: 'Estorno em processamento',
+        status: 'Em processamento',
+        title: 'Estorno',
       },
       success: {
-        color: '#5b2886',
         title: 'Estornada',
       },
     },
@@ -186,19 +179,18 @@ const types = {
   validate: {
     status: {
       deferred: {
-        color: '#41535b',
-        title: 'Validação do cartão pendente',
+        status: 'Pendente',
+        title: 'Validação do cartão',
       },
       failed: {
-        color: '#e00403',
-        title: 'Validação do cartão falhou',
+        status: 'Falhou',
+        title: 'Validação do cartão',
       },
       processing: {
-        color: '#951d3c',
-        title: 'Validação do cartão em processamento',
+        status: 'Em processamento',
+        title: 'Validação do cartão',
       },
       success: {
-        color: '#951d3c',
         title: 'Cartão validado',
       },
     },

@@ -91,6 +91,7 @@ const transaction = {
     }
   ],
   "payment": {
+    "authorized_amount": 3000,
     "cost_amount": 0,
     "installments": 12,
     "method": "credit_card",

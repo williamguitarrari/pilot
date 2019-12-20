@@ -1,9 +1,8 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react'
 import PropTypes from 'prop-types'
-import cx from 'classnames'
+import classNames from 'classnames'
 import {
-  is,
   head,
 } from 'ramda'
 import IconChevronUp from 'emblematic-icons/svg/ChevronUp24.svg'
@@ -11,13 +10,30 @@ import IconChevronDown from 'emblematic-icons/svg/ChevronDown24.svg'
 
 import style from './style.css'
 
-const getValidActiveColor = (active, color) => (
-  active
-    ? color
+const getActiveColor = (active, choosedColor, type) => {
+  const baseColors = {
+    background: '#fff',
+    number: '#4d4f62',
+  }
+
+  return active
+    ? choosedColor
+    : baseColors[type]
+}
+
+const getTextColor = (active, color) => {
+  const defaultColor = '#757575'
+  const choosedColor = color === '#f2cb03'
+    ? '#000000'
     : '#fff'
-)
+
+  return active
+    ? choosedColor
+    : defaultColor
+}
+
 const renderIndicatorArrow = (collapsed, active, color) => (
-  <span style={{ color: getValidActiveColor(active, color) }}>
+  <span style={{ color: getActiveColor(active, color, 'number') }}>
     {
       collapsed
         ? <IconChevronDown width={12} height={12} />
@@ -50,29 +66,31 @@ class Event extends React.Component {
       active,
       children,
       color,
+      isMoreThanOneOperation,
       number,
       title,
     } = this.props
 
     const { collapsed } = this.state
 
-    const childrenIsArray = is(Array, children)
-
     return (
       <div
-        className={cx(style.event, {
+        className={classNames(style.event, {
           [style.active]: active,
-          [style.hasEvents]: childrenIsArray,
+          [style.hasEvents]: isMoreThanOneOperation,
         })}
         onClick={this.handleCollapse}
         role="button"
-        style={{ backgroundColor: getValidActiveColor(active, color) }}
+        style={{
+          backgroundColor: getActiveColor(active, color, 'background'),
+          color: getTextColor(active, color),
+        }}
         tabIndex="0"
       >
         <header className={style.header}>
           <span
             className={style.number}
-            style={{ color: getValidActiveColor(active, color) }}
+            style={{ color: getActiveColor(active, color, 'number') }}
           >
             {number}
           </span>
@@ -81,15 +99,16 @@ class Event extends React.Component {
 
         <div className={style.info}>
           {
-            collapsed && childrenIsArray
+            collapsed && isMoreThanOneOperation
               ? head(children)
               : children
           }
         </div>
 
-        <div className={style.indicator}>
+        <div className={classNames(style.indicator, { [style.line]: !active })}>
           {
-            childrenIsArray && renderIndicatorArrow(collapsed, active, color)
+            isMoreThanOneOperation
+              && renderIndicatorArrow(collapsed, active, color)
           }
         </div>
       </div>
@@ -102,6 +121,7 @@ Event.propTypes = {
   children: PropTypes.node.isRequired,
   collapsed: PropTypes.bool,
   color: PropTypes.string.isRequired,
+  isMoreThanOneOperation: PropTypes.bool.isRequired,
   number: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
 }

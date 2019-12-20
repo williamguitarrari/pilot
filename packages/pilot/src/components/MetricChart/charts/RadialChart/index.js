@@ -29,7 +29,7 @@ const RadialChart = ({
           styles={styles}
           title={label}
         />
-        <span>{label}</span>
+        <span className={style.title}>{label}</span>
       </div>
     ))}
   </Flexbox>

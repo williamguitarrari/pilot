@@ -13,6 +13,7 @@ const EventList = () => (
       <CardTitle title="Histórico de transações" />
       <div>
         <Event
+          isMoreThanOneOperation
           number={5}
           title="Chargeback"
           color="#f27119"
@@ -41,10 +42,10 @@ const EventList = () => (
         </Event>
 
         <Event
+          isMoreThanOneOperation
           number={4}
           title="Capturada"
           color="#53be76"
-          collapsed
         >
           <section>
             Captura <br />
@@ -53,10 +54,10 @@ const EventList = () => (
         </Event>
 
         <Event
+          isMoreThanOneOperation
           number={3}
           title="Aprovada"
           color="#53be76"
-          collapsed
         >
           <section>
             Regras de aprovação<br />
@@ -65,10 +66,10 @@ const EventList = () => (
         </Event>
 
         <Event
+          isMoreThanOneOperation
           number={2}
           title="Análise de Antifraude"
           color="#53be76"
-          collapsed
         >
           <section>
             Aprovada<br />
@@ -94,10 +95,10 @@ const EventList = () => (
         </Event>
 
         <Event
+          isMoreThanOneOperation
           number={1}
           title="Autorizada"
           color="#fcb20a"
-          collapsed
         >
           <section>
             Aprovada<br />
