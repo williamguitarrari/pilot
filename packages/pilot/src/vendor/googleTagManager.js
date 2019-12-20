@@ -27,6 +27,7 @@ export const identify = (
       event: 'loginReceive',
       fullstoryUserId: id,
       userDateCreated,
+      userId: id,
       userName,
       userPermission,
     })
