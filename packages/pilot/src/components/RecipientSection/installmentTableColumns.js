@@ -138,8 +138,10 @@ const columns = [
     aggregator: sumParameters,
     align: 'end',
     orderable: false,
-    renderer: ({ costs }) => currencyFormatter(costs.mdr),
-    title: 'models.installment.mdr',
+    renderer: ({ costs }) => currencyFormatter(
+      costs.mdr + costs.fraud_coverage_fee
+    ),
+    title: 'models.installment.tax',
   },
   {
     accessor: ['costs', 'anticipation'],

@@ -461,6 +461,21 @@ const sumAllRecipientsFraudCoverageFee = pipe(
   )
 )
 
+const fraudCoverageFeeLens = lensPath(['transaction', 'payment', 'fraud_coverage_fee'])
+
+const hasFraudCoverageFee = fraudCoverageFee => fraudCoverageFee > 0
+
+const pickFraudCoverageFee = pipe(
+  path(['transaction', 'payables']),
+  pluck('fraud_coverage_fee'),
+  filter(hasFraudCoverageFee),
+  head,
+  when(
+    isNil,
+    always(0)
+  )
+)
+
 const netAmountLens = lensPath(['transaction', 'payment', 'net_amount'])
 
 const subtractMdrFromNetAmount = pipe(
@@ -478,5 +493,7 @@ export default pipe(
   apply(set(netAmountLens)),
   juxt([sumAllRecipientsFraudCoverageFee, identity]),
   apply(set(fraudCoverageAmountLens)),
-  dissocPath(['transaction', 'payables']),
+  juxt([pickFraudCoverageFee, identity]),
+  apply(set(fraudCoverageFeeLens)),
+  dissocPath(['transaction', 'payables'])
 )
