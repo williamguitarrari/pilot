@@ -98,7 +98,7 @@
     ],
     "payment": {
       "fraud_coverage_amount": 0,
-      "fraud_coverage_fee": 0,
+      "fraud_coverage_fee": 100,
       "cost_amount": 0,
       "installments": 12,
       "method": "credit_card",
@@ -122,7 +122,7 @@
             "costs": {
               "anticipation": 0,
               "mdr": 3283909,
-              "fraud_coverage_fee": 0
+              "fraud_coverage_fee": 100
             },
             "created_at": "2018-03-14T13:40:28.959Z",
             "net_amount": 29555175,
@@ -136,7 +136,7 @@
             "costs": {
               "anticipation": 0,
               "mdr": 3283909,
-              "fraud_coverage_fee": 0
+              "fraud_coverage_fee": 100
             },
             "created_at": "2018-03-14T13:40:28.958Z",
             "net_amount": 29555175,
@@ -150,7 +150,7 @@
             "costs": {
               "anticipation": 0,
               "mdr": 3283909,
-              "fraud_coverage_fee": 0
+              "fraud_coverage_fee": 100
             },
             "created_at": "2018-03-14T13:40:28.958Z",
             "net_amount": 29555175,
@@ -164,7 +164,7 @@
             "costs": {
               "anticipation": 0,
               "mdr": 3283909,
-              "fraud_coverage_fee": 0
+              "fraud_coverage_fee": 100
             },
             "created_at": "2018-03-14T13:40:28.951Z",
             "net_amount": 29555175,
@@ -178,7 +178,7 @@
             "costs": {
               "anticipation": 0,
               "mdr": 3283909,
-              "fraud_coverage_fee": 0
+              "fraud_coverage_fee": 100
             },
             "created_at": "2018-03-14T13:40:28.951Z",
             "net_amount": 29555175,
@@ -192,7 +192,7 @@
             "costs": {
               "anticipation": 0,
               "mdr": 3283909,
-              "fraud_coverage_fee": 0
+              "fraud_coverage_fee": 100
             },
             "created_at": "2018-03-14T13:40:28.951Z",
             "net_amount": 29555175,
@@ -206,7 +206,7 @@
             "costs": {
               "anticipation": 0,
               "mdr": 3283909,
-              "fraud_coverage_fee": 0
+              "fraud_coverage_fee": 100
             },
             "created_at": "2018-03-14T13:40:28.950Z",
             "net_amount": 29555175,
@@ -220,7 +220,7 @@
             "costs": {
               "anticipation": 0,
               "mdr": 3283909,
-              "fraud_coverage_fee": 0
+              "fraud_coverage_fee": 100
             },
             "created_at": "2018-03-14T13:40:28.950Z",
             "net_amount": 29555175,
@@ -234,7 +234,7 @@
             "costs": {
               "anticipation": 0,
               "mdr": 3283909,
-              "fraud_coverage_fee": 0
+              "fraud_coverage_fee": 100
             },
             "created_at": "2018-03-14T13:40:28.949Z",
             "net_amount": 29555175,
@@ -248,7 +248,7 @@
             "costs": {
               "anticipation": 0,
               "mdr": 3283909,
-              "fraud_coverage_fee": 0
+              "fraud_coverage_fee": 100
             },
             "created_at": "2018-03-14T13:40:28.949Z",
             "net_amount": 29555175,
@@ -262,7 +262,7 @@
             "costs": {
               "anticipation": 0,
               "mdr": 3283909,
-              "fraud_coverage_fee": 0
+              "fraud_coverage_fee": 100
             },
             "created_at": "2018-03-14T13:40:28.949Z",
             "net_amount": 29555175,
@@ -276,7 +276,7 @@
             "costs": {
               "anticipation": 0,
               "mdr": 3283901,
-              "fraud_coverage_fee": 0
+              "fraud_coverage_fee": 100
             },
             "created_at": "2018-03-14T13:40:28.948Z",
             "net_amount": 29555174,

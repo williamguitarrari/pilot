@@ -820,6 +820,7 @@ class TransactionDetails extends Component {
                     getOutAmount([
                       payment.refund_amount,
                       payment.mdr_amount,
+                      payment.fraud_coverage_amount,
                     ])
                   }
                   amountSize="large"

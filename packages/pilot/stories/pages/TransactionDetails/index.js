@@ -100,9 +100,16 @@ const totalDisplayLabels = {
   captured_at: `Capturado em ${
     moment(transactionMock.captured_at).format('L')
   }`,
-  mdr: `MDR: R$ ${
-    currencyFormatter(transactionMock.payment.cost_amount || 0)
-  }`,
+  mdr: transactionMock.payment.fraud_coverage_amount > 0
+    ? `MDR + Cobertura de Fraudes: R$ ${
+      currencyFormatter(
+        transactionMock.payment.fraud_coverage_amount
+        + transactionMock.payment.cost_amount || 0
+      )
+    }`
+    : `MDR: R$ ${
+      currencyFormatter(transactionMock.payment.cost_amount || 0)
+    }`,
   net_amount: 'VALOR LÍQUIDO',
   out_amount: 'TOTAL DE SAÍDAS',
   paid_amount: 'VALOR CAPTURADO',
