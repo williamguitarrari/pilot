@@ -1,0 +1,22 @@
+@import "former-kit-skin-pagarme/dist/styles/spacing.css";
+@import "former-kit-skin-pagarme/dist/styles/colors.css";
+
+.selectedOptionsTitle {
+  font-size: 14px;
+  text-transform: uppercase;
+  color: var(--color-light-steel-100);
+  display: inline-flex;
+  align-content: center;
+  align-items: center;
+  height: 25px;
+}
+
+.selectedOptionsTags {
+  margin-bottom: calc(0 - var(--spacing-tiny));
+  margin-left: calc(0 - var(--spacing-tiny));
+
+  & > * {
+    margin-left: var(--spacing-tiny);
+    margin-bottom: var(--spacing-tiny);
+  }
+}
