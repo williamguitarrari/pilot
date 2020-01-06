@@ -192,8 +192,9 @@ class TransactionsSearch extends React.Component {
     this.localizedPresets = dateSelectorPresets(props.t)
 
     this.state = {
+      clearFilterDisabled: true,
       collapsed: true,
-      confirmationDisabled: false,
+      confirmationDisabled: true,
       expandedRows: [],
       exporting: false,
       pendingReviewsCount: 0,
@@ -209,6 +210,7 @@ class TransactionsSearch extends React.Component {
         },
         total: {},
       },
+      selectedPreset: 'days-30',
       selectedRows: [],
       showDateInputCalendar: false,
       viewMode: 'table',
@@ -327,13 +329,15 @@ class TransactionsSearch extends React.Component {
       })
   }
 
-  handleDatePresetChange (dates) {
+  handleDatePresetChange (dates, preset) {
     const { query } = this.state
     this.setState({
+      clearFilterDisabled: false,
       query: {
         ...query,
         dates,
       },
+      selectedPreset: preset.key,
       showDateInputCalendar: true,
     })
   }
@@ -368,6 +372,7 @@ class TransactionsSearch extends React.Component {
     const newQuery = mergeRight(stateQuery, query)
 
     this.setState({
+      clearFilterDisabled: false,
       confirmationDisabled: false,
       query: newQuery,
     })
@@ -376,7 +381,9 @@ class TransactionsSearch extends React.Component {
   handleFilterClear () {
     const { onRequestClearSearch } = this.props
     this.setState({
+      clearFilterDisabled: true,
       confirmationDisabled: true,
+      selectedPreset: 'days-30',
     })
 
     onRequestClearSearch()
@@ -397,6 +404,10 @@ class TransactionsSearch extends React.Component {
       search,
       sort: sort || stateQuery.sort,
     }
+    this.setState({
+      clearFilterDisabled: false,
+      confirmationDisabled: true,
+    })
 
     this.updateQuery(query)
   }
@@ -468,6 +479,7 @@ class TransactionsSearch extends React.Component {
 
   render () {
     const {
+      clearFilterDisabled,
       collapsed,
       columns,
       confirmationDisabled,
@@ -485,6 +497,7 @@ class TransactionsSearch extends React.Component {
         list,
         total,
       },
+      selectedPreset,
       selectedRows,
       showDateInputCalendar,
       viewMode,
@@ -506,6 +519,7 @@ class TransactionsSearch extends React.Component {
           ? total.payment.paid_amount
           : 0
         }
+        clearFilterDisabled={clearFilterDisabled}
         collapsed={collapsed}
         columns={columns}
         count={total.count}
@@ -536,6 +550,7 @@ class TransactionsSearch extends React.Component {
         query={query}
         rows={list.rows}
         selectedPage={count}
+        selectedPreset={selectedPreset}
         selectedRows={selectedRows}
         showDateInputCalendar={showDateInputCalendar}
         t={t}
