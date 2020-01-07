@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment-timezone'
 
@@ -12,13 +12,7 @@ import {
   Grid,
   Row,
 } from 'former-kit'
-import {
-  always,
-  cond,
-  equals,
-} from 'ramda'
 import IconChecked from 'emblematic-icons/svg/Check32.svg'
-import IconError from 'emblematic-icons/svg/ClearClose32.svg'
 import IconExtract from 'emblematic-icons/svg/Extract24.svg'
 
 import DataDisplay from '../../../components/DataDisplay'
@@ -31,11 +25,6 @@ import TotalDisplay from '../../../components/TotalDisplay'
 import TransferError from '../../../components/TransferError'
 
 import style from './style.css'
-
-const getIcon = cond([
-  [equals('success'), always(<IconChecked height={16} width={16} />)],
-  [equals('error'), always(<IconError height={16} width={16} />)],
-])
 
 class WithdrawResult extends Component {
   constructor () {
@@ -158,21 +147,6 @@ class WithdrawResult extends Component {
 
     return (
       <Grid className={style.grid}>
-        <Row>
-          <Col
-            desk={12}
-            palm={12}
-            tablet={12}
-            tv={12}
-          >
-            <Alert
-              icon={getIcon(status)}
-              type={status}
-            >
-              <span>{statusMessage}</span>
-            </Alert>
-          </Col>
-        </Row>
         {status === 'error'
           && (
             <Row>
@@ -187,6 +161,7 @@ class WithdrawResult extends Component {
                   actionLabel={t('pages.withdraw.try_again')}
                   message={t('pages.withdraw.result_error')}
                   onClick={onTryAgain}
+                  title={t('pages.withdraw.ops')}
                 />
               </Col>
             </Row>
@@ -194,53 +169,72 @@ class WithdrawResult extends Component {
         }
         {status === 'success'
           && (
-            <Row>
-              <Col
-                desk={12}
-                palm={12}
-                tablet={12}
-                tv={12}
-              >
-                <Card>
-                  <CardContent>
-                    <Grid>
-                      <Row>
-                        <Col
-                          desk={12}
-                          palm={12}
-                          tablet={12}
-                          tv={12}
-                        >
-                          <div className={style.head}>
-                            <div className={style.advise}>
-                              {t('pages.withdraw.result_advise')}
+            <Fragment>
+              <Row>
+                <Col
+                  desk={12}
+                  palm={12}
+                  tablet={12}
+                  tv={12}
+                >
+                  <Alert
+                    icon={
+                      <IconChecked height={16} width={16} />
+                    }
+                    type="success"
+                  >
+                    <span>{statusMessage}</span>
+                  </Alert>
+                </Col>
+              </Row>
+              <Row>
+                <Col
+                  desk={12}
+                  palm={12}
+                  tablet={12}
+                  tv={12}
+                >
+                  <Card>
+                    <CardContent>
+                      <Grid>
+                        <Row>
+                          <Col
+                            desk={12}
+                            palm={12}
+                            tablet={12}
+                            tv={12}
+                          >
+                            <div className={style.head}>
+                              <div className={style.advise}>
+                                {t('pages.withdraw.result_advise')}
+                              </div>
+                              <div className={style.headActions}>
+                                <Button
+                                  fill="outline"
+                                  icon={<IconExtract width={12} height={12} />}
+                                  onClick={onViewStatement}
+                                >
+                                  {t('pages.withdraw.view_statement')}
+                                </Button>
+                              </div>
                             </div>
-                            <div className={style.headActions}>
-                              <Button
-                                fill="outline"
-                                icon={<IconExtract width={12} height={12} />}
-                                onClick={onViewStatement}
-                              >
-                                {t('pages.withdraw.view_statement')}
-                              </Button>
-                            </div>
-                          </div>
-                        </Col>
-                      </Row>
-                      {this.renderRecipient()}
-                      {this.renderInformationRow()}
-                      <Row>
-                        <Col>
-                          <span className={style.information}>
-                            {t('pages.withdraw.result_information')}
-                          </span>
-                        </Col>
-                      </Row>
-                    </Grid>
-                  </CardContent>
-                </Card>
-              </Col>
-            </Row>
+                          </Col>
+                        </Row>
+                        {this.renderRecipient()}
+                        {this.renderInformationRow()}
+                        <Row>
+                          <Col>
+                            <span className={style.information}>
+                              {t('pages.withdraw.result_information')}
+                            </span>
+                          </Col>
+                        </Row>
+                      </Grid>
+                    </CardContent>
+                  </Card>
+                </Col>
+              </Row>
+            </Fragment>
           )
         }
       </Grid>
