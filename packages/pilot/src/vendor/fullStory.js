@@ -25,7 +25,7 @@ export const identify = (
       {
         email_str: email,
         environment_str: environment,
-        userDateCreated_str: userDateCreated,
+        userDateCreated_date: new Date(userDateCreated),
         userName_str: userName,
         userPermission_str: userPermission,
       }
@@ -45,7 +45,7 @@ export const identify = (
 export const setCompany = (id, name, dateCreated, status) => {
   if (hasProperty(window.FS)) {
     window.FS.setUserVars({
-      companyDateCreated_str: dateCreated,
+      companyDateCreated_date: new Date(dateCreated),
       companyId_str: id,
       companyName_str: name,
       companyStatus_str: status,
