@@ -53,16 +53,16 @@ describe('isReprocessable', () => {
     expect(isReprocessable(transaction, emptyData)).toBe(false)
   })
 
-  it('should return false if status is refused and date_created greater than 3d', () => {
+  it('should return false if status is refused and date_created greater than 5d', () => {
     const transaction = pipe(
       assoc('status', 'refused'),
-      assoc('date_created', moment().subtract(4, 'days'))
+      assoc('date_created', moment().subtract(6, 'days'))
     )(transactionMock)
 
     expect(isReprocessable(transaction, emptyData)).toBe(false)
   })
 
-  it('should return true if status is refused and date_created less than 3d', () => {
+  it('should return true if status is refused and date_created less than 5d', () => {
     const transaction = pipe(
       assoc('status', 'refused'),
       assoc('date_created', now)
