@@ -18,6 +18,7 @@ import WithdrawContainer from '../../containers/Withdraw'
 import partnersBankCodes from '../../models/partnersBanksCodes'
 
 import { receiveWithdraw } from './actions'
+import { clearLocalErrors } from '../ErrorBoundary/actions'
 import { withError } from '../ErrorBoundary'
 
 const mapStateToProps = ({
@@ -36,7 +37,8 @@ const mapStateToProps = ({
   pricing,
 })
 
-const mapDispatchToProps = ({
+const mapDispatchToProps = dispatch => ({
+  clearErrors: () => dispatch(clearLocalErrors()),
   onWithdrawReceive: receiveWithdraw,
 })
 
@@ -254,6 +256,8 @@ class Withdraw extends Component {
   }
 
   handleTryAgain () {
+    const { clearErrors } = this.props
+    clearErrors()
     this.goTo('data', 'current')
   }
 
@@ -326,7 +330,19 @@ Withdraw.propTypes = {
   capabilities: PropTypes.shape({
     allow_manage_recipients: PropTypes.bool,
   }).isRequired,
-  client: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  clearErrors: PropTypes.func.isRequired,
+  client: PropTypes.shape({
+    authentication: PropTypes.shape({
+      session_id: PropTypes.string.isRequired,
+    }),
+    session: PropTypes.shape({
+      verify: PropTypes.func.isRequired,
+    }).isRequired,
+    transfers: PropTypes.shape({
+      create: PropTypes.func.isRequired,
+    }).isRequired,
+    withdraw: PropTypes.func.isRequired,
+  }).isRequired,
   error: PropTypes.shape({
     affectedRoute: PropTypes.string.isRequired,
     localized: PropTypes.shape({

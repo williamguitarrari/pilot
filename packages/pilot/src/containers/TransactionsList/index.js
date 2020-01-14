@@ -103,6 +103,7 @@ const buildEmptyState = t => (
 
 const TransactionsList = ({
   amount,
+  clearFilterDisabled,
   confirmationDisabled,
   count,
   data,
@@ -129,6 +130,7 @@ const TransactionsList = ({
   query,
   rows,
   selectedPage,
+  selectedPreset,
   selectedRows,
   showDateInputCalendar,
   t,
@@ -179,6 +181,7 @@ const TransactionsList = ({
           <Filter
             confirmationDisabled={confirmationDisabled}
             disabled={loading}
+            clearFilterDisabled={clearFilterDisabled}
             onConfirm={onFilterConfirm}
             onChange={onFilterChange}
             onClear={onFilterClear}
@@ -193,6 +196,7 @@ const TransactionsList = ({
               presets={dateSelectorPresets}
               strings={translateDateInput(t)}
               onPresetChange={onDatePresetChange}
+              selectedPreset={selectedPreset}
               selectionMode={
                 query.dates.start
                 && query.dates.start.isSame(query.dates.end, 'day')
@@ -354,6 +358,7 @@ const TransactionsList = ({
 
 TransactionsList.propTypes = {
   amount: PropTypes.number,
+  clearFilterDisabled: PropTypes.bool,
   confirmationDisabled: PropTypes.bool,
   count: PropTypes.number,
   data: PropTypes.arrayOf(PropTypes.object),
@@ -405,6 +410,7 @@ TransactionsList.propTypes = {
   }),
   rows: PropTypes.arrayOf(PropTypes.object).isRequired,
   selectedPage: PropTypes.number,
+  selectedPreset: PropTypes.string,
   selectedRows: PropTypes.arrayOf(PropTypes.number).isRequired,
   showDateInputCalendar: PropTypes.bool,
   t: PropTypes.func.isRequired,
@@ -413,7 +419,8 @@ TransactionsList.propTypes = {
 
 TransactionsList.defaultProps = {
   amount: 0,
-  confirmationDisabled: false,
+  clearFilterDisabled: false,
+  confirmationDisabled: true,
   count: 0,
   data: null,
   order: 'descending',
@@ -427,6 +434,7 @@ TransactionsList.defaultProps = {
     search: '',
   },
   selectedPage: 15,
+  selectedPreset: '30-days',
   showDateInputCalendar: false,
 }
 

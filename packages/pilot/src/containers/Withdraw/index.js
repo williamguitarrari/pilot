@@ -28,8 +28,9 @@ import formatCpfCnpj from '../../formatters/cpfCnpj'
 import WithdrawForm from './Form'
 import WithdrawConfirmation from './Confirmation'
 import WithdrawResult from './Result'
-import { Message, MessageActions } from '../../components/Message'
 import EmptyStateIcon from './EmptyStateIcon.svg'
+
+import style from './style.css'
 
 const createStepsStatus = pipe(
   toPairs,
@@ -50,19 +51,18 @@ const buildEmptyState = (onBack, t) => (
     alignItems="center"
     direction="column"
   >
-    <Message
-      image={<EmptyStateIcon width={365} height={148} />}
-      message={t('pages.withdraw.no_available_limits')}
-    >
-      <MessageActions>
-        <Button
-          fill="gradient"
-          onClick={onBack}
-        >
-          {t('pages.withdraw.back_to_balance')}
-        </Button>
-      </MessageActions>
-    </Message>
+    <p className={style.message}>
+      {t('pages.withdraw.no_available_limits')}
+    </p>
+    <EmptyStateIcon width={365} height={148} />
+    <div className={style.buttonWrapper}>
+      <Button
+        fill="gradient"
+        onClick={onBack}
+      >
+        {t('pages.withdraw.back_to_balance')}
+      </Button>
+    </div>
   </Flexbox>
 )
 

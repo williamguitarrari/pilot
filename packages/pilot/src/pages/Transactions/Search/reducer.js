@@ -6,22 +6,24 @@ import {
   SEARCH_CLEAR,
 } from './actions'
 
+const getInitialquery = () => ({
+  count: 15,
+  dates: {
+    end: moment(new Date()).endOf('day'),
+    start: moment(new Date()).subtract(30, 'days').startOf('day'),
+  },
+  filters: {},
+  offset: 1,
+  search: '',
+  sort: {
+    field: ['created_at'],
+    order: 'descending',
+  },
+})
+
 const initialState = {
   loading: true,
-  query: {
-    count: 15,
-    dates: {
-      end: moment(new Date()).endOf('day'),
-      start: moment(new Date()).subtract(30, 'days').startOf('day'),
-    },
-    filters: {},
-    offset: 1,
-    search: '',
-    sort: {
-      field: ['created_at'],
-      order: 'descending',
-    },
-  },
+  query: getInitialquery(),
 }
 
 export default function searchReducer (state, action) {
@@ -54,8 +56,8 @@ export default function searchReducer (state, action) {
 
     case SEARCH_CLEAR: {
       return {
-        ...initialState,
         loading: false,
+        query: getInitialquery(),
       }
     }
 

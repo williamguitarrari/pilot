@@ -4,9 +4,22 @@
 .container {
   padding-top: var(--spacing-large);
   text-align: center;
+  width: 350px;
+  margin: auto;
+}
+
+.buttonWrapper {
+  margin-top: 48px;
 }
 
 .message {
-  color: var(--color-light-steel-100);
+  color: var(--color-light-noir-100);
   line-height: 1.81;
+  font-size: 14px;
+  width: 350px;
+  margin-bottom: 56px;
+}
+
+.title {
+  color: var(--color-light-noir-100);
 }
