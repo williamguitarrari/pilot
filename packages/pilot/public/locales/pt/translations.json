@@ -56,6 +56,11 @@
   "export_table": "Exportar tabela",
   "export_to": "Exportar para:",
   "filter_action": "Filtrar",
+  "fraud_reimbursed": {
+    "title": "Fraude coberta",
+    "action": "Transações com este status foram identificadas como fraudulentas e são garantidas pela sua Cobertura de fraudes.",
+    "reason": ""
+  },
   "go_back": "voltar",
   "holder_name": "Portador do cartão",
   "installment_plural": "{{count}}x",

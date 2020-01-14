@@ -21,6 +21,7 @@ const actions = {
   acquirer_timeout: 'refuse.action.acquirer_timeout',
   antifraud: 'refuse.action.antifraud',
   capture_timeout: 'refuse.action.capture_timeout',
+  fraud_reimbursed: 'fraud_reimbursed.action',
   invalid_capture_amount: 'refuse.action.invalid_capture_amount',
   manual_review: 'refuse.action.manual_review',
   manual_review_timeout: 'refuse.action.manual_review_timeout',

@@ -296,7 +296,11 @@ const transactionSpec = {
   risk_level: prop('risk_level'),
   referer: prop('referer'),
   soft_descriptor: prop('soft_descriptor'),
-  status: prop('status'),
+  status: ifElse(
+    propEq('fraud_reimbursed', true),
+    always('fraud_reimbursed'),
+    prop('status')
+  ),
   status_reason: ifElse(
     propEq('status', 'refused'),
     prop('refuse_reason'),
