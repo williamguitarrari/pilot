@@ -9,10 +9,10 @@ import {
   FormInput,
 } from 'former-kit'
 
-import styles from '../../style.css'
+import styles from '../style.css'
 
-import PasswordInput from '../../../../components/PasswordInput'
-import required from '../../../../validation/required'
+import PasswordInput from '../../../components/PasswordInput'
+import required from '../../../validation/required'
 
 const isRequired = t => required(t('sign_up.required'))
 
