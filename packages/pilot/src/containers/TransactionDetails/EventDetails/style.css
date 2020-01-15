@@ -15,5 +15,9 @@
     & p {
       margin: 0;
     }
+
+    & > .fraudReimbursed {
+      margin-bottom: var(--spacing-small);
+    }
   }
 }
