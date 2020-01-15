@@ -20,20 +20,12 @@ const PasswordResetConfirmation = lazy(() => import(
   /* webpackChunkName: "password-reset-confirmation" */ './PasswordRecovery/Reset/Confirmation'
 ))
 
-const CompanySignup = lazy(() => import(
-  /* webpackChunkName: "company-signup" */ './SignUp/Company'
-))
-
-const CompanySignupConfirmation = lazy(() => import(
-  /* webpackChunkName: "company-signup-confirmation" */ './SignUp/Company/Confirmation'
-))
-
 const UserSignUp = lazy(() => import(
-  /* webpackChunkName: "user-signup" */ './SignUp/User'
+  /* webpackChunkName: "user-signup" */ './UserSignUp'
 ))
 
-const UserSignupConfirmation = lazy(() => import(
-  /* webpackChunkName: "user-signup-confirmation" */ './SignUp/User/Confirmation'
+const UserSignUpConfirmation = lazy(() => import(
+  /* webpackChunkName: "user-signup-confirmation" */ './UserSignUp/Confirmation'
 ))
 
 export {
@@ -42,8 +34,6 @@ export {
   PasswordRecoveryConfirmation,
   PasswordReset,
   PasswordResetConfirmation,
-  CompanySignup,
-  CompanySignupConfirmation,
   UserSignUp,
-  UserSignupConfirmation,
+  UserSignUpConfirmation,
 }
