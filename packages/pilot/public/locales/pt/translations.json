@@ -164,6 +164,7 @@
       "subtitle": "À dashboard Pagar.me"
     },
     "login_call": "Faça login para acessar sua conta",
+    "register_url": "https://pagar.me/quero-usar",
     "signup_call": "Ainda não tem uma conta?",
     "signup_action": "Cadastre-se!",
     "test": {

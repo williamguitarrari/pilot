@@ -28,19 +28,17 @@ const PresentationPage = ({
     location: {
       pathname,
     },
-    push,
   },
   t,
 }) => {
-  const onRegister = () => push('/account/signup')
-
+  const redirectToRegister = () => window.open(t('landing.register_url'))
   const shouldShowCopyright = pathname !== '/account/login'
 
   return (
     <Presentation
       environment={environment}
       environmentUrl={changeEnvironmentUrl()}
-      onRegister={onRegister}
+      redirectToRegister={redirectToRegister}
       shouldShowCopyright={shouldShowCopyright}
       t={t}
     />

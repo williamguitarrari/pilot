@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import Confirmation from '../../Confirmation'
+import Confirmation from '../Confirmation'
 
-const UserSignupConfirmation = ({
+const UserSignUpConfirmation = ({
   onBackToLogin,
   t,
 }) => (
@@ -17,9 +17,9 @@ const UserSignupConfirmation = ({
   />
 )
 
-UserSignupConfirmation.propTypes = {
+UserSignUpConfirmation.propTypes = {
   onBackToLogin: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
 }
 
-export default UserSignupConfirmation
+export default UserSignUpConfirmation

@@ -15,13 +15,9 @@ import {
   PasswordResetConfirmation,
 } from '../../../src/containers/Account/PasswordRecovery/Reset'
 import {
-  CompanySignupForm,
-  CompanySignupConfirmation,
-} from '../../../src/containers/Account/SignUp/Company'
-import {
-  UserSignupForm,
-  UserSignupConfirmation,
-} from '../../../src/containers/Account/SignUp/User'
+  UserSignUpForm,
+  UserSignUpConfirmation,
+} from '../../../src/containers/Account/UserSignUp'
 import Presentation from '../../../src/containers/Account/Presentation'
 
 const t = translation => translation
@@ -45,12 +41,12 @@ const TestPresentation = (
   <Presentation
     environment="test"
     environmentUrl=""
-    onRegister={action('register click')}
+    redirectToRegister={action('register click')}
     t={t}
   />
 )
 
-const UserSignup = () => {
+const UserSignUp = () => {
   const initialValidations = validate(' ')
   const [validations, setValidations] = useState(initialValidations)
 
@@ -65,7 +61,7 @@ const UserSignup = () => {
     <Account
       logo={Placeholder}
       primaryContent={(
-        <UserSignupForm
+        <UserSignUpForm
           base="dark"
           email="johndoe@pagar.me"
           onChange={validatePassword(action('onChange'))}
@@ -85,7 +81,7 @@ const LivePresentation = (
   <Presentation
     environment="live"
     environmentUrl=""
-    onRegister={action('register click')}
+    redirectToRegister={action('register click')}
     t={t}
   />
 )
@@ -191,43 +187,12 @@ storiesOf('Pages|Login', module)
 
 storiesOf('Pages|Signup', module)
   .addDecorator(withA11y)
-  .add('Company Signup', () => (
-    <Account
-      // eslint-disable-next-line
-      logo={Placeholder}
-      primaryContent={(
-        <CompanySignupForm
-          base="dark"
-          onPasswordRecovery={action('recover password')}
-          onSubmit={action('submit')}
-          t={t}
-        />
-      )}
-      secondaryContent={TestPresentation}
-      t={t}
-    />
-  ))
-  .add('Company Signup Confirmation', () => (
-    <Account
-      // eslint-disable-next-line
-      logo={Placeholder}
-      primaryContent={(
-        <CompanySignupConfirmation
-          onPasswordRecovery={action('recover password')}
-          onBackToLogin={action('back to login')}
-          t={t}
-        />
-      )}
-      secondaryContent={TestPresentation}
-      t={t}
-    />
-  ))
-  .add('User Signup', () => <UserSignup />)
+  .add('User Signup', () => <UserSignUp />)
   .add('User Signup Confirmation', () => (
     <Account
       logo={Placeholder}
       primaryContent={(
-        <UserSignupConfirmation
+        <UserSignUpConfirmation
           onPasswordRecovery={action('recover password')}
           onBackToLogin={action('back to login')}
           t={t}
