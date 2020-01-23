@@ -27,10 +27,8 @@ import {
   PasswordRecoveryConfirmation,
   PasswordReset,
   PasswordResetConfirmation,
-  CompanySignup,
-  CompanySignupConfirmation,
   UserSignUp,
-  UserSignupConfirmation,
+  UserSignUpConfirmation,
 } from './dynamicImports'
 
 const DARK_BASE = 'dark'
@@ -94,20 +92,12 @@ const AccountArea = ({ history: { location }, t }) => {
               render={() => <PasswordReset base={base} />}
             />
             <Route
-              path="/account/signup/confirmation"
-              render={() => <CompanySignupConfirmation />}
-            />
-            <Route
               path="/account/signup/invite/confirmation"
-              render={() => <UserSignupConfirmation />}
+              render={() => <UserSignUpConfirmation />}
             />
             <Route
               path="/account/signup/invite"
               render={() => <UserSignUp base={base} />}
-            />
-            <Route
-              path="/account/signup"
-              render={() => <CompanySignup base={base} />}
             />
             <Redirect to="/account/login" />
           </Switch>

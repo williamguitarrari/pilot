@@ -760,6 +760,7 @@ class TransactionDetails extends Component {
                 <Events
                   boleto={boleto}
                   color={statusLegends[status].color}
+                  fraudReimbursed={status === 'fraud_reimbursed'}
                   t={t}
                   id={id}
                   operations={operations}

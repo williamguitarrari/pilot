@@ -16,7 +16,7 @@ import styles from './style.css'
 const PresentationContainer = ({
   environment,
   environmentUrl,
-  onRegister,
+  redirectToRegister,
   shouldShowCopyright,
   t,
 }) => (
@@ -60,7 +60,7 @@ const PresentationContainer = ({
           &nbsp;
           <button
             className={styles.link}
-            onClick={onRegister}
+            onClick={redirectToRegister}
             role="link"
             type="button"
           >
@@ -125,7 +125,7 @@ const PresentationContainer = ({
 PresentationContainer.propTypes = {
   environment: PropTypes.oneOf(['live', 'test']).isRequired,
   environmentUrl: PropTypes.string.isRequired,
-  onRegister: PropTypes.func.isRequired,
+  redirectToRegister: PropTypes.func.isRequired,
   shouldShowCopyright: PropTypes.bool,
   t: PropTypes.func.isRequired,
 }

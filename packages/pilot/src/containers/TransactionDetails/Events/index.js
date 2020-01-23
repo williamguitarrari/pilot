@@ -23,9 +23,16 @@ const getOperationLegendStatus = pipe(
   pathOr({}, __, transactionOperationTypes)
 )
 
+const isChargebackCovered = (type, fraudReimbursed) => {
+  const isChargeback = type === 'chargeback' || type === 'chargeback_refund'
+
+  return isChargeback && fraudReimbursed === true
+}
+
 const Events = ({
   boleto,
   color,
+  fraudReimbursed,
   id,
   operations,
   payment,
@@ -41,6 +48,7 @@ const Events = ({
     const key = `${type}_${status}_${(cycle || 0)}_${index}`
     const legendStatus = getOperationLegendStatus(operation)
     const number = operations.length - index
+    const isFraudReimbursed = isChargebackCovered(type, fraudReimbursed)
 
     return (
       <Event
@@ -49,10 +57,14 @@ const Events = ({
         isMoreThanOneOperation={operations.length > 1}
         key={key}
         number={number}
-        title={legendStatus.title}
+        title={isFraudReimbursed
+          ? t('fraud_reimbursed.title')
+          : legendStatus.title
+        }
       >
         <EventDetails
           boleto={boleto}
+          fraudReimbursed={isFraudReimbursed}
           id={id}
           legendStatus={legendStatus}
           operation={operation}
@@ -72,6 +84,7 @@ Events.propTypes = {
     url: PropTypes.string,
   }),
   color: PropTypes.string.isRequired,
+  fraudReimbursed: PropTypes.bool,
   id: PropTypes.number,
   operations: PropTypes.arrayOf(PropTypes.shape({
     cycle: PropTypes.number,
@@ -88,6 +101,7 @@ Events.propTypes = {
 
 Events.defaultProps = {
   boleto: null,
+  fraudReimbursed: null,
   id: null,
   riskLevel: 'unknown',
 }

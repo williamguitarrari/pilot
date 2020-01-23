@@ -34,6 +34,7 @@ const reasons = {
   acquirer_timeout: 'refuse.reason.acquirer_timeout',
   antifraud: 'refuse.reason.antifraud',
   capture_timeout: 'refuse.reason.capture_timeout',
+  fraud_reimbursed: 'fraud_reimbursed.reason',
   IMSG: 'refuse.reason.conflicting_data',
   invalid_capture_amount: 'refuse.reason.invalid_capture_amount',
   manual_review: 'refuse.reason.manual_review',

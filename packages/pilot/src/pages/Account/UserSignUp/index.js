@@ -15,9 +15,9 @@ import {
 import { validate } from 'p4g4rm3'
 import qs from 'qs'
 import pagarme from 'pagarme'
-import buildParamErrors from '../../Login/buildParamErrors'
+import buildParamErrors from '../Login/buildParamErrors'
 
-import { SignUpInviteForm } from '../../../../containers/Account/SignUp'
+import { UserSignUpForm } from '../../../containers/Account/UserSignUp'
 
 const enhanced = compose(
   translate(),
@@ -113,7 +113,7 @@ const SignUpInvitePage = ({
   }
 
   return (
-    <SignUpInviteForm
+    <UserSignUpForm
       base={base}
       errors={errors}
       loading={loading}

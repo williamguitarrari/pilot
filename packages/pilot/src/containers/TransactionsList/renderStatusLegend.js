@@ -29,17 +29,34 @@ const getActionOrIMSG = ({ refuseLabels, t }) => {
   return t(refuseLabels.action)
 }
 
-const renderContentTooltip = (item, t) => {
-  const refuseLabels = item.status_reason === 'acquirer'
+const getRefuseLabels = (item) => {
+  if (item.status === 'fraud_reimbursed') {
+    return refuse('fraud_reimbursed')
+  }
+
+  return item.status_reason === 'acquirer'
     ? refuse(item.acquirer.response_code)
     : refuse(item.status_reason)
+}
+
+const isStatusRefused = transactionStatus => transactionStatus === 'refused'
+
+const getTransactionStatus = isRefusedTransaction => (isRefusedTransaction
+  ? 'refuse'
+  : 'fraud_reimbursed'
+)
+
+const renderContentTooltip = (item, t) => {
+  const refuseLabels = getRefuseLabels(item)
+  const isRefusedTransaction = isStatusRefused(item.status)
+  const transactionStatus = getTransactionStatus(isRefusedTransaction)
 
   return (
     <div className={style.tooltip}>
-      <p className={style.title}>{t('refuse.title')}</p>
+      <p className={style.title}>{t(`${transactionStatus}.title`)}</p>
       <div className={style.description}>
         <div className={style.descriptionTitle}>
-          { item.status_reason === 'acquirer'
+          { item.status_reason === 'acquirer' && isRefusedTransaction
             && (
               <span className={style.responseCode}>
                 {refuseLabels.code}
@@ -60,7 +77,7 @@ const renderContentTooltip = (item, t) => {
 
 const renderStatusLegend = t => item => (
   <div className={style.centralizedItem}>
-    {item.status === 'refused'
+    {(item.status === 'refused' || item.status === 'fraud_reimbursed')
       && <Spacing size="medium" />
     }
     <Legend
@@ -72,7 +89,7 @@ const renderStatusLegend = t => item => (
     >
       {status[item.status].text}
     </Legend>
-    {item.status === 'refused'
+    {(item.status === 'refused' || item.status === 'fraud_reimbursed')
       && (
         <Tooltip
           content={renderContentTooltip(item, t)}
@@ -80,7 +97,7 @@ const renderStatusLegend = t => item => (
         >
           <HelpInfo
             className={style.helpIcon}
-            color="#ea5656"
+            color={status[item.status].color}
             height={16}
             width={16}
           />

@@ -20,6 +20,10 @@ const status = {
     color: '#984141',
     text: 'Cbk reapresentado',
   },
+  fraud_reimbursed: {
+    color: '#0ba4bc',
+    text: 'Fraude Coberta',
+  },
   paid: {
     color: '#17c9b2',
     text: 'Paga',
