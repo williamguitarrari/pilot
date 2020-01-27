@@ -43,6 +43,7 @@ import ConfirmModal from './ConfirmModal'
 import WithLoader from './withLoader'
 import WithSpinner from './withSpinner'
 import PaymentLinkHeader from './PaymentLinkHeader'
+import PaymentLinkMetrics from './PaymentLinkMetrics'
 
 storiesOf('Components|Custom components', module)
   .addDecorator(withA11y)
@@ -85,6 +86,7 @@ storiesOf('Components|Custom components', module)
   .add('MetricChart', () => <MetricChart />)
   .add('Confirm Modal', () => <ConfirmModal />)
   .add('PaymentLinkHeader', () => <PaymentLinkHeader />)
+  .add('PaymentLinkMetrics', () => <PaymentLinkMetrics />)
 
 storiesOf('Components|High Order Components', module)
   .add('with loader', () => <WithLoader />)
