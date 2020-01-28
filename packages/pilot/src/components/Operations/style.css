@@ -11,29 +11,6 @@
   padding-left: var(--spacing-tiny);
 }
 
-.container {
-  border-radius: 3px;
-
-  & > div .pagination.paginationBottom {
-    padding-top: var(--spacing-medium);
-  }
-
-  & > div:last-child {
-    padding-top: var(--spacing-medium);
-  }
-
-  & .head > div:first-child {
-    padding-left: 0;
-    padding-right: 0;
-    padding-top: var(--spacing-tiny);
-  }
-}
-
-.head {
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
-}
-
 .negative {
   color: var(--color-light-salmon-100);
 }
@@ -68,13 +45,6 @@
   color: var(--color-light-greenish-100);
 }
 
-.subtitle > h3 {
-  color: var(--color-light-steel-100);
-  font-size: 14px;
-  font-weight: normal;
-  margin-right: var(--spacing-small);
-}
-
 .type {
   color: var(--color-light-steel-100);
   font-weight: bold;
@@ -86,18 +56,6 @@
 
 .zero {
   color: var(--color-light-steel-100);
-}
-
-.overlay {
-  align-items: center;
-  background-color: rgba(var(--color-white), 0.95);
-  display: flex;
-  height: 100%;
-  justify-content: center;
-  padding-top: 75px;
-  position: absolute;
-  width: 100%;
-  z-index: 5;
 }
 
 .title {

@@ -22,7 +22,7 @@ import Filter from '../Filter'
 import tableColumns from './tableColumns'
 
 import NotFoundMessage from './NotFoundMessage'
-import TableData from '../../components/Operations/TableData'
+import TableData from '../../components/PaginationTable/TableData'
 
 const RecipientTable = ({
   confirmationDisabled,

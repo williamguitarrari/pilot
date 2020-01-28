@@ -15,7 +15,10 @@ const TableData = ({
   expandedRows,
   maxColumns,
   onExpandRow,
+  onOrderChange,
   onRowClick,
+  order,
+  orderField,
   rows,
 }) => (
   <Table
@@ -26,7 +29,10 @@ const TableData = ({
     expandedRows={expandedRows}
     maxColumns={maxColumns}
     onExpandRow={onExpandRow}
+    onOrderChange={onOrderChange}
     onRowClick={onRowClick}
+    orderSequence={order}
+    orderColumn={orderField}
     rows={rows}
   />
 )
@@ -39,7 +45,12 @@ TableData.propTypes = {
   expandedRows: PropTypes.arrayOf(PropTypes.number),
   maxColumns: PropTypes.number,
   onExpandRow: PropTypes.func,
+  onOrderChange: PropTypes.func,
   onRowClick: PropTypes.func,
+  order: PropTypes.oneOf([
+    'ascending', 'descending',
+  ]),
+  orderField: PropTypes.number,
   rows: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
@@ -49,7 +60,10 @@ TableData.defaultProps = {
   expandedRows: [],
   maxColumns: 7,
   onExpandRow: null,
+  onOrderChange: null,
   onRowClick: null,
+  order: 'ascending',
+  orderField: 0,
 }
 
 export default enhance(TableData)
