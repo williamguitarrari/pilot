@@ -15,6 +15,8 @@ import {
 import PaymentLinksList from '../../../src/containers/PaymentLinks/Table'
 import Section from '../../Section'
 
+import rows from './mocks'
+
 const translations = {
   pages: {
     payment_links: {
@@ -36,6 +38,8 @@ const getTranslation = pipe(
   identity
 )
 
+const pageSizeOptions = [15, 30, 60, 100]
+
 const initialQuery = {
   dates: {
     end: moment(),
@@ -46,12 +50,45 @@ const initialQuery = {
 }
 
 const PaymentLinksListExample = () => {
+  const [itemsPerPage, setItemsPerPage] = useState(15)
+  const [exporting, setExporting] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [orderField, setOrderField] = useState(3)
+  const [order, setOrder] = useState('ascending')
   const [filter, setFilter] = useState(initialQuery)
+
+  const toggleExporting = () => {
+    setExporting(true)
+
+    setTimeout(() => setExporting(false), 200)
+  }
+
+  const handlePageChange = (page) => {
+    setLoading(true)
+
+    setTimeout(() => {
+      setCurrentPage(page)
+      setLoading(false)
+    }, 200)
+  }
+
+  const handleOrderChange = (field, newOrder) => {
+    setOrderField(field)
+    setOrder(newOrder)
+  }
 
   return (
     <Section>
       <PaymentLinksList
+        currentPage={currentPage}
+        totalPages={15}
+        data={rows}
+        disabled={loading}
+        exporting={exporting}
         filter={filter}
+        itemsPerPage={itemsPerPage}
+        loading={loading}
         onFilterClear={juxt([
           action('onFilterClear'),
           () => setFilter(initialQuery),
@@ -61,6 +98,29 @@ const PaymentLinksListExample = () => {
           action('onFilterChange'),
           setFilter,
         ])}
+        onExport={juxt([
+          action('onExport'),
+          toggleExporting,
+        ])}
+        onOrderChange={juxt([
+          action('onOrderChange'),
+          handleOrderChange,
+        ])}
+        onPageChange={juxt([
+          action('onPageChange'),
+          handlePageChange,
+        ])}
+        onPageCountChange={juxt([
+          action('onPageCountChange'),
+          setItemsPerPage,
+        ])}
+        onRowClick={action('onRowClick')}
+        order={order}
+        orderField={orderField}
+        pageSizeOptions={pageSizeOptions.map(i => ({
+          name: `items_per_page ${i}`,
+          value: `${i}`,
+        }))}
         t={getTranslation}
       />
     </Section>

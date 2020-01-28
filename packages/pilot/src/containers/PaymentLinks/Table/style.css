@@ -10,3 +10,21 @@
 .filter {
   margin-bottom: var(--spacing-medium);
 }
+
+.copyButton {
+  color: #7052c8;
+
+  & svg {
+    color: #7052c8;
+  }
+}
+
+.table > div > div {
+  padding-top: 0 !important; /* stylelint-disable-line declaration-no-important */
+}
+
+.tableTitle {
+  color: var(--color-light-steel-100) !important; /* stylelint-disable-line declaration-no-important */
+  text-transform: uppercase;
+  font-weight: 600 !important; /* stylelint-disable-line declaration-no-important */
+}
