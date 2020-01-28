@@ -8,6 +8,10 @@ const status = {
     text: 'Autorizada',
     textColor: '#000000',
   },
+  available: {
+    color: '#7052c8',
+    text: 'Disponível',
+  },
   cancelled: {
     color: '#da272c',
     text: 'Cancelada',
@@ -19,6 +23,10 @@ const status = {
   chargedback_refund: {
     color: '#984141',
     text: 'Cbk reapresentado',
+  },
+  inactive: {
+    color: '#ea5656',
+    text: 'Inativo',
   },
   paid: {
     color: '#17c9b2',
