@@ -1,5 +1,6 @@
 import React, { cloneElement } from 'react'
 import PropTypes from 'prop-types'
+import className from 'classnames'
 
 import {
   CardActions,
@@ -28,7 +29,7 @@ const renderChildrenInput = ({
   input,
   styled,
 }) => cloneElement(input, {
-  className: styled.search,
+  className: className(input.props.className, styled.search),
   disabled,
   key: `${input.props.name}-${index}`,
 })

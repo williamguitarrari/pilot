@@ -1,0 +1,12 @@
+@import "former-kit-skin-pagarme/dist/styles/spacing.css";
+@import "former-kit-skin-pagarme/dist/styles/colors.css";
+
+.checkboxGroup {
+  min-width: auto;
+  width: auto;
+  margin: 0 var(--spacing-large);
+}
+
+.filter {
+  margin-bottom: var(--spacing-medium);
+}
