@@ -29,6 +29,35 @@ const totalAmountByWeekday = [
   },
 ]
 
+const presets = [
+  {
+    date: () => null,
+    key: 'custom',
+    label: 'Personalizado',
+  },
+  {
+    date: () => 0,
+    key: 'today',
+    label: 'Hoje',
+  },
+  {
+    date: () => -7,
+    key: '7-days',
+    label: '7 Dias',
+  },
+  {
+    date: () => -15,
+    key: '15-days',
+    label: '15 Dias',
+  },
+  {
+    date: () => -30,
+    key: '30-days',
+    label: '30 Dias',
+  },
+]
+
 export {
+  presets,
   totalAmountByWeekday,
 }
