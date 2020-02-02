@@ -1609,6 +1609,22 @@
         "encryption": "Criptografia",
         "live": "Live",
         "test": "Test"
+      },
+      "fees": {
+        "subtitle": "Veja se está tudo certo com as taxas configuradas para a sua empresa.",
+        "title": "Confira suas taxas",
+        "credit_card": "Cartão de crédito",
+        "one_installment": "Taxa à vista",
+        "two_to_six_installments": "2 a 6 parcelas",
+        "seven_or_more_installments": "7 parcelas ou mais",
+        "processing": "Processamento",
+        "antifraud": "Antifraude",
+        "boleto": "Boleto",
+        "emission": "Emissão",
+        "anticipation": "Antecipação",
+        "tax": "Taxa",
+        "transfers": "Transferências",
+        "doc_ted": "DOC/TED"
       }
     }
   },
