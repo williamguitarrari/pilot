@@ -42,6 +42,7 @@ import PasswordInput from './PasswordInput'
 import ConfirmModal from './ConfirmModal'
 import WithLoader from './withLoader'
 import WithSpinner from './withSpinner'
+import WelcomeMessage from './WelcomeMessage'
 
 storiesOf('Components|Custom components', module)
   .addDecorator(withA11y)
@@ -83,6 +84,7 @@ storiesOf('Components|Custom components', module)
   .add('MetricList', () => <MetricList />)
   .add('MetricChart', () => <MetricChart />)
   .add('Confirm Modal', () => <ConfirmModal />)
+  .add('Welcome Message', () => <WelcomeMessage />)
 
 storiesOf('Components|High Order Components', module)
   .add('with loader', () => <WithLoader />)

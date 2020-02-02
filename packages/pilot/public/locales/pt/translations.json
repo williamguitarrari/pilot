@@ -1592,6 +1592,13 @@
       "title": "Transações",
       "total_amount": "total capturado de",
       "try_again": "Tente novamente com outros filtros."
+    },
+    "empty_state": {
+      "welcome": {
+        "title": "Bem-vindo ao seu painel, {{userName}}!",
+        "message": "As dicas ao lado vão te ajudar a começar a sua jornada com o Pagar.me, elas ficarão ativas durante o primeiro mês da nossa parceria, mas se preferir, você pode",
+        "turn_off": "desativá-las."
+      }
     }
   },
   "components": {
