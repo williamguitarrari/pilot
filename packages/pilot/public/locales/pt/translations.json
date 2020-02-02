@@ -1600,6 +1600,15 @@
         "title": "Bem-vindo ao seu painel, {{userName}}!",
         "message": "As dicas ao lado vão te ajudar a começar a sua jornada com o Pagar.me, elas ficarão ativas durante o primeiro mês da nossa parceria, mas se preferir, você pode",
         "turn_off": "desativá-las."
+      },
+      "access_keys": {
+        "subtitle": "Utilize-a para vender com a sua loja,",
+        "subtitle_strong": "não a utilize para testes e nem compartilhe.",
+        "title": "Veja sua Chave de API",
+        "api": "API",
+        "encryption": "Criptografia",
+        "live": "Live",
+        "test": "Test"
       }
     }
   },
