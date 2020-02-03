@@ -157,7 +157,8 @@
     "title": "Transações",
     "alerts": "Notificações",
     "messages": "Mensagens",
-    "exit": "Sair"
+    "exit": "Sair",
+    "welcome": "Bem-vindo!"
   },
   "landing": {
     "logo": "FormerKit",
