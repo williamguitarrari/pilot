@@ -1623,6 +1623,15 @@
         "tax": "Taxa",
         "transfers": "Transferências",
         "doc_ted": "DOC/TED"
+      },
+      "access_docs": {
+        "button_label": "Acessar docs",
+        "title": "Veja como integrar em nossa documentação",
+        "subtitle_link": "entrar em contato",
+        "subtitle_part_one": "Caso tenha dúvidas é só",
+        "subtitle_part_two": "com a gente.",
+        "documentation_link": "https://docs.pagar.me/docs",
+        "homologation_email": "homologacao@pagar.me"
       }
     }
   },
