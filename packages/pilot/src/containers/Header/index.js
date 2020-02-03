@@ -22,6 +22,7 @@ import {
 
 import IconTestAmbientOff from 'emblematic-icons/svg/TestAmbientOff24.svg'
 import IconTestAmbientOn from 'emblematic-icons/svg/TestAmbientOn24.svg'
+import IconRocket from './rocket.svg'
 
 import environment, {
   liveUrl,
@@ -74,7 +75,9 @@ const HeaderContainer = ({
   onBack,
   onLogout,
   onSettings,
+  onWelcome,
   routes,
+  showWelcomeButton,
   t,
   user,
 }) => (
@@ -104,6 +107,21 @@ const HeaderContainer = ({
     </HashRouter>
 
     <HeaderContent>
+      {showWelcomeButton && (
+        <>
+          <Button
+            icon={<IconRocket />}
+            onClick={onWelcome}
+          >
+            <span className={style.welcome}>
+              {t('header.welcome')}
+            </span>
+          </Button>
+
+          <Spacing size="small" />
+        </>
+      )}
+
       {renderEnvironmentButton({ t })}
 
       <Spacing size="small" />
@@ -143,12 +161,14 @@ HeaderContainer.propTypes = {
   onBack: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
   onSettings: PropTypes.func.isRequired,
+  onWelcome: PropTypes.func.isRequired,
   routes: PropTypes.arrayOf(PropTypes.shape({
     component: isValidElement,
     exact: PropTypes.bool,
     path: PropTypes.string,
     title: PropTypes.string,
   })).isRequired,
+  showWelcomeButton: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired,
   user: PropTypes.shape({
     email: PropTypes.string,
