@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import AccessDocs from './AccessDocs'
+import AccessWelcomeMaterial from './AccessWelcomeMaterial'
 import Fees from './Fees'
 import AccessKeys from './AccessKeys'
 import styles from './styles.css'
@@ -14,6 +15,7 @@ const EmptyState = ({
 }) => (
   <div className={styles.accountInfo}>
     <AccessDocs t={t} />
+    <AccessWelcomeMaterial t={t} />
     <Fees fees={fees} t={t} />
     <AccessKeys
       apiKey={apiKey}

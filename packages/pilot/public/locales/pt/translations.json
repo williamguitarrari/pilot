@@ -1632,6 +1632,12 @@
         "subtitle_part_two": "com a gente.",
         "documentation_link": "https://docs.pagar.me/docs",
         "homologation_email": "homologacao@pagar.me"
+      },
+      "access_material": {
+        "button_label": "Acessar material",
+        "title": "Principais dúvidas que você pode ter",
+        "subtitle": "Entenda as transações negadas, seu prazo de recebimento e mais.",
+        "material_link": "https://docs.pagar.me/page/bem-vindo-ao-pagarme"
       }
     }
   },
