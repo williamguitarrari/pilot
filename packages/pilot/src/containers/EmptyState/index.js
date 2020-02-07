@@ -18,6 +18,7 @@ const EmptyState = ({
   encryptionKey,
   environment,
   fees,
+  isAdmin,
   onDisableWelcome,
   t,
   userName,
@@ -48,12 +49,16 @@ const EmptyState = ({
           <AccessDocs t={t} />
           <AccessWelcomeMaterial t={t} />
           <Fees fees={fees} t={t} />
-          <AccessKeys
-            apiKey={apiKey}
-            encryptionKey={encryptionKey}
-            environment={environment}
-            t={t}
-          />
+          { isAdmin
+            && (
+              <AccessKeys
+                apiKey={apiKey}
+                encryptionKey={encryptionKey}
+                environment={environment}
+                t={t}
+              />
+            )
+          }
         </Flexbox>
       </Col>
     </Row>
@@ -75,6 +80,7 @@ EmptyState.propTypes = {
     })),
     transfer: PropTypes.number,
   }),
+  isAdmin: PropTypes.bool,
   onDisableWelcome: PropTypes.func,
   t: PropTypes.func.isRequired,
   userName: PropTypes.string,
@@ -84,6 +90,7 @@ EmptyState.defaultProps = {
   apiKey: '',
   encryptionKey: '',
   fees: {},
+  isAdmin: false,
   onDisableWelcome: () => {},
   userName: '',
 }

@@ -25,6 +25,8 @@ import environment from '../../environment'
 
 const getUserName = pipe(prop('name'), split(' '), head)
 
+const hasAdminPermission = propEq('permission', 'admin')
+
 const getAccessKeys = applySpec({
   apiKey: path(['api_key', environment]),
   encryptionKey: path(['encryption_key', environment]),
@@ -69,6 +71,7 @@ const mapStateToProps = ({
 }) => ({
   accessKeys: getAccessKeys(company),
   fees: getFees(company),
+  isAdmin: hasAdminPermission(user),
   userName: getUserName(user),
 })
 
@@ -84,13 +87,14 @@ const hideEmptyState = push => () => {
 }
 
 const EmptyState = ({
-  accessKeys, fees, history, t, userName,
+  accessKeys, fees, history, isAdmin, t, userName,
 }) => (
   <EmptyStateContainer
     apiKey={accessKeys.apiKey}
     encryptionKey={accessKeys.encryptionKey}
     environment={environment}
     fees={fees}
+    isAdmin={isAdmin}
     onDisableWelcome={hideEmptyState(history.push)}
     t={t}
     userName={userName}
@@ -116,6 +120,7 @@ EmptyState.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  isAdmin: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired,
   userName: PropTypes.string,
 }
