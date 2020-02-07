@@ -21,6 +21,7 @@ const EmptyStateExample = () => (
         ],
         transfer: 187,
       }}
+      isAdmin
       t={t => t}
     />
   </Section>
