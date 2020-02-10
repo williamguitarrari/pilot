@@ -32,6 +32,11 @@ export const isRefundOrChargeBack = pathSatisfies(
   ['movement_object', 'type']
 )
 
+export const isRefundReversal = both(
+  propEq('type', 'payable'),
+  compareMovementTypeTo('refund_reversal')
+)
+
 export const refundOrChargeBackOutcoming = juxt([
   transformAndNegateMovementTypePropTo(['fee'], 'mdr'),
 ])
@@ -140,6 +145,10 @@ export const buildOutcoming = cond([
     refundOrChargeBackOutcoming,
   ],
   [
+    isRefundReversal,
+    creditOutcoming,
+  ],
+  [
     either(isTedTransfer, isCreditTransfer),
     pipe(
       zeroMovementAmount,
@@ -171,6 +180,13 @@ export const buildOutgoing = cond([
   [
     isRefundOrChargeBack,
     refundOrChargeBackOutgoing,
+  ],
+  [
+    isRefundReversal,
+    pipe(
+      zeroMovementAmount,
+      ofRamda
+    ),
   ],
   [
     isTedTransfer,

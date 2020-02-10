@@ -142,6 +142,12 @@ const renderGatewayFeeCollection = (type, outgoing, description) => {
   return null
 }
 
+const renderRefundReversal = (type, labels) => (
+  type === 'refund_reversal'
+    ? <span>{labels.refund_reversal_description}</span>
+    : null
+)
+
 /* eslint-disable react/prop-types */
 const renderDescription = ({
   description,
@@ -171,6 +177,7 @@ const renderDescription = ({
       {renderCreditTransferStatus(type, status, outgoing, transferId, labels)}
       {renderTargetOrSource(type, net, targetId, sourceId, labels)}
       {renderGatewayFeeCollection(type, outgoing, description)}
+      {renderRefundReversal(type, labels)}
     </div>
   )
 }
