@@ -142,9 +142,9 @@ const renderGatewayFeeCollection = (type, outgoing, description) => {
   return null
 }
 
-const renderRefundReversal = (type, labels) => (
+const renderRefundReversal = (type, label) => (
   type === 'refund_reversal'
-    ? <span>{labels.refund_reversal_description}</span>
+    ? <span>{label}</span>
     : null
 )
 
@@ -177,7 +177,7 @@ const renderDescription = ({
       {renderCreditTransferStatus(type, status, outgoing, transferId, labels)}
       {renderTargetOrSource(type, net, targetId, sourceId, labels)}
       {renderGatewayFeeCollection(type, outgoing, description)}
-      {renderRefundReversal(type, labels)}
+      {renderRefundReversal(type, labels.refund_reversal_description)}
     </div>
   )
 }
