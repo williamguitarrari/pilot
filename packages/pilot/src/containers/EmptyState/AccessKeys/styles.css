@@ -1,0 +1,42 @@
+@import "former-kit-skin-pagarme/dist/styles/colors.css";
+@import "former-kit-skin-pagarme/dist/styles/spacing.css";
+
+.subtitle {
+  font-size: 14px;
+}
+
+.acessKeys {
+  padding-top: var(--spacing-medium);
+
+  & > p {
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 0;
+  }
+}
+
+.keysArea {
+  width: auto;
+
+  & > div:first-of-type {
+    margin-right: 35px;
+  }
+}
+
+.keyLabelAndValue {
+  font-size: 12px;
+  margin-bottom: var(--spacing-tiny);
+  width: auto;
+}
+
+.value {
+  align-items: center;
+  color: var(--color-light-greenish-100);
+  cursor: pointer;
+  display: flex;
+  font-weight: bold;
+
+  & svg {
+    margin-left: 5px;
+  }
+}

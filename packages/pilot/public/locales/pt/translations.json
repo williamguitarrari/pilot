@@ -157,7 +157,8 @@
     "title": "Transações",
     "alerts": "Notificações",
     "messages": "Mensagens",
-    "exit": "Sair"
+    "exit": "Sair",
+    "welcome": "Bem-vindo!"
   },
   "landing": {
     "logo": "FormerKit",
@@ -1592,6 +1593,54 @@
       "title": "Transações",
       "total_amount": "total capturado de",
       "try_again": "Tente novamente com outros filtros."
+    },
+    "empty_state": {
+      "title": "Bem vindo",
+      "welcome": {
+        "title": "Bem-vindo ao seu painel, {{userName}}!",
+        "message": "As dicas ao lado vão te ajudar a começar a sua jornada com o Pagar.me, elas ficarão ativas durante o primeiro mês da nossa parceria, mas se preferir, você pode",
+        "turn_off": "desativá-las."
+      },
+      "access_keys": {
+        "subtitle": "Utilize-a para vender com a sua loja,",
+        "subtitle_strong": "não a utilize para testes e nem compartilhe.",
+        "title": "Veja sua Chave de API",
+        "api": "API",
+        "encryption": "Criptografia",
+        "live": "Live",
+        "test": "Test"
+      },
+      "fees": {
+        "subtitle": "Veja se está tudo certo com as taxas configuradas para a sua empresa.",
+        "title": "Confira suas taxas",
+        "credit_card": "Cartão de crédito",
+        "one_installment": "Taxa à vista",
+        "two_to_six_installments": "2 a 6 parcelas",
+        "seven_or_more_installments": "7 parcelas ou mais",
+        "processing": "Processamento",
+        "antifraud": "Antifraude",
+        "boleto": "Boleto",
+        "emission": "Emissão",
+        "anticipation": "Antecipação",
+        "tax": "Taxa",
+        "transfers": "Transferências",
+        "doc_ted": "DOC/TED"
+      },
+      "access_docs": {
+        "button_label": "Acessar docs",
+        "title": "Veja como integrar em nossa documentação",
+        "subtitle_link": "entrar em contato",
+        "subtitle_part_one": "Caso tenha dúvidas é só",
+        "subtitle_part_two": "com a gente.",
+        "documentation_link": "https://docs.pagar.me/docs",
+        "homologation_email": "homologacao@pagar.me"
+      },
+      "access_material": {
+        "button_label": "Acessar material",
+        "title": "Principais dúvidas que você pode ter",
+        "subtitle": "Entenda as transações negadas, seu prazo de recebimento e mais.",
+        "material_link": "https://docs.pagar.me/page/bem-vindo-ao-pagarme"
+      }
     }
   },
   "components": {
