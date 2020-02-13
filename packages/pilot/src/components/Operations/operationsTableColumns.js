@@ -64,7 +64,7 @@ const renderValueAndOperator = (value) => {
 }
 
 const getTypeLabel = (type, labels) => {
-  if (!isNil(type) && type === 'refund_reversal') {
+  if (type === 'refund_reversal') {
     return (
       <Flexbox>
         {labels[type]}
