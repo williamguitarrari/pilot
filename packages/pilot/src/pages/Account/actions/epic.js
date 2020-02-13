@@ -135,6 +135,26 @@ const companyEpic = (action$, state$) => action$.pipe(
   }),
   mergeMap((action) => {
     if (action.error) {
+      return action
+    }
+
+    const { value: state } = state$
+    const { account: { client } } = state
+
+    return client
+      .transactions
+      .search({ count: 1 })
+      .then(({ result: { total: { count } } }) => {
+        const alreadyTransacted = count > 0
+        return { ...action, alreadyTransacted }
+      })
+      .catch(errorPayload => ({
+        error: true,
+        payload: errorPayload,
+      }))
+  }),
+  mergeMap((action) => {
+    if (action.error) {
       return rxOf(receiveError(action.payload))
     }
 
