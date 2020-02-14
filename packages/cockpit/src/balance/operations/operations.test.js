@@ -8,6 +8,7 @@ import operations, {
   isCredit,
   isInterRecipientTransfer,
   isRefundOrChargeBack,
+  isRefundReversal,
   isTedTransfer,
   isGatewayFeeCollection,
   gatewayFeeCollectionOutgoing,
@@ -305,6 +306,17 @@ describe('Operations table data', () => {
       }]
 
       expect(outgoing).toEqual(expected)
+    })
+
+    it('should validate if it is a refund reversal', () => {
+      const result = isRefundReversal({
+        type: 'payable',
+        movement_object: {
+          type: 'refund_reversal',
+        },
+      })
+
+      expect(result).toBe(true)
     })
   })
 })

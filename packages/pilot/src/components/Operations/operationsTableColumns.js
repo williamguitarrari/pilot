@@ -19,8 +19,14 @@ import {
   __,
 } from 'ramda'
 import classNames from 'classnames'
-import { Tooltip } from 'former-kit'
+import {
+  Flexbox,
+  Spacing,
+  Tooltip,
+} from 'former-kit'
 import IconAnticipation from 'emblematic-icons/svg/Undo24.svg'
+import HelpInfo from 'emblematic-icons/svg/Help32.svg'
+
 import currencyFormatter from '../../formatters/currency'
 import style from './style.css'
 import dateFormatter from '../../formatters/longDate'
@@ -58,6 +64,24 @@ const renderValueAndOperator = (value) => {
 }
 
 const getTypeLabel = (type, labels) => {
+  if (type === 'refund_reversal') {
+    return (
+      <Flexbox>
+        {labels[type]}
+        <Spacing size="tiny" />
+        <Tooltip
+          content={labels.refund_reversal_description}
+          placement="rightMiddle"
+        >
+          <HelpInfo
+            height={16}
+            width={16}
+          />
+        </Tooltip>
+      </Flexbox>
+    )
+  }
+
   if (!isNil(type) && !isPayable(type)) {
     return labels[type]
   }

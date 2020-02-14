@@ -258,5 +258,33 @@
     "transactionId": null,
     "transferId": 208028,
     "type": "inter_recipient"
+  },
+  {
+    "description": "",
+    "id": 10301450,
+    "installment": null,
+    "net": 249700,
+    "outcoming": [
+      {
+        "amount": 249700,
+        "type": "payable"
+      }
+    ],
+    "outgoing": [
+      {
+        "amount": 0,
+        "type": "payable"
+      }
+    ],
+    "paymentDate": {
+      "actual": "2020-02-04T03:00:00.000Z",
+      "original": null
+    },
+    "status": "paid",
+    "sourceId": null,
+    "targetId": null,
+    "transactionId": 7788350,
+    "transferId": null,
+    "type": "refund_reversal"
   }
 ]

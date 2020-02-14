@@ -15,6 +15,8 @@ const types = {
   inter_recipient: 'models.operations.inter_recipient',
   mdr: 'models.operations.mdr',
   refund: 'models.operations.refund',
+  refund_reversal: 'models.operations.refund_reversal',
+  refund_reversal_description: 'models.operations.refund_reversal_description',
   ted: 'models.operations.transfer',
   tedFee: 'models.operations.transfer_fee',
   to: 'models.operations.to',
