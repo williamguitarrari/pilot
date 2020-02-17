@@ -23,7 +23,7 @@
   }
 }
 
-.keyLabelAndValue {
+.labelledValue {
   font-size: 12px;
   margin-bottom: var(--spacing-tiny);
   width: auto;

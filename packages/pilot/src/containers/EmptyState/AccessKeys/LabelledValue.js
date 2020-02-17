@@ -6,9 +6,9 @@ import copyToClipBoard from 'clipboard-copy'
 import IconCopy from 'emblematic-icons/svg/Copy24.svg'
 import styles from './styles.css'
 
-const KeyLabelAndValue = ({ label, value }) => (
+const LabelledValue = ({ label, value }) => (
   <Flexbox
-    className={styles.keyLabelAndValue}
+    className={styles.labelledValue}
     direction="column"
     justifyContent="center"
   >
@@ -26,9 +26,9 @@ const KeyLabelAndValue = ({ label, value }) => (
   </Flexbox>
 )
 
-KeyLabelAndValue.propTypes = {
+LabelledValue.propTypes = {
   label: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
 }
 
-export default KeyLabelAndValue
+export default LabelledValue

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Flexbox } from 'former-kit'
-import KeyLabelAndValue from './KeyLabelAndValue'
+import LabelledValue from './LabelledValue'
 import CollapsibleCard from '../CollapsibleCard'
 import styles from './styles.css'
 
@@ -30,11 +30,11 @@ const AccessKeys = ({
       >
         <p>{t(`pages.empty_state.access_keys.${environment}`)}</p>
         <Flexbox className={styles.keysArea}>
-          <KeyLabelAndValue
+          <LabelledValue
             label={t('pages.empty_state.access_keys.api')}
             value={apiKey}
           />
-          <KeyLabelAndValue
+          <LabelledValue
             label={t('pages.empty_state.access_keys.encryption')}
             value={encryptionKey}
           />
