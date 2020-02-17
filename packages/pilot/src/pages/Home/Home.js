@@ -62,7 +62,7 @@ import HomeContainer from '../../containers/Home'
 import icons from '../../models/icons'
 import IndicatorTooltip from '../../components/HomeIndicatorTooltip'
 import statusLegends from '../../models/statusLegends'
-import isRecentCreatedUser from '../../validation/recentCreatedUser'
+import isRecentlyCreatedUser from '../../validation/recentCreatedUser'
 
 import {
   Message,
@@ -536,7 +536,7 @@ const Home = ({
     )
   }
 
-  if (isRecentCreatedUser({ company, user }) && userNotHidEmptyState()) {
+  if (isRecentlyCreatedUser({ company, user }) && userNotHidEmptyState()) {
     return <Redirect to="/welcome" />
   }
 

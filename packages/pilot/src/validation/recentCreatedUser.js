@@ -5,16 +5,16 @@ import {
   pathOr,
 } from 'ramda'
 
-const userCreatedLessThan30Days = ({ user }) => {
+const userCreatedLessThan30DaysAgo = ({ user }) => {
   const createdAtDaysDiff = moment().diff(user.date_created, 'days')
   return createdAtDaysDiff < 30
 }
 
 const companyNotTransacted = complement(pathOr(true, ['company', 'alreadyTransacted']))
 
-const isRecentCreatedUser = anyPass([
+const isRecentlyCreatedUser = anyPass([
   companyNotTransacted,
-  userCreatedLessThan30Days,
+  userCreatedLessThan30DaysAgo,
 ])
 
-export default isRecentCreatedUser
+export default isRecentlyCreatedUser
