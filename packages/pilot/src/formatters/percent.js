@@ -1,10 +1,14 @@
-
-import { isNil } from 'ramda'
+import { anyPass, is } from 'ramda'
 import Intl from 'intl'
 import 'intl/locale-data/jsonp/pt'
 
+const isNumberOrString = anyPass([
+  is(Number),
+  is(String),
+])
+
 const percent = (value) => {
-  if (isNil(value)) {
+  if (!isNumberOrString(value)) {
     return null
   }
 
