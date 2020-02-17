@@ -1,18 +1,16 @@
 @import "former-kit-skin-pagarme/dist/styles/colors.css";
 
+.infoCard {
+  flex-wrap: nowrap;
+}
+
 .infoCard a {
   text-decoration: underline;
 }
 
-@media (min-width: 1024px) and (max-width: 1280px) {
-
-  .infoCard a {
-    margin-top: 10px;
-  }
-}
-
 .infoCard button {
   text-transform: none;
+  margin-left: 20px;
 }
 
 .infoCard p {
