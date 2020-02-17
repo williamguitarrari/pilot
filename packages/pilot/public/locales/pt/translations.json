@@ -158,7 +158,7 @@
     "alerts": "Notificações",
     "messages": "Mensagens",
     "exit": "Sair",
-    "welcome": "Bem-vindo!"
+    "welcome": "Boas-vindas!"
   },
   "landing": {
     "logo": "FormerKit",
@@ -1597,9 +1597,9 @@
       "try_again": "Tente novamente com outros filtros."
     },
     "empty_state": {
-      "title": "Bem vindo",
+      "title": "Boas-vindas",
       "welcome": {
-        "title": "Bem-vindo ao seu painel, {{userName}}!",
+        "title": "Conheça o seu painel, {{userName}}!",
         "message": "As dicas ao lado vão te ajudar a começar a sua jornada com o Pagar.me, elas ficarão ativas durante o primeiro mês da nossa parceria, mas se preferir, você pode",
         "turn_off": "desativá-las."
       },
@@ -1630,7 +1630,7 @@
       },
       "access_docs": {
         "button_label": "Acessar docs",
-        "title": "Veja como integrar em nossa documentação",
+        "title": "Veja como integrar sua loja em nossa documentação",
         "subtitle_link": "entrar em contato",
         "subtitle_part_one": "Caso tenha dúvidas é só",
         "subtitle_part_two": "com a gente.",
