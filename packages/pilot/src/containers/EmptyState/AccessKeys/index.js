@@ -13,7 +13,7 @@ const AccessKeys = ({
 }) => {
   const subtitle = (
     <span className={styles.subtitle}>
-      {`${t('pages.empty_state.access_keys.subtitle')} `}
+      {t('pages.empty_state.access_keys.subtitle')}
       <strong>{t('pages.empty_state.access_keys.subtitle_strong')}</strong>
     </span>
   )

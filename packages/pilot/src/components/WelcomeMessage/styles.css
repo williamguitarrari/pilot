@@ -20,6 +20,7 @@
     color: var(--body-color);
     font-family: var(--body-font-family);
     font-size: 14px;
+    padding-left: 4.5px;
     text-decoration: underline;
   }
 

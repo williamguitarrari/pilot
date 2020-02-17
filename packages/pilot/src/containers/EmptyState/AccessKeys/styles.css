@@ -3,6 +3,10 @@
 
 .subtitle {
   font-size: 14px;
+
+  & strong {
+    padding-left: 4.5px;
+  }
 }
 
 .acessKeys {

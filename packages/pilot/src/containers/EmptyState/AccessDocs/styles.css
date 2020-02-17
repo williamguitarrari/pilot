@@ -1,0 +1,9 @@
+.subtitle {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 4px;
+
+  & a {
+    padding: 0 4.5px;
+  }
+}
