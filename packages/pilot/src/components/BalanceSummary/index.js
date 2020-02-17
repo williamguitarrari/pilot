@@ -4,6 +4,7 @@ import { keys } from 'ramda'
 import classNames from 'classnames'
 import Summary from '../Summary'
 import TotalDisplay from '../TotalDisplay'
+import TotalDisplayTitle from './TotalDisplayTitle'
 
 import style from './style.css'
 
@@ -13,7 +14,12 @@ const colors = {
   outgoing: '#ff796f',
 }
 
-const BalanceSummary = ({ amount, base, loading }) => (
+const BalanceSummary = ({
+  amount,
+  base,
+  loading,
+  t,
+}) => (
   <Summary base={base}>
     {
       keys(amount).map(type => (
@@ -32,7 +38,14 @@ const BalanceSummary = ({ amount, base, loading }) => (
               amount={amount[type].value}
               amountSize="large"
               color={colors[type]}
-              title={amount[type].title}
+              title={(
+                <TotalDisplayTitle
+                  description={t(`pages.balance.${type}`)}
+                  type={type}
+                >
+                  { amount[type].title }
+                </TotalDisplayTitle>
+              )}
               titleColor={colors[type]}
               titleSize="medium"
               loading={loading}
@@ -57,6 +70,7 @@ BalanceSummary.propTypes = {
   }),
   base: PropTypes.oneOf(['light', 'dark']),
   loading: PropTypes.bool.isRequired,
+  t: PropTypes.func.isRequired,
 }
 BalanceSummary.defaultProps = {
   amount: {},
