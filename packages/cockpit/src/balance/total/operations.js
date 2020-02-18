@@ -3,7 +3,6 @@ import {
   add,
   always,
   applySpec,
-  converge,
   gt,
   juxt,
   lt,
@@ -14,6 +13,8 @@ import {
   reduce,
   sum,
   when,
+  propOr,
+  uncurryN,
 } from 'ramda'
 
 const absSum = pipe(
@@ -38,12 +39,8 @@ const getNegativeOrZero = propPath => pipe(
 )
 
 const sumOut = pipe(
-  juxt([
-    path(['amount', 'out']),
-    getPositveOrZero(['fee', 'in']),
-    getPositveOrZero(['fee', 'out']),
-  ]),
-  absSum
+  path(['amount', 'out']),
+  Math.abs
 )
 
 const sumIn = pipe(
@@ -68,13 +65,31 @@ const getOutgoing = pipe(
   negate
 )
 
+const sumFee = pipe(
+  juxt([
+    getPositveOrZero(['fee', 'in']),
+    getPositveOrZero(['fee', 'out']),
+  ]),
+  absSum,
+  negate
+)
+
+const sumRecuder = uncurryN(2, acc => pipe(
+  propOr({}, 'available'),
+  sumFee,
+  add(acc)
+))
+
+const getFee = reduce(sumRecuder, 0)
+
 const buildBalanceTotal = applySpec({
-  net: converge(
-    add,
-    [buildTotal('in'), getOutgoing]
+  net: pipe(
+    juxt([buildTotal('in'), getOutgoing, getFee]),
+    sum
   ),
   outcoming: buildTotal('in'),
   outgoing: getOutgoing,
+  fee: getFee,
 })
 
 export default buildBalanceTotal
