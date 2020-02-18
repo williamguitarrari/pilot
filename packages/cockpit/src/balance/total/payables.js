@@ -48,9 +48,6 @@ const getCashOutFee = feePath => negateFunction(getPositveOrZero(feePath))
 
 const getCashOutFrom = propertyPath => sumFunctionResults([
   getNegativeOrZero([...propertyPath, 'amount']),
-  getCashOutFee([...propertyPath, 'anticipation_fee']),
-  getCashOutFee([...propertyPath, 'fee']),
-  getCashOutFee([...propertyPath, 'fraud_coverage_fee']),
 ])
 
 const getCashInFrom = propertyPath => sumFunctionResults([
@@ -60,14 +57,24 @@ const getCashInFrom = propertyPath => sumFunctionResults([
   getCashInFee([...propertyPath, 'fraud_coverage_fee']),
 ])
 
+const getFeeFrom = propertyPath => sumFunctionResults([
+  getCashOutFee([...propertyPath, 'anticipation_fee']),
+  getCashOutFee([...propertyPath, 'fee']),
+  getCashOutFee([...propertyPath, 'fraud_coverage_fee']),
+])
+
 const cashInFunctions = map(getCashInFrom, paths)
 
 const cashOutFunctions = map(getCashOutFrom, paths)
+
+const feeFunctions = map(getFeeFrom, paths)
 
 const mapSumFunction = sumFunction => pipe(
   map(sumFunctionResults(sumFunction)),
   sum
 )
+
+const sumFee = mapSumFunction(feeFunctions)
 
 const sumOutcoming = mapSumFunction(cashInFunctions)
 
@@ -81,6 +88,7 @@ const sumNetAmount = sumFunctionResults([
 const getDates = pluck('date')
 
 const buildPayablesTotal = applySpec({
+  fee: sumFee,
   net: sumNetAmount,
   outcoming: sumOutcoming,
   outgoing: sumOutgoing,

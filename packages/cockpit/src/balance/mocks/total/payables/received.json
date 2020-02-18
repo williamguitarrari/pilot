@@ -72,8 +72,8 @@
           "anticipation_fee": 0
         },
         "refund": {
-          "amount": 0,
-          "fee": 0,
+          "amount": -305500,
+          "fee": -15277,
           "fraud_coverage_fee": 0,
           "anticipation_fee": 0
         },
