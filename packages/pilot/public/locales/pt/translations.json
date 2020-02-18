@@ -880,10 +880,10 @@
       "title": "Extrato",
       "total": {
         "fee": "Taxas Pagar.me",
-        "outcoming": "Total de entradas",
-        "outgoing": "Total de saídas",
         "net": "Total líquido",
-        "of": "Total de"
+        "of": "Total de",
+        "outcoming": "Total de entradas",
+        "outgoing": "Total de saídas"
       },
       "type": "Tipo de conta",
       "waiting_funds": "A receber",

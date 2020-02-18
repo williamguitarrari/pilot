@@ -272,6 +272,13 @@ class Balance extends Component {
             ? 0
             : total.outgoing,
         },
+        fee: { // eslint-disable-line sort-keys
+          title: t('pages.balance.total.fee'),
+          unit: t('currency'),
+          value: disabled
+            ? 0
+            : total.fee,
+        },
         net: { // eslint-disable-line sort-keys
           title: t('pages.balance.total.net'),
           unit: t('currency'),

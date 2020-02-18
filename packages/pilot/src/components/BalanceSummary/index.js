@@ -9,6 +9,7 @@ import TotalDisplayTitle from './TotalDisplayTitle'
 import style from './style.css'
 
 const colors = {
+  fee: '#ff796f',
   net: '#4ca9d7',
   outcoming: '#37cc9a',
   outgoing: '#ff796f',
