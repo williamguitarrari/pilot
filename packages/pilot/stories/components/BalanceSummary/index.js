@@ -25,6 +25,7 @@ const BalanceSummaryExample = () => (
     <BalanceSummary
       amount={amount}
       loading={false}
+      t={t => t}
     />
   </Section>
 )
