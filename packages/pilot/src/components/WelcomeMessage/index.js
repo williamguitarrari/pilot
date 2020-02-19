@@ -13,7 +13,7 @@ const WelcomeMessage = ({ onDisableWelcome, t, userName }) => (
     <WelcomeImage />
     <h1>{t('pages.empty_state.welcome.title', { userName })}</h1>
     <div>
-      {`${t('pages.empty_state.welcome.message')} `}
+      {t('pages.empty_state.welcome.message')}
       <button onClick={onDisableWelcome} role="link" type="button">
         {t('pages.empty_state.welcome.turn_off')}
       </button>
