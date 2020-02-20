@@ -15,6 +15,7 @@ import DescriptionAlert from './DescriptionAlert'
 import DetailsHead from './DetailsHead'
 import EventList from './EventList'
 import ExportData from './ExportData'
+import FakeLoader from './FakeLoader'
 import PaymentCards from './PaymentCards'
 import Property from './Property'
 import MetricIndicator from './MetricIndicator'
@@ -56,6 +57,7 @@ storiesOf('Components|Custom components', module)
   .add('Transaction details card', () => <TransactionDetailsCard />)
   .add('Event list', () => <EventList />)
   .add('Export Data', () => <ExportData />)
+  .add('Fake Loader', () => <FakeLoader />)
   .add('DataDisplay', () => <DataDisplay />)
   .add('Description Alert', () => <DescriptionAlert />)
   .add('Reprocess details', () => <ReprocessDetails />)

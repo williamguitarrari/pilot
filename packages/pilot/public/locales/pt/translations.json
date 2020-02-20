@@ -1666,6 +1666,13 @@
       "start": "Início",
       "today": "Hoje"
     },
+    "fake_loader": {
+      "title": "Preparando o seu painel",
+      "steps_info": "Passo {{currentStep}} de {{finalStep}}:",
+      "step_1": "Gerando a sua chave de API",
+      "step_2": "Organizando as documentações",
+      "step_3": "Customizando a sua interface"
+    },
     "filter": {
       "apply": "Filtrar",
       "reset": "Limpar filtros",
