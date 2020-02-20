@@ -9,6 +9,7 @@ import {
   Anticipation,
   Balance,
   CompanySettings,
+  EmptyState,
   Home,
   Recipients,
   Transactions,
@@ -96,6 +97,12 @@ export default {
     hidden: true,
     path: '/recipients/detail',
     title: 'pages.recipient_detail.title',
+  },
+  emptyState: {
+    component: EmptyState,
+    hidden: true,
+    path: '/welcome',
+    title: 'pages.empty_state.title',
   },
 }
 

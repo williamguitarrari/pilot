@@ -103,6 +103,8 @@ import RecipientDetailConfig from './RecipientDetails/Config'
 import RecipientDetailInfo from './RecipientDetails/Info'
 import RecipientDetails from './RecipientDetails'
 
+import EmptyState from './EmptyState'
+
 storiesOf('Containers|Bank/Account', module)
   .add('selector', () => <BankAccountSelector />)
   .add('settings', () => <BankAccount />)
@@ -416,4 +418,7 @@ storiesOf('Containers|Page containers', module)
   ))
   .add('Home', () => (
     <Home />
+  ))
+  .add('Empty State', () => (
+    <EmptyState />
   ))

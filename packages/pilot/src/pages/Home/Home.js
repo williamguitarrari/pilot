@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import moment from 'moment-timezone'
 import qs from 'qs'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Redirect } from 'react-router-dom'
 import { translate } from 'react-i18next'
 import {
   __,
@@ -62,6 +62,7 @@ import HomeContainer from '../../containers/Home'
 import icons from '../../models/icons'
 import IndicatorTooltip from '../../components/HomeIndicatorTooltip'
 import statusLegends from '../../models/statusLegends'
+import isRecentlyCreatedUser from '../../validation/recentCreatedUser'
 
 import {
   Message,
@@ -70,6 +71,7 @@ import GenericErrorIcon from '../Errors/GenericError/Icon.svg'
 
 const mapStateToProps = ({
   account: {
+    company,
     user,
   },
   home: {
@@ -78,6 +80,7 @@ const mapStateToProps = ({
     metrics,
   },
 }) => ({
+  company,
   conversion,
   loading,
   metrics,
@@ -436,6 +439,8 @@ const getConversions = uncurryN(2, t => pipe(
   )
 ))
 
+const userNotHidEmptyState = () => isNilOrEmpty(localStorage.getItem('hide_empty-state'))
+
 const defaultPreset = 'days-7'
 
 const isGlobalLoading = pipe(
@@ -444,6 +449,7 @@ const isGlobalLoading = pipe(
 )
 
 const Home = ({
+  company,
   conversion,
   error,
   history: {
@@ -457,9 +463,7 @@ const Home = ({
   requestConversion,
   requestMetrics,
   t,
-  user: {
-    name: userName,
-  },
+  user,
 }) => {
   const initialSearchDates = getDatesFromUrl(search)
   const [dates, setDates] = useState(search ? initialSearchDates : defaultDates)
@@ -532,6 +536,10 @@ const Home = ({
     )
   }
 
+  if (isRecentlyCreatedUser({ company, user }) && userNotHidEmptyState()) {
+    return <Redirect to="/welcome" />
+  }
+
   return (
     <HomeContainer
       averageAmount={averageAmount}
@@ -541,7 +549,7 @@ const Home = ({
       isEmptySearch={verifyEmptyMetrics(metrics || {})}
       labels={{
         description: enhanceGreetingsDescription(t, dates),
-        greeting: t('pages.home.greeting', { name: userName }),
+        greeting: t('pages.home.greeting', { name: user.name }),
       }}
       loading={isGlobalLoading(loading)}
       localLoading={loading}
@@ -577,6 +585,9 @@ const graphicDataShape = PropTypes.shape({
 })
 
 Home.propTypes = {
+  company: PropTypes.shape({
+    alreadyTransacted: PropTypes.bool,
+  }),
   conversion: PropTypes.shape({
     boleto: PropTypes.shape({
       conversion: PropTypes.number,
@@ -620,11 +631,13 @@ Home.propTypes = {
   requestMetrics: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
   user: PropTypes.shape({
+    date_created: PropTypes.string,
     name: PropTypes.string,
   }),
 }
 
 Home.defaultProps = {
+  company: {},
   conversion: {
     boleto: {},
     card: {},

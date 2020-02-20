@@ -32,10 +32,15 @@ const Recipients = lazy(() => import(
   /* webpackChunkName: "recipients" */ '../Recipients'
 ))
 
+const EmptyState = lazy(() => import(
+  /* webpackChunkName: "empty-state" */ '../EmptyState'
+))
+
 export {
   Anticipation,
   Balance,
   CompanySettings,
+  EmptyState,
   Home,
   Recipients,
   Transactions,

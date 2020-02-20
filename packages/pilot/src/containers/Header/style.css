@@ -6,3 +6,7 @@
   cursor: pointer;
   user-select: none;
 }
+
+.welcome {
+  text-transform: none;
+}

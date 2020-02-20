@@ -1,0 +1,30 @@
+@import "former-kit-skin-pagarme/dist/styles/typography.css";
+
+.welcomeMessage {
+  margin-top: 22px;
+  text-align: center;
+
+  & h1 {
+    font-weight: bold;
+    font-size: 18px;
+    margin: 35px 0 8px;
+  }
+
+  & div {
+    font-size: 14px;
+    line-height: 22px;
+    max-width: 362px;
+  }
+
+  & button {
+    color: var(--body-color);
+    font-family: var(--body-font-family);
+    font-size: 14px;
+    padding-left: 4.5px;
+    text-decoration: underline;
+  }
+
+  & svg {
+    width: 100%;
+  }
+}
