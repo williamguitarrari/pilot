@@ -95,6 +95,7 @@ const BalanceOperations = ({
       <BalanceSummary
         amount={amount}
         loading={loading}
+        t={t}
       />
       <Operations
         columns={translateColumns(getColumns(typesLabels))}

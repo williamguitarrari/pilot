@@ -17,3 +17,23 @@
   height: 100%;
   padding: var(--spacing-small);
 }
+
+.helpIcon {
+  margin-left: 8px;
+}
+
+.totalDisplayTitle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tooltip {
+  font-size: 13px;
+  width: 150px;
+  color: var(--color-white);
+
+  & .title {
+    text-align: center;
+  }
+}

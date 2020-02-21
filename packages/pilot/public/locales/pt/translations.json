@@ -863,10 +863,14 @@
           "excel": "Excel"
         }
       },
+      "fee": "Todos os descontos de tarifas de cartão, gateway, boleto e TEDs.",
       "id": "id do recebedor",
       "invalid_recipient": "Você não possui um recebedor padrão configurado para este ambiente",
       "no_anticipation": "Não há valores disponíveis para antecipação.",
       "operations_title": "Lançamentos do período",
+      "outcoming": "Todos os lançamentos de vendas brutas.",
+      "outgoing": "Todos os lançamentos de transferências, chargebacks e estornos.",
+      "net": "Todos os lançamentos de vendas descontando as taxas, chargebacks e estornos.",
       "pending_anticipations_empty_message": "Nenhuma antecipação disponível",
       "pending_anticipations_title": "Antecipações pendentes",
       "previous": "Anteriores",
@@ -875,10 +879,11 @@
       "results_plural": "lançamentos",
       "title": "Extrato",
       "total": {
-        "outcoming": "Total de entradas",
-        "outgoing": "Total de saídas",
+        "fee": "Taxas Pagar.me",
         "net": "Total líquido",
-        "of": "Total de"
+        "of": "Total de",
+        "outcoming": "Total de entradas",
+        "outgoing": "Total de saídas"
       },
       "type": "Tipo de conta",
       "waiting_funds": "A receber",

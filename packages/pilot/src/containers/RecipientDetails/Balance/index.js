@@ -452,6 +452,7 @@ class RecipientBalance extends Component {
                     dates={dates}
                     loading={loading}
                     base="light"
+                    t={t}
                   />
                 </CardContent>
                 <CardContent>
