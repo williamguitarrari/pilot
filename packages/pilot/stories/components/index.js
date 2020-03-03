@@ -21,6 +21,7 @@ import Property from './Property'
 import MetricIndicator from './MetricIndicator'
 import MetricList from './MetricList'
 import MetricChart from './MetricChart'
+import OnboardingBackground from './OnboardingBackground'
 import Operations from './Operations'
 import RecipientSectionState from './RecipientSection'
 import RiskLevel from './RiskLevel'
@@ -70,6 +71,7 @@ storiesOf('Components|Custom components', module)
   .add('CreditCardRefundDetails', () => <CreditCardRefundDetails />)
   .add('ApiKey', () => <ApiKeySection />)
   .add('Pending Anticipations', () => <PendingAnticipations />)
+  .add('Onboarding Background', () => <OnboardingBackground />)
   .add('Operations', () => <Operations />)
   .add('Balance total display', () => <BalanceTotalDisplay />)
   .add('Balance summary', () => <BalanceSummary />)
