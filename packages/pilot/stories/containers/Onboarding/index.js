@@ -6,7 +6,9 @@ const OnboardingExample = () => (
     questionSettings={{
       progressPercent: 50,
     }}
+    status="starting"
     t={t => t}
+    userName="Eduardo"
   />
 )
 
