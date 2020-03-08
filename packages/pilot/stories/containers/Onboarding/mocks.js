@@ -1,6 +1,16 @@
 import BoxIcon from './box.svg'
+import SampleDeadEnd from './SampleDeadEnd'
 
 export default {
+  whenDeadEnd: {
+    loading: false,
+    question: {},
+    questionSettings: {
+      deadEnd: SampleDeadEnd,
+    },
+    status: 'boarding',
+    userName: 'Eduardo',
+  },
   whenLoading: {
     loading: true,
     question: {},
