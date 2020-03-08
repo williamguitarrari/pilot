@@ -98,4 +98,29 @@ export default {
     status: 'boarding',
     userName: 'Eduardo',
   },
+  withDropdown: {
+    loading: false,
+    question: {
+      label: 'plataform',
+      options: [
+        {
+          label: 'WooCommerce',
+          value: 'woocommerce',
+        },
+        {
+          label: 'Shopify',
+          value: 'shopify',
+        },
+      ],
+      others: [],
+      title: 'E qual é a sua plataforma',
+    },
+    questionSettings: {
+      placeholder: 'some.path',
+      progressPercent: 75,
+      type: 'drop-down',
+    },
+    status: 'finishing',
+    userName: 'Eduardo',
+  },
 }
