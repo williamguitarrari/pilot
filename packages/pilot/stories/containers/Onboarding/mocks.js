@@ -1,6 +1,13 @@
 import BoxIcon from './box.svg'
 
 export default {
+  whenLoading: {
+    loading: true,
+    question: {},
+    questionSettings: {},
+    status: 'boarding',
+    userName: 'Eduardo',
+  },
   withCardIconAndSubtitle: {
     loading: false,
     question: {

@@ -6,11 +6,13 @@ import DropdownOptions from './DropownOptions'
 import OtherOptions from './OtherOptions'
 import ProgressBar from './ProgressBar'
 import OnboardingBackground from '../../components/OnboardingBackground'
+import Spinner from '../../components/Spinner'
 import styles from './styles.css'
 
 import ArrowBack from './arrow-back.svg'
 
 const OnboardingContainer = ({
+  loading,
   onReturn,
   onSkipOnboarding,
   onSubmit,
@@ -28,6 +30,16 @@ const OnboardingContainer = ({
   })
 
   const handleSubmit = answer => onSubmit(answer, others)
+
+  if (loading) {
+    return (
+      <OnboardingBackground>
+        <div className={styles.loading}>
+          <Spinner />
+        </div>
+      </OnboardingBackground>
+    )
+  }
 
   const header = status === 'starting'
     ? (<p className={styles.welcome}>{t('pages.onboarding.welcome', { userName })}</p>)
@@ -76,6 +88,7 @@ const OnboardingContainer = ({
 }
 
 OnboardingContainer.propTypes = {
+  loading: PropTypes.bool.isRequired,
   onReturn: PropTypes.func,
   onSkipOnboarding: PropTypes.func,
   onSubmit: PropTypes.func,
