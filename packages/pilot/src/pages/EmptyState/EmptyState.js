@@ -142,6 +142,7 @@ const EmptyState = ({
       environment={environment}
       fees={fees}
       isAdmin={isAdmin}
+      onboardingAnswers={onboardingAnswers}
       onDisableWelcome={hideEmptyState(push)}
       t={t}
       userName={userName}
