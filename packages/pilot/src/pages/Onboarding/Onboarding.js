@@ -8,6 +8,7 @@ import {
   compose,
   cond,
   head,
+  isNil,
   last,
   pipe,
   prop,
@@ -27,6 +28,9 @@ import {
   postOnboardingAnswer as postOnboardingAnswerAction,
   destroyOnboardingAnswer as destroyOnboardingAnswerAction,
 } from './actions'
+import {
+  resetOnboardingAnswers as resetOnboardingAnswersAction,
+} from '../EmptyState/actions'
 import FakeLoader from '../../components/FakeLoader'
 
 const getUserFirstName = pipe(prop('name'), split(' '), head)
@@ -48,9 +52,13 @@ const mapStateToProps = ({
     loading,
     question,
   },
+  welcome: {
+    onboardingAnswers,
+  },
 }) => ({
   error,
   loading,
+  onboardingAnswers,
   question,
   userId: prop('id', user),
   userName: getUserFirstName(user),
@@ -60,6 +68,7 @@ const mapDispatchToProps = {
   destroyOnboardingAnswer: destroyOnboardingAnswerAction,
   postOnboardingAnswer: postOnboardingAnswerAction,
   requestOnboardingQuestion: requestOnboardingQuestionAction,
+  resetOnboardingAnswers: resetOnboardingAnswersAction,
 }
 
 const enhanced = compose(
@@ -146,6 +155,14 @@ const Onboarding = ({
   }
 
   if (error) {
+    return <Redirect to="/home" />
+  }
+
+  const { onboardingAlreadyFinished } = machineContext
+  const shouldRedirectToHome = isNil(onboardingAnswers)
+    || onboardingAlreadyFinished
+
+  if (shouldRedirectToHome && !showFakeLoader) {
     return <Redirect to="/home" />
   }
 
