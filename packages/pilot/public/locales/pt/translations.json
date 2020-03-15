@@ -612,6 +612,11 @@
       "last_step": "Finalizar",
       "skip": "Pular introdução",
       "welcome": "Boas-vindas, {{userName}}!",
+      "placeholders": {
+        "platform": "Digite ou escolha na lista",
+        "payment_method": "Digite ou escolha na lista",
+        "expected_revenue": "Escolha uma das opções na lista"
+      },
       "not_found_pages": {
         "platform_not_found": {
           "title": "Não encontramos a plataforma informada em nosso sistema",

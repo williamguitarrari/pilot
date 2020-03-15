@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Button } from 'former-kit'
 import styles from './styles.css'
 
-const PlataformNotFound = ({ onSubmit, t }) => (
+const PlatformNotFound = ({ onSubmit, t }) => (
   <div className={styles.platformNotFound}>
     <h1 className={styles.title}>
       {t('pages.onboarding.not_found_pages.platform_not_found.title')}
@@ -32,9 +32,9 @@ const PlataformNotFound = ({ onSubmit, t }) => (
   </div>
 )
 
-PlataformNotFound.propTypes = {
+PlatformNotFound.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
 }
 
-export default PlataformNotFound
+export default PlatformNotFound
