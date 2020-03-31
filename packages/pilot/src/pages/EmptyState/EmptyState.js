@@ -180,7 +180,7 @@ EmptyState.defaultProps = {
   accessKeys: {},
   alreadyTransacted: true,
   fees: {},
-  onboardingAnswers: null,
+  onboardingAnswers: undefined,
   userName: '',
 }
 

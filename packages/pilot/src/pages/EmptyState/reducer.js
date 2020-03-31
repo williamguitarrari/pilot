@@ -4,7 +4,7 @@ import {
 } from './actions'
 
 const makeInitialState = () => ({
-  onboardingAnswers: null,
+  onboardingAnswers: undefined,
 })
 
 export default function welcomeReducer (state = makeInitialState(), action) {
