@@ -7033,10 +7033,10 @@ former-kit-skin-pagarme@1.8.0:
     emblematic-icons "0.7.1"
     react-dates "18.4.1"
 
-former-kit@1.9.0:
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/former-kit/-/former-kit-1.9.0.tgz#9bec5629526675f7a2016edf7ff1a27fcdd0ce84"
-  integrity sha512-EDLF2ovKpbVGNO3HQBGegcovdUxZ8yZqXfz1w08wAzG435f4PzRVsUztY6Ks/GUJeF23r6C8oLmwpUwgX/xIYA==
+former-kit@1.9.1:
+  version "1.9.1"
+  resolved "https://registry.yarnpkg.com/former-kit/-/former-kit-1.9.1.tgz#f22e8a3599c8ed939dc491533a5301774066b622"
+  integrity sha512-NVQhM3pn/Wul0nnVy6LrZwElqUbvZLR0HakT5A/mio+mJVU2XTzm7WqTwii9QZvZqXv8eZnwMLgJYb6J1VdNGA==
   dependencies:
     classnames "2.2.6"
     emblematic-icons "0.7.1"
