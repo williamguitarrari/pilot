@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { applySpec, map, prop } from 'ramda'
 import {
   CardContent,
-  Dropdown,
+  SecondaryFormDropdown,
   SecondaryButton,
 } from 'former-kit'
 import Card from '../Card'
@@ -35,7 +35,7 @@ const DropdownOptions = ({
     <div className={styles.dropDownOptions}>
       <Card>
         <CardContent>
-          <Dropdown
+          <SecondaryFormDropdown
             name="onboarding"
             options={parseOptions(options)}
             onChange={e => setValue(e.target.value)}
