@@ -10,6 +10,7 @@ import Split from './data/icons/split.svg'
 import Clock from './data/icons/clock.svg'
 import Search from './data/icons/search.svg'
 import Check from './data/icons/check.svg'
+import supportedPlatforms from './data/supportedPlatforms'
 
 const initialQuestion = 'integrationType'
 
@@ -38,21 +39,6 @@ const settingsByQuestion = {
     questionId: isDevelopmentStage ? 'oq_ck898abhm00050goahe90emwa' : 'oq_ck8a5ue9t006p0grqywqj3t8r',
     type: 'drop-down',
     nextByAnswer: (answer) => {
-      const supportedPlatforms = [
-        'xtech',
-        'woocommerce',
-        'vtex',
-        'signativa',
-        'prestashop',
-        'opencart',
-        'magento',
-        'loja_integrada',
-        'iset',
-        'ezcommerce',
-        'core',
-        'bizcommerce',
-      ]
-
       if (supportedPlatforms.includes(answer)) {
         return 'companyStatus'
       }

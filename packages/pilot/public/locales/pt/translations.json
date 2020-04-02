@@ -619,7 +619,7 @@
       },
       "not_found_pages": {
         "platform_not_found": {
-          "title": "Não encontramos a plataforma informada em nosso sistema",
+          "title": "Infelizmente o Pagar.me ainda não possui suporte à sua plataforma",
           "description": "Caso tenha interesse de continuar a nossa parceria, entre em contato com alguma de nossas plataformas parceiras.",
           "button_label": "Ver plataformas",
           "button_link": "https://docs.pagar.me/page/plataformas-de-e-commerce-parceiras",
