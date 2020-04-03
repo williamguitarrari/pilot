@@ -40,6 +40,7 @@ import { activeCompanyLogin, inactiveCompanyLogin } from '../../../vendor/google
 const isActiveCompany = propEq('status', 'active')
 const isSelfRegister = propEq('type', 'self_register')
 const isPendingRiskAnalysis = propEq('status', 'pending_risk_analysis')
+const hasDashboardAccess = pathEq(['authentication', 'allow_dashboard_login'], true)
 
 const getRecipientId = pathOr(null, ['account', 'company', 'default_recipient_id', env])
 
@@ -50,11 +51,20 @@ const errorHandler = (error) => {
   return Promise.reject(error)
 }
 
+const verifyCapabilityPermission = (client) => {
+  if (!hasDashboardAccess(client)) {
+    throw new Error('Unathorized company')
+  }
+
+  return client
+}
+
 const loginEpic = action$ => action$
   .pipe(
     ofType(LOGIN_REQUEST),
     mergeMap(action => pagarme.client.connect(action.payload)
       .then(client => cockpit(client, errorHandler))
+      .then(verifyCapabilityPermission)
       .then(receiveLogin)
       .catch((error) => {
         try {
