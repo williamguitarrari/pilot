@@ -3,6 +3,7 @@ import {
   complement,
   identity,
   isEmpty,
+  pathEq,
   pathOr,
   propEq,
 } from 'ramda'
