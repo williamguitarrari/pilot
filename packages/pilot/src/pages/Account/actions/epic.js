@@ -4,7 +4,6 @@ import {
   identity,
   isEmpty,
   pathEq,
-  isEmpty,
   pathOr,
   propEq,
 } from 'ramda'
