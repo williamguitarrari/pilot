@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Button } from 'former-kit'
 import CardOptions from './CardOptions'
@@ -23,6 +23,8 @@ const OnboardingContainer = ({
   userName,
 }) => {
   const [others, setOthers] = useState({})
+
+  useEffect(() => setOthers({}), [question])
 
   const handleOthers = (value, isChecked) => setOthers({
     ...others,
