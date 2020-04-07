@@ -7,8 +7,8 @@ import {
   always,
   compose,
   cond,
-  contains,
   equals,
+  includes,
   isNil,
   path,
   pathOr,
@@ -153,7 +153,7 @@ class Withdraw extends Component {
       // eslint-disable-next-line camelcase
       const { pricing: { transfers: { credito_em_conta, ted } } } = this.props
 
-      if (contains(partnersBankCodes, bankCode)) {
+      if (includes(bankCode, partnersBankCodes)) {
         return -credito_em_conta // eslint-disable-line camelcase
       }
 
