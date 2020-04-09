@@ -105,9 +105,31 @@ import RecipientDetails from './RecipientDetails'
 
 import EmptyState from './EmptyState'
 
+import Onboarding from './Onboarding'
+
 storiesOf('Containers|Bank/Account', module)
   .add('selector', () => <BankAccountSelector />)
   .add('settings', () => <BankAccount />)
+
+storiesOf('Containers|Onboarding')
+  .add('With Card, Icon and Subtitle', () => (
+    <Onboarding.WithCardIconAndSubtitle />
+  ))
+  .add('With Card, Icon and Without Subtitle', () => (
+    <Onboarding.WithCardIconAndWithoutSubtitle />
+  ))
+  .add('With Card, Without Icon and Subtitle', () => (
+    <Onboarding.WithCardWithoutIconAndSubtitle />
+  ))
+  .add('When Dropdown', () => (
+    <Onboarding.WithDropdown />
+  ))
+  .add('When Loading Question', () => (
+    <Onboarding.WhenLoading />
+  ))
+  .add('When DeadEnd', () => (
+    <Onboarding.WhenDeadEnd />
+  ))
 
 storiesOf('Containers|Page containers', module)
   .addDecorator(withA11y)

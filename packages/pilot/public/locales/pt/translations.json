@@ -607,6 +607,26 @@
     }
   },
   "pages": {
+    "onboarding": {
+      "advance_step": "Avançar",
+      "last_step": "Finalizar",
+      "skip": "Pular introdução",
+      "welcome": "Boas-vindas, {{userName}}!",
+      "placeholders": {
+        "platform": "Digite ou escolha na lista",
+        "payment_method": "Digite ou escolha na lista",
+        "expected_revenue": "Escolha uma das opções na lista"
+      },
+      "not_found_pages": {
+        "platform_not_found": {
+          "title": "Infelizmente o Pagar.me ainda não possui suporte à sua plataforma",
+          "description": "Caso tenha interesse de continuar a nossa parceria, entre em contato com alguma de nossas plataformas parceiras.",
+          "button_label": "Ver plataformas",
+          "button_link": "https://docs.pagar.me/page/plataformas-de-e-commerce-parceiras",
+          "skip_to_dashboard": "Avançar para a dashboard"
+        }
+      }
+    },
     "recipient_detail": {
       "anticipation": "Antecipação",
       "anticipation_1025": "Antecipação 1025",
@@ -1642,6 +1662,61 @@
         "documentation_link": "https://docs.pagar.me/docs",
         "homologation_email": "homologacao@pagar.me"
       },
+      "access_docs_platform": {
+        "button_label": "Acessar guia",
+        "title": "Aprenda a integrar com {{platformLabel}}",
+        "subtitle": "Você vai ver como é fácil integrar com a nossa extensão.",
+        "platforms": {
+          "bizcommerce": {
+            "link": "https://docs.pagar.me/v2/docs/instalando-o-m%C3%B3dulo-pagarme-na-bizcommerce",
+            "label": "a Biz Commerce"
+          },
+          "core": {
+            "link": "https://docs.pagar.me/v2/docs/instalando-o-m%C3%B3dulo-pagarme-na-plataforma-core",
+            "label": "a Core"
+          },
+          "ezcommerce": {
+            "link": "https://docs.pagar.me/v2/docs/configurando-o-m%C3%B3dulo-pagarme-na-plataforma-ez-commerce",
+            "label": "a EzCommerce"
+          },
+          "iset": {
+            "link": "https://docs.pagar.me/v1/docs/instalando-o-m%C3%B3dulo-pagarme-na-plataforma-iset",
+            "label": "a Iset"
+          },
+          "loja_integrada": {
+            "link": "https://docs.pagar.me/v2/docs/instalando-o-m%C3%B3dulo-pagarme-na-loja-integrada",
+            "label": "a Loja Integrada"
+          },
+          "magento": {
+            "link": "https://docs.pagar.me/v2/docs/instalando-modulo-magento",
+            "label": "a Magento"
+          },
+          "opencart": {
+            "link": "https://docs.pagar.me/v2/docs/instalando-modulo-opencart",
+            "label": "a OpenCart"
+          },
+          "prestashop": {
+            "link": "https://docs.pagar.me/v1/docs/instalando-modulo-prestashop",
+            "label": "a Prestashop"
+          },
+          "signativa": {
+            "link": "https://docs.pagar.me/v1/docs/instalando-o-m%C3%B3dulo-pagarme-na-plataforma-signashop",
+            "label": "a Signativa"
+          },
+          "vtex": {
+            "link": "https://docs.pagar.me/v1/docs/instalando-o-m%C3%B3dulo-pagarme-na-plataforma-vtex",
+            "label": "a VTEX"
+          },
+          "woocommerce": {
+            "link": "https://docs.pagar.me/v2/docs/instalando-plugin-pagarme-woocommerce",
+            "label": "a WooCommerce"
+          },
+          "xtech": {
+            "link": "https://docs.pagar.me/docs/instalando-o-m%C3%B3dulo-pagarme-na-xtech",
+            "label": "a Xtech"
+          }
+        }
+      },
       "access_material": {
         "button_label": "Acessar material",
         "title": "Principais dúvidas que você pode ter",
@@ -1665,6 +1740,13 @@
       "select": "Selecione um dia ou período",
       "start": "Início",
       "today": "Hoje"
+    },
+    "fake_loader": {
+      "title": "Preparando o seu painel",
+      "steps_info": "Passo {{currentStep}} de {{finalStep}}:",
+      "step_1": "Gerando a sua chave de API",
+      "step_2": "Organizando as documentações",
+      "step_3": "Customizando a sua interface"
     },
     "filter": {
       "apply": "Filtrar",
