@@ -1,0 +1,32 @@
+@import "former-kit-skin-pagarme/dist/styles/webfonts/roboto/index.css";
+
+.loading {
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+
+  & svg {
+    width: 100px;
+  }
+}
+
+.onboardingQuestions {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+  width: 400px;
+}
+
+.welcome {
+  margin-bottom: 0;
+}
+
+.title {
+  font-family: "Roboto", sans-serif;
+  font-size: 30px;
+  font-weight: bold;
+  line-height: 41px;
+  margin-bottom: 50px;
+  margin-top: 8px;
+}

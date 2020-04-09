@@ -4,13 +4,14 @@
   "homepage": ".",
   "private": true,
   "dependencies": {
+    "@xstate/react": "0.8.1",
     "classnames": "2.2.6",
     "clipboard-copy": "2.0.0",
     "cockpit": "0.0.1",
     "cpf_cnpj": "0.2.0",
     "emblematic-icons": "0.7.1",
-    "former-kit": "1.7.4",
-    "former-kit-skin-pagarme": "1.5.4",
+    "former-kit": "1.9.1",
+    "former-kit-skin-pagarme": "1.8.0",
     "i18next": "13.1.2",
     "i18next-browser-languagedetector": "2.2.4",
     "i18next-xhr-backend": "1.5.1",
@@ -18,7 +19,7 @@
     "moment-timezone": "0.5.27",
     "normalize.css": "8.0.1",
     "p4g4rm3": "0.1.7",
-    "pagarme": "4.5.1",
+    "pagarme": "4.7.1",
     "prop-types": "15.6.2",
     "qs": "6.5.1",
     "ramda": "0.26.1",
@@ -41,7 +42,8 @@
     "rxjs": "6.4.0",
     "shortid": "2.2.14",
     "validator": "10.6.0",
-    "xlsx": "0.14.0"
+    "xlsx": "0.14.0",
+    "xstate": "4.8.0"
   },
   "devDependencies": {
     "@babel/core": "7.2.2",

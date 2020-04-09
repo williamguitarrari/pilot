@@ -2524,6 +2524,11 @@
     "@webassemblyjs/wast-parser" "1.8.5"
     "@xtuc/long" "4.2.2"
 
+"@xstate/react@0.8.1":
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/@xstate/react/-/react-0.8.1.tgz#df200547cca24c909572b7aef1ddab8bca3a0603"
+  integrity sha512-8voZm4GX3x70lNQVvoGedoObPYapkQIbgMhE+xOQEsm8Ait4Zto6R01SZ6WJD4qvLl8JPV6uq96OcFRdEsVESg==
+
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@xtuc/ieee754/-/ieee754-1.2.0.tgz#eef014a3145ae477a1cbc00cd1e552336dceb790"
@@ -7020,22 +7025,22 @@ format@^0.2.2:
   resolved "https://registry.yarnpkg.com/format/-/format-0.2.2.tgz#d6170107e9efdc4ed30c9dc39016df942b5cb58b"
   integrity sha1-1hcBB+nv3E7TDJ3DkBbflCtctYs=
 
-former-kit-skin-pagarme@1.5.4:
-  version "1.5.4"
-  resolved "https://registry.yarnpkg.com/former-kit-skin-pagarme/-/former-kit-skin-pagarme-1.5.4.tgz#1cb48877cb28d3e0719807d0909ee63fc7ca01cc"
-  integrity sha512-bVO8amHSDbDQAYuUUzHlIUTPNVIc/+f4977+kUnJb9/wKAKqj3D6F1AjgpzW8oTn9Wi8eS7HzUdnD4tDxk1IGQ==
+former-kit-skin-pagarme@1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/former-kit-skin-pagarme/-/former-kit-skin-pagarme-1.8.0.tgz#c1bfe1997872db7995f299da1cdf90953bf0f787"
+  integrity sha512-ecygYKbYfPhlRk+rCflWFMfnLGkmrTKQQbgOjpvA4+HgoA9MCioqUJj6OGWNy2TtrW55YDbbaybW51qgeRwQ+Q==
   dependencies:
     emblematic-icons "0.7.1"
     react-dates "18.4.1"
 
-former-kit@1.7.4:
-  version "1.7.4"
-  resolved "https://registry.yarnpkg.com/former-kit/-/former-kit-1.7.4.tgz#747b914fce4ba96ab90c5b05c8b8e50fa98adf85"
-  integrity sha512-CEj3oLxKY7HEkOxyO8CCoCl6uN2aRBS8JBT864E+BGA5dtNhk4i8PxKlRYfPjnp+4Hx93jgLmnaANuNFGB634w==
+former-kit@1.9.1:
+  version "1.9.1"
+  resolved "https://registry.yarnpkg.com/former-kit/-/former-kit-1.9.1.tgz#f22e8a3599c8ed939dc491533a5301774066b622"
+  integrity sha512-NVQhM3pn/Wul0nnVy6LrZwElqUbvZLR0HakT5A/mio+mJVU2XTzm7WqTwii9QZvZqXv8eZnwMLgJYb6J1VdNGA==
   dependencies:
     classnames "2.2.6"
     emblematic-icons "0.7.1"
-    former-kit-skin-pagarme "1.5.4"
+    former-kit-skin-pagarme "1.8.0"
     promise "8.0.2"
     prop-types "15.6.2"
     ramda "0.26.1"
@@ -10917,10 +10922,10 @@ package-json@^4.0.0:
     registry-url "^3.0.3"
     semver "^5.1.0"
 
-pagarme@4.5.1:
-  version "4.5.1"
-  resolved "https://registry.yarnpkg.com/pagarme/-/pagarme-4.5.1.tgz#a027780c3bf0084b39249d922552f495fa7f4ec2"
-  integrity sha512-ma78et0v15WaJtELdXvEAomHPXAOSRVAUxa02pWZDrS7N9JrztGMX6j2TbxgzuGahwUnTHrWnZlwtDIuq30Tgg==
+pagarme@4.7.1:
+  version "4.7.1"
+  resolved "https://registry.yarnpkg.com/pagarme/-/pagarme-4.7.1.tgz#39d0f3bcc36133a3b6d1fd40fb9b27904067346d"
+  integrity sha512-O1lZiRo2LdFn6c1nhuSAGVKRAZcC9qy9Ppk0zQmr6t1mEIidQ7bYTJfL94wGnMO/whXU1RHEiWL2JbpiE/2wyg==
 
 pako@~1.0.5:
   version "1.0.10"
@@ -16317,6 +16322,11 @@ xregexp@4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/xregexp/-/xregexp-4.0.0.tgz#e698189de49dd2a18cc5687b05e17c8e43943020"
   integrity sha512-PHyM+sQouu7xspQQwELlGwwd05mXUFqwFYfqPO0cC7x4fxyHnnuetmQr6CjJiafIDoH4MogHb9dOoJzR/Y4rFg==
+
+xstate@4.8.0:
+  version "4.8.0"
+  resolved "https://registry.yarnpkg.com/xstate/-/xstate-4.8.0.tgz#1aefa1f7828f84f61c356785615ffc0824ebf5a2"
+  integrity sha512-xHSYQtCHLkcrFRxa5lK4Lp1rnKt00a80jcKFMQiMBuE+6MvTYv7twwqYpzjsJoKFjGZB3GGEpZAuY1dmlPTh/g==
 
 xtend@^4.0.0, xtend@^4.0.1, xtend@~4.0.1:
   version "4.0.2"

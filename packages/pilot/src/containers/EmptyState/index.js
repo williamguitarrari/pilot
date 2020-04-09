@@ -20,6 +20,7 @@ const EmptyState = ({
   fees,
   isAdmin,
   onDisableWelcome,
+  onboardingAnswers,
   t,
   userName,
 }) => (
@@ -46,7 +47,7 @@ const EmptyState = ({
         tv={8}
       >
         <Flexbox className={styles.accountInfo}>
-          <AccessDocs t={t} />
+          <AccessDocs t={t} onboardingAnswers={onboardingAnswers} />
           <AccessWelcomeMaterial t={t} />
           <Fees fees={fees} t={t} />
           { isAdmin
@@ -81,6 +82,9 @@ EmptyState.propTypes = {
     transfer: PropTypes.number,
   }),
   isAdmin: PropTypes.bool,
+  onboardingAnswers: PropTypes.shape({
+    platform: PropTypes.string.isRequired,
+  }),
   onDisableWelcome: PropTypes.func,
   t: PropTypes.func.isRequired,
   userName: PropTypes.string,
@@ -91,6 +95,7 @@ EmptyState.defaultProps = {
   encryptionKey: '',
   fees: {},
   isAdmin: false,
+  onboardingAnswers: {},
   onDisableWelcome: () => {},
   userName: '',
 }

@@ -1,0 +1,19 @@
+@keyframes rotateSpinner {
+
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner svg > circle {
+  transform-origin: center;
+  animation: rotateSpinner 1.5s linear infinite;
+}
+
+.spinner svg > circle:last-of-type {
+  animation: rotateSpinner 0.8s linear infinite;
+}

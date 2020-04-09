@@ -15,11 +15,13 @@ import DescriptionAlert from './DescriptionAlert'
 import DetailsHead from './DetailsHead'
 import EventList from './EventList'
 import ExportData from './ExportData'
+import FakeLoader from './FakeLoader'
 import PaymentCards from './PaymentCards'
 import Property from './Property'
 import MetricIndicator from './MetricIndicator'
 import MetricList from './MetricList'
 import MetricChart from './MetricChart'
+import OnboardingBackground from './OnboardingBackground'
 import Operations from './Operations'
 import RecipientSectionState from './RecipientSection'
 import RiskLevel from './RiskLevel'
@@ -56,6 +58,7 @@ storiesOf('Components|Custom components', module)
   .add('Transaction details card', () => <TransactionDetailsCard />)
   .add('Event list', () => <EventList />)
   .add('Export Data', () => <ExportData />)
+  .add('Fake Loader', () => <FakeLoader />)
   .add('DataDisplay', () => <DataDisplay />)
   .add('Description Alert', () => <DescriptionAlert />)
   .add('Reprocess details', () => <ReprocessDetails />)
@@ -68,6 +71,7 @@ storiesOf('Components|Custom components', module)
   .add('CreditCardRefundDetails', () => <CreditCardRefundDetails />)
   .add('ApiKey', () => <ApiKeySection />)
   .add('Pending Anticipations', () => <PendingAnticipations />)
+  .add('Onboarding Background', () => <OnboardingBackground />)
   .add('Operations', () => <Operations />)
   .add('Balance total display', () => <BalanceTotalDisplay />)
   .add('Balance summary', () => <BalanceSummary />)

@@ -7,13 +7,17 @@ import balance from './Balance'
 import anticipation, { epic as anticipationEpic } from './Anticipation'
 import { reducers as transactionsReducers } from './Transactions'
 import home, { epic as homeEpic } from './Home'
+import onboarding, { epic as onboardingEpic } from './Onboarding'
+import welcome, { epic as welcomeEpic } from './EmptyState'
 import { reducers as recipientsReducers } from './Recipients'
 
 export const rootEpic = combineEpics(
   accountEpic,
   anticipationEpic,
   errorsEpic,
-  homeEpic
+  homeEpic,
+  onboardingEpic,
+  welcomeEpic
 )
 
 export const rootReducer = combineReducers({
@@ -22,7 +26,9 @@ export const rootReducer = combineReducers({
   balance,
   errors,
   home,
+  onboarding,
   recipients: recipientsReducers.search,
   transactionDetails: transactionsReducers.details,
   transactions: transactionsReducers.search,
+  welcome,
 })

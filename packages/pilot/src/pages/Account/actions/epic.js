@@ -1,6 +1,8 @@
 import pagarme from 'pagarme'
 import {
+  complement,
   identity,
+  isEmpty,
   pathOr,
   propEq,
 } from 'ramda'
@@ -40,6 +42,8 @@ const isSelfRegister = propEq('type', 'self_register')
 const isPendingRiskAnalysis = propEq('status', 'pending_risk_analysis')
 
 const getRecipientId = pathOr(null, ['account', 'company', 'default_recipient_id', env])
+
+const isNotEmpty = complement(isEmpty)
 
 const errorHandler = (error) => {
   store.dispatch(receiveError(error))
@@ -143,9 +147,9 @@ const companyEpic = (action$, state$) => action$.pipe(
 
     return client
       .transactions
-      .search({ count: 1 })
-      .then(({ result: { total: { count } } }) => {
-        const alreadyTransacted = count > 0
+      .all({ count: 1 })
+      .then((transactions) => {
+        const alreadyTransacted = isNotEmpty(transactions)
         return { ...action, alreadyTransacted }
       })
       .catch(errorPayload => ({
