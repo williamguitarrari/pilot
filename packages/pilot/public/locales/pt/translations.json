@@ -615,7 +615,8 @@
       "placeholders": {
         "platform": "Digite ou escolha na lista",
         "payment_method": "Digite ou escolha na lista",
-        "expected_revenue": "Escolha uma das opções na lista"
+        "expected_revenue": "Escolha uma das opções na lista",
+        "segment": "Digite ou escolha na lista"
       },
       "not_found_pages": {
         "platform_not_found": {
