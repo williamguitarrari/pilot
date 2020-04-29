@@ -43,6 +43,7 @@ const createMainItem = mainTitle => subItems => ({
 const getTransactionPath = curry((basePath, path, obj) => pathOr('', [basePath, path], obj))
 const getTransactionSpreadPath = getTransactionPath('transaction_spread')
 const getTransactionCostPath = getTransactionPath('transaction_cost')
+const getBoletosPath = getTransactionPath('boletos')
 const getGatewayPriceItem = title => applySpec({
   title: always(title),
   prices: juxt([
@@ -54,6 +55,21 @@ const getGatewayPriceItem = title => applySpec({
       getTransactionSpreadPath(title),
       createPercentagePrice
     ),
+  ]),
+})
+const getPaymentFixedFee = title => pipe(
+  getBoletosPath(title),
+  createRealPrice
+)
+const getPaymentSpreadFee = title => pipe(
+  getBoletosPath(title),
+  createPercentagePrice
+)
+const getBoletoFees = title => applySpec({
+  title: always(title),
+  prices: juxt([
+    getPaymentFixedFee('payment_fixed_fee'),
+    getPaymentSpreadFee('payment_spread_fee'),
   ]),
 })
 const calcAntifraudeTotalPrice = (acc, { cost }) => acc + cost
@@ -70,6 +86,10 @@ const gatewayCostArray = [
   getPriceEntry('minimum_monthly_payment', getPriceFromProp('minimum_monthly_payment', createRealPrice)),
 ]
 
+const boletoFeesArray = [
+  getBoletoFees('boletos'),
+]
+
 const rejectItemWithoutPrice = propName => reject(pipe(
   propOr([], propName),
   length,
@@ -82,6 +102,14 @@ const getGatewayCost = pipe(
   juxt(gatewayCostArray),
   rejectItemWithoutPrice('prices'),
   createMainItem('gateway')
+)
+
+const getTransactionFees = pipe(
+  pathOr([], ['gateway', 'live']),
+  pick(['boletos']),
+  juxt(boletoFeesArray),
+  rejectItemWithoutPrice('prices'),
+  createMainItem('transactionFees')
 )
 
 const pspCostArray = [
@@ -110,6 +138,7 @@ const getTransferCost = pipe(
 
 const mainItemArray = [
   getGatewayCost,
+  getTransactionFees,
   getPspCost,
   getTransferCost,
 ]
