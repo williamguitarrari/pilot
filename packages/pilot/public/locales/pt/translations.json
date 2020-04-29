@@ -1326,14 +1326,17 @@
               "psp": "PSP",
               "credit_card": "Cartão de crédito",
               "debit_card": "Cartão de débito",
-              "boleto": "Boleto",
+              "boleto": "Boleto emitido",
               "antifraud_cost": "Antifraude",
               "mdrs": "MDRS",
               "anticipation": "Antecipação",
               "credito_em_conta": "Crédito de conta",
               "doc": "DOC",
               "ted": "TED",
-              "minimum_monthly_payment": "Mínimo pago mensalmente"
+              "minimum_monthly_payment": "Mínimo pago mensalmente",
+              "paid_boleto": "Boleto pago",
+              "transactionFees": "Taxas de transação",
+              "boletos": "Boleto pago"
             },
             "api_key": {
               "api": "API",
