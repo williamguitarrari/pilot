@@ -139,6 +139,27 @@ export const gatewayFeeCollectionOutgoing = juxt([
   transformMovementTypePropTo(['movement_object', 'amount'], 'gateway'),
 ])
 
+export const isAdjustmentFeeCollection = both(
+  propEq('type', 'fee_collection'),
+  compareMovementTypeTo('fee_adjustment')
+)
+
+export const adjustmentFeeCollectionOutgoing = juxt([
+  ifElse(
+    isNegative('amount'),
+    transformMovementTypePropTo(['amount'], 'fee_adjustment'),
+    zeroMovementAmount
+  ),
+])
+
+export const adjustmentFeeCollectionOutcoming = juxt([
+  ifElse(
+    isNegative('amount'),
+    zeroMovementAmount,
+    transformMovementTypePropTo(['amount'], 'fee_adjustment')
+  ),
+])
+
 export const buildOutcoming = cond([
   [
     isRefundOrChargeBack,
@@ -173,6 +194,10 @@ export const buildOutcoming = cond([
       zeroMovementAmount,
       ofRamda
     ),
+  ],
+  [
+    isAdjustmentFeeCollection,
+    adjustmentFeeCollectionOutcoming,
   ],
 ])
 
@@ -211,6 +236,10 @@ export const buildOutgoing = cond([
   [
     isGatewayFeeCollection,
     gatewayFeeCollectionOutgoing,
+  ],
+  [
+    isAdjustmentFeeCollection,
+    adjustmentFeeCollectionOutgoing,
   ],
 ])
 

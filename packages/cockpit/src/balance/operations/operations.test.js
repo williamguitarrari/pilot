@@ -11,7 +11,10 @@ import operations, {
   isRefundReversal,
   isTedTransfer,
   isGatewayFeeCollection,
+  isAdjustmentFeeCollection,
   gatewayFeeCollectionOutgoing,
+  adjustmentFeeCollectionOutgoing,
+  adjustmentFeeCollectionOutcoming,
   refundOrChargeBackOutcoming,
   refundOrChargeBackOutgoing,
   tedTransferOutgoing,
@@ -317,6 +320,53 @@ describe('Operations table data', () => {
       })
 
       expect(result).toBe(true)
+    })
+
+    it('should validate if it is a fee_adjustment fee collection', () => {
+      const isFeeAdjustment = isAdjustmentFeeCollection({
+        type: 'fee_collection',
+        movement_object: {
+          type: 'fee_adjustment',
+        },
+      })
+
+      expect(isFeeAdjustment).toBe(true)
+    })
+
+    it('should build a correct fee_adjustment outgoing', () => {
+      const outgoing = adjustmentFeeCollectionOutgoing({
+        amount: -10000,
+        type: 'fee_collection',
+        movement_object: {
+          amount: -10000,
+          type: 'fee_adjustment',
+        },
+      })
+
+      const expected = [{
+        amount: -10000,
+        type: 'fee_adjustment',
+      }]
+
+      expect(outgoing).toEqual(expected)
+    })
+
+    it('should build a correct fee_adjument outcoming', () => {
+      const outcoming = adjustmentFeeCollectionOutcoming({
+        amount: 10000,
+        type: 'fee_collection',
+        movement_object: {
+          amount: 10000,
+          type: 'fee_adjustment',
+        },
+      })
+
+      const expected = [{
+        amount: 10000,
+        type: 'fee_adjustment',
+      }]
+
+      expect(outcoming).toEqual(expected)
     })
   })
 })
