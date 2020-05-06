@@ -1168,7 +1168,7 @@
       "without_antifraud_disclaimer_4": "nossa documentação.",
       "without_antifraud_documentation_link": "https://docs.pagar.me/page/reprocessamento-sem-antifraude",
       "without_antifraud_requirements": {
-        "chargeback_rate": "Não é possível reprocessar sem o antifraude pois o seu índice de chargeback nos últimos 30 dias está acima de 1%.",
+        "chargeback_rate": "Não é possível reprocessar sem o antifraude pois o seu índice de chargeback nos últimos 30 dias está acima de {{maxChargebackRate}}%.",
         "not_antifraud": "Não é possível reprocessar pois a transação não foi recusada pelo antifraude."
       }
     },

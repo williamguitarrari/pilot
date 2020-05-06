@@ -60,6 +60,7 @@ const Reprocess = ({
   isOpen,
   loading,
   lockReason,
+  maxChargebackRate,
   onBack,
   onCancel,
   onCopyId,
@@ -130,6 +131,7 @@ const Reprocess = ({
           holderName={holderName}
           loading={loading}
           lockReason={lockReason}
+          maxChargebackRate={maxChargebackRate}
           onReprocessWithAntifraud={onReprocessTypeSelection(false)}
           onReprocessWithoutAntifraud={onReprocessTypeSelection(true)}
           t={t}
@@ -164,6 +166,7 @@ Reprocess.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
   lockReason: PropTypes.string,
+  maxChargebackRate: PropTypes.number.isRequired,
   onBack: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   onCopyId: PropTypes.func.isRequired,
