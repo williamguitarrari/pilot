@@ -7,6 +7,7 @@ import {
   equals,
   ifElse,
   juxt,
+  multiply,
   path,
   pipe,
 } from 'ramda'
@@ -21,7 +22,7 @@ const calculateChargebackRate = pipe(
   ifElse(
     any(equals(0)),
     always(0),
-    apply(divide)
+    pipe(apply(divide), multiply(100))
   )
 )
 
