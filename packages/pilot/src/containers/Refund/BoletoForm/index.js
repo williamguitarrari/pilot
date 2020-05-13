@@ -232,7 +232,6 @@ class BoletoForm extends Component {
         </ModalContent>
         <ModalActions>
           <Button
-            fill="gradient"
             type="submit"
           >
             {t('pages.refund.continue')}

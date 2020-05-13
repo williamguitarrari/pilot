@@ -85,7 +85,6 @@ const BalanceOperations = ({
         <Spacing size="tiny" />
         <Button
           disabled={disabled || isFilterActive}
-          fill="gradient"
           onClick={onFilterClick}
           size="default"
         >

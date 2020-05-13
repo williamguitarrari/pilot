@@ -83,7 +83,6 @@ const Toolbar = ({
       relevance="normal"
       disabled={confirmDisabled}
       type="submit"
-      fill="gradient"
     >
       {t('components.filter.apply')}
     </Button>

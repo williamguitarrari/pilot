@@ -114,7 +114,6 @@ const SelectAccount = ({
             {t('pages.add_recipient.back')}
           </Button>
           <Button
-            fill="gradient"
             type="submit"
           >
             {t('pages.add_recipient.continue')}

@@ -89,7 +89,6 @@ class CardConfirmation extends Component {
           </Button>
           <Button
             disabled={disabled}
-            fill="gradient"
             type="submit"
           >
             {t('pages.refund.confirm')}

@@ -65,7 +65,6 @@ const TransferContent = ({
           </Button>
           <Spacing size="medium" />
           <Button
-            fill="gradient"
             type="submit"
           >
             {t('pages.recipient_detail.save')}

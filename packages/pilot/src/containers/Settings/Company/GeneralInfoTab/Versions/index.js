@@ -131,7 +131,6 @@ const Versions = ({
             </Button>
             <Spacing size="small" />
             <Button
-              fill="gradient"
               onClick={handleVersionChange}
             >
               {t('confirm')}

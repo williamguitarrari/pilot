@@ -170,7 +170,6 @@ const ReprocessForm = ({
         />
         <Button
           disabled={loading}
-          fill="gradient"
           loading={loading}
           onClick={onReprocessWithAntifraud}
         >

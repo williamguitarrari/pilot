@@ -39,7 +39,7 @@ const ConfirmModal = ({
       <Button fill="outline" onClick={onCancel}>
         {cancelText}
       </Button>
-      <Button fill="gradient" onClick={onConfirm}>
+      <Button onClick={onConfirm}>
         {confirmText}
       </Button>
       <Spacing />

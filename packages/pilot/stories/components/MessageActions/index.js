@@ -27,7 +27,6 @@ const MessageActionsExample = () => (
           Sair
         </Button>
         <Button
-          fill="gradient"
           onClick={action('agree')}
           relevance="normal"
         >

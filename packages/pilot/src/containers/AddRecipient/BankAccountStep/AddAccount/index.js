@@ -110,7 +110,6 @@ const AddAccount = ({
           <Spacing size="medium" />
           <Button
             type="submit"
-            fill="gradient"
           >
             {t('pages.add_recipient.continue')}
           </Button>

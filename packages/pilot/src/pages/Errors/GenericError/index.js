@@ -49,7 +49,6 @@ const GenericError = ({
           && (
             <MessageActions>
               <Button
-                fill="gradient"
                 onClick={() => {
                   if (action) {
                     return action({

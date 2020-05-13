@@ -41,7 +41,7 @@ class ConclusionStep extends Component {
             {t('pages.add_recipient.exit')}
           </Button>
           <Spacing size="large" />
-          <Button fill="gradient" onClick={onViewDetails}>
+          <Button onClick={onViewDetails}>
             {t('pages.add_recipient.see_recipient')}
           </Button>
         </div>
