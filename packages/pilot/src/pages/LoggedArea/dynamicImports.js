@@ -36,6 +36,10 @@ const EmptyState = lazy(() => import(
   /* webpackChunkName: "empty-state" */ '../EmptyState/EmptyState'
 ))
 
+const PaymentLinks = lazy(() => import(
+  /* webpackChunkName: "payment-links" */ '../PaymentLinks/PaymentLinks'
+))
+
 export {
   Anticipation,
   Balance,
@@ -46,4 +50,5 @@ export {
   Transactions,
   UserSettings,
   Withdraw,
+  PaymentLinks,
 }
