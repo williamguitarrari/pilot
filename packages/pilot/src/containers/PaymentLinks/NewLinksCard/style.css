@@ -1,0 +1,21 @@
+@import "former-kit-skin-pagarme/dist/styles/typography.css";
+@import "former-kit-skin-pagarme/dist/styles/colors.css";
+@import "former-kit-skin-pagarme/dist/styles/spacing.css";
+
+.verticalAlign {
+  align-items: center;
+}
+
+.title,
+.subtitle {
+  color: var(--color-light-noir-100);
+}
+
+.title {
+  margin-top: 0;
+  margin-bottom: var(--spacing-small);
+}
+
+.subtitle {
+  font-size: 14px;
+}
