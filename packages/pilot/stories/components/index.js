@@ -45,6 +45,7 @@ import ConfirmModal from './ConfirmModal'
 import WithLoader from './withLoader'
 import WithSpinner from './withSpinner'
 import WelcomeMessage from './WelcomeMessage'
+import NewLinksCard from './NewLinksCard'
 
 storiesOf('Components|Custom components', module)
   .addDecorator(withA11y)
@@ -89,6 +90,7 @@ storiesOf('Components|Custom components', module)
   .add('MetricChart', () => <MetricChart />)
   .add('Confirm Modal', () => <ConfirmModal />)
   .add('Welcome Message', () => <WelcomeMessage />)
+  .add('NewLinksCard', () => <NewLinksCard />)
 
 storiesOf('Components|High Order Components', module)
   .add('with loader', () => <WithLoader />)
