@@ -1633,6 +1633,9 @@
       "total_amount": "total capturado de",
       "try_again": "Tente novamente com outros filtros."
     },
+    "payment_links": {
+      "title": "Links De Pagamento"
+    },
     "empty_state": {
       "title": "Boas-vindas",
       "welcome": {

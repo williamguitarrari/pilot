@@ -4,6 +4,7 @@ import Home32 from 'emblematic-icons/svg/Home32.svg'
 import Transaction32 from 'emblematic-icons/svg/Transaction32.svg'
 import Withdraw32 from 'emblematic-icons/svg/Withdraw32.svg'
 import Store32 from 'emblematic-icons/svg/Store32.svg'
+import Link32 from 'emblematic-icons/svg/Link32.svg'
 
 import {
   Anticipation,
@@ -15,6 +16,7 @@ import {
   Transactions,
   UserSettings,
   Withdraw,
+  PaymentLinks,
 } from './dynamicImports'
 
 /* eslint-disable sort-keys */
@@ -56,6 +58,13 @@ export default {
     icon: Transaction32,
     path: '/transactions',
     title: 'pages.transactions.title',
+  },
+  paymentLinks: {
+    component: PaymentLinks,
+    hidden: true,
+    path: '/payment-links',
+    title: 'pages.payment_links.title',
+    icon: Link32,
   },
   companySettings: {
     component: CompanySettings,
