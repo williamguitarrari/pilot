@@ -28,17 +28,17 @@
 }
 
 .info {
-  color: var(--color-light-info);
+  color: var(--color-barney-purple-100);
 }
 
 .error {
-  color: var(--color-light-error);
+  color: var(--color-beth-pink-100);
 }
 
 .warning {
-  color: var(--color-light-warning);
+  color: var(--color-morty-yellow-100);
 }
 
 .success {
-  color: var(--color-light-success);
+  color: var(--color-picklerick-green-100);
 }
