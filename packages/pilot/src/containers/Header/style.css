@@ -2,7 +2,7 @@
 
 .testEnvironmentLabel {
   align-self: center;
-  color: var(--color-picklerick-green-100);
+  color: var(--color-squanchy-gray-400);
   cursor: pointer;
   user-select: none;
 }
