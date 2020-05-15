@@ -3,7 +3,7 @@
 @import "former-kit-skin-pagarme/dist/styles/typography.css";
 
 .title {
-  color: var(--color-light-steel-100);
+  color: var(--color-squanchy-gray-400);
   display: inline-flex;
   font-size: 14px;
   font-weight: var(--title-font-weight);
@@ -15,7 +15,7 @@
 
 .receiverTitle,
 .partnerTitle {
-  color: var(--color-light-steel-100);
+  color: var(--color-squanchy-gray-400);
   display: inline-flex;
   font-size: 14px;
   font-weight: var(--title-font-weight);
@@ -26,7 +26,7 @@
 }
 
 .subtitle {
-  color: var(--color-light-steel-100);
+  color: var(--color-squanchy-gray-400);
   font-size: 14px;
   font-weight: var(--title-font-style);
   margin: 0;
@@ -34,7 +34,7 @@
 }
 
 .label {
-  color: var(--color-light-steel-100);
+  color: var(--color-squanchy-gray-400);
   font-size: 12px;
   font-weight: var(--title-font-style);
   margin-bottom: 8px;

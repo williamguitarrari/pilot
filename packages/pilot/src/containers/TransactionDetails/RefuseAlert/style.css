@@ -2,7 +2,7 @@
 @import "former-kit-skin-pagarme/dist/styles/spacing.css";
 
 .refuseAlertCustom {
-  color: var(--color-light-noir-100);
+  color: var(--color-birdperson-gray-500);
   font-size: 14px;
 
   & .refuseCode:after {
@@ -13,7 +13,7 @@
 @media print {
 
   .alertCustom {
-    border-bottom: 1px solid var(--color-light-iron-50);
+    border-bottom: 1px solid var(--color-squanchy-gray-50);
     padding-top: var(--spacing-small);
 
     & div {

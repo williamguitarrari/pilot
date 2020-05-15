@@ -19,7 +19,7 @@
 
   & * {
     user-select: none;
-    color: var(--color-light-steel-200);
+    color: var(--color-squanchy-gray-400);
   }
 
   & li {
@@ -28,9 +28,9 @@
 }
 
 .value {
-  color: var(--color-light-greenish-100);
+  color: var(--color-picklerick-green-100);
 }
 
 .arrow {
-  color: var(--color-light-steel-100);
+  color: var(--color-squanchy-gray-400);
 }

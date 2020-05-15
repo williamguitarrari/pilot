@@ -325,13 +325,13 @@
 .dark {
 
   & > .text {
-    color: var(--color-light-silver-50);
+    color: var(--color-squanchy-gray-20);
   }
 }
 
 .light {
 
   & > .text {
-    color: var(--color-light-carbon-40);
+    color: var(--color-birdperson-gray-600);
   }
 }

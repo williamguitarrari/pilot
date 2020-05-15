@@ -122,12 +122,12 @@
 
       & > span:before {
         max-width: 20px;
-        border-top: solid 1px var(--color-light-iron-50);
+        border-top: solid 1px var(--color-squanchy-gray-50);
       }
 
       &:not(:first-child):after {
         content: "";
-        border-right: solid 1px var(--color-light-iron-50);
+        border-right: solid 1px var(--color-squanchy-gray-50);
         height: 100%;
         left: 0;
         position: absolute;
@@ -141,7 +141,7 @@
       & > span:before {
         right: 50% !important; /* stylelint-disable-line declaration-no-important */
         transform: translate(50%, 0) !important; /* stylelint-disable-line declaration-no-important */
-        border-top: 1px solid var(--color-light-iron-50);
+        border-top: 1px solid var(--color-squanchy-gray-50);
       }
     }
 

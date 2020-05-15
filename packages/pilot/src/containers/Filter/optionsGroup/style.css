@@ -2,7 +2,7 @@
 @import "former-kit-skin-pagarme/dist/styles/spacing.css";
 
 .filtersTitle {
-  color: var(--color-light-steel-100);
+  color: var(--color-squanchy-gray-400);
   font-size: 14px;
   margin-bottom: var(--spacing-tiny);
   text-transform: uppercase;

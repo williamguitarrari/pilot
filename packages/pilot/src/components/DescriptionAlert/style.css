@@ -3,8 +3,8 @@
 @import "former-kit-skin-pagarme/dist/styles/typography.css";
 
 .descriptionAlert {
-  color: var(--color-light-steel-100);
-  border: 1px solid var(--color-light-smoke-40);
+  color: var(--color-squanchy-gray-400);
+  border: 1px solid var(--color-squanchy-gray-20);
   line-height: 18px;
   padding: var(--spacing-tiny);
 

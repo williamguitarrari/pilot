@@ -13,7 +13,7 @@
 }
 
 .message {
-  color: var(--color-light-noir-100);
+  color: var(--color-birdperson-gray-500);
   line-height: 1.81;
   font-size: 14px;
   width: 350px;
@@ -21,5 +21,5 @@
 }
 
 .title {
-  color: var(--color-light-noir-100);
+  color: var(--color-birdperson-gray-500);
 }
