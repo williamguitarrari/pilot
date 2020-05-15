@@ -4,7 +4,7 @@ import { applySpec, map, prop } from 'ramda'
 import {
   CardContent,
   SecondaryFormDropdown,
-  SecondaryButton,
+  Button,
 } from 'former-kit'
 import Card from '../Card'
 import styles from './styles.css'
@@ -44,13 +44,13 @@ const DropdownOptions = ({
           />
         </CardContent>
       </Card>
-      <SecondaryButton
+      <Button
         disabled={!value}
         onClick={() => handleSubmit(value)}
         size="huge"
       >
         {t(buttonLabelPath)}
-      </SecondaryButton>
+      </Button>
     </div>
   )
 }
