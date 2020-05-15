@@ -53,7 +53,7 @@ class WithdrawResult extends Component {
         <TotalDisplay
           amount={requested}
           amountSize="large"
-          color="#37cc9a"
+          color="#65a300"
           title={t('pages.withdraw.requested_value')}
           titleColor="#757575"
           titleSize="small"
@@ -61,7 +61,7 @@ class WithdrawResult extends Component {
         <TotalDisplay
           amount={transferCost}
           amountSize="large"
-          color="#ff796f"
+          color="#df285f"
           title={t('pages.withdraw.transfer_cost')}
           titleColor="#757575"
           titleSize="small"
@@ -69,7 +69,7 @@ class WithdrawResult extends Component {
         <TotalDisplay
           amount={amount}
           amountSize="large"
-          color="#37cc9a"
+          color="#65a300"
           title={t('pages.withdraw.value_to_transfer')}
           titleColor="#757575"
           titleSize="small"

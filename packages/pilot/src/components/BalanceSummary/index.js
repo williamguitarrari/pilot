@@ -9,10 +9,10 @@ import TotalDisplayTitle from './TotalDisplayTitle'
 import style from './style.css'
 
 const colors = {
-  fee: '#ff796f',
-  net: '#4ca9d7',
-  outcoming: '#37cc9a',
-  outgoing: '#ff796f',
+  fee: '#df285f',
+  net: '#4079bb',
+  outcoming: '#65a300',
+  outgoing: '#df285f',
 }
 
 const BalanceSummary = ({

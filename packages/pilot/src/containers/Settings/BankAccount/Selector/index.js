@@ -51,7 +51,7 @@ const getColumns = (selectedAccountId, onSelect, t, disabled) => [
       if (item.id === selectedAccountId) {
         return (
           <IconCheck
-            color="#37cc9a"
+            color="#65a300"
             height={16}
             width={16}
           />
