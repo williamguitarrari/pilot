@@ -237,7 +237,7 @@
   }
 
   .netAmountValue {
-    border-top: 3px solid #4ca9d7;
+    border-top: 3px solid var(--color-mrmeeseks-blue-100);
   }
 
   .metadataInfo {
