@@ -452,10 +452,17 @@ storiesOf('Containers|Empty State', module)
   .add('Default', () => <EmptyState.EmptyStateDefault />)
   .add('MDRzao', () => <EmptyState.EmptyStateMDRzao />)
 
-storiesOf('Containers|Payment Links', module)
+storiesOf('Containers|Payment Links/Filter', module)
+  .add('Filter', () => <PaymentLinks.Filter />)
+
+storiesOf('Containers|Payment Links/NewLinksCard', module)
+  .add('NewLinksCard', () => <PaymentLinks.NewLinksCard />)
+
+storiesOf('Containers|Payment Links/PaymentLinkList', module)
   .add('List', () => <PaymentLinks.PaymentLinksList.WithList />)
   .add('List exporting', () => <PaymentLinks.PaymentLinksList.WithListExporting />)
   .add('List loading', () => <PaymentLinks.PaymentLinksList.WithListLoading />)
   .add('Empty list', () => <PaymentLinks.PaymentLinksList.WithEmptyList />)
-  .add('NewLinksCard', () => <PaymentLinks.NewLinksCard />)
-  .add('Filter', () => <PaymentLinks.Filter />)
+
+storiesOf('Containers|Payment Links/PaymentLinkAdd', module)
+  .add('NewLinksCard', () => <PaymentLinks.PaymentLinkAdd.PaymentLinkResult />)

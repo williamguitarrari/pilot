@@ -1652,6 +1652,13 @@
           "canceled": "inativo",
           "expired": "inativo"
         }
+      },
+      "add_link": {
+        "success": {
+          "title": "Link criado com sucesso!",
+          "subtitle": "Compartilhe o link abaixo e boas vendas.",
+          "new_link": "Criar novo link de pagamento"
+        }
       }
     },
     "empty_state": {
