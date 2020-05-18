@@ -124,11 +124,6 @@ const getOutgoingAmount = pipe(
   prop('amount')
 )
 
-const getOutgoingType = pipe(
-  head,
-  prop('type')
-)
-
 const renderCreditTransferStatus = (
   type,
   status,
@@ -154,10 +149,8 @@ const renderCreditTransferStatus = (
   return null
 }
 
-const renderGatewayFeeCollection = (type, outgoing, description) => {
-  const outgoingType = getOutgoingType(outgoing)
-
-  if (type === 'fee_collection' && outgoingType === 'gateway' && description) {
+const renderFeeCollection = (type, description) => {
+  if (type === 'fee_collection' && description) {
     return (
       <span>{description}</span>
     )
@@ -194,7 +187,7 @@ const renderDescription = ({
       }
       {renderCreditTransferStatus(type, status, outgoing, transferId, labels)}
       {renderTargetOrSource(type, net, targetId, sourceId, labels)}
-      {renderGatewayFeeCollection(type, outgoing, description)}
+      {renderFeeCollection(type, description)}
     </div>
   )
 }

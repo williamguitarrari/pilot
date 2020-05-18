@@ -10,5 +10,6 @@ export default applySpec({
   statementDescriptor: propOr('', 'statement_descriptor'),
   fullName: propOr('', 'full_name'),
   cnpj: propOr('', 'cnpj'),
+  max_chargeback_index: propOr(2, 'max_chargeback_index'),
 })
 

@@ -18,6 +18,7 @@ import {
   isEmpty,
   isNil,
   length,
+  path,
   pathEq,
   pipe,
   prop,
@@ -211,6 +212,9 @@ const requestChargebackRate = (client) => {
   return client.transactions.chargebackRate(range)
 }
 
+const requestMaxChargebackIndex = client => client.company.info()
+  .then(path(['general', 'max_chargeback_index']))
+
 const promiseDelay = timeout => new Promise(
   resolve => setTimeout(resolve, timeout)
 )
@@ -253,6 +257,7 @@ class TransactionDetails extends Component {
         reprocess: false,
       },
       manualReviewAction: null,
+      maxChargebackRate: 2,
       paymentBoletoLabels: getPaymentBoletoLabels(t),
       paymentCardLabels: getPaymentCardLabels(t),
       result: {
@@ -360,12 +365,24 @@ class TransactionDetails extends Component {
     const transactionRequests = [
       client.transactions.details(query),
       requestChargebackRate(client),
+      requestMaxChargebackIndex(client),
     ]
 
     return Promise.all(transactionRequests)
-      .then(([result, { chargebackRate }]) => {
+      .then((data) => {
+        const [
+          result,
+          { chargebackRate, transactions: transactionsCount },
+          maxChargebackIndex,
+        ] = data
+
+        const maxChargebackRate = transactionsCount > 100
+          ? maxChargebackIndex
+          : 10
+
         const newState = {
           chargebackRate,
+          maxChargebackRate,
           paymentBoletoLabels: getPaymentBoletoLabels(t, result.transaction),
           result,
         }
@@ -523,6 +540,7 @@ class TransactionDetails extends Component {
       installmentColumns,
       loading,
       manualReviewAction,
+      maxChargebackRate,
       paymentBoletoLabels,
       paymentCardLabels,
       result,
@@ -726,6 +744,7 @@ class TransactionDetails extends Component {
         <Reprocess
           chargebackRate={chargebackRate}
           isOpen={showReprocess}
+          maxChargebackRate={maxChargebackRate}
           onClose={this.handleReprocessClose}
           onSuccess={this.handleReprocessSuccess}
           transaction={transaction}

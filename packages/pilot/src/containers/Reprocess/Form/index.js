@@ -27,6 +27,7 @@ const WithoutAntifraudButton = ({
   allowReprocessWithoutAntifraud,
   disableWithoutAntifraudReprocess,
   lockReason,
+  maxChargebackRate,
   onReprocessWithoutAntifraud,
   t,
 }) => (
@@ -34,7 +35,10 @@ const WithoutAntifraudButton = ({
     { allowReprocessWithoutAntifraud && disableWithoutAntifraudReprocess
       && (
         <Tooltip
-          content={t(`pages.reprocess.without_antifraud_requirements.${lockReason}`)}
+          content={t(
+            `pages.reprocess.without_antifraud_requirements.${lockReason}`,
+            { maxChargebackRate }
+          )}
           placement="topStart"
         >
           <Button
@@ -90,6 +94,7 @@ const ReprocessForm = ({
   holderName,
   loading,
   lockReason,
+  maxChargebackRate,
   onReprocessWithAntifraud,
   onReprocessWithoutAntifraud,
   t,
@@ -159,6 +164,7 @@ const ReprocessForm = ({
           allowReprocessWithoutAntifraud={allowReprocessWithoutAntifraud}
           disableWithoutAntifraudReprocess={disableWithoutAntifraudReprocess}
           lockReason={lockReason}
+          maxChargebackRate={maxChargebackRate}
           onReprocessWithoutAntifraud={onReprocessWithoutAntifraud}
           t={t}
         />
@@ -208,6 +214,7 @@ WithoutAntifraudButton.propTypes = {
   allowReprocessWithoutAntifraud: PropTypes.bool.isRequired,
   disableWithoutAntifraudReprocess: PropTypes.bool.isRequired,
   lockReason: lockReasonValidation,
+  maxChargebackRate: PropTypes.number.isRequired,
   onReprocessWithoutAntifraud: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
 }
@@ -223,6 +230,7 @@ ReprocessForm.propTypes = {
   holderName: PropTypes.string.isRequired,
   loading: PropTypes.bool,
   lockReason: lockReasonValidation,
+  maxChargebackRate: PropTypes.number.isRequired,
   onReprocessWithAntifraud: PropTypes.func.isRequired,
   onReprocessWithoutAntifraud: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,

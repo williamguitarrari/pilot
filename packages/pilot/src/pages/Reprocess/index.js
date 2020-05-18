@@ -5,8 +5,8 @@ import { connect } from 'react-redux'
 import { translate } from 'react-i18next'
 import { withRouter } from 'react-router-dom'
 import {
-  __,
   always,
+  apply,
   complement,
   compose,
   cond,
@@ -17,7 +17,7 @@ import {
   isNil,
   path,
   pipe,
-  prop,
+  props,
 } from 'ramda'
 
 import ReprocessContainer from '../../containers/Reprocess'
@@ -82,8 +82,8 @@ const getNextStep = cond([
 ])
 
 const hasSurpassedChargebackRate = pipe(
-  prop('chargebackRate'),
-  gt(__, 1)
+  props(['chargebackRate', 'maxChargebackRate']),
+  apply(gt)
 )
 
 const isNotRefusedByAntifraud = pipe(
@@ -103,6 +103,7 @@ const Reprocess = ({
   error,
   history,
   isOpen,
+  maxChargebackRate,
   onClose,
   onSuccess,
   t,
@@ -183,7 +184,11 @@ const Reprocess = ({
       : error.message
   }
 
-  const lockReason = getLockReason({ chargebackRate, transaction })
+  const lockReason = getLockReason({
+    chargebackRate,
+    maxChargebackRate,
+    transaction,
+  })
 
   return (
     <Fragment>
@@ -194,6 +199,7 @@ const Reprocess = ({
             isOpen={isOpen}
             loading={loading}
             lockReason={lockReason}
+            maxChargebackRate={maxChargebackRate}
             onBack={handleBack}
             onCancel={handleClose}
             onCopyId={handleCopyId}
@@ -230,6 +236,7 @@ Reprocess.propTypes = {
     replace: PropTypes.func,
   }).isRequired,
   isOpen: PropTypes.bool.isRequired,
+  maxChargebackRate: PropTypes.number.isRequired,
   onClose: PropTypes.func.isRequired,
   onSuccess: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
