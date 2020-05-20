@@ -2,7 +2,7 @@
 @import "former-kit-skin-pagarme/dist/styles/colors.css";
 
 .title {
-  color: var(--color-light-steel-100);
+  color: var(--color-squanchy-gray-400);
   display: inline-flex;
 }
 
@@ -19,7 +19,7 @@
   & * {
     user-select: none;
     font-size: 14px;
-    color: var(--color-light-steel-100);
+    color: var(--color-squanchy-gray-400);
   }
 
   & li {
@@ -30,9 +30,9 @@
 }
 
 .value {
-  color: var(--color-light-steel-100);
+  color: var(--color-squanchy-gray-400);
 }
 
 .arrow {
-  color: var(--color-light-steel-100);
+  color: var(--color-squanchy-gray-400);
 }

@@ -57,7 +57,6 @@ const buildEmptyState = (onBack, t) => (
     <EmptyStateIcon width={365} height={148} />
     <div className={style.buttonWrapper}>
       <Button
-        fill="gradient"
         onClick={onBack}
       >
         {t('pages.withdraw.back_to_balance')}

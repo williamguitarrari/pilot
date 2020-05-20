@@ -79,7 +79,6 @@ class MenagementTeam extends React.Component {
         <CardActions>
           <Button
             size="default"
-            fill="gradient"
             icon={<IconAdd width={12} height={12} />}
             onClick={this.handleModalOpenAddUser}
           > {t('pages.settings.company.card.team.table.add_user')}

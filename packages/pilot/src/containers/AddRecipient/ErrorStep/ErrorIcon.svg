@@ -37,6 +37,6 @@
         </g>
         <path stroke="#17C9B2" d="M197 84c1.333 6 5 9 11 9M137 83c-6 .667-11.667-2.667-17-10M120.5 79.5l-4-47.5"/>
         <rect width="47" height="20" x="115.5" y="11.5" fill="#FFF" fill-rule="nonzero" stroke="#17C9B2" rx="3" transform="rotate(-6 139 21.5)"/>
-        <use fill="#FF796F" fill-rule="nonzero" stroke="#FF796F" transform="rotate(4 139.983 20.983)" xlink:href="#a"/>
+        <use fill="#df285f" fill-rule="nonzero" stroke="#df285f" transform="rotate(4 139.983 20.983)" xlink:href="#a"/>
     </g>
 </svg>

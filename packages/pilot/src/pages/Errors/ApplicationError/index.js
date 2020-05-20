@@ -26,7 +26,6 @@ const ApplicationError = ({
       >
         <MessageActions>
           <Button
-            fill="gradient"
             // eslint-disable-next-line no-restricted-globals
             onClick={() => location.reload()}
           >

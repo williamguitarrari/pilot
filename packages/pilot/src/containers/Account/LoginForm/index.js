@@ -68,7 +68,6 @@ const LoginContainer = ({
           type="submit"
           disabled={loading}
           size="huge"
-          fill="gradient"
         >
           {t('login.login_action')}
         </Button>

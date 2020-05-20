@@ -21,7 +21,7 @@ const TotalDisplayExample = () => (
               align="center"
               amount={1000000000}
               amountSize="large"
-              color="#37cc9a"
+              color="#65a300"
               subtitle={(
                 <span>
                   Capturado em 10/03/2018 às 14:15h
@@ -40,7 +40,7 @@ const TotalDisplayExample = () => (
               align="start"
               amount={-500000}
               amountSize="large"
-              color="#ff796f"
+              color="#df285f"
               subtitle={(
                 <span>
                   MDR: R$ 6,00 | Valor estornado: R$ 15,00 <br />
@@ -60,7 +60,7 @@ const TotalDisplayExample = () => (
               align="end"
               amount={9995000000}
               amountSize="large"
-              color="#4ca9d7"
+              color="#4079bb"
               subtitle={(
                 <span>
                   Data a receber: 20/03/2018
@@ -81,14 +81,14 @@ const TotalDisplayExample = () => (
               align="center"
               amount={1000000000}
               amountSize="large"
-              color="#37cc9a"
+              color="#65a300"
               subtitle={(
                 <span>
                   Capturado em 10/03/2018 às 14:15h
                 </span>
               )}
               title="Valor Capturado"
-              titleColor="#37cc9a"
+              titleColor="#65a300"
               titleSize="medium"
             />
           </Col>
@@ -100,7 +100,7 @@ const TotalDisplayExample = () => (
               align="start"
               amount={-500000}
               amountSize="large"
-              color="#ff796f"
+              color="#df285f"
               subtitle={(
                 <span>
                   MDR: R$ 6,00 | Valor estornado: R$ 15,00 <br />
@@ -108,7 +108,7 @@ const TotalDisplayExample = () => (
                 </span>
               )}
               title="Total de Saídas"
-              titleColor="#ff796f"
+              titleColor="#df285f"
               titleSize="medium"
             />
           </Col>
@@ -120,14 +120,14 @@ const TotalDisplayExample = () => (
               align="end"
               amount={9995000000}
               amountSize="large"
-              color="#4ca9d7"
+              color="#4079bb"
               subtitle={(
                 <span>
                   Data a receber: 20/03/2018
                 </span>
               )}
               title="Valor Líquido"
-              titleColor="#4ca9d7"
+              titleColor="#4079bb"
               titleSize="medium"
             />
           </Col>

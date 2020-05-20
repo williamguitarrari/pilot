@@ -8,7 +8,7 @@
   justify-content: space-between;
 
   & p {
-    color: var(--color-light-steel-100);
+    color: var(--color-squanchy-gray-400);
     font-size: 12px;
   }
 }
@@ -17,7 +17,7 @@
   height: 150px;
 
   & h2 {
-    color: var(--color-light-noir-100);
+    color: var(--color-birdperson-gray-500);
     font-size: 14px;
     margin: 0;
   }
@@ -50,7 +50,7 @@
 }
 
 .cardBarCode {
-  color: var(--color-light-noir-100);
+  color: var(--color-birdperson-gray-500);
   font-size: 14px;
   line-height: var(--spacing-medium);
 
@@ -80,7 +80,7 @@
   }
 
   .cardContent {
-    border-bottom: 1px solid  var(--color-light-iron-50);
+    border-bottom: 1px solid  var(--color-squanchy-gray-50);
     flex-flow: row wrap;
     height: auto;
     justify-content: flex-start;

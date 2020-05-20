@@ -438,7 +438,6 @@ class RecipientBalance extends Component {
                     />
                     <Button
                       disabled={filterDatesEqualCurrent}
-                      fill="gradient"
                       onClick={this.handleFilterClick}
                       size="default"
                     >

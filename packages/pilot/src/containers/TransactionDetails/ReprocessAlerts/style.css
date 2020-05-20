@@ -4,7 +4,7 @@
 @media print {
 
   .alertCustom {
-    border-bottom: 1px solid var(--color-light-iron-50);
+    border-bottom: 1px solid var(--color-squanchy-gray-50);
     padding-top: var(--spacing-small);
 
     & div {

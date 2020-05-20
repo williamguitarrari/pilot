@@ -3,11 +3,11 @@
 
 .anticipationDate {
   font-weight: bold;
-  color: var(--color-light-steel-100);
+  color: var(--color-squanchy-gray-400);
 }
 
 .anticipationIcon {
-  color: var(--color-light-greenish-100);
+  color: var(--color-picklerick-green-100);
   padding-left: var(--spacing-tiny);
 }
 
@@ -35,7 +35,7 @@
 }
 
 .negative {
-  color: var(--color-light-salmon-100);
+  color: var(--color-barney-purple-100);
 }
 
 .net {
@@ -65,18 +65,18 @@
 }
 
 .positive {
-  color: var(--color-light-greenish-100);
+  color: var(--color-picklerick-green-100);
 }
 
 .subtitle > h3 {
-  color: var(--color-light-steel-100);
+  color: var(--color-squanchy-gray-400);
   font-size: 14px;
   font-weight: normal;
   margin-right: var(--spacing-small);
 }
 
 .type {
-  color: var(--color-light-steel-100);
+  color: var(--color-squanchy-gray-400);
   font-weight: bold;
 }
 
@@ -85,7 +85,7 @@
 }
 
 .zero {
-  color: var(--color-light-steel-100);
+  color: var(--color-squanchy-gray-400);
 }
 
 .overlay {
@@ -101,6 +101,6 @@
 }
 
 .title {
-  color: var(--color-light-steel-100);
+  color: var(--color-squanchy-gray-400);
   font-size: 14px;
 }

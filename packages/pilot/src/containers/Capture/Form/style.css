@@ -3,7 +3,7 @@
 @import "former-kit-skin-pagarme/dist/styles/colors/light.css";
 
 .captureAmount {
-  color: var(--color-light-steel-100);
+  color: var(--color-squanchy-gray-400);
   font-size: var(--headline-font-size);
   font-weight: var(--title-font-weight);
   margin: 0;
@@ -14,6 +14,6 @@
 }
 
 .value {
-  color: var(--color-light-steel-100);
+  color: var(--color-squanchy-gray-400);
   font-size: 14px;
 }

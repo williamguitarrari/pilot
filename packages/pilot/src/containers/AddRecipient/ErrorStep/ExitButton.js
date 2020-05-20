@@ -7,7 +7,7 @@ const ExitButton = ({
   t,
 }) => (
   <div>
-    <Button fill="gradient" onClick={onExit}>
+    <Button onClick={onExit}>
       {t('pages.add_recipient.exit')}
     </Button>
   </div>

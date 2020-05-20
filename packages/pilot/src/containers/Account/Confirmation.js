@@ -29,7 +29,6 @@ const Confirmation = ({
         <Button
           type="button"
           size="huge"
-          fill="gradient"
           onClick={onBackToLogin}
         >
           {backToLogin}

@@ -95,7 +95,6 @@ const PersonalInfoForm = ({
       <Button
         type="submit"
         size="large"
-        fill="gradient"
       >
         {t('pages.settings.user.personal.button.save')}
       </Button>

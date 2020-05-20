@@ -97,7 +97,7 @@
   white-space: pre;
 
   & strong {
-    color: var(--color-light-salmon-100);
+    color: var(--color-barney-purple-100);
     font-weight: bold;
   }
 
@@ -107,7 +107,7 @@
 }
 
 .verticalDivider {
-  border-left: 1px solid var(--color-light-iron-50);
+  border-left: 1px solid var(--color-squanchy-gray-50);
   height: 20px;
   margin: 0 8px;
   width: auto;
@@ -123,7 +123,7 @@
 }
 
 .separator {
-  border-left: 1px solid var(--color-light-steel-50);
+  border-left: 1px solid var(--color-squanchy-gray-100);
   margin: 0 10px;
   width: 1px;
 }
@@ -136,7 +136,7 @@
 
 .legendTitle {
   align-items: flex-start;
-  color: var(--color-light-steel-100);
+  color: var(--color-squanchy-gray-400);
   display: flex;
   font-size: 13px;
   font-weight: bold;

@@ -8,7 +8,7 @@ const LoginAgainButton = ({
   t,
 }) => (
   <div>
-    <Button fill="gradient" onClick={onLoginAgain}>
+    <Button onClick={onLoginAgain}>
       {t('pages.add_recipient.login_again')}
     </Button>
   </div>

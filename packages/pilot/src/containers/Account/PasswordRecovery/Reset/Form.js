@@ -75,7 +75,6 @@ const PasswordResetForm = ({
         <div className={styles.hugeButton}>
           <Button
             disabled={loading}
-            fill="gradient"
             loading={loading}
             size="huge"
             type="submit"

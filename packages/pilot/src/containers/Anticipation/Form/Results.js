@@ -18,9 +18,9 @@ import formatCurrency from '../../../formatters/currency'
 import style from './style.css'
 
 const colors = {
-  amount: '#37cc9a',
-  cost: '#ff796f',
-  requested: '#37cc9a',
+  amount: '#65a300',
+  cost: '#df285f',
+  requested: '#65a300',
 }
 
 const Skeleton = (

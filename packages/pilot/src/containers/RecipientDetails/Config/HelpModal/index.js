@@ -116,7 +116,7 @@ const HelpModal = ({
       </ModalContent>
       <ModalActions>
         <div className={style.justifyContent}>
-          <Button fill="gradient" onClick={onExit}>
+          <Button onClick={onExit}>
             {t('pages.recipient_detail.exit_modal')}
           </Button>
           <Spacing />

@@ -648,7 +648,6 @@ class Balance extends Component {
               </Button>
               <Spacing size="small" />
               <Button
-                fill="gradient"
                 onClick={onConfirmCancelPendingRequest}
               >
                 {t('cancel_pending_anticipations_confirm')}

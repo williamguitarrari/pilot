@@ -15,22 +15,22 @@ const SummaryExample = () => (
         />
         <TotalDisplay
           amount={9995000}
-          color="#37cc9a"
+          color="#65a300"
           title="Valor a ser transferido"
         />
         <TotalDisplay
           amount={10000000}
-          color="#37cc9a"
+          color="#65a300"
           title="Valor Solicitado"
         />
         <TotalDisplay
           amount={-367}
-          color="#ff796f"
+          color="#df285f"
           title="Custo da transferência"
         />
         <TotalDisplay
           amount={9995000}
-          color="#37cc9a"
+          color="#65a300"
           title="Valor a ser transferido"
         />
       </Summary>

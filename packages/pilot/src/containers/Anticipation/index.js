@@ -60,7 +60,6 @@ const buildEmptyState = (onCancel, t) => () => (
     >
       <MessageActions>
         <Button
-          fill="gradient"
           onClick={onCancel}
         >
           {t('pages.anticipation.back_to_balance')}

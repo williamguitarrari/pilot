@@ -12,7 +12,7 @@ const TryAgainAndExitButtons = ({
       {t('pages.add_recipient.exit')}
     </Button>
     <Spacing size="large" />
-    <Button fill="gradient" onClick={onTryAgain}>
+    <Button onClick={onTryAgain}>
       {t('pages.add_recipient.try_again')}
     </Button>
   </div>

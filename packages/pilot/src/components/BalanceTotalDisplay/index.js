@@ -37,7 +37,6 @@ const BalanceTotalDisplay = ({
           && (
             <Button
               disabled={disabled}
-              fill="gradient"
               onClick={action.onClick}
               size="default"
             >

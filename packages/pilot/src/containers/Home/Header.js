@@ -157,7 +157,7 @@ const Header = ({
               icon={(
                 <Calendar24
                   color={isUsingCustomDates
-                    ? '#37cc9a'
+                    ? '#65a300'
                     : '#4d4f62'
                   }
                   height={13}

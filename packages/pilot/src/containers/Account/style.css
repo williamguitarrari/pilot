@@ -58,7 +58,7 @@
 }
 
 .light .title {
-  color: var(--color-light-coal-100);
+  color: var(--color-birdperson-gray-500);
 }
 
 .uppercase {
@@ -139,7 +139,7 @@
 /* stylelint-disable selector-no-qualifying-type */
 
 .primaryContent .actions button[role="link"] {
-  color: var(--color-light-steel-100);
+  color: var(--color-squanchy-gray-400);
   font-size: 12px;
   outline: none;
   padding: 10px 0;
@@ -152,7 +152,7 @@
 }
 
 .link {
-  color: var(--color-light-greenish-100);
+  color: var(--color-picklerick-green-100);
   font-weight: bold;
   outline: none;
   text-decoration: none;
@@ -161,7 +161,7 @@
   &:hover,
   &:focus,
   &:active {
-    color: var(--color-light-greenish-120);
+    color: var(--color-picklerick-green-200);
     text-decoration: none;
   }
 }
@@ -190,18 +190,18 @@
   text-decoration: none;
 
   & strong {
-    color: var(--color-light-greenish-100);
+    color: var(--color-picklerick-green-100);
   }
 
   &:hover strong,
   &:focus strong {
-    color: var(--color-light-greenish-120);
+    color: var(--color-picklerick-green-200);
   }
 }
 
 .githubLink {
   align-items: flex-end;
-  background: var(--color-light-steel-100);
+  background: var(--color-squanchy-gray-400);
   border-radius: 100%;
   color: var(--color-white);
   display: flex;
@@ -213,7 +213,7 @@
 
   &:hover,
   &:focus {
-    background: var(--color-light-coal-100);
+    background: var(--color-birdperson-gray-500);
   }
 }
 

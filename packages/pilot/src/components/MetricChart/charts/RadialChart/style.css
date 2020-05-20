@@ -2,7 +2,7 @@
 @import "former-kit-skin-pagarme/dist/styles/colors/light.css";
 
 .label {
-  color: var(--color-light-noir-100);
+  color: var(--color-birdperson-gray-500);
   font-size: 20px;
   font-weight: 500;
 
