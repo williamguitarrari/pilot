@@ -17,7 +17,6 @@ const TransferError = ({
     <ErrorIcon />
     <div className={style.buttonWrapper}>
       <Button
-        fill="gradient"
         onClick={onClick}
       >
         {actionLabel}

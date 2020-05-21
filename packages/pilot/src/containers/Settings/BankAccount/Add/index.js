@@ -181,7 +181,6 @@ const BankAccountForm = ({
         </Button>
         <Button
           disabled={actionsDisabled}
-          fill="gradient"
           type="submit"
         >
           {t('pages.settings.company.card.register.bank.confirm')}

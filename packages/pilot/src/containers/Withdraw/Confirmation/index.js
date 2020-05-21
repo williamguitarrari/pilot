@@ -70,7 +70,7 @@ class WithdrawConfirmationContainer extends Component {
           align="center"
           amount={requested}
           amountSize="large"
-          color="#37cc9a"
+          color="#65a300"
           title={t('pages.withdraw.requested_value')}
           titleColor="#757575"
           titleSize="small"
@@ -79,7 +79,7 @@ class WithdrawConfirmationContainer extends Component {
           align="center"
           amount={transferCost}
           amountSize="large"
-          color="#ff796f"
+          color="#df285f"
           title={t('pages.withdraw.transfer_cost')}
           titleColor="#757575"
           titleSize="small"
@@ -88,7 +88,7 @@ class WithdrawConfirmationContainer extends Component {
           align="center"
           amount={amount}
           amountSize="large"
-          color="#37cc9a"
+          color="#65a300"
           title={t('pages.withdraw.value_to_transfer')}
           titleColor="#757575"
           titleSize="small"

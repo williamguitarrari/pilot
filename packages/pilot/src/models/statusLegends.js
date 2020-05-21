@@ -1,67 +1,69 @@
 const status = {
   analyzing: {
-    color: '#0b6e69',
+    color: '#235894',
     text: 'Em análise',
   },
   authorized: {
-    color: '#f2cb03',
+    color: '#f8cc43',
     text: 'Autorizada',
-    textColor: '#000000',
+    textColor: '#070817',
   },
   cancelled: {
-    color: '#da272c',
+    color: '#f55d8b;',
     text: 'Cancelada',
+    textColor: '#070817',
   },
   chargedback: {
-    color: '#2d2d2d',
+    color: '#070817',
     text: 'Chargeback',
   },
   chargedback_refund: {
-    color: '#984141',
+    color: '#a71a44',
     text: 'Cbk reapresentado',
   },
   fraud_reimbursed: {
-    color: '#0ba4bc',
+    color: '#e2efff',
     text: 'Fraude Coberta',
+    textColor: '#070817',
   },
   paid: {
-    color: '#17c9b2',
+    color: '#65a300',
     text: 'Paga',
   },
   pending_refund: {
-    color: '#5d3f90',
+    color: '#3f2787',
     text: 'Estorno pendente',
   },
   pending_review: {
-    color: '#d588f2',
+    color: '#ec6e16',
     text: 'Revisão pendente',
   },
   processing: {
-    color: '#5da0fc',
+    color: '#5691d6',
     text: 'Processando',
   },
   refunded: {
-    color: '#7250d8',
+    color: '#6045af',
     text: 'Estornada',
   },
   refused: {
-    color: '#ea5656',
+    color: '#df285f',
     text: 'Recusada',
   },
   suspended: {
-    color: '#bf5316',
+    color: '#c25408',
     text: 'Suspensa',
   },
   unavailable: {
-    color: '#a0a0a0',
+    color: '#72737a',
     text: 'Indisponível',
   },
   waiting_funds: {
-    color: '#f29f03',
+    color: '#f3b700',
     text: 'Aguardando pgto',
   },
   waiting_payment: {
-    color: '#f29f03',
+    color: '#f3b700',
     text: 'Aguardando pgto',
   },
 }

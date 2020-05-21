@@ -43,7 +43,6 @@ const PasswordRecoveryForm = ({
       <div className={styles.hugeButton}>
         <Button
           disabled={loading}
-          fill="gradient"
           size="huge"
           type="submit"
         >

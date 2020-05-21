@@ -32,7 +32,7 @@
   width: 100%;
   height: var(--spacing-tiny);
   border-radius: 3px;
-  background-color: var(--color-light-silver-20);
+  background-color: var(--color-squanchy-gray-20);
 
   & > div {
     height: var(--spacing-tiny);
@@ -42,22 +42,22 @@
 }
 
 .strong {
-  background-color: var(--color-light-greenish-100);
+  background-color: var(--color-picklerick-green-100);
   width: 100%;
 }
 
 .moderated {
-  background-color: var(--color-light-orange-50);
+  background-color: var(--color-summer-orange-50);
   width: 75%;
 }
 
 .weak {
-  background-color: var(--color-light-orange-100);
+  background-color: var(--color-summer-orange-100);
   width: 50%;
 }
 
 .veryWeak {
-  background-color: var(--color-light-red-100);
+  background-color: var(--color-beth-pink-100);
   width: 25%;
 }
 
@@ -66,5 +66,5 @@
 }
 
 .valid {
-  color: var(--color-light-greenish-100);
+  color: var(--color-picklerick-green-100);
 }

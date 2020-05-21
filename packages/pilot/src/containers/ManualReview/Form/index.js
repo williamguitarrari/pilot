@@ -97,7 +97,6 @@ class ManualReviewForm extends Component {
         </ModalContent>
         <ModalActions>
           <Button
-            fill="gradient"
             type="submit"
             disabled={!password}
           >

@@ -34,8 +34,8 @@ import style from './style.css'
 
 const chooseTransferCardColor = cond([
   [Number.isNaN, always('#757575')],
-  [lt(0), always('#37cc9a')],
-  [gte(0), always('#ff796f')],
+  [lt(0), always('#65a300')],
+  [gte(0), always('#df285f')],
 ])
 
 class WithdrawFormContainer extends Component {
@@ -165,7 +165,7 @@ class WithdrawFormContainer extends Component {
         <TotalDisplay
           amount={requested}
           amountSize="large"
-          color="#37cc9a"
+          color="#65a300"
           title={t('pages.withdraw.requested_value')}
           titleColor="#757575"
           titleSize="small"
@@ -174,7 +174,7 @@ class WithdrawFormContainer extends Component {
           align="center"
           amount={transferCost}
           amountSize="large"
-          color="#ff796f"
+          color="#df285f"
           title={t('pages.withdraw.transfer_cost')}
           titleColor="#757575"
           titleSize="small"

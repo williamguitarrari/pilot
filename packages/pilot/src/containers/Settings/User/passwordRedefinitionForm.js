@@ -221,7 +221,6 @@ class PasswordRedefinitionForm extends Component {
             disabled={saveActionDisabled}
             type="submit"
             size="default"
-            fill="gradient"
           >
             {t('pages.settings.user.card.access.button_submit')}
           </Button>

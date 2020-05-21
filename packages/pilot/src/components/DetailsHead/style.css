@@ -18,7 +18,7 @@
   }
 
   & > span {
-    color: var(--color-light-noir-100);
+    color: var(--color-birdperson-gray-500);
     font-size: 12px;
 
     &:first-letter {
@@ -34,7 +34,7 @@
 }
 
 .identifier {
-  color: var(--color-light-steel-100);
+  color: var(--color-squanchy-gray-400);
   font-size: 16px;
   font-weight: bold;
   line-height: 1;
@@ -52,11 +52,11 @@
 }
 
 .propertyChildren {
-  color: var(--color-light-steel-100);
+  color: var(--color-squanchy-gray-400);
   font-size: 14px;
 
   &:empty {
-    border-top: 1px solid var(--color-light-steel-50);
+    border-top: 1px solid var(--color-squanchy-gray-100);
     margin-top: var(--spacing-small);
   }
 }
@@ -65,7 +65,7 @@
 
   .content {
     align-items: baseline;
-    border-bottom: 1px solid var(--color-light-grey-50);
+    border-bottom: 1px solid var(--color-squanchy-gray-50);
     justify-content: center;
     padding: var(--spacing-small) 0;
     width: 100%;

@@ -12,7 +12,7 @@
 }
 
 .formMessage {
-  color: var(--color-light-steel-100);
+  color: var(--color-squanchy-gray-400);
   font-size: 14px;
   font-weight: bold;
   margin-bottom: 8px;
@@ -20,13 +20,13 @@
 }
 
 .balance {
-  color: var(--color-light-steel-100);
+  color: var(--color-squanchy-gray-400);
   font-size: 12px;
   margin-bottom: 32px;
 }
 
 .available {
-  color: var(--color-light-steel-100);
+  color: var(--color-squanchy-gray-400);
   font-weight: bold;
 }
 
@@ -41,6 +41,6 @@
 }
 
 .maximum {
-  color: var(--color-light-greenish-100);
+  color: var(--color-picklerick-green-100);
   font-weight: bold;
 }

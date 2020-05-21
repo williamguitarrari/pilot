@@ -22,7 +22,7 @@
   }
 
   & span {
-    color: var(--color-light-noir-100);
+    color: var(--color-birdperson-gray-500);
     font-weight: bold;
   }
 
@@ -32,7 +32,7 @@
   }
 
   & .title {
-    color: var(--color-light-steel-100);
+    color: var(--color-squanchy-gray-400);
     margin-bottom: 0;
     margin-top: 0;
   }
@@ -44,7 +44,7 @@
 }
 
 .empty {
-  border: 1px solid var(--color-light-steel-50);
+  border: 1px solid var(--color-squanchy-gray-100);
   margin: calc(var(--spacing-small) - 5px) 0;
   width: 100px;
 }
@@ -68,7 +68,7 @@
 @media print {
 
   .content {
-    border-bottom: 1px solid var(--color-light-steel-50);
+    border-bottom: 1px solid var(--color-squanchy-gray-100);
   }
 
   .title {

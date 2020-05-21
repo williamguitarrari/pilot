@@ -104,7 +104,6 @@ const Confirmation = ({
           </Button>
           <Button
             disabled={loading}
-            fill="gradient"
             type="button"
             loading={loading}
             onClick={handleSubmit}

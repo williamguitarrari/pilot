@@ -2,7 +2,7 @@
 @import "former-kit-skin-pagarme/dist/styles/colors/light.css";
 
 .title {
-  color: var(--color-light-steel-100);
+  color: var(--color-squanchy-gray-400);
   display: inline-flex;
   font-size: 14px;
   font-weight: bold;
@@ -12,14 +12,14 @@
 }
 
 .subtitle {
-  color: var(--color-light-steel-100);
+  color: var(--color-squanchy-gray-400);
   font-size: 14px;
   font-weight: normal;
   margin-top: 0;
 }
 
 .infoTitle {
-  color: var(--color-light-chromium-100);
+  color: var(--color-squanchy-gray-100);
   font-size: 12px;
   font-weight: normal;
   margin-top: 0;
@@ -27,7 +27,7 @@
 }
 
 .info {
-  color: var(--color-light-steel-100);
+  color: var(--color-squanchy-gray-400);
   font-size: 14px;
   font-weight: normal;
   margin-top: 0;

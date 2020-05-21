@@ -369,7 +369,6 @@ class ConfirmStep extends Component {
           <Spacing size="medium" />
           <Button
             type="submit"
-            fill="gradient"
             onClick={() => onContinue()}
           >
             {t('pages.add_recipient.create_recipient')}

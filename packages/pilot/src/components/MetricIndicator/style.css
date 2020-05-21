@@ -6,7 +6,7 @@
   margin: var(--spacing-large) 0;
 
   & .value {
-    color: var(--color-light-noir-100);
+    color: var(--color-birdperson-gray-500);
     font-weight: 600;
     margin: 0;
   }

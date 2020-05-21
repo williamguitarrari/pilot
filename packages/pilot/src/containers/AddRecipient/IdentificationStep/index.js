@@ -525,7 +525,6 @@ class IdentificationStep extends Component {
             </Button>
             <Spacing size="medium" />
             <Button
-              fill="gradient"
               type="submit"
             >
               {t('pages.add_recipient.continue')}

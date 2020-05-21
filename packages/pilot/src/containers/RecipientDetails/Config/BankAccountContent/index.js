@@ -250,7 +250,6 @@ class BankAccountContent extends Component {
                 <Spacing size="medium" />
                 <Button
                   type="submit"
-                  fill="gradient"
                 >
                   {t('pages.recipient_detail.save')}
                 </Button>

@@ -56,7 +56,6 @@ const ConfigurationCardForm = ({
               </Button>
               <Button
                 disabled={disabled}
-                fill="gradient"
                 type="submit"
               >
                 {t('pages.settings.company.confirm')}

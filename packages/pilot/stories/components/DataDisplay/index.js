@@ -15,7 +15,7 @@ const DataDisplayExample = () => (
         <Col palm={12} tablet={12} desk={12}>
           <DataDisplay
             align="center"
-            color="#37cc9a"
+            color="#65a300"
             subtitle={(
               <span>
                 Capturado em 10/03/2018 às 14:15h
@@ -32,7 +32,7 @@ const DataDisplayExample = () => (
         <Col palm={12} tablet={12} desk={12}>
           <DataDisplay
             align="end"
-            color="#ff796f"
+            color="#df285f"
             title="Data"
             value="20/02/2000"
             valueSize="huge"
@@ -44,7 +44,7 @@ const DataDisplayExample = () => (
         <Col palm={12} tablet={12} desk={12}>
           <DataDisplay
             align="start"
-            color="#ff796f"
+            color="#df285f"
             title="Data"
             value="20/02/2000"
             valueSize="huge"

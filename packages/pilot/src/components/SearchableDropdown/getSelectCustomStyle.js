@@ -13,7 +13,7 @@ const getSelectCustomStyle = error => ({
     const style = {
       ...base,
       '&:hover': {
-        borderColor: '#37cc9a',
+        borderColor: '#65a300',
         cursor: 'pointer',
       },
       backgroundColor: 'transparent',
@@ -30,7 +30,7 @@ const getSelectCustomStyle = error => ({
     }
 
     if (isFocused) {
-      style.borderColor = '#37cc9a'
+      style.borderColor = '#65a300'
     }
 
     if (error) {

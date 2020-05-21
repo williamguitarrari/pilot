@@ -76,7 +76,6 @@ const Result = ({
           {status === 'error'
             ? (
               <Button
-                fill="gradient"
                 onClick={onRestart}
               >
                 {t('try_again')}
@@ -94,7 +93,6 @@ const Result = ({
                 />
                 <Spacing size="medium" />
                 <Button
-                  fill="gradient"
                   onClick={onViewTransactionClick}
                 >
                   {t('view_transaction')}

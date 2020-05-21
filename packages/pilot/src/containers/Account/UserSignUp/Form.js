@@ -91,7 +91,6 @@ const SignUpInvite = ({
             disabled={loading}
             type="submit"
             size="huge"
-            fill="gradient"
           >
             {t('sign_up.sign_up_action')}
           </Button>

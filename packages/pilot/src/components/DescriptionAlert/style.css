@@ -3,8 +3,8 @@
 @import "former-kit-skin-pagarme/dist/styles/typography.css";
 
 .descriptionAlert {
-  color: var(--color-light-steel-100);
-  border: 1px solid var(--color-light-smoke-40);
+  color: var(--color-squanchy-gray-400);
+  border: 1px solid var(--color-squanchy-gray-20);
   line-height: 18px;
   padding: var(--spacing-tiny);
 
@@ -28,17 +28,17 @@
 }
 
 .info {
-  color: var(--color-light-info);
+  color: var(--color-barney-purple-100);
 }
 
 .error {
-  color: var(--color-light-error);
+  color: var(--color-beth-pink-100);
 }
 
 .warning {
-  color: var(--color-light-warning);
+  color: var(--color-morty-yellow-100);
 }
 
 .success {
-  color: var(--color-light-success);
+  color: var(--color-picklerick-green-100);
 }
