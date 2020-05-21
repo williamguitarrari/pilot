@@ -18,7 +18,7 @@ import {
 } from 'former-kit'
 
 import style from './style.css'
-import Filter from '../Filter'
+import Filter from '../../components/Filter'
 import tableColumns from './tableColumns'
 
 import NotFoundMessage from './NotFoundMessage'

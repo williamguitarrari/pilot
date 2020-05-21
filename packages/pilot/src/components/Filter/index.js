@@ -27,7 +27,7 @@ import {
 import moment from 'moment-timezone'
 
 import compileTags from './compileTags'
-import optionsGroup from './optionsGroup'
+import CheckboxesGroup from './CheckboxesGroup'
 
 import Toolbar from './Toolbar'
 import Tags from './Tags'
@@ -62,7 +62,7 @@ export const stringifyDates = ifElse(
   formatIfDate
 )
 
-const Filters = ({
+const Filter = ({
   children,
   clearFilterDisabled,
   confirmationDisabled,
@@ -151,13 +151,13 @@ const Filters = ({
         >
           {children}
         </Toolbar>
-        {optionsGroup({
-          disabled,
-          isOptionsEmptyOrCollapsed,
-          options,
-          selectedFilters,
-        })}
-        {(!isNilOrEmpty(selectedFilters))
+        <CheckboxesGroup
+          disabled={disabled}
+          options={options}
+          selectedFilters={selectedFilters}
+          isOptionsEmptyOrCollapsed={isOptionsEmptyOrCollapsed}
+        />
+        {!isNilOrEmpty(selectedFilters)
           && (
             <Tags
               t={t}
@@ -170,7 +170,7 @@ const Filters = ({
   )
 }
 
-Filters.propTypes = {
+Filter.propTypes = {
   children: PropTypes.node.isRequired,
   clearFilterDisabled: PropTypes.bool,
   confirmationDisabled: PropTypes.bool,
@@ -190,7 +190,7 @@ Filters.propTypes = {
   t: PropTypes.func.isRequired,
 }
 
-Filters.defaultProps = {
+Filter.defaultProps = {
   clearFilterDisabled: true,
   confirmationDisabled: true,
   disabled: false,
@@ -199,4 +199,4 @@ Filters.defaultProps = {
   query: {},
 }
 
-export default Filters
+export default Filter

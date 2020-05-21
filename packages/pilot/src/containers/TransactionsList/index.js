@@ -37,7 +37,7 @@ import style from './style.css'
 
 import Charts from './Charts'
 import ExportData from '../../components/ExportData'
-import Filter from '../Filter'
+import Filter from '../../components/Filter'
 import TableList from './TableList'
 
 import tableColumns from './tableColumns'

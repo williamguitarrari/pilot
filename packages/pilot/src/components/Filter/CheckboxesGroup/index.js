@@ -17,7 +17,7 @@ const getCheckboxGroupColumns = length => (
     : 1
 )
 
-const optionsGroup = ({
+const CheckboxesGroup = ({
   disabled,
   isOptionsEmptyOrCollapsed,
   options,
@@ -44,6 +44,7 @@ const optionsGroup = ({
                     name={key}
                     options={items}
                     value={selectedFilters}
+                    onChange={() => {}}
                   />
                 </Col>
               ))}
@@ -55,7 +56,7 @@ const optionsGroup = ({
   )
 }
 
-optionsGroup.propTypes = {
+CheckboxesGroup.propTypes = {
   disabled: PropTypes.bool,
   isOptionsEmptyOrCollapsed: PropTypes.bool.isRequired,
   options: PropTypes.arrayOf(PropTypes.shape({
@@ -69,8 +70,8 @@ optionsGroup.propTypes = {
   selectedFilters: PropTypes.arrayOf(PropTypes.string).isRequired,
 }
 
-optionsGroup.defaultProps = {
+CheckboxesGroup.defaultProps = {
   disabled: false,
 }
 
-export default optionsGroup
+export default CheckboxesGroup
