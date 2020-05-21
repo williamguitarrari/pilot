@@ -87,6 +87,7 @@ import {
   ErrorStepPermission,
   ErrorStepServer,
   ErrorStepDefault,
+  ErrorCannotCreateRecipient,
 } from './AddRecipient/ErrorStep'
 
 import ConfigurationStep from './AddRecipient/ConfigurationsStep'
@@ -174,6 +175,9 @@ storiesOf('Containers|Page containers', module)
   ))
   .add('Recipient Error Step permission', () => (
     <ErrorStepPermission />
+  ))
+  .add('Recipient Error Step cannot create recipient', () => (
+    <ErrorCannotCreateRecipient />
   ))
   .add('Recipient Error Step server', () => (
     <ErrorStepServer />

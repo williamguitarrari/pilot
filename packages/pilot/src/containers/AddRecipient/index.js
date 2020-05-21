@@ -1,5 +1,8 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
+import {
+  always, cond, propEq, T,
+} from 'ramda'
 import { Card, Steps } from 'former-kit'
 
 import IdentificationStep from './IdentificationStep'
@@ -15,6 +18,7 @@ import style from './style.css'
 import {
   errorType,
   PERMISSION_ERROR,
+  CANNOT_CREATE_RECIPIENT_ERROR,
 } from '../../formatters/errorType'
 
 import {
@@ -33,14 +37,18 @@ const initialStepStatus = [
   { id: CONCLUSION, status: 'pending' },
 ]
 
+const hasRecipientWritePermission = cond([
+  [propEq('userPermission', 'read_only'), always(PERMISSION_ERROR)],
+  [propEq('canCreateRecipient', false), always(CANNOT_CREATE_RECIPIENT_ERROR)],
+  [T, always(null)],
+])
+
 class AddRecipients extends Component {
   constructor (props) {
     super(props)
-    const { userPermission } = props.options
+    const { options } = props
 
-    const error = (userPermission === 'read_only')
-      ? PERMISSION_ERROR
-      : null
+    const error = hasRecipientWritePermission(options)
 
     this.state = {
       currentStepNumber: 0,
@@ -294,12 +302,16 @@ class AddRecipients extends Component {
       t,
     } = this.props
 
+    const errorTitle = error === CANNOT_CREATE_RECIPIENT_ERROR
+      && 'pages.add_recipient.cannot_create_recipient'
+
     return (
       <ErrorStep
         error={error}
         onExit={onExit}
         onLoginAgain={onLoginAgain}
         onTryAgain={this.handleTryAgain}
+        errorTitle={errorTitle}
         t={t}
       />
     )
@@ -366,6 +378,7 @@ AddRecipients.propTypes = {
   onViewDetails: PropTypes.func.isRequired,
   options: PropTypes.shape({
     canConfigureAnticipation: PropTypes.bool,
+    canCreateRecipient: PropTypes.bool,
     maximumAnticipationDays: PropTypes.number,
     minimumAnticipationDelay: PropTypes.number,
     userPermission: PropTypes.string,
