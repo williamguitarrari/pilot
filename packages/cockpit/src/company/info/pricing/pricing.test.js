@@ -12,6 +12,12 @@ const mock = [
       { prices: [{ unit: 'real', value: 0 }], title: 'minimum_monthly_payment' },
     ],
   },
+  {
+    mainTitle: 'transactionFees',
+    subItems: [
+      { prices: [{ unit: 'real', value: 120 }, { unit: 'percentage', value: 0.7 }], title: 'boletos' },
+    ],
+  },
   { mainTitle: 'psp', subItems: [{ prices: [{ unit: 'percentage', value: 3.14 }], title: 'anticipation' }] },
   {
     mainTitle: 'transfers',
@@ -25,7 +31,6 @@ const mock = [
 describe('Company pricing details to dashboard', () => {
   it('should get formated pricing when receives company object', () => {
     const result = pricing(companyMock)
-
     expect(result).toEqual(mock)
   })
 })
