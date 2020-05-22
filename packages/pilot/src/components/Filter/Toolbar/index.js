@@ -24,12 +24,10 @@ const ensureArray = unless(
 
 const ChildInput = ({
   disabled,
-  index,
   input,
 }) => cloneElement(input, {
-  className: input.props.className,
+  ...input.props,
   disabled,
-  key: `${input.props.name}-${index}`,
 })
 
 const Toolbar = ({
@@ -47,7 +45,8 @@ const Toolbar = ({
     <div className={style.toolbarContainer}>
       <div className={style.childrenContainer}>
         {ensureArray(children).map((input, index) => (
-          <ChildInput disabled={disabled} index={index} input={input} />
+          // eslint-disable-next-line react/no-array-index-key
+          <ChildInput key={`child-input-${index}`} disabled={disabled} input={input} />
         ))}
       </div>
       <div className={style.actionsContainer}>
@@ -67,6 +66,7 @@ const Toolbar = ({
           </Button>
         ) }
         <Button
+          key="clearButton"
           relevance="normal"
           onClick={onClear}
           fill="outline"
@@ -75,6 +75,7 @@ const Toolbar = ({
           {t('components.filter.reset')}
         </Button>
         <Button
+          key="confirmButton"
           relevance="normal"
           disabled={confirmDisabled}
           type="submit"
