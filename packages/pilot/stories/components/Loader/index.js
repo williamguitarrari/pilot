@@ -38,9 +38,7 @@ class LoaderState extends PureComponent {
             {buttonMessage}
           </Button>
           <Loader
-            label="Loading"
             position="fixed"
-            text="Loading..."
             visible={showingLoader}
           />
         </div>

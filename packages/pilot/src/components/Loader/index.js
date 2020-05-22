@@ -3,19 +3,16 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import style from './style.css'
 import Transition from '../Transition'
+import Spinner from '../Spinner'
 
 const createOverlayStyle = position => classNames(
   style.highZIndex,
-  style.loaderOverlay,
   style.overlay,
   style[position]
 )
 
 const Loader = ({
-  base,
-  label,
   position,
-  text,
   visible,
 }) => (
   <Transition
@@ -41,16 +38,10 @@ const Loader = ({
     {visible
       && (
         <div
-          className={classNames(createOverlayStyle(position), style[base])}
+          className={classNames(createOverlayStyle(position), style.spinner)}
           key="overlay"
         >
-          <div
-            aria-busy="true"
-            aria-label={label}
-            className={style.loader}
-            role="progressbar"
-          />
-          <h4 className={style.text}>{text}</h4>
+          <Spinner />
         </div>
       )
     }
@@ -58,20 +49,12 @@ const Loader = ({
 )
 
 Loader.propTypes = {
-  base: PropTypes.oneOf([
-    'dark', 'light',
-  ]),
-  label: PropTypes.string,
   position: PropTypes.oneOf(['fixed', 'absolute', 'relative']),
-  text: PropTypes.string,
   visible: PropTypes.bool,
 }
 
 Loader.defaultProps = {
-  base: 'light',
-  label: 'Loading',
   position: 'fixed',
-  text: '',
   visible: false,
 }
 

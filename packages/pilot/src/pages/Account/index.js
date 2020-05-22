@@ -62,12 +62,7 @@ const AccountArea = ({ history: { location }, t }) => {
       primaryContent={(
         <Suspense
           fallback={(
-            <Loader
-              base={base}
-              position="relative"
-              text={t('loading')}
-              visible
-            />
+            <Loader visible />
           )}
         >
           <Switch>
