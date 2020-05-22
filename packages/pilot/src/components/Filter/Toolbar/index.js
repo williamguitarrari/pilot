@@ -22,13 +22,12 @@ const ensureArray = unless(
   of
 )
 
-const renderChildrenInput = ({
+const ChildInput = ({
   disabled,
   index,
   input,
-  styled,
 }) => cloneElement(input, {
-  className: styled.search,
+  className: input.props.className,
   disabled,
   key: `${input.props.name}-${index}`,
 })
@@ -45,48 +44,46 @@ const Toolbar = ({
   t,
 }) => (
   <CardActions>
-    {ensureArray(children)
-      .map((input, index) => renderChildrenInput({
-        disabled,
-        index,
-        input,
-        styled: style,
-      }))
-    }
-    {isEmptyOptions
-      && (
+    <div className={style.toolbarContainer}>
+      <div className={style.childrenContainer}>
+        {ensureArray(children).map((input, index) => (
+          <ChildInput disabled={disabled} index={index} input={input} />
+        ))}
+      </div>
+      <div className={style.actionsContainer}>
+        {isEmptyOptions && (
+          <Button
+            disabled={disabled}
+            relevance="low"
+            fill="outline"
+            iconAlignment="end"
+            icon={collapsed
+              ? <ChevronDown32 width={16} height={16} />
+              : <ChevronUp32 width={16} height={16} />
+                }
+            onClick={handleToogleMoreFilters}
+          >
+            {t('components.filter.more')}
+          </Button>
+        ) }
         <Button
-          disabled={disabled}
-          relevance="low"
+          relevance="normal"
+          onClick={onClear}
           fill="outline"
-          iconAlignment="end"
-          icon={collapsed
-            ? <ChevronDown32 width={16} height={16} />
-            : <ChevronUp32 width={16} height={16} />
-          }
-          onClick={handleToogleMoreFilters}
+          disabled={isClearFilterDisabled}
         >
-          {t('components.filter.more')}
+          {t('components.filter.reset')}
         </Button>
-      )
-    }
-    <Button
-      relevance="normal"
-      onClick={onClear}
-      fill="outline"
-      disabled={isClearFilterDisabled}
-    >
-      {t('components.filter.reset')}
-    </Button>
-
-    <Button
-      relevance="normal"
-      disabled={confirmDisabled}
-      type="submit"
-      fill="gradient"
-    >
-      {t('components.filter.apply')}
-    </Button>
+        <Button
+          relevance="normal"
+          disabled={confirmDisabled}
+          type="submit"
+          fill="gradient"
+        >
+          {t('components.filter.apply')}
+        </Button>
+      </div>
+    </div>
   </CardActions>
 )
 

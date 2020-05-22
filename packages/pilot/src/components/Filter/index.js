@@ -106,6 +106,7 @@ const Filter = ({
   }
 
   const handleFiltersChange = (newQuery) => {
+    console.log('>>> handleFiltersChange', newQuery)
     setFilterQuery(newQuery)
     onChange(newQuery)
   }

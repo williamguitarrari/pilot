@@ -1623,7 +1623,12 @@
       "try_again": "Tente novamente com outros filtros."
     },
     "payment_links": {
-      "title": "Links De Pagamento"
+      "title": "Links De Pagamento",
+      "filter": {
+        "filter_by_link_name": "Filtre pelo nome do link",
+        "active": "Ativo",
+        "inactive": "Inativo"
+      }
     },
     "empty_state": {
       "title": "Boas-vindas",

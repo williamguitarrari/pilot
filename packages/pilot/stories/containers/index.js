@@ -107,6 +107,8 @@ import EmptyState from './EmptyState'
 
 import Onboarding from './Onboarding'
 
+import PaymentLinks from './PaymentLinks'
+
 storiesOf('Containers|Bank/Account', module)
   .add('selector', () => <BankAccountSelector />)
   .add('settings', () => <BankAccount />)
@@ -129,6 +131,11 @@ storiesOf('Containers|Onboarding')
   ))
   .add('When DeadEnd', () => (
     <Onboarding.WhenDeadEnd />
+  ))
+
+storiesOf('Containers|Payment Links')
+  .add('Search', () => (
+    <PaymentLinks.Search />
   ))
 
 storiesOf('Containers|Page containers', module)

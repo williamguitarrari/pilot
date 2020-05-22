@@ -1,3 +1,23 @@
-.search {
-  min-width: 360px;
+.toolbarContainer {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.childrenContainer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.childrenContainer > * {
+  margin-right: 16px;
+}
+
+.actionsContainer {
+  display: flex;
+}
+
+.actionsContainer > *:not(:last-child) {
+  margin-right: 16px;
 }

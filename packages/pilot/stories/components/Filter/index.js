@@ -83,7 +83,6 @@ const FilterExample = () => (
         dates={query.dates}
         icon={<Calendar32 width={16} height={16} />}
         name="dates"
-        onPresetChange={action('onPresetChange')}
         selectionMode="period"
         showCalendar
       />
