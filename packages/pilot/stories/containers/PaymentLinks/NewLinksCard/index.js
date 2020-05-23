@@ -2,8 +2,8 @@ import React from 'react'
 import { identity } from 'ramda'
 import { action } from '@storybook/addon-actions'
 
-import Section from '../../Section'
-import NewLinksCard from '../../../src/containers/PaymentLinks/NewLinksCard'
+import Section from '../../../Section'
+import NewLinksCard from '../../../../src/containers/PaymentLinks/NewLinksCard'
 
 const NewLinksCardExample = () => (
   <Section>
