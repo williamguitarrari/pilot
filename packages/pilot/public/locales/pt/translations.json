@@ -1635,6 +1635,11 @@
     },
     "payment_links": {
       "title": "Links de Pagamento",
+      "filter": {
+        "filter_by_link_name": "Filtre pelo nome do link",
+        "active": "Ativo",
+        "inactive": "Inativo"
+      },
       "list": {
         "title": "Meus links de pagamento",
         "status": "status",
