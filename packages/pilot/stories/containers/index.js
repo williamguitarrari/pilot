@@ -108,7 +108,6 @@ import EmptyState from './EmptyState'
 
 import Onboarding from './Onboarding'
 
-import PaymentLinksList from './PaymentLinksList'
 import PaymentLinks from './PaymentLinks'
 
 storiesOf('Containers|Bank/Account', module)
@@ -454,9 +453,9 @@ storiesOf('Containers|Empty State', module)
   .add('MDRzao', () => <EmptyState.EmptyStateMDRzao />)
 
 storiesOf('Containers|Payment Links', module)
-  .add('List', () => <PaymentLinksList.WithList />)
-  .add('List exporting', () => <PaymentLinksList.WithListExporting />)
-  .add('List loading', () => <PaymentLinksList.WithListLoading />)
-  .add('Empty list', () => <PaymentLinksList.WithEmptyList />)
+  .add('List', () => <PaymentLinks.PaymentLinksList.WithList />)
+  .add('List exporting', () => <PaymentLinks.PaymentLinksList.WithListExporting />)
+  .add('List loading', () => <PaymentLinks.PaymentLinksList.WithListLoading />)
+  .add('Empty list', () => <PaymentLinks.PaymentLinksList.WithEmptyList />)
   .add('NewLinksCard', () => <PaymentLinks.NewLinksCard />)
   .add('Filter', () => <PaymentLinks.Filter />)

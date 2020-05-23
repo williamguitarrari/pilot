@@ -2,10 +2,10 @@ import React from 'react'
 import { path, split } from 'ramda'
 import { action } from '@storybook/addon-actions'
 
-import Section from '../../Section'
-import PaymentLinksList from '../../../src/containers/PaymentLinks/PaymentLinksList'
+import Section from '../../../Section'
+import PaymentLinksList from '../../../../src/containers/PaymentLinks/PaymentLinksList'
 
-import translations from '../../../public/locales/pt/translations.json'
+import translations from '../../../../public/locales/pt/translations.json'
 import links from './links.json'
 
 const t = sentence => path(split('.', sentence), translations)
