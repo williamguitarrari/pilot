@@ -109,6 +109,7 @@ import EmptyState from './EmptyState'
 import Onboarding from './Onboarding'
 
 import PaymentLinksList from './PaymentLinksList'
+import PaymentLinks from './PaymentLinks'
 
 storiesOf('Containers|Bank/Account', module)
   .add('selector', () => <BankAccountSelector />)
@@ -457,3 +458,4 @@ storiesOf('Containers|Payment Links', module)
   .add('List exporting', () => <PaymentLinksList.WithListExporting />)
   .add('List loading', () => <PaymentLinksList.WithListLoading />)
   .add('Empty list', () => <PaymentLinksList.WithEmptyList />)
+  .add('Filter', () => <PaymentLinks.Filter />)
