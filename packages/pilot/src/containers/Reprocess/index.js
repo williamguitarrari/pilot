@@ -79,24 +79,24 @@ const Reprocess = ({
     id: transactionId,
   },
 }) => {
-  const [isWithoutAntifraud, setIsWithoutAntifraud] = useState(false)
+  const [isWithAntifraud, setIsWithAntifraud] = useState(true)
   const stepsBuilder = getSteps(allowReprocessWithoutAntifraud)
 
   const currentSteps = stepsBuilder(t, stepStatus)
 
-  const handleReprocess = withoutAntifraud => onReprocess({
+  const handleReprocess = withAntifraud => onReprocess({
     transactionId,
-    withoutAntifraud,
+    withAntifraud,
   })
 
-  const onReprocessTypeSelection = withoutAntifraud => () => {
-    setIsWithoutAntifraud(withoutAntifraud)
+  const onReprocessTypeSelection = withAntifraud => () => {
+    setIsWithAntifraud(withAntifraud)
 
     if (allowReprocessWithoutAntifraud) {
       return onForward()
     }
 
-    return handleReprocess(isWithoutAntifraud)
+    return handleReprocess(withAntifraud)
   }
 
   return (
@@ -132,18 +132,18 @@ const Reprocess = ({
           loading={loading}
           lockReason={lockReason}
           maxChargebackRate={maxChargebackRate}
-          onReprocessWithAntifraud={onReprocessTypeSelection(false)}
-          onReprocessWithoutAntifraud={onReprocessTypeSelection(true)}
+          onReprocessWithAntifraud={onReprocessTypeSelection(true)}
+          onReprocessWithoutAntifraud={onReprocessTypeSelection(false)}
           t={t}
           transactionId={transactionId}
         />
       )}
       {stepStatus.confirmation === 'current' && (
         <Confirmation
-          isReprocessingWithoutAntifraud={isWithoutAntifraud}
+          isReprocessingWithoutAntifraud={isWithAntifraud === false}
           loading={loading}
           onBack={onBack}
-          onReprocess={() => handleReprocess(isWithoutAntifraud)}
+          onReprocess={() => handleReprocess(isWithAntifraud)}
           t={t}
         />
       )}

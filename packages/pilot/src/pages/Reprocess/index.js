@@ -142,12 +142,14 @@ const Reprocess = ({
     onClose()
   }
 
-  const handleReprocess = ({ transactionId, withoutAntifraud }) => {
+  const handleReprocess = ({ transactionId, withAntifraud }) => {
     setLoading(true)
 
-    const reprocessRequest = withoutAntifraud
-      ? client.transactions.reprocess({ capture: true, id: transactionId })
-      : client.transactions.reprocessWithAntifraud(transactionId)
+    const reprocessRequest = client.transactions.reprocess({
+      analyze: withAntifraud,
+      capture: true,
+      id: transactionId,
+    })
 
     reprocessRequest
       .then(({ id }) => {
