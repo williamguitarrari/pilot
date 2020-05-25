@@ -8,9 +8,9 @@ import {
   ModalActions,
 } from 'former-kit'
 import copyToClipBoard from 'clipboard-copy'
-
 import IconCopy from 'emblematic-icons/svg/Copy24.svg'
 import IconClose from 'emblematic-icons/svg/ClearClose32.svg'
+import ClickableDiv from '../../../components/ClickableDiv'
 import CreatedLinkSvg from './created_link.svg'
 
 import style from './style.css'
@@ -32,16 +32,14 @@ const Result = ({ onCreateLink, paymentLink, t }) => (
           <div className={style.image}>
             <CreatedLinkSvg />
           </div>
-          <div
+          <ClickableDiv
             className={style.link}
             onClick={() => copyToClipBoard(paymentLink)}
             onKeyPress={() => copyToClipBoard(paymentLink)}
-            role="button"
-            tabIndex={0}
           >
             {paymentLink}
             <IconCopy width="16px" height="16px" />
-          </div>
+          </ClickableDiv>
         </Flexbox>
       </div>
     </ModalContent>

@@ -11,6 +11,7 @@ import IconCopy from 'emblematic-icons/svg/Copy24.svg'
 
 import style from './style.css'
 
+import ClickableDiv from '../../../components/ClickableDiv'
 import formatCurrency from '../../../formatters/currency'
 import formatDate from '../../../formatters/longDate'
 import paymentLinkStatus from '../../../models/paymentLinkStatusLegends'
@@ -27,7 +28,7 @@ const renderLink = (item) => {
   }
 
   return (
-    <div
+    <ClickableDiv
       className={
         classNames(
           style.link,
@@ -35,12 +36,10 @@ const renderLink = (item) => {
         )
       }
       {...(isLinkActive ? eventHandlers : {})}
-      role="button"
-      tabIndex={0}
     >
       { item.url }
       <IconCopy />
-    </div>
+    </ClickableDiv>
   )
 }
 
