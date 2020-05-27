@@ -1,12 +1,12 @@
 import React from 'react'
-
+import classNames from 'classnames'
 import withLoader from '../withLoader'
-
+import Spinner from '../Spinner'
 import style from './style.css'
 
 const spinner = overlay => (
-  <div className={overlay}>
-    <span className={style.spinner} />
+  <div className={classNames(overlay, style.spinner)}>
+    <Spinner />
   </div>
 )
 
