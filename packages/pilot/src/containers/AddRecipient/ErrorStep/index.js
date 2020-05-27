@@ -23,13 +23,13 @@ class ErrorStep extends Component {
   }
 
   render () {
-    const { t } = this.props
+    const { errorTitle, t } = this.props
 
     return (
       <CardContent className={style.flex}>
         <ErrorIcon />
         <h2 className={style.title}>
-          {t('pages.add_recipient.ops')}
+          {t(errorTitle)}
         </h2>
         <ErrorMessage {...this.props} />
         <ErrorButtons {...this.props} />
@@ -40,6 +40,7 @@ class ErrorStep extends Component {
 
 ErrorStep.propTypes = {
   error: PropTypes.oneOf(possibleErrors),
+  errorTitle: PropTypes.string,
   onExit: PropTypes.func.isRequired,
   onLoginAgain: PropTypes.func.isRequired,
   onTryAgain: PropTypes.func.isRequired,
@@ -48,6 +49,7 @@ ErrorStep.propTypes = {
 
 ErrorStep.defaultProps = {
   error: UNKNOWN_ERROR,
+  errorTitle: 'pages.add_recipient.ops',
 }
 
 export default ErrorStep

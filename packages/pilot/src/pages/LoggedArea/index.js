@@ -91,7 +91,6 @@ const LoggedArea = ({
       <Suspense
         fallback={(
           <Loader
-            text={t('loading')}
             position="relative"
             visible
           />

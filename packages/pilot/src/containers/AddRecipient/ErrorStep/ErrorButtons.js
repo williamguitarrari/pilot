@@ -3,10 +3,12 @@ import PropTypes from 'prop-types'
 import LoginAgainButton from './LoginAgainButton'
 import ExitButton from './ExitButton'
 import TryAgainAndExitButtons from './TryAgainAndExitButtons'
+import style from '../style.css'
 
 import {
   possibleErrors,
   AUTHENTICATION_ERROR,
+  CANNOT_CREATE_RECIPIENT_ERROR,
   PERMISSION_ERROR,
   SERVER_ERROR,
   UNKNOWN_ERROR,
@@ -25,6 +27,21 @@ const ErrorButtons = ({
         onLoginAgain={onLoginAgain}
         t={t}
       />
+    )
+  }
+
+  if (error === CANNOT_CREATE_RECIPIENT_ERROR) {
+    return (
+      <>
+        <div className={style.errorDetails}>
+          <p>{t('phone')}: <a href="tel:3004-9709">3004-9709</a></p>
+          <p>{t('email')}: <a href="mailto:inbound@pagar.me">inbound@pagar.me</a></p>
+        </div>
+        <ExitButton
+          onExit={onExit}
+          t={t}
+        />
+      </>
     )
   }
 

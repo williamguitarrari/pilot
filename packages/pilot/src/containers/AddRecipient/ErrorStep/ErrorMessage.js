@@ -7,6 +7,7 @@ import {
   possibleErrors,
   FORM_SUBMIT_ERROR,
   AUTHENTICATION_ERROR,
+  CANNOT_CREATE_RECIPIENT_ERROR,
   PERMISSION_ERROR,
   SERVER_ERROR,
   UNKNOWN_ERROR,
@@ -25,6 +26,10 @@ const ErrorMessage = ({
 
     case AUTHENTICATION_ERROR:
       errorMessage = t('pages.add_recipient.expired_session')
+      break
+
+    case CANNOT_CREATE_RECIPIENT_ERROR:
+      errorMessage = t('pages.add_recipient.cannot_create_recipient_error')
       break
 
     case PERMISSION_ERROR:
