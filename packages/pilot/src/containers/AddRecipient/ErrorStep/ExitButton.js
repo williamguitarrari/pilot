@@ -7,8 +7,8 @@ const ExitButton = ({
   t,
 }) => (
   <div>
-    <Button onClick={onExit}>
-      {t('pages.add_recipient.exit')}
+    <Button onClick={onExit} fill="outline">
+      {t('pages.add_recipient.go_back')}
     </Button>
   </div>
 )

@@ -6,6 +6,7 @@ import ErrorStep from '../../../../src/containers/AddRecipient/ErrorStep'
 
 import {
   AUTHENTICATION_ERROR,
+  CANNOT_CREATE_RECIPIENT_ERROR,
   FORM_SUBMIT_ERROR,
   PERMISSION_ERROR,
   SERVER_ERROR,
@@ -39,6 +40,12 @@ export const ErrorStepLogin = () => (
 export const ErrorStepPermission = () => (
   <Section>
     <ErrorStep {...props} error={PERMISSION_ERROR} />
+  </Section>
+)
+
+export const ErrorCannotCreateRecipient = () => (
+  <Section>
+    <ErrorStep {...props} error={CANNOT_CREATE_RECIPIENT_ERROR} />
   </Section>
 )
 

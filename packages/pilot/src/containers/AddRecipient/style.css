@@ -28,8 +28,18 @@
   font-weight: var(--title-font-style);
   text-align: center;
   margin-top: 0;
+  width: 470px;
 }
 
 .title {
   font-size: 24px;
+}
+
+.errorDetails p:first-of-type {
+  margin-bottom: 5px;
+}
+
+.errorDetails p:last-of-type {
+  margin-top: 0;
+  margin-bottom: 48px;
 }

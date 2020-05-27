@@ -7,6 +7,7 @@ import { compose, pathOr } from 'ramda'
 
 import { requestLogout } from '../../Account/actions/actions'
 import AddRecipient from '../../../containers/AddRecipient'
+import env from '../../../environment'
 
 const getUserPermission = pathOr('admin', ['permission'])
 
@@ -16,17 +17,21 @@ const getMinimumAnticipationDelay = pathOr(15, ['anticipation_config', 'minimum_
 
 const getMaximumAnticipationDays = pathOr(31, ['anticipation_config', 'max_anticipation_days'])
 
+const getCanCreateRecipient = pathOr(true, ['marketplace', env, 'can_create_recipient'])
+
 const mapStateToProps = (state) => {
   const { account } = state
   const { client, company, user } = account || {}
 
   const userPermission = getUserPermission(user)
+  const canCreateRecipient = getCanCreateRecipient(company)
   const canConfigureAnticipation = getAnticipationParams(company)
   const minimumAnticipationDelay = getMinimumAnticipationDelay(company)
   const maximumAnticipationDays = getMaximumAnticipationDays(company)
 
   const options = {
     canConfigureAnticipation,
+    canCreateRecipient,
     maximumAnticipationDays,
     minimumAnticipationDelay,
     userPermission,
@@ -115,6 +120,7 @@ AddRecipientPage.propTypes = {
   }).isRequired,
   options: PropTypes.shape({
     canConfigureAnticipation: PropTypes.bool,
+    canCreateRecipient: PropTypes.bool,
     maximumAnticipationDays: PropTypes.number,
     minimumAnticipationDelay: PropTypes.number,
     userPermission: PropTypes.string,
