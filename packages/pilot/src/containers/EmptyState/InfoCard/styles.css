@@ -4,8 +4,9 @@
   flex-wrap: nowrap;
 }
 
-.infoCard a {
-  text-decoration: underline;
+.infoCard a,
+.infoCard a:hover {
+  text-decoration: none;
 }
 
 .infoCard button {
