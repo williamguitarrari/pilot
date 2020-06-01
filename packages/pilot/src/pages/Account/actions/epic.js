@@ -1,11 +1,14 @@
 import pagarme from 'pagarme'
 import {
+  always,
+  cond,
   complement,
   identity,
   isEmpty,
   pathEq,
   pathOr,
   propEq,
+  T,
 } from 'ramda'
 import {
   map,
@@ -44,6 +47,11 @@ const isPendingRiskAnalysis = propEq('status', 'pending_risk_analysis')
 const hasDashboardAccess = pathEq(['authentication', 'allow_dashboard_login'], true)
 
 const getRecipientId = pathOr(null, ['account', 'company', 'default_recipient_id', env])
+
+const getAnticipationType = cond([
+  [propEq('seller_id', '5ecd6e8a124d4259991313ae'), always('MDRZAO')],
+  [T, always('DEFAULT')],
+])
 
 const isNotEmpty = complement(isEmpty)
 
@@ -156,12 +164,14 @@ const companyEpic = (action$, state$) => action$.pipe(
     const { value: state } = state$
     const { account: { client } } = state
 
+    const anticipationType = getAnticipationType(action)
+
     return client
       .transactions
       .all({ count: 1 })
       .then((transactions) => {
         const alreadyTransacted = isNotEmpty(transactions)
-        return { ...action, alreadyTransacted }
+        return { ...action, alreadyTransacted, anticipationType }
       })
       .catch(errorPayload => ({
         error: true,
