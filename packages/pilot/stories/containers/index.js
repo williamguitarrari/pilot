@@ -445,6 +445,7 @@ storiesOf('Containers|Page containers', module)
   .add('Home', () => (
     <Home />
   ))
-  .add('Empty State', () => (
-    <EmptyState />
-  ))
+
+storiesOf('Containers|Empty State', module)
+  .add('Default', () => <EmptyState.EmptyStateDefault />)
+  .add('MDRzao', () => <EmptyState.EmptyStateMDRzao />)
