@@ -63,7 +63,7 @@ const getFees = pipe(
   applySpec({
     anticipation: path(['psp', environment, 'anticipation']),
     antifraud: getAntifraudCost,
-    boleto: path(['gateway', environment, 'transaction_cost', 'boleto']),
+    boleto: path(['gateway', environment, 'boletos', 'payment_fixed_fee']),
     gateway: path(['gateway', environment, 'transaction_cost', 'credit_card']),
     installments: getInstallmentsFee,
     transfer: path(['transfers', 'ted']),

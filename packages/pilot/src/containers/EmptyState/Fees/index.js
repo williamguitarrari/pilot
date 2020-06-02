@@ -49,7 +49,7 @@ const Fees = ({ fees, t }) => {
           title={t('pages.empty_state.fees.boleto')}
           values={[
             {
-              translationPath: 'pages.empty_state.fees.emission',
+              translationPath: 'pages.empty_state.fees.paid',
               type: 'currency',
               value: fees.boleto,
             },
