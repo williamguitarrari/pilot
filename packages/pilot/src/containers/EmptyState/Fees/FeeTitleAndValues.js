@@ -14,7 +14,9 @@ const FeeTitleAndValues = ({ t, title, values }) => (
   <div>
     <p className={styles.title}>{title}</p>
     <Flexbox className={styles.feeValuesWrapper}>
-      {values.map(({ translationPath, type, value }) => {
+      {values.map(({
+        translationPath, type, value, valueSuffixPath,
+      }) => {
         const formatter = formatterByType[type]
         const formattedValue = formatter(value) || 'N/A'
 
@@ -23,7 +25,7 @@ const FeeTitleAndValues = ({ t, title, values }) => (
             <p>{t(translationPath)}</p>
             <p>
               <strong>
-                {formattedValue}
+                {formattedValue} {t(valueSuffixPath)}
               </strong>
             </p>
           </div>

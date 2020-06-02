@@ -18,8 +18,42 @@ const buildInstallmentsValues = map(({ installment, mdr }) => ({
   value: mdr,
 }))
 
-const Fees = ({ fees, t }) => {
+const loadFirstInstallmentMDR = (installments) => {
+  if (installments.length < 1) {
+    return null
+  }
+
+  return installments[0].mdr
+}
+
+const loadCreditCardFees = ({ fees, isMDRzao }) => (
+  isMDRzao
+    ? [
+      {
+        translationPath: 'pages.empty_state.fees.mdrzao_installment',
+        type: 'percent',
+        value: loadFirstInstallmentMDR(fees.installments),
+        valueSuffixPath: 'pages.empty_state.fees.per_transaction',
+      },
+    ]
+    : [
+      ...buildInstallmentsValues(fees.installments),
+      {
+        translationPath: 'pages.empty_state.fees.processing',
+        type: 'currency',
+        value: fees.gateway,
+      },
+      {
+        translationPath: 'pages.empty_state.fees.antifraud',
+        type: 'currency',
+        value: fees.antifraud,
+      },
+    ])
+
+const Fees = ({ fees, isMDRzao, t }) => {
   const subtitle = <span className={styles.subtitle}>{t('pages.empty_state.fees.subtitle')}</span>
+
+  const creditCardFees = loadCreditCardFees({ fees, isMDRzao })
 
   return (
     <CollapsibleCard
@@ -29,19 +63,7 @@ const Fees = ({ fees, t }) => {
       <FeeTitleAndValues
         t={t}
         title={t('pages.empty_state.fees.credit_card')}
-        values={[
-          ...buildInstallmentsValues(fees.installments),
-          {
-            translationPath: 'pages.empty_state.fees.processing',
-            type: 'currency',
-            value: fees.gateway,
-          },
-          {
-            translationPath: 'pages.empty_state.fees.antifraud',
-            type: 'currency',
-            value: fees.antifraud,
-          },
-        ]}
+        values={creditCardFees}
       />
       <Flexbox className={styles.marginRight}>
         <FeeTitleAndValues
@@ -63,6 +85,7 @@ const Fees = ({ fees, t }) => {
               translationPath: 'pages.empty_state.fees.tax',
               type: 'percent',
               value: fees.anticipation,
+              valueSuffixPath: isMDRzao ? 'pages.empty_state.fees.per_installment' : '',
             },
           ]}
         />
@@ -94,6 +117,7 @@ Fees.propTypes = {
     })),
     transfer: PropTypes.number,
   }),
+  isMDRzao: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired,
 }
 

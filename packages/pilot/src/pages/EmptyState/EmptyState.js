@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
   always,
+  anyPass,
   applySpec,
   compose,
   equals,
@@ -47,7 +48,7 @@ const getAlreadyTransacted = propOr(true, 'alreadyTransacted')
 
 const notDefaultInstallments = pipe(
   pluck('installment'),
-  equals([1, 2, 7]),
+  anyPass([equals([1, 2, 7]), equals([1])]),
   not
 )
 
@@ -87,6 +88,7 @@ const mapStateToProps = ({
   alreadyTransacted: getAlreadyTransacted(company),
   fees: getFees(company),
   isAdmin: hasAdminPermission(user),
+  isMDRzao: propEq('anticipationType', 'MDRZAO', company),
   onboardingAnswers,
   userName: getUserName(user),
 })
@@ -118,6 +120,7 @@ const EmptyState = ({
     push,
   },
   isAdmin,
+  isMDRzao,
   onboardingAnswers,
   requestOnboardingAnswers,
   t,
@@ -142,6 +145,7 @@ const EmptyState = ({
       environment={environment}
       fees={fees}
       isAdmin={isAdmin}
+      isMDRzao={isMDRzao}
       onboardingAnswers={onboardingAnswers}
       onDisableWelcome={hideEmptyState(push)}
       t={t}
@@ -171,6 +175,7 @@ EmptyState.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
   isAdmin: PropTypes.bool.isRequired,
+  isMDRzao: PropTypes.bool,
   onboardingAnswers: PropTypes.shape({}),
   requestOnboardingAnswers: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
@@ -181,6 +186,7 @@ EmptyState.defaultProps = {
   accessKeys: {},
   alreadyTransacted: true,
   fees: {},
+  isMDRzao: false,
   onboardingAnswers: undefined,
   userName: '',
 }
