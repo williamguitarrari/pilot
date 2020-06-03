@@ -24,9 +24,24 @@ const buildInstallmentsValues = (
   value: item.mdr,
 }))
 
+const loadFirstInstallmentMDR = (installments) => {
+  if (installments.length < 1) {
+    return null
+  }
+
+  return installments[0].mdr
+}
+
 const buildCreditCardFees = ({ fees, isMDRzao }) => (
   isMDRzao
-    ? buildInstallmentsValues('MDRZAO', fees.installments)
+    ? [
+      {
+        translationPath: 'pages.empty_state.fees.mdrzao_installment',
+        type: 'percent',
+        value: loadFirstInstallmentMDR(fees.installments),
+        valueSuffixPath: 'pages.empty_state.fees.per_transaction',
+      },
+    ]
     : [
       ...buildInstallmentsValues('DEFAULT', fees.installments),
       {
