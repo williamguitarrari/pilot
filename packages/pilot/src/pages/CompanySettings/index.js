@@ -26,9 +26,17 @@ import { requestLogout } from '../Account/actions/actions'
 import CompanySettings from '../../containers/Settings/Company'
 import environment from '../../environment'
 
+import { selectCompanyFees } from '../Account/actions/reducer'
+
 const mapStateToProps = ({
   account: { client, company, user },
-}) => ({ client, company, user })
+}) => ({
+  client,
+  company,
+  fees: selectCompanyFees(company),
+  isMDRzao: company && propEq('anticipationType', 'MDRZAO', company),
+  user,
+})
 
 const mapDispatchToProp = ({
   requestLogout,
@@ -560,6 +568,8 @@ class CompanySettingsPage extends React.Component {
 
   render () {
     const {
+      fees,
+      isMDRzao,
       t,
       user,
     } = this.props
@@ -574,7 +584,6 @@ class CompanySettingsPage extends React.Component {
         apiVersion,
         general,
         managingPartner,
-        pricing,
         team,
       },
       createUserStatus,
@@ -603,9 +612,11 @@ class CompanySettingsPage extends React.Component {
         createUserStatus={createUserStatus}
         deleteUserStatus={deleteUserStatus}
         environment={environment}
+        fees={fees}
         general={general}
         handleCreateUser={this.handleCreateUser}
         handleDeleteUser={this.handleDeleteUser}
+        isMDRzao={isMDRzao}
         managingPartner={managingPartner}
         onBankAccountCancel={this.handleAccountCancel}
         onBankAccountChange={this.handleAccountChange}
@@ -615,7 +626,6 @@ class CompanySettingsPage extends React.Component {
         onBoletoSettingsChange={this.handleBoletoChange}
         onBoletoSettingsSubmit={this.handleBoletoSubmit}
         onVersionChange={this.handleVersionChange}
-        pricing={pricing}
         resetCreateUserState={this.resetCreateUserState}
         t={t}
         team={team}
@@ -646,6 +656,18 @@ CompanySettingsPage.propTypes = {
       instrucoes: PropTypes.string.isRequired,
     }).isRequired,
   }),
+  fees: PropTypes.shape({
+    anticipation: PropTypes.number,
+    antifraud: PropTypes.number,
+    boleto: PropTypes.number,
+    gateway: PropTypes.number,
+    installments: PropTypes.arrayOf(PropTypes.shape({
+      installment: PropTypes.number.isRequired,
+      mdr: PropTypes.number.isRequired,
+    })),
+    transfer: PropTypes.number,
+  }),
+  isMDRzao: PropTypes.bool,
   requestLogout: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
   user: PropTypes.shape({}),
@@ -653,6 +675,8 @@ CompanySettingsPage.propTypes = {
 
 CompanySettingsPage.defaultProps = {
   company: null,
+  fees: {},
+  isMDRzao: false,
   user: null,
 }
 

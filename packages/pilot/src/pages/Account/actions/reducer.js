@@ -1,7 +1,18 @@
 import {
+  always,
+  anyPass,
   applySpec,
+  equals,
+  find,
   merge,
+  not,
   path,
+  pathOr,
+  pluck,
+  pipe,
+  prop,
+  propEq,
+  when,
 } from 'ramda'
 
 import {
@@ -13,6 +24,8 @@ import {
   LOGOUT_RECEIVE,
   RECIPIENT_BALANCE_RECEIVE,
 } from './actions'
+
+import environment from '../../../environment'
 
 const getBalance = applySpec({
   available: path(['withdrawal', 'maximum']),
@@ -89,3 +102,36 @@ export default function loginReducer (state = initialState, action) {
       return state
   }
 }
+
+const getAntifraudCost = pipe(
+  pathOr([], ['gateway', environment, 'antifraud_cost']),
+  find(propEq('name', 'pagarme')),
+  prop('cost')
+)
+
+const notDefaultInstallments = pipe(
+  pluck('installment'),
+  anyPass([equals([1, 2, 7]), equals([1])]),
+  not
+)
+
+const getInstallmentsFee = pipe(
+  pathOr([], ['psp', environment, 'mdrs']),
+  find(propEq('payment_method', 'credit_card')),
+  pathOr([], ['installments']),
+  when(notDefaultInstallments, always([]))
+)
+
+const getFees = pipe(
+  prop('pricing'),
+  applySpec({
+    anticipation: path(['psp', environment, 'anticipation']),
+    antifraud: getAntifraudCost,
+    boleto: path(['gateway', environment, 'boletos', 'payment_fixed_fee']),
+    gateway: path(['gateway', environment, 'transaction_cost', 'credit_card']),
+    installments: getInstallmentsFee,
+    transfer: path(['transfers', 'ted']),
+  })
+)
+
+export const selectCompanyFees = company => getFees(company)

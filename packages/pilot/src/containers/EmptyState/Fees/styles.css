@@ -1,31 +1,7 @@
-@import "former-kit-skin-pagarme/dist/styles/colors.css";
-@import "former-kit-skin-pagarme/dist/styles/spacing.css";
-
 .subtitle {
   font-size: 14px;
 }
 
-.title {
-  color: var(--color-birdperson-gray-700);
-  font-weight: bold;
-  font-size: 14px;
-  line-height: 14px;
-  margin-top: var(--spacing-medium);
-}
-
-.marginRight > div {
-  margin-right: 54px;
-}
-
-.feeValuesWrapper {
-  font-size: 12px;
-
-  & > div:not(:last-child) {
-    margin-bottom: 6px;
-    margin-right: var(--spacing-large);
-  }
-
-  & p {
-    margin: 0;
-  }
+.feeArea {
+  margin-top: 10px;
 }
