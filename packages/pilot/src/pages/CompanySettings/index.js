@@ -3,22 +3,28 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import {
+  always,
+  anyPass,
   applySpec,
   compose,
   curry,
   defaultTo,
+  equals,
   find,
   head,
   map,
   merge,
+  not,
   path,
   pathOr,
+  pluck,
   pick,
   pipe,
   prop,
   propEq,
   propOr,
   uncurryN,
+  when,
 } from 'ramda'
 import { translate } from 'react-i18next'
 
@@ -26,9 +32,46 @@ import { requestLogout } from '../Account/actions/actions'
 import CompanySettings from '../../containers/Settings/Company'
 import environment from '../../environment'
 
+const getAntifraudCost = pipe(
+  pathOr([], ['gateway', environment, 'antifraud_cost']),
+  find(propEq('name', 'pagarme')),
+  prop('cost')
+)
+
+const notDefaultInstallments = pipe(
+  pluck('installment'),
+  anyPass([equals([1, 2, 7]), equals([1])]),
+  not
+)
+
+const getInstallmentsFee = pipe(
+  pathOr([], ['psp', environment, 'mdrs']),
+  find(propEq('payment_method', 'credit_card')),
+  pathOr([], ['installments']),
+  when(notDefaultInstallments, always([]))
+)
+
+const getFees = pipe(
+  prop('pricing'),
+  applySpec({
+    anticipation: path(['psp', environment, 'anticipation']),
+    antifraud: getAntifraudCost,
+    boleto: path(['gateway', environment, 'boletos', 'payment_fixed_fee']),
+    gateway: path(['gateway', environment, 'transaction_cost', 'credit_card']),
+    installments: getInstallmentsFee,
+    transfer: path(['transfers', 'ted']),
+  })
+)
+
 const mapStateToProps = ({
   account: { client, company, user },
-}) => ({ client, company, user })
+}) => ({
+  client,
+  company,
+  fees: getFees(company),
+  isMDRzao: company && propEq('anticipationType', 'MDRZAO', company),
+  user,
+})
 
 const mapDispatchToProp = ({
   requestLogout,
@@ -560,6 +603,8 @@ class CompanySettingsPage extends React.Component {
 
   render () {
     const {
+      fees,
+      isMDRzao,
       t,
       user,
     } = this.props
@@ -574,7 +619,6 @@ class CompanySettingsPage extends React.Component {
         apiVersion,
         general,
         managingPartner,
-        pricing,
         team,
       },
       createUserStatus,
@@ -603,9 +647,11 @@ class CompanySettingsPage extends React.Component {
         createUserStatus={createUserStatus}
         deleteUserStatus={deleteUserStatus}
         environment={environment}
+        fees={fees}
         general={general}
         handleCreateUser={this.handleCreateUser}
         handleDeleteUser={this.handleDeleteUser}
+        isMDRzao={isMDRzao}
         managingPartner={managingPartner}
         onBankAccountCancel={this.handleAccountCancel}
         onBankAccountChange={this.handleAccountChange}
@@ -615,7 +661,6 @@ class CompanySettingsPage extends React.Component {
         onBoletoSettingsChange={this.handleBoletoChange}
         onBoletoSettingsSubmit={this.handleBoletoSubmit}
         onVersionChange={this.handleVersionChange}
-        pricing={pricing}
         resetCreateUserState={this.resetCreateUserState}
         t={t}
         team={team}
@@ -646,6 +691,18 @@ CompanySettingsPage.propTypes = {
       instrucoes: PropTypes.string.isRequired,
     }).isRequired,
   }),
+  fees: PropTypes.shape({
+    anticipation: PropTypes.number,
+    antifraud: PropTypes.number,
+    boleto: PropTypes.number,
+    gateway: PropTypes.number,
+    installments: PropTypes.arrayOf(PropTypes.shape({
+      installment: PropTypes.number.isRequired,
+      mdr: PropTypes.number.isRequired,
+    })),
+    transfer: PropTypes.number,
+  }),
+  isMDRzao: PropTypes.bool,
   requestLogout: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
   user: PropTypes.shape({}),
@@ -653,6 +710,8 @@ CompanySettingsPage.propTypes = {
 
 CompanySettingsPage.defaultProps = {
   company: null,
+  fees: {},
+  isMDRzao: false,
   user: null,
 }
 
