@@ -45,6 +45,7 @@ import ConfirmModal from './ConfirmModal'
 import WithLoader from './withLoader'
 import WithSpinner from './withSpinner'
 import WelcomeMessage from './WelcomeMessage'
+import FeesDetails from './FeesDetails'
 
 storiesOf('Components|Custom components', module)
   .addDecorator(withA11y)
@@ -93,3 +94,8 @@ storiesOf('Components|Custom components', module)
 storiesOf('Components|High Order Components', module)
   .add('with loader', () => <WithLoader />)
   .add('with spinner', () => <WithSpinner />)
+
+storiesOf('Components|Custom components/FeesDetails', module)
+  .addDecorator(withA11y)
+  .add('Default', () => <FeesDetails.FeesDetailsDefault />)
+  .add('MDRzao', () => <FeesDetails.FeesDetailsMDRzao />)
