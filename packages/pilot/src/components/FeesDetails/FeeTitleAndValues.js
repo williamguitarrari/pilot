@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Flexbox } from 'former-kit'
-import formatPercent from '../../../formatters/percent'
-import formatCurrency from '../../../formatters/currency'
+import formatPercent from '../../formatters/percent'
+import formatCurrency from '../../formatters/currency'
 import styles from './styles.css'
 
 const formatterByType = {

@@ -11,8 +11,9 @@ const GeneralInfoTab = ({
   apiKeys,
   apiVersion,
   environment,
+  fees,
+  isMDRzao,
   onVersionChange,
-  pricing,
   t,
   userIsReadOnly,
   versions,
@@ -20,7 +21,8 @@ const GeneralInfoTab = ({
   <Fragment>
     <CardContent>
       <Pricing
-        pricing={pricing}
+        fees={fees}
+        isMDRzao={isMDRzao}
         t={t}
       />
     </CardContent>
@@ -63,17 +65,19 @@ GeneralInfoTab.propTypes = {
     'live',
     'test',
   ]).isRequired,
+  fees: PropTypes.shape({
+    anticipation: PropTypes.number,
+    antifraud: PropTypes.number,
+    boleto: PropTypes.number,
+    gateway: PropTypes.number,
+    installments: PropTypes.arrayOf(PropTypes.shape({
+      installment: PropTypes.number.isRequired,
+      mdr: PropTypes.number.isRequired,
+    })),
+    transfer: PropTypes.number,
+  }).isRequired,
+  isMDRzao: PropTypes.bool.isRequired,
   onVersionChange: PropTypes.func.isRequired,
-  pricing: PropTypes.arrayOf(PropTypes.shape({
-    mainTitle: PropTypes.string.isRequired,
-    subItems: PropTypes.arrayOf(PropTypes.shape({
-      prices: PropTypes.arrayOf(PropTypes.shape({
-        unit: PropTypes.string.isRequired,
-        value: PropTypes.number.isRequired,
-      })).isRequired,
-      title: PropTypes.string.isRequired,
-    })).isRequired,
-  })).isRequired,
   t: PropTypes.func.isRequired,
   userIsReadOnly: PropTypes.bool.isRequired,
   versions: PropTypes.arrayOf(PropTypes.shape({

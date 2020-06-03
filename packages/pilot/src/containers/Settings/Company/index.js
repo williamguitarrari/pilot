@@ -44,9 +44,11 @@ class CompanySettings extends Component {
       createUserStatus,
       deleteUserStatus,
       environment,
+      fees,
       general,
       handleCreateUser,
       handleDeleteUser,
+      isMDRzao,
       managingPartner,
       onBankAccountCancel,
       onBankAccountChange,
@@ -56,7 +58,6 @@ class CompanySettings extends Component {
       onBoletoSettingsChange,
       onBoletoSettingsSubmit,
       onVersionChange,
-      pricing,
       resetCreateUserState,
       t,
       team,
@@ -88,8 +89,9 @@ class CompanySettings extends Component {
               apiKeys={apiKeys}
               apiVersion={apiVersion}
               environment={environment}
+              fees={fees}
+              isMDRzao={isMDRzao}
               onVersionChange={onVersionChange}
-              pricing={pricing}
               t={t}
               userIsReadOnly={userIsReadOnly}
               versions={versions}
@@ -235,6 +237,17 @@ CompanySettings.propTypes = {
     'live',
     'test',
   ]).isRequired,
+  fees: PropTypes.shape({
+    anticipation: PropTypes.number,
+    antifraud: PropTypes.number,
+    boleto: PropTypes.number,
+    gateway: PropTypes.number,
+    installments: PropTypes.arrayOf(PropTypes.shape({
+      installment: PropTypes.number.isRequired,
+      mdr: PropTypes.number.isRequired,
+    })),
+    transfer: PropTypes.number,
+  }).isRequired,
   general: PropTypes.shape({
     cnpj: PropTypes.string,
     fullName: PropTypes.string,
@@ -243,6 +256,7 @@ CompanySettings.propTypes = {
   }).isRequired,
   handleCreateUser: PropTypes.func.isRequired,
   handleDeleteUser: PropTypes.func.isRequired,
+  isMDRzao: PropTypes.bool.isRequired,
   managingPartner: PropTypes.shape({
     cpf: PropTypes.string,
     email: PropTypes.string,
@@ -256,16 +270,6 @@ CompanySettings.propTypes = {
   onBoletoSettingsChange: PropTypes.func.isRequired,
   onBoletoSettingsSubmit: PropTypes.func.isRequired,
   onVersionChange: PropTypes.func.isRequired,
-  pricing: PropTypes.arrayOf(PropTypes.shape({
-    mainTitle: PropTypes.string.isRequired,
-    subItems: PropTypes.arrayOf(PropTypes.shape({
-      prices: PropTypes.arrayOf(PropTypes.shape({
-        unit: PropTypes.string.isRequired,
-        value: PropTypes.number.isRequired,
-      })).isRequired,
-      title: PropTypes.string.isRequired,
-    })).isRequired,
-  })).isRequired,
   resetCreateUserState: PropTypes.func.isRequired,
   t: PropTypes.func,
   team: PropTypes.arrayOf(PropTypes.shape({
