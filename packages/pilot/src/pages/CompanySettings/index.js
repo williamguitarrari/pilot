@@ -3,28 +3,22 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import {
-  always,
-  anyPass,
   applySpec,
   compose,
   curry,
   defaultTo,
-  equals,
   find,
   head,
   map,
   merge,
-  not,
   path,
   pathOr,
-  pluck,
   pick,
   pipe,
   prop,
   propEq,
   propOr,
   uncurryN,
-  when,
 } from 'ramda'
 import { translate } from 'react-i18next'
 
@@ -32,43 +26,14 @@ import { requestLogout } from '../Account/actions/actions'
 import CompanySettings from '../../containers/Settings/Company'
 import environment from '../../environment'
 
-const getAntifraudCost = pipe(
-  pathOr([], ['gateway', environment, 'antifraud_cost']),
-  find(propEq('name', 'pagarme')),
-  prop('cost')
-)
-
-const notDefaultInstallments = pipe(
-  pluck('installment'),
-  anyPass([equals([1, 2, 7]), equals([1])]),
-  not
-)
-
-const getInstallmentsFee = pipe(
-  pathOr([], ['psp', environment, 'mdrs']),
-  find(propEq('payment_method', 'credit_card')),
-  pathOr([], ['installments']),
-  when(notDefaultInstallments, always([]))
-)
-
-const getFees = pipe(
-  prop('pricing'),
-  applySpec({
-    anticipation: path(['psp', environment, 'anticipation']),
-    antifraud: getAntifraudCost,
-    boleto: path(['gateway', environment, 'boletos', 'payment_fixed_fee']),
-    gateway: path(['gateway', environment, 'transaction_cost', 'credit_card']),
-    installments: getInstallmentsFee,
-    transfer: path(['transfers', 'ted']),
-  })
-)
+import { selectCompanyFees } from '../Account/actions/reducer'
 
 const mapStateToProps = ({
   account: { client, company, user },
 }) => ({
   client,
   company,
-  fees: getFees(company),
+  fees: selectCompanyFees(company),
   isMDRzao: company && propEq('anticipationType', 'MDRZAO', company),
   user,
 })
