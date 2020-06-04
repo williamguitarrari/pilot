@@ -1,10 +1,14 @@
 import pagarme from 'pagarme'
 import {
+  allPass,
   always,
-  cond,
   complement,
+  cond,
+  hasPath,
   identity,
+  ifElse,
   isEmpty,
+  path,
   pathEq,
   pathOr,
   propEq,
@@ -44,7 +48,19 @@ import { activeCompanyLogin, inactiveCompanyLogin } from '../../../vendor/google
 const isActiveCompany = propEq('status', 'active')
 const isSelfRegister = propEq('type', 'self_register')
 const isPendingRiskAnalysis = propEq('status', 'pending_risk_analysis')
-const hasDashboardAccess = pathEq(['authentication', 'allow_dashboard_login'], true)
+
+const pathNotEq = (pathName, propValue) => complement(
+  pathEq(pathName, propValue)
+)
+
+const hasDashboardAccess = ifElse(
+  hasPath(['client', 'authentication', 'allow_dashboard_login']),
+  path(['client', 'authentication', 'allow_dashboard_login']),
+  allPass([
+    pathNotEq(['company', 'type'], 'mei'),
+    pathNotEq(['company', 'type'], 'payment_link_app'),
+  ])
+)
 
 const getRecipientId = pathOr(null, ['account', 'company', 'default_recipient_id', env])
 
@@ -60,13 +76,18 @@ const errorHandler = (error) => {
   return Promise.reject(error)
 }
 
-const verifyCapabilityPermission = (client) => {
-  if (!hasDashboardAccess(client)) {
-    throw new Error('Unathorized company')
-  }
+const verifyCapabilityPermission = client => (
+  client.company.current()
+    .then((company) => {
+      if (!hasDashboardAccess({ client, company })) {
+        client.session.destroy(client.authentication.session_id)
 
-  return client
-}
+        throw new Error('Unauthorized Login')
+      }
+
+      return client
+    })
+)
 
 const loginEpic = action$ => action$
   .pipe(
