@@ -3,19 +3,26 @@ import { path, split } from 'ramda'
 import { Modal } from 'former-kit'
 import PaymentLinkResult from '../../../../src/containers/PaymentLinks/PaymentLinkAdd/Result'
 import PaymentLinkFirstStep from '../../../../src/containers/PaymentLinks/PaymentLinkAdd/FirstStep'
+import PaymentLinkSecondStep from '../../../../src/containers/PaymentLinks/PaymentLinkAdd/SecondStep'
 
 import translations from '../../../../public/locales/pt/translations.json'
 
 const t = sentence => path(split('.', sentence), translations)
 
 const PaymentLinkFirstStepExample = () => (
-  <Modal isOpen>
+  <Modal size="small" isOpen>
     <PaymentLinkFirstStep t={t} />
   </Modal>
 )
 
+const PaymentLinkSecondStepExample = () => (
+  <Modal size="small" isOpen>
+    <PaymentLinkSecondStep t={t} />
+  </Modal>
+)
+
 const PaymentLinkResultExample = () => (
-  <Modal isOpen>
+  <Modal size="small" isOpen>
     <PaymentLinkResult t={t} paymentLink="link.pagar.me/tBy6bncOoN" />
   </Modal>
 )
@@ -23,4 +30,5 @@ const PaymentLinkResultExample = () => (
 export default {
   PaymentLinkFirstStep: PaymentLinkFirstStepExample,
   PaymentLinkResult: PaymentLinkResultExample,
+  PaymentLinkSecondStep: PaymentLinkSecondStepExample,
 }

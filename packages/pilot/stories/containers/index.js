@@ -466,4 +466,5 @@ storiesOf('Containers|Payment Links/PaymentLinkList', module)
 
 storiesOf('Containers|Payment Links/PaymentLinkAdd', module)
   .add('FirstStep', () => <PaymentLinks.PaymentLinkAdd.PaymentLinkFirstStep />)
+  .add('SecondStep', () => <PaymentLinks.PaymentLinkAdd.PaymentLinkSecondStep />)
   .add('Result', () => <PaymentLinks.PaymentLinkAdd.PaymentLinkResult />)

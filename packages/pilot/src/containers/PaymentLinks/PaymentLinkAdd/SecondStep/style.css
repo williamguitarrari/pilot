@@ -16,6 +16,71 @@
   }
 }
 
+.boletoInfo {
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+
+.creditCardContainer {
+  padding-top: 35px;
+}
+
+.paymentLinkActions button {
+  margin-top: 10px;
+  margin-bottom: var(--spacing-small);
+  width: 100%;
+}
+
+.creditCardOptions > div {
+  margin-top: 20px;
+}
+
+.secondStepActions {
+  display: flex;
+  width: 100%;
+
+  & > button:first-of-type {
+    width: 40%;
+  }
+
+  & > button:last-of-type {
+    margin-left: 10px;
+  }
+}
+
+.percentPerMonth {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+
+  & > div {
+    align-items: baseline;
+    display: flex;
+    font-size: 13px;
+    justify-content: center;
+
+    & > span {
+      font-weight: bold;
+      margin: 0 5px;
+    }
+
+    & .formInput div,
+    & .formInput input {
+      width: 25px;
+    }
+
+    & .formInput input {
+      padding: 0;
+    }
+  }
+
+  & > p {
+    color: var(--color-beth-pink-100);
+    font-size: 12px;
+    margin: auto;
+  }
+}
+
 .segmentedSwitch label:last-of-type input:checked + span {
   background-color: var(--color-picklerick-green-100);
   border-color: var(--color-picklerick-green-100);
