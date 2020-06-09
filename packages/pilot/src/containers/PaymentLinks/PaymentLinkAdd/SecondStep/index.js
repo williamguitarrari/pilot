@@ -22,7 +22,6 @@ const SecondStep = ({
   onChange,
   onSubmit,
   renderBulletSteps,
-  renderTitle,
   t,
 }) => {
   const [isPaymentMethodEnabled, setIsPaymentMethodEnabled] = useState(false)
@@ -34,7 +33,6 @@ const SecondStep = ({
 
   return (
     <>
-      {renderTitle(t('pages.payment_links.add_link.second_step.title'))}
       <Form
         data={formData}
         onChange={internalOnChange}
@@ -73,13 +71,17 @@ const SecondStep = ({
 }
 
 SecondStep.propTypes = {
-  formData: PropTypes.shape().isRequired,
+  formData: PropTypes.shape({
+    boleto_expires_in: PropTypes.string,
+    free_installments: PropTypes.string,
+    interest_rate: PropTypes.string,
+    max_installments: PropTypes.string,
+  }).isRequired,
   loading: PropTypes.bool,
   onBack: PropTypes.func,
   onChange: PropTypes.func,
   onSubmit: PropTypes.func,
   renderBulletSteps: PropTypes.func.isRequired,
-  renderTitle: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
 }
 

@@ -11,12 +11,10 @@ import ErrorLinkSvg from './error_link.svg'
 import style from './style.css'
 
 const ErrorStep = ({
-  onCreateNewLink,
-  renderTitle,
+  onCreateAnotherLink,
   t,
 }) => (
   <>
-    {renderTitle(t('pages.payment_links.add_link.error.title'))}
     <ModalContent>
       <div className={style.paymentLinkResult}>
         <Flexbox alignItems="center" direction="column">
@@ -31,7 +29,7 @@ const ErrorStep = ({
       </div>
     </ModalContent>
     <PaymentLinkActionsContainer>
-      <Button fill="outline" onClick={onCreateNewLink}>
+      <Button fill="outline" onClick={onCreateAnotherLink}>
         {t('pages.payment_links.add_link.error.retry_button')}
       </Button>
     </PaymentLinkActionsContainer>
@@ -39,13 +37,12 @@ const ErrorStep = ({
 )
 
 ErrorStep.propTypes = {
-  onCreateNewLink: PropTypes.func,
-  renderTitle: PropTypes.func.isRequired,
+  onCreateAnotherLink: PropTypes.func,
   t: PropTypes.func.isRequired,
 }
 
 ErrorStep.defaultProps = {
-  onCreateNewLink: () => {},
+  onCreateAnotherLink: () => {},
 }
 
 export default ErrorStep

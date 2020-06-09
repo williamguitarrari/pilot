@@ -7,6 +7,7 @@ import createNumberValidation from '../../../../validation/number'
 import createMinLengthValidation from '../../../../validation/minLength'
 import createMaxLengthValidaton from '../../../../validation/maxLength'
 import createLessThanValidation from '../../../../validation/lessThan'
+import createGreaterThanValidation from '../../../../validation/greaterThan'
 
 const applyValidations = (validations, value) => pipe(
   juxt(validations),
@@ -60,12 +61,19 @@ export const validateAmount = getTranslation => (value) => {
   const minimumRequiredPrice = 100
   const priceGreaterThanMinimum = createLessThanValidation(
     minimumRequiredPrice,
-    getTranslation('price_greater_than_100_error', { minAmount: minimumRequiredPrice })
+    getTranslation('price_greater_than_100_error')
+  )
+
+  const maxRequiredPrice = 2000000000
+  const priceLessThanMaximum = createGreaterThanValidation(
+    maxRequiredPrice,
+    getTranslation('price_less_than_error')
   )
 
   return applyValidations([
     isNumber,
     priceGreaterThanMinimum,
+    priceLessThanMaximum,
   ],
   value)
 }

@@ -77,7 +77,7 @@ const renderCreditCardInput = (formData, t) => (
         placeholder={t('pages.payment_links.add_link.second_step.transfer_fees_label')}
         options={buildInterestFeesOptions(formData.max_installments, t)}
       />
-      {formData.transfer_fees > 0 && formData.credit_card && (
+      {formData.free_installments > 0 && formData.credit_card && (
         <InterestFees
           name="interest_rate"
           t={t}
@@ -93,18 +93,22 @@ const InterestFees = ({
   onChange,
   t,
   value,
-}) => (
-  <div className={styles.percentPerMonth}>
-    <div>
-      {t('pages.payment_links.add_link.second_step.percent_per_month_1')}
-      <span>{t('pages.payment_links.add_link.second_step.percent_per_month_2')}</span>
-      <div className={styles.formInput}>
-        <FormInput name={name} onChange={onChange} type="text" value={value} />
-      </div>%
+}) => {
+  const internalOnChange = event => onChange(event.target.value.replace(/,/g, '.'))
+
+  return (
+    <div className={styles.percentPerMonth}>
+      <div>
+        {t('pages.payment_links.add_link.second_step.percent_per_month_1')}
+        <span>{t('pages.payment_links.add_link.second_step.percent_per_month_2')}</span>
+        <div className={styles.formInput}>
+          <FormInput name={name} onChange={internalOnChange} type="text" value={value} />
+        </div>%
+      </div>
+      { error && <p>{error}</p> }
     </div>
-    { error && <p>{error}</p> }
-  </div>
-)
+  )
+}
 
 InterestFees.propTypes = {
   error: PropTypes.string,

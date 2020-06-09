@@ -14,13 +14,11 @@ import CreatedLinkSvg from './created_link.svg'
 import style from './style.css'
 
 const SuccessStep = ({
-  onCreateNewLink,
+  onCreateAnotherLink,
   paymentLink,
-  renderTitle,
   t,
 }) => (
   <>
-    {renderTitle(t('pages.payment_links.add_link.success.title'))}
     <ModalContent>
       <div className={style.paymentLinkResult}>
         <span className={style.subtitle}>
@@ -42,7 +40,7 @@ const SuccessStep = ({
       </div>
     </ModalContent>
     <PaymentLinkActionsContainer>
-      <Button onClick={onCreateNewLink}>
+      <Button onClick={onCreateAnotherLink}>
         {t('pages.payment_links.add_link.success.new_link')}
       </Button>
     </PaymentLinkActionsContainer>
@@ -50,14 +48,13 @@ const SuccessStep = ({
 )
 
 SuccessStep.propTypes = {
-  onCreateNewLink: PropTypes.func,
+  onCreateAnotherLink: PropTypes.func,
   paymentLink: PropTypes.string.isRequired,
-  renderTitle: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
 }
 
 SuccessStep.defaultProps = {
-  onCreateNewLink: () => {},
+  onCreateAnotherLink: () => {},
 }
 
 export default SuccessStep

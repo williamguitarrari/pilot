@@ -35,14 +35,12 @@ const FirstStep = ({
   onChange,
   onSubmit,
   renderBulletSteps,
-  renderTitle,
   t,
 }) => {
   const getTranslation = (subpath, args = {}) => t(`pages.payment_links.add_link.first_step.${subpath}`, args)
 
   return (
     <>
-      {renderTitle(getTranslation('title'))}
       <Form
         data={formData}
         onChange={onChange}
@@ -63,7 +61,7 @@ const FirstStep = ({
               label={getTranslation('price_form_label')}
               name="amount"
               renderer={props => (
-                <CurrencyInput max={99999999999} {...props} />
+                <CurrencyInput max={9999999999} {...props} />
               )}
             />
             <div className={style.expirationDate}>
@@ -108,7 +106,6 @@ FirstStep.propTypes = {
   onChange: PropTypes.func,
   onSubmit: PropTypes.func,
   renderBulletSteps: PropTypes.func.isRequired,
-  renderTitle: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
 }
 

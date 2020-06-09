@@ -9,15 +9,7 @@ import IconClose from 'emblematic-icons/svg/ClearClose32.svg'
 import FirstStep from './FirstStep/FirstStep'
 import SecondStep from './SecondStep'
 import SuccessStep from './SuccessStep'
-
-const buildRenderTitle = onClose => title => (
-  <ModalTitle
-    title={title}
-    titleAlign="start"
-    closeIcon={<IconClose width={12} height={12} />}
-    onClose={onClose}
-  />
-)
+import ErrorStep from './ErrorStep'
 
 const renderBulletSteps = (currentStep) => {
   const status = currentStep === 'first_step'
@@ -57,7 +49,8 @@ const PaymentLinkAdd = ({
   isOpen,
   loading,
   onClose,
-  onCreateNewLink,
+  onCreateAnotherLink,
+  onCreateLinkRequest,
   onNextStep,
   onPreviousStep,
   paymentLink,
@@ -100,43 +93,52 @@ const PaymentLinkAdd = ({
     setFormData(newFormData)
   }
 
-  const renderTitle = buildRenderTitle(onClose)
-
   return (
     <Modal isOpen={isOpen} size="small">
+      <ModalTitle
+        title={step.title}
+        titleAlign="start"
+        closeIcon={<IconClose width={12} height={12} />}
+        onClose={() => !loading && onClose()}
+      />
       {
-          step === 'first_step' && (
+          step.name === 'first_step' && (
           <FirstStep
             formData={formData}
             onChange={handleFormChange}
-            onSubmit={() => onNextStep()}
+            onSubmit={onNextStep}
             t={t}
-            renderTitle={renderTitle}
             renderBulletSteps={renderBulletSteps}
           />
           )
       }
       {
-        step === 'second_step' && (
+        step.name === 'second_step' && (
           <SecondStep
             formData={formData}
             loading={loading}
-            onBack={() => onPreviousStep()}
+            onBack={onPreviousStep}
             onChange={handleFormChange}
-            onSubmit={() => onNextStep()}
+            onSubmit={onCreateLinkRequest}
             t={t}
-            renderTitle={renderTitle}
             renderBulletSteps={renderBulletSteps}
           />
         )
       }
       {
-        step === 'success_step' && (
+        step.name === 'success_step' && (
           <SuccessStep
-            onCreateNewLink={onCreateNewLink}
+            onCreateAnotherLink={onCreateAnotherLink}
             paymentLink={paymentLink}
             t={t}
-            renderTitle={renderTitle}
+          />
+        )
+      }
+      {
+        step.name === 'error_step' && (
+          <ErrorStep
+            onCreateAnotherLink={onCreateAnotherLink}
+            t={t}
           />
         )
       }
@@ -148,22 +150,22 @@ PaymentLinkAdd.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
   onClose: PropTypes.func,
-  onCreateNewLink: PropTypes.func,
+  onCreateAnotherLink: PropTypes.func,
+  onCreateLinkRequest: PropTypes.func,
   onNextStep: PropTypes.func.isRequired,
   onPreviousStep: PropTypes.func.isRequired,
   paymentLink: PropTypes.string,
-  step: PropTypes.oneOf([
-    'first_step',
-    'second_step',
-    'success_step',
-    'error_step',
-  ]).isRequired,
+  step: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+  }).isRequired,
   t: PropTypes.func.isRequired,
 }
 
 PaymentLinkAdd.defaultProps = {
   onClose: () => {},
-  onCreateNewLink: () => {},
+  onCreateAnotherLink: () => {},
+  onCreateLinkRequest: () => {},
   paymentLink: null,
 }
 

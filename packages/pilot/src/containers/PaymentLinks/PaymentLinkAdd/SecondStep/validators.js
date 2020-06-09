@@ -8,7 +8,6 @@ import createMoreThanValidation from '../../../../validation/greaterThan'
 const isString = is(String)
 
 const isRequired = t => createRequiredValidation(t('pages.payment_links.add_link.second_step.required_error'))
-const isInteger = t => createNumberValidation(t('pages.payment_links.add_link.second_step.is_integer_error'))
 
 const isNumber = message => value => Number.isNaN(Number(value)) && message
 
@@ -25,9 +24,20 @@ export const validateBoletoExpiresIn = (boletoEnabled, t) => (value) => {
     })
   )
 
+  const minValue = 1
+  const lessThan1 = createLessThanValidation(
+    minValue,
+    t('pages.payment_links.add_link.second_step.min_value_error', {
+      value: minValue,
+    })
+  )
+
+  const isInteger = createNumberValidation(t('pages.payment_links.add_link.second_step.is_integer_error'))
+
   const validationsOutput = juxt([
     isRequired(t),
-    isInteger(t),
+    lessThan1,
+    isInteger,
     greaterThan3650,
   ])(value)
 
@@ -55,8 +65,8 @@ export const validateInterestRate = (creditCardEnabled, t) => (value) => {
     })
   )
 
-  const maxValue = 100
-  const greaterThan100 = createMoreThanValidation(
+  const maxValue = 99
+  const greaterThan99 = createMoreThanValidation(
     maxValue,
     t('pages.payment_links.add_link.second_step.max_value_error', {
       value: maxValue,
@@ -67,7 +77,7 @@ export const validateInterestRate = (creditCardEnabled, t) => (value) => {
     isRequired(t),
     isNumber(t('pages.payment_links.add_link.second_step.is_number_error')),
     lessThan0,
-    greaterThan100,
+    greaterThan99,
   ])(value)
 
   return validationsOutput.find(isString)

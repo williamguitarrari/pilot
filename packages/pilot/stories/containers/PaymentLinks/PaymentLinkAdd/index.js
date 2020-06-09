@@ -1,57 +1,47 @@
 import React, { useState } from 'react'
 import { path, split } from 'ramda'
-import { BulletSteps, Modal, ModalTitle } from 'former-kit'
-import PaymentLinkSuccessStep from '../../../../src/containers/PaymentLinks/PaymentLinkAdd/SuccessStep'
-import PaymentLinkErrorStep from '../../../../src/containers/PaymentLinks/PaymentLinkAdd/ErrorStep'
-import PaymentLinkFirstStep from '../../../../src/containers/PaymentLinks/PaymentLinkAdd/FirstStep/FirstStep'
-import PaymentLinkSecondStep from '../../../../src/containers/PaymentLinks/PaymentLinkAdd/SecondStep'
+import { action } from '@storybook/addon-actions'
 import PaymentLinkAdd from '../../../../src/containers/PaymentLinks/PaymentLinkAdd'
 
 import translations from '../../../../public/locales/pt/translations.json'
 
 const t = sentence => path(split('.', sentence), translations)
 
-const renderTitle = title => (
-  <ModalTitle
-    title={title}
-    titleAlign="start"
-  />
-)
-
-const renderBulletSteps = () => (
-  <BulletSteps
-    status={[
-      { id: 'firstStep', status: 'current' },
-      { id: 'secondStep', status: 'next' },
-    ]}
-    steps={[{ id: 'firstStep' }, { id: 'secondStep' }]}
-  />
-)
+const steps = {
+  error_step: {
+    name: 'error_step',
+    title: 'Erro na criação do link',
+  },
+  first_step: {
+    name: 'first_step',
+    title: 'Criar link de pagamentos',
+  },
+  second_step: {
+    name: 'second_step',
+    title: 'Meios de pagamento',
+  },
+  success_step: {
+    name: 'success_step',
+    title: 'Link criado com sucesso!',
+  },
+}
 
 const PaymentLinkAddExample = () => {
-  const [step, setStep] = useState('first_step')
+  const [step, setStep] = useState(steps.first_step)
   const [loading, setLoading] = useState(false)
   const paymentLink = 'link.pagar.me/tBy6bncOoN'
 
-  const onCreateLink = () => {
+  const onCreateLinkRequest = () => {
     setLoading(true)
     setTimeout(() => {
       setLoading(false)
-      setStep('success_step')
+      setStep(steps.success_step)
     }, 2000)
   }
 
-  const onCreateNewLink = () => setStep('first_step')
-
-  const onNextStep = () => {
-    if (step === 'first_step') {
-      return setStep('second_step')
-    }
-
-    return onCreateLink()
-  }
-
-  const onPreviousStep = () => setStep('first_step')
+  const onCreateAnotherLink = () => setStep(steps.first_step)
+  const onNextStep = () => setStep(steps.second_step)
+  const onPreviousStep = () => setStep(steps.first_step)
 
   return (
     <PaymentLinkAdd
@@ -59,7 +49,8 @@ const PaymentLinkAddExample = () => {
       isOpen
       onNextStep={onNextStep}
       onPreviousStep={onPreviousStep}
-      onCreateNewLink={onCreateNewLink}
+      onCreateAnotherLink={onCreateAnotherLink}
+      onCreateLinkRequest={onCreateLinkRequest}
       paymentLink={paymentLink}
       step={step}
       t={t}
@@ -67,46 +58,31 @@ const PaymentLinkAddExample = () => {
   )
 }
 
+const baseProps = {
+  isOpen: true,
+  loading: false,
+  onCreateAnotherLink: action('onCreateAnotherLink'),
+  onCreateLinkRequest: action('onCreateLinkRequests'),
+  onNextStep: action('onNextStep'),
+  onPreviousStep: action('onPreviousStep'),
+  paymentLink: 'link.pagar.me/tBy6bncOoN',
+  t,
+}
+
 const PaymentLinkFirstStepExample = () => (
-  <Modal size="small" isOpen>
-    <PaymentLinkFirstStep
-      formData={{
-        amount: '0',
-        expiration_unit: 'days',
-      }}
-      renderTitle={renderTitle}
-      renderBulletSteps={renderBulletSteps}
-      t={t}
-    />
-  </Modal>
+  <PaymentLinkAdd {...baseProps} step={steps.first_step} />
 )
 
 const PaymentLinkSecondStepExample = () => (
-  <Modal size="small" isOpen>
-    <PaymentLinkSecondStep
-      formData={{}}
-      renderTitle={renderTitle}
-      renderBulletSteps={renderBulletSteps}
-      t={t}
-    />
-  </Modal>
+  <PaymentLinkAdd {...baseProps} step={steps.second_step} />
 )
 
 const PaymentLinkSuccessStepExample = () => (
-  <Modal size="small" isOpen>
-    <PaymentLinkSuccessStep
-      t={t}
-      paymentLink="link.pagar.me/tBy6bncOoN"
-      renderTitle={renderTitle}
-    />
-  </Modal>
+  <PaymentLinkAdd {...baseProps} step={steps.success_step} />
 )
 
 const PaymentLinkErrorStepExample = () => (
-  <Modal size="small" isOpen>
-    <PaymentLinkErrorStep t={t} renderTitle={renderTitle} />
-  </Modal>
-
+  <PaymentLinkAdd {...baseProps} step={steps.error_step} />
 )
 
 export default {
