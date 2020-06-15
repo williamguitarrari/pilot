@@ -1662,6 +1662,10 @@
         }
       },
       "add_link": {
+        "receive_payments": "Receba pagamentos",
+        "share_payment_links_1": "Crie e compartilhe links de pagamento com",
+        "share_payment_links_2": "os seus clientes e comece a vender agora.",
+        "create_payment_link": "Criar link de pagamento",
         "first_step": {
           "title": "Criar link de pagamentos",
           "price_form_label": "Preço (R$)",

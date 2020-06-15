@@ -26,11 +26,11 @@ const NewLinksCard = ({
             tv={5}
           >
             <h2 className={style.title}>
-              {t('pages.payment_links.receive_payments')}
+              {t('pages.payment_links.add_link.receive_payments')}
             </h2>
             <span className={style.subtitle}>
-              {t('pages.payment_links.share_payment_links_1')}<br />
-              {t('pages.payment_links.share_payment_links_2')}
+              {t('pages.payment_links.add_link.share_payment_links_1')}<br />
+              {t('pages.payment_links.add_link.share_payment_links_2')}
             </span>
           </Col>
           <Col
@@ -42,7 +42,7 @@ const NewLinksCard = ({
           >
             <div className={style.createLink}>
               <Button onClick={onAddPaymentLink}>
-                {t('pages.payment_links.create_payment_link')}
+                {t('pages.payment_links.add_link.create_payment_link')}
               </Button>
             </div>
           </Col>
