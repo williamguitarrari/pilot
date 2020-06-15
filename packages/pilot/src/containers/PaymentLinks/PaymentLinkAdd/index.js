@@ -126,7 +126,7 @@ PaymentLinkAdd.defaultProps = {
   onClose: () => {},
   onCreateAnotherLink: () => {},
   onCreateLinkRequest: () => {},
-  paymentLink: null,
+  paymentLink: '',
 }
 
 export default PaymentLinkAdd

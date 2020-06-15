@@ -18,6 +18,7 @@ const PaymentLinks = ({
   onCreateLinkRequest,
   onNextStep,
   onPreviousStep,
+  paymentLinkUrl,
   step,
   t,
 }) => (
@@ -32,6 +33,7 @@ const PaymentLinks = ({
       onCreateLinkRequest={onCreateLinkRequest}
       onNextStep={onNextStep}
       onPreviousStep={onPreviousStep}
+      paymentLink={paymentLinkUrl}
       step={step}
       t={t}
     />
@@ -54,6 +56,7 @@ PaymentLinks.propTypes = {
   onCreateLinkRequest: PropTypes.func.isRequired,
   onNextStep: PropTypes.func.isRequired,
   onPreviousStep: PropTypes.func.isRequired,
+  paymentLinkUrl: PropTypes.string.isRequired,
   step: PropTypes.shape({
     name: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,

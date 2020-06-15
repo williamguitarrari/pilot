@@ -10,6 +10,7 @@ import {
 
 const initialState = () => ({
   loading: false,
+  paymentLinkUrl: null,
   step: 'first_step',
 })
 
@@ -36,6 +37,7 @@ export default function paymentLinksReducer (state = initialState(), action) {
     case LINK_SUCCESS_REQUEST: {
       return merge(state, {
         loading: false,
+        paymentLinkUrl: action.payload.url,
         step: 'success_step',
       })
     }

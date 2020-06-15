@@ -14,10 +14,11 @@ import PaymentLinksContainer from '../../containers/PaymentLinks'
 const mapStateToProps = ({
   paymentLinks: {
     loading,
+    paymentLinkUrl,
     step,
   },
 }) => ({
-  loading, step,
+  loading, paymentLinkUrl, step,
 })
 
 const mapDispatchToProps = {
@@ -77,6 +78,7 @@ const steps = {
 const PaymentLinks = ({
   createLink,
   loading,
+  paymentLinkUrl,
   requestNextStep,
   requestPreviousStep,
   requestResetStatus,
@@ -116,9 +118,7 @@ const PaymentLinks = ({
 
   const onAddPaymentLink = () => setIsNewLinkOpen(true)
 
-  const onCreateLinkRequest = () => {
-    createLink()
-  }
+  const onCreateLinkRequest = () => createLink(linkFormData)
 
   const onClosePaymentLink = () => {
     setLinkFormData(makeDefaulLinkData())
@@ -137,6 +137,7 @@ const PaymentLinks = ({
       loading={loading}
       isNewLinkOpen={isNewLinkOpen}
       handleLinkFormChange={handleLinkFormChange}
+      paymentLinkUrl={paymentLinkUrl}
       onAddPaymentLink={onAddPaymentLink}
       onClosePaymentLink={onClosePaymentLink}
       onCreateLinkRequest={onCreateLinkRequest}
@@ -152,11 +153,16 @@ const PaymentLinks = ({
 PaymentLinks.propTypes = {
   createLink: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
+  paymentLinkUrl: PropTypes.string,
   requestNextStep: PropTypes.func.isRequired,
   requestPreviousStep: PropTypes.func.isRequired,
   requestResetStatus: PropTypes.func.isRequired,
   step: PropTypes.string.isRequired,
   t: PropTypes.func.isRequired,
+}
+
+PaymentLinks.defaultProps = {
+  paymentLinkUrl: '',
 }
 
 export default enhanced(PaymentLinks)
