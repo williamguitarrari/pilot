@@ -1,5 +1,6 @@
 import React from 'react'
+import PaymentLinksContainer from '../../containers/PaymentLinks'
 
-const PaymentLinks = () => (<div>links de pagamento</div>)
+const PaymentLinks = () => <PaymentLinksContainer />
 
 export default PaymentLinks
