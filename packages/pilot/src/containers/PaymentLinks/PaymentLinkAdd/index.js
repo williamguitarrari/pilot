@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import {
   BulletSteps,
@@ -30,22 +30,9 @@ const renderBulletSteps = (currentStep) => {
   )
 }
 
-const firstStepDefaultData = {
-  amount: '0',
-  expiration_unit: 'days',
-}
-
-const boletoInputDefaultValues = {
-  boleto_expires_in: undefined,
-}
-
-const creditCardInputDefaultValues = {
-  free_installments: undefined,
-  interest_rate: '0',
-  max_installments: undefined,
-}
-
 const PaymentLinkAdd = ({
+  formData,
+  handleFormChange,
   isOpen,
   loading,
   onClose,
@@ -56,52 +43,15 @@ const PaymentLinkAdd = ({
   paymentLink,
   step,
   t,
-}) => {
-  const [formData, setFormData] = useState({
-    boleto: false,
-    credit_card: false,
-    ...firstStepDefaultData,
-    ...boletoInputDefaultValues,
-    ...creditCardInputDefaultValues,
-  })
-
-  const handleFormChange = (newData) => {
-    let newFormData = { ...newData }
-
-    if (newFormData.max_installments !== formData.max_installments) {
-      newFormData = Object.assign(
-        newFormData,
-        creditCardInputDefaultValues,
-        { max_installments: newFormData.max_installments }
-      )
-    }
-
-    if (!newFormData.boleto) {
-      newFormData = Object.assign(
-        newFormData,
-        boletoInputDefaultValues
-      )
-    }
-
-    if (!newFormData.credit_card) {
-      newFormData = Object.assign(
-        newFormData,
-        creditCardInputDefaultValues
-      )
-    }
-
-    setFormData(newFormData)
-  }
-
-  return (
-    <Modal isOpen={isOpen} size="small">
-      <ModalTitle
-        title={step.title}
-        titleAlign="start"
-        closeIcon={<IconClose width={12} height={12} />}
-        onClose={() => !loading && onClose()}
-      />
-      {
+}) => (
+  <Modal isOpen={isOpen} size="small">
+    <ModalTitle
+      title={t(step.title)}
+      titleAlign="start"
+      closeIcon={<IconClose width={12} height={12} />}
+      onClose={() => !loading && onClose()}
+    />
+    {
           step.name === 'first_step' && (
           <FirstStep
             formData={formData}
@@ -112,7 +62,7 @@ const PaymentLinkAdd = ({
           />
           )
       }
-      {
+    {
         step.name === 'second_step' && (
           <SecondStep
             formData={formData}
@@ -125,7 +75,7 @@ const PaymentLinkAdd = ({
           />
         )
       }
-      {
+    {
         step.name === 'success_step' && (
           <SuccessStep
             onCreateAnotherLink={onCreateAnotherLink}
@@ -134,7 +84,7 @@ const PaymentLinkAdd = ({
           />
         )
       }
-      {
+    {
         step.name === 'error_step' && (
           <ErrorStep
             onCreateAnotherLink={onCreateAnotherLink}
@@ -142,11 +92,21 @@ const PaymentLinkAdd = ({
           />
         )
       }
-    </Modal>
-  )
-}
+  </Modal>
+)
 
 PaymentLinkAdd.propTypes = {
+  formData: PropTypes.shape({
+    amount: PropTypes.string,
+    boleto: PropTypes.bool,
+    boleto_expires_in: PropTypes.string,
+    credit_card: PropTypes.bool,
+    expiration_unit: PropTypes.string,
+    free_installments: PropTypes.string,
+    interest_rate: PropTypes.string,
+    max_installments: PropTypes.string,
+  }).isRequired,
+  handleFormChange: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
   onClose: PropTypes.func,

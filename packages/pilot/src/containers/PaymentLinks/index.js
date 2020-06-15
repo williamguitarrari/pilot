@@ -5,20 +5,59 @@ import {
   Row,
 } from 'former-kit'
 import NewLinksCard from './NewLinksCard'
+import PaymentLinkAdd from './PaymentLinkAdd'
 
 const PaymentLinks = ({
+  handleLinkFormChange,
+  isNewLinkOpen,
+  linkFormData,
+  loading,
   onAddPaymentLink,
+  onClosePaymentLink,
+  onCreateAnotherLink,
+  onCreateLinkRequest,
+  onNextStep,
+  onPreviousStep,
+  step,
   t,
 }) => (
-  <Grid>
-    <Row>
-      <NewLinksCard onAddPaymentLink={onAddPaymentLink} t={t} />
-    </Row>
-  </Grid>
+  <>
+    <PaymentLinkAdd
+      formData={linkFormData}
+      isOpen={isNewLinkOpen}
+      loading={loading}
+      handleFormChange={handleLinkFormChange}
+      onClose={onClosePaymentLink}
+      onCreateAnotherLink={onCreateAnotherLink}
+      onCreateLinkRequest={onCreateLinkRequest}
+      onNextStep={onNextStep}
+      onPreviousStep={onPreviousStep}
+      step={step}
+      t={t}
+    />
+    <Grid>
+      <Row>
+        <NewLinksCard onAddPaymentLink={onAddPaymentLink} t={t} />
+      </Row>
+    </Grid>
+  </>
 )
 
 PaymentLinks.propTypes = {
+  handleLinkFormChange: PropTypes.func.isRequired,
+  isNewLinkOpen: PropTypes.bool.isRequired,
+  linkFormData: PropTypes.shape().isRequired,
+  loading: PropTypes.bool.isRequired,
   onAddPaymentLink: PropTypes.func.isRequired,
+  onClosePaymentLink: PropTypes.func.isRequired,
+  onCreateAnotherLink: PropTypes.func.isRequired,
+  onCreateLinkRequest: PropTypes.func.isRequired,
+  onNextStep: PropTypes.func.isRequired,
+  onPreviousStep: PropTypes.func.isRequired,
+  step: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+  }).isRequired,
   t: PropTypes.func.isRequired,
 }
 
