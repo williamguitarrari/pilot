@@ -48,6 +48,8 @@ import BalanceContainer from '../../containers/Balance'
 import env from '../../environment'
 import { withError } from '../ErrorBoundary'
 
+import { selectHasBlockedWithdraw } from '../Account/actions/reducer'
+
 const mapStateToProps = ({
   account: {
     client,
@@ -84,6 +86,7 @@ const mapStateToProps = ({
   balanceError,
   client,
   company,
+  isWithdrawBlocked: selectHasBlockedWithdraw(company),
   loading,
   query,
   sessionId,
@@ -786,6 +789,7 @@ class Balance extends Component {
           search: urlSearch,
         },
       },
+      isWithdrawBlocked,
       loading,
       t,
       user,
@@ -876,6 +880,7 @@ class Balance extends Component {
           hasNextPage={hasNextPage}
           itemsPerPage={itemsPerPage}
           loading={loading || localLoading}
+          isWithdrawBlocked={isWithdrawBlocked}
           modalConfirmOpened={modalOpened}
           onAnticipationClick={this.handleAnticipation}
           onCancelRequestClick={userIsReadOnly(user)
@@ -947,6 +952,7 @@ Balance.propTypes = {
     push: PropTypes.func.isRequired,
     replace: PropTypes.func.isRequired,
   }).isRequired,
+  isWithdrawBlocked: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
   location: PropTypes.shape({
     search: PropTypes.string.isRequired,
