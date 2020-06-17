@@ -13,11 +13,8 @@ import {
   CardActions,
   CardContent,
   CardTitle,
-  Col,
   Dropdown,
-  Grid,
   Pagination,
-  Row,
 } from 'former-kit'
 
 import style from './style.css'
@@ -62,16 +59,7 @@ const PaymentLinksList = ({
     tableOrder
   ) => onOrderChange(columns[columnIndex].accessor, tableOrder)
 
-  return (
-    <Grid>
-      <Row>
-        <Col
-          palm={12}
-          tablet={12}
-          desk={12}
-          tv={12}
-        >
-          {rows.length > 0
+  return rows.length > 0
             && (
               <Card>
                 <CardTitle
@@ -149,11 +137,6 @@ const PaymentLinksList = ({
                 </CardActions>
               </Card>
             )
-          }
-        </Col>
-      </Row>
-    </Grid>
-  )
 }
 
 PaymentLinksList.propTypes = {
