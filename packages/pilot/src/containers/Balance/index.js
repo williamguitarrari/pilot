@@ -458,6 +458,7 @@ class Balance extends Component {
       },
       company,
       disabled,
+      isWithdrawBlocked,
       modalConfirmOpened,
       onAnticipationClick,
       onCancelRequestClick,
@@ -514,17 +515,27 @@ class Balance extends Component {
               <Card>
                 <BalanceTotalDisplay
                   action={
-                    isNil(onWithdrawClick)
+                    isWithdrawBlocked || isNil(onWithdrawClick)
                       ? null
                       : withdrawalAction
                   }
                   amount={amount}
-                  detail={(
-                    <span>
-                      {t('pages.balance.available_withdrawal')}
-                      <strong> {currencyFormatter(withdrawal)} </strong>
-                    </span>
-                  )}
+                  detail={
+                    isWithdrawBlocked
+                      ? (
+                        <span>{t('pages.balance.blocked_withdraw_1')}
+                          <br />{t('pages.balance.blocked_withdraw_2')}<br />
+                          <a href={t('pages.balance.blocked_withdraw_link_href')} target="_blank" rel="noreferrer noopener">
+                            {t('pages.balance.blocked_withdraw_link')}
+                          </a>
+                        </span>
+                      )
+                      : (
+                        <span>
+                          {t('pages.balance.available_withdrawal')}
+                          <strong> {currencyFormatter(withdrawal)} </strong>
+                        </span>
+                      )}
                   disabled={
                     disabled || withdrawal <= ted + MINIMUM_API_VALUE
                   }
@@ -705,6 +716,7 @@ Balance.propTypes = {
   disabled: PropTypes.bool.isRequired,
   exporting: PropTypes.bool.isRequired,
   hasNextPage: PropTypes.bool,
+  isWithdrawBlocked: PropTypes.bool.isRequired,
   itemsPerPage: PropTypes.number.isRequired,
   loading: PropTypes.bool,
   modalConfirmOpened: PropTypes.bool,
