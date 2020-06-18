@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import { withRouter } from 'react-router-dom'
 import { compose } from 'ramda'
 import { connect } from 'react-redux'
 import { translate } from 'react-i18next'
@@ -10,6 +11,7 @@ import {
   requestResetStatus as requestResetStatusAction,
 } from './actions'
 import PaymentLinksContainer from '../../containers/PaymentLinks'
+import { withError } from '../ErrorBoundary'
 
 const mapStateToProps = ({
   paymentLinks: {
@@ -30,7 +32,9 @@ const mapDispatchToProps = {
 
 const enhanced = compose(
   translate(),
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(mapStateToProps, mapDispatchToProps),
+  withRouter,
+  withError
 )
 
 const firstStepDefaultData = {
