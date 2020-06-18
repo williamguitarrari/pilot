@@ -5,11 +5,11 @@ import { compose } from 'ramda'
 import { connect } from 'react-redux'
 import { translate } from 'react-i18next'
 import {
-  createLink as createLinkAction,
-  requestNextStep as requestNextStepAction,
-  requestPreviousStep as requestPreviousStepAction,
-  requestResetStatus as requestResetStatusAction,
-  requestGetLinks as requestGetLinksAction,
+  createLinkRequest as createLinkRequestAction,
+  nextStepRequest as nextStepRequestAction,
+  previousStepRequest as previousStepRequestAction,
+  resetStepsRequest as resetStepsRequestAction,
+  getLinksRequest as getLinksRequestAction,
 } from './actions'
 import PaymentLinksContainer from '../../containers/PaymentLinks'
 import { withError } from '../ErrorBoundary'
@@ -25,11 +25,11 @@ const mapStateToProps = ({
 })
 
 const mapDispatchToProps = {
-  createLink: createLinkAction,
-  requestGetLinks: requestGetLinksAction,
-  requestNextStep: requestNextStepAction,
-  requestPreviousStep: requestPreviousStepAction,
-  requestResetStatus: requestResetStatusAction,
+  createLinkRequest: createLinkRequestAction,
+  getLinksRequest: getLinksRequestAction,
+  nextStepRequest: nextStepRequestAction,
+  previousStepRequest: previousStepRequestAction,
+  resetStepsRequest: resetStepsRequestAction,
 }
 
 const enhanced = compose(
@@ -82,20 +82,20 @@ const steps = {
 }
 
 const PaymentLinks = ({
-  createLink,
+  createLinkRequest,
+  getLinksRequest,
   loading,
+  nextStepRequest,
   paymentLinkUrl,
-  requestGetLinks,
-  requestNextStep,
-  requestPreviousStep,
-  requestResetStatus,
+  previousStepRequest,
+  resetStepsRequest,
   step,
   t,
 }) => {
   const [linkFormData, setLinkFormData] = useState(makeDefaulLinkData())
   const [isNewLinkOpen, setIsNewLinkOpen] = useState(false)
 
-  useEffect(() => requestGetLinks(), [requestGetLinks])
+  useEffect(() => getLinksRequest(), [getLinksRequest])
 
   const handleLinkFormChange = (newData) => {
     let newFormData = { ...newData }
@@ -127,17 +127,17 @@ const PaymentLinks = ({
 
   const onAddPaymentLink = () => setIsNewLinkOpen(true)
 
-  const onCreateLinkRequest = () => createLink(linkFormData)
+  const onCreateLinkRequest = () => createLinkRequest(linkFormData)
 
   const onClosePaymentLink = () => {
     setLinkFormData(makeDefaulLinkData())
-    requestResetStatus()
+    resetStepsRequest()
     setIsNewLinkOpen(false)
   }
 
   const onCreateAnotherLink = () => {
     setLinkFormData(makeDefaulLinkData())
-    requestResetStatus()
+    resetStepsRequest()
   }
 
   return (
@@ -151,8 +151,8 @@ const PaymentLinks = ({
       onClosePaymentLink={onClosePaymentLink}
       onCreateLinkRequest={onCreateLinkRequest}
       onCreateAnotherLink={onCreateAnotherLink}
-      onNextStep={requestNextStep}
-      onPreviousStep={requestPreviousStep}
+      onNextStep={nextStepRequest}
+      onPreviousStep={previousStepRequest}
       step={steps[step]}
       t={t}
     />
@@ -160,13 +160,13 @@ const PaymentLinks = ({
 }
 
 PaymentLinks.propTypes = {
-  createLink: PropTypes.func.isRequired,
+  createLinkRequest: PropTypes.func.isRequired,
+  getLinksRequest: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
+  nextStepRequest: PropTypes.func.isRequired,
   paymentLinkUrl: PropTypes.string,
-  requestGetLinks: PropTypes.func.isRequired,
-  requestNextStep: PropTypes.func.isRequired,
-  requestPreviousStep: PropTypes.func.isRequired,
-  requestResetStatus: PropTypes.func.isRequired,
+  previousStepRequest: PropTypes.func.isRequired,
+  resetStepsRequest: PropTypes.func.isRequired,
   step: PropTypes.string.isRequired,
   t: PropTypes.func.isRequired,
 }

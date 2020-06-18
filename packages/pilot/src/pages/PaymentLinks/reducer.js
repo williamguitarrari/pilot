@@ -1,13 +1,13 @@
 import { merge } from 'ramda'
 import {
-  RESET_STATUS_REQUEST,
+  CREATE_LINK_FAIL,
+  CREATE_LINK_RECEIVE,
+  CREATE_LINK_REQUEST,
+  GET_LINKS_RECEIVE,
+  GET_LINKS_REQUEST,
   NEXT_STEP_REQUEST,
   PREVIOUS_STEP_REQUEST,
-  LINK_POST_REQUEST,
-  LINK_FAIL_REQUEST,
-  LINK_SUCCESS_REQUEST,
-  LINKS_GET_RECEIVE,
-  LINKS_GET_REQUEST,
+  RESET_STEPS_REQUEST,
 } from './actions'
 
 const initialState = () => ({
@@ -32,13 +32,13 @@ export default function paymentLinksReducer (state = initialState(), action) {
       })
     }
 
-    case LINK_POST_REQUEST: {
+    case CREATE_LINK_REQUEST: {
       return merge(state, {
         loading: true,
       })
     }
 
-    case LINK_SUCCESS_REQUEST: {
+    case CREATE_LINK_RECEIVE: {
       return merge(state, {
         loading: false,
         paymentLinkUrl: action.payload.url,
@@ -46,28 +46,28 @@ export default function paymentLinksReducer (state = initialState(), action) {
       })
     }
 
-    case LINK_FAIL_REQUEST: {
+    case CREATE_LINK_FAIL: {
       return merge(state, {
         loading: false,
         step: 'error_step',
       })
     }
 
-    case LINKS_GET_REQUEST: {
+    case GET_LINKS_REQUEST: {
       return merge(state, {
         loadingPaymentLinks: true,
         paymentLinks: null,
       })
     }
 
-    case LINKS_GET_RECEIVE: {
+    case GET_LINKS_RECEIVE: {
       return merge(state, {
         loadingPaymentLinks: false,
         paymentLinks: action.payload,
       })
     }
 
-    case RESET_STATUS_REQUEST: {
+    case RESET_STEPS_REQUEST: {
       return initialState()
     }
 
