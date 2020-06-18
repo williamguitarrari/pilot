@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { compose } from 'ramda'
@@ -9,6 +9,7 @@ import {
   requestNextStep as requestNextStepAction,
   requestPreviousStep as requestPreviousStepAction,
   requestResetStatus as requestResetStatusAction,
+  requestGetLinks as requestGetLinksAction,
 } from './actions'
 import PaymentLinksContainer from '../../containers/PaymentLinks'
 import { withError } from '../ErrorBoundary'
@@ -25,6 +26,7 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = {
   createLink: createLinkAction,
+  requestGetLinks: requestGetLinksAction,
   requestNextStep: requestNextStepAction,
   requestPreviousStep: requestPreviousStepAction,
   requestResetStatus: requestResetStatusAction,
@@ -83,6 +85,7 @@ const PaymentLinks = ({
   createLink,
   loading,
   paymentLinkUrl,
+  requestGetLinks,
   requestNextStep,
   requestPreviousStep,
   requestResetStatus,
@@ -91,6 +94,8 @@ const PaymentLinks = ({
 }) => {
   const [linkFormData, setLinkFormData] = useState(makeDefaulLinkData())
   const [isNewLinkOpen, setIsNewLinkOpen] = useState(false)
+
+  useEffect(() => requestGetLinks(), [requestGetLinks])
 
   const handleLinkFormChange = (newData) => {
     let newFormData = { ...newData }
@@ -158,6 +163,7 @@ PaymentLinks.propTypes = {
   createLink: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   paymentLinkUrl: PropTypes.string,
+  requestGetLinks: PropTypes.func.isRequired,
   requestNextStep: PropTypes.func.isRequired,
   requestPreviousStep: PropTypes.func.isRequired,
   requestResetStatus: PropTypes.func.isRequired,

@@ -17,3 +17,9 @@ export const requestSuccessLink = createAction(LINK_SUCCESS_REQUEST)
 
 export const LINK_FAIL_REQUEST = 'pilot/payment_links/LINK_FAIL_REQUEST'
 export const requestFailLink = createAction(LINK_FAIL_REQUEST)
+
+export const LINKS_GET_REQUEST = 'pilot/payment_links/LINKS_GET_REQUEST'
+export const requestGetLinks = createAction(LINKS_GET_REQUEST)
+
+export const LINKS_GET_RECEIVE = 'pilot/payment_links/LINKS_GET_RECEIVE'
+export const receiveGetLinks = createAction(LINKS_GET_RECEIVE)

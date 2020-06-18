@@ -6,10 +6,14 @@ import {
   LINK_POST_REQUEST,
   LINK_FAIL_REQUEST,
   LINK_SUCCESS_REQUEST,
+  LINKS_GET_RECEIVE,
+  LINKS_GET_REQUEST,
 } from './actions'
 
 const initialState = () => ({
   loading: false,
+  loadingPaymentLinks: false,
+  paymentLinks: null,
   paymentLinkUrl: null,
   step: 'first_step',
 })
@@ -46,6 +50,20 @@ export default function paymentLinksReducer (state = initialState(), action) {
       return merge(state, {
         loading: false,
         step: 'error_step',
+      })
+    }
+
+    case LINKS_GET_REQUEST: {
+      return merge(state, {
+        loadingPaymentLinks: true,
+        paymentLinks: null,
+      })
+    }
+
+    case LINKS_GET_RECEIVE: {
+      return merge(state, {
+        loadingPaymentLinks: false,
+        paymentLinks: action.payload,
       })
     }
 
