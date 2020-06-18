@@ -16,12 +16,12 @@ import { withError } from '../ErrorBoundary'
 
 const mapStateToProps = ({
   paymentLinks: {
-    loading,
+    loadingCreateLink,
     paymentLinkUrl,
     step,
   },
 }) => ({
-  loading, paymentLinkUrl, step,
+  loadingCreateLink, paymentLinkUrl, step,
 })
 
 const mapDispatchToProps = {
@@ -84,7 +84,7 @@ const steps = {
 const PaymentLinks = ({
   createLinkRequest,
   getLinksRequest,
-  loading,
+  loadingCreateLink,
   nextStepRequest,
   paymentLinkUrl,
   previousStepRequest,
@@ -143,7 +143,7 @@ const PaymentLinks = ({
   return (
     <PaymentLinksContainer
       linkFormData={linkFormData}
-      loading={loading}
+      loadingCreateLink={loadingCreateLink}
       isNewLinkOpen={isNewLinkOpen}
       handleLinkFormChange={handleLinkFormChange}
       paymentLinkUrl={paymentLinkUrl}
@@ -162,7 +162,7 @@ const PaymentLinks = ({
 PaymentLinks.propTypes = {
   createLinkRequest: PropTypes.func.isRequired,
   getLinksRequest: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
+  loadingCreateLink: PropTypes.bool.isRequired,
   nextStepRequest: PropTypes.func.isRequired,
   paymentLinkUrl: PropTypes.string,
   previousStepRequest: PropTypes.func.isRequired,

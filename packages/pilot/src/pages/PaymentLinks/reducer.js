@@ -10,15 +10,21 @@ import {
   RESET_STEPS_REQUEST,
 } from './actions'
 
-const initialState = () => ({
-  loading: false,
-  loadingPaymentLinks: false,
-  paymentLinks: null,
+const createLinkInitialState = {
+  loadingCreateLink: false,
   paymentLinkUrl: null,
   step: 'first_step',
-})
+}
 
-export default function paymentLinksReducer (state = initialState(), action) {
+const getLinksInitialState = {
+  loadingGetLinks: false,
+  paymentLinks: null,
+}
+
+export default function paymentLinksReducer (state = {
+  ...createLinkInitialState,
+  ...getLinksInitialState,
+}, action) {
   switch (action.type) {
     case NEXT_STEP_REQUEST: {
       return merge(state, {
@@ -34,13 +40,20 @@ export default function paymentLinksReducer (state = initialState(), action) {
 
     case CREATE_LINK_REQUEST: {
       return merge(state, {
-        loading: true,
+        loadingCreateLink: true,
       })
+    }
+
+    case RESET_STEPS_REQUEST: {
+      return {
+        ...state,
+        ...createLinkInitialState,
+      }
     }
 
     case CREATE_LINK_RECEIVE: {
       return merge(state, {
-        loading: false,
+        loadingCreateLink: false,
         paymentLinkUrl: action.payload.url,
         step: 'success_step',
       })
@@ -48,27 +61,23 @@ export default function paymentLinksReducer (state = initialState(), action) {
 
     case CREATE_LINK_FAIL: {
       return merge(state, {
-        loading: false,
+        loadingCreateLink: false,
         step: 'error_step',
       })
     }
 
     case GET_LINKS_REQUEST: {
       return merge(state, {
-        loadingPaymentLinks: true,
+        loadingGetLinks: true,
         paymentLinks: null,
       })
     }
 
     case GET_LINKS_RECEIVE: {
       return merge(state, {
-        loadingPaymentLinks: false,
+        loadingGetLinks: false,
         paymentLinks: action.payload,
       })
-    }
-
-    case RESET_STEPS_REQUEST: {
-      return initialState()
     }
 
     default: {

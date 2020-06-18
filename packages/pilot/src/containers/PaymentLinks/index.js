@@ -11,7 +11,7 @@ const PaymentLinks = ({
   handleLinkFormChange,
   isNewLinkOpen,
   linkFormData,
-  loading,
+  loadingCreateLink,
   onAddPaymentLink,
   onClosePaymentLink,
   onCreateAnotherLink,
@@ -26,7 +26,7 @@ const PaymentLinks = ({
     <PaymentLinkAdd
       formData={linkFormData}
       isOpen={isNewLinkOpen}
-      loading={loading}
+      loading={loadingCreateLink}
       handleFormChange={handleLinkFormChange}
       onClose={onClosePaymentLink}
       onCreateAnotherLink={onCreateAnotherLink}
@@ -49,7 +49,7 @@ PaymentLinks.propTypes = {
   handleLinkFormChange: PropTypes.func.isRequired,
   isNewLinkOpen: PropTypes.bool.isRequired,
   linkFormData: PropTypes.shape().isRequired,
-  loading: PropTypes.bool.isRequired,
+  loadingCreateLink: PropTypes.bool.isRequired,
   onAddPaymentLink: PropTypes.func.isRequired,
   onClosePaymentLink: PropTypes.func.isRequired,
   onCreateAnotherLink: PropTypes.func.isRequired,
