@@ -10,6 +10,8 @@ import PaymentLinkAdd from './PaymentLinkAdd'
 import PaymentLinksList from './PaymentLinksList'
 
 const PaymentLinks = ({
+  exporting,
+  handleExport,
   handleLinkFormChange,
   isNewLinkOpen,
   linkFormData,
@@ -68,9 +70,9 @@ const PaymentLinks = ({
           tv={12}
         >
           <PaymentLinksList
-            exporting={false}
+            exporting={exporting}
             loading={loadingGetLinks}
-            onExport={() => {}}
+            onExport={handleExport}
             onPageCountChange={onPageCountChange}
             onPageChange={onPageNumberChange}
             onRowClick={() => {}}
@@ -90,6 +92,8 @@ const PaymentLinks = ({
 )
 
 PaymentLinks.propTypes = {
+  exporting: PropTypes.bool.isRequired,
+  handleExport: PropTypes.func.isRequired,
   handleLinkFormChange: PropTypes.func.isRequired,
   isNewLinkOpen: PropTypes.bool.isRequired,
   linkFormData: PropTypes.shape().isRequired,

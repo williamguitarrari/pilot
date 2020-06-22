@@ -136,9 +136,9 @@ const PaymentLinksList = ({
 }
 
 PaymentLinksList.propTypes = {
-  exporting: PropTypes.bool.isRequired, // TODO
+  exporting: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
-  onExport: PropTypes.func.isRequired, // TODO
+  onExport: PropTypes.func.isRequired,
   onOrderChange: PropTypes.func.isRequired,
   onPageChange: PropTypes.func.isRequired,
   onPageCountChange: PropTypes.func.isRequired,
