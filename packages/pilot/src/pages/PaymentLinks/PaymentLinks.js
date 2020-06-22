@@ -17,11 +17,19 @@ import { withError } from '../ErrorBoundary'
 const mapStateToProps = ({
   paymentLinks: {
     loadingCreateLink,
+    loadingGetLinks,
     paymentLinkUrl,
+    paymentLinks,
     step,
+    totalPaymentLinks,
   },
 }) => ({
-  loadingCreateLink, paymentLinkUrl, step,
+  loadingCreateLink,
+  loadingGetLinks,
+  paymentLinks,
+  paymentLinkUrl,
+  step,
+  totalPaymentLinks,
 })
 
 const mapDispatchToProps = {
@@ -81,21 +89,61 @@ const steps = {
   },
 }
 
+const initialPaginationData = {
+  count: 15,
+  page: 1,
+  sortField: 'created_at',
+  sortOrder: 'descending',
+}
+
 const PaymentLinks = ({
   createLinkRequest,
   getLinksRequest,
   loadingCreateLink,
+  loadingGetLinks,
   nextStepRequest,
   paymentLinkUrl,
+  paymentLinks,
   previousStepRequest,
   resetStepsRequest,
   step,
   t,
+  totalPaymentLinks,
 }) => {
   const [linkFormData, setLinkFormData] = useState(makeDefaulLinkData())
   const [isNewLinkOpen, setIsNewLinkOpen] = useState(false)
+  const [paginationData, setPaginationData] = useState(initialPaginationData)
 
-  useEffect(() => getLinksRequest(), [getLinksRequest])
+  useEffect(() => getLinksRequest(initialPaginationData), [getLinksRequest])
+
+  const onPageCountChange = (count) => {
+    const newPaginationData = {
+      ...paginationData,
+      count,
+      page: 1,
+    }
+    setPaginationData(newPaginationData)
+    return getLinksRequest(newPaginationData)
+  }
+
+  const onPageNumberChange = (page) => {
+    const newPaginationData = {
+      ...paginationData,
+      page,
+    }
+    setPaginationData(newPaginationData)
+    return getLinksRequest(newPaginationData)
+  }
+
+  const onOrderChange = ([sortField], sortOrder) => {
+    const newPaginationData = {
+      ...paginationData,
+      sortField,
+      sortOrder,
+    }
+    setPaginationData(newPaginationData)
+    return getLinksRequest(newPaginationData)
+  }
 
   const handleLinkFormChange = (newData) => {
     let newFormData = { ...newData }
@@ -140,19 +188,34 @@ const PaymentLinks = ({
     resetStepsRequest()
   }
 
+  const pagination = {
+    offset: paginationData.count * paginationData.page,
+    total: Math.ceil(totalPaymentLinks / paginationData.count),
+  }
+
   return (
     <PaymentLinksContainer
       linkFormData={linkFormData}
       loadingCreateLink={loadingCreateLink}
+      loadingGetLinks={loadingGetLinks}
       isNewLinkOpen={isNewLinkOpen}
       handleLinkFormChange={handleLinkFormChange}
-      paymentLinkUrl={paymentLinkUrl}
       onAddPaymentLink={onAddPaymentLink}
       onClosePaymentLink={onClosePaymentLink}
       onCreateLinkRequest={onCreateLinkRequest}
       onCreateAnotherLink={onCreateAnotherLink}
+      onOrderChange={onOrderChange}
+      onPageCountChange={onPageCountChange}
+      onPageNumberChange={onPageNumberChange}
       onNextStep={nextStepRequest}
       onPreviousStep={previousStepRequest}
+      order={paginationData.sortOrder}
+      orderField={paginationData.sortField}
+      pageCount={paginationData.count}
+      pagination={pagination}
+      paymentLinks={paymentLinks}
+      paymentLinkUrl={paymentLinkUrl}
+      selectedPage={paginationData.page}
       step={steps[step]}
       t={t}
     />
@@ -163,15 +226,19 @@ PaymentLinks.propTypes = {
   createLinkRequest: PropTypes.func.isRequired,
   getLinksRequest: PropTypes.func.isRequired,
   loadingCreateLink: PropTypes.bool.isRequired,
+  loadingGetLinks: PropTypes.bool.isRequired,
   nextStepRequest: PropTypes.func.isRequired,
+  paymentLinks: PropTypes.arrayOf(PropTypes.shape()),
   paymentLinkUrl: PropTypes.string,
   previousStepRequest: PropTypes.func.isRequired,
   resetStepsRequest: PropTypes.func.isRequired,
   step: PropTypes.string.isRequired,
   t: PropTypes.func.isRequired,
+  totalPaymentLinks: PropTypes.number.isRequired,
 }
 
 PaymentLinks.defaultProps = {
+  paymentLinks: [],
   paymentLinkUrl: '',
 }
 

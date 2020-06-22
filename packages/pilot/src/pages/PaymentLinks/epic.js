@@ -27,11 +27,11 @@ const postLinkEpic = (action$, state$) => action$
 const getLinksEpic = (action$, state$) => action$
   .pipe(
     ofType(GET_LINKS_REQUEST),
-    mergeMap(() => {
+    mergeMap(({ payload }) => {
       const state = state$.value
       const { account: { client } } = state
 
-      return client.paymentLinks.find()
+      return client.paymentLinks.search(payload)
         .then(getLinksReceive)
     })
   )

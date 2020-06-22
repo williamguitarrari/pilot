@@ -47,19 +47,33 @@ const PaymentLinksList = ({
   onRowClick,
   order,
   orderField,
+  pageCount,
   pagination,
   rows,
   selectedPage,
   t,
 }) => {
   const columns = tableColumns({ t })
-  const orderColumn = findIndex(propEq('accessor', orderField), columns)
+  const orderColumn = findIndex(propEq('accessor', [orderField]), columns)
   const handleOrderChange = (
     columnIndex,
     tableOrder
   ) => onOrderChange(columns[columnIndex].accessor, tableOrder)
 
-  return rows.length > 0
+  const paginationElem = (
+    <Pagination
+      currentPage={selectedPage}
+      disabled={loading}
+      onPageChange={onPageChange}
+      size="tiny"
+      strings={{
+        of: t('components.pagination.of'),
+      }}
+      totalPages={pagination.total}
+    />
+  )
+
+  return (loading || rows.length > 0)
             && (
               <Card>
                 <CardTitle
@@ -92,18 +106,9 @@ const PaymentLinksList = ({
                             value: `${i}`,
                           }))}
                           size="tiny"
-                          value={selectedPage.toString()}
+                          value={pageCount.toString()}
                         />
-                        <Pagination
-                          currentPage={pagination.offset}
-                          disabled={loading}
-                          onPageChange={onPageChange}
-                          size="tiny"
-                          strings={{
-                            of: t('components.pagination.of'),
-                          }}
-                          totalPages={pagination.total}
-                        />
+                        {paginationElem}
                       </>
                     </div>
                   )}
@@ -124,31 +129,23 @@ const PaymentLinksList = ({
                 </CardContent>
 
                 <CardActions>
-                  <Pagination
-                    currentPage={pagination.offset}
-                    disabled={loading}
-                    onPageChange={onPageChange}
-                    strings={{
-                      of: t('components.pagination.of'),
-                    }}
-                    size="tiny"
-                    totalPages={pagination.total}
-                  />
+                  {paginationElem}
                 </CardActions>
               </Card>
             )
 }
 
 PaymentLinksList.propTypes = {
-  exporting: PropTypes.bool.isRequired,
+  exporting: PropTypes.bool.isRequired, // TODO
   loading: PropTypes.bool.isRequired,
-  onExport: PropTypes.func.isRequired,
+  onExport: PropTypes.func.isRequired, // TODO
   onOrderChange: PropTypes.func.isRequired,
   onPageChange: PropTypes.func.isRequired,
   onPageCountChange: PropTypes.func.isRequired,
   onRowClick: PropTypes.func.isRequired,
   order: PropTypes.string,
-  orderField: PropTypes.arrayOf(PropTypes.string),
+  orderField: PropTypes.string,
+  pageCount: PropTypes.number.isRequired,
   pagination: PropTypes.shape({
     offset: PropTypes.number,
     total: PropTypes.number,
@@ -160,8 +157,8 @@ PaymentLinksList.propTypes = {
 
 PaymentLinksList.defaultProps = {
   order: 'descending',
-  orderField: [],
-  selectedPage: 15,
+  orderField: '',
+  selectedPage: 1,
 }
 
 export default PaymentLinksList

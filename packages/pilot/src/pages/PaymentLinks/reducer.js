@@ -18,7 +18,8 @@ const createLinkInitialState = {
 
 const getLinksInitialState = {
   loadingGetLinks: false,
-  paymentLinks: null,
+  paymentLinks: [],
+  totalPaymentLinks: null,
 }
 
 export default function paymentLinksReducer (state = {
@@ -69,14 +70,15 @@ export default function paymentLinksReducer (state = {
     case GET_LINKS_REQUEST: {
       return merge(state, {
         loadingGetLinks: true,
-        paymentLinks: null,
+        paymentLinks: [],
       })
     }
 
     case GET_LINKS_RECEIVE: {
       return merge(state, {
         loadingGetLinks: false,
-        paymentLinks: action.payload,
+        paymentLinks: action.payload.rows,
+        totalPaymentLinks: action.payload.totalPaymentLinks,
       })
     }
 
