@@ -22,7 +22,6 @@ const WithEmptyList = () => (
         total: 0,
       }}
       count={15}
-      exporting={false}
       onExport={action('onExport')}
       onOrderChange={action('onOrderChange')}
       onPageChange={action('onPageChange')}
@@ -44,7 +43,6 @@ const WithList = () => (
         total: 1,
       }}
       count={15}
-      exporting={false}
       onExport={action('onExport')}
       onOrderChange={action('onOrderChange')}
       onPageChange={action('onPageChange')}
@@ -52,28 +50,6 @@ const WithList = () => (
       onRowClick={action('onRowClick')}
       order="descending"
       orderField={['created_at']}
-    />
-  </Section>
-)
-
-const WithListExporting = () => (
-  <Section>
-    <PaymentLinksList
-      t={t}
-      amount={0}
-      rows={links}
-      loading={false}
-      pagination={{
-        offset: 1,
-        total: 1,
-      }}
-      count={15}
-      exporting
-      onExport={action('onExport')}
-      onOrderChange={action('onOrderChange')}
-      onPageChange={action('onPageChange')}
-      onPageCountChange={action('onPageCountChange')}
-      onRowClick={action('onRowClick')}
     />
   </Section>
 )
@@ -90,7 +66,6 @@ const WithListLoading = () => (
         total: 1,
       }}
       count={15}
-      exporting={false}
       onExport={action('onExport')}
       onOrderChange={action('onOrderChange')}
       onPageChange={action('onPageChange')}
@@ -103,6 +78,5 @@ const WithListLoading = () => (
 export default {
   WithEmptyList,
   WithList,
-  WithListExporting,
   WithListLoading,
 }

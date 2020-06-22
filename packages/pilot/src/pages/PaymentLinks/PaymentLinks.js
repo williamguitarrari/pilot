@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import moment from 'moment-timezone'
 import { withRouter } from 'react-router-dom'
-import { compose } from 'ramda'
+import { applySpec, compose, prop } from 'ramda'
 import { connect } from 'react-redux'
 import { translate } from 'react-i18next'
-import XLSX from 'xlsx'
 import {
   createLinkRequest as createLinkRequestAction,
   nextStepRequest as nextStepRequestAction,
@@ -15,9 +13,9 @@ import {
 } from './actions'
 import PaymentLinksContainer from '../../containers/PaymentLinks'
 import { withError } from '../ErrorBoundary'
+import useFileExporter from '../../hooks/useFileExporter'
 
 const mapStateToProps = ({
-  account: { client },
   paymentLinks: {
     loadingCreateLink,
     loadingGetLinks,
@@ -27,7 +25,6 @@ const mapStateToProps = ({
     totalPaymentLinks,
   },
 }) => ({
-  client,
   loadingCreateLink,
   loadingGetLinks,
   paymentLinks,
@@ -51,37 +48,6 @@ const enhanced = compose(
   withError
 )
 
-const handleCSVExportDownloadingClick = (data, filename) => {
-  /* eslint-disable no-undef */
-  const downloadLink = document.createElement('a')
-  downloadLink.target = '_blank'
-  downloadLink.download = filename.concat('csv')
-
-  const blob = new Blob([data], { type: 'application/vnd.ms-excel' })
-
-  const URL = window.URL || window.webkitURL
-  const downloadUrl = URL.createObjectURL(blob)
-
-  downloadLink.href = downloadUrl
-
-  document.body.append(downloadLink)
-
-  downloadLink.click()
-
-  document.body.removeChild(downloadLink)
-  URL.revokeObjectURL(downloadUrl)
-  /* eslint-enable no-undef */
-}
-
-const handleXLSExportDownloadingClick = (data, filename) => {
-  const workSheetName = 'sheetJS'
-  const newWorkSheet = XLSX.utils.book_new()
-  const dataWorkSheet = XLSX.utils.aoa_to_sheet(data)
-  XLSX.utils.book_append_sheet(newWorkSheet, dataWorkSheet, workSheetName)
-
-  XLSX.writeFile(newWorkSheet, filename.concat('xls'))
-}
-
 const firstStepDefaultData = {
   amount: '0',
   expiration_unit: 'days',
@@ -104,6 +70,30 @@ const makeDefaulLinkData = () => ({
   ...boletoInputDefaultValues,
   ...creditCardInputDefaultValues,
 })
+
+const exportHeaders = [
+  'ID',
+  'Status',
+  'Nome',
+  'Data',
+  'Link',
+  'Valor Pago',
+]
+
+const buildTotalPaid = ({
+  amount,
+  orders_paid: ordersPaid,
+}) => ((ordersPaid * amount) / 100).toFixed(2)
+
+const exportParser = applySpec({
+  id: prop('id'),
+  name: prop('name'),
+  status: prop('status'),
+  totalPaid: buildTotalPaid,
+  url: prop('url'),
+})
+
+const exportPrefix = 'payment_links'
 
 const steps = {
   error_step: {
@@ -132,7 +122,6 @@ const initialPaginationData = {
 }
 
 const PaymentLinks = ({
-  client,
   createLinkRequest,
   getLinksRequest,
   loadingCreateLink,
@@ -149,7 +138,11 @@ const PaymentLinks = ({
   const [linkFormData, setLinkFormData] = useState(makeDefaulLinkData())
   const [isNewLinkOpen, setIsNewLinkOpen] = useState(false)
   const [paginationData, setPaginationData] = useState(initialPaginationData)
-  const [exporting, setExporting] = useState(false)
+  const handleExport = useFileExporter({
+    exportHeaders,
+    exportParser,
+    exportPrefix,
+  })
 
   useEffect(() => getLinksRequest(initialPaginationData), [getLinksRequest])
 
@@ -230,31 +223,18 @@ const PaymentLinks = ({
     total: Math.ceil(totalPaymentLinks / paginationData.count),
   }
 
-  const handleExport = (exportType) => {
-    setExporting(true)
-
-    return client.paymentLinks
-      .exportData(paginationData, exportType)
-      .then((res) => {
-        const filename = `paymentlinks-${moment().format('LLL')}`
-        if (exportType === 'csv') {
-          handleCSVExportDownloadingClick(res, filename)
-        } else {
-          handleXLSExportDownloadingClick(res, filename)
-        }
-
-        setExporting(false)
-      })
-  }
+  const onExport = exportType => handleExport(
+    paymentLinks,
+    exportType
+  )
 
   return (
     <PaymentLinksContainer
-      exporting={exporting}
       linkFormData={linkFormData}
       loadingCreateLink={loadingCreateLink}
       loadingGetLinks={loadingGetLinks}
       isNewLinkOpen={isNewLinkOpen}
-      handleExport={handleExport}
+      onExport={onExport}
       handleLinkFormChange={handleLinkFormChange}
       onAddPaymentLink={onAddPaymentLink}
       onClosePaymentLink={onClosePaymentLink}
@@ -279,7 +259,6 @@ const PaymentLinks = ({
 }
 
 PaymentLinks.propTypes = {
-  client: PropTypes.func.isRequired,
   createLinkRequest: PropTypes.func.isRequired,
   getLinksRequest: PropTypes.func.isRequired,
   loadingCreateLink: PropTypes.bool.isRequired,

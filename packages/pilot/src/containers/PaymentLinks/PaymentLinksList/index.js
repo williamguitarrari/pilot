@@ -38,7 +38,6 @@ const getExportOptions = onExport => ([
 ])
 
 const PaymentLinksList = ({
-  exporting,
   loading,
   onExport,
   onOrderChange,
@@ -88,7 +87,7 @@ const PaymentLinksList = ({
                         <ExportData
                           exportOptions={getExportOptions(onExport)}
                           icon={<Download32 width={12} height={12} />}
-                          loading={exporting}
+                          loading={false}
                           placement="bottomEnd"
                           relevance="low"
                           size="tiny"

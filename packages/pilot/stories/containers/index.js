@@ -460,7 +460,6 @@ storiesOf('Containers|Payment Links/NewLinksCard', module)
 
 storiesOf('Containers|Payment Links/PaymentLinkList', module)
   .add('List', () => <PaymentLinks.PaymentLinksList.WithList />)
-  .add('List exporting', () => <PaymentLinks.PaymentLinksList.WithListExporting />)
   .add('List loading', () => <PaymentLinks.PaymentLinksList.WithListLoading />)
   .add('Empty list', () => <PaymentLinks.PaymentLinksList.WithEmptyList />)
 
