@@ -1,9 +1,11 @@
 import {
+  __,
   always,
   anyPass,
   applySpec,
   equals,
   find,
+  gte,
   merge,
   not,
   path,
@@ -135,3 +137,13 @@ const getFees = pipe(
 )
 
 export const selectCompanyFees = company => getFees(company)
+
+// The value 1_000_000 is set by the Risk Team on the property
+// `company.transfer.blocked_balance_amount` when the company is
+// not allowed to do withdraws.
+const BLOCKED_AMOUNT_LIMIT = 1000000
+
+export const selectHasBlockedWithdraw = pipe(
+  pathOr(0, ['transfer', 'blocked_balance_amount']),
+  gte(__, BLOCKED_AMOUNT_LIMIT)
+)
