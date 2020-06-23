@@ -1,5 +1,12 @@
 import {
-  always, applySpec, ifElse, omit, pipe, prop, propEq,
+  always,
+  applySpec,
+  ifElse,
+  omit,
+  pipe,
+  prop,
+  propEq,
+  when,
 } from 'ramda'
 import moment from 'moment'
 import shortid from 'shortid'
@@ -35,12 +42,15 @@ const paymentConfigBoleto = ifElse(
 
 const parserInterestRate = obj => parseFloat(obj.interest_rate, 10) || 0.01
 
-const buildCreditCard = applySpec({
-  enabled: prop('credit_card'),
-  free_installments: parseIntValue('free_installments'),
-  interest_rate: parserInterestRate,
-  max_installments: parseIntValue('max_installments'),
-})
+const buildCreditCard = pipe(
+  applySpec({
+    enabled: prop('credit_card'),
+    free_installments: parseIntValue('free_installments'),
+    interest_rate: parserInterestRate,
+    max_installments: parseIntValue('max_installments'),
+  }),
+  when(propEq('free_installments', 0), omit(['free_installments', 'interest_rate']))
+)
 
 const paymentConfigCreditCard = ifElse(
   propEq('credit_card', true),
