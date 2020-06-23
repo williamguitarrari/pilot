@@ -17,6 +17,7 @@ import useFileExporter from '../../hooks/useFileExporter'
 
 const mapStateToProps = ({
   paymentLinks: {
+    filter,
     loadingCreateLink,
     loadingGetLinks,
     paymentLinkUrl,
@@ -25,6 +26,7 @@ const mapStateToProps = ({
     totalPaymentLinks,
   },
 }) => ({
+  filter,
   loadingCreateLink,
   loadingGetLinks,
   paymentLinks,
@@ -114,15 +116,9 @@ const steps = {
   },
 }
 
-const initialPaginationData = {
-  count: 15,
-  page: 1,
-  sortField: 'created_at',
-  sortOrder: 'descending',
-}
-
 const PaymentLinks = ({
   createLinkRequest,
+  filter,
   getLinksRequest,
   loadingCreateLink,
   loadingGetLinks,
@@ -137,43 +133,32 @@ const PaymentLinks = ({
 }) => {
   const [linkFormData, setLinkFormData] = useState(makeDefaulLinkData())
   const [isNewLinkOpen, setIsNewLinkOpen] = useState(false)
-  const [paginationData, setPaginationData] = useState(initialPaginationData)
   const handleExport = useFileExporter({
     exportHeaders,
     exportParser,
     exportPrefix,
   })
 
-  useEffect(() => getLinksRequest(initialPaginationData), [getLinksRequest])
+  useEffect(() => {
+    getLinksRequest(filter)
+  }, [getLinksRequest]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const onPageCountChange = (count) => {
-    const newPaginationData = {
-      ...paginationData,
-      count,
-      page: 1,
-    }
-    setPaginationData(newPaginationData)
-    return getLinksRequest(newPaginationData)
-  }
+  const onPageCountChange = count => getLinksRequest({
+    ...filter,
+    count,
+    page: 1,
+  })
 
-  const onPageNumberChange = (page) => {
-    const newPaginationData = {
-      ...paginationData,
-      page,
-    }
-    setPaginationData(newPaginationData)
-    return getLinksRequest(newPaginationData)
-  }
+  const onPageNumberChange = page => getLinksRequest({
+    ...filter,
+    page,
+  })
 
-  const onOrderChange = ([sortField], sortOrder) => {
-    const newPaginationData = {
-      ...paginationData,
-      sortField,
-      sortOrder,
-    }
-    setPaginationData(newPaginationData)
-    return getLinksRequest(newPaginationData)
-  }
+  const onOrderChange = ([sortField], sortOrder) => getLinksRequest({
+    ...filter,
+    sortField,
+    sortOrder,
+  })
 
   const handleLinkFormChange = (newData) => {
     let newFormData = { ...newData }
@@ -219,8 +204,8 @@ const PaymentLinks = ({
   }
 
   const pagination = {
-    offset: paginationData.count * paginationData.page,
-    total: Math.ceil(totalPaymentLinks / paginationData.count),
+    offset: filter.count * filter.page,
+    total: Math.ceil(totalPaymentLinks / filter.count),
   }
 
   const onExport = exportType => handleExport(
@@ -245,13 +230,13 @@ const PaymentLinks = ({
       onPageNumberChange={onPageNumberChange}
       onNextStep={nextStepRequest}
       onPreviousStep={previousStepRequest}
-      order={paginationData.sortOrder}
-      orderField={paginationData.sortField}
-      pageCount={paginationData.count}
+      order={filter.sortOrder}
+      orderField={filter.sortField}
+      pageCount={filter.count}
       pagination={pagination}
       paymentLinks={paymentLinks}
       paymentLinkUrl={paymentLinkUrl}
-      selectedPage={paginationData.page}
+      selectedPage={filter.page}
       step={steps[step]}
       t={t}
     />
@@ -260,6 +245,12 @@ const PaymentLinks = ({
 
 PaymentLinks.propTypes = {
   createLinkRequest: PropTypes.func.isRequired,
+  filter: PropTypes.shape({
+    count: PropTypes.number,
+    page: PropTypes.number,
+    sortField: PropTypes.string,
+    sortOrder: PropTypes.string,
+  }).isRequired,
   getLinksRequest: PropTypes.func.isRequired,
   loadingCreateLink: PropTypes.bool.isRequired,
   loadingGetLinks: PropTypes.bool.isRequired,
@@ -270,12 +261,13 @@ PaymentLinks.propTypes = {
   resetStepsRequest: PropTypes.func.isRequired,
   step: PropTypes.string.isRequired,
   t: PropTypes.func.isRequired,
-  totalPaymentLinks: PropTypes.number.isRequired,
+  totalPaymentLinks: PropTypes.number,
 }
 
 PaymentLinks.defaultProps = {
   paymentLinks: [],
   paymentLinkUrl: '',
+  totalPaymentLinks: null,
 }
 
 export default enhanced(PaymentLinks)

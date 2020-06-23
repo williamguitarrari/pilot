@@ -7,12 +7,13 @@ import {
   GET_LINKS_REQUEST,
   NEXT_STEP_REQUEST,
   PREVIOUS_STEP_REQUEST,
+  RESET_FILTER_REQUEST,
   RESET_STEPS_REQUEST,
 } from './actions'
 
 const createLinkInitialState = {
   loadingCreateLink: false,
-  paymentLinkUrl: null,
+  paymentLinkUrl: '',
   step: 'first_step',
 }
 
@@ -22,9 +23,17 @@ const getLinksInitialState = {
   totalPaymentLinks: null,
 }
 
+const initialFilterState = {
+  count: 15,
+  page: 1,
+  sortField: 'created_at',
+  sortOrder: 'descending',
+}
+
 export default function paymentLinksReducer (state = {
   ...createLinkInitialState,
   ...getLinksInitialState,
+  filter: { ...initialFilterState },
 }, action) {
   switch (action.type) {
     case NEXT_STEP_REQUEST: {
@@ -69,8 +78,13 @@ export default function paymentLinksReducer (state = {
 
     case GET_LINKS_REQUEST: {
       return merge(state, {
+        filter: {
+          ...state.filter,
+          ...action.payload,
+        },
         loadingGetLinks: true,
         paymentLinks: [],
+
       })
     }
 
@@ -79,6 +93,13 @@ export default function paymentLinksReducer (state = {
         loadingGetLinks: false,
         paymentLinks: action.payload.rows,
         totalPaymentLinks: action.payload.totalPaymentLinks,
+      })
+    }
+
+    case RESET_FILTER_REQUEST: {
+      return merge(state, {
+        filter: { ...initialFilterState },
+        loadingGetLinks: true,
       })
     }
 

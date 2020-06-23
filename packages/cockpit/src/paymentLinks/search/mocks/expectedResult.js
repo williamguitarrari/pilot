@@ -1,5 +1,5 @@
 const result = {
-  total: 7,
+  totalPaymentLinks: 7,
   rows: [{
     object: 'payment_link',
     company_id: '5e8f606e2e684d1e268ad05e',

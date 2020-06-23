@@ -23,3 +23,6 @@ export const getLinksRequest = createAction(GET_LINKS_REQUEST)
 
 export const GET_LINKS_RECEIVE = 'pilot/payment_links/GET_LINKS_RECEIVE'
 export const getLinksReceive = createAction(GET_LINKS_RECEIVE)
+
+export const RESET_FILTER_REQUEST = 'pilot/payment_links/RESET_FILTER_REQUEST'
+export const resetFilterRequest = createAction(RESET_FILTER_REQUEST)

@@ -26,6 +26,6 @@ describe('PaymentLinks Results', () => {
     }
 
     const result = buildResult(apiMock)
-    expect(result).toEqual({ total: 0, rows: [] })
+    expect(result).toEqual({ totalPaymentLinks: 0, rows: [] })
   })
 })

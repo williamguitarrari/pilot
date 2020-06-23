@@ -1,5 +1,8 @@
+import { from as rxFrom, of as rxOf } from 'rxjs'
 import {
+  delay,
   mergeMap,
+  catchError,
 } from 'rxjs/operators'
 import { ofType, combineEpics } from 'redux-observable'
 import {
@@ -7,9 +10,24 @@ import {
   createLinkFail,
   createLinkReceive,
   getLinksReceive,
+  getLinksRequest,
   GET_LINKS_REQUEST,
+  RESET_FILTER_REQUEST,
+  resetFilterRequest,
 } from './actions'
 import paymentLinkSpec from '../../formatters/paymentLinkSpec'
+
+const resetLinksEpic = (action$, state$) => action$
+  .pipe(
+    ofType(RESET_FILTER_REQUEST),
+    delay(5000),
+    mergeMap(() => {
+      const state = state$.value
+      const { paymentLinks: { filter } } = state
+
+      return rxOf(getLinksRequest(filter))
+    })
+  )
 
 const postLinkEpic = (action$, state$) => action$
   .pipe(
@@ -18,10 +36,11 @@ const postLinkEpic = (action$, state$) => action$
       const state = state$.value
       const { account: { client } } = state
 
-      return client.paymentLinks.create(paymentLinkSpec(payload))
-        .then(createLinkReceive)
-        .catch(createLinkFail)
-    })
+      return rxFrom(client.paymentLinks.create(paymentLinkSpec(payload)))
+    }),
+    delay(1000),
+    mergeMap(resp => rxOf(createLinkReceive(resp), resetFilterRequest())),
+    catchError(error => rxOf(createLinkFail(error)))
   )
 
 const getLinksEpic = (action$, state$) => action$
@@ -36,4 +55,8 @@ const getLinksEpic = (action$, state$) => action$
     })
   )
 
-export default combineEpics(postLinkEpic, getLinksEpic)
+export default combineEpics(
+  postLinkEpic,
+  getLinksEpic,
+  resetLinksEpic
+)
