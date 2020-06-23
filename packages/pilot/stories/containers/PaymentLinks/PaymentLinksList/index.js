@@ -14,7 +14,6 @@ const WithEmptyList = () => (
   <Section>
     <PaymentLinksList
       t={t}
-      amount={0}
       rows={[]}
       loading={false}
       pagination={{
@@ -27,6 +26,7 @@ const WithEmptyList = () => (
       onPageChange={action('onPageChange')}
       onPageCountChange={action('onPageCountChange')}
       onRowClick={action('onRowClick')}
+      pageCount={15}
     />
   </Section>
 )
@@ -35,7 +35,6 @@ const WithList = () => (
   <Section>
     <PaymentLinksList
       t={t}
-      amount={0}
       rows={links}
       loading={false}
       pagination={{
@@ -49,7 +48,8 @@ const WithList = () => (
       onPageCountChange={action('onPageCountChange')}
       onRowClick={action('onRowClick')}
       order="descending"
-      orderField={['created_at']}
+      orderField="created_at"
+      pageCount={15}
     />
   </Section>
 )
@@ -58,7 +58,6 @@ const WithListLoading = () => (
   <Section>
     <PaymentLinksList
       t={t}
-      amount={0}
       rows={links}
       loading
       pagination={{
@@ -71,6 +70,7 @@ const WithListLoading = () => (
       onPageChange={action('onPageChange')}
       onPageCountChange={action('onPageCountChange')}
       onRowClick={action('onRowClick')}
+      pageCount={15}
     />
   </Section>
 )
