@@ -85,9 +85,9 @@ const PaymentLinksList = ({
                     <div className={style.toolBar}>
                       <>
                         <ExportData
+                          disabled={loading}
                           exportOptions={getExportOptions(onExport)}
                           icon={<Download32 width={12} height={12} />}
-                          loading={false}
                           placement="bottomEnd"
                           relevance="low"
                           size="tiny"
