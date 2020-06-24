@@ -5,14 +5,30 @@ import { compose } from 'ramda'
 import { connect } from 'react-redux'
 import { translate } from 'react-i18next'
 import {
+  Col,
+  Grid,
+  Row,
+} from 'former-kit'
+import {
   createLinkRequest as createLinkRequestAction,
   nextStepRequest as nextStepRequestAction,
   previousStepRequest as previousStepRequestAction,
   resetStepsRequest as resetStepsRequestAction,
   getLinksRequest as getLinksRequestAction,
 } from './actions'
-import PaymentLinksContainer from '../../containers/PaymentLinks'
+import {
+  NewLinksCard,
+  PaymentLinkAdd,
+  PaymentLinksList,
+} from '../../containers/PaymentLinks'
 import { withError } from '../ErrorBoundary'
+
+const defaultColumnSize = {
+  desk: 12,
+  palm: 12,
+  tablet: 12,
+  tv: 12,
+}
 
 const mapStateToProps = ({
   paymentLinks: {
@@ -179,31 +195,47 @@ const PaymentLinks = ({
   }
 
   return (
-    <PaymentLinksContainer
-      linkFormData={linkFormData}
-      loadingCreateLink={loadingCreateLink}
-      loadingGetLinks={loadingGetLinks}
-      isNewLinkOpen={isNewLinkOpen}
-      handleLinkFormChange={handleLinkFormChange}
-      onAddPaymentLink={onAddPaymentLink}
-      onClosePaymentLink={onClosePaymentLink}
-      onCreateLinkRequest={onCreateLinkRequest}
-      onCreateAnotherLink={onCreateAnotherLink}
-      onOrderChange={onOrderChange}
-      onPageCountChange={onPageCountChange}
-      onPageNumberChange={onPageNumberChange}
-      onNextStep={nextStepRequest}
-      onPreviousStep={previousStepRequest}
-      order={filter.sortOrder}
-      orderField={filter.sortField}
-      pageCount={filter.count}
-      pagination={pagination}
-      paymentLinks={paymentLinks}
-      paymentLinkUrl={paymentLinkUrl}
-      selectedPage={filter.page}
-      step={steps[step]}
-      t={t}
-    />
+    <>
+      <PaymentLinkAdd
+        formData={linkFormData}
+        isOpen={isNewLinkOpen}
+        loading={loadingCreateLink}
+        handleFormChange={handleLinkFormChange}
+        onClose={onClosePaymentLink}
+        onCreateAnotherLink={onCreateAnotherLink}
+        onCreateLinkRequest={onCreateLinkRequest}
+        onNextStep={nextStepRequest}
+        onPreviousStep={previousStepRequest}
+        paymentLink={paymentLinkUrl}
+        step={steps[step]}
+        t={t}
+      />
+      <Grid>
+        <Row>
+          <Col {...defaultColumnSize}>
+            <NewLinksCard onAddPaymentLink={onAddPaymentLink} t={t} />
+          </Col>
+        </Row>
+        <Row>
+          <Col {...defaultColumnSize}>
+            <PaymentLinksList
+              loading={loadingGetLinks}
+              onPageCountChange={onPageCountChange}
+              onPageChange={onPageNumberChange}
+              onRowClick={() => {}}
+              pageCount={filter.count}
+              pagination={pagination}
+              onOrderChange={onOrderChange}
+              order={filter.sortOrder}
+              orderField={filter.sortField}
+              t={t}
+              rows={paymentLinks}
+              selectedPage={filter.page}
+            />
+          </Col>
+        </Row>
+      </Grid>
+    </>
   )
 }
 
