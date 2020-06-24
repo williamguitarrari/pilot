@@ -4,7 +4,9 @@ import PropTypes from 'prop-types'
 import Download32 from 'emblematic-icons/svg/Download32.svg'
 
 import {
+  applySpec,
   findIndex,
+  prop,
   propEq,
 } from 'ramda'
 
@@ -21,6 +23,7 @@ import style from './style.css'
 
 import ExportData from '../../../components/ExportData'
 import TableList from '../../../components/TableList'
+import useFileExporter from '../../../hooks/useFileExporter'
 
 import tableColumns from './tableColumns'
 
@@ -37,9 +40,33 @@ const getExportOptions = onExport => ([
   },
 ])
 
+const exportHeaders = [
+  'Data',
+  'ID',
+  'Nome',
+  'Status',
+  'Valor Pago',
+  'Link',
+]
+
+const buildTotalPaid = ({
+  amount,
+  orders_paid: ordersPaid,
+}) => ((ordersPaid * amount) / 100).toFixed(2)
+
+const exportParser = applySpec({
+  dateCreated: prop('date_created'),
+  id: prop('id'),
+  name: prop('name'),
+  status: prop('status'),
+  totalPaid: buildTotalPaid,
+  url: prop('url'),
+})
+
+const exportPrefix = 'payment_links'
+
 const PaymentLinksList = ({
   loading,
-  onExport,
   onOrderChange,
   onPageChange,
   onPageCountChange,
@@ -52,6 +79,17 @@ const PaymentLinksList = ({
   selectedPage,
   t,
 }) => {
+  const handleExport = useFileExporter({
+    exportHeaders,
+    exportParser,
+    exportPrefix,
+  })
+
+  const onExport = exportType => handleExport(
+    rows,
+    exportType
+  )
+
   const columns = tableColumns({ t })
   const orderColumn = findIndex(propEq('accessor', [orderField]), columns)
   const handleOrderChange = (
@@ -137,7 +175,6 @@ const PaymentLinksList = ({
 PaymentLinksList.propTypes = {
   exporting: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
-  onExport: PropTypes.func.isRequired,
   onOrderChange: PropTypes.func.isRequired,
   onPageChange: PropTypes.func.isRequired,
   onPageCountChange: PropTypes.func.isRequired,

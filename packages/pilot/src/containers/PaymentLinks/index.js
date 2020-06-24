@@ -19,7 +19,6 @@ const PaymentLinks = ({
   onClosePaymentLink,
   onCreateAnotherLink,
   onCreateLinkRequest,
-  onExport,
   onNextStep,
   onOrderChange,
   onPageCountChange,
@@ -70,7 +69,6 @@ const PaymentLinks = ({
         >
           <PaymentLinksList
             loading={loadingGetLinks}
-            onExport={onExport}
             onPageCountChange={onPageCountChange}
             onPageChange={onPageNumberChange}
             onRowClick={() => {}}
@@ -99,7 +97,6 @@ PaymentLinks.propTypes = {
   onClosePaymentLink: PropTypes.func.isRequired,
   onCreateAnotherLink: PropTypes.func.isRequired,
   onCreateLinkRequest: PropTypes.func.isRequired,
-  onExport: PropTypes.func.isRequired,
   onNextStep: PropTypes.func.isRequired,
   onOrderChange: PropTypes.func.isRequired,
   onPageCountChange: PropTypes.func.isRequired,

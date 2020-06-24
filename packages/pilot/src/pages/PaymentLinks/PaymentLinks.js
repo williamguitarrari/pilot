@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
-import { applySpec, compose, prop } from 'ramda'
+import { compose } from 'ramda'
 import { connect } from 'react-redux'
 import { translate } from 'react-i18next'
 import {
@@ -13,7 +13,6 @@ import {
 } from './actions'
 import PaymentLinksContainer from '../../containers/PaymentLinks'
 import { withError } from '../ErrorBoundary'
-import useFileExporter from '../../hooks/useFileExporter'
 
 const mapStateToProps = ({
   paymentLinks: {
@@ -73,30 +72,6 @@ const makeDefaulLinkData = () => ({
   ...creditCardInputDefaultValues,
 })
 
-const exportHeaders = [
-  'ID',
-  'Status',
-  'Nome',
-  'Data',
-  'Link',
-  'Valor Pago',
-]
-
-const buildTotalPaid = ({
-  amount,
-  orders_paid: ordersPaid,
-}) => ((ordersPaid * amount) / 100).toFixed(2)
-
-const exportParser = applySpec({
-  id: prop('id'),
-  name: prop('name'),
-  status: prop('status'),
-  totalPaid: buildTotalPaid,
-  url: prop('url'),
-})
-
-const exportPrefix = 'payment_links'
-
 const steps = {
   error_step: {
     name: 'error_step',
@@ -133,15 +108,10 @@ const PaymentLinks = ({
 }) => {
   const [linkFormData, setLinkFormData] = useState(makeDefaulLinkData())
   const [isNewLinkOpen, setIsNewLinkOpen] = useState(false)
-  const handleExport = useFileExporter({
-    exportHeaders,
-    exportParser,
-    exportPrefix,
-  })
 
   useEffect(() => {
     getLinksRequest(filter)
-  }, [getLinksRequest]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const onPageCountChange = count => getLinksRequest({
     ...filter,
@@ -208,18 +178,12 @@ const PaymentLinks = ({
     total: Math.ceil(totalPaymentLinks / filter.count),
   }
 
-  const onExport = exportType => handleExport(
-    paymentLinks,
-    exportType
-  )
-
   return (
     <PaymentLinksContainer
       linkFormData={linkFormData}
       loadingCreateLink={loadingCreateLink}
       loadingGetLinks={loadingGetLinks}
       isNewLinkOpen={isNewLinkOpen}
-      onExport={onExport}
       handleLinkFormChange={handleLinkFormChange}
       onAddPaymentLink={onAddPaymentLink}
       onClosePaymentLink={onClosePaymentLink}
