@@ -1737,7 +1737,8 @@
         "name": "Nome do link",
         "status": "Status",
         "url": "URL do link",
-        "disable_link": "Desativar Link"
+        "disable_link": "Desativar Link",
+        "disable_link_inactive": "Link Inativo"
       }
     },
     "empty_state": {

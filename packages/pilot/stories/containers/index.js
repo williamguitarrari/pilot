@@ -477,6 +477,7 @@ storiesOf('Containers|Payment Links/Details/LinkStatement', module)
 
 storiesOf('Containers|Payment Links/Details/Header', module)
   .add('Active Link', () => <PaymentLinks.Details.DetailsHeader.ActiveLink />)
+  .add('Inactive Link', () => <PaymentLinks.Details.DetailsHeader.InactiveLink />)
 
 storiesOf('Containers|Empty State', module)
   .add('Default', () => <EmptyState.EmptyStateDefault />)

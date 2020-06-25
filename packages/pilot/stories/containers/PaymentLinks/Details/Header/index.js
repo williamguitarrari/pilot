@@ -23,6 +23,17 @@ const ActiveLinkExample = () => (
   </Section>
 )
 
+const InactiveLinkExample = () => (
+  <Section>
+    <DetailsHeader
+      {...defaultProps}
+      status="expired"
+      t={t}
+    />
+  </Section>
+)
+
 export default {
   ActiveLink: ActiveLinkExample,
+  InactiveLink: InactiveLinkExample,
 }

@@ -19,32 +19,40 @@ const DetailsHeader = ({
   status,
   t,
   url,
-}) => (
-  <Card>
-    <CardContent>
-      <div className={styles.detailsHeader}>
-        <DetailsItem title={t('pages.payment_link_detail.header.name')}>
-          <span className={styles.linkName}>{name}</span>
-        </DetailsItem>
-        <DetailsItem title={t('pages.payment_link_detail.header.status')}>
-          <StatusLegend t={t} status={status} />
-        </DetailsItem>
-        <DetailsItem title={t('pages.payment_link_detail.header.url')}>
-          <LinkCopyURL status={status} url={url} />
-        </DetailsItem>
-        <div>
-          <Button
-            icon={<IconDisable height={16} width={16} />}
-            fill="outline"
-            onClick={onPaymentLinkCancel}
-          >
-            {t('pages.payment_link_detail.header.disable_link')}
-          </Button>
+}) => {
+  const isLinkActive = status === 'active'
+
+  return (
+    <Card>
+      <CardContent>
+        <div className={styles.detailsHeader}>
+          <DetailsItem title={t('pages.payment_link_detail.header.name')}>
+            <span className={styles.linkName}>{name}</span>
+          </DetailsItem>
+          <DetailsItem title={t('pages.payment_link_detail.header.status')}>
+            <StatusLegend t={t} status={status} />
+          </DetailsItem>
+          <DetailsItem title={t('pages.payment_link_detail.header.url')}>
+            <LinkCopyURL status={status} url={url} />
+          </DetailsItem>
+          <div>
+            <Button
+              icon={isLinkActive && <IconDisable height={16} width={16} />}
+              fill="outline"
+              onClick={onPaymentLinkCancel}
+              disabled={!isLinkActive}
+            >
+              {isLinkActive
+                ? t('pages.payment_link_detail.header.disable_link')
+                : t('pages.payment_link_detail.header.disable_link_inactive')
+            }
+            </Button>
+          </div>
         </div>
-      </div>
-    </CardContent>
-  </Card>
-)
+      </CardContent>
+    </Card>
+  )
+}
 
 DetailsHeader.propTypes = {
   name: PropTypes.string.isRequired,
