@@ -26,7 +26,7 @@ const getLinksInitialState = {
 const initialFilterState = {
   count: 15,
   page: 1,
-  sortField: 'created_at',
+  sortField: 'date_created',
   sortOrder: 'descending',
 }
 
@@ -84,7 +84,6 @@ export default function paymentLinksReducer (state = {
         },
         loadingGetLinks: true,
         paymentLinks: [],
-
       })
     }
 

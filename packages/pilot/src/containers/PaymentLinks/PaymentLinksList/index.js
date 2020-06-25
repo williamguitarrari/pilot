@@ -173,7 +173,6 @@ const PaymentLinksList = ({
 }
 
 PaymentLinksList.propTypes = {
-  exporting: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
   onOrderChange: PropTypes.func.isRequired,
   onPageChange: PropTypes.func.isRequired,

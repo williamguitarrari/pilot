@@ -13,11 +13,11 @@ const t = sentence => path(split('.', sentence), translations)
 const FilterExample = () => (
   <Section>
     <Filter
-      fieldsData={{
+      searchData={{
         active: true,
         dates: {
-          end: moment().add('1', 'month'),
-          start: moment(),
+          end: moment(),
+          start: moment().subtract(1, 'month'),
         },
         inactive: false,
         linkNameQuery: 'Pulseira gótica',

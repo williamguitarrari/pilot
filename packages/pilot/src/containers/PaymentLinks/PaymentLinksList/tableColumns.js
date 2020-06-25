@@ -85,7 +85,7 @@ const getDefaultColumns = ({ t }) => ([
     title: t('pages.payment_links.list.link_name'),
   },
   {
-    accessor: ['created_at'],
+    accessor: ['date_created'],
     orderable: true,
     renderer: pipe(prop('date_created'), formatDate),
     title: t('pages.payment_links.list.created_at'),

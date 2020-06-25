@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
-import { compose } from 'ramda'
+import { compose, curry } from 'ramda'
 import { connect } from 'react-redux'
 import { translate } from 'react-i18next'
+import moment from 'moment'
 import {
   Col,
   Grid,
@@ -19,6 +20,7 @@ import {
 import {
   NewLinksCard,
   PaymentLinkAdd,
+  PaymentLinksFilter,
   PaymentLinksList,
 } from '../../containers/PaymentLinks'
 import { withError } from '../ErrorBoundary'
@@ -107,6 +109,17 @@ const steps = {
   },
 }
 
+const today = moment().startOf('day')
+const initialQueryData = {
+  active: true,
+  dates: {
+    end: today,
+    start: today.clone().subtract(1, 'month'),
+  },
+  inactive: true,
+  name: '',
+}
+
 const PaymentLinks = ({
   createLinkRequest,
   filter,
@@ -124,10 +137,31 @@ const PaymentLinks = ({
 }) => {
   const [linkFormData, setLinkFormData] = useState(makeDefaulLinkData())
   const [isNewLinkOpen, setIsNewLinkOpen] = useState(false)
+  const [query, setQuery] = useState(initialQueryData)
 
   useEffect(() => {
-    getLinksRequest(filter)
+    getLinksRequest({ ...filter, ...initialQueryData })
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const onQueryChange = curry((propName, value) => setQuery({
+    ...query,
+    [propName]: value,
+  }))
+
+  const onApplyQuery = () => getLinksRequest({
+    ...filter,
+    ...query,
+    page: 1,
+  })
+
+  const onResetQuery = () => {
+    setQuery(initialQueryData)
+    return getLinksRequest({
+      ...filter,
+      ...initialQueryData,
+      page: 1,
+    })
+  }
 
   const onPageCountChange = count => getLinksRequest({
     ...filter,
@@ -214,6 +248,17 @@ const PaymentLinks = ({
         <Row>
           <Col {...defaultColumnSize}>
             <NewLinksCard onAddPaymentLink={onAddPaymentLink} t={t} />
+          </Col>
+        </Row>
+        <Row>
+          <Col {...defaultColumnSize}>
+            <PaymentLinksFilter
+              onApply={onApplyQuery}
+              onQueryChange={onQueryChange}
+              onReset={onResetQuery}
+              query={query}
+              t={t}
+            />
           </Col>
         </Row>
         <Row>
