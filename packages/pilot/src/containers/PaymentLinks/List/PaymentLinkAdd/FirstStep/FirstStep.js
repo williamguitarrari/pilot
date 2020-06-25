@@ -9,7 +9,7 @@ import {
 import Form from 'react-vanilla-form'
 import moment from 'moment'
 import PaymentLinkActionsContainer from '../PaymentLinkActionsContainer'
-import CurrencyInput from '../../../../components/CurrencyInput'
+import CurrencyInput from '../../../../../components/CurrencyInput'
 import { validateAmount, validateExpirationAmount, validateName } from './validators'
 import style from './style.css'
 

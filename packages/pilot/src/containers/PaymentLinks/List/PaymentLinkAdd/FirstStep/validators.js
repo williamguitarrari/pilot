@@ -2,12 +2,12 @@ import {
   find, is, juxt, pipe,
 } from 'ramda'
 import moment from 'moment'
-import createRequiredValidation from '../../../../validation/required'
-import createNumberValidation from '../../../../validation/number'
-import createMinLengthValidation from '../../../../validation/minLength'
-import createMaxLengthValidaton from '../../../../validation/maxLength'
-import createLessThanValidation from '../../../../validation/lessThan'
-import createGreaterThanValidation from '../../../../validation/greaterThan'
+import createRequiredValidation from '../../../../../validation/required'
+import createNumberValidation from '../../../../../validation/number'
+import createMinLengthValidation from '../../../../../validation/minLength'
+import createMaxLengthValidaton from '../../../../../validation/maxLength'
+import createLessThanValidation from '../../../../../validation/lessThan'
+import createGreaterThanValidation from '../../../../../validation/greaterThan'
 
 const applyValidations = (validations, value) => pipe(
   juxt(validations),

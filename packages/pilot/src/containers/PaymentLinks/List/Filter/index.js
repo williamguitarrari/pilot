@@ -11,8 +11,8 @@ import {
 
 import CalendarIcon from 'emblematic-icons/svg/Calendar24.svg'
 import SearchIcon from 'emblematic-icons/svg/Search32.svg'
-import dateSelectorPresets from '../../../models/dateSelectorPresets'
-import translateDateInput from '../../../formatters/dateInputTranslator'
+import dateSelectorPresets from '../../../../models/dateSelectorPresets'
+import translateDateInput from '../../../../formatters/dateInputTranslator'
 
 import style from './style.css'
 

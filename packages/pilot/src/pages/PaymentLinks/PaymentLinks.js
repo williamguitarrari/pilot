@@ -22,7 +22,7 @@ import {
   PaymentLinkAdd,
   PaymentLinksFilter,
   PaymentLinksList,
-} from '../../containers/PaymentLinks'
+} from '../../containers/PaymentLinks/List'
 import { withError } from '../ErrorBoundary'
 
 const defaultColumnSize = {

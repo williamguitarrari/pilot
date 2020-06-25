@@ -8,7 +8,7 @@ import {
 import copyToClipBoard from 'clipboard-copy'
 import IconCopy from 'emblematic-icons/svg/Copy24.svg'
 import PaymentLinkActionsContainer from '../PaymentLinkActionsContainer'
-import ClickableDiv from '../../../../components/ClickableDiv'
+import ClickableDiv from '../../../../../components/ClickableDiv'
 import CreatedLinkSvg from './created_link.svg'
 
 import style from './style.css'

@@ -21,13 +21,13 @@ import {
 
 import style from './style.css'
 
-import ExportData from '../../../components/ExportData'
-import TableList from '../../../components/TableList'
-import useFileExporter from '../../../hooks/useFileExporter'
+import ExportData from '../../../../components/ExportData'
+import TableList from '../../../../components/TableList'
+import useFileExporter from '../../../../hooks/useFileExporter'
 
 import tableColumns from './tableColumns'
 
-import itemsPerPage from '../../../models/itemsPerPage'
+import itemsPerPage from '../../../../models/itemsPerPage'
 
 const getExportOptions = onExport => ([
   {

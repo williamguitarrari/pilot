@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { path, split } from 'ramda'
 import { action } from '@storybook/addon-actions'
-import PaymentLinkAdd from '../../../../src/containers/PaymentLinks/PaymentLinkAdd'
+import PaymentLinkAdd from '../../../../../src/containers/PaymentLinks/List/PaymentLinkAdd'
 
-import translations from '../../../../public/locales/pt/translations.json'
+import translations from '../../../../../public/locales/pt/translations.json'
 
 const t = sentence => path(split('.', sentence), translations)
 

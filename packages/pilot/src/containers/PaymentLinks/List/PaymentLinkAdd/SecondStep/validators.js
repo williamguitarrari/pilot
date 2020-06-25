@@ -1,9 +1,9 @@
 import { juxt, is } from 'ramda'
 
-import createRequiredValidation from '../../../../validation/required'
-import createNumberValidation from '../../../../validation/number'
-import createLessThanValidation from '../../../../validation/lessThan'
-import createMoreThanValidation from '../../../../validation/greaterThan'
+import createRequiredValidation from '../../../../../validation/required'
+import createNumberValidation from '../../../../../validation/number'
+import createLessThanValidation from '../../../../../validation/lessThan'
+import createMoreThanValidation from '../../../../../validation/greaterThan'
 
 const isString = is(String)
 

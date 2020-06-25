@@ -11,10 +11,10 @@ import IconCopy from 'emblematic-icons/svg/Copy24.svg'
 
 import style from './style.css'
 
-import ClickableDiv from '../../../components/ClickableDiv'
-import formatCurrency from '../../../formatters/currency'
-import formatDate from '../../../formatters/longDate'
-import paymentLinkStatus from '../../../models/paymentLinkStatusLegends'
+import ClickableDiv from '../../../../components/ClickableDiv'
+import formatCurrency from '../../../../formatters/currency'
+import formatDate from '../../../../formatters/longDate'
+import paymentLinkStatus from '../../../../models/paymentLinkStatusLegends'
 
 const renderLink = (item) => {
   const isLinkActive = item.status === 'active'
