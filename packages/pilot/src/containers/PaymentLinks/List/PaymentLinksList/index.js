@@ -29,6 +29,8 @@ import tableColumns from './tableColumns'
 
 import itemsPerPage from '../../../../models/itemsPerPage'
 
+import EmptyStateIcon from './EmptyStateIcon.svg'
+
 const getExportOptions = onExport => ([
   {
     action: () => onExport('csv'),
@@ -110,66 +112,90 @@ const PaymentLinksList = ({
     />
   )
 
-  return (loading || rows.length > 0)
-            && (
-              <Card>
-                <CardTitle
-                  title={(
-                    <h2 className={style.customTitle}>
-                      {t('pages.payment_links.list.title')}
-                    </h2>
+  return (
+    <Card>
+      {(loading || rows.length > 0)
+        ? (
+          <>
+            <CardTitle
+              title={(
+                <h2 className={style.customTitle}>
+                  {t('pages.payment_links.list.title')}
+                </h2>
                   )}
-                  subtitle={(
-                    <div className={style.toolBar}>
-                      <>
-                        <ExportData
-                          disabled={loading}
-                          exportOptions={getExportOptions(onExport)}
-                          icon={<Download32 width={12} height={12} />}
-                          placement="bottomEnd"
-                          relevance="low"
-                          size="tiny"
-                          subtitle={t('export_to')}
-                          title={t('export_table')}
-                        />
-                        <Dropdown
-                          disabled={loading}
-                          name="page-count"
-                          onChange={({ target: { value } }) => (
-                            onPageCountChange(parseInt(value, 10))
-                          )}
-                          options={itemsPerPage.map(i => ({
-                            name: t('items_per_page', { count: i }),
-                            value: `${i}`,
-                          }))}
-                          size="tiny"
-                          value={pageCount.toString()}
-                        />
-                        {paginationElem}
-                      </>
-                    </div>
+              subtitle={(
+                <div className={style.toolBar}>
+                  <>
+                    <ExportData
+                      disabled={loading}
+                      exportOptions={getExportOptions(onExport)}
+                      icon={<Download32 width={12} height={12} />}
+                      placement="bottomEnd"
+                      relevance="low"
+                      size="tiny"
+                      subtitle={t('export_to')}
+                      title={t('export_table')}
+                    />
+                    <Dropdown
+                      disabled={loading}
+                      name="page-count"
+                      onChange={({ target: { value } }) => (
+                        onPageCountChange(parseInt(value, 10))
+                      )}
+                      options={itemsPerPage.map(i => ({
+                        name: t('items_per_page', { count: i }),
+                        value: `${i}`,
+                      }))}
+                      size="tiny"
+                      value={pageCount.toString()}
+                    />
+                    {paginationElem}
+                  </>
+                </div>
                   )}
-                />
+            />
 
-                <CardContent>
-                  <TableList
-                    columns={columns}
-                    disabled={loading}
-                    loading={loading}
-                    maxColumns={6}
-                    onOrderChange={handleOrderChange}
-                    onRowClick={onRowClick}
-                    orderColumn={orderColumn}
-                    orderSequence={order}
-                    rows={rows}
-                  />
-                </CardContent>
+            <CardContent>
+              <TableList
+                columns={columns}
+                disabled={loading}
+                loading={loading}
+                maxColumns={6}
+                onOrderChange={handleOrderChange}
+                onRowClick={onRowClick}
+                orderColumn={orderColumn}
+                orderSequence={order}
+                rows={rows}
+              />
+            </CardContent>
 
-                <CardActions>
-                  {paginationElem}
-                </CardActions>
-              </Card>
-            )
+            <CardActions>
+              {paginationElem}
+            </CardActions>
+          </>
+        )
+        : (
+          <CardContent>
+            <div className={style.emptyState}>
+              <div>
+                <EmptyStateIcon />
+              </div>
+              <div>
+                <h1>
+                  {t('pages.payment_links.list.empty_state_title')}
+                </h1>
+                <p>
+                  {t('pages.payment_links.list.empty_state_message_1')}
+                  <span>{t('pages.payment_links.list.empty_state_message_2')}</span>
+                  {t('pages.payment_links.list.empty_state_message_3')}
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        )
+    }
+    </Card>
+  )
 }
 
 PaymentLinksList.propTypes = {

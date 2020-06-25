@@ -1659,7 +1659,11 @@
           "active": "ativo",
           "canceled": "inativo",
           "expired": "inativo"
-        }
+        },
+        "empty_state_title": "Ops, nenhum link foi encontrado...",
+        "empty_state_message_1": "Dá uma olhadinha no período selecionado e tente limpar os filtros, se você nunca criou um link, basta clicar no botão",
+        "empty_state_message_2": "\"Criar link de pagamento\"",
+        "empty_state_message_3": "para começar a vender!"
       },
       "add_link": {
         "receive_payments": "Receba pagamentos",

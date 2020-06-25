@@ -35,7 +35,12 @@ describe('PaymentLinks Query', () => {
               },
             },
             { terms: { status: ['active'] } },
-            { match: { name: 'Indiana Jones' } },
+            {
+              wildcard: { name: '*Indiana*' },
+            },
+            {
+              wildcard: { name: '*Jones*' },
+            },
           ],
         },
       },

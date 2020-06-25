@@ -1,6 +1,14 @@
-import { applySpec, defaultTo, pipe, prop } from 'ramda'
+import {
+  applySpec,
+  complement,
+  defaultTo,
+  isEmpty,
+  pipe,
+  prop,
+} from 'ramda'
 
 const defaultSize = defaultTo(15)
+const isNotEmpty = complement(isEmpty)
 
 const buildFrom = ({ count, page }) => {
   if (page < 1) return count
@@ -50,11 +58,16 @@ const buildQuery = (data) => {
 
   const parsedName = data.name.trim()
   if (parsedName) {
-    query.bool.must.push({
-      match: {
-        name: parsedName,
-      },
-    })
+    const wildCardQueries = parsedName
+      .split(' ')
+      .filter(isNotEmpty)
+      .map(item => ({
+        wildcard: {
+          name: `*${item}*`,
+        },
+      }))
+
+    query.bool.must.push(...wildCardQueries)
   }
 
   return query

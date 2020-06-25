@@ -41,6 +41,7 @@ const Filter = ({
           type="text"
           value={query.name}
           onChange={e => onQueryChange('name', e.target.value)}
+          onKeyPress={e => e.key === 'Enter' && onApply()}
           className={style.linkNameQueryInput}
           placeholder={t('pages.payment_links.filter.filter_by_link_name')}
           icon={<SearchIcon width={12} height={12} />}
