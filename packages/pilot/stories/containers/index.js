@@ -475,6 +475,9 @@ storiesOf('Containers|Payment Links/Details/LinkStatement', module)
   .add('EmptyState', () => <PaymentLinks.Details.LinkStatement.LinkStatementEmptyState />)
   .add('OptionalFields', () => <PaymentLinks.Details.LinkStatement.LinkStatementOptionalFields />)
 
+storiesOf('Containers|Payment Links/Details/Header', module)
+  .add('Active Link', () => <PaymentLinks.Details.DetailsHeader.ActiveLink />)
+
 storiesOf('Containers|Empty State', module)
   .add('Default', () => <EmptyState.EmptyStateDefault />)
   .add('MDRzao', () => <EmptyState.EmptyStateMDRzao />)

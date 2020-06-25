@@ -1732,6 +1732,14 @@
         }
       }
     },
+    "payment_link_detail": {
+      "header": {
+        "name": "Nome do link",
+        "status": "Status",
+        "url": "URL do link",
+        "disable_link": "Desativar Link"
+      }
+    },
     "empty_state": {
       "title": "Boas-vindas",
       "welcome": {

@@ -3,45 +3,11 @@ import {
   pipe,
   prop,
 } from 'ramda'
-import classNames from 'classnames'
-import copyToClipBoard from 'clipboard-copy'
-import { Legend } from 'former-kit'
 
-import IconCopy from 'emblematic-icons/svg/Copy24.svg'
-
-import style from './style.css'
-
-import ClickableDiv from '../../../../components/ClickableDiv'
 import formatCurrency from '../../../../formatters/currency'
 import formatDate from '../../../../formatters/longDate'
-import paymentLinkStatus from '../../../../models/paymentLinkStatusLegends'
-
-const renderLink = (item) => {
-  const isLinkActive = item.status === 'active'
-  const handleLink = (e) => {
-    e.stopPropagation()
-    copyToClipBoard(item.url)
-  }
-  const eventHandlers = {
-    onClick: handleLink,
-    onKeyPress: handleLink,
-  }
-
-  return (
-    <ClickableDiv
-      className={
-        classNames(
-          style.link,
-          { [style['link--active']]: isLinkActive }
-        )
-      }
-      {...(isLinkActive ? eventHandlers : {})}
-    >
-      { item.url }
-      <IconCopy />
-    </ClickableDiv>
-  )
-}
+import LinkCopyURL from '../../LinkCopyURL'
+import StatusLegend from '../../StatusLegend'
 
 const renderTotalPaid = (item) => {
   const { amount, orders_paid: ordersPaid } = item
@@ -53,29 +19,11 @@ const renderTotalPaid = (item) => {
   )
 }
 
-const renderStatusLegend = t => (item) => {
-  const statusText = t(paymentLinkStatus[item.status].text)
-
-  return (
-    <div className={style.centralizedItem}>
-      <Legend
-        acronym={statusText}
-        color={paymentLinkStatus[item.status].color}
-        hideLabel
-        textColor={paymentLinkStatus[item.status].textColor}
-        textFormat="capitalize"
-      >
-        {statusText}
-      </Legend>
-    </div>
-  )
-}
-
 const getDefaultColumns = ({ t }) => ([
   {
     accessor: ['status'],
     orderable: true,
-    renderer: renderStatusLegend(t),
+    renderer: item => <StatusLegend t={t} status={item.status} />,
     title: t('pages.payment_links.list.status'),
     width: 100,
   },
@@ -93,7 +41,7 @@ const getDefaultColumns = ({ t }) => ([
   {
     accessor: ['url'],
     orderable: true,
-    renderer: renderLink,
+    renderer: item => <LinkCopyURL status={item.status} url={item.url} />,
     title: t('pages.payment_links.list.link'),
     width: 300,
   },

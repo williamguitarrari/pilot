@@ -1,0 +1,32 @@
+@import "former-kit-skin-pagarme/dist/styles/colors/light.css";
+
+.detailsHeader {
+  display: flex;
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  & > div:not(:first-of-type) {
+    margin-left: 32px;
+  }
+
+  & > div:last-of-type {
+    margin-left: auto;
+  }
+
+  & .title {
+    color: var(--color-birdperson-gray-500);
+    font-size: 14px;
+    line-height: 14px;
+    margin-top: 0;
+  }
+
+  & .linkName {
+    color: var(--color-squanchy-gray-300);
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 21px;
+  }
+}
