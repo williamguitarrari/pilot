@@ -1739,6 +1739,14 @@
         "url": "URL do link",
         "disable_link": "Desativar Link",
         "disable_link_inactive": "Link Inativo"
+      },
+      "disable": {
+        "title": "Tem certeza disso?",
+        "cancel": "Agora não",
+        "confirm": "Sim, desativar link",
+        "disable_message_1": "Após desativar este link de pagamento não será",
+        "disable_message_2": "possível reativá-lo e seus clientes não poderão",
+        "disable_message_3": "realizar pagamentos através dele."
       }
     },
     "empty_state": {

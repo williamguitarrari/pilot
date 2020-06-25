@@ -13,7 +13,7 @@ const defaultProps = {
   url: 'link.pagar.me/tBy6bncOoN',
 }
 
-const ActiveLinkExample = () => (
+const ActiveLink = () => (
   <Section>
     <DetailsHeader
       {...defaultProps}
@@ -23,7 +23,7 @@ const ActiveLinkExample = () => (
   </Section>
 )
 
-const InactiveLinkExample = () => (
+const InactiveLink = () => (
   <Section>
     <DetailsHeader
       {...defaultProps}
@@ -34,6 +34,6 @@ const InactiveLinkExample = () => (
 )
 
 export default {
-  ActiveLink: ActiveLinkExample,
-  InactiveLink: InactiveLinkExample,
+  ActiveLink,
+  InactiveLink,
 }

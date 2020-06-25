@@ -479,6 +479,10 @@ storiesOf('Containers|Payment Links/Details/Header', module)
   .add('Active Link', () => <PaymentLinks.Details.DetailsHeader.ActiveLink />)
   .add('Inactive Link', () => <PaymentLinks.Details.DetailsHeader.InactiveLink />)
 
+storiesOf('Containers|Payment Links/Details/DisableLinkModal', module)
+  .add('Loading', () => <PaymentLinks.Details.DisableLinkModal.Loading />)
+  .add('Not Loading', () => <PaymentLinks.Details.DisableLinkModal.NotLoading />)
+
 storiesOf('Containers|Empty State', module)
   .add('Default', () => <EmptyState.EmptyStateDefault />)
   .add('MDRzao', () => <EmptyState.EmptyStateMDRzao />)
