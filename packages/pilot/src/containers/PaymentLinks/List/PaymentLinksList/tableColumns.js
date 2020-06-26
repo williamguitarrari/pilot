@@ -41,7 +41,7 @@ const getDefaultColumns = ({ t }) => ([
   {
     accessor: ['url'],
     orderable: true,
-    renderer: item => <LinkCopyURL status={item.status} url={item.url} />,
+    renderer: item => <LinkCopyURL t={t} status={item.status} url={item.url} />,
     title: t('pages.payment_links.list.link'),
     width: 300,
   },

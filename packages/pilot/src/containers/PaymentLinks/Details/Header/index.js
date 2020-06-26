@@ -33,7 +33,7 @@ const DetailsHeader = ({
             <StatusLegend t={t} status={status} />
           </DetailsItem>
           <DetailsItem title={t('pages.payment_link_detail.header.url')}>
-            <LinkCopyURL status={status} url={url} />
+            <LinkCopyURL t={t} status={status} url={url} />
           </DetailsItem>
           <div>
             <Button
