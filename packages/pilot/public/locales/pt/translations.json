@@ -1748,6 +1748,13 @@
         "disable_message_1": "Após desativar este link de pagamento não será",
         "disable_message_2": "possível reativá-lo e seus clientes não poderão",
         "disable_message_3": "realizar pagamentos através dele."
+      },
+      "info": {
+        "title": "Detalhes do link de pagamento",
+        "amount": "Valor do produto",
+        "date_created": "Data de criação",
+        "expires_at": "Disponibilidade",
+        "until": "até {{date}}"
       }
     },
     "empty_state": {
