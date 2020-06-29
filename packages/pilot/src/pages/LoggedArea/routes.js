@@ -59,12 +59,19 @@ export default {
     path: '/transactions',
     title: 'pages.transactions.title',
   },
-  paymentLinks: {
+  PaymentLinks: {
     component: PaymentLinks,
+    exact: true,
     hidden: true,
     path: '/payment-links',
     title: 'pages.payment_links.title',
     icon: Link32,
+  },
+  paymentLinksDetails: {
+    exact: true,
+    hidden: true,
+    path: '/payment-links/:id',
+    title: 'pages.payment_link_detail.title',
   },
   companySettings: {
     component: CompanySettings,

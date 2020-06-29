@@ -37,7 +37,7 @@ const EmptyState = lazy(() => import(
 ))
 
 const PaymentLinks = lazy(() => import(
-  /* webpackChunkName: "payment-links" */ '../PaymentLinks/PaymentLinks'
+  /* webpackChunkName: "payment-links" */ '../PaymentLinks'
 ))
 
 export {

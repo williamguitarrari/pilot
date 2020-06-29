@@ -1734,6 +1734,7 @@
       }
     },
     "payment_link_detail": {
+      "title": "Detalhes do link de pagamento",
       "header": {
         "name": "Nome do link",
         "status": "Status",

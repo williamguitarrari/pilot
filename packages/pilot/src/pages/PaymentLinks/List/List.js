@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
-import { compose, curry } from 'ramda'
+import { compose, curry, nth } from 'ramda'
 import { connect } from 'react-redux'
 import { translate } from 'react-i18next'
 import moment from 'moment'
@@ -22,8 +22,8 @@ import {
   PaymentLinkAdd,
   PaymentLinksFilter,
   PaymentLinksList,
-} from '../../containers/PaymentLinks/List'
-import { withError } from '../ErrorBoundary'
+} from '../../../containers/PaymentLinks/List'
+import { withError } from '../../ErrorBoundary'
 
 const defaultColumnSize = {
   desk: 12,
@@ -120,10 +120,11 @@ const initialQueryData = {
   name: '',
 }
 
-const PaymentLinks = ({
+const List = ({
   createLinkRequest,
   filter,
   getLinksRequest,
+  history,
   loadingCreateLink,
   loadingGetLinks,
   nextStepRequest,
@@ -223,6 +224,11 @@ const PaymentLinks = ({
     resetStepsRequest()
   }
 
+  const onRowClick = (rowIndex) => {
+    const { id } = nth(rowIndex, paymentLinks)
+    history.push(`/payment-links/${id}`)
+  }
+
   const pagination = {
     offset: filter.count * filter.page,
     total: Math.ceil(totalPaymentLinks / filter.count),
@@ -267,7 +273,7 @@ const PaymentLinks = ({
               loading={loadingGetLinks}
               onPageCountChange={onPageCountChange}
               onPageChange={onPageNumberChange}
-              onRowClick={() => {}}
+              onRowClick={onRowClick}
               pageCount={filter.count}
               pagination={pagination}
               onOrderChange={onOrderChange}
@@ -284,7 +290,7 @@ const PaymentLinks = ({
   )
 }
 
-PaymentLinks.propTypes = {
+List.propTypes = {
   createLinkRequest: PropTypes.func.isRequired,
   filter: PropTypes.shape({
     count: PropTypes.number,
@@ -293,6 +299,9 @@ PaymentLinks.propTypes = {
     sortOrder: PropTypes.string,
   }).isRequired,
   getLinksRequest: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
   loadingCreateLink: PropTypes.bool.isRequired,
   loadingGetLinks: PropTypes.bool.isRequired,
   nextStepRequest: PropTypes.func.isRequired,
@@ -305,10 +314,10 @@ PaymentLinks.propTypes = {
   totalPaymentLinks: PropTypes.number,
 }
 
-PaymentLinks.defaultProps = {
+List.defaultProps = {
   paymentLinks: [],
   paymentLinkUrl: '',
   totalPaymentLinks: null,
 }
 
-export default enhanced(PaymentLinks)
+export default enhanced(List)

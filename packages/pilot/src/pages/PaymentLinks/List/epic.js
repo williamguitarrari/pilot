@@ -15,7 +15,7 @@ import {
   RESET_FILTER_REQUEST,
   resetFilterRequest,
 } from './actions'
-import paymentLinkSpec from '../../formatters/paymentLinkSpec'
+import paymentLinkSpec from '../../../formatters/paymentLinkSpec'
 
 const resetLinksEpic = (action$, state$) => action$
   .pipe(
