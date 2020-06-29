@@ -15,7 +15,11 @@ import {
   cancelLinkRequest as cancelLinkRequestAction,
 
 } from './actions'
-import { DetailsHeader, DisableLinkModal } from '../../../containers/PaymentLinks/Details'
+import {
+  DetailsHeader,
+  DetailsInfo,
+  DisableLinkModal,
+} from '../../../containers/PaymentLinks/Details'
 
 const mapStateToProps = ({
   paymentLinksDetails: {
@@ -82,6 +86,16 @@ const Details = ({
               status={paymentLink.status}
               t={t}
               url={paymentLink.url}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col {...defaultColumnSize}>
+            <DetailsInfo
+              amount={paymentLink.amount}
+              createdAt={paymentLink.date_created}
+              expiresAt={paymentLink.expires_at}
+              t={t}
             />
           </Col>
         </Row>
