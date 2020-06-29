@@ -59,7 +59,7 @@ export default {
     path: '/transactions',
     title: 'pages.transactions.title',
   },
-  PaymentLinks: {
+  paymentLinks: {
     component: PaymentLinks,
     exact: true,
     hidden: true,

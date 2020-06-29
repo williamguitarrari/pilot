@@ -13,12 +13,12 @@ import { withError } from '../../ErrorBoundary'
 import {
   getLinkRequest as getLinkRequestAction,
   cancelLinkRequest as cancelLinkRequestAction,
-
 } from './actions'
 import {
   DetailsHeader,
   DetailsInfo,
   DisableLinkModal,
+  PaymentMethods,
 } from '../../../containers/PaymentLinks/Details'
 import Spinner from '../../../components/Spinner'
 import styles from './styles.css'
@@ -92,12 +92,19 @@ const Details = ({
               />
             </Col>
           </Row>
-          <Row>
-            <Col {...defaultColumnSize}>
+          <Row stretch>
+            <Col desk={6} palm={6} tablet={6} tv={6}>
               <DetailsInfo
                 amount={paymentLink.amount}
                 createdAt={paymentLink.date_created}
                 expiresAt={paymentLink.expires_at}
+                t={t}
+              />
+            </Col>
+            <Col desk={6} palm={6} tablet={6} tv={6}>
+              <PaymentMethods
+                boletoConfig={paymentLink.payment_config.boleto}
+                creditCardConfig={paymentLink.payment_config.credit_card}
                 t={t}
               />
             </Col>

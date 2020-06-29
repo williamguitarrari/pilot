@@ -5,7 +5,7 @@ import {
 } from 'react-router-dom'
 
 import list, { epic as listEpic } from './List'
-import details, { epic as DetailsEpic } from './Details'
+import details, { epic as detailsEpic } from './Details'
 
 import {
   PaymentLinksDetails,
@@ -18,7 +18,7 @@ export const reducers = {
 }
 
 export const epics = {
-  details: DetailsEpic,
+  details: detailsEpic,
   list: listEpic,
 }
 

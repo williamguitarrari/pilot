@@ -485,6 +485,11 @@ storiesOf('Containers|Payment Links/Details/Info', module)
 storiesOf('Containers|Payment Links/Details/DisableLinkModal', module)
   .add('Default', () => <PaymentLinks.Details.DisableLinkModal />)
 
+storiesOf('Containers|Payment Links/Details/PaymentMethods', module)
+  .add('OnlyBoleto', () => <PaymentLinks.Details.PaymentMethods.OnlyBoleto />)
+  .add('WithInterestRate', () => <PaymentLinks.Details.PaymentMethods.WithInterestRate />)
+  .add('WithoutInterestRate', () => <PaymentLinks.Details.PaymentMethods.WithoutInterestRate />)
+
 storiesOf('Containers|Empty State', module)
   .add('Default', () => <EmptyState.EmptyStateDefault />)
   .add('MDRzao', () => <EmptyState.EmptyStateMDRzao />)

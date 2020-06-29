@@ -1756,6 +1756,21 @@
         "date_created": "Data de criação",
         "expires_at": "Disponibilidade",
         "until": "até {{date}}"
+      },
+      "payment_methods": {
+        "title": "Meios de pagamento",
+        "boleto_title": "Boleto",
+        "boleto_subtitle": "Dias para o vencimento",
+        "credit_title": "Cartão de crédito",
+        "credit_subtitle": "Parcelamento",
+        "max_of": "Máximo de",
+        "no_interest_rate": "sem juros",
+        "with_interest_rate_1": ", sem juros até",
+        "installment": "parcela",
+        "installment_plural": "parcelas",
+        "with_interest_rate_2": "De",
+        "to": "{{from}} a {{to}}",
+        "with_interest_rate_3": "vezes, juros de {{percent}} a.m"
       }
     },
     "empty_state": {

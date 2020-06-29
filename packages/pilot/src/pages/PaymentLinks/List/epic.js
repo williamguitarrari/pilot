@@ -12,14 +12,14 @@ import {
   getLinksReceive,
   getLinksRequest,
   GET_LINKS_REQUEST,
-  RESET_FILTER_REQUEST,
-  resetFilterRequest,
+  RESET_PAGINATION_REQUEST,
+  resetPaginationRequest,
 } from './actions'
 import paymentLinkSpec from '../../../formatters/paymentLinkSpec'
 
-const resetLinksEpic = (action$, state$) => action$
+const resetPaginationEpic = (action$, state$) => action$
   .pipe(
-    ofType(RESET_FILTER_REQUEST),
+    ofType(RESET_PAGINATION_REQUEST),
     delay(5000),
     mergeMap(() => {
       const state = state$.value
@@ -39,7 +39,7 @@ const postLinkEpic = (action$, state$) => action$
       return rxFrom(client.paymentLinks.create(paymentLinkSpec(payload)))
     }),
     delay(1000),
-    mergeMap(resp => rxOf(createLinkReceive(resp), resetFilterRequest())),
+    mergeMap(resp => rxOf(createLinkReceive(resp), resetPaginationRequest())),
     catchError(error => rxOf(createLinkFail(error)))
   )
 
@@ -58,5 +58,5 @@ const getLinksEpic = (action$, state$) => action$
 export default combineEpics(
   postLinkEpic,
   getLinksEpic,
-  resetLinksEpic
+  resetPaginationEpic
 )

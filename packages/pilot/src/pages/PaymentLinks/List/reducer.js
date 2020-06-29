@@ -7,7 +7,7 @@ import {
   GET_LINKS_REQUEST,
   NEXT_STEP_REQUEST,
   PREVIOUS_STEP_REQUEST,
-  RESET_FILTER_REQUEST,
+  RESET_PAGINATION_REQUEST,
   RESET_STEPS_REQUEST,
 } from './actions'
 
@@ -95,7 +95,7 @@ export default function paymentLinksReducer (state = {
       })
     }
 
-    case RESET_FILTER_REQUEST: {
+    case RESET_PAGINATION_REQUEST: {
       return merge(state, {
         filter: {
           ...state.filter,
