@@ -14,19 +14,10 @@ const defaultProps = {
   t,
 }
 
-const NotLoading = () => (
+const DisableLinkModalExample = () => (
   <Section>
-    <DisableLinkModal {...defaultProps} loading={false} />
+    <DisableLinkModal {...defaultProps} />
   </Section>
 )
 
-const Loading = () => (
-  <Section>
-    <DisableLinkModal {...defaultProps} loading />
-  </Section>
-)
-
-export default {
-  Loading,
-  NotLoading,
-}
+export default DisableLinkModalExample

@@ -483,8 +483,7 @@ storiesOf('Containers|Payment Links/Details/Info', module)
   .add('Link Information', () => <PaymentLinks.Details.PaymentLinkInfo />)
 
 storiesOf('Containers|Payment Links/Details/DisableLinkModal', module)
-  .add('Loading', () => <PaymentLinks.Details.DisableLinkModal.Loading />)
-  .add('Not Loading', () => <PaymentLinks.Details.DisableLinkModal.NotLoading />)
+  .add('Default', () => <PaymentLinks.Details.DisableLinkModal />)
 
 storiesOf('Containers|Empty State', module)
   .add('Default', () => <EmptyState.EmptyStateDefault />)

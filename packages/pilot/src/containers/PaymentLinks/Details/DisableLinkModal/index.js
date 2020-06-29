@@ -12,7 +12,6 @@ import styles from './styles.css'
 
 const DisableLinkModal = ({
   isOpen,
-  loading,
   onCancelLink,
   onClose,
   t,
@@ -22,7 +21,7 @@ const DisableLinkModal = ({
       title={t('pages.payment_link_detail.disable.title')}
       titleAlign="start"
       closeIcon={<IconClose width={12} height={12} />}
-      onClose={() => !loading && onClose()}
+      onClose={onClose}
     />
     <ModalContent>
       <p className={styles.disableMessage}>
@@ -32,10 +31,10 @@ const DisableLinkModal = ({
       </p>
     </ModalContent>
     <ModalActions>
-      <Button disabled={loading} fill="outline" onClick={onClose}>
+      <Button fill="outline" onClick={onClose}>
         {t('pages.payment_link_detail.disable.cancel')}
       </Button>
-      <Button disabled={loading} loading={loading} onClick={onCancelLink}>
+      <Button onClick={onCancelLink}>
         {t('pages.payment_link_detail.disable.confirm')}
       </Button>
     </ModalActions>
@@ -44,7 +43,6 @@ const DisableLinkModal = ({
 
 DisableLinkModal.propTypes = {
   isOpen: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
   onCancelLink: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
