@@ -113,8 +113,11 @@ const today = moment().startOf('day')
 const initialQueryData = {
   active: true,
   dates: {
-    end: today,
-    start: today.clone().subtract(1, 'month'),
+    end: today.endOf('day'),
+    start: today
+      .clone()
+      .subtract(1, 'month')
+      .startOf('day'),
   },
   inactive: true,
   name: '',

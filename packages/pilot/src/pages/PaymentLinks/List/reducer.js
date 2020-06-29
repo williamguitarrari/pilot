@@ -97,7 +97,10 @@ export default function paymentLinksReducer (state = {
 
     case RESET_FILTER_REQUEST: {
       return merge(state, {
-        filter: { ...initialFilterState },
+        filter: {
+          ...state.filter,
+          ...initialFilterState,
+        },
         loadingGetLinks: true,
       })
     }
