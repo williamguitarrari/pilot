@@ -20,6 +20,8 @@ import {
   DetailsInfo,
   DisableLinkModal,
 } from '../../../containers/PaymentLinks/Details'
+import Spinner from '../../../components/Spinner'
+import styles from './styles.css'
 
 const mapStateToProps = ({
   paymentLinksDetails: {
@@ -69,39 +71,45 @@ const Details = ({
     setIsOpen(false)
   }
 
-  return !loadingGetLink && (
-    <>
-      <DisableLinkModal
-        isOpen={isOpen}
-        onCancelLink={onCancelLink}
-        onClose={() => setIsOpen(false)}
-        t={t}
-      />
-      <Grid>
-        <Row>
-          <Col {...defaultColumnSize}>
-            <DetailsHeader
-              name={paymentLink.name}
-              onPaymentLinkCancel={() => setIsOpen(true)}
-              status={paymentLink.status}
-              t={t}
-              url={paymentLink.url}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col {...defaultColumnSize}>
-            <DetailsInfo
-              amount={paymentLink.amount}
-              createdAt={paymentLink.date_created}
-              expiresAt={paymentLink.expires_at}
-              t={t}
-            />
-          </Col>
-        </Row>
-      </Grid>
-    </>
-  )
+  return !loadingGetLink
+    ? (
+      <>
+        <DisableLinkModal
+          isOpen={isOpen}
+          onCancelLink={onCancelLink}
+          onClose={() => setIsOpen(false)}
+          t={t}
+        />
+        <Grid>
+          <Row>
+            <Col {...defaultColumnSize}>
+              <DetailsHeader
+                name={paymentLink.name}
+                onPaymentLinkCancel={() => setIsOpen(true)}
+                status={paymentLink.status}
+                t={t}
+                url={paymentLink.url}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col {...defaultColumnSize}>
+              <DetailsInfo
+                amount={paymentLink.amount}
+                createdAt={paymentLink.date_created}
+                expiresAt={paymentLink.expires_at}
+                t={t}
+              />
+            </Col>
+          </Row>
+        </Grid>
+      </>
+    )
+    : (
+      <div className={styles.loading}>
+        <Spinner />
+      </div>
+    )
 }
 
 Details.propTypes = {
