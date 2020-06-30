@@ -95,6 +95,7 @@ class SidebarContainer extends React.Component {
     } = this.state
     const {
       companyName,
+      companyType,
       links,
       logo: Logo,
       onLinkClick,
@@ -183,7 +184,7 @@ class SidebarContainer extends React.Component {
             />
           ))}
         </SidebarLinks>
-        {!collapsed
+        {!collapsed && companyType !== 'payment_link_app'
           && (
             <Flexbox
               className={style.backToOldVersion}
@@ -218,6 +219,7 @@ SidebarContainer.propTypes = {
     waitingFunds: PropTypes.number,
   }).isRequired,
   companyName: PropTypes.string,
+  companyType: PropTypes.string,
   links: PropTypes.arrayOf(PropTypes.shape({
     active: PropTypes.bool,
     component: isValidElement,
@@ -242,6 +244,7 @@ SidebarContainer.defaultProps = {
   // More details in issue #1159
   // anticipationLimit: null,
   companyName: '',
+  companyType: '',
   onWithdraw: null,
   sessionId: '',
   transfersPricing: {},
