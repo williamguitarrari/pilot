@@ -53,6 +53,7 @@ const Header = ({
 
   return (
     <HeaderContainer
+      companyType={company.type}
       onBack={goBack}
       onLogout={onLogout}
       onSettings={() => push(routes.accountSettings.path)}
