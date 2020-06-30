@@ -42,6 +42,7 @@ const Sidebar = ({
   balance,
   companyCapabilities,
   companyName,
+  companyType,
   history,
   location: { pathname },
   recipientId,
@@ -52,6 +53,7 @@ const Sidebar = ({
   <SidebarContainer
     balance={balance}
     companyName={companyName}
+    companyType={companyType}
     links={values(routes)
       .filter(({ hidden, validateVisibility }) => {
         if (validateVisibility) {
@@ -92,6 +94,7 @@ Sidebar.propTypes = {
     allow_manage_recipient: PropTypes.bool,
   }),
   companyName: PropTypes.string,
+  companyType: PropTypes.string,
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
@@ -114,6 +117,7 @@ Sidebar.defaultProps = {
   // anticipationLimit: null,
   companyCapabilities: {},
   companyName: '',
+  companyType: '',
   recipientId: null,
   sessionId: '',
   transfersPricing: {},

@@ -31,6 +31,7 @@ const getRecipientId = path(['account', 'company', 'default_recipient_id', env])
 const getBalance = path(['account', 'balance'])
 const getCompanyCapabilities = path(['account', 'company', 'capabilities'])
 const getCompanyName = path(['account', 'company', 'name'])
+const getCompanyType = path(['account', 'company', 'type'])
 const getAccountSessionId = path(['account', 'sessionId'])
 const getTransfersPricing = path(['account', 'company', 'pricing', 'transfers'])
 
@@ -43,6 +44,7 @@ const mapStateToProps = applySpec({
   balance: getBalance,
   companyCapabilities: getCompanyCapabilities,
   companyName: getCompanyName,
+  companyType: getCompanyType,
   recipientId: getRecipientId,
   sessionId: getAccountSessionId,
   transfersPricing: getTransfersPricing,
@@ -63,6 +65,7 @@ const LoggedArea = ({
   balance,
   companyCapabilities,
   companyName,
+  companyType,
   recipientId,
   sessionId,
   t,
@@ -78,6 +81,7 @@ const LoggedArea = ({
         // anticipationLimit={anticipationLimit}
         companyCapabilities={companyCapabilities}
         companyName={companyName}
+        companyType={companyType}
         balance={balance}
         recipientId={recipientId}
         sessionId={sessionId}
@@ -124,6 +128,7 @@ LoggedArea.propTypes = {
     allow_manage_recipient: PropTypes.bool,
   }),
   companyName: PropTypes.string,
+  companyType: PropTypes.string,
   recipientId: PropTypes.string,
   sessionId: PropTypes.string,
   t: PropTypes.func.isRequired,
@@ -141,6 +146,7 @@ LoggedArea.defaultProps = {
   balance: {},
   companyCapabilities: {},
   companyName: '',
+  companyType: '',
   recipientId: null,
   sessionId: '',
   transfersPricing: {},
