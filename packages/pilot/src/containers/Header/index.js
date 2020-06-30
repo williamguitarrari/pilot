@@ -49,7 +49,8 @@ const renderTestEnviromentNav = t => (
   </div>
 )
 
-const renderLiveEnvironmentButton = ({
+const renderEnvironmentButton = ({
+  companyType,
   t,
 }) => (
   <Popover
@@ -65,14 +66,31 @@ const renderLiveEnvironmentButton = ({
     )}
     placement="bottomEnd"
   >
-    <Button
-      fill="clean"
-      icon={<IconTestAmbientOff />}
-    />
+    {environment === 'test' && companyType !== 'payment_link_app'
+      && (
+        <small className={style.testEnvironmentLabel}>
+          {t('header.environment.test_environment')}
+        </small>
+      )
+    }
+    {
+      companyType !== 'payment_link_app'
+      && (
+        <Button
+          fill="clean"
+          icon={
+            environment === 'test'
+              ? <IconTestAmbientOn />
+              : <IconTestAmbientOff />
+          }
+        />
+      )
+    }
   </Popover>
 )
 
 const HeaderContainer = ({
+  companyType,
   onBack,
   onLogout,
   onSettings,
@@ -124,7 +142,7 @@ const HeaderContainer = ({
           </>
         )}
 
-        {environment === 'live' && renderLiveEnvironmentButton({ t })}
+        {renderEnvironmentButton({ companyType, t })}
 
         <Spacing size="small" />
 
@@ -156,11 +174,17 @@ const HeaderContainer = ({
   </>
 )
 
-renderLiveEnvironmentButton.propTypes = {
+renderEnvironmentButton.propTypes = {
+  companyType: PropTypes.string,
   t: PropTypes.func.isRequired,
 }
 
+renderEnvironmentButton.defaultProps = {
+  companyType: '',
+}
+
 HeaderContainer.propTypes = {
+  companyType: PropTypes.string,
   onBack: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
   onSettings: PropTypes.func.isRequired,
@@ -177,6 +201,10 @@ HeaderContainer.propTypes = {
     email: PropTypes.string,
     name: PropTypes.string,
   }).isRequired,
+}
+
+HeaderContainer.defaultProps = {
+  companyType: '',
 }
 
 export default HeaderContainer
