@@ -81,6 +81,17 @@ export const activeCompanyLogin = () => {
   }
 }
 
+/**
+ * Trigger paymentLinkCompanyLogin event
+ */
+export const paymentLinkCompanyLogin = () => {
+  if (hasProperty(window.dataLayer)) {
+    window.dataLayer.push({
+      event: 'paymentLinkCompanyLogin',
+    })
+  }
+}
+
 export const virtualPageView = ({ path, title }) => {
   if (hasProperty(window.dataLayer)) {
     window.dataLayer.push({
