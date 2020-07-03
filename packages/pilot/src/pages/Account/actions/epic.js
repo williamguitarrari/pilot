@@ -44,7 +44,11 @@ import store from '../../../configureStore'
 
 import { WITHDRAW_RECEIVE } from '../../Withdraw/actions'
 import { receiveError } from '../../ErrorBoundary'
-import { activeCompanyLogin, inactiveCompanyLogin } from '../../../vendor/googleTagManager'
+import {
+  activeCompanyLogin,
+  paymentLinkCompanyLogin,
+  inactiveCompanyLogin,
+} from '../../../vendor/googleTagManager'
 
 const isActiveCompany = propEq('status', 'active')
 const isSelfRegister = propEq('type', 'self_register')
@@ -245,7 +249,11 @@ const companyEpic = (action$, state$) => action$.pipe(
     ])
 
     if (status === 'active') {
-      activeCompanyLogin()
+      if (type === 'payment_link_app') {
+        paymentLinkCompanyLogin()
+      } else {
+        activeCompanyLogin()
+      }
     } else {
       inactiveCompanyLogin()
     }
