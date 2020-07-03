@@ -12,6 +12,7 @@ const GeneralInfoTab = ({
   apiVersion,
   environment,
   fees,
+  hiddenApiKey,
   isMDRzao,
   onVersionChange,
   t,
@@ -27,15 +28,19 @@ const GeneralInfoTab = ({
       />
     </CardContent>
 
-    <CardContent>
-      <ApiKey
-        apiKeys={apiKeys}
-        environment={environment}
-        t={t}
-      />
-    </CardContent>
+    {!hiddenApiKey
+      && (
+        <CardContent>
+          <ApiKey
+            apiKeys={apiKeys}
+            environment={environment}
+            t={t}
+          />
+        </CardContent>
+      )
+    }
 
-    {!userIsReadOnly
+    {!userIsReadOnly && !hiddenApiKey
       && (
         <CardContent>
           <Versions
@@ -76,6 +81,7 @@ GeneralInfoTab.propTypes = {
     })),
     transfer: PropTypes.number,
   }).isRequired,
+  hiddenApiKey: PropTypes.bool.isRequired,
   isMDRzao: PropTypes.bool.isRequired,
   onVersionChange: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
