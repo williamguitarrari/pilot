@@ -3,6 +3,7 @@ import DetailsInfo from './Info'
 import DisableLinkModal from './DisableLinkModal'
 import LinkStatement from './LinkStatement'
 import PaymentMethods from './PaymentMethods'
+import TransactionsList from './TransactionsList'
 
 export {
   DetailsHeader,
@@ -10,4 +11,5 @@ export {
   DisableLinkModal,
   LinkStatement,
   PaymentMethods,
+  TransactionsList,
 }
