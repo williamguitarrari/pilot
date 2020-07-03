@@ -141,6 +141,7 @@ const defaultBankAccountErrorsState = {
 }
 
 const userIsReadOnly = propEq('permission', 'read_only')
+const hiddenApiKey = propEq('type', 'payment_link_app')
 
 class CompanySettingsPage extends React.Component {
   constructor (props) {
@@ -568,6 +569,7 @@ class CompanySettingsPage extends React.Component {
 
   render () {
     const {
+      company,
       fees,
       isMDRzao,
       t,
@@ -616,6 +618,7 @@ class CompanySettingsPage extends React.Component {
         general={general}
         handleCreateUser={this.handleCreateUser}
         handleDeleteUser={this.handleDeleteUser}
+        hiddenApiKey={hiddenApiKey(company)}
         isMDRzao={isMDRzao}
         managingPartner={managingPartner}
         onBankAccountCancel={this.handleAccountCancel}
@@ -674,7 +677,9 @@ CompanySettingsPage.propTypes = {
 }
 
 CompanySettingsPage.defaultProps = {
-  company: null,
+  company: {
+    type: null,
+  },
   fees: {},
   isMDRzao: false,
   user: null,
