@@ -48,6 +48,7 @@ class CompanySettings extends Component {
       general,
       handleCreateUser,
       handleDeleteUser,
+      hiddenApiKey,
       isMDRzao,
       managingPartner,
       onBankAccountCancel,
@@ -90,6 +91,7 @@ class CompanySettings extends Component {
               apiVersion={apiVersion}
               environment={environment}
               fees={fees}
+              hiddenApiKey={hiddenApiKey}
               isMDRzao={isMDRzao}
               onVersionChange={onVersionChange}
               t={t}
@@ -256,6 +258,7 @@ CompanySettings.propTypes = {
   }).isRequired,
   handleCreateUser: PropTypes.func.isRequired,
   handleDeleteUser: PropTypes.func.isRequired,
+  hiddenApiKey: PropTypes.bool.isRequired,
   isMDRzao: PropTypes.bool.isRequired,
   managingPartner: PropTypes.shape({
     cpf: PropTypes.string,
