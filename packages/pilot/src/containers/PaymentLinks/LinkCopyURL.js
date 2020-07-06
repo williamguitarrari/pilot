@@ -8,7 +8,12 @@ import IconCheck from 'emblematic-icons/svg/Check24.svg'
 import ClickableDiv from '../../components/ClickableDiv'
 import styles from './styles.css'
 
-const LinkCopyURL = ({ status, t, url }) => {
+const LinkCopyURL = ({
+  placement,
+  status,
+  t,
+  url,
+}) => {
   const [isCopied, setIsCopied] = useState(false)
 
   const isLinkActive = status === 'active'
@@ -29,7 +34,7 @@ const LinkCopyURL = ({ status, t, url }) => {
     <Tooltip
       onMouseEnter={() => {}}
       onMouseLeave={() => {}}
-      placement="topCenter"
+      placement={placement}
       content={t('copied')}
       visible={isCopied}
     >
@@ -53,9 +58,14 @@ const LinkCopyURL = ({ status, t, url }) => {
 }
 
 LinkCopyURL.propTypes = {
+  placement: PropTypes.string,
   status: PropTypes.string.isRequired,
   t: PropTypes.func.isRequired,
   url: PropTypes.string.isRequired,
+}
+
+LinkCopyURL.defaultProps = {
+  placement: 'topCenter',
 }
 
 export default LinkCopyURL

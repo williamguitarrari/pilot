@@ -84,7 +84,7 @@ const creditCardInputDefaultValues = {
 
 const makeDefaulLinkData = () => ({
   boleto: false,
-  credit_card: false,
+  credit_card: true,
   ...firstStepDefaultData,
   ...boletoInputDefaultValues,
   ...creditCardInputDefaultValues,
