@@ -5,10 +5,8 @@ import {
   Flexbox,
   ModalContent,
 } from 'former-kit'
-import copyToClipBoard from 'clipboard-copy'
-import IconCopy from 'emblematic-icons/svg/Copy24.svg'
 import PaymentLinkActionsContainer from '../PaymentLinkActionsContainer'
-import ClickableDiv from '../../../../../components/ClickableDiv'
+import LinkCopyUrl from '../../../LinkCopyURL'
 import CreatedLinkSvg from './created_link.svg'
 
 import style from './style.css'
@@ -28,14 +26,14 @@ const SuccessStep = ({
           <div className={style.image}>
             <CreatedLinkSvg />
           </div>
-          <ClickableDiv
-            className={style.link}
-            onClick={() => copyToClipBoard(paymentLink)}
-            onKeyPress={() => copyToClipBoard(paymentLink)}
-          >
-            {paymentLink}
-            <IconCopy width="16px" height="16px" />
-          </ClickableDiv>
+          <div className={style.link}>
+            <LinkCopyUrl
+              placement="rightEnd"
+              status="active"
+              url={paymentLink}
+              t={t}
+            />
+          </div>
         </Flexbox>
       </div>
     </ModalContent>
@@ -54,7 +52,7 @@ SuccessStep.propTypes = {
 }
 
 SuccessStep.defaultProps = {
-  onCreateAnotherLink: () => {},
+  onCreateAnotherLink: () => { },
 }
 
 export default SuccessStep

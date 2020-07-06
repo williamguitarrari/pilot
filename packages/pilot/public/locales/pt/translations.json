@@ -1771,6 +1771,10 @@
         "with_interest_rate_2": "De",
         "to": "{{from}} a {{to}}",
         "with_interest_rate_3": "vezes, juros de {{percent}} a.m"
+      },
+      "list": {
+        "empty_state_title": "Não foram encontradas transações neste link de pagamentos.",
+        "empty_state_subtitle": "Compartilhe-o com seus clientes para ver aqui as suas vendas."
       }
     },
     "empty_state": {

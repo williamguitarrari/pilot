@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { translate } from 'react-i18next'
-import { compose } from 'ramda'
+import { compose, nth } from 'ramda'
 import {
   Col,
   Grid,
@@ -12,6 +12,7 @@ import {
 import { withError } from '../../ErrorBoundary'
 import {
   getLinkRequest as getLinkRequestAction,
+  getTransactionsRequest as getTransactionsRequestAction,
   cancelLinkRequest as cancelLinkRequestAction,
 } from './actions'
 import {
@@ -19,6 +20,7 @@ import {
   DetailsInfo,
   DisableLinkModal,
   PaymentMethods,
+  TransactionsList,
 } from '../../../containers/PaymentLinks/Details'
 import Spinner from '../../../components/Spinner'
 import styles from './styles.css'
@@ -26,16 +28,21 @@ import styles from './styles.css'
 const mapStateToProps = ({
   paymentLinksDetails: {
     loadingGetLink,
+    loadingGetTransactions,
     paymentLink,
+    transactions,
   },
 }) => ({
   loadingGetLink,
+  loadingGetTransactions,
   paymentLink,
+  transactions,
 })
 
 const mapDispatchToProps = {
   cancelLinkRequest: cancelLinkRequestAction,
   getLinkRequest: getLinkRequestAction,
+  getTransactionsRequest: getTransactionsRequestAction,
 }
 
 const enhanced = compose(
@@ -55,20 +62,30 @@ const defaultColumnSize = {
 const Details = ({
   cancelLinkRequest,
   getLinkRequest,
+  getTransactionsRequest,
+  history,
   loadingGetLink,
+  loadingGetTransactions,
   match,
   paymentLink,
   t,
+  transactions,
 }) => {
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
     getLinkRequest(match.params.id)
+    getTransactionsRequest(match.params.id)
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const onCancelLink = () => {
     cancelLinkRequest(match.params.id)
     setIsOpen(false)
+  }
+
+  const onRowClick = (rowIndex) => {
+    const { id } = nth(rowIndex, transactions)
+    history.push(`/transactions/${id}`)
   }
 
   return !loadingGetLink
@@ -109,6 +126,16 @@ const Details = ({
               />
             </Col>
           </Row>
+          <Row>
+            <Col {...defaultColumnSize}>
+              <TransactionsList
+                loading={loadingGetTransactions}
+                onRowClick={onRowClick}
+                rows={transactions}
+                t={t}
+              />
+            </Col>
+          </Row>
         </Grid>
       </>
     )
@@ -122,7 +149,12 @@ const Details = ({
 Details.propTypes = {
   cancelLinkRequest: PropTypes.func.isRequired,
   getLinkRequest: PropTypes.func.isRequired,
+  getTransactionsRequest: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
   loadingGetLink: PropTypes.bool.isRequired,
+  loadingGetTransactions: PropTypes.bool.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -130,10 +162,12 @@ Details.propTypes = {
   }).isRequired,
   paymentLink: PropTypes.shape(),
   t: PropTypes.func.isRequired,
+  transactions: PropTypes.arrayOf(PropTypes.shape({})),
 }
 
 Details.defaultProps = {
   paymentLink: null,
+  transactions: [],
 }
 
 export default enhanced(Details)

@@ -42,7 +42,7 @@ const DisableLinkModal = ({
 )
 
 DisableLinkModal.propTypes = {
-  isOpen: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired,
   onCancelLink: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
