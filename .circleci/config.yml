@@ -70,6 +70,7 @@ jobs:
           export PUBLIC_URL='https://beta.dashboard.stg.pagarme.net/latest'
           export REACT_APP_LIVE_URL='https://beta.dashboard.stg.pagarme.net/latest/index.html'
           export REACT_APP_TEST_URL='https://beta.dashboard.sandbox.stg.pagarme.net/latest/index.html'
+          export REACT_APP_RECAPTCHA_KEY=$RECAPTCHA_KEY_SANDBOX
           export REACT_APP_API_ENVIRONMENT='live'
           sed -e 's/\".\"/"'$PUBLIC_URL_REGEX'\"/g' package.json > package.json.bak
           cp package.json.bak package.json
@@ -137,6 +138,7 @@ jobs:
           export PUBLIC_URL='https://beta.dashboard.pagar.me'
           export REACT_APP_LIVE_URL='https://beta.dashboard.pagar.me/'
           export REACT_APP_TEST_URL='https://beta.dashboard.sandbox.pagar.me/'
+          export REACT_APP_RECAPTCHA_KEY=$RECAPTCHA_KEY_LIVE
           export REACT_APP_API_ENVIRONMENT='live'
           sed -e 's/\".\"/"'$PUBLIC_URL_REGEX'\"/g' package.json > package.json.bak
           cp package.json.bak package.json
