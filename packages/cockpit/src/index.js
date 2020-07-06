@@ -2,6 +2,7 @@ import { applySpec } from 'ramda'
 import balance from './balance'
 import bulkAnticipations from './bulkAnticipations'
 import business from './business'
+import paymentLinks from './paymentLinks'
 import proxy from './proxy'
 import user from './user'
 import company from './company'
@@ -18,6 +19,7 @@ const cockpit = applySpec({
   user,
   company,
   invites,
+  paymentLinks,
   recipient,
   withdraw,
 })

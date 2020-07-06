@@ -2,7 +2,7 @@ import React from 'react'
 import { omit } from 'ramda'
 import { Table } from 'former-kit'
 
-import withSpinner from '../../components/withSpinner'
+import withSpinner from '../withSpinner'
 
 import style from './style.css'
 

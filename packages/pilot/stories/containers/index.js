@@ -108,6 +108,8 @@ import EmptyState from './EmptyState'
 
 import Onboarding from './Onboarding'
 
+import PaymentLinks from './PaymentLinks'
+
 storiesOf('Containers|Bank/Account', module)
   .add('selector', () => <BankAccountSelector />)
   .add('settings', () => <BankAccount />)
@@ -445,6 +447,53 @@ storiesOf('Containers|Page containers', module)
   .add('Home', () => (
     <Home />
   ))
+
+storiesOf('Containers|Empty State', module)
+  .add('Default', () => <EmptyState.EmptyStateDefault />)
+  .add('MDRzao', () => <EmptyState.EmptyStateMDRzao />)
+
+storiesOf('Containers|Payment Links/List/Filter', module)
+  .add('Filter', () => <PaymentLinks.List.Filter />)
+
+storiesOf('Containers|Payment Links/List/NewLinksCard', module)
+  .add('NewLinksCard', () => <PaymentLinks.List.NewLinksCard />)
+
+storiesOf('Containers|Payment Links/List/PaymentLinkList', module)
+  .add('List', () => <PaymentLinks.List.PaymentLinksList.WithList />)
+  .add('List loading', () => <PaymentLinks.List.PaymentLinksList.WithListLoading />)
+  .add('Empty list', () => <PaymentLinks.List.PaymentLinksList.WithEmptyList />)
+
+storiesOf('Containers|Payment Links/List/PaymentLinkAdd', module)
+  .add('AddModal', () => <PaymentLinks.List.PaymentLinkAdd.PaymentLinkAddModal />)
+  .add('FirstStep', () => <PaymentLinks.List.PaymentLinkAdd.PaymentLinkFirstStep />)
+  .add('SecondStep', () => <PaymentLinks.List.PaymentLinkAdd.PaymentLinkSecondStep />)
+  .add('SuccessStep', () => <PaymentLinks.List.PaymentLinkAdd.PaymentLinkSuccessStep />)
+  .add('ErrorStep', () => <PaymentLinks.List.PaymentLinkAdd.PaymentLinkErrorStep />)
+
+storiesOf('Containers|Payment Links/Details/LinkStatement', module)
+  .add('Default', () => <PaymentLinks.Details.LinkStatement.LinkStatementDefault />)
+  .add('EmptyState', () => <PaymentLinks.Details.LinkStatement.LinkStatementEmptyState />)
+  .add('OptionalFields', () => <PaymentLinks.Details.LinkStatement.LinkStatementOptionalFields />)
+
+storiesOf('Containers|Payment Links/Details/Header', module)
+  .add('Active Link', () => <PaymentLinks.Details.DetailsHeader.ActiveLink />)
+  .add('Inactive Link', () => <PaymentLinks.Details.DetailsHeader.InactiveLink />)
+
+storiesOf('Containers|Payment Links/Details/Info', module)
+  .add('Link Information', () => <PaymentLinks.Details.PaymentLinkInfo />)
+
+storiesOf('Containers|Payment Links/Details/DisableLinkModal', module)
+  .add('Default', () => <PaymentLinks.Details.DisableLinkModal />)
+
+storiesOf('Containers|Payment Links/Details/TransactionsList', module)
+  .add('With rows', () => <PaymentLinks.Details.TransactionsList.WithRows />)
+  .add('When loading', () => <PaymentLinks.Details.TransactionsList.WhenLoading />)
+  .add('When empty', () => <PaymentLinks.Details.TransactionsList.WhenEmpty />)
+
+storiesOf('Containers|Payment Links/Details/PaymentMethods', module)
+  .add('OnlyBoleto', () => <PaymentLinks.Details.PaymentMethods.OnlyBoleto />)
+  .add('WithInterestRate', () => <PaymentLinks.Details.PaymentMethods.WithInterestRate />)
+  .add('WithoutInterestRate', () => <PaymentLinks.Details.PaymentMethods.WithoutInterestRate />)
 
 storiesOf('Containers|Empty State', module)
   .add('Default', () => <EmptyState.EmptyStateDefault />)

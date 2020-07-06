@@ -9,6 +9,7 @@ import {
 import style from './style.css'
 
 const ExportData = ({
+  disabled,
   exportOptions,
   icon,
   loading,
@@ -17,32 +18,10 @@ const ExportData = ({
   size,
   subtitle,
   title,
-}) => (!loading
-  ? (
-    <Popover
-      content={(
-        <div className={style.exportPopover}>
-          <PopoverContent>
-            <strong>{subtitle}</strong>
-          </PopoverContent>
-          <PopoverMenu items={exportOptions} />
-        </div>
-      )}
-      placement={placement}
-    >
-      <Button
-        fill="outline"
-        icon={icon}
-        loading={loading}
-        relevance={relevance}
-        size={size}
-        displayChildrenWhenLoading
-      >
-        {title}
-      </Button>
-    </Popover>
-  ) : (
+}) => {
+  const button = (
     <Button
+      disabled={disabled}
       fill="outline"
       icon={icon}
       loading={loading}
@@ -53,15 +32,38 @@ const ExportData = ({
       {title}
     </Button>
   )
-)
+
+  return (!loading && !disabled
+    ? (
+      <Popover
+        content={(
+          <div className={style.exportPopover}>
+            <PopoverContent>
+              <strong>{subtitle}</strong>
+            </PopoverContent>
+            <PopoverMenu items={exportOptions} />
+          </div>
+      )}
+        placement={placement}
+      >
+        {button}
+      </Popover>
+    ) : (
+      <>
+        {button}
+      </>
+    )
+  )
+}
 
 ExportData.propTypes = {
+  disabled: PropTypes.bool,
   exportOptions: PropTypes.arrayOf(PropTypes.shape({
     action: PropTypes.func.isRequired,
     title: PropTypes.string.isRequired,
   })).isRequired,
   icon: PropTypes.node.isRequired,
-  loading: PropTypes.bool.isRequired,
+  loading: PropTypes.bool,
   placement: PropTypes.string.isRequired,
   relevance: PropTypes.oneOf([
     'high', 'normal', 'low',
@@ -74,6 +76,8 @@ ExportData.propTypes = {
 }
 
 ExportData.defaultProps = {
+  disabled: false,
+  loading: false,
   relevance: 'normal',
   size: 'default',
   title: null,
