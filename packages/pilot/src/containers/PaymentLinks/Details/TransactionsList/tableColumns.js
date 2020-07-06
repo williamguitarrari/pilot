@@ -9,6 +9,7 @@ import { Truncate } from 'former-kit'
 
 import formatCurrency from '../../../../formatters/currency'
 import formatDate from '../../../../formatters/longDate'
+import cpfCnpj from '../../../../formatters/cpfCnpj'
 import rendererStatusLegend from '../../../TransactionsList/renderStatusLegend'
 
 const convertPaymentValue = property => pipe(
@@ -41,7 +42,7 @@ const getDocumentNumber = (item) => {
     return false
   }
 
-  return document.number
+  return cpfCnpj(document.number)
 }
 
 const renderPaymentMethod = t => item => t(`models.transaction.${item.payment_method}`)
