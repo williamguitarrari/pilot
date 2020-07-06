@@ -40,7 +40,7 @@
 
 .secondaryContent,
 .primaryContent {
-  align-items: baseline;
+  align-items: stretch;
   display: flex;
   flex-direction: column;
   height: 600px;
@@ -90,7 +90,6 @@
 .confirmationContent {
   display: flex;
   flex-direction: column;
-  flex: 1;
   min-height: 150px;
   padding-top: var(--spacing-large);
   width: 100%;

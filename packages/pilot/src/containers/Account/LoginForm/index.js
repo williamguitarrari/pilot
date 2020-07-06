@@ -1,16 +1,17 @@
-import React from 'react'
+import React, { useState, useRef } from 'react'
 import PropTypes from 'prop-types'
-import Form from 'react-vanilla-form'
+import ReCAPTCHA from 'react-google-recaptcha'
+import isEmail from 'validator/lib/isEmail'
+import isEmpty from 'validator/lib/isEmpty'
 import IconError from 'emblematic-icons/svg/ClearClose32.svg'
 import {
   Button,
   FormInput,
   Alert,
 } from 'former-kit'
+import { recaptchaKey } from '../../../environment'
 
 import styles from '../style.css'
-
-import isEmail from '../../../validation/email'
 
 const LoginContainer = ({
   base,
@@ -19,70 +20,123 @@ const LoginContainer = ({
   onLogin,
   onPasswordRecovery,
   t,
-}) => (
-  <Form
-    errors={errors}
-    customErrorProp="error"
-    onSubmit={onLogin}
-    validation={{
-      email: isEmail(t('invalid_email')),
-    }}
-  >
-    <div className={styles.formContent}>
-      <FormInput
-        base={base}
-        disabled={loading}
-        label={t('email')}
-        name="email"
-        type="email"
+}) => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [formErrors, setFormErrors] = useState({
+    email: null,
+    password: null,
+  })
+  const recaptchaRef = useRef()
+
+  const recaptchaOnChange = (recaptchaToken) => {
+    onLogin({ email, password, recaptchaToken })
+  }
+
+  const handleLoginActionOnClick = (e) => {
+    e.preventDefault()
+
+    if (!isEmail(email)) {
+      setFormErrors({
+        email: t('invalid_email'),
+        password: null,
+      })
+      return
+    }
+    if (isEmpty(password)) {
+      setFormErrors({
+        email: null,
+        password: t('empty_password'),
+      })
+      return
+    }
+
+    setFormErrors({
+      email: null,
+      password: null,
+    })
+
+    const recaptchaToken = recaptchaRef.current.getValue()
+    if (!recaptchaToken) {
+      recaptchaRef.current.execute()
+      return
+    }
+
+    onLogin({ email, password, recaptchaToken })
+  }
+
+  return (
+    <form
+      onSubmit={handleLoginActionOnClick}
+    >
+      <div className={styles.formContent}>
+        <FormInput
+          base={base}
+          disabled={loading}
+          label={t('email')}
+          name="email"
+          type="email"
+          value={email}
+          onChange={v => setEmail(v.target.value)}
+          error={formErrors.email}
+        />
+        <FormInput
+          base={base}
+          disabled={loading}
+          type="password"
+          label={t('password')}
+          name="password"
+          value={password}
+          onChange={v => setPassword(v.target.value)}
+          error={formErrors.password}
+        />
+      </div>
+      <ReCAPTCHA
+        ref={recaptchaRef}
+        sitekey={recaptchaKey}
+        size="invisible"
+        onChange={recaptchaOnChange}
       />
-      <FormInput
-        base={base}
-        disabled={loading}
-        type="password"
-        label={t('password')}
-        name="password"
-      />
-    </div>
-    <div className={styles.errorAlert}>
       {errors
         && (
-          <Alert
-            base={base}
-            type="error"
-            icon={<IconError height={16} width={16} />}
-          >
-            <span>
-              {errors.null
-                ? errors.null
-                : t('login.network_error')
+          <div className={styles.errorAlert}>
+            <Alert
+              base={base}
+              type="error"
+              icon={<IconError height={16} width={16} />}
+            >
+              <span>
+                {errors.null
+                  ? errors.null
+                  : t('login.network_error')
               }
-            </span>
-          </Alert>
+              </span>
+            </Alert>
+          </div>
         )
       }
-    </div>
-    <div className={styles.actions}>
-      <div className={styles.hugeButton}>
-        <Button
-          type="submit"
+      <div className={styles.actions}>
+        <div className={styles.hugeButton}>
+          <Button
+            type="submit"
+            disabled={loading}
+            size="huge"
+          >
+            {t('login.login_action')}
+          </Button>
+        </div>
+        <button
+          role="link"
           disabled={loading}
-          size="huge"
+          onClick={onPasswordRecovery}
+          type="button"
         >
-          {t('login.login_action')}
-        </Button>
+          {t('login.password_recovery_action')}
+        </button>
       </div>
-      <button
-        role="link"
-        disabled={loading}
-        onClick={onPasswordRecovery}
-        type="button"
-      >
-        {t('login.password_recovery_action')}
-      </button>
-    </div>
-  </Form>
-)
+    </form>
+  )
+}
 
 LoginContainer.propTypes = {
   base: PropTypes.oneOf(['dark', 'light']).isRequired,
