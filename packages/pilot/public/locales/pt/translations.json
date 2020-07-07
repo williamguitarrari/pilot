@@ -1,6 +1,10 @@
 {
+  "advance": "Avançar",
   "amount": "Valor",
   "at": "às",
+  "yes": "sim",
+  "no": "não",
+  "finish": "finalizar",
   "attention": "Atenção!",
   "back_login_action": "Voltar para o login",
   "bank": "Banco",
@@ -22,11 +26,13 @@
   "conta_poupança_conjunta": "Poupança conjunta",
   "copied_to_clipboard": "Copiado!",
   "copy_id": "Copiar id",
+  "copied": "Copiado!",
   "copyright_group": "Uma empresa do Grupo Arpex Capital © 2015,",
   "copyright_company": "Pagar.me Pagamentos S.A. Todos os direitos reservados.",
   "currency_symbol": "R$",
   "currency": "R$",
   "phone": "Telefone",
+  "days": "Dias",
   "dates": {
     "any": "Qualquer data",
     "cancel": "Cancelar",
@@ -62,6 +68,7 @@
     "action": "Transações com este status foram identificadas como fraudulentas e são garantidas pela sua Cobertura de fraudes.",
     "reason": ""
   },
+  "hours": "Horas",
   "go_back": "voltar",
   "holder_name": "Portador do cartão",
   "installment_plural": "{{count}}x",
@@ -73,11 +80,13 @@
   "items_per_page_plural": "{{count}} itens por página",
   "items_per_page": "{{count}} item por página",
   "loading": "Carregando...",
+  "minutes": "Minutos",
+  "months": "Meses",
   "of": "de",
   "password": "Senha",
   "password_confirm": "Confirmar senha",
   "recipient": "Recebedor",
-  "refuse":{
+  "refuse": {
     "title": "Recusado - motivo:",
     "action": {
       "acquirer_timeout": "Acesse os detalhes da transação e tente reprocessá-la.",
@@ -85,11 +94,11 @@
       "capture_timeout": "Acesse os detalhes da transação e tente reprocessá-la.",
       "checkout_cvv": "Oriente o portador a certificar-se que foi realizado o envio do CVV no fechamento do checkout.",
       "contact_acquirer": "Você pode orientar o portador a entrar em contato com o banco emissor do cartão.",
-      "credit_limit":"Você poder orientar o portador a entrar em contato com o banco emissor do cartão para aumento do limite.",
+      "credit_limit": "Você poder orientar o portador a entrar em contato com o banco emissor do cartão para aumento do limite.",
       "duplicated_payment": "É possível que o cliente já tenha realizado a compra com sucesso e está erroneamente enviando o pagamento uma segunda vez.",
       "imsg_error_1": "Maiores orientações no artigo: ",
       "imsg_error_2": "O que significa o Erro Interno IMSG?",
-      "imsg_error_link":"https://pagarme.zendesk.com/hc/pt-br/articles/115000482986-O-que-significa-o-Erro-interno-IMSG-",
+      "imsg_error_link": "https://pagarme.zendesk.com/hc/pt-br/articles/115000482986-O-que-significa-o-Erro-interno-IMSG-",
       "incorrect_cvv": "O CVV digitado está incorreto. Oriente o portador a tentar novamente, se atentando ao preenchimento do CVV.",
       "invalid_capture_amount": "Certifique-se de que o valor da captura não é acima do que foi autorizado ou se o número foi informado corretamente.",
       "invalid_card": "O número do cartão digitado está incorreto. Oriente o portador a tentar novamente, se atentando ao preenchimento do número do cartão.",
@@ -99,7 +108,7 @@
       "no_acquirer": "Entre em contato com o nosso time de relacionamento para mais detalhes.",
       "nonexistent_account": "Pode acontecer quando o tipo de conta selecionado não existe. Oriente o portador a tentar novamente, se atentando ao preenchimento do tipo de conta.",
       "remake_transaction": "Tente refazer a transação.",
-      "unknown_error":"Você pode tentar refazer a transação. Se o erro persistir, oriente o portador a entrar em contato com o banco emissor do cartão."
+      "unknown_error": "Você pode tentar refazer a transação. Se o erro persistir, oriente o portador a entrar em contato com o banco emissor do cartão."
     },
     "reason": {
       "acquirer_timeout": "Tempo de resposta do banco ou adquirente esgotado.",
@@ -990,7 +999,7 @@
       "invalid_capture_amount": "Valor de captura inválido",
       "manual_review_timeout": "Revisão manual expirada",
       "manual_review": "Revisão manual",
-      "mastercard":  "Mastercard",
+      "mastercard": "Mastercard",
       "most_used_card_brands": "Bandeiras mais utilizadas",
       "no_acquirer": "Sem adquirente configurado",
       "none": "Status desconhecido",
@@ -1461,7 +1470,7 @@
       "acquirer_response_code": "Resposta da operadora",
       "action_boleto": "Gerar boleto",
       "action_capture": "Capturar",
-      "action_refund":"Estornar",
+      "action_refund": "Estornar",
       "action_reprocess": "Reprocessar",
       "action_reprocessing": "Reprocessando",
       "alert": {
@@ -1632,6 +1641,142 @@
       "title": "Transações",
       "total_amount": "total capturado de",
       "try_again": "Tente novamente com outros filtros."
+    },
+    "payment_links": {
+      "title": "Links de Pagamento",
+      "filter": {
+        "filter_by_link_name": "Filtre pelo nome do link",
+        "active": "Ativo",
+        "inactive": "Inativo"
+      },
+      "list": {
+        "title": "Meus links de pagamento",
+        "status": "status",
+        "link_name": "nome do link",
+        "created_at": "data de criação",
+        "link": "link",
+        "total_paid": "valor total",
+        "status_legends": {
+          "active": "ativo",
+          "canceled": "inativo",
+          "expired": "inativo"
+        },
+        "empty_state_title": "Ops, nenhum link foi encontrado...",
+        "empty_state_message_1": "Dá uma olhadinha no período selecionado e tente limpar os filtros, se você nunca criou um link, basta clicar no botão",
+        "empty_state_message_2": "\"Criar link de pagamento\"",
+        "empty_state_message_3": "para começar a vender!"
+      },
+      "add_link": {
+        "receive_payments": "Receba pagamentos",
+        "share_payment_links_1": "Crie e compartilhe links de pagamento com",
+        "share_payment_links_2": "os seus clientes e comece a vender agora.",
+        "create_payment_link": "Criar link de pagamento",
+        "first_step": {
+          "title": "Criar link de pagamentos",
+          "price_form_label": "Preço (R$)",
+          "link_name_label": "Nome do link",
+          "time_expiration_form_label": "Tempo de expiração",
+          "expiration_date_string": "Este link ficará disponível até {{formatedDate}} às {{formatedHours}}.",
+          "min_chars_length_error": "Este campo precisa ter no mínimo {{length}} caracteres.",
+          "max_chars_length_error": "No máximo {{length}} caracteres",
+          "required_error": "Campo obrigatório",
+          "price_greater_than_100_error": "O preço do seu link deve ser maior ou igual a R$1,00",
+          "price_less_than_error": "O preço do seu link deve ser menor ou igual a R$20.000.000,00",
+          "is_number_error": "Este campo precisa ser um número",
+          "min_allowed_hours_error": "Seu link precisa durar no mínimo {{hours}} hora.",
+          "max_allowed_days_error": "O tempo máximo de expiração de um link é {{days}} dias.",
+          "is_not_integer_error": "Não utilize pontos ou vírgulas ao especificar o tempo de expiração."
+        },
+        "second_step": {
+          "boleto": "Boleto",
+          "boleto_info_1": "Os dias serão contados a partir do momento",
+          "boleto_info_2": "que o seu cliente gerar o boleto.",
+          "boleto_input_label": "Dias para o vencimento",
+          "credit_card": "Cartão de crédito",
+          "max_installments_label": "Limites de parcelas",
+          "transfer_fees_label": "Opções de parcelamento",
+          "installment_value_singular": "Máximo de 1 parcela",
+          "installment_value_plural": "Máximo de {{installment}} parcelas",
+          "without_fee_options": "Sem juros",
+          "installment_options_singular": "Parcelamento sem juros até 1 parcela",
+          "installment_options_plural": "Parcelamento sem juros até {{installment}} parcelas",
+          "percent_per_month_1": "Porcentagem de juros ",
+          "percent_per_month_2": "ao mês",
+          "title": "Meios de pagamento",
+          "required_error": "Campo obrigatório",
+          "is_integer_error": "Este campo precisa ser um número inteiro",
+          "is_number_error": "Este campo precisa ser um número",
+          "min_value_error": "O valor mínimo é {{value}}",
+          "max_value_error": "O valor máximo é {{value}}"
+        },
+        "success": {
+          "title": "Link criado com sucesso!",
+          "subtitle": "Compartilhe o link abaixo e boas vendas.",
+          "new_link": "Criar novo link de pagamento"
+        },
+        "error": {
+          "title": "Erro na criação do link",
+          "retry_button": "Tentar novamente",
+          "error_info_1": "Ops! Tivemos um problema na criação",
+          "error_info_2": "do seu link, tente novamente mais tarde."
+        }
+      },
+      "details": {
+        "link_statement": {
+          "title": "Extrato do link",
+          "paid_amount": "Valor pago",
+          "refunds": "Estornos",
+          "chargebacks": "Chargebacks",
+          "fees": "Taxas Pagar.me",
+          "net_amount": "Você recebe",
+          "empty_state": "Vamos adicionar aqui o extrato das suas transações neste link de pagamento, basta ter uma transação paga para visualizar aqui o quanto você receberá no seu saldo."
+        }
+      }
+    },
+    "payment_link_detail": {
+      "title": "Detalhes do link de pagamento",
+      "header": {
+        "name": "Nome do link",
+        "status": "Status",
+        "url": "URL do link",
+        "disable_link": "Desativar Link",
+        "disable_link_inactive": "Link Inativo"
+      },
+      "disable": {
+        "title": "Tem certeza disso?",
+        "cancel": "Agora não",
+        "confirm": "Sim, desativar link",
+        "disable_message_1": "Após desativar este link de pagamento não será",
+        "disable_message_2": "possível reativá-lo e seus clientes não poderão",
+        "disable_message_3": "realizar pagamentos através dele."
+      },
+      "info": {
+        "title": "Detalhes do link de pagamento",
+        "amount": "Valor do produto",
+        "date_created": "Data de criação",
+        "expires_at": "Disponibilidade",
+        "until": "até {{date}}"
+      },
+      "payment_methods": {
+        "title": "Meios de pagamento",
+        "boleto_title": "Boleto",
+        "boleto_subtitle": "Dias para o vencimento",
+        "credit_title": "Cartão de crédito",
+        "credit_subtitle": "Parcelamento",
+        "max_of": "Máximo de",
+        "no_interest_rate": "parcela sem juros",
+        "no_interest_rate_plural": "parcelas sem juros",
+        "with_interest_rate_1": ", sem juros até",
+        "installment": "parcela",
+        "installment_plural": "parcelas",
+        "with_interest_rate_2": "De",
+        "to": "{{from}} a {{to}}",
+        "with_interest_rate_3": "vezes, juros de {{percent}} a.m"
+      },
+      "list": {
+        "empty_state_title": "Não foram encontradas transações neste link de pagamentos.",
+        "empty_state_subtitle": "Compartilhe-o com seus clientes para ver aqui as suas vendas."
+      }
     },
     "empty_state": {
       "title": "Boas-vindas",
