@@ -19,6 +19,7 @@ import SidebarContainer from '../../containers/Sidebar'
 import routes from './routes'
 
 import Logo from '../../components/Logo'
+import env from '../../environment'
 
 const removeRouteParams = pipe(
   split(':'),
@@ -59,7 +60,8 @@ const Sidebar = ({
           return validateVisibility(companyCapabilities)
         }
 
-        if (path === '/payment-links' && companyId === '5e8f606e2e684d1e268ad05e') {
+        if (path === '/payment-links'
+        && (companyId === '5e8f606e2e684d1e268ad05e' || env === 'test')) {
           return true
         }
 
