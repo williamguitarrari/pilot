@@ -2,7 +2,6 @@ import {
   find, is, juxt, pipe,
 } from 'ramda'
 import moment from 'moment'
-import createRequiredValidation from '../../../../../validation/required'
 import createNumberValidation from '../../../../../validation/number'
 import createMinLengthValidation from '../../../../../validation/minLength'
 import createMaxLengthValidaton from '../../../../../validation/maxLength'
@@ -40,14 +39,12 @@ const createMaxAllowedDays = (timeUnit, getTranslation) => (timeAmount) => {
 
 export const validateExpirationAmount = (
   expirationUnit, getTranslation
-) => (value) => {
-  const isRequired = createRequiredValidation(getTranslation('required_error'))
+) => (value = 0) => {
   const isNumber = createNumberValidation(getTranslation('is_not_integer_error'))
   const minAllowedHours = createMinAllowedHours(expirationUnit, getTranslation)
   const maxAllowedDays = createMaxAllowedDays(expirationUnit, getTranslation)
 
   return applyValidations([
-    isRequired,
     isNumber,
     minAllowedHours,
     maxAllowedDays,
@@ -79,8 +76,6 @@ export const validateAmount = getTranslation => (value) => {
 }
 
 export const validateName = getTranslation => (value = '') => {
-  const isRequired = createRequiredValidation(getTranslation('required_error'))
-
   const minCharLength = 2
   const minCharLengthError = createMinLengthValidation(
     minCharLength,
@@ -94,7 +89,6 @@ export const validateName = getTranslation => (value = '') => {
   )
 
   return applyValidations([
-    isRequired,
     maxCharLengthError,
     minCharLengthError,
   ],

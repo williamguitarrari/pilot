@@ -3,7 +3,6 @@ import { pluck, prop } from 'ramda'
 const transactions = client => async (paymentLinkId) => {
   const orders = await client.orders.all({
     payment_link_id: paymentLinkId,
-    status: 'paid',
   })
 
   const orderIds = pluck('id', orders)
