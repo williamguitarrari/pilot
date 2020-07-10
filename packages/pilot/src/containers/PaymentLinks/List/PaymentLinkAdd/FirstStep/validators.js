@@ -45,8 +45,8 @@ export const validateExpirationAmount = (
   const maxAllowedDays = createMaxAllowedDays(expirationUnit, getTranslation)
 
   return applyValidations([
-    isNumber,
     minAllowedHours,
+    isNumber,
     maxAllowedDays,
   ],
   value)
