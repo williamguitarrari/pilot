@@ -94,6 +94,7 @@ const LoginContainer = ({
         />
       </div>
       <ReCAPTCHA
+        badge="bottomleft"
         ref={recaptchaRef}
         sitekey={recaptchaKey}
         size="invisible"
