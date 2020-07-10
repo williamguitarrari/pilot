@@ -5778,10 +5778,10 @@ emblematic-icons@0.7.1:
   resolved "https://registry.yarnpkg.com/emblematic-icons/-/emblematic-icons-0.7.1.tgz#2771340af07f31628cb9afc678108fa61542d76e"
   integrity sha512-ZkPYHOhGtwltmeRHnEOA55PK4Cl5fNmTX8kkFqZ6T2MFsZFBle7h8qBfk5gcGxvfQwc/+iRQrwMOGZ86+DooRw==
 
-emblematic-icons@0.8.0:
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/emblematic-icons/-/emblematic-icons-0.8.0.tgz#81a23184eb82ca29153dca13207f7df8d597338f"
-  integrity sha512-uqt+tzWK5Ssr9Yrhey64sVZ5KpEyjv+YczpZWdV9RonaSSfihjrEu7uFfyUDtrs1nSb/890jD6fDuXGLZkCi/Q==
+emblematic-icons@0.8.1:
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/emblematic-icons/-/emblematic-icons-0.8.1.tgz#869ade6dab7344d3d78f4c5f7b0df88e9927afe0"
+  integrity sha512-gFA1G+lwgjihHmwfXpknXqMaEY7AdvbMkpSiAEpNAqyTiPjO6fJ6naFYgNuy1Pw/pFjK/j+YiJl2pHR/6H9XtQ==
 
 emoji-regex@^6.5.1:
   version "6.5.1"
