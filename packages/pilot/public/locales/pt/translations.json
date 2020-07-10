@@ -1755,7 +1755,8 @@
         "amount": "Valor do produto",
         "date_created": "Data de criação",
         "expires_at": "Disponibilidade",
-        "until": "até {{date}}"
+        "until": "até {{date}}",
+        "no_expiration": "Sem prazo de expiração"
       },
       "payment_methods": {
         "title": "Meios de pagamento",

@@ -31,7 +31,9 @@ const Info = ({
         </div>
         {renderItem(
           t('pages.payment_link_detail.info.expires_at'),
-          t('pages.payment_link_detail.info.until', { date: formatDate(expiresAt) })
+          expiresAt == null
+            ? t('pages.payment_link_detail.info.no_expiration')
+            : t('pages.payment_link_detail.info.until', { date: formatDate(expiresAt) })
         )}
       </div>
     </CardContent>

@@ -5778,10 +5778,10 @@ emblematic-icons@0.7.1:
   resolved "https://registry.yarnpkg.com/emblematic-icons/-/emblematic-icons-0.7.1.tgz#2771340af07f31628cb9afc678108fa61542d76e"
   integrity sha512-ZkPYHOhGtwltmeRHnEOA55PK4Cl5fNmTX8kkFqZ6T2MFsZFBle7h8qBfk5gcGxvfQwc/+iRQrwMOGZ86+DooRw==
 
-emblematic-icons@0.8.0:
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/emblematic-icons/-/emblematic-icons-0.8.0.tgz#81a23184eb82ca29153dca13207f7df8d597338f"
-  integrity sha512-uqt+tzWK5Ssr9Yrhey64sVZ5KpEyjv+YczpZWdV9RonaSSfihjrEu7uFfyUDtrs1nSb/890jD6fDuXGLZkCi/Q==
+emblematic-icons@0.8.1:
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/emblematic-icons/-/emblematic-icons-0.8.1.tgz#869ade6dab7344d3d78f4c5f7b0df88e9927afe0"
+  integrity sha512-gFA1G+lwgjihHmwfXpknXqMaEY7AdvbMkpSiAEpNAqyTiPjO6fJ6naFYgNuy1Pw/pFjK/j+YiJl2pHR/6H9XtQ==
 
 emoji-regex@^6.5.1:
   version "6.5.1"
@@ -7046,10 +7046,10 @@ former-kit-skin-pagarme@2.1.1:
     emblematic-icons "0.7.1"
     react-dates "18.4.1"
 
-former-kit@2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/former-kit/-/former-kit-2.1.0.tgz#16c20517e9bbf0c002b8ed1c8b77a0f9a943091b"
-  integrity sha512-YSTla+BCCSuJeiUpiilLErdMp+vAdS62yE+AtqOqAp+7cNusy9YfD+EkQpxte3UrsFjNXwuInV6x+A+x8Ki61w==
+former-kit@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/former-kit/-/former-kit-2.2.0.tgz#d166e12e425b837525444edeeeddfef0be91e738"
+  integrity sha512-fRyYzK0ZTK7wifG7NkU0xHMVcgu2ID5unrUMH9robumPWl+f8/N4qo6ccEDHyVs3aoGGHVqRAS68pAAuQuum8w==
   dependencies:
     classnames "2.2.6"
     emblematic-icons "0.7.1"

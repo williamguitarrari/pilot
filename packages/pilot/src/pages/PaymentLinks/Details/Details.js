@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { translate } from 'react-i18next'
-import { compose, nth } from 'ramda'
+import { compose, path, nth } from 'ramda'
 import {
   Col,
   Grid,
@@ -120,8 +120,8 @@ const Details = ({
             </Col>
             <Col desk={6} palm={6} tablet={6} tv={6}>
               <PaymentMethods
-                boletoConfig={paymentLink.payment_config.boleto}
-                creditCardConfig={paymentLink.payment_config.credit_card}
+                boletoConfig={path(['payment_config', 'boleto'], paymentLink)}
+                creditCardConfig={path(['payment_config', 'credit_card'], paymentLink)}
                 t={t}
               />
             </Col>

@@ -27,7 +27,7 @@ const DetailsHeader = ({
       <CardContent>
         <div className={styles.detailsHeader}>
           <DetailsItem title={t('pages.payment_link_detail.header.name')}>
-            <span className={styles.linkName}>{name}</span>
+            <span className={styles.linkName}>{name || '-'}</span>
           </DetailsItem>
           <DetailsItem title={t('pages.payment_link_detail.header.status')}>
             <StatusLegend t={t} status={status} />
