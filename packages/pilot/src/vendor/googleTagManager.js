@@ -2,6 +2,16 @@
 import hasProperty from './hasProperty'
 
 /**
+ * send data to google tag manager
+ * @param {Object} data to be sent to google tag maanager
+ */
+const pushData = (data) => {
+  if (hasProperty(window.dataLayer)) {
+    window.dataLayer.push(data)
+  }
+}
+
+/**
  * Set User identification variables on loginReceive
  * in google tag manager data layer
  *
@@ -19,20 +29,16 @@ export const identify = (
   userDateCreated,
   userPermission,
   environment
-) => {
-  if (hasProperty(window.dataLayer)) {
-    window.dataLayer.push({
-      email,
-      environment,
-      event: 'loginReceive',
-      fullstoryUserId: id,
-      userDateCreated,
-      userId: id,
-      userName,
-      userPermission,
-    })
-  }
-}
+) => pushData({
+  email,
+  environment,
+  event: 'loginReceive',
+  fullstoryUserId: id,
+  userDateCreated,
+  userId: id,
+  userName,
+  userPermission,
+})
 
 /**
  * Set Company identification variables on accountReceive
@@ -47,57 +53,43 @@ export const setCompany = (
   companyName,
   companyDateCreated,
   companyStatus
-) => {
-  if (hasProperty(window.dataLayer)) {
-    window.dataLayer.push({
-      companyDateCreated,
-      companyId,
-      companyName,
-      companyStatus,
-      event: 'accountReceive',
-    })
-  }
-}
+) => pushData({
+  companyDateCreated,
+  companyId,
+  companyName,
+  companyStatus,
+  event: 'accountReceive',
+})
 
 /**
  * Triggers inactiveCompanyLogin event
  */
-export const inactiveCompanyLogin = () => {
-  if (hasProperty(window.dataLayer)) {
-    window.dataLayer.push({
-      event: 'inactiveCompanyLogin',
-    })
-  }
-}
+export const inactiveCompanyLogin = () => pushData({
+  event: 'inactiveCompanyLogin',
+})
 
 /**
  * Trigger activeCompanyLogin event
  */
-export const activeCompanyLogin = () => {
-  if (hasProperty(window.dataLayer)) {
-    window.dataLayer.push({
-      event: 'activeCompanyLogin',
-    })
-  }
-}
+export const activeCompanyLogin = () => pushData({
+  event: 'activeCompanyLogin',
+})
 
 /**
  * Trigger paymentLinkCompanyLogin event
  */
-export const paymentLinkCompanyLogin = () => {
-  if (hasProperty(window.dataLayer)) {
-    window.dataLayer.push({
-      event: 'paymentLinkCompanyLogin',
-    })
-  }
-}
+export const paymentLinkCompanyLogin = () => pushData({
+  event: 'paymentLinkCompanyLogin',
+})
 
-export const virtualPageView = ({ path, title }) => {
-  if (hasProperty(window.dataLayer)) {
-    window.dataLayer.push({
-      event: 'virtualPageView',
-      pagePath: path,
-      pageTitle: title,
-    })
-  }
-}
+/**
+ * trigger page view in google tag manager
+ * @param {Object} page
+ * @param {string} page.path the page path
+ * @param {title} page.title the page title
+ */
+export const virtualPageView = ({ path, title }) => pushData({
+  event: 'virtualPageView',
+  pagePath: path,
+  pageTitle: title,
+})
