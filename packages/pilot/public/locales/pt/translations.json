@@ -1655,7 +1655,7 @@
         "link_name": "nome do link",
         "created_at": "data de criação",
         "link": "link",
-        "total_paid": "valor total",
+        "total_paid": "valor pago",
         "status_legends": {
           "active": "ativo",
           "canceled": "inativo",
