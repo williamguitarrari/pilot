@@ -1,6 +1,7 @@
 import React from 'react'
 import {
   path,
+  pick,
   pipe,
   prop,
 } from 'ramda'
@@ -8,12 +9,13 @@ import {
 import { Truncate } from 'former-kit'
 
 import formatCurrency from '../../../../formatters/currency'
+import formatPaymentMethod from '../../../../formatters/paymentMethod'
 import formatDate from '../../../../formatters/longDate'
 import cpfCnpj from '../../../../formatters/cpfCnpj'
 import rendererStatusLegend from '../../../TransactionsList/renderStatusLegend'
 
 const convertPaymentValue = property => pipe(
-  path([property]),
+  path(['payment', property]),
   formatCurrency
 )
 
@@ -45,7 +47,12 @@ const getDocumentNumber = (item) => {
   return cpfCnpj(document.number)
 }
 
-const renderPaymentMethod = t => item => t(`models.transaction.${item.payment_method}`)
+const renderPaymentMethod = t => pipe(
+  prop('payment'),
+  pick(['method', 'international']),
+  formatPaymentMethod,
+  t
+)
 
 const getDefaultColumns = t => ([
   {

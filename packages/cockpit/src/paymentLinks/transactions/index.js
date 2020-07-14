@@ -1,4 +1,15 @@
-import { pluck, prop } from 'ramda'
+import { applySpec, map, path, pluck, pipe, prop } from 'ramda'
+import { transactionSpec } from '../../transactions/shared'
+
+const mapSourceToTableRows = applySpec(transactionSpec)
+
+const buildTransactions = pipe(
+  path(['hits', 'hits']),
+  map(pipe(
+    prop('_source'),
+    mapSourceToTableRows
+  ))
+)
 
 const transactions = client => async (paymentLinkId) => {
   const orders = await client.orders.all({
@@ -24,7 +35,7 @@ const transactions = client => async (paymentLinkId) => {
     type: 'transaction',
   })
 
-  return paymentLinkTransactions.hits.hits.map(prop('_source'))
+  return buildTransactions(paymentLinkTransactions)
 }
 
 export default transactions
