@@ -19,7 +19,6 @@ import SidebarContainer from '../../containers/Sidebar'
 import routes from './routes'
 
 import Logo from '../../components/Logo'
-import env from '../../environment'
 
 const removeRouteParams = pipe(
   split(':'),
@@ -42,7 +41,6 @@ const Sidebar = ({
   // anticipationLimit,
   balance,
   companyCapabilities,
-  companyId,
   companyName,
   history,
   location: { pathname },
@@ -55,14 +53,9 @@ const Sidebar = ({
     balance={balance}
     companyName={companyName}
     links={values(routes)
-      .filter(({ hidden, path, validateVisibility }) => {
+      .filter(({ hidden, validateVisibility }) => {
         if (validateVisibility) {
           return validateVisibility(companyCapabilities)
-        }
-
-        if (path === '/payment-links'
-        && (companyId === '5e8f606e2e684d1e268ad05e' || env === 'test')) {
-          return true
         }
 
         return !hidden
@@ -98,7 +91,6 @@ Sidebar.propTypes = {
   companyCapabilities: PropTypes.shape({
     allow_manage_recipient: PropTypes.bool,
   }),
-  companyId: PropTypes.string,
   companyName: PropTypes.string,
   history: PropTypes.shape({
     push: PropTypes.func,
@@ -121,7 +113,6 @@ Sidebar.defaultProps = {
   // More details in issue #1159
   // anticipationLimit: null,
   companyCapabilities: {},
-  companyId: '',
   companyName: '',
   recipientId: null,
   sessionId: '',
