@@ -25,6 +25,7 @@ import cockpit from 'cockpit'
 import env from '../../../environment'
 import identifyUser from '../../../vendor/identifyUser'
 import setCompany from '../../../vendor/setCompany'
+import { zopimAddTags, zopimClearAll } from '../../../vendor/zopim'
 import {
   ACCOUNT_RECEIVE,
   COMPANY_RECEIVE,
@@ -141,6 +142,8 @@ const accountEpic = action$ => action$
         permission,
         env
       )
+
+      zopimAddTags([`nível de acesso do usuário: ${permission}`])
     })
   )
 
@@ -236,6 +239,12 @@ const companyEpic = (action$, state$) => action$.pipe(
       userId
     )
 
+    zopimAddTags([
+      `tipo da company: ${type}`,
+      `id da company: ${id}`,
+      'Aplicação: dashboard beta',
+    ])
+
     if (status === 'active') {
       activeCompanyLogin()
     } else {
@@ -278,6 +287,8 @@ const logoutEpic = (action$, state$) => action$.pipe(
         sessionId,
       },
     } = state
+
+    zopimClearAll()
 
     return client.session
       .destroy(sessionId)
