@@ -62,6 +62,7 @@ class CompanySettings extends Component {
       resetCreateUserState,
       t,
       team,
+      type,
       userIsReadOnly,
       versions,
     } = this.props
@@ -80,7 +81,10 @@ class CompanySettings extends Component {
           >
             <TabItem text={t('pages.settings.company.tab.general')} />
             <TabItem text={t('pages.settings.company.tab.products')} />
-            <TabItem text={t('pages.settings.company.tab.team')} />
+            {type !== 'payment_link_app'
+              ? <TabItem text={t('pages.settings.company.tab.team')} />
+              : <></>
+            }
             <TabItem text={t('pages.settings.company.tab.register')} />
           </TabBar>
         </CardContent>
@@ -281,6 +285,7 @@ CompanySettings.propTypes = {
     name: PropTypes.string,
     role: PropTypes.string,
   })).isRequired,
+  type: PropTypes.string,
   userIsReadOnly: PropTypes.bool.isRequired,
   versions: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
@@ -303,6 +308,7 @@ CompanySettings.defaultProps = {
   boletoDaysToAddInExpirationDate: null,
   boletoInstructions: null,
   t: t => t,
+  type: null,
 }
 
 export default CompanySettings
