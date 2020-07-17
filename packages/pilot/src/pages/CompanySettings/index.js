@@ -632,6 +632,7 @@ class CompanySettingsPage extends React.Component {
         resetCreateUserState={this.resetCreateUserState}
         t={t}
         team={team}
+        type={company && company.type}
         versions={versions}
         userIsReadOnly={userIsReadOnly(user)}
       />
