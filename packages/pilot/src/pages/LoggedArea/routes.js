@@ -62,7 +62,7 @@ export default {
   paymentLinks: {
     component: PaymentLinks,
     exact: true,
-    hidden: true,
+    hidden: false,
     path: '/payment-links',
     title: 'pages.payment_links.title',
     icon: Link32,
