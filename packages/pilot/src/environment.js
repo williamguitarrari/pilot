@@ -9,7 +9,7 @@ const {
 
 const getLiveUrl = defaultTo('https://beta.dashboard.stg.pagarme.net/latest/index.html')
 const getTestUrl = defaultTo('https://beta.dashboard.sandbox.stg.pagarme.net/latest/index.html')
-const getRecaptchaKey = defaultTo('6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI')
+const getRecaptchaKey = defaultTo('6LeiGq0ZAAAAAHwTqiKldmUBdmgH8qvXAv6-ivdF')
 
 const env = REACT_APP_API_ENVIRONMENT === 'live'
   ? 'live'

@@ -30,6 +30,9 @@ const LoginContainer = ({
   const recaptchaRef = useRef()
 
   const recaptchaOnChange = (recaptchaToken) => {
+    if (!recaptchaToken) {
+      return
+    }
     onLogin({ email, password, recaptchaToken })
   }
 
