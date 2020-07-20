@@ -147,6 +147,7 @@ jobs:
           export PUBLIC_URL_REGEX='https:\/\/beta.dashboard.sandbox.pagar.me'
           export PUBLIC_URL='https://beta.dashboard.sandbox.pagar.me'
           export REACT_APP_API_ENVIRONMENT='sandbox'
+          export REACT_APP_RECAPTCHA_KEY=$RECAPTCHA_KEY_SANDBOX
           sed -e 's/\".\"/"'$PUBLIC_URL_REGEX'\"/g' package.json > package.json.bak
           cp package.json.bak package.json
           yarn build
