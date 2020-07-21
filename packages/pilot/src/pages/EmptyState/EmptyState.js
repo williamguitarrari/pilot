@@ -26,6 +26,7 @@ import { selectCompanyFees } from '../Account/actions/reducer'
 const getUserName = pipe(prop('name'), split(' '), head)
 
 const hasAdminPermission = propEq('permission', 'admin')
+const isPaymentLink = propEq('type', 'payment_link_app')
 
 const getAccessKeys = applySpec({
   apiKey: path(['api_key', environment]),
@@ -49,6 +50,7 @@ const mapStateToProps = ({
 }) => ({
   accessKeys: getAccessKeys(company),
   alreadyTransacted: getAlreadyTransacted(company),
+  company,
   fees: selectCompanyFees(company),
   isAdmin: hasAdminPermission(user),
   isMDRzao: company && propEq('anticipationType', 'MDRZAO', company),
@@ -78,6 +80,7 @@ const shouldRedirectToOnboarding = (alreadyTransacted, onboardingAnswers) => {
 const EmptyState = ({
   accessKeys,
   alreadyTransacted,
+  company,
   fees,
   history: {
     push,
@@ -94,12 +97,21 @@ const EmptyState = ({
   }, [requestOnboardingAnswers])
 
   useEffect(() => {
-    if (onboardingAnswers
+    if (
+      onboardingAnswers
       && isAdmin
-      && shouldRedirectToOnboarding(alreadyTransacted, onboardingAnswers)) {
+      && shouldRedirectToOnboarding(alreadyTransacted, onboardingAnswers)
+      && !isPaymentLink(company)
+    ) {
       push('/onboarding')
     }
-  }, [alreadyTransacted, isAdmin, onboardingAnswers, push])
+  }, [
+    alreadyTransacted,
+    company,
+    isAdmin,
+    onboardingAnswers,
+    push,
+  ])
 
   return (
     <EmptyStateContainer
@@ -123,6 +135,9 @@ EmptyState.propTypes = {
     encryptionKey: PropTypes.string,
   }),
   alreadyTransacted: PropTypes.bool,
+  company: PropTypes.shape({
+    type: PropTypes.string,
+  }),
   fees: PropTypes.shape({
     anticipation: PropTypes.number,
     antifraud: PropTypes.number,
@@ -148,6 +163,9 @@ EmptyState.propTypes = {
 EmptyState.defaultProps = {
   accessKeys: {},
   alreadyTransacted: true,
+  company: {
+    type: null,
+  },
   fees: {},
   isMDRzao: false,
   onboardingAnswers: undefined,
