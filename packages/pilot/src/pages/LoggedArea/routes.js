@@ -73,13 +73,6 @@ export default {
     path: '/payment-links/:id',
     title: 'pages.payment_link_detail.title',
   },
-  companySettings: {
-    component: CompanySettings,
-    exact: true,
-    icon: Configuration32,
-    path: '/settings',
-    title: 'pages.settings.company.menu',
-  },
   transactionsDetails: {
     exact: true,
     hidden: true,
@@ -119,6 +112,13 @@ export default {
     hidden: true,
     path: '/welcome',
     title: 'pages.empty_state.title',
+  },
+  companySettings: {
+    component: CompanySettings,
+    exact: true,
+    icon: Configuration32,
+    path: '/settings',
+    title: 'pages.settings.company.menu',
   },
 }
 
