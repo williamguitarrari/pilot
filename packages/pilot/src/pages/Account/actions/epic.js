@@ -182,7 +182,7 @@ const companyEpic = (action$, state$) => action$.pipe(
   }),
   mergeMap((action) => {
     if (action.error) {
-      return action
+      return rxOf(action)
     }
 
     const { value: state } = state$
