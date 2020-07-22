@@ -6,14 +6,17 @@ import {
 } from 'rxjs/operators'
 import { combineEpics, ofType } from 'redux-observable'
 import {
+  addOnboardingAnswers,
   failOnboardingAnswers,
-  ONBOARDING_ANSWERS_REQUEST,
   receiveOnboardingAnswers,
 } from './actions'
 
+import { LOGIN_RECEIVE } from '../Account/actions/actions'
+import { POST_ANSWER } from '../Onboarding/actions'
+
 const onboardingAnswersEpic = (action$, state$) => action$
   .pipe(
-    ofType(ONBOARDING_ANSWERS_REQUEST),
+    ofType(LOGIN_RECEIVE),
     mergeMap(() => {
       const state = state$.value
       const { account: { client } } = state
@@ -27,4 +30,18 @@ const onboardingAnswersEpic = (action$, state$) => action$
     })
   )
 
-export default combineEpics(onboardingAnswersEpic)
+const postAnswersEpic = (action$, state$) => action$
+  .pipe(
+    ofType(POST_ANSWER),
+    map(({ payload }) => {
+      const state = state$.value
+      const { onboarding: { question } } = state
+
+      return {
+        [question.label]: payload.answer,
+      }
+    }),
+    map(addOnboardingAnswers)
+  )
+
+export default combineEpics(onboardingAnswersEpic, postAnswersEpic)
