@@ -20,6 +20,7 @@ import {
   Spacing,
 } from 'former-kit'
 
+import IconTestAmbientOn from 'emblematic-icons/svg/TestAmbientOn24.svg'
 import IconTestAmbientOff from 'emblematic-icons/svg/TestAmbientOff24.svg'
 import IconArrowDownRight from 'emblematic-icons/svg/ArrowDownRight24.svg'
 import IconRocket from './rocket.svg'
@@ -30,6 +31,7 @@ import environment, {
 } from '../../environment'
 
 import style from './style.css'
+import isPaymentLink from '../../validation/isPaymentLink'
 
 const getEnvironmentUrl = () => (
   environment === 'test'
@@ -52,42 +54,46 @@ const renderTestEnviromentNav = t => (
 const renderEnvironmentButton = ({
   companyType,
   t,
-}) => (
-  <Popover
-    content={(
-      <PopoverContent>
-        <small>
-          {t('header.environment.text_live')}&nbsp;
-          <a href={getEnvironmentUrl()}>
-            {t('header.environment.text_action_live')}
-          </a>
-        </small>
-      </PopoverContent>
-    )}
-    placement="bottomEnd"
-  >
-    {environment === 'test' && companyType !== 'payment_link_app'
-      && (
-        <small className={style.testEnvironmentLabel}>
-          {t('header.environment.test_environment')}
-        </small>
-      )
-    }
-    {
-      companyType !== 'payment_link_app'
-      && (
-        <Button
-          fill="clean"
-          icon={
-            environment === 'test'
-              ? <IconTestAmbientOn />
-              : <IconTestAmbientOff />
-          }
-        />
-      )
-    }
-  </Popover>
-)
+}) => {
+  const isCompanyPaymentLink = isPaymentLink(companyType)
+
+  return (
+    <Popover
+      content={(
+        <PopoverContent>
+          <small>
+            {t(`header.environment.text_${environment}`)}&nbsp;
+            <a href={getEnvironmentUrl()}>
+              {t('header.environment.text_action')}
+            </a>.
+          </small>
+        </PopoverContent>
+      )}
+      placement="bottomEnd"
+    >
+      {environment === 'test' && !isCompanyPaymentLink
+        && (
+          <small className={style.testEnvironmentLabel}>
+            {t('header.environment.test_environment')}
+          </small>
+        )
+      }
+      {
+        !isCompanyPaymentLink
+        && (
+          <Button
+            fill="clean"
+            icon={
+              environment === 'test'
+                ? <IconTestAmbientOn />
+                : <IconTestAmbientOff />
+            }
+          />
+        )
+      }
+    </Popover>
+  )
+}
 
 const HeaderContainer = ({
   companyType,

@@ -30,6 +30,7 @@ import SidebarSections from '../../components/SidebarSections'
 import SidebarSummary from '../../components/SidebarSummary'
 import formatDecimalCurrency from '../../formatters/decimalCurrency'
 import environment from '../../environment'
+import isPaymentLink from '../../validation/isPaymentLink'
 
 const MINIMUM_API_VALUE = 100
 
@@ -184,7 +185,7 @@ class SidebarContainer extends React.Component {
             />
           ))}
         </SidebarLinks>
-        {!collapsed && companyType !== 'payment_link_app'
+        {!collapsed && !isPaymentLink(companyType)
           && (
             <Flexbox
               className={style.backToOldVersion}
