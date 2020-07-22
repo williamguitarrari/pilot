@@ -28,9 +28,6 @@ import {
   postOnboardingAnswer as postOnboardingAnswerAction,
   destroyOnboardingAnswer as destroyOnboardingAnswerAction,
 } from './actions'
-import {
-  resetOnboardingAnswers as resetOnboardingAnswersAction,
-} from '../EmptyState/actions'
 import FakeLoader from '../../components/FakeLoader'
 
 const getUserFirstName = pipe(prop('name'), split(' '), head)
@@ -68,7 +65,6 @@ const mapDispatchToProps = {
   destroyOnboardingAnswer: destroyOnboardingAnswerAction,
   postOnboardingAnswer: postOnboardingAnswerAction,
   requestOnboardingQuestion: requestOnboardingQuestionAction,
-  resetOnboardingAnswers: resetOnboardingAnswersAction,
 }
 
 const enhanced = compose(
@@ -93,7 +89,6 @@ const Onboarding = ({
   postOnboardingAnswer,
   question,
   requestOnboardingQuestion,
-  resetOnboardingAnswers,
   t,
   userId,
   userName,
@@ -136,7 +131,6 @@ const Onboarding = ({
     }
 
     if (finalStep) {
-      resetOnboardingAnswers()
       return setShowFakeLoader(true)
     }
 
@@ -201,7 +195,6 @@ Onboarding.propTypes = {
   postOnboardingAnswer: PropTypes.func.isRequired,
   question: PropTypes.shape(),
   requestOnboardingQuestion: PropTypes.func.isRequired,
-  resetOnboardingAnswers: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
   userId: PropTypes.string,
   userName: PropTypes.string,
