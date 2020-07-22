@@ -23,8 +23,8 @@
   width: 100%;
 }
 
-.highZIndex {
-  z-index: 10;
+.opaqueBackground {
+  background-color: var(--color-squanchy-gray-20);
 }
 
 .spinner > div {
