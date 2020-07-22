@@ -12,6 +12,8 @@ import ProductInfoTab from './ProductInfoTab'
 import RegisterInfoTab from './RegisterInfoTab'
 import TeamInfoTab from './TeamInfoTab'
 
+import isPaymentLink from '../../../validation/isPaymentLink'
+
 class CompanySettings extends Component {
   constructor (props) {
     super(props)
@@ -81,7 +83,7 @@ class CompanySettings extends Component {
           >
             <TabItem text={t('pages.settings.company.tab.general')} />
             <TabItem text={t('pages.settings.company.tab.products')} />
-            {type !== 'payment_link_app'
+            {!isPaymentLink(type)
               ? <TabItem text={t('pages.settings.company.tab.team')} />
               : <></>
             }
