@@ -20,13 +20,13 @@ import {
   requestOnboardingAnswers as requestOnboardingAnswersAction,
 } from './actions'
 import isOnboardingComplete from '../../validation/isOnboardingComplete'
+import isPaymentLink from '../../validation/isPaymentLink'
 
 import { selectCompanyFees } from '../Account/actions/reducer'
 
 const getUserName = pipe(prop('name'), split(' '), head)
 
 const hasAdminPermission = propEq('permission', 'admin')
-const isPaymentLink = propEq('type', 'payment_link_app')
 
 const getAccessKeys = applySpec({
   apiKey: path(['api_key', environment]),
