@@ -1192,7 +1192,7 @@
     "sidebar": {
       "available": "Disponível para saque",
       "balance": "Saldo",
-      "back_to_old_version": "Voltar para versão 1.0",
+      "back_to_old_version": "Voltar para a dashboard legada",
       "currency_symbol": "R$",
       "hide_balance": "Ocultar saldo",
       "show_balance": "Mostrar saldo",

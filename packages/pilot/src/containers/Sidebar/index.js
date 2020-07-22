@@ -196,6 +196,7 @@ class SidebarContainer extends React.Component {
                 }
                 fill="outline"
                 size="tiny"
+                relevance="low"
               >
                 {t('pages.sidebar.back_to_old_version')}
               </Button>

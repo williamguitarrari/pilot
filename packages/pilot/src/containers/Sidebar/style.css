@@ -2,7 +2,8 @@
 @import "former-kit-skin-pagarme/dist/styles/spacing.css";
 
 .backToOldVersion {
-  margin-top: var(--spacing-medium);
+  bottom: var(--spacing-large);
+  position: absolute;
 }
 
 .sidebarIcon {

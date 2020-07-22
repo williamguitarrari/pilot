@@ -1,9 +1,9 @@
-import Balance32 from 'emblematic-icons/svg/Extract32.svg'
-import Configuration32 from 'emblematic-icons/svg/Configuration32.svg'
+import HeartRate32 from 'emblematic-icons/svg/HeartRate32.svg'
+import Wrench32 from 'emblematic-icons/svg/Wrench32.svg'
 import Home32 from 'emblematic-icons/svg/Home32.svg'
-import Transaction32 from 'emblematic-icons/svg/Transaction32.svg'
+import Checkout32 from 'emblematic-icons/svg/Checkout32.svg'
 import Withdraw32 from 'emblematic-icons/svg/Withdraw32.svg'
-import Store32 from 'emblematic-icons/svg/Store32.svg'
+import Anticipation32 from 'emblematic-icons/svg/Anticipation32.svg'
 import Link32 from 'emblematic-icons/svg/Link32.svg'
 
 import {
@@ -25,7 +25,7 @@ export default {
     component: UserSettings,
     exact: true,
     hidden: true,
-    icon: Configuration32,
+    icon: Wrench32,
     path: '/account',
     title: 'pages.settings.user.menu',
   },
@@ -33,7 +33,7 @@ export default {
     component: Anticipation,
     exact: true,
     hidden: true,
-    icon: Balance32,
+    icon: HeartRate32,
     path: '/anticipation/:id?',
     title: 'pages.anticipation.title',
   },
@@ -48,14 +48,14 @@ export default {
   balance: {
     component: Balance,
     exact: true,
-    icon: Balance32,
+    icon: HeartRate32,
     path: '/balance/:id?',
     title: 'pages.balance.title',
   },
   transactions: {
     component: Transactions,
     exact: true,
-    icon: Transaction32,
+    icon: Checkout32,
     path: '/transactions',
     title: 'pages.transactions.title',
   },
@@ -72,13 +72,6 @@ export default {
     hidden: true,
     path: '/payment-links/:id',
     title: 'pages.payment_link_detail.title',
-  },
-  companySettings: {
-    component: CompanySettings,
-    exact: true,
-    icon: Configuration32,
-    path: '/settings',
-    title: 'pages.settings.company.menu',
   },
   transactionsDetails: {
     exact: true,
@@ -101,7 +94,7 @@ export default {
     title: 'pages.recipients.title',
     path: '/recipients',
     component: Recipients,
-    icon: Store32,
+    icon: Anticipation32,
     exact: true,
   },
   recipientsAdd: {
@@ -119,6 +112,13 @@ export default {
     hidden: true,
     path: '/welcome',
     title: 'pages.empty_state.title',
+  },
+  companySettings: {
+    component: CompanySettings,
+    exact: true,
+    icon: Wrench32,
+    path: '/settings',
+    title: 'pages.settings.company.menu',
   },
 }
 
