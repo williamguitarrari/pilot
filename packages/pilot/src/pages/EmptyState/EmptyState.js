@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
@@ -16,10 +16,6 @@ import { translate } from 'react-i18next'
 import EmptyStateContainer from '../../containers/EmptyState'
 import { withError } from '../ErrorBoundary'
 import environment from '../../environment'
-import {
-  requestOnboardingAnswers as requestOnboardingAnswersAction,
-} from './actions'
-import isOnboardingComplete from '../../validation/isOnboardingComplete'
 
 import { selectCompanyFees } from '../Account/actions/reducer'
 
@@ -33,10 +29,6 @@ const getAccessKeys = applySpec({
 })
 
 const getAlreadyTransacted = propOr(true, 'alreadyTransacted')
-
-const mapDispatchToProps = {
-  requestOnboardingAnswers: requestOnboardingAnswersAction,
-}
 
 const mapStateToProps = ({
   account: {
@@ -58,7 +50,7 @@ const mapStateToProps = ({
 
 const enhanced = compose(
   translate(),
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(mapStateToProps, null),
   withError
 )
 
@@ -67,17 +59,8 @@ const hideEmptyState = push => () => {
   return push('/home')
 }
 
-const shouldRedirectToOnboarding = (alreadyTransacted, onboardingAnswers) => {
-  if (localStorage.getItem('skip-onboarding')) {
-    return false
-  }
-
-  return !alreadyTransacted && !isOnboardingComplete(onboardingAnswers)
-}
-
 const EmptyState = ({
   accessKeys,
-  alreadyTransacted,
   fees,
   history: {
     push,
@@ -85,44 +68,28 @@ const EmptyState = ({
   isAdmin,
   isMDRzao,
   onboardingAnswers,
-  requestOnboardingAnswers,
   t,
   userName,
-}) => {
-  useEffect(() => {
-    requestOnboardingAnswers()
-  }, [requestOnboardingAnswers])
-
-  useEffect(() => {
-    if (onboardingAnswers
-      && isAdmin
-      && shouldRedirectToOnboarding(alreadyTransacted, onboardingAnswers)) {
-      push('/onboarding')
-    }
-  }, [alreadyTransacted, isAdmin, onboardingAnswers, push])
-
-  return (
-    <EmptyStateContainer
-      apiKey={accessKeys.apiKey}
-      encryptionKey={accessKeys.encryptionKey}
-      environment={environment}
-      fees={fees}
-      isAdmin={isAdmin}
-      isMDRzao={isMDRzao}
-      onboardingAnswers={onboardingAnswers}
-      onDisableWelcome={hideEmptyState(push)}
-      t={t}
-      userName={userName}
-    />
-  )
-}
+}) => (
+  <EmptyStateContainer
+    apiKey={accessKeys.apiKey}
+    encryptionKey={accessKeys.encryptionKey}
+    environment={environment}
+    fees={fees}
+    isAdmin={isAdmin}
+    isMDRzao={isMDRzao}
+    onboardingAnswers={onboardingAnswers}
+    onDisableWelcome={hideEmptyState(push)}
+    t={t}
+    userName={userName}
+  />
+)
 
 EmptyState.propTypes = {
   accessKeys: PropTypes.shape({
     apiKey: PropTypes.string,
     encryptionKey: PropTypes.string,
   }),
-  alreadyTransacted: PropTypes.bool,
   fees: PropTypes.shape({
     anticipation: PropTypes.number,
     antifraud: PropTypes.number,
@@ -140,14 +107,12 @@ EmptyState.propTypes = {
   isAdmin: PropTypes.bool.isRequired,
   isMDRzao: PropTypes.bool,
   onboardingAnswers: PropTypes.shape({}),
-  requestOnboardingAnswers: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
   userName: PropTypes.string,
 }
 
 EmptyState.defaultProps = {
   accessKeys: {},
-  alreadyTransacted: true,
   fees: {},
   isMDRzao: false,
   onboardingAnswers: undefined,
