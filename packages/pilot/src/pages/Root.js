@@ -13,6 +13,7 @@ import {
   pipe,
   startsWith,
   tail,
+  anyPass,
 } from 'ramda'
 
 import { requestLogin as requestLoginAction } from './Account/actions/actions'
@@ -21,6 +22,9 @@ import { inactiveCompanyLogin } from '../vendor/googleTagManager'
 import Account from './Account'
 import LoggedArea from './LoggedArea'
 import Onboarding from './Onboarding/Onboarding'
+import Loader from '../components/Loader'
+import isRecentlyCreatedUser from '../validation/recentCreatedUser'
+import isOnboardingComplete from '../validation/isOnboardingComplete'
 
 import environment from '../environment'
 import { page as appcuesPage } from '../vendor/appcues'
@@ -32,9 +36,13 @@ const mapStateToProps = ({
     sessionId,
     user,
   },
+  welcome: {
+    onboardingAnswers,
+  },
 }) => ({
   client,
   company,
+  onboardingAnswers,
   sessionId,
   user,
 })
@@ -51,6 +59,22 @@ const parseQueryString = pipe(tail, qs.parse)
 const getSessionId = (props, queryString) => (
   props.sessionId || queryString.session_id
 )
+
+const isOnboardingSkipped = () => localStorage.getItem('skip-onboarding')
+const userAlreadyTransacted = ({ company }) => company.alreadyTransacted
+const onboardingCompleted = ({
+  onboardingAnswers,
+}) => isOnboardingComplete(onboardingAnswers)
+const longTimeUser = ({
+  company,
+  user,
+}) => !isRecentlyCreatedUser({ company, user })
+const skipOnboarding = anyPass([
+  isOnboardingSkipped,
+  onboardingCompleted,
+  userAlreadyTransacted,
+  longTimeUser,
+])
 
 class Root extends Component {
   componentDidMount () {
@@ -94,6 +118,7 @@ class Root extends Component {
         pathname: path,
         search: queryString,
       },
+      onboardingAnswers,
       sessionId,
       user,
     } = this.props
@@ -121,12 +146,18 @@ class Root extends Component {
       return null
     }
 
-    if (!user && !company) {
-      return null
+    if (!user || !company || !onboardingAnswers) {
+      return (
+        <Loader
+          opaqueBackground
+          position="absolute"
+          visible
+        />
+      )
     }
 
-    if (user && startsWith('/onboarding', path)) {
-      return <Route path="/onboarding" component={Onboarding} />
+    if (!skipOnboarding({ company, onboardingAnswers, user })) {
+      return <Onboarding />
     }
 
     return <LoggedArea />
@@ -144,6 +175,7 @@ Root.propTypes = {
     pathname: PropTypes.string,
     search: PropTypes.string,
   }).isRequired,
+  onboardingAnswers: PropTypes.objectOf(PropTypes.string),
   requestLogin: PropTypes.func.isRequired,
   sessionId: PropTypes.string,
   user: PropTypes.object, // eslint-disable-line
@@ -152,6 +184,7 @@ Root.propTypes = {
 Root.defaultProps = {
   client: null,
   company: null,
+  onboardingAnswers: null,
   sessionId: null,
   user: null,
 }
