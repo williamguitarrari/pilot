@@ -1,4 +1,5 @@
 import {
+  ADD_ONBOARDING_ANSWERS,
   ONBOARDING_ANSWERS_RECEIVE,
   ONBOARDING_ANSWERS_RESET,
 } from './actions'
@@ -16,7 +17,18 @@ export default function welcomeReducer (state = makeInitialState(), action) {
 
       return { onboardingAnswers: payload }
     }
+    case ADD_ONBOARDING_ANSWERS: {
+      const {
+        payload,
+      } = action
 
+      return {
+        onboardingAnswers: {
+          ...state.onboardingAnswers,
+          ...payload,
+        },
+      }
+    }
     case ONBOARDING_ANSWERS_RESET: {
       return makeInitialState()
     }
