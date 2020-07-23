@@ -13,7 +13,6 @@ import {
   path,
   pipe,
   prop,
-  propEq,
   propSatisfies,
   take,
   when,
@@ -54,6 +53,7 @@ import dateInputPresets from '../../models/dateSelectorPresets'
 import DetailsHead from '../../components/DetailsHead'
 import PendingAnticipations from '../../components/PendingAnticipations'
 import BalanceOperations from '../BalanceOperations'
+import isPaymentLink from '../../validation/isPaymentLink'
 
 import style from './style.css'
 
@@ -114,8 +114,6 @@ const getSelectedPreset = (end, start) => {
   }
   return 'period'
 }
-
-const isPaymentLink = propEq('type', 'payment_link_app')
 
 class Balance extends Component {
   constructor (props) {
@@ -487,7 +485,8 @@ class Balance extends Component {
 
     const { ted } = getTransfersPricing(company)
 
-    const balanceGridCol = isPaymentLink(company) ? 6 : 4
+    const isCompanyPaymentLink = isPaymentLink(company)
+    const balanceGridCol = isCompanyPaymentLink ? 6 : 4
 
     return (
       <Fragment>
@@ -557,7 +556,7 @@ class Balance extends Component {
               <Card>
                 <BalanceTotalDisplay
                   action={
-                    isNil(onAnticipationClick) || isPaymentLink(company)
+                    isNil(onAnticipationClick) || isCompanyPaymentLink
                       ? null
                       : anticipationAction
                   }
@@ -573,7 +572,7 @@ class Balance extends Component {
                   //   || anticipationError
                   //   || available < MINIMUM_API_VALUE
                   // }
-                  detail={!isPaymentLink(company) && (
+                  detail={!isCompanyPaymentLink && (
                     <span>
                       {t('pages.balance.anticipation_call')}
                     </span>
@@ -583,7 +582,7 @@ class Balance extends Component {
                 />
               </Card>
             </Col>
-            {!isPaymentLink(company) && (
+            {!isCompanyPaymentLink && (
               <Col
                 desk={4}
                 palm={12}

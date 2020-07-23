@@ -50,6 +50,8 @@ import {
   inactiveCompanyLogin,
 } from '../../../vendor/googleTagManager'
 
+import isPaymentLink from '../../../validation/isPaymentLink'
+
 const isActiveCompany = propEq('status', 'active')
 const isSelfRegister = propEq('type', 'self_register')
 const isPendingRiskAnalysis = propEq('status', 'pending_risk_analysis')
@@ -249,7 +251,7 @@ const companyEpic = (action$, state$) => action$.pipe(
     ])
 
     if (status === 'active') {
-      if (type === 'payment_link_app') {
+      if (isPaymentLink(type)) {
         paymentLinkCompanyLogin()
       } else {
         activeCompanyLogin()

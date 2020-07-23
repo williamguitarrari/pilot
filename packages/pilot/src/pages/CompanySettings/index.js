@@ -25,6 +25,7 @@ import { translate } from 'react-i18next'
 import { requestLogout } from '../Account/actions/actions'
 import CompanySettings from '../../containers/Settings/Company'
 import environment from '../../environment'
+import isPaymentLink from '../../validation/isPaymentLink'
 
 import { selectCompanyFees } from '../Account/actions/reducer'
 
@@ -141,7 +142,6 @@ const defaultBankAccountErrorsState = {
 }
 
 const userIsReadOnly = propEq('permission', 'read_only')
-const hiddenApiKey = propEq('type', 'payment_link_app')
 
 class CompanySettingsPage extends React.Component {
   constructor (props) {
@@ -618,7 +618,7 @@ class CompanySettingsPage extends React.Component {
         general={general}
         handleCreateUser={this.handleCreateUser}
         handleDeleteUser={this.handleDeleteUser}
-        hiddenApiKey={hiddenApiKey(company)}
+        hiddenApiKey={isPaymentLink(company)}
         isMDRzao={isMDRzao}
         managingPartner={managingPartner}
         onBankAccountCancel={this.handleAccountCancel}
