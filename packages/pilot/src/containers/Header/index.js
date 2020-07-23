@@ -21,7 +21,7 @@ import {
 } from 'former-kit'
 
 import IconTestAmbientOff from 'emblematic-icons/svg/TestAmbientOff24.svg'
-import IconTestAmbientOn from 'emblematic-icons/svg/TestAmbientOn24.svg'
+import IconArrowDownRight from 'emblematic-icons/svg/ArrowDownRight24.svg'
 import IconRocket from './rocket.svg'
 
 import environment, {
@@ -37,36 +37,37 @@ const getEnvironmentUrl = () => (
     : testUrl
 )
 
-const renderEnvironmentButton = ({
+const renderTestEnviromentNav = t => (
+  <div className={style.testEnvironmentLabel}>
+    <p>{t('header.environment.text_test_1')}&nbsp;
+      <b>{t('header.environment.text_test_2')}</b>
+    </p>
+    <a href={liveUrl}>
+      {t('header.environment.text_action_test')}
+      <IconArrowDownRight height={10} />
+    </a>
+  </div>
+)
+
+const renderLiveEnvironmentButton = ({
   t,
 }) => (
   <Popover
     content={(
       <PopoverContent>
         <small>
-          {t(`header.environment.text_${environment}`)}&nbsp;
+          {t('header.environment.text_live')}&nbsp;
           <a href={getEnvironmentUrl()}>
-            {t('header.environment.text_action')}
-          </a>.
+            {t('header.environment.text_action_live')}
+          </a>
         </small>
       </PopoverContent>
     )}
     placement="bottomEnd"
   >
-    {environment === 'test'
-      && (
-        <small className={style.testEnvironmentLabel}>
-          {t('header.environment.test_environment')}
-        </small>
-      )
-    }
     <Button
       fill="clean"
-      icon={
-        environment === 'test'
-          ? <IconTestAmbientOn />
-          : <IconTestAmbientOff />
-      }
+      icon={<IconTestAmbientOff />}
     />
   </Popover>
 )
@@ -81,79 +82,81 @@ const HeaderContainer = ({
   t,
   user,
 }) => (
-  <Header>
-    <HashRouter>
-      <Switch>
-        {routes.map(({
-          exact,
-          icon: Icon,
-          path,
-          title,
-        }) => (
-          <Route
-            exact={exact}
-            key={path}
-            path={path}
-            render={() => (
-              <Fragment>
-                {!Icon && <HeaderBackButton onClick={onBack} />}
-                {Icon && <Icon width={16} height={16} />}
-                <HeaderTitle>{t(title)}</HeaderTitle>
-              </Fragment>
-            )}
-          />
-        ))}
-      </Switch>
-    </HashRouter>
+  <>
+    { environment === 'test' && renderTestEnviromentNav(t) }
+    <Header>
+      <HashRouter>
+        <Switch>
+          {routes.map(({
+            exact,
+            icon: Icon,
+            path,
+            title,
+          }) => (
+            <Route
+              exact={exact}
+              key={path}
+              path={path}
+              render={() => (
+                <Fragment>
+                  {!Icon && <HeaderBackButton onClick={onBack} />}
+                  {Icon && <Icon width={16} height={16} />}
+                  <HeaderTitle>{t(title)}</HeaderTitle>
+                </Fragment>
+              )}
+            />
+          ))}
+        </Switch>
+      </HashRouter>
+      <HeaderContent>
+        {showWelcomeButton && (
+          <>
+            <Button
+              icon={<IconRocket />}
+              onClick={onWelcome}
+            >
+              <span className={style.welcome}>
+                {t('header.welcome')}
+              </span>
+            </Button>
 
-    <HeaderContent>
-      {showWelcomeButton && (
-        <>
-          <Button
-            icon={<IconRocket />}
-            onClick={onWelcome}
-          >
-            <span className={style.welcome}>
-              {t('header.welcome')}
-            </span>
-          </Button>
-
-          <Spacing size="small" />
-        </>
-      )}
-
-      {renderEnvironmentButton({ t })}
-
-      <Spacing size="small" />
-
-      <HeaderMenu
-        title={(
-          <Fragment>
-            <Avatar alt={user.name} />
-            <span>{user.name}</span>
-          </Fragment>
+            <Spacing size="small" />
+          </>
         )}
-      >
-        <PopoverContent>
-          <strong>
-            {user.name}
-          </strong>
-          <small>
-            {t(`models.user.permission.${user.permission}`)}
-          </small>
-        </PopoverContent>
-        <PopoverMenu
-          items={[
-            { action: onSettings, title: t('header.account.settings') },
-            { action: onLogout, title: t('header.account.logout') },
-          ]}
-        />
-      </HeaderMenu>
-    </HeaderContent>
-  </Header>
+
+        {environment === 'live' && renderLiveEnvironmentButton({ t })}
+
+        <Spacing size="small" />
+
+        <HeaderMenu
+          title={(
+            <Fragment>
+              <Avatar alt={user.name} />
+              <span>{user.name}</span>
+            </Fragment>
+          )}
+        >
+          <PopoverContent>
+            <strong>
+              {user.name}
+            </strong>
+            <small>
+              {t(`models.user.permission.${user.permission}`)}
+            </small>
+          </PopoverContent>
+          <PopoverMenu
+            items={[
+              { action: onSettings, title: t('header.account.settings') },
+              { action: onLogout, title: t('header.account.logout') },
+            ]}
+          />
+        </HeaderMenu>
+      </HeaderContent>
+    </Header>
+  </>
 )
 
-renderEnvironmentButton.propTypes = {
+renderLiveEnvironmentButton.propTypes = {
   t: PropTypes.func.isRequired,
 }
 
