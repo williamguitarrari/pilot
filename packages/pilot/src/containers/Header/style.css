@@ -1,10 +1,38 @@
 @import "former-kit-skin-pagarme/dist/styles/colors/light.css";
 
 .testEnvironmentLabel {
-  align-self: center;
-  color: var(--color-squanchy-gray-400);
-  cursor: pointer;
-  user-select: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 20px 0 20px;
+  padding: 10px 15px;
+  background-color: var(--color-barney-purple-100);
+  color: #ffffff;
+  border-radius: 6px;
+}
+
+.testEnvironmentLabel p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.testEnvironmentLabel a {
+  font-size: 14px;
+  line-height: 20px;
+  color: #ffffff;
+}
+
+.testEnvironmentLabel a:hover {
+  text-decoration: none;
+}
+
+.testEnvironmentLabel-icon {
+  height: 10px;
+}
+
+.testEnvironmentLabel-icon path {
+  fill: #ffffff;
 }
 
 .welcome {
