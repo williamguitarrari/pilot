@@ -46,8 +46,12 @@ const AccessDocs = ({ onboardingAnswers, t }) => {
 AccessDocs.propTypes = {
   onboardingAnswers: PropTypes.shape({
     platform: PropTypes.string,
-  }).isRequired,
+  }),
   t: PropTypes.func.isRequired,
+}
+
+AccessDocs.defaultProps = {
+  onboardingAnswers: {},
 }
 
 export default AccessDocs
