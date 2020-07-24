@@ -3,10 +3,12 @@ import {
   catchError,
   map,
   mergeMap,
+  tap,
 } from 'rxjs/operators'
 import { combineEpics, ofType } from 'redux-observable'
 import {
   addOnboardingAnswers,
+  fetchingOnboardingAnswers,
   failOnboardingAnswers,
   receiveOnboardingAnswers,
 } from './actions'
@@ -17,6 +19,7 @@ import { POST_ANSWER } from '../Onboarding/actions'
 const onboardingAnswersEpic = (action$, state$) => action$
   .pipe(
     ofType(LOGIN_RECEIVE),
+    tap(fetchingOnboardingAnswers),
     mergeMap(() => {
       const state = state$.value
       const { account: { client } } = state
