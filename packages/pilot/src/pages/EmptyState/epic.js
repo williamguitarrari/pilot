@@ -9,6 +9,7 @@ import {
   addOnboardingAnswers,
   failOnboardingAnswers,
   receiveOnboardingAnswers,
+  fetchingOnboardingAnswers,
 } from './actions'
 
 import { LOGIN_RECEIVE } from '../Account/actions/actions'
@@ -30,6 +31,12 @@ const onboardingAnswersEpic = (action$, state$) => action$
     })
   )
 
+const fetchAnswersEpic = action$ => action$
+  .pipe(
+    ofType(LOGIN_RECEIVE),
+    map(fetchingOnboardingAnswers)
+  )
+
 const postAnswersEpic = (action$, state$) => action$
   .pipe(
     ofType(POST_ANSWER),
@@ -44,4 +51,8 @@ const postAnswersEpic = (action$, state$) => action$
     map(addOnboardingAnswers)
   )
 
-export default combineEpics(onboardingAnswersEpic, postAnswersEpic)
+export default combineEpics(
+  fetchAnswersEpic,
+  onboardingAnswersEpic,
+  postAnswersEpic
+)

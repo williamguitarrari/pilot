@@ -41,11 +41,15 @@ const mapStateToProps = ({
     user,
   },
   welcome: {
+    error: onboardingError,
+    loading: loadingOnboardingAnswers,
     onboardingAnswers,
   },
 }) => ({
   client,
   company,
+  fetchOnboardingAnswersFailed: !!onboardingError,
+  loadingOnboardingAnswers,
   onboardingAnswers,
   sessionId,
   user,
@@ -74,6 +78,9 @@ const shouldSelectDashboard = () => {
 }
 const isOnboardingSkipped = () => localStorage.getItem('skip-onboarding')
 const userAlreadyTransacted = ({ company }) => company.alreadyTransacted
+const onboardingAnswersError = ({
+  fetchOnboardingAnswersFailed,
+}) => fetchOnboardingAnswersFailed
 const onboardingCompleted = ({
   onboardingAnswers,
 }) => isOnboardingComplete(onboardingAnswers)
@@ -81,11 +88,13 @@ const longTimeUser = ({
   company,
   user,
 }) => !isRecentlyCreatedUser({ company, user })
+
 const skipOnboarding = anyPass([
   isOnboardingSkipped,
   onboardingCompleted,
   userAlreadyTransacted,
   longTimeUser,
+  onboardingAnswersError,
 ])
 
 class Root extends Component {
@@ -129,7 +138,9 @@ class Root extends Component {
     const {
       client,
       company,
+      fetchOnboardingAnswersFailed,
       history,
+      loadingOnboardingAnswers,
       location: {
         pathname: path,
         search: queryString,
@@ -162,7 +173,7 @@ class Root extends Component {
       return null
     }
 
-    if (!user || !company || !onboardingAnswers) {
+    if (!user || !company || loadingOnboardingAnswers) {
       return (
         <Loader
           opaqueBackground
@@ -189,7 +200,9 @@ class Root extends Component {
       return window.open(`https://dashboard.pagar.me/#login?session_id=${sessionId}&redirect_to=dashboard.home&environment=${environment}`, '_self')
     }
 
-    if (!skipOnboarding({ company, onboardingAnswers, user })) {
+    if (!skipOnboarding({
+      company, fetchOnboardingAnswersFailed, onboardingAnswers, user,
+    })) {
       return <Onboarding />
     }
 
@@ -200,10 +213,12 @@ class Root extends Component {
 Root.propTypes = {
   client: PropTypes.object, // eslint-disable-line
   company: PropTypes.object, // eslint-disable-line
+  fetchOnboardingAnswersFailed: PropTypes.bool.isRequired,
   history: PropTypes.shape({
     listen: PropTypes.func,
     replace: PropTypes.func,
   }).isRequired,
+  loadingOnboardingAnswers: PropTypes.bool.isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string,
     search: PropTypes.string,
