@@ -1,276 +1,346 @@
-version: 2
-image: ubuntu:16.04
-jobs:
-  build:
-    docker:
-      - image: circleci/node:10.15.1-jessie-browsers
+version: 2.1
 
-    working_directory: ~/repo
+orbs:
+  node: circleci/node@3.0.1
+  aws-cli: circleci/aws-cli@1.2.1
+  aws-s3: circleci/aws-s3@1.0.16
 
-    environment:
-        TZ: America/Sao_Paulo
-
+commands:
+  checkout-and-install:
     steps:
       - checkout
-
       - restore_cache:
           keys:
           - dependencies-{{ checksum "yarn.lock" }}
           - dependencies-
-
-      - run: yarn
-
-      - run: |
-          cd packages/cockpit
-          yarn lint
-          yarn test
-          yarn build
-
-      - run: |
-          cd packages/pilot
-          yarn lint
-          yarn build
-          yarn build-storybook
-          yarn percy; true
-
+      - run: yarn install --no-audit --prefer-offline
       - save_cache:
           paths:
             - node_modules
             - packages/cockpit/node_modules
             - packages/pilot/node_modules
           key: dependencies-{{ checksum "yarn.lock" }}
-  build_stg:
-    docker:
-      - image: circleci/node:10.15.1-jessie-browsers
 
-    working_directory: ~/repo
+jobs:
+  build:
+    executor: node/default
+    steps:
+      - checkout-and-install
+      - run: |
+          cd packages/pilot && yarn build
+
+  cockpit-lint:
+    executor: node/default
+    steps:
+      - checkout-and-install
+      - run: |
+          cd packages/cockpit && yarn lint
+
+  cockpit-test:
+    executor: node/default
+    environment:
+      TZ: America/Sao_Paulo
+    steps:
+      - checkout-and-install
+      - run: |
+          cd packages/cockpit && yarn test
+
+  pilot-lint:
+    executor: node/default
+    steps:
+      - checkout-and-install
+      - run: |
+          cd packages/pilot && yarn lint
+
+  percy:
+    docker:
+      - image: "circleci/node:12.18.2-browsers"
+    steps:
+      - checkout-and-install
+      - run: |
+          cd packages/pilot
+          yarn add @percy/storybook@3.3.0
+          yarn run build-storybook
+          yarn run percy
+
+  build_for_deploy:
+    executor: node/default
+    parameters:
+      environment:
+        type: enum
+        enum: ["live", "sandbox"]
+      live_url:
+        type: string
+      test_url:
+        type: string
+      persist_at:
+        type: string
+      public_url:
+        type: string
+      recaptcha_key:
+        type: env_var_name
 
     steps:
-      - checkout
-
-      - restore_cache:
-          keys:
-          - dependencies-{{ checksum "yarn.lock" }}
-          - dependencies-
-
-      - run: yarn
-
-      - run: |
-          cd packages/cockpit
-          yarn build
-
-      - run: |
-          cd packages
-          cp -rf pilot pilot-latest-live
-          cp -rf pilot pilot-${CIRCLE_TAG}-live
-          cp -rf pilot pilot-latest-sandbox
-          cp -rf pilot pilot-${CIRCLE_TAG}-sandbox
-          cd pilot-latest-live
-          export PUBLIC_URL_REGEX='https:\/\/beta.dashboard.stg.pagarme.net\/latest'
-          export PUBLIC_URL='https://beta.dashboard.stg.pagarme.net/latest'
-          export REACT_APP_LIVE_URL='https://beta.dashboard.stg.pagarme.net/latest/index.html'
-          export REACT_APP_TEST_URL='https://beta.dashboard.sandbox.stg.pagarme.net/latest/index.html'
-          export REACT_APP_RECAPTCHA_KEY=$RECAPTCHA_KEY_LIVE
-          export REACT_APP_API_ENVIRONMENT='live'
-          sed -e 's/\".\"/"'$PUBLIC_URL_REGEX'\"/g' package.json > package.json.bak
-          cp package.json.bak package.json
-          yarn build
-          cd ../pilot-latest-sandbox
-          export PUBLIC_URL_REGEX='https:\/\/beta.dashboard.sandbox.stg.pagarme.net\/latest'
-          export PUBLIC_URL='https://beta.dashboard.sandbox.stg.pagarme.net/latest'
-          export REACT_APP_RECAPTCHA_KEY=$RECAPTCHA_KEY_SANDBOX
-          export REACT_APP_API_ENVIRONMENT='sandbox'
-          sed -e 's/\".\"/"'$PUBLIC_URL_REGEX'\"/g' package.json > package.json.bak
-          cp package.json.bak package.json
-          yarn build
-          cd ../pilot-${CIRCLE_TAG}-live
-          export PUBLIC_URL_REGEX='https:\/\/beta.dashboard.stg.pagarme.net\/versions\/'${CIRCLE_TAG}
-          export PUBLIC_URL='https://beta.dashboard.stg.pagarme.net/versions/'${CIRCLE_TAG}
-          export REACT_APP_LIVE_URL='https://beta.dashboard.stg.pagarme.net/versions/'${CIRCLE_TAG}'/index.html'
-          export REACT_APP_TEST_URL='https://beta.dashboard.sandbox.stg.pagarme.net/versions/'${CIRCLE_TAG}'/index.html'
-          export REACT_APP_RECAPTCHA_KEY=$RECAPTCHA_KEY_LIVE
-          export REACT_APP_API_ENVIRONMENT='live'
-          sed -e 's/\".\"/"'$PUBLIC_URL_REGEX'\"/g' package.json > package.json.bak
-          cp package.json.bak package.json
-          yarn build
-          cd ../pilot-${CIRCLE_TAG}-sandbox
-          export PUBLIC_URL_REGEX='https:\/\/beta.dashboard.sandbox.stg.pagarme.net\/versions\/'${CIRCLE_TAG}
-          export PUBLIC_URL='https://beta.dashboard.sandbox.stg.pagarme.net/versions/'${CIRCLE_TAG}
-          export REACT_APP_RECAPTCHA_KEY=$RECAPTCHA_KEY_SANDBOX
-          export REACT_APP_API_ENVIRONMENT='sandbox'
-          sed -e 's/\".\"/"'$PUBLIC_URL_REGEX'\"/g' package.json > package.json.bak
-          cp package.json.bak package.json
-          yarn build
-      - run: |
-         cd packages
-         mkdir builds
-         mv pilot-latest-live/build builds/pilot-latest-live
-         mv pilot-${CIRCLE_TAG}-live/build builds/pilot-${CIRCLE_TAG}-live
-         mv pilot-latest-sandbox/build builds/pilot-latest-sandbox
-         mv pilot-${CIRCLE_TAG}-sandbox/build builds/pilot-${CIRCLE_TAG}-sandbox
+      - checkout-and-install
+      - run:
+          name: Building site
+          command: |
+            cd packages/pilot
+            PUBLIC_URL=<< parameters.public_url >> \
+            REACT_APP_API_ENVIRONMENT=<< parameters.environment >> \
+            REACT_APP_LIVE_URL=<< parameters.live_url >> \
+            REACT_APP_TEST_URL=<< parameters.test_url >> \
+            REACT_APP_RECAPTCHA_KEY=${<< parameters.recaptcha_key >>} \
+            yarn run build
+            mkdir -p builds/<< parameters.persist_at >>
+            mv build/* builds/<< parameters.persist_at >>
       - persist_to_workspace:
-          root: packages
+          root: ./
           paths:
-            - builds
-  build_prd:
-    docker:
-      - image: circleci/node:10.15.1-jessie-browsers
+            - packages/pilot/builds
 
-    working_directory: ~/repo
-
-    steps:
-      - checkout
-
-      - restore_cache:
-          keys:
-          - dependencies-{{ checksum "yarn.lock" }}
-          - dependencies-
-
-      - run: yarn
-
-      - run: |
-          cd packages/cockpit
-          yarn build
-
-      - run: |
-          cd packages
-          cp -rf pilot pilot-live
-          cp -rf pilot pilot-sandbox
-          cd pilot-live
-          export PUBLIC_URL_REGEX='https:\/\/beta.dashboard.pagar.me'
-          export PUBLIC_URL='https://beta.dashboard.pagar.me'
-          export REACT_APP_LIVE_URL='https://beta.dashboard.pagar.me/'
-          export REACT_APP_TEST_URL='https://beta.dashboard.sandbox.pagar.me/'
-          export REACT_APP_RECAPTCHA_KEY=$RECAPTCHA_KEY_LIVE
-          export REACT_APP_API_ENVIRONMENT='live'
-          sed -e 's/\".\"/"'$PUBLIC_URL_REGEX'\"/g' package.json > package.json.bak
-          cp package.json.bak package.json
-          yarn build
-          cd ../pilot-sandbox
-          export PUBLIC_URL_REGEX='https:\/\/beta.dashboard.sandbox.pagar.me'
-          export PUBLIC_URL='https://beta.dashboard.sandbox.pagar.me'
-          export REACT_APP_API_ENVIRONMENT='sandbox'
-          export REACT_APP_RECAPTCHA_KEY=$RECAPTCHA_KEY_SANDBOX
-          sed -e 's/\".\"/"'$PUBLIC_URL_REGEX'\"/g' package.json > package.json.bak
-          cp package.json.bak package.json
-          yarn build
-      - run: |
-         cd packages
-         mkdir builds
-         mv pilot-live/build builds/pilot-live
-         mv pilot-sandbox/build builds/pilot-sandbox
-      - persist_to_workspace:
-          root: packages
-          paths:
-            - builds
-  deploy_stg:
-    machine:
-        enabled: true
-    working_directory: ~/repo
+  deploy:
+    executor: aws-cli/default
+    parameters:
+      aws_access_key_id:
+        type: env_var_name
+      aws_secret_access_key:
+        type: env_var_name
+      cloudfront_id:
+        type: env_var_name
+      s3_path:
+        type: string
+      persisted_at:
+        type: string
 
     steps:
       - attach_workspace:
-          at: ~/repo
+          at: .
+      - aws-s3/sync:
+          arguments: --delete
+          aws-access-key-id: << parameters.aws_access_key_id >>
+          aws-secret-access-key: << parameters.aws_secret_access_key >>
+          from: packages/pilot/builds/<< parameters.persisted_at >>
+          to: << parameters.s3_path >>
       - run:
-          name: Deploy to S3 files of version for stg (live)
+          name: Create AWS CloudFront invalidation
           command: |
-            mkdir -p live/versions
-            mv builds/pilot-latest-live live/latest
-            mv builds/pilot-${CIRCLE_TAG}-live live/versions/${CIRCLE_TAG}
-            aws s3 sync --delete ./live/latest s3://beta.dashboard.stg.pagarme.net/latest
-            aws s3 sync ./live/versions s3://beta.dashboard.stg.pagarme.net/versions
-            aws cloudfront create-invalidation --distribution-id $CDN_DISTRIBUTION_ID --paths "/latest/*"
-      - run:
-          name: Deploy to S3 files of version for stg (sandbox)
-          command: |
-            mkdir -p sandbox/versions
-            mv builds/pilot-latest-sandbox sandbox/latest
-            mv builds/pilot-${CIRCLE_TAG}-sandbox sandbox/versions/${CIRCLE_TAG}
-            aws s3 sync --delete ./sandbox/latest s3://beta.dashboard.sandbox.stg.pagarme.net/latest
-            aws s3 sync ./sandbox/versions s3://beta.dashboard.sandbox.stg.pagarme.net/versions
-            aws cloudfront create-invalidation --distribution-id $CDN_DISTRIBUTION_ID_SANDBOX --paths "/latest/*"
-  deploy_prd:
-    machine:
-        enabled: true
-    working_directory: ~/repo
-
-    steps:
-      - attach_workspace:
-          at: ~/repo/
-      - run:
-          name: Deploy to S3 files of version fo prod (live)
-          command: |
-            cd builds/pilot-live
-            AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_PRD AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_PRD aws s3 sync --delete . s3://beta.dashboard.prd.pagarme.net
-            AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_PRD AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_PRD aws cloudfront create-invalidation --distribution-id $PRD_CDN_DISTRIBUTION_ID --paths "/*"
-            cd ../../builds/pilot-sandbox
-            AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_PRD AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_PRD aws s3 sync --delete . s3://beta.dashboard.sandbox.prd.pagarme.net
-            AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_PRD AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_PRD aws cloudfront create-invalidation --distribution-id $PRD_CDN_DISTRIBUTION_ID_SANDBOX --paths "/*"
-  pre_hold:
-    machine:
-          enabled: true
-    working_directory: ~/repo
-    steps:
-      - run:
-          name: Call the team for holded process
-          command: |
-            pip install slack-webhook-cli
-            slack "upgrade do seu jaeger está pronto, certifique que a versão $CIRCLE_TAG está correto em $CIRCLE_BUILD_URL"
+            AWS_ACCESS_KEY_ID=${<< parameters.aws_access_key_id >>} \
+            AWS_SECRET_ACCESS_KEY=${<< parameters.aws_secret_access_key >>} \
+            aws cloudfront create-invalidation --distribution-id ${<< parameters.cloudfront_id >>}  --paths "/*"
 
 workflows:
-  version: 2
-  build-and-deploy:
+  main:
     jobs:
-    - build:
-        filters:
-          tags:
-            only: /^v.*/
-    - build_stg:
-        requires:
-        - build
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^v([0-9]+).([0-9]+).([0-9]+).*$/
-    - deploy_stg:
-        requires:
-        - build_stg
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^v([0-9]+).([0-9]+).([0-9]+).*$/
-    - pre_hold:
-        requires:
-          - deploy_stg
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^v([0-9]+).([0-9]+).([0-9]+)$/
-    - hold:
-        type: approval
-        requires:
-          - pre_hold
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^v([0-9]+).([0-9]+).([0-9]+)$/
-    - build_prd:
-        requires:
-        - hold
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^v([0-9]+).([0-9]+).([0-9]+).*$/
-    - deploy_prd:
-        requires:
-        - build_prd
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^v([0-9]+).([0-9]+).([0-9]+)$/
+      - build:
+          filters:
+            tags:
+              ignore: /.*/
+      - cockpit-lint:
+          filters:
+            tags:
+              only: /.*/
+      - cockpit-test:
+          filters:
+            tags:
+              only: /.*/
+      - pilot-lint:
+          filters:
+            tags:
+              only: /.*/
+      - percy:
+          filters:
+            tags:
+              ignore: /.*/
+
+      # STAGING
+      ## versions
+      - build_for_deploy:
+          name: build-stg-live-versions
+          environment: live
+          live_url: https://beta.dashboard.stg.pagarme.net/versions/${CIRCLE_TAG}/index.html
+          test_url: https://beta.dashboard.sandbox.stg.pagarme.net/${CIRCLE_TAG}/index.html
+          persist_at: stg-live-versions
+          public_url: https://beta.dashboard.stg.pagarme.net/versions/${CIRCLE_TAG}
+          recaptcha_key: RECAPTCHA_KEY_LIVE
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v([0-9]+).([0-9]+).([0-9]+)-.*$/
+
+      - deploy:
+          name: deploy-stg-live-versions
+          aws_access_key_id: AWS_ACCESS_KEY_ID_STG
+          aws_secret_access_key: AWS_SECRET_ACCESS_KEY_STG
+          cloudfront_id: CDN_DISTRIBUTION_ID
+          s3_path: s3://beta.dashboard.stg.pagarme.net/versions/${CIRCLE_TAG}
+          persisted_at: stg-live-versions
+          requires:
+            - build-stg-live-versions
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v([0-9]+).([0-9]+).([0-9]+)-.*$/
+
+      - build_for_deploy:
+          name: build-stg-sandbox-versions
+          environment: sandbox
+          live_url: https://beta.dashboard.stg.pagarme.net/versions/${CIRCLE_TAG}/index.html
+          test_url: https://beta.dashboard.sandbox.stg.pagarme.net/${CIRCLE_TAG}/index.html
+          persist_at: stg-sandbox-versions
+          public_url: https://beta.dashboard.sandbox.stg.pagarme.net/versions/${CIRCLE_TAG}
+          recaptcha_key: RECAPTCHA_KEY_SANDBOX
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v([0-9]+).([0-9]+).([0-9]+)-.*$/
+
+      - deploy:
+          name: deploy-stg-sandbox-versions
+          aws_access_key_id: AWS_ACCESS_KEY_ID_STG
+          aws_secret_access_key: AWS_SECRET_ACCESS_KEY_STG
+          cloudfront_id: CDN_DISTRIBUTION_ID_SANDBOX
+          s3_path: s3://beta.dashboard.sandbox.stg.pagarme.net/versions/${CIRCLE_TAG}
+          persisted_at: stg-sandbox-versions
+          requires:
+            - build-stg-sandbox-versions
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v([0-9]+).([0-9]+).([0-9]+)-.*$/
+
+      ## latest
+      - build_for_deploy:
+          name: build-stg-live-latest
+          environment: live
+          live_url: https://beta.dashboard.stg.pagarme.net/latest
+          test_url: https://beta.dashboard.sandbox.stg.pagarme.net/latest
+          persist_at: stg-live-latest
+          public_url: https://beta.dashboard.stg.pagarme.net/latest
+          recaptcha_key: RECAPTCHA_KEY_LIVE
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v([0-9]+).([0-9]+).([0-9]+)-.*$/
+
+      - deploy:
+          name: deploy-stg-live-latest
+          aws_access_key_id: AWS_ACCESS_KEY_ID_STG
+          aws_secret_access_key: AWS_SECRET_ACCESS_KEY_STG
+          cloudfront_id: CDN_DISTRIBUTION_ID
+          s3_path: s3://beta.dashboard.stg.pagarme.net/latest
+          persisted_at: stg-live-latest
+          requires:
+            - build-stg-live-latest
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v([0-9]+).([0-9]+).([0-9]+)-.*$/
+
+      - build_for_deploy:
+          name: build-stg-sandbox-latest
+          environment: sandbox
+          live_url: https://beta.dashboard.stg.pagarme.net/latest
+          test_url: https://beta.dashboard.sandbox.stg.pagarme.net/latest
+          persist_at: stg-sandbox-latest
+          public_url: https://beta.dashboard.sandbox.stg.pagarme.net/latest
+          recaptcha_key: RECAPTCHA_KEY_SANDBOX
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v([0-9]+).([0-9]+).([0-9]+)-.*$/
+
+      - deploy:
+          name: deploy-stg-sandbox-latest
+          aws_access_key_id: AWS_ACCESS_KEY_ID_STG
+          aws_secret_access_key: AWS_SECRET_ACCESS_KEY_STG
+          cloudfront_id: CDN_DISTRIBUTION_ID_SANDBOX
+          s3_path: s3://beta.dashboard.sandbox.stg.pagarme.net/latest
+          persisted_at: stg-sandbox-latest
+          requires:
+            - build-stg-sandbox-latest
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v([0-9]+).([0-9]+).([0-9]+)-.*$/
+
+      # PRODUCTION
+      - build_for_deploy:
+          name: build-prd-live
+          environment: live
+          live_url: https://beta.dashboard.pagar.me/
+          test_url: https://beta.dashboard.sandbox.pagar.me/
+          persist_at: prd-live
+          public_url: https://beta.dashboard.pagar.me/
+          recaptcha_key: RECAPTCHA_KEY_LIVE
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v([0-9]+).([0-9]+).([0-9]+)$/
+
+      - build_for_deploy:
+          name: build-prd-sandbox
+          environment: sandbox
+          live_url: https://beta.dashboard.pagar.me/
+          test_url: https://beta.dashboard.sandbox.pagar.me/
+          persist_at: prd-sandbox
+          public_url: https://beta.dashboard.sandbox.pagar.me
+          recaptcha_key: RECAPTCHA_KEY_SANDBOX
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v([0-9]+).([0-9]+).([0-9]+)$/
+
+      - hold:
+          type: approval
+          requires:
+            - build-prd-live
+            - build-prd-sandbox
+            - cockpit-lint
+            - cockpit-test
+            - pilot-lint
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v([0-9]+).([0-9]+).([0-9]+)$/
+
+      - deploy:
+          name: deploy-prd-live
+          aws_access_key_id: AWS_ACCESS_KEY_ID_PRD
+          aws_secret_access_key: AWS_SECRET_ACCESS_KEY_PRD
+          cloudfront_id: PRD_CDN_DISTRIBUTION_ID
+          s3_path: s3://beta.dashboard.prd.pagarme.net
+          persisted_at: prd-live
+          requires:
+            - hold
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v([0-9]+).([0-9]+).([0-9]+)$/
+
+      - deploy:
+          name: deploy-prd-sandbox
+          aws_access_key_id: AWS_ACCESS_KEY_ID_PRD
+          aws_secret_access_key: AWS_SECRET_ACCESS_KEY_PRD
+          cloudfront_id: PRD_CDN_DISTRIBUTION_ID_SANDBOX
+          s3_path: s3://beta.dashboard.sandbox.prd.pagarme.net
+          persisted_at: prd-sandbox
+          requires:
+            - hold
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v([0-9]+).([0-9]+).([0-9]+)$/
