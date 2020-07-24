@@ -14,3 +14,9 @@ export const resetOnboardingAnswers = createAction(ONBOARDING_ANSWERS_RESET)
 
 export const ADD_ONBOARDING_ANSWERS = 'pilot/welcome/ADD_ONBOARDING_ANSWERS'
 export const addOnboardingAnswers = createAction(ADD_ONBOARDING_ANSWERS)
+
+export const FETCHING_ONBOARDING_ANSWERS = 'pilot/welcome/FETCHING_ONBOARDING_ANSWERS'
+export const fetchingOnboardingAnswers = createAction(
+  FETCHING_ONBOARDING_ANSWERS
+)
+

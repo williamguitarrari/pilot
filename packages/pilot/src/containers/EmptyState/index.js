@@ -84,9 +84,7 @@ EmptyState.propTypes = {
   }),
   isAdmin: PropTypes.bool,
   isMDRzao: PropTypes.bool.isRequired,
-  onboardingAnswers: PropTypes.shape({
-    platform: PropTypes.string.isRequired,
-  }),
+  onboardingAnswers: PropTypes.objectOf(PropTypes.string),
   onDisableWelcome: PropTypes.func,
   t: PropTypes.func.isRequired,
   userName: PropTypes.string,
