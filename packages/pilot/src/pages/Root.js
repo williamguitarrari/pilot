@@ -13,7 +13,6 @@ import {
   pipe,
   startsWith,
   tail,
-  anyPass,
 } from 'ramda'
 
 import { requestLogin as requestLoginAction } from './Account/actions/actions'
@@ -23,11 +22,10 @@ import Account from './Account'
 import LoggedArea from './LoggedArea'
 import Onboarding from './Onboarding/Onboarding'
 import Loader from '../components/Loader'
-import isRecentlyCreatedUser from '../validation/recentCreatedUser'
-import isOnboardingComplete from '../validation/isOnboardingComplete'
 
 import environment from '../environment'
 import { page as appcuesPage } from '../vendor/appcues'
+import { shouldSkipOnboarding } from './EmptyState/reducer'
 
 const mapStateToProps = ({
   account: {
@@ -36,18 +34,13 @@ const mapStateToProps = ({
     sessionId,
     user,
   },
-  welcome: {
-    error: onboardingError,
-    loading: loadingOnboardingAnswers,
-    onboardingAnswers,
-  },
+  welcome,
 }) => ({
   client,
   company,
-  fetchOnboardingAnswersFailed: !!onboardingError,
-  loadingOnboardingAnswers,
-  onboardingAnswers,
+  loadingOnboardingAnswers: welcome.loading,
   sessionId,
+  skipOnboarding: shouldSkipOnboarding(welcome),
   user,
 })
 
@@ -63,27 +56,6 @@ const parseQueryString = pipe(tail, qs.parse)
 const getSessionId = (props, queryString) => (
   props.sessionId || queryString.session_id
 )
-
-const isOnboardingSkipped = () => localStorage.getItem('skip-onboarding')
-const userAlreadyTransacted = ({ company }) => company.alreadyTransacted
-const onboardingAnswersError = ({
-  fetchOnboardingAnswersFailed,
-}) => fetchOnboardingAnswersFailed
-const onboardingCompleted = ({
-  onboardingAnswers,
-}) => isOnboardingComplete(onboardingAnswers)
-const longTimeUser = ({
-  company,
-  user,
-}) => !isRecentlyCreatedUser({ company, user })
-
-const skipOnboarding = anyPass([
-  isOnboardingSkipped,
-  onboardingCompleted,
-  userAlreadyTransacted,
-  longTimeUser,
-  onboardingAnswersError,
-])
 
 class Root extends Component {
   componentDidMount () {
@@ -122,15 +94,14 @@ class Root extends Component {
     const {
       client,
       company,
-      fetchOnboardingAnswersFailed,
       history,
       loadingOnboardingAnswers,
       location: {
         pathname: path,
         search: queryString,
       },
-      onboardingAnswers,
       sessionId,
+      skipOnboarding,
       user,
     } = this.props
 
@@ -167,9 +138,7 @@ class Root extends Component {
       )
     }
 
-    if (!skipOnboarding({
-      company, fetchOnboardingAnswersFailed, onboardingAnswers, user,
-    })) {
+    if (!skipOnboarding) {
       return <Onboarding />
     }
 
@@ -180,7 +149,6 @@ class Root extends Component {
 Root.propTypes = {
   client: PropTypes.object, // eslint-disable-line
   company: PropTypes.object, // eslint-disable-line
-  fetchOnboardingAnswersFailed: PropTypes.bool.isRequired,
   history: PropTypes.shape({
     listen: PropTypes.func,
     replace: PropTypes.func,
@@ -190,16 +158,15 @@ Root.propTypes = {
     pathname: PropTypes.string,
     search: PropTypes.string,
   }).isRequired,
-  onboardingAnswers: PropTypes.objectOf(PropTypes.string),
   requestLogin: PropTypes.func.isRequired,
   sessionId: PropTypes.string,
+  skipOnboarding: PropTypes.bool.isRequired,
   user: PropTypes.object, // eslint-disable-line
 }
 
 Root.defaultProps = {
   client: null,
   company: null,
-  onboardingAnswers: null,
   sessionId: null,
   user: null,
 }

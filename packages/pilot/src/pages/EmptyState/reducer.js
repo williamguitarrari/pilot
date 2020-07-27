@@ -4,18 +4,22 @@ import {
   ONBOARDING_ANSWERS_RECEIVE,
   ONBOARDING_ANSWERS_RESET,
   ONBOARDING_ANSWERS_FAIL,
+  SKIP_ONBOARDING,
 } from './actions'
+import isOnboardingComplete from '../../validation/isOnboardingComplete'
 
 const makeInitialState = () => ({
   error: null,
   loading: false,
   onboardingAnswers: undefined,
+  skippedOnboarding: false,
 })
 
 export default function welcomeReducer (state = makeInitialState(), action) {
   switch (action.type) {
     case FETCHING_ONBOARDING_ANSWERS: {
       return {
+        ...state,
         error: null,
         loading: true,
         onboardingAnswers: undefined,
@@ -56,8 +60,21 @@ export default function welcomeReducer (state = makeInitialState(), action) {
         error: action.payload,
         loading: false,
       }
+
+    case SKIP_ONBOARDING:
+      return {
+        ...state,
+        skippedOnboarding: true,
+      }
+
     default: {
       return state
     }
   }
 }
+
+export const shouldSkipOnboarding = ({
+  error,
+  onboardingAnswers,
+  skippedOnboarding,
+}) => !!error || isOnboardingComplete(onboardingAnswers) || skippedOnboarding

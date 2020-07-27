@@ -13,7 +13,7 @@ import { withRouter } from 'react-router-dom'
 
 import routes from './routes'
 import { requestLogout } from '../Account/actions/actions'
-import isRecentlyCreatedUser from '../../validation/recentCreatedUser'
+import isRecentlyCreatedCompany from '../../validation/recentCreatedCompany'
 
 import HeaderContainer from '../../containers/Header'
 
@@ -48,7 +48,7 @@ const Header = ({
   t,
   user,
 }) => {
-  const showWelcomeButton = isRecentlyCreatedUser({ company, user })
+  const showWelcomeButton = isRecentlyCreatedCompany({ company })
     && isNotWelcomePage(pathname)
 
   return (
