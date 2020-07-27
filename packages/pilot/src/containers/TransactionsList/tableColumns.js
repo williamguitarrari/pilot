@@ -1,5 +1,6 @@
 import React from 'react'
 import {
+  either,
   path,
   pick,
   pipe,
@@ -18,8 +19,13 @@ const convertPaymentValue = property => pipe(
   formatCurrency
 )
 
+const getCustomerName = either(
+  path(['customer', 'name']),
+  path(['card', 'holder_name'])
+)
+
 const applyTruncateCustomerName = (item) => {
-  const value = path(['customer', 'name'], item)
+  const value = getCustomerName(item)
 
   return value
     ? (
