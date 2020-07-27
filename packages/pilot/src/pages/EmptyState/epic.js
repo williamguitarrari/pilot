@@ -1,39 +1,43 @@
-import { of as rxOf } from 'rxjs'
 import {
-  catchError,
   map,
   mergeMap,
 } from 'rxjs/operators'
 import { combineEpics, ofType } from 'redux-observable'
 import {
   addOnboardingAnswers,
-  failOnboardingAnswers,
   receiveOnboardingAnswers,
   fetchingOnboardingAnswers,
+  FETCHING_ONBOARDING_ANSWERS,
+  failOnboardingAnswers,
 } from './actions'
 
-import { LOGIN_RECEIVE } from '../Account/actions/actions'
+import { COMPANY_RECEIVE } from '../Account/actions/actions'
 import { POST_ANSWER } from '../Onboarding/actions'
 
 const onboardingAnswersEpic = (action$, state$) => action$
   .pipe(
-    ofType(LOGIN_RECEIVE),
+    ofType(FETCHING_ONBOARDING_ANSWERS),
     mergeMap(() => {
       const state = state$.value
       const { account: { client } } = state
       return client.onboardingAnswers.all()
+        .catch(({ message }) => ({
+          error: true,
+          payload: { message },
+        }))
     }),
-    map(receiveOnboardingAnswers),
-    catchError((error) => {
-      const { message } = error
+    map((action) => {
+      if (action.error) {
+        return failOnboardingAnswers({ message: action.payload })
+      }
 
-      return rxOf(failOnboardingAnswers({ message }))
+      return receiveOnboardingAnswers(action)
     })
   )
 
 const fetchAnswersEpic = action$ => action$
   .pipe(
-    ofType(LOGIN_RECEIVE),
+    ofType(COMPANY_RECEIVE),
     map(fetchingOnboardingAnswers)
   )
 

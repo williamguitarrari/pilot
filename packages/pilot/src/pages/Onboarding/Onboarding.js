@@ -93,7 +93,7 @@ const Onboarding = ({
   userId,
   userName,
 }) => {
-  const [showFakeLoader, setShowFakeLoader] = useState(false)
+  const [lastAnswerSubmited, setLastAnswerSubmited] = useState(null)
 
   const machineContext = machineContextFactory(onboardingAnswers)
   const onboardingMachine = onboardingMachineFactory(machineContext)
@@ -121,8 +121,8 @@ const Onboarding = ({
       questionId,
     } = settingsByQuestion[currentQuestion]
 
-    if (!deadEnd) {
-      postOnboardingAnswer({
+    if (finalStep) {
+      return setLastAnswerSubmited({
         answer,
         others,
         question_id: questionId,
@@ -130,8 +130,13 @@ const Onboarding = ({
       })
     }
 
-    if (finalStep) {
-      return setShowFakeLoader(true)
+    if (!deadEnd) {
+      postOnboardingAnswer({
+        answer,
+        others,
+        question_id: questionId,
+        user_id: userId,
+      })
     }
 
     return sendEvent('NEXT', { answer })
@@ -156,14 +161,16 @@ const Onboarding = ({
   const shouldRedirectToHome = isNil(onboardingAnswers)
     || onboardingAlreadyFinished
 
-  if (shouldRedirectToHome && !showFakeLoader) {
+  if (shouldRedirectToHome && !lastAnswerSubmited) {
     return <Redirect to="/home" />
   }
 
-  if (showFakeLoader) {
+  if (lastAnswerSubmited) {
     return (
       <FakeLoader
-        runAfterLoader={() => push('/home')}
+        runAfterLoader={() => {
+          postOnboardingAnswer(lastAnswerSubmited)
+        }}
         t={t}
       />
     )

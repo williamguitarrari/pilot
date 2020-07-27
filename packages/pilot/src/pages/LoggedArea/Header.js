@@ -13,9 +13,9 @@ import { withRouter } from 'react-router-dom'
 
 import routes from './routes'
 import { requestLogout } from '../Account/actions/actions'
-import isRecentlyCreatedUser from '../../validation/recentCreatedUser'
 import isCompanyPaymentLink from '../../validation/isPaymentLink'
 import isNilOrEmpty from '../../validation/isNilOrEmpty'
+import isRecentlyCreatedCompany from '../../validation/recentCreatedCompany'
 
 import HeaderContainer from '../../containers/Header'
 
@@ -51,7 +51,7 @@ const Header = ({
   user,
 }) => {
   const showWelcomeButton = !isNilOrEmpty(company)
-    && isRecentlyCreatedUser({ company, user })
+    && isRecentlyCreatedCompany({ company })
     && isNotWelcomePage(pathname)
     && !isCompanyPaymentLink(company)
 
