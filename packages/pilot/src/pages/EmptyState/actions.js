@@ -12,6 +12,9 @@ export const failOnboardingAnswers = createAction(ONBOARDING_ANSWERS_FAIL)
 export const ONBOARDING_ANSWERS_RESET = 'pilot/welcome/ONBOARDING_ANSWERS_RESET'
 export const resetOnboardingAnswers = createAction(ONBOARDING_ANSWERS_RESET)
 
+export const SKIP_ONBOARDING = 'pilot/welcome/SKIP_ONBOARDING'
+export const skipOnboarding = createAction(SKIP_ONBOARDING)
+
 export const ADD_ONBOARDING_ANSWERS = 'pilot/welcome/ADD_ONBOARDING_ANSWERS'
 export const addOnboardingAnswers = createAction(ADD_ONBOARDING_ANSWERS)
 

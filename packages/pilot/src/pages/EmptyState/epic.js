@@ -5,19 +5,24 @@ import {
   mergeMap,
 } from 'rxjs/operators'
 import { combineEpics, ofType } from 'redux-observable'
+import shouldSkipOnboarding from '../../validation/shouldSkipOnboarding'
 import {
   addOnboardingAnswers,
-  failOnboardingAnswers,
   receiveOnboardingAnswers,
+  ONBOARDING_ANSWERS_FAIL,
   fetchingOnboardingAnswers,
+  FETCHING_ONBOARDING_ANSWERS,
+  skipOnboarding,
+  failOnboardingAnswers,
 } from './actions'
 
-import { LOGIN_RECEIVE } from '../Account/actions/actions'
+import { COMPANY_RECEIVE } from '../Account/actions/actions'
 import { POST_ANSWER } from '../Onboarding/actions'
+import { clearLocalErrors } from '../ErrorBoundary/actions'
 
 const onboardingAnswersEpic = (action$, state$) => action$
   .pipe(
-    ofType(LOGIN_RECEIVE),
+    ofType(FETCHING_ONBOARDING_ANSWERS),
     mergeMap(() => {
       const state = state$.value
       const { account: { client } } = state
@@ -26,15 +31,27 @@ const onboardingAnswersEpic = (action$, state$) => action$
     map(receiveOnboardingAnswers),
     catchError((error) => {
       const { message } = error
-
       return rxOf(failOnboardingAnswers({ message }))
     })
   )
 
-const fetchAnswersEpic = action$ => action$
+const failAnswersEpic = action$ => action$
   .pipe(
-    ofType(LOGIN_RECEIVE),
-    map(fetchingOnboardingAnswers)
+    ofType(ONBOARDING_ANSWERS_FAIL),
+    map(clearLocalErrors)
+  )
+
+const fetchAnswersEpic = (action$, state$) => action$
+  .pipe(
+    ofType(COMPANY_RECEIVE),
+    mergeMap(() => {
+      const state = state$.value
+      const { account: { company } } = state
+      if (shouldSkipOnboarding({ company })) {
+        return rxOf(skipOnboarding())
+      }
+      return rxOf(fetchingOnboardingAnswers())
+    })
   )
 
 const postAnswersEpic = (action$, state$) => action$
@@ -52,6 +69,7 @@ const postAnswersEpic = (action$, state$) => action$
   )
 
 export default combineEpics(
+  failAnswersEpic,
   fetchAnswersEpic,
   onboardingAnswersEpic,
   postAnswersEpic
