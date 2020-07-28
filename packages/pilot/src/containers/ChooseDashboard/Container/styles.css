@@ -1,0 +1,23 @@
+@import "former-kit-skin-pagarme/dist/styles/colors.css";
+
+.chooseDashboardContainer {
+  align-items: center;
+  background-color: var(--color-squanchy-gray-20);
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  position: relative;
+  width: 100vw;
+}
+
+.ellipse {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+}
+
+.circles {
+  position: absolute;
+  right: 0;
+  top: 37px;
+}

@@ -503,3 +503,6 @@ storiesOf('Containers|Empty State', module)
 storiesOf('Containers|Choose Dashboard/Card')
   .add('Legacy Dashboard', () => <ChooseDashboard.Card.LegacyDashboardCard />)
   .add('New Dashboard', () => <ChooseDashboard.Card.NewDashboard />)
+
+storiesOf('Containers|Choose Dashboard/Container')
+  .add('Container', () => <ChooseDashboard.Container />)
