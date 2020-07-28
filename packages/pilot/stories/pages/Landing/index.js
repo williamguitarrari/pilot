@@ -40,8 +40,6 @@ const Placeholder = props => (
 const TestPresentation = (
   <Presentation
     environment="test"
-    environmentUrl=""
-    redirectToRegister={action('register click')}
     t={t}
   />
 )
@@ -80,8 +78,6 @@ const UserSignUp = () => {
 const LivePresentation = (
   <Presentation
     environment="live"
-    environmentUrl=""
-    redirectToRegister={action('register click')}
     t={t}
   />
 )
@@ -90,13 +86,14 @@ storiesOf('Pages|Login', module)
   .addDecorator(withA11y)
   .add('Login Live', () => (
     <Account
-      base="light"
       logo={Placeholder}
       primaryContent={(
         <LoginForm
-          base="light"
+          environment="live"
           onLogin={action('login')}
           onPasswordRecovery={action('recover password')}
+          onChangeEnvironment={action('change environment')}
+          recaptchaKey="not_a_real_key"
           t={t}
         />
       )}
@@ -106,13 +103,14 @@ storiesOf('Pages|Login', module)
   ))
   .add('Login Test', () => (
     <Account
-      base="dark"
       logo={Placeholder}
       primaryContent={(
         <LoginForm
-          base="dark"
+          environment="live"
           onLogin={action('login')}
           onPasswordRecovery={action('recover password')}
+          onChangeEnvironment={action('change environment')}
+          recaptchaKey="not_a_real_key"
           t={t}
         />
       )}
@@ -122,7 +120,6 @@ storiesOf('Pages|Login', module)
   ))
   .add('Password Recovery Form', () => (
     <Account
-      // eslint-disable-next-line
       logo={Placeholder}
       primaryContent={(
         <PasswordRecoveryForm
@@ -139,7 +136,6 @@ storiesOf('Pages|Login', module)
   ))
   .add('Password Recovery Confirmation', () => (
     <Account
-      // eslint-disable-next-line
       logo={Placeholder}
       primaryContent={(
         <PasswordRecoveryConfirmation
