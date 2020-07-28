@@ -20,7 +20,6 @@ import {
   Spacing,
 } from 'former-kit'
 
-import IconTestAmbientOn from 'emblematic-icons/svg/TestAmbientOn24.svg'
 import IconTestAmbientOff from 'emblematic-icons/svg/TestAmbientOff24.svg'
 import IconArrowDownRight from 'emblematic-icons/svg/ArrowDownRight24.svg'
 import IconRocket from './rocket.svg'
@@ -71,23 +70,12 @@ const renderEnvironmentButton = ({
       )}
       placement="bottomEnd"
     >
-      {environment === 'test' && !isCompanyPaymentLink
-        && (
-          <small className={style.testEnvironmentLabel}>
-            {t('header.environment.test_environment')}
-          </small>
-        )
-      }
       {
         !isCompanyPaymentLink
         && (
           <Button
             fill="clean"
-            icon={
-              environment === 'test'
-                ? <IconTestAmbientOn />
-                : <IconTestAmbientOff />
-            }
+            icon={<IconTestAmbientOff />}
           />
         )
       }
