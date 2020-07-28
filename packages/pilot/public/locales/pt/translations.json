@@ -86,6 +86,7 @@
   "password": "Senha",
   "password_confirm": "Confirmar senha",
   "recipient": "Recebedor",
+  "recommended": "Recomendado",
   "refuse": {
     "title": "Recusado - motivo:",
     "action": {
