@@ -90,7 +90,6 @@ storiesOf('Pages|Login', module)
   .addDecorator(withA11y)
   .add('Login Live', () => (
     <Account
-      base="light"
       logo={Placeholder}
       primaryContent={(
         <LoginForm
@@ -106,7 +105,6 @@ storiesOf('Pages|Login', module)
   ))
   .add('Login Test', () => (
     <Account
-      base="dark"
       logo={Placeholder}
       primaryContent={(
         <LoginForm

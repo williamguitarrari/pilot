@@ -1,0 +1,16 @@
+.passwordTopDeco {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.bottomMessage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 99px;
+  height: 40px;
+  justify-content: space-between;
+  font-size: 14px;
+}
+

@@ -58,7 +58,6 @@ const AccountArea = ({ history: { location }, t }) => {
     <Account
       t={t}
       logo={getEnvironmentLogo()}
-      base={base}
       primaryContent={(
         <Suspense
           fallback={(
@@ -68,7 +67,7 @@ const AccountArea = ({ history: { location }, t }) => {
           <Switch>
             <Route
               path="/account/login"
-              render={() => <Login base={base} />}
+              render={() => <Login />}
             />
             <Route
               path="/account/password/recovery/confirmation"

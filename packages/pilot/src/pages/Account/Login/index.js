@@ -61,7 +61,6 @@ class LoginPage extends PureComponent {
 
   render () {
     const {
-      base,
       error,
       loading,
       onLogin,
@@ -69,7 +68,7 @@ class LoginPage extends PureComponent {
     } = this.props
     return (
       <LoginForm
-        base={base}
+        env={environment}
         errors={buildParamErrors(error)}
         loading={loading}
         onLogin={onLogin}
@@ -81,7 +80,6 @@ class LoginPage extends PureComponent {
 }
 
 LoginPage.propTypes = {
-  base: PropTypes.oneOf(['dark', 'light']).isRequired,
   error: PropTypes.instanceOf(Error),
   history: PropTypes.shape({
     push: PropTypes.func,
