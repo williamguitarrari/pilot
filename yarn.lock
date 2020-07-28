@@ -5721,15 +5721,15 @@ elliptic@^6.0.0:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.0"
 
+emblematic-icons@0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/emblematic-icons/-/emblematic-icons-0.10.0.tgz#96f4145aec8689c270b606de6dabc15d2d643a2f"
+  integrity sha512-G3bJCzu6vzDaRfA/PNQLVpXm35f3/F2c8/GMt9hms2wtcIWunxZWW/PpbjIMCHagVJ8kiohw3a7kPuwW2NtkhA==
+
 emblematic-icons@0.7.1:
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/emblematic-icons/-/emblematic-icons-0.7.1.tgz#2771340af07f31628cb9afc678108fa61542d76e"
   integrity sha512-ZkPYHOhGtwltmeRHnEOA55PK4Cl5fNmTX8kkFqZ6T2MFsZFBle7h8qBfk5gcGxvfQwc/+iRQrwMOGZ86+DooRw==
-
-emblematic-icons@0.9.2:
-  version "0.9.2"
-  resolved "https://registry.yarnpkg.com/emblematic-icons/-/emblematic-icons-0.9.2.tgz#8cfc2742404afe350bb88ed6750ab929b92eb771"
-  integrity sha512-J2RX9zjQR2KVKX5Z0H/9asBcfKI64saF/2lTI9W2tkYVSEQgclXcm0uXxjwt+R937duGl4/TRSbrbEuB2fVBGg==
 
 emoji-regex@^6.5.1:
   version "6.5.1"
