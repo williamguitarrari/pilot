@@ -1,24 +1,39 @@
 import React, { useState, useRef } from 'react'
 import PropTypes from 'prop-types'
 import ReCAPTCHA from 'react-google-recaptcha'
+import classnames from 'classnames'
 import isEmail from 'validator/lib/isEmail'
 import isEmpty from 'validator/lib/isEmpty'
-import IconError from 'emblematic-icons/svg/ClearClose32.svg'
-import {
-  Button,
-  FormInput,
-  Alert,
-} from 'former-kit'
-import { recaptchaKey } from '../../../environment'
+import IconCode from 'emblematic-icons/svg/Code24.svg'
+import { Button } from 'former-kit'
+import styled from 'styled-components'
+import Input from '../ui/Input'
+import Alert from '../ui/Alert'
 
 import styles from '../style.css'
+import localStyles from './style.css'
 
-const LoginContainer = ({
-  base,
+const PasswordBox = styled.div`
+  position: relative;
+  margin: 36px 0;
+`
+
+const ForgetPassword = styled.button`
+  position: absolute;
+  margin-bottom: 8px;
+  font-size: 14px;
+  top: 0;
+  right: 0;
+`
+
+const LoginForm = ({
+  environment,
   errors,
   loading,
+  onChangeEnvironment,
   onLogin,
   onPasswordRecovery,
+  recaptchaKey,
   t,
 }) => {
   const [email, setEmail] = useState('')
@@ -71,81 +86,94 @@ const LoginContainer = ({
   }
 
   return (
-    <form
-      onSubmit={handleLoginActionOnClick}
-    >
-      <div className={styles.formContent}>
-        <FormInput
-          base={base}
-          disabled={loading}
-          label={t('email')}
-          name="email"
-          type="email"
-          value={email}
-          onChange={v => setEmail(v.target.value)}
-          error={formErrors.email}
-        />
-        <FormInput
-          base={base}
-          disabled={loading}
-          type="password"
-          label={t('password')}
-          name="password"
-          value={password}
-          onChange={v => setPassword(v.target.value)}
-          error={formErrors.password}
-        />
-      </div>
-      <ReCAPTCHA
-        badge="bottomleft"
-        ref={recaptchaRef}
-        sitekey={recaptchaKey}
-        size="invisible"
-        onChange={recaptchaOnChange}
-      />
-      {errors
-        && (
-          <div className={styles.errorAlert}>
-            <Alert
-              base={base}
-              type="error"
-              icon={<IconError height={16} width={16} />}
-            >
-              <span>
-                {errors.null
-                  ? errors.null
-                  : t('login.network_error')
-              }
-              </span>
-            </Alert>
-          </div>
-        )
-      }
-      <div className={styles.actions}>
-        <div className={styles.hugeButton}>
-          <Button
-            type="submit"
+    <>
+      <form
+        onSubmit={handleLoginActionOnClick}
+      >
+        <div className={styles.formContent}>
+          <Input
             disabled={loading}
-            size="huge"
-          >
-            {t('login.login_action')}
-          </Button>
+            placeholder="seuemail@provedor.com.br"
+            label="Email"
+            id="name"
+            name="email"
+            type="email"
+            value={email}
+            onChange={v => setEmail(v.target.value)}
+            error={formErrors.email}
+          />
+          <PasswordBox>
+            <ForgetPassword
+              role="link"
+              disabled={loading}
+              onClick={onPasswordRecovery}
+              type="button"
+            >
+              {t('login.forgot_password')}
+            </ForgetPassword>
+            <Input
+              disabled={loading}
+              placeholder="•••••••••••••"
+              label="Senha"
+              id="password"
+              name="password"
+              type="password"
+              value={password}
+              onChange={v => setPassword(v.target.value)}
+              error={formErrors.password}
+            />
+          </PasswordBox>
         </div>
-        <button
-          role="link"
-          disabled={loading}
-          onClick={onPasswordRecovery}
-          type="button"
-        >
-          {t('login.password_recovery_action')}
-        </button>
+        <ReCAPTCHA
+          badge="bottomleft"
+          ref={recaptchaRef}
+          sitekey={recaptchaKey}
+          size="invisible"
+          onChange={recaptchaOnChange}
+        />
+        {errors
+          && (
+          <Alert severity="error">
+            {errors.null
+              ? errors.null
+              : t('login.network_error')
+            }
+          </Alert>
+          )
+        }
+        <div className={classnames(styles.actions, styles.formGroup)}>
+          <div className={styles.hugeButton}>
+            <Button
+              type="submit"
+              disabled={loading}
+              size="huge"
+            >
+              {t('login.login_action')}
+            </Button>
+          </div>
+        </div>
+      </form>
+      <div className={localStyles.bottomMessage}>
+        <span>{t('landing.signup_call')}</span>
+        <a className={styles.link} href="https://pagar.me/precos">
+          {t('landing.signup_action')}
+        </a>
       </div>
-    </form>
+      <Button
+        icon={environment === 'live' ? <IconCode /> : null}
+        disabled={loading}
+        onClick={onChangeEnvironment}
+        size="huge"
+        fill="outline"
+      >
+        {t(`landing.${environment}.back_button`)}
+      </Button>
+    </>
   )
 }
 
-LoginContainer.propTypes = {
-  base: PropTypes.oneOf(['dark', 'light']).isRequired,
+LoginForm.propTypes = {
+  environment: PropTypes.string.isRequired,
   errors: PropTypes.oneOfType([
     PropTypes.shape({
       email: PropTypes.string,
@@ -154,14 +182,16 @@ LoginContainer.propTypes = {
     PropTypes.instanceOf(Error),
   ]),
   loading: PropTypes.bool,
+  onChangeEnvironment: PropTypes.func.isRequired,
   onLogin: PropTypes.func.isRequired,
   onPasswordRecovery: PropTypes.func.isRequired,
+  recaptchaKey: PropTypes.string.isRequired,
   t: PropTypes.func.isRequired,
 }
 
-LoginContainer.defaultProps = {
+LoginForm.defaultProps = {
   errors: null,
   loading: false,
 }
 
-export default LoginContainer
+export default LoginForm

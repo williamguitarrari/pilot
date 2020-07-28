@@ -6,29 +6,6 @@
   height: 100vh;
 }
 
-.columnContainer {
-  align-items: center;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  font-size: 14px;
-  height: 80%;
-  min-height: 550px;
-  padding: 15vh 65px 10vh 48px;
-  width: 100%;
-}
-
-@media screen and (width <= 1024px) {
-
-  .columnContainer {
-    height: 80vh;
-  }
-}
-
-.secondaryContent {
-  justify-content: space-between;
-}
-
 .primaryContent {
   max-width: 375px;
   width: 100%;
@@ -36,14 +13,6 @@
 
 .primaryContent form {
   width: 100%;
-}
-
-.secondaryContent,
-.primaryContent {
-  align-items: stretch;
-  display: flex;
-  flex-direction: column;
-  height: 600px;
 }
 
 .title {
@@ -90,9 +59,7 @@
 .confirmationContent {
   display: flex;
   flex-direction: column;
-  min-height: 150px;
-  padding-top: var(--spacing-large);
-  width: 100%;
+  padding-top: 46px;
 
   &.signup {
     min-height: 300px;
@@ -131,36 +98,17 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  margin-top: 65px;
   width: 100%;
 }
 
-/* stylelint-disable selector-no-qualifying-type */
-
-.primaryContent .actions button[role="link"] {
-  color: var(--color-squanchy-gray-400);
-  font-size: 12px;
-  outline: none;
-  padding: 10px 0;
-  text-transform: uppercase;
-
-  &:hover,
-  &:focus {
-    color: #bababa;
-  }
-}
-
 .link {
-  color: var(--color-picklerick-green-100);
-  font-weight: bold;
-  outline: none;
-  text-decoration: none;
-  text-transform: uppercase;
+  color: var(--color-barney-purple-100);
+  font-size: 14px;
 
   &:hover,
   &:focus,
   &:active {
-    color: var(--color-picklerick-green-200);
+    color: var(--color-barney-purple-200);
     text-decoration: none;
   }
 }
@@ -218,4 +166,58 @@
 
 .copyright {
   font-size: var(--caption-font-size);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.twoSidesView {
+  display: flex;
+  height: 100vh;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.interactionSide {
+  width: 47%;
+  align-self: center;
+  display: flex;
+  justify-content: center;
+
+  @media (max-width: 1170px) {
+    width: unset;
+  }
+}
+
+.interactionSideContent {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 361px;
+}
+
+.presentationSide {
+  width: 63%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-squanchy-gray-20);
+
+  @media (max-width: 1170px) {
+    display: none;
+  }
+}
+
+.presentationSideContent {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  height: 600px;
+  justify-content: space-between;
+}
+
+.formGroup {
+  margin-bottom: var(--spacing-large);
 }

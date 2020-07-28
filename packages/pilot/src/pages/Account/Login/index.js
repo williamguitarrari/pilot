@@ -13,7 +13,11 @@ import { requestLogin } from '../actions/actions'
 
 import buildParamErrors from './buildParamErrors'
 
-import environment from '../../../environment'
+import environment, { liveUrl, testUrl, recaptchaKey } from '../../../environment'
+
+const oppositeEnvironmentUrl = environment === 'live'
+  ? testUrl
+  : liveUrl
 
 const mapStateToProps = (state) => {
   const {
@@ -45,6 +49,11 @@ const enhanced = compose(
   translate(),
   withRouter
 )
+
+const handleChangeEnvironment = () => {
+  window.location.href = oppositeEnvironmentUrl
+}
+
 class LoginPage extends PureComponent {
   constructor () {
     super()
@@ -52,16 +61,13 @@ class LoginPage extends PureComponent {
     this.handlePasswordRecovery = this.handlePasswordRecovery.bind(this)
   }
 
-  handlePasswordRecovery (e) {
+  handlePasswordRecovery () {
     const { history } = this.props
-
-    e.preventDefault()
     history.push('/account/password/recovery')
   }
 
   render () {
     const {
-      base,
       error,
       loading,
       onLogin,
@@ -69,11 +75,13 @@ class LoginPage extends PureComponent {
     } = this.props
     return (
       <LoginForm
-        base={base}
+        environment={environment}
+        recaptchaKey={recaptchaKey}
         errors={buildParamErrors(error)}
         loading={loading}
         onLogin={onLogin}
         onPasswordRecovery={this.handlePasswordRecovery}
+        onChangeEnvironment={handleChangeEnvironment}
         t={t}
       />
     )
@@ -81,7 +89,6 @@ class LoginPage extends PureComponent {
 }
 
 LoginPage.propTypes = {
-  base: PropTypes.oneOf(['dark', 'light']).isRequired,
   error: PropTypes.instanceOf(Error),
   history: PropTypes.shape({
     push: PropTypes.func,
