@@ -5,6 +5,7 @@ import operations, {
   interRecipientTransferOutcoming,
   interRecipientTransferOutgoing,
   isBoletoRefund,
+  isChargebackRefund,
   isCredit,
   isInterRecipientTransfer,
   isRefundOrChargeBack,
@@ -367,6 +368,55 @@ describe('Operations table data', () => {
       }]
 
       expect(outcoming).toEqual(expected)
+    })
+
+    it('should validate if it is a chargeback_refund', () => {
+      const result = isChargebackRefund({
+        type: 'payable',
+        movement_object: {
+          type: 'chargeback_refund',
+        },
+      })
+
+      expect(result).toEqual(true)
+    })
+
+    it('should build a correct chargeback_refund outgoing', () => {
+      const outgoing = buildOutgoing({
+        amount: 6580,
+        type: 'payable',
+        movement_object: {
+          amount: 6580,
+          fee: 254,
+          type: 'chargeback_refund',
+        },
+      })
+
+      const expected = [{
+        amount: -254,
+        type: 'mdr',
+      }]
+
+      expect(outgoing).toEqual(expected)
+    })
+
+    it('should build a correct chargeback_refund outcoming', () => {
+      const outgoing = buildOutcoming({
+        amount: 6580,
+        type: 'payable',
+        movement_object: {
+          amount: 6580,
+          fee: 254,
+          type: 'chargeback_refund',
+        },
+      })
+
+      const expected = [{
+        amount: 6580,
+        type: 'payable',
+      }]
+
+      expect(outgoing).toEqual(expected)
     })
   })
 })

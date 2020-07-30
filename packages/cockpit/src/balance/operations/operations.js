@@ -27,6 +27,11 @@ import {
 
 const compareMovementTypeTo = type => pathEq(['movement_object', 'type'], type)
 
+export const isChargebackRefund = both(
+  propEq('type', 'payable'),
+  compareMovementTypeTo('chargeback_refund')
+)
+
 export const isRefundOrChargeBack = pathSatisfies(
   includes(__, ['chargeback', 'refund']),
   ['movement_object', 'type']
@@ -199,6 +204,10 @@ export const buildOutcoming = cond([
     isAdjustmentFeeCollection,
     adjustmentFeeCollectionOutcoming,
   ],
+  [
+    isChargebackRefund,
+    creditOutcoming,
+  ],
 ])
 
 export const buildOutgoing = cond([
@@ -240,6 +249,10 @@ export const buildOutgoing = cond([
   [
     isAdjustmentFeeCollection,
     adjustmentFeeCollectionOutgoing,
+  ],
+  [
+    isChargebackRefund,
+    creditOutgoing,
   ],
 ])
 
