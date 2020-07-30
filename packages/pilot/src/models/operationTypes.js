@@ -5,6 +5,7 @@ const types = {
   boleto: 'models.operations.boleto',
   boletoRefundFee: 'models.operations.boleto_refund_fee',
   chargeback: 'models.operations.chargeback',
+  chargeback_refund: 'models.operations.chargeback_refund',
   credit_card: 'models.operations.credit_card',
   credito_em_conta: 'models.operations.transfer',
   debit: 'models.operations.debit',

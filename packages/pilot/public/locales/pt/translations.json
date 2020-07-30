@@ -539,6 +539,7 @@
       "boleto": "Boleto",
       "boleto_refund_fee": "Taxa de estorno de boleto",
       "chargeback": "Chargeback",
+      "chargeback_refund": "Estorno de chargeback",
       "credit_card": "Cartão de crédito",
       "dates_title": "Selecione um dia ou período",
       "debit": "Boleto",
