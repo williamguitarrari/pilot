@@ -191,8 +191,10 @@ class SidebarContainer extends React.Component {
             >
               <Button
                 onClick={
-                  // eslint-disable-next-line no-undef
-                  () => window.open(`https://dashboard.pagar.me/#login?session_id=${sessionId}&redirect_to=dashboard.home&environment=${environment}`)
+                  () => {
+                    localStorage.setItem('dashboardChoice', 'legacy')
+                    return window.open(`https://dashboard.pagar.me/#login?session_id=${sessionId}&redirect_to=dashboard.home&environment=${environment}`)
+                  }
                 }
                 fill="outline"
                 size="tiny"
