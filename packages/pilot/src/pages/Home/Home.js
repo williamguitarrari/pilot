@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import moment from 'moment-timezone'
 import qs from 'qs'
 import { connect } from 'react-redux'
-import { withRouter, Redirect } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { translate } from 'react-i18next'
 import {
   __,
@@ -63,6 +63,7 @@ import icons from '../../models/icons'
 import IndicatorTooltip from '../../components/HomeIndicatorTooltip'
 import statusLegends from '../../models/statusLegends'
 import isRecentlyCreatedUser from '../../validation/recentCreatedUser'
+import isCompanyPaymentLink from '../../validation/isPaymentLink'
 
 import {
   Message,
@@ -504,6 +505,16 @@ const Home = ({
       setPreset(newPreset)
     }
   }, [search])
+
+  useEffect(() => {
+    if (!isNilOrEmpty(company)
+      && !isCompanyPaymentLink(company)
+      && isRecentlyCreatedUser({ company, user })
+      && userNotHidEmptyState()
+    ) {
+      replace('/welcome')
+    }
+  }, [company, replace, user])
   /* End effects */
 
   const {
@@ -534,10 +545,6 @@ const Home = ({
         />
       </Flexbox>
     )
-  }
-
-  if (isRecentlyCreatedUser({ company, user }) && userNotHidEmptyState()) {
-    return <Redirect to="/welcome" />
   }
 
   return (
