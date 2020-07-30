@@ -16,6 +16,7 @@ import {
   compose,
   lensPath,
   mergeLeft,
+  pathEq,
   pipe,
   propEq,
   reject,
@@ -38,14 +39,16 @@ const mapStateToProps = (state = {}) => {
       anticipation_config: {
         config_anticipation_params: canConfigureAnticipation,
       },
+      capabilities,
     } = {
       anticipation_config: {
         config_anticipation_params: false,
       },
+      capabilities: {},
     },
   } = account || {}
 
-  return { canConfigureAnticipation, client }
+  return { canConfigureAnticipation, capabilities, client }
 }
 
 const enhanced = compose(
@@ -554,7 +557,12 @@ class DetailRecipientPage extends Component {
       selectedItemsPerPage,
       timeframe,
     } = this.state
-    const { client, match } = this.props
+    const {
+      capabilities,
+      client,
+      match,
+    } = this.props
+
     const { id } = match.params
     const query = {
       count: selectedItemsPerPage,
@@ -563,7 +571,13 @@ class DetailRecipientPage extends Component {
       timeframe,
     }
 
-    const getRecipientData = client.balance.data(id, query)
+    const shouldRequestBulkAnticipation = pathEq(['allow_transaction_anticipation'], false, capabilities)
+
+    const getRecipientData = client.balance.data(
+      id,
+      shouldRequestBulkAnticipation,
+      query
+    )
 
     return getRecipientData
   }
@@ -820,6 +834,9 @@ class DetailRecipientPage extends Component {
 
 DetailRecipientPage.propTypes = {
   canConfigureAnticipation: PropTypes.bool.isRequired,
+  capabilities: PropTypes.shape({
+    allow_transaction_anticipation: PropTypes.bool,
+  }).isRequired,
   client: PropTypes.shape({
     bulkAnticipations: PropTypes.shape({
       cancel: PropTypes.func.isRequired,
