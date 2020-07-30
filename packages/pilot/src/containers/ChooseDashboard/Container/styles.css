@@ -4,20 +4,42 @@
   align-items: center;
   background-color: var(--color-squanchy-gray-20);
   display: flex;
-  height: 100vh;
+  flex-direction: column;
   justify-content: center;
   position: relative;
   width: 100vw;
 }
 
-.ellipse {
-  bottom: 0;
-  left: 0;
-  position: absolute;
+.ellipse,
+.circles {
+  display: none;
 }
 
-.circles {
-  position: absolute;
-  right: 0;
-  top: 37px;
+@media (min-width: 768px) {
+
+  .ellipse {
+    display: unset;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+  }
+
+  .circles {
+    display: unset;
+    position: absolute;
+    right: -10px;
+    top: 105px;
+  }
+}
+
+@media (min-width: 768px) {
+
+  .chooseDashboardContainer {
+    height: 100vh;
+  }
+
+  .circles {
+    right: 0;
+    top: 37px;
+  }
 }

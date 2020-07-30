@@ -10,14 +10,20 @@
   text-align: center;
   width: min-content;
 
+  & img {
+    max-width: 300px;
+  }
+
   & h1 {
+    font-size: 20px;
     font-weight: 600;
     margin-bottom: 0;
-    margin-top: var(--spacing-large);
+    margin-top: var(--spacing-small);
   }
 
   & p {
     color: var(--color-squanchy-gray-200);
+    font-size: 14.5px;
     line-height: var(--spacing-medium);
     margin-top: 8px;
   }
@@ -28,8 +34,27 @@
   background: var(--color-picklerick-green-100);
   border-radius: 8px;
   position: absolute;
-  padding: 10px;
+  padding: 8px;
   right: 15px;
   text-align: center;
   top: -18px;
+}
+
+@media (min-width: 1170px) {
+
+  .dashboardCard h1 {
+    margin-top: var(--spacing-large);
+  }
+
+  .dashboardCard img {
+    max-width: unset;
+  }
+
+  .dashboardCard p {
+    font-size: 16px;
+  }
+
+  .recommendedBadge {
+    padding: 10px;
+  }
 }
