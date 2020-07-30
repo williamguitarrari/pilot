@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import qs from 'qs'
+import moment from 'moment-timezone'
 
 import {
   Route,
@@ -19,6 +20,7 @@ import { requestLogin as requestLoginAction } from './Account/actions/actions'
 import { inactiveCompanyLogin } from '../vendor/googleTagManager'
 
 import Account from './Account'
+import ChooseDashboard from './ChooseDashboard'
 import LoggedArea from './LoggedArea'
 import Onboarding from './Onboarding/Onboarding'
 
@@ -51,6 +53,15 @@ const parseQueryString = pipe(tail, qs.parse)
 const getSessionId = (props, queryString) => (
   props.sessionId || queryString.session_id
 )
+
+const shouldSelectDashboard = () => {
+  if (!localStorage.getItem('dashboardChoice')) {
+    return true
+  }
+
+  const choiceExpiresAt = localStorage.getItem('dashboardChoiceExpiresAt')
+  return moment(choiceExpiresAt).isBefore(moment())
+}
 
 class Root extends Component {
   componentDidMount () {
@@ -123,6 +134,19 @@ class Root extends Component {
 
     if (!user && !company) {
       return null
+    }
+
+    if (user && startsWith('/choose-dashboard', path)) {
+      return <Route path="/choose-dashboard" component={ChooseDashboard} />
+    }
+
+    if (user && shouldSelectDashboard()) {
+      history.replace('/choose-dashboard')
+      return null
+    }
+
+    if (user && localStorage.getItem('dashboardChoice') === 'legacy') {
+      return window.open(`https://dashboard.pagar.me/#login?session_id=${sessionId}&redirect_to=dashboard.home&environment=${environment}`, '_self')
     }
 
     if (user && startsWith('/onboarding', path)) {
