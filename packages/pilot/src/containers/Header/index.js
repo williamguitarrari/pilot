@@ -51,37 +51,27 @@ const renderTestEnviromentNav = t => (
 )
 
 const renderEnvironmentButton = ({
-  companyType,
   t,
-}) => {
-  const isCompanyPaymentLink = isPaymentLink(companyType)
-
-  return (
-    <Popover
-      content={(
-        <PopoverContent>
-          <small>
-            {t(`header.environment.text_${environment}`)}&nbsp;
-            <a href={getEnvironmentUrl()}>
-              {t('header.environment.text_action')}
-            </a>.
-          </small>
-        </PopoverContent>
-      )}
-      placement="bottomEnd"
-    >
-      {
-        !isCompanyPaymentLink
-        && (
-          <Button
-            fill="clean"
-            icon={<IconTestAmbientOff />}
-          />
-        )
-      }
-    </Popover>
-  )
-}
+}) => (
+  <Popover
+    content={(
+      <PopoverContent>
+        <small>
+          {t(`header.environment.text_${environment}`)}&nbsp;
+          <a href={getEnvironmentUrl()}>
+            {t('header.environment.text_action')}
+          </a>.
+        </small>
+      </PopoverContent>
+    )}
+    placement="bottomEnd"
+  >
+    <Button
+      fill="clean"
+      icon={<IconTestAmbientOff />}
+    />
+  </Popover>
+)
 
 const HeaderContainer = ({
   companyType,
@@ -136,7 +126,11 @@ const HeaderContainer = ({
           </>
         )}
 
-        {renderEnvironmentButton({ companyType, t })}
+        {
+          companyType
+            && !isPaymentLink(companyType)
+            && renderEnvironmentButton({ t })
+        }
 
         <Spacing size="small" />
 
@@ -169,12 +163,7 @@ const HeaderContainer = ({
 )
 
 renderEnvironmentButton.propTypes = {
-  companyType: PropTypes.string,
   t: PropTypes.func.isRequired,
-}
-
-renderEnvironmentButton.defaultProps = {
-  companyType: '',
 }
 
 HeaderContainer.propTypes = {
