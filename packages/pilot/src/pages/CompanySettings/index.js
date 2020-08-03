@@ -25,7 +25,6 @@ import { translate } from 'react-i18next'
 import { requestLogout } from '../Account/actions/actions'
 import CompanySettings from '../../containers/Settings/Company'
 import environment from '../../environment'
-import isPaymentLink from '../../validation/isPaymentLink'
 
 import { selectCompanyFees } from '../Account/actions/reducer'
 
@@ -611,6 +610,7 @@ class CompanySettingsPage extends React.Component {
         boletoDisabled={boleto.loading}
         boletoInstructions={boleto.instructions}
         boletoInstructionsOptions={boletoOptions(t)}
+        company={company}
         createUserStatus={createUserStatus}
         deleteUserStatus={deleteUserStatus}
         environment={environment}
@@ -618,7 +618,6 @@ class CompanySettingsPage extends React.Component {
         general={general}
         handleCreateUser={this.handleCreateUser}
         handleDeleteUser={this.handleDeleteUser}
-        hiddenApiKey={isPaymentLink(company)}
         isMDRzao={isMDRzao}
         managingPartner={managingPartner}
         onBankAccountCancel={this.handleAccountCancel}
@@ -632,7 +631,6 @@ class CompanySettingsPage extends React.Component {
         resetCreateUserState={this.resetCreateUserState}
         t={t}
         team={team}
-        type={company && company.type}
         versions={versions}
         userIsReadOnly={userIsReadOnly(user)}
       />
@@ -678,9 +676,7 @@ CompanySettingsPage.propTypes = {
 }
 
 CompanySettingsPage.defaultProps = {
-  company: {
-    type: null,
-  },
+  company: null,
   fees: {},
   isMDRzao: false,
   user: null,

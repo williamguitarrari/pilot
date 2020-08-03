@@ -13,6 +13,7 @@ import RegisterInfoTab from './RegisterInfoTab'
 import TeamInfoTab from './TeamInfoTab'
 
 import isPaymentLink from '../../../validation/isPaymentLink'
+import isNilOrEmpty from '../../../validation/isNilOrEmpty'
 
 class CompanySettings extends Component {
   constructor (props) {
@@ -43,6 +44,7 @@ class CompanySettings extends Component {
       boletoDisabled,
       boletoInstructions,
       boletoInstructionsOptions,
+      company,
       createUserStatus,
       deleteUserStatus,
       environment,
@@ -50,7 +52,6 @@ class CompanySettings extends Component {
       general,
       handleCreateUser,
       handleDeleteUser,
-      hiddenApiKey,
       isMDRzao,
       managingPartner,
       onBankAccountCancel,
@@ -64,7 +65,6 @@ class CompanySettings extends Component {
       resetCreateUserState,
       t,
       team,
-      type,
       userIsReadOnly,
       versions,
     } = this.props
@@ -73,7 +73,7 @@ class CompanySettings extends Component {
       selectedIndex,
     } = this.state
 
-    return (
+    return !isNilOrEmpty(company) && (
       <Card>
         <CardContent>
           <TabBar
@@ -83,7 +83,7 @@ class CompanySettings extends Component {
           >
             <TabItem text={t('pages.settings.company.tab.general')} />
             <TabItem text={t('pages.settings.company.tab.products')} />
-            {!isPaymentLink(type)
+            {!isPaymentLink(company)
               ? <TabItem text={t('pages.settings.company.tab.team')} />
               : <></>
             }
@@ -97,7 +97,7 @@ class CompanySettings extends Component {
               apiVersion={apiVersion}
               environment={environment}
               fees={fees}
-              hiddenApiKey={hiddenApiKey}
+              hiddenApiKey={isPaymentLink(company)}
               isMDRzao={isMDRzao}
               onVersionChange={onVersionChange}
               t={t}
@@ -231,6 +231,9 @@ CompanySettings.propTypes = {
     name: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
   })).isRequired,
+  company: PropTypes.shape({
+    type: PropTypes.string,
+  }),
   createUserStatus: PropTypes.shape({
     error: PropTypes.string,
     loading: PropTypes.bool,
@@ -264,7 +267,6 @@ CompanySettings.propTypes = {
   }).isRequired,
   handleCreateUser: PropTypes.func.isRequired,
   handleDeleteUser: PropTypes.func.isRequired,
-  hiddenApiKey: PropTypes.bool.isRequired,
   isMDRzao: PropTypes.bool.isRequired,
   managingPartner: PropTypes.shape({
     cpf: PropTypes.string,
@@ -287,7 +289,6 @@ CompanySettings.propTypes = {
     name: PropTypes.string,
     role: PropTypes.string,
   })).isRequired,
-  type: PropTypes.string,
   userIsReadOnly: PropTypes.bool.isRequired,
   versions: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
@@ -309,8 +310,8 @@ CompanySettings.defaultProps = {
   bankErrors: null,
   boletoDaysToAddInExpirationDate: null,
   boletoInstructions: null,
+  company: null,
   t: t => t,
-  type: null,
 }
 
 export default CompanySettings
