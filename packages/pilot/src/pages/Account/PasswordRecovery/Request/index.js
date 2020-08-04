@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom'
 import { translate } from 'react-i18next'
 import { compose } from 'ramda'
 import pagarme from 'pagarme'
-import { PasswordRecoveryForm } from '../../../../containers/Account/PasswordRecovery/Request'
+import PasswordRecoveryRequest from '../../../../containers/Account/PasswordRecovery/Request'
 import buildResetParamErrors from './buildResetParamErrors'
 
 const enhanced = compose(
@@ -21,13 +21,7 @@ class PasswordRecoveryPage extends PureComponent {
       loading: false,
     }
 
-    this.handleBackToLogin = this.handleBackToLogin.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-  }
-
-  handleBackToLogin () {
-    const { history } = this.props
-    history.replace('/account/login')
   }
 
   handleSubmit (data, formErrors) {
@@ -60,7 +54,6 @@ class PasswordRecoveryPage extends PureComponent {
 
   render () {
     const {
-      base,
       t,
     } = this.props
     const {
@@ -69,11 +62,9 @@ class PasswordRecoveryPage extends PureComponent {
     } = this.state
 
     return (
-      <PasswordRecoveryForm
-        base={base}
+      <PasswordRecoveryRequest
         errors={errors}
         loading={loading}
-        onBackToLogin={this.handleBackToLogin}
         onSubmit={this.handleSubmit}
         t={t}
       />
@@ -82,7 +73,6 @@ class PasswordRecoveryPage extends PureComponent {
 }
 
 PasswordRecoveryPage.propTypes = {
-  base: PropTypes.oneOf(['dark', 'light']).isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,
     replace: PropTypes.func,

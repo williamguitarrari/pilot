@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react'
 import PropTypes from 'prop-types'
 import ReCAPTCHA from 'react-google-recaptcha'
-import classnames from 'classnames'
 import isEmail from 'validator/lib/isEmail'
 import isEmpty from 'validator/lib/isEmpty'
 import IconCode from 'emblematic-icons/svg/Code24.svg'
@@ -11,12 +10,6 @@ import Input from '../ui/Input'
 import Alert from '../ui/Alert'
 
 import styles from '../style.css'
-import localStyles from './style.css'
-
-const PasswordBox = styled.div`
-  position: relative;
-  margin: 36px 0;
-`
 
 const ForgetPassword = styled.button`
   position: absolute;
@@ -102,7 +95,7 @@ const LoginForm = ({
             onChange={v => setEmail(v.target.value)}
             error={formErrors.email}
           />
-          <PasswordBox>
+          <div className={styles.passwordBox}>
             <ForgetPassword
               role="link"
               disabled={loading}
@@ -122,7 +115,7 @@ const LoginForm = ({
               onChange={v => setPassword(v.target.value)}
               error={formErrors.password}
             />
-          </PasswordBox>
+          </div>
         </div>
         <ReCAPTCHA
           badge="bottomleft"
@@ -141,33 +134,33 @@ const LoginForm = ({
           </Alert>
           )
         }
-        <div className={classnames(styles.actions, styles.formGroup)}>
-          <div className={styles.hugeButton}>
-            <Button
-              type="submit"
-              disabled={loading}
-              size="huge"
-            >
-              {t('login.login_action')}
-            </Button>
-          </div>
+        <div className={styles.hugeButton}>
+          <Button
+            type="submit"
+            disabled={loading}
+            size="huge"
+          >
+            {t('login.login_action')}
+          </Button>
         </div>
       </form>
-      <div className={localStyles.bottomMessage}>
+      <div className={styles.bottomMessage}>
         <span>{t('landing.signup_call')}</span>
         <a className={styles.link} href="https://pagar.me/precos">
           {t('landing.signup_action')}
         </a>
       </div>
-      <Button
-        icon={environment === 'live' ? <IconCode /> : null}
-        disabled={loading}
-        onClick={onChangeEnvironment}
-        size="huge"
-        fill="outline"
-      >
-        {t(`landing.${environment}.back_button`)}
-      </Button>
+      <div className={styles.changeEnvButton}>
+        <Button
+          icon={environment === 'live' ? <IconCode /> : null}
+          disabled={loading}
+          onClick={onChangeEnvironment}
+          size="huge"
+          fill="outline"
+        >
+          {t(`landing.${environment}.back_button`)}
+        </Button>
+      </div>
     </>
   )
 }
