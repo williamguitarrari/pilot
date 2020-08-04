@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
-
+import { Button } from 'former-kit'
 import styles from './style.css'
 
 const Confirmation = ({
@@ -11,25 +10,23 @@ const Confirmation = ({
     confirmationEmphasis,
   },
 }) => (
-  <div
-    className={classNames(
-      styles.primaryContent,
-      styles.confirmationContent
-    )}
-  >
-    <p className={classNames(styles.uppercase, styles.paragraph)}>
+  <>
+    <span className={styles.confirmationMessage}>
       <b>{confirmationEmphasis}</b>
       {' '}
       <span>{confirmation}</span>
-    </p>
-    <div className={styles.actions}>
-      <div className={styles.hugeButton}>
-        <a className={styles.link} href="/account/login">
-          {backToLogin}
-        </a>
-      </div>
+    </span>
+    <div className={styles.hugeButton}>
+      <Button
+        onClick={() => {
+          window.location.href = '/#/account/login'
+        }}
+        size="huge"
+      >
+        {backToLogin}
+      </Button>
     </div>
-  </div>
+  </>
 )
 
 Confirmation.propTypes = {

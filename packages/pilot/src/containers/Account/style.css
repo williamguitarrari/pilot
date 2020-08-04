@@ -6,15 +6,6 @@
   height: 100vh;
 }
 
-.primaryContent {
-  max-width: 375px;
-  width: 100%;
-}
-
-.primaryContent form {
-  width: 100%;
-}
-
 .title {
   padding: 0;
   font-size: 36px;
@@ -49,16 +40,10 @@
   width: 100%;
 }
 
-.paragraph {
-  font-size: 14px;
-  line-height: 1.7;
-  max-width: 80ch;
-}
-
-.formContent,
-.confirmationContent {
+.formContent {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 
   &.signup {
     min-height: 300px;
@@ -71,14 +56,6 @@
   &.passwordReset {
     min-height: 300px;
   }
-}
-
-.confirmationContent {
-  margin-top: 130px;
-}
-
-.formContent {
-  justify-content: space-between;
 }
 
 .errorAlert {
@@ -245,10 +222,16 @@
   margin-top: 36px;
 }
 
+.confirmationMessage,
 .subtitle {
   margin-bottom: 24px;
   font-size: 14px;
   line-height: 20px;
   color: var(--color-squanchy-gray-400);
   text-align: center;
+  max-width: 80ch;
+}
+
+.confirmationMessage {
+  margin: 0;
 }
