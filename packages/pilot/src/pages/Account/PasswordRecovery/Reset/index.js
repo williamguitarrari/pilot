@@ -14,10 +14,7 @@ import { withRouter } from 'react-router-dom'
 import { translate } from 'react-i18next'
 
 import buildParamErrors from '../../Login/buildParamErrors'
-
-import {
-  PasswordResetForm,
-} from '../../../../containers/Account/PasswordRecovery/Reset'
+import PasswordRecoveryReset from '../../../../containers/Account/PasswordRecovery/Reset'
 
 const enhance = compose(
   translate(),
@@ -25,7 +22,6 @@ const enhance = compose(
 )
 
 const Reset = ({
-  base,
   history: {
     replace,
   },
@@ -66,8 +62,6 @@ const Reset = ({
     setValidations(score)
   }
 
-  const onBackToLogin = () => replace('/account/login')
-
   const onSubmit = ({ password, passwordConfirm }) => {
     validateInputs({
       password,
@@ -99,11 +93,9 @@ const Reset = ({
   }
 
   return (
-    <PasswordResetForm
-      base={base}
+    <PasswordRecoveryReset
       errors={errors}
       loading={loading}
-      onBackToLogin={onBackToLogin}
       onChange={validateInputs}
       onSubmit={onSubmit}
       t={t}
@@ -113,7 +105,6 @@ const Reset = ({
 }
 
 Reset.propTypes = {
-  base: PropTypes.oneOf(['dark', 'light']).isRequired,
   history: PropTypes.shape({
     replace: PropTypes.func.isRequired,
   }).isRequired,

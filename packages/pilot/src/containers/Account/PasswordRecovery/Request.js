@@ -46,7 +46,7 @@ const PasswordRecoveryRequest = ({
       </div>
     </Form>
     <div className={styles.bottomMessage}>
-      <a className={styles.link} href="/account/login">
+      <a className={styles.link} href="#/account/login">
         {t('back_login_action')}
       </a>
     </div>

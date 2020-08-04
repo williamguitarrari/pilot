@@ -124,16 +124,18 @@ const LoginForm = ({
           size="invisible"
           onChange={recaptchaOnChange}
         />
-        {errors
-          && (
-          <Alert severity="error">
-            {errors.null
-              ? errors.null
-              : t('login.network_error')
-            }
-          </Alert>
-          )
-        }
+        <div className={styles.errorAlert}>
+          {errors
+            && (
+            <Alert severity="error">
+              {errors.null
+                ? errors.null
+                : t('login.network_error')
+              }
+            </Alert>
+            )
+          }
+        </div>
         <div className={styles.hugeButton}>
           <Button
             type="submit"

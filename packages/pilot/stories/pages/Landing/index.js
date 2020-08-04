@@ -8,10 +8,7 @@ import Account from '../../../src/containers/Account'
 import LoginForm from '../../../src/containers/Account/LoginForm'
 import PasswordRecoveryRequest from '../../../src/containers/Account/PasswordRecovery/Request'
 import Confirmation from '../../../src/containers/Account/Confirmation'
-import {
-  PasswordResetForm,
-  PasswordResetConfirmation,
-} from '../../../src/containers/Account/PasswordRecovery/Reset'
+import PasswordRecoveryReset from '../../../src/containers/Account/PasswordRecovery/Reset'
 import {
   UserSignUpForm,
   UserSignUpConfirmation,
@@ -149,8 +146,7 @@ storiesOf('Pages|Login', module)
     <Account
       logo={Placeholder}
       primaryContent={(
-        <PasswordResetForm
-          base="dark"
+        <PasswordRecoveryReset
           onChange={action('change')}
           onSubmit={action('submit')}
           t={t}
@@ -167,10 +163,12 @@ storiesOf('Pages|Login', module)
     <Account
       logo={Placeholder}
       primaryContent={(
-        <PasswordResetConfirmation
-          base="dark"
-          onBackToLogin={action('back to login')}
-          t={t}
+        <Confirmation
+          labels={{
+            backToLogin: t('back_login_action'),
+            confirmation: t('pages.password_reset.confirmation'),
+            confirmationEmphasis: t('pages.password_reset.confirmation_emphasis'),
+          }}
         />
       )}
       secondaryContent={TestPresentation}

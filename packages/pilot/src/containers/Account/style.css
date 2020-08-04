@@ -21,23 +21,12 @@
   color: var(--color-birdperson-gray-500);
 }
 
-.uppercase {
-  color: inherit;
-  font-size: 14px;
-  text-transform: uppercase;
-}
-
 .signInBlock {
   padding-bottom: var(--spacing-small);
 
   & span {
     line-height: 30px;
   }
-}
-
-.uppercase > p > span {
-  display: block;
-  width: 100%;
 }
 
 .formContent {
@@ -48,18 +37,10 @@
   &.signup {
     min-height: 300px;
   }
-
-  &.passwordRecovery {
-    min-height: 110px;
-  }
-
-  &.passwordReset {
-    min-height: 300px;
-  }
 }
 
 .errorAlert {
-  margin-top: var(--spacing-large);
+  margin-top: var(--spacing-medium);
 }
 
 .hugeButton {
