@@ -1255,8 +1255,8 @@
       "wrong_pass": "Senha inválida"
     },
     "password_recovery": {
-      "confirmation": "Em instantes você receberá um e-mail com as instruções para a redefinição de sua senha.",
-      "confirmation_emphasis": "Pronto!",
+      "confirmation": "Em alguns instantes você receberá um emailcom as instruções para redefinir sua senha.",
+      "confirmation_emphasis": "Prontinho!",
       "recovery_call": "Informe o endereço de email utilizado no cadastro, vamos te encaminhar um email de redefinição de senha",
       "recovery_action": "Enviar"
     },
