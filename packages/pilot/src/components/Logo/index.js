@@ -1,28 +1,25 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import BaseLight from './baseLight.svg'
-import BaseDark from './baseDark.svg'
-
-const DARK_BASE = 'dark'
-const LIGHT_BASE = 'light'
+import LogoLive from './logo-live.svg'
+import LogoTest from './logo-test.svg'
 
 const Logo = ({
-  base,
+  test,
   ...props
 }) => {
-  if (base === LIGHT_BASE) {
-    return <BaseLight {...props} />
+  if (test) {
+    return <LogoTest {...props} />
   }
 
-  return <BaseDark {...props} />
+  return <LogoLive {...props} />
 }
 
 Logo.propTypes = {
-  base: PropTypes.oneOf([DARK_BASE, LIGHT_BASE]),
+  test: PropTypes.bool,
 }
 
 Logo.defaultProps = {
-  base: DARK_BASE,
+  test: false,
 }
 
 export default Logo

@@ -17,7 +17,6 @@ import { translate } from 'react-i18next'
 import Account from '../../containers/Account'
 import Logo from '../../components/Logo'
 import Presentation from './Presentation'
-import TestLogo from '../../components/Logo/TestLogo'
 import Loader from '../../components/Loader'
 
 import environment from '../../environment'
@@ -41,12 +40,6 @@ const getBaseByPath = (pathname) => {
   return DARK_BASE
 }
 
-const getEnvironmentLogo = () => (
-  environment === 'live'
-    ? Logo
-    : TestLogo
-)
-
 const enhance = compose(
   withRouter,
   translate()
@@ -57,7 +50,7 @@ const AccountArea = ({ history: { location }, t }) => {
   return (
     <Account
       t={t}
-      logo={getEnvironmentLogo()}
+      logo={<Logo test={environment === 'test'} alt={t('landing.logo')} />}
       primaryContent={(
         <Suspense
           fallback={(
@@ -83,7 +76,7 @@ const AccountArea = ({ history: { location }, t }) => {
             />
             <Route
               path="/account/password/reset/:token"
-              render={() => <PasswordReset base={base} />}
+              render={() => <PasswordReset />}
             />
             <Route
               path="/account/signup/invite/confirmation"

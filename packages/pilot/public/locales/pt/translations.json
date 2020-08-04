@@ -1270,7 +1270,7 @@
         "weak_password": "Senha muito fraca"
       },
       "reset_action": "Enviar",
-      "reset_call": "Digite sua nova senha para concluir a redefinição."
+      "reset_call": "Escolha uma nova senha para acessar o seu painel, cuidado para não esquecer ela de novo. 😅"
     },
     "settings": {
       "user": {
