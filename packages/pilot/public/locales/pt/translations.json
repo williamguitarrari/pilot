@@ -1255,7 +1255,7 @@
     "password_recovery": {
       "confirmation": "Em instantes você receberá um e-mail com as instruções para a redefinição de sua senha.",
       "confirmation_emphasis": "Pronto!",
-      "recovery_call": "Digite o e-mail cadastrado para recuperar sua senha.",
+      "recovery_call": "Informe o endereço de email utilizado no cadastro, vamos te encaminhar um email de redefinição de senha",
       "recovery_action": "Enviar"
     },
     "password_reset": {

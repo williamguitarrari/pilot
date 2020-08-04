@@ -71,11 +71,11 @@ const AccountArea = ({ history: { location }, t }) => {
             />
             <Route
               path="/account/password/recovery/confirmation"
-              render={() => <PasswordRecoveryConfirmation base={base} />}
+              render={() => <PasswordRecoveryConfirmation />}
             />
             <Route
               path="/account/password/recovery"
-              render={() => <PasswordRecovery base={base} />}
+              render={() => <PasswordRecovery />}
             />
             <Route
               path="/account/password/reset/confirmation"

@@ -6,10 +6,8 @@ import { withA11y } from '@storybook/addon-a11y'
 
 import Account from '../../../src/containers/Account'
 import LoginForm from '../../../src/containers/Account/LoginForm'
-import {
-  PasswordRecoveryForm,
-  PasswordRecoveryConfirmation,
-} from '../../../src/containers/Account/PasswordRecovery/Request'
+import PasswordRecoveryRequest from '../../../src/containers/Account/PasswordRecovery/Request'
+import Confirmation from '../../../src/containers/Account/Confirmation'
 import {
   PasswordResetForm,
   PasswordResetConfirmation,
@@ -122,10 +120,7 @@ storiesOf('Pages|Login', module)
     <Account
       logo={Placeholder}
       primaryContent={(
-        <PasswordRecoveryForm
-          base="dark"
-          onPasswordRecovery={action('recover password')}
-          onBackToLogin={action('back to login')}
+        <PasswordRecoveryRequest
           onSubmit={action('submit')}
           t={t}
         />
@@ -138,10 +133,12 @@ storiesOf('Pages|Login', module)
     <Account
       logo={Placeholder}
       primaryContent={(
-        <PasswordRecoveryConfirmation
-          onBackToLogin={action('back to login')}
-          onPasswordRecovery={action('recover password')}
-          t={t}
+        <Confirmation
+          labels={{
+            backToLogin: t('back_login_action'),
+            confirmation: t('pages.password_recovery.confirmation'),
+            confirmationEmphasis: t('pages.password_recovery.confirmation_emphasis'),
+          }}
         />
       )}
       secondaryContent={TestPresentation}

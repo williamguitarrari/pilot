@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { Button } from 'former-kit'
 
 import styles from './style.css'
 
@@ -11,7 +10,6 @@ const Confirmation = ({
     confirmation,
     confirmationEmphasis,
   },
-  onBackToLogin,
 }) => (
   <div
     className={classNames(
@@ -26,13 +24,9 @@ const Confirmation = ({
     </p>
     <div className={styles.actions}>
       <div className={styles.hugeButton}>
-        <Button
-          type="button"
-          size="huge"
-          onClick={onBackToLogin}
-        >
+        <a className={styles.link} href="/account/login">
           {backToLogin}
-        </Button>
+        </a>
       </div>
     </div>
   </div>
@@ -44,7 +38,6 @@ Confirmation.propTypes = {
     confirmation: PropTypes.string.isRequired,
     confirmationEmphasis: PropTypes.string.isRequired,
   }).isRequired,
-  onBackToLogin: PropTypes.func.isRequired,
 }
 
 export default Confirmation
