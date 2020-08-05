@@ -113,7 +113,6 @@ const SignUpInvitePage = ({
 
   return (
     <UserSignUpForm
-      base="light"
       errors={errors}
       loading={loading}
       onChange={validateInputs}

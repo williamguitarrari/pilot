@@ -2,12 +2,19 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import Form from 'react-vanilla-form'
 import { Button } from 'former-kit'
+import styled from 'styled-components'
 
 import required from '../../../validation/required'
 import PasswordInput from '../../../components/PasswordInput'
 import Alert from '../ui/Alert'
 import Input from '../ui/Input'
 import styles from '../style.css'
+
+const ActionsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+`
 
 const PasswordRecoveryReset = ({
   errors,
@@ -55,14 +62,12 @@ const PasswordRecoveryReset = ({
             placeholder="•••••••••••••"
           />
         </div>
-        <div className={styles.errorAlert}>
+        <ActionsContainer>
           {errors && errors.api && (
           <Alert severity="error">
             {errors.api}
           </Alert>
           )}
-        </div>
-        <div className={styles.hugeButton}>
           <Button
             disabled={loading}
             loading={loading}
@@ -71,7 +76,7 @@ const PasswordRecoveryReset = ({
           >
             {t('pages.password_reset.reset_action')}
           </Button>
-        </div>
+        </ActionsContainer>
         <div className={styles.bottomMessage}>
           <a className={styles.link} href="#/account/login">
             {t('back_login_action')}
