@@ -11,6 +11,7 @@ const sections = {
     {
       action: action('clicked'),
       actionTitle: 'Sacar',
+      showButton: true,
       title: 'Disponível',
       value: <span><small>R$</small> 15.000,00</span>,
     },

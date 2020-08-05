@@ -64,6 +64,7 @@ class SidebarContainer extends React.Component {
       // More details in issue #1159
       // anticipationLimit,
       balance,
+      companyType,
       onWithdraw,
       t,
       transfersPricing,
@@ -73,6 +74,7 @@ class SidebarContainer extends React.Component {
     const available = getFrombalance('available')
 
     const minimumWithdrawalValue = transfersPricing.ted + MINIMUM_API_VALUE
+    const isCompanyNotPaymentLink = !!companyType && !isPaymentLink(companyType)
 
     return (
       <SidebarSections
@@ -81,6 +83,7 @@ class SidebarContainer extends React.Component {
             action: onWithdraw,
             actionTitle: t('pages.sidebar.withdraw'),
             disabled: available <= minimumWithdrawalValue,
+            showButton: isCompanyNotPaymentLink,
             title: t('pages.sidebar.available'),
             value: <span><small>{t('pages.sidebar.currency_symbol')}</small> {formatDecimalCurrency(available)}</span>,
           },
