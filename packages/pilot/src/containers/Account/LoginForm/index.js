@@ -12,11 +12,13 @@ import Alert from '../ui/Alert'
 import styles from '../style.css'
 
 const ForgetPassword = styled.button`
+  cursor: pointer;
   position: absolute;
   margin-bottom: 8px;
   font-size: 14px;
   top: 0;
   right: 0;
+  z-index: 2;
 `
 
 const ActionsContainer = styled.div`

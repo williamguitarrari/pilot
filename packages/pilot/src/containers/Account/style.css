@@ -2,33 +2,6 @@
 @import "former-kit-skin-pagarme/dist/styles/spacing.css";
 @import "former-kit-skin-pagarme/dist/styles/typography.css";
 
-.container {
-  height: 100vh;
-}
-
-.title {
-  padding: 0;
-  font-size: 36px;
-  font-weight: normal;
-  color: inherit;
-  margin: 0 0 13px;
-  width: 100%;
-  line-height: 1;
-  text-transform: uppercase;
-}
-
-.light .title {
-  color: var(--color-birdperson-gray-500);
-}
-
-.signInBlock {
-  padding-bottom: var(--spacing-small);
-
-  & span {
-    line-height: 30px;
-  }
-}
-
 .formContent {
   display: flex;
   flex-direction: column;
@@ -44,16 +17,8 @@
   width: 100%;
 }
 
-.actions {
-  align-content: center;
-  align-items: flex-end;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  width: 100%;
-}
-
 .link {
+  cursor: pointer;
   color: var(--color-barney-purple-100);
   font-size: 14px;
 
@@ -63,61 +28,6 @@
     color: var(--color-barney-purple-200);
     text-decoration: none;
   }
-}
-
-.confirmation .actions {
-  padding-bottom: 35px;
-}
-
-.changeEnvironment {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-
-  & button,
-  & a {
-    text-decoration: none;
-  }
-}
-
-.goToTest {
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-  outline: none;
-  text-decoration: none;
-
-  & strong {
-    color: var(--color-picklerick-green-100);
-  }
-
-  &:hover strong,
-  &:focus strong {
-    color: var(--color-picklerick-green-200);
-  }
-}
-
-.githubLink {
-  align-items: flex-end;
-  background: var(--color-squanchy-gray-400);
-  border-radius: 100%;
-  color: var(--color-white);
-  display: flex;
-  height: var(--spacing-large);
-  justify-content: center;
-  outline: none;
-  text-decoration: none;
-  width: var(--spacing-large);
-
-  &:hover,
-  &:focus {
-    background: var(--color-birdperson-gray-500);
-  }
-}
-
-.copyright {
-  font-size: var(--caption-font-size);
 }
 
 .logo {
@@ -158,10 +68,6 @@
   @media (max-width: 400px) {
     width: 90%;
   }
-}
-
-.formGroup {
-  margin-bottom: var(--spacing-large);
 }
 
 .bottomMessage {
