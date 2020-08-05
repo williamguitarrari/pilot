@@ -136,6 +136,7 @@ storiesOf('Pages|Login', module)
             confirmation: t('pages.password_recovery.confirmation'),
             confirmationEmphasis: t('pages.password_recovery.confirmation_emphasis'),
           }}
+          onBackToLogin={action('onBackToLogin')}
         />
       )}
       secondaryContent={TestPresentation}
@@ -169,6 +170,7 @@ storiesOf('Pages|Login', module)
             confirmation: t('pages.password_reset.confirmation'),
             confirmationEmphasis: t('pages.password_reset.confirmation_emphasis'),
           }}
+          onBackToLogin={action('onBackToLogin')}
         />
       )}
       secondaryContent={TestPresentation}

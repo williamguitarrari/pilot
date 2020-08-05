@@ -12,17 +12,22 @@ import Alert from '../ui/Alert'
 import styles from '../style.css'
 
 const ForgetPassword = styled.button`
+  cursor: pointer;
   position: absolute;
   margin-bottom: 8px;
   font-size: 14px;
   top: 0;
   right: 0;
+  z-index: 2;
 `
 
-const ActionsContainer = styled.div`
+const ButtonContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  margin-top: 40px;
+  margin-top: 18px;
+
+  & button {
+    width: 100%;
+  }
 `
 
 const LoginForm = ({
@@ -125,15 +130,7 @@ const LoginForm = ({
             />
           </div>
         </div>
-        <ReCAPTCHA
-          badge="bottomleft"
-          ref={recaptchaRef}
-          sitekey={recaptchaKey}
-          size="invisible"
-          onChange={recaptchaOnChange}
-        />
-        <ActionsContainer>
-          {errors
+        {errors
             && (
             <Alert severity="error">
               {errors.null
@@ -143,6 +140,14 @@ const LoginForm = ({
             </Alert>
             )
           }
+        <ReCAPTCHA
+          badge="bottomleft"
+          ref={recaptchaRef}
+          sitekey={recaptchaKey}
+          size="invisible"
+          onChange={recaptchaOnChange}
+        />
+        <ButtonContainer>
           <Button
             type="submit"
             disabled={loading}
@@ -151,7 +156,7 @@ const LoginForm = ({
           >
             {t('login.login_action')}
           </Button>
-        </ActionsContainer>
+        </ButtonContainer>
       </form>
       <div className={styles.bottomMessage}>
         <span>{t('landing.signup_call')}</span>

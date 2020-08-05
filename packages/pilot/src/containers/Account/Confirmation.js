@@ -9,6 +9,7 @@ const Confirmation = ({
     confirmation,
     confirmationEmphasis,
   },
+  onBackToLogin,
 }) => (
   <>
     <span className={styles.confirmationMessage}>
@@ -18,9 +19,7 @@ const Confirmation = ({
     </span>
     <div className={styles.hugeButton}>
       <Button
-        onClick={() => {
-          window.location.href = '/#/account/login'
-        }}
+        onClick={onBackToLogin}
         size="huge"
       >
         {backToLogin}
@@ -35,6 +34,7 @@ Confirmation.propTypes = {
     confirmation: PropTypes.string.isRequired,
     confirmationEmphasis: PropTypes.string.isRequired,
   }).isRequired,
+  onBackToLogin: PropTypes.func.isRequired,
 }
 
 export default Confirmation

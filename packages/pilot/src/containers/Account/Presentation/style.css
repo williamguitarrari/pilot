@@ -1,4 +1,5 @@
 @import "former-kit-skin-pagarme/dist/styles/colors/light.css";
+@import "former-kit-skin-pagarme/dist/styles/spacing.css";
 
 .mosaic {
   height: 50vh;
@@ -61,7 +62,7 @@
 
 .content p {
   color: var(--color-squanchy-gray-200);
-  line-height: 24px;
+  line-height: var(--spacing-medium);
   margin-top: 10px;
 }
 
