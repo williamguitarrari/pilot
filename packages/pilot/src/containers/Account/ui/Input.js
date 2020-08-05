@@ -30,7 +30,7 @@ const InputBase = styled(props => <MUIInputBase {...props} />)`
     color: #8b8b92;
     font-family: Lato;
     font-size: 14px;
-    padding: 18px 16px;
+    padding: 16px 16px;
   }
 
   .MuiInputBase-input::placeholder {

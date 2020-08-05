@@ -13,7 +13,7 @@ import styles from '../style.css'
 const ActionsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 40px;
+  margin-top: 18px;
 `
 
 const PasswordRecoveryReset = ({
@@ -40,34 +40,36 @@ const PasswordRecoveryReset = ({
           passwordConfirm: required(t('pages.password_reset.errors.field_required')),
         }}
       >
-        <PasswordInput
-          disabled={loading}
-          label={t('password')}
-          type="password"
-          name="password"
-          placeholder="•••••••••••••"
-          onBlur={() => setShowPopover(false)}
-          onFocus={() => setShowPopover(true)}
-          showPopover={showPopover}
-          t={t}
-          validations={validations}
-        />
-        <div className={styles.passwordBox}>
-          <Input
+        <div className={styles.formContent}>
+          <PasswordInput
             disabled={loading}
-            label={t('password_confirm')}
+            label={t('password')}
             type="password"
-            id="passwordConfirm"
-            name="passwordConfirm"
+            name="password"
             placeholder="•••••••••••••"
+            onBlur={() => setShowPopover(false)}
+            onFocus={() => setShowPopover(true)}
+            showPopover={showPopover}
+            t={t}
+            validations={validations}
           />
+          <div className={styles.passwordBox}>
+            <Input
+              disabled={loading}
+              label={t('password_confirm')}
+              type="password"
+              id="passwordConfirm"
+              name="passwordConfirm"
+              placeholder="•••••••••••••"
+            />
+          </div>
         </div>
+        {errors && errors.api && (
+        <Alert severity="error">
+          {errors.api}
+        </Alert>
+        )}
         <ActionsContainer>
-          {errors && errors.api && (
-          <Alert severity="error">
-            {errors.api}
-          </Alert>
-          )}
           <Button
             disabled={loading}
             loading={loading}

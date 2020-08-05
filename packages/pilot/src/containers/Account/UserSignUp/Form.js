@@ -15,12 +15,16 @@ const SignupFormContainer = styled.div`
   & > div {
     margin-bottom: 36px;
   }
+
+  & > div:last-of-type {
+    margin-bottom: 18px;
+  }
 `
 
 const ActionsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 40px;
+  margin-top: 18px;
 `
 
 const SignUpInvite = ({
@@ -75,21 +79,21 @@ const SignUpInvite = ({
           name="passwordConfirm"
           type="password"
         />
-        <ActionsContainer>
-          { errors && errors.api && (
-          <Alert severity="error">
-            {errors.api}
-          </Alert>
-          )}
-          <Button
-            disabled={loading}
-            type="submit"
-            size="huge"
-          >
-            {t('sign_up.sign_up_action')}
-          </Button>
-        </ActionsContainer>
       </SignupFormContainer>
+      { errors && errors.api && (
+      <Alert severity="error">
+        {errors.api}
+      </Alert>
+      )}
+      <ActionsContainer>
+        <Button
+          disabled={loading}
+          type="submit"
+          size="huge"
+        >
+          {t('sign_up.sign_up_action')}
+        </Button>
+      </ActionsContainer>
     </Form>
   )
 }
