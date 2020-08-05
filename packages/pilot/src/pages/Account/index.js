@@ -4,13 +4,7 @@ import {
   Redirect,
   Route,
   Switch,
-  withRouter,
 } from 'react-router-dom'
-
-import {
-  compose,
-  contains,
-} from 'ramda'
 
 import { translate } from 'react-i18next'
 
@@ -30,86 +24,55 @@ import {
   UserSignUpConfirmation,
 } from './dynamicImports'
 
-const DARK_BASE = 'dark'
-const LIGHT_BASE = 'light'
-
-const getBaseByPath = (pathname) => {
-  if (contains('account', pathname) && environment === 'live') {
-    return LIGHT_BASE
-  }
-  return DARK_BASE
-}
-
-const enhance = compose(
-  withRouter,
-  translate()
-)
-
-const AccountArea = ({ history: { location }, t }) => {
-  const base = getBaseByPath(location.pathname)
-  return (
-    <Account
-      t={t}
-      logo={<Logo test={environment === 'test'} alt={t('landing.logo')} />}
-      primaryContent={(
-        <Suspense
-          fallback={(
-            <Loader visible />
+const AccountArea = ({ t }) => (
+  <Account
+    t={t}
+    logo={<Logo test={environment === 'test'} alt={t('landing.logo')} />}
+    primaryContent={(
+      <Suspense
+        fallback={(
+          <Loader visible />
           )}
-        >
-          <Switch>
-            <Route
-              path="/account/login"
-              render={() => <Login />}
-            />
-            <Route
-              path="/account/password/recovery/confirmation"
-              render={() => <PasswordRecoveryConfirmation />}
-            />
-            <Route
-              path="/account/password/recovery"
-              render={() => <PasswordRecovery />}
-            />
-            <Route
-              path="/account/password/reset/confirmation"
-              render={() => <PasswordResetConfirmation base={base} />}
-            />
-            <Route
-              path="/account/password/reset/:token"
-              render={() => <PasswordReset />}
-            />
-            <Route
-              path="/account/signup/invite/confirmation"
-              render={() => <UserSignUpConfirmation />}
-            />
-            <Route
-              path="/account/signup/invite"
-              render={() => <UserSignUp base={base} />}
-            />
-            <Redirect to="/account/login" />
-          </Switch>
-        </Suspense>
-      )}
-      secondaryContent={(
+      >
         <Switch>
           <Route
-            path="/account"
-            component={Presentation}
+            path="/account/login"
+            render={() => <Login />}
+          />
+          <Route
+            path="/account/password/recovery/confirmation"
+            render={() => <PasswordRecoveryConfirmation />}
+          />
+          <Route
+            path="/account/password/recovery"
+            render={() => <PasswordRecovery />}
+          />
+          <Route
+            path="/account/password/reset/confirmation"
+            render={() => <PasswordResetConfirmation />}
+          />
+          <Route
+            path="/account/password/reset/:token"
+            render={() => <PasswordReset />}
+          />
+          <Route
+            path="/account/signup/invite/confirmation"
+            render={() => <UserSignUpConfirmation />}
+          />
+          <Route
+            path="/account/signup/invite"
+            render={() => <UserSignUp />}
           />
           <Redirect to="/account/login" />
         </Switch>
+      </Suspense>
       )}
-    />
-  )
-}
+    secondaryContent={<Presentation />}
+  />
+)
 
 AccountArea.propTypes = {
-  history: PropTypes.shape({
-    location: PropTypes.shape({
-      pathname: PropTypes.string,
-    }),
-  }).isRequired,
   t: PropTypes.func.isRequired,
 }
 
-export default enhance(AccountArea)
+export default translate()(AccountArea)

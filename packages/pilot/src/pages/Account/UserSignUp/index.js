@@ -35,7 +35,6 @@ const formatEmail = unless(isNil, replace(
 ))
 
 const SignUpInvitePage = ({
-  base,
   history,
   t,
 }) => {
@@ -114,7 +113,7 @@ const SignUpInvitePage = ({
 
   return (
     <UserSignUpForm
-      base={base}
+      base="light"
       errors={errors}
       loading={loading}
       onChange={validateInputs}
@@ -127,7 +126,6 @@ const SignUpInvitePage = ({
 }
 
 SignUpInvitePage.propTypes = {
-  base: PropTypes.oneOf(['dark', 'light']).isRequired,
   history: PropTypes.shape({
     location: PropTypes.shape({
       search: PropTypes.string,

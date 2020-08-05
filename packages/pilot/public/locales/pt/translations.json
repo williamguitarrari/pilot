@@ -185,7 +185,7 @@
     "signup_action": "Cadastre-se agora",
     "test": {
       "about_title": "Bem-vindo ao Ambiente de Testes do Pagar.me!",
-      "about_dashboard": "Utilize este ambiente para testar sua integração conosco, lembre-sede que qualquer tipo de operação neste ambiente não gera pagamentos reais, é importante ressaltar que a chave de API de testes é diferente do ambiente live.",
+      "about_dashboard": "Utilize este ambiente para testar sua integração conosco, lembre-se de que qualquer tipo de operação neste ambiente não gera pagamentos reais, é importante ressaltar que a chave de API de testes é diferente do ambiente live.",
       "back_button": "Voltar para o ambiente live"
     }
   },

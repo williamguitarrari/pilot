@@ -37,6 +37,8 @@ const LoginForm = ({
   })
   const recaptchaRef = useRef()
 
+  const isLive = environment === 'live'
+
   const recaptchaOnChange = (recaptchaToken) => {
     if (!recaptchaToken) {
       return
@@ -141,6 +143,7 @@ const LoginForm = ({
             type="submit"
             disabled={loading}
             size="huge"
+            relevance={isLive ? 'normal' : 'high'}
           >
             {t('login.login_action')}
           </Button>
@@ -154,7 +157,7 @@ const LoginForm = ({
       </div>
       <div className={styles.changeEnvButton}>
         <Button
-          icon={environment === 'live' ? <IconCode /> : null}
+          icon={isLive ? <IconCode /> : null}
           disabled={loading}
           onClick={onChangeEnvironment}
           size="huge"
