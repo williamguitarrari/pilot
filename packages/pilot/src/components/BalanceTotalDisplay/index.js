@@ -14,6 +14,8 @@ const BalanceTotalDisplay = ({
   amount,
   detail,
   disabled,
+  isCompanyPaymentLink,
+  paymentLinkDisclaimer,
   title,
 }) => {
   const { symbol, value } = currencyToParts(Math.abs(amount))
@@ -33,7 +35,12 @@ const BalanceTotalDisplay = ({
         <div className={style.detail}>
           {detail}
         </div>
-        { action
+        {isCompanyPaymentLink && (
+          <span className={style.detail}>
+            {paymentLinkDisclaimer}
+          </span>
+        )}
+        {!isCompanyPaymentLink && action
           && (
             <Button
               disabled={disabled}
@@ -64,6 +71,8 @@ BalanceTotalDisplay.propTypes = {
   // More details in issue #1159
   // detail: PropTypes.node.isRequired,
   disabled: PropTypes.bool,
+  isCompanyPaymentLink: PropTypes.bool,
+  paymentLinkDisclaimer: PropTypes.string,
   title: PropTypes.string.isRequired,
 }
 
@@ -78,6 +87,8 @@ BalanceTotalDisplay.defaultProps = {
   // detail: PropTypes.node.isRequired,
   detail: null,
   disabled: false,
+  isCompanyPaymentLink: false,
+  paymentLinkDisclaimer: '',
 }
 
 export default BalanceTotalDisplay

@@ -543,6 +543,8 @@ class Balance extends Component {
                   disabled={
                     disabled || withdrawal <= ted + MINIMUM_API_VALUE
                   }
+                  isCompanyPaymentLink={isCompanyPaymentLink}
+                  paymentLinkDisclaimer={t('pages.balance.payment_link_withdraw')}
                   title={t('pages.balance.withdrawal_title')}
                 />
               </Card>
