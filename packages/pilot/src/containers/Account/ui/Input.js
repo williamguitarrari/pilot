@@ -79,8 +79,6 @@ const FormControl = styled(props => <MUIFormControl {...props} />)`
   width: 100%;
 
   &.MuiFormControl-root {
-    display: unset;
-    position: unset;
     ${props => props.customStyle}
   }
 

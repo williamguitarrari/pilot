@@ -1,23 +1,29 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import Form from 'react-vanilla-form'
-import ClearIcon from 'emblematic-icons/svg/ClearClose32.svg'
-import className from 'classnames'
-import {
-  Alert,
-  Button,
-  FormInput,
-} from 'former-kit'
-
-import styles from '../style.css'
+import styled from 'styled-components'
+import { Button } from 'former-kit'
+import Alert from '../ui/Alert'
+import Input from '../ui/Input'
 
 import PasswordInput from '../../../components/PasswordInput'
 import required from '../../../validation/required'
 
 const isRequired = t => required(t('sign_up.required'))
 
+const SignupFormContainer = styled.div`
+  & > div {
+    margin-bottom: 36px;
+  }
+`
+
+const ActionsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+`
+
 const SignUpInvite = ({
-  base,
   email,
   errors,
   loading,
@@ -40,23 +46,20 @@ const SignUpInvite = ({
       onSubmit={onSubmit}
       data={{ email }}
     >
-      <div className={className(styles.formContent, styles.signup)}>
-        <FormInput
-          base={base}
+      <SignupFormContainer>
+        <Input
           disabled
           label={t('email')}
           name="email"
           type="email"
         />
-        <FormInput
-          base={base}
+        <Input
           disabled={loading}
           label={t('sign_up.name')}
           name="name"
           type="text"
         />
         <PasswordInput
-          base={base}
           disabled={loading}
           label={t('password')}
           name="password"
@@ -66,27 +69,18 @@ const SignUpInvite = ({
           t={t}
           validations={passwordValidations}
         />
-        <FormInput
-          base={base}
+        <Input
           disabled={loading}
           label={t('password_confirm')}
           name="passwordConfirm"
           type="password"
         />
-        <div className={styles.error}>
+        <ActionsContainer>
           { errors && errors.api && (
-            <Alert
-              base={base}
-              type="error"
-              icon={<ClearIcon height={16} width={16} />}
-            >
-              {errors.api}
-            </Alert>
+          <Alert severity="error">
+            {errors.api}
+          </Alert>
           )}
-        </div>
-      </div>
-      <div className={styles.actions}>
-        <div className={styles.hugeButton}>
           <Button
             disabled={loading}
             type="submit"
@@ -94,14 +88,13 @@ const SignUpInvite = ({
           >
             {t('sign_up.sign_up_action')}
           </Button>
-        </div>
-      </div>
+        </ActionsContainer>
+      </SignupFormContainer>
     </Form>
   )
 }
 
 SignUpInvite.propTypes = {
-  base: PropTypes.oneOf(['dark', 'light']).isRequired,
   email: PropTypes.string.isRequired,
   errors: PropTypes.oneOfType([
     PropTypes.shape({

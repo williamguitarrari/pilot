@@ -33,14 +33,6 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
-  &.signup {
-    min-height: 300px;
-  }
-}
-
-.errorAlert {
-  margin-top: var(--spacing-medium);
 }
 
 .hugeButton {
@@ -144,11 +136,15 @@
 
 .interactionSide {
   width: 47%;
-  align-self: center;
+  align-items: center;
+  box-shadow: 1px 1px 14px -10px var(--color-black);
   display: flex;
   justify-content: center;
+  height: 100%;
+  z-index: 2;
 
   @media (max-width: 1170px) {
+    box-shadow: unset;
     width: unset;
   }
 }
@@ -158,6 +154,10 @@
   flex-direction: column;
   align-items: stretch;
   width: 361px;
+
+  @media (max-width: 400px) {
+    width: 90%;
+  }
 }
 
 .formGroup {

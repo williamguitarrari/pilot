@@ -19,6 +19,12 @@ const ForgetPassword = styled.button`
   right: 0;
 `
 
+const ActionsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+`
+
 const LoginForm = ({
   environment,
   errors,
@@ -126,7 +132,7 @@ const LoginForm = ({
           size="invisible"
           onChange={recaptchaOnChange}
         />
-        <div className={styles.errorAlert}>
+        <ActionsContainer>
           {errors
             && (
             <Alert severity="error">
@@ -137,8 +143,6 @@ const LoginForm = ({
             </Alert>
             )
           }
-        </div>
-        <div className={styles.hugeButton}>
           <Button
             type="submit"
             disabled={loading}
@@ -147,7 +151,7 @@ const LoginForm = ({
           >
             {t('login.login_action')}
           </Button>
-        </div>
+        </ActionsContainer>
       </form>
       <div className={styles.bottomMessage}>
         <span>{t('landing.signup_call')}</span>
