@@ -109,6 +109,7 @@ import EmptyState from './EmptyState'
 import Onboarding from './Onboarding'
 
 import PaymentLinks from './PaymentLinks'
+import ChooseDashboard from './ChooseDashboard'
 
 storiesOf('Containers|Bank/Account', module)
   .add('selector', () => <BankAccountSelector />)
@@ -498,3 +499,10 @@ storiesOf('Containers|Payment Links/Details/PaymentMethods', module)
 storiesOf('Containers|Empty State', module)
   .add('Default', () => <EmptyState.EmptyStateDefault />)
   .add('MDRzao', () => <EmptyState.EmptyStateMDRzao />)
+
+storiesOf('Containers|Choose Dashboard/Card')
+  .add('Legacy Dashboard', () => <ChooseDashboard.Card.LegacyDashboardCard />)
+  .add('New Dashboard', () => <ChooseDashboard.Card.NewDashboard />)
+
+storiesOf('Containers|Choose Dashboard/Container')
+  .add('Container', () => <ChooseDashboard.Container />)

@@ -86,6 +86,7 @@
   "password": "Senha",
   "password_confirm": "Confirmar senha",
   "recipient": "Recebedor",
+  "recommended": "Recomendado",
   "refuse": {
     "title": "Recusado - motivo:",
     "action": {
@@ -618,6 +619,19 @@
     }
   },
   "pages": {
+    "choose_dashboard": {
+      "title": "Qual versão da dashboard você gostaria de acessar?",
+      "new": {
+        "img_alt": "Nova Dashboard",
+        "title": "Nova Dashboard",
+        "message": "A Nova Dashboard é a mais indicada para nosso clientes, ela oferece uma usabilidade mais agradável e eficiente para o dia a dia do seu negócio, também está constantemente recebendo atualizações e melhorias."
+      },
+      "old": {
+        "img_alt": "Dashboard Legada",
+        "title": "Dashboard legada",
+        "message": "Indicada para clientes que utilizam o Pagar.me para gerenciar recorrências, a Dashboard legada já não recebe mais atualizações e melhorias."
+      }
+    },
     "onboarding": {
       "advance_step": "Avançar",
       "last_step": "Finalizar",

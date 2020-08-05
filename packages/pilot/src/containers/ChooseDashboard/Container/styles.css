@@ -1,0 +1,45 @@
+@import "former-kit-skin-pagarme/dist/styles/colors.css";
+
+.chooseDashboardContainer {
+  align-items: center;
+  background-color: var(--color-squanchy-gray-20);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  width: 100vw;
+}
+
+.ellipse,
+.circles {
+  display: none;
+}
+
+@media (min-width: 768px) {
+
+  .ellipse {
+    display: unset;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+  }
+
+  .circles {
+    display: unset;
+    position: absolute;
+    right: -10px;
+    top: 105px;
+  }
+}
+
+@media (min-width: 768px) {
+
+  .chooseDashboardContainer {
+    height: 100vh;
+  }
+
+  .circles {
+    right: 0;
+    top: 37px;
+  }
+}
