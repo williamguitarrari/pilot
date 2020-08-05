@@ -17,9 +17,7 @@ const Account = ({
         {primaryContent}
       </div>
     </div>
-    <div className={styles.presentationSide}>
-      {secondaryContent}
-    </div>
+    {secondaryContent}
   </div>
 )
 

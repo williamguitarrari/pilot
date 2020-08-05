@@ -160,25 +160,6 @@
   width: 361px;
 }
 
-.presentationSide {
-  width: 63%;
-  display: flex;
-  flex-direction: column;
-  background-color: var(--color-squanchy-gray-20);
-
-  @media (max-width: 1170px) {
-    display: none;
-  }
-}
-
-.presentationSideContent {
-  align-items: stretch;
-  display: flex;
-  flex-direction: column;
-  height: 600px;
-  justify-content: space-between;
-}
-
 .formGroup {
   margin-bottom: var(--spacing-large);
 }
