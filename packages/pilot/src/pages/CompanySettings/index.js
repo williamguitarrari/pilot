@@ -25,6 +25,7 @@ import { translate } from 'react-i18next'
 import { requestLogout } from '../Account/actions/actions'
 import CompanySettings from '../../containers/Settings/Company'
 import environment from '../../environment'
+import isCompanyPaymentLink from '../../validation/isPaymentLink'
 
 import { selectCompanyFees } from '../Account/actions/reducer'
 
@@ -231,26 +232,7 @@ class CompanySettingsPage extends React.Component {
       pick(['fraud_covered'])
     )
 
-    getCurrentCompany(client)
-      .then(applySpec({
-        antifraud: getAntifraudOptions,
-        boletoInstructions: getBoletoOptions,
-        defaultRecipientId: getDefaultRecipientId,
-      }))
-      .then(({ antifraud, boletoInstructions, defaultRecipientId }) => {
-        this.setState({
-          antifraud,
-          boleto: {
-            ...boleto,
-            actionsDisabled: true,
-            ...boletoInstructions,
-          },
-          defaultRecipientId,
-        })
-
-        return defaultRecipientId
-      })
-      .then(getSelectedAccount(client))
+    const getCompanyBankAccount = id => getSelectedAccount(client, id)
       .then(getBankAccounts(client))
       .then(({ accounts, selectedAccount }) => this.setState({
         bankAccount: {
@@ -264,7 +246,37 @@ class CompanySettingsPage extends React.Component {
           selectedAccount,
         },
       }))
-      .catch(redirectoToLogout)
+
+    getCurrentCompany(client)
+      .then(applySpec({
+        antifraud: getAntifraudOptions,
+        boletoInstructions: getBoletoOptions,
+        defaultRecipientId: getDefaultRecipientId,
+        type: prop('type'),
+      }))
+      .then(({
+        antifraud,
+        boletoInstructions,
+        defaultRecipientId,
+        type,
+      }) => {
+        this.setState({
+          antifraud,
+          boleto: {
+            ...boleto,
+            actionsDisabled: true,
+            ...boletoInstructions,
+          },
+          defaultRecipientId,
+        })
+
+        return { recipientId: defaultRecipientId, type }
+      })
+      .then(({ recipientId, type }) => !isCompanyPaymentLink(type)
+        && getCompanyBankAccount(recipientId))
+      .catch(() => {
+        redirectoToLogout()
+      })
   }
 
   componentDidMount () {

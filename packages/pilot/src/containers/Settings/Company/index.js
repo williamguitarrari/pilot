@@ -147,6 +147,7 @@ class CompanySettings extends Component {
               bankAccountChangeActionDisabled={bankAccountChangeActionDisabled}
               bankAccountSelectedView={bankAccountSelectedView}
               general={general}
+              isPaymentLink={isPaymentLink(company)}
               managingPartner={managingPartner}
               onBankAccountCancel={onBankAccountCancel}
               onBankAccountChange={onBankAccountChange}

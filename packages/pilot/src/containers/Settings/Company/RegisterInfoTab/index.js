@@ -19,6 +19,7 @@ const RegisterInfoTab = ({
   bankAccountSelectedView,
   bankAccounts,
   general,
+  isPaymentLink,
   managingPartner,
   onBankAccountCancel,
   onBankAccountChange,
@@ -49,26 +50,29 @@ const RegisterInfoTab = ({
       />
     </CardContent>
 
-    <CardTitle
-      title={t('pages.settings.company.card.register.bank_title')}
-    />
-
-    <CardContent>
-      <CompanyBankAccount
-        accounts={bankAccounts}
-        changeActionDisabled={bankAccountChangeActionDisabled}
-        data={bankAccountData}
-        disabled={bankAccountActionsDisabled}
-        errors={bankAccountErrors}
-        onAccountSelect={onBankAccountSelect}
-        onCancel={onBankAccountCancel}
-        onChange={onBankAccountChange}
-        onSubmit={onBankAccountCreate}
-        selectedAccount={bankAccountSelected}
-        selectedView={bankAccountSelectedView}
-        t={t}
-      />
-    </CardContent>
+    {!isPaymentLink && (
+      <Fragment>
+        <CardTitle
+          title={t('pages.settings.company.card.register.bank_title')}
+        />
+        <CardContent>
+          <CompanyBankAccount
+            accounts={bankAccounts}
+            changeActionDisabled={bankAccountChangeActionDisabled}
+            data={bankAccountData}
+            disabled={bankAccountActionsDisabled}
+            errors={bankAccountErrors}
+            onAccountSelect={onBankAccountSelect}
+            onCancel={onBankAccountCancel}
+            onChange={onBankAccountChange}
+            onSubmit={onBankAccountCreate}
+            selectedAccount={bankAccountSelected}
+            selectedView={bankAccountSelectedView}
+            t={t}
+          />
+        </CardContent>
+      </Fragment>
+    )}
 
     <CardTitle
       title={t('pages.settings.company.card.register.account_manager')}
@@ -140,6 +144,7 @@ RegisterInfoTab.propTypes = {
     name: PropTypes.string,
     siteUrl: PropTypes.string,
   }).isRequired,
+  isPaymentLink: PropTypes.bool.isRequired,
   managingPartner: PropTypes.shape({
     cpf: PropTypes.string,
     email: PropTypes.string,
