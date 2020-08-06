@@ -152,22 +152,6 @@ const accountEpic = action$ => action$
     })
   )
 
-const verifyEnvironmentPermission = (company) => {
-  if (
-    env === 'live'
-    && isSelfRegister(company)
-    && isPendingRiskAnalysis(company)
-  ) {
-    throw new Error('Pending risk analysis')
-  }
-
-  if (env === 'live' && !isActiveCompany(company)) {
-    throw new Error('Unauthorized environment')
-  }
-
-  return company
-}
-
 const companyEpic = (action$, state$) => action$.pipe(
   ofType(ACCOUNT_RECEIVE),
   mergeMap(({ error, payload }) => {
@@ -179,7 +163,6 @@ const companyEpic = (action$, state$) => action$.pipe(
     }
 
     return client.company.current()
-      .then(verifyEnvironmentPermission)
       .catch(errorPayload => ({
         error: true,
         payload: errorPayload,
@@ -286,6 +269,43 @@ const recipientBalanceEpic = (action$, state$) => action$.pipe(
   map(receiveRecipientBalance)
 )
 
+const verifyEnvironmentPermission = (company) => {
+  if (
+    env === 'live'
+    && isSelfRegister(company)
+    && isPendingRiskAnalysis(company)
+  ) {
+    throw new Error('Pending risk analysis')
+  }
+
+  if (env === 'live' && !isActiveCompany(company)) {
+    throw new Error('Unauthorized environment')
+  }
+
+  return company
+}
+
+const onCompanyReceive = action$ => action$.pipe(
+  ofType(COMPANY_RECEIVE),
+  mergeMap(({ payload }) => {
+    try {
+      return rxOf(verifyEnvironmentPermission(payload))
+    } catch (error) {
+      return rxOf({
+        error: true,
+        payload: error,
+      })
+    }
+  }),
+  mergeMap((action) => {
+    if (action.error) {
+      return rxOf(receiveError(action.payload))
+    }
+
+    return rxOf(action)
+  })
+)
+
 const logoutEpic = (action$, state$) => action$.pipe(
   ofType(LOGOUT_REQUEST),
   mergeMap(() => {
@@ -310,5 +330,6 @@ export default combineEpics(
   accountEpic,
   companyEpic,
   recipientBalanceEpic,
+  onCompanyReceive,
   logoutEpic
 )
