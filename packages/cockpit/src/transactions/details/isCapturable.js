@@ -1,4 +1,5 @@
 import {
+  both,
   ifElse,
   propEq,
 } from 'ramda'
@@ -14,7 +15,7 @@ const isTokenValid = (transaction) => {
 
 const isCapturable = ifElse(
   isFromCheckout,
-  isAuthorized && isTokenValid,
+  both(isAuthorized, isTokenValid),
   isAuthorized
 )
 
