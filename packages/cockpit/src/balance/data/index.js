@@ -15,12 +15,18 @@ const getValidStatus = when(
 
 const ignoredProps = ['status', 'recipientId']
 
-const data = client => (recipientId, query = {}) => Promise.props({
+const data = client => (
+  recipientId,
+  shouldRequestAnticipations,
+  query = {}
+) => Promise.props({
   balance: client.balance.find({ recipientId }),
-  bulk_anticipations_pending: client.bulkAnticipations.find({
-    recipientId,
-    status: 'pending',
-  }),
+  bulk_anticipations_pending: shouldRequestAnticipations
+    ? client.bulkAnticipations.find({
+      recipientId,
+      status: 'pending',
+    })
+    : Promise.resolve([]),
   recipient: client.recipients.find({ id: recipientId }),
   withdrawal: client.transfers.limits({ recipient_id: recipientId }),
 }).then(buildResult({

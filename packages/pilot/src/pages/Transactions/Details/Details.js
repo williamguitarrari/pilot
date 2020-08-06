@@ -38,6 +38,7 @@ import {
 import Reprocess from '../../Reprocess'
 import currencyFormatter from '../../../formatters/decimalCurrency'
 import getColumnFormatter from '../../../formatters/columnTranslator'
+import checkIsPaymentLink from '../../../validation/isPaymentLink'
 import installmentTableColumns from '../../../components/RecipientSection/installmentTableColumns'
 import ManualReview from '../../ManualReview'
 import TransactionDetailsContainer from '../../../containers/TransactionDetails'
@@ -55,6 +56,7 @@ const hasPrintInQueryString = pipe(
 const mapStateToProps = ({
   account: {
     client,
+    company,
     user: {
       permission,
     },
@@ -63,6 +65,7 @@ const mapStateToProps = ({
   transactions: { query },
 }) => ({
   client,
+  company,
   loading,
   permission,
   query,
@@ -529,6 +532,7 @@ class TransactionDetails extends Component {
 
   render () {
     const {
+      company,
       error,
       permission,
       t,
@@ -669,6 +673,7 @@ class TransactionDetails extends Component {
     }
 
     const nextTransactionId = transaction.nextId
+    const isPaymentLink = checkIsPaymentLink(company)
 
     return (
       <Fragment>
@@ -680,6 +685,7 @@ class TransactionDetails extends Component {
           expandRecipients={expandRecipients}
           headerLabels={headerLabels}
           installmentColumns={installmentColumns}
+          isPaymentLink={isPaymentLink}
           loading={loading}
           metadataTitle={t('pages.transaction.metadata')}
           nextTransactionId={nextTransactionId}
@@ -756,6 +762,9 @@ class TransactionDetails extends Component {
 
 TransactionDetails.propTypes = {
   client: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  company: PropTypes.shape({
+    type: PropTypes.string,
+  }),
   error: PropTypes.shape({
     localized: PropTypes.shape({
       message: PropTypes.string,
@@ -786,6 +795,7 @@ TransactionDetails.propTypes = {
 }
 
 TransactionDetails.defaultProps = {
+  company: {},
   error: undefined,
 }
 

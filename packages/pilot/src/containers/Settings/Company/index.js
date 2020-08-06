@@ -12,6 +12,9 @@ import ProductInfoTab from './ProductInfoTab'
 import RegisterInfoTab from './RegisterInfoTab'
 import TeamInfoTab from './TeamInfoTab'
 
+import isPaymentLink from '../../../validation/isPaymentLink'
+import isNilOrEmpty from '../../../validation/isNilOrEmpty'
+
 class CompanySettings extends Component {
   constructor (props) {
     super(props)
@@ -41,6 +44,7 @@ class CompanySettings extends Component {
       boletoDisabled,
       boletoInstructions,
       boletoInstructionsOptions,
+      company,
       createUserStatus,
       deleteUserStatus,
       environment,
@@ -69,7 +73,7 @@ class CompanySettings extends Component {
       selectedIndex,
     } = this.state
 
-    return (
+    return !isNilOrEmpty(company) && (
       <Card>
         <CardContent>
           <TabBar
@@ -79,7 +83,10 @@ class CompanySettings extends Component {
           >
             <TabItem text={t('pages.settings.company.tab.general')} />
             <TabItem text={t('pages.settings.company.tab.products')} />
-            <TabItem text={t('pages.settings.company.tab.team')} />
+            {!isPaymentLink(company)
+              ? <TabItem text={t('pages.settings.company.tab.team')} />
+              : <></>
+            }
             <TabItem text={t('pages.settings.company.tab.register')} />
           </TabBar>
         </CardContent>
@@ -90,6 +97,7 @@ class CompanySettings extends Component {
               apiVersion={apiVersion}
               environment={environment}
               fees={fees}
+              hiddenApiKey={isPaymentLink(company)}
               isMDRzao={isMDRzao}
               onVersionChange={onVersionChange}
               t={t}
@@ -139,6 +147,7 @@ class CompanySettings extends Component {
               bankAccountChangeActionDisabled={bankAccountChangeActionDisabled}
               bankAccountSelectedView={bankAccountSelectedView}
               general={general}
+              isPaymentLink={isPaymentLink(company)}
               managingPartner={managingPartner}
               onBankAccountCancel={onBankAccountCancel}
               onBankAccountChange={onBankAccountChange}
@@ -223,6 +232,9 @@ CompanySettings.propTypes = {
     name: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
   })).isRequired,
+  company: PropTypes.shape({
+    type: PropTypes.string,
+  }),
   createUserStatus: PropTypes.shape({
     error: PropTypes.string,
     loading: PropTypes.bool,
@@ -299,6 +311,7 @@ CompanySettings.defaultProps = {
   bankErrors: null,
   boletoDaysToAddInExpirationDate: null,
   boletoInstructions: null,
+  company: null,
   t: t => t,
 }
 

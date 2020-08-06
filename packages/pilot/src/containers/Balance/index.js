@@ -53,6 +53,7 @@ import dateInputPresets from '../../models/dateSelectorPresets'
 import DetailsHead from '../../components/DetailsHead'
 import PendingAnticipations from '../../components/PendingAnticipations'
 import BalanceOperations from '../BalanceOperations'
+import isPaymentLink from '../../validation/isPaymentLink'
 
 import style from './style.css'
 
@@ -484,6 +485,9 @@ class Balance extends Component {
 
     const { ted } = getTransfersPricing(company)
 
+    const isCompanyPaymentLink = isPaymentLink(company)
+    const balanceGridCol = isCompanyPaymentLink ? 6 : 4
+
     return (
       <Fragment>
         <Grid>
@@ -507,10 +511,10 @@ class Balance extends Component {
           </Row>
           <Row stretch>
             <Col
-              desk={4}
+              desk={balanceGridCol}
               palm={12}
               tablet={6}
-              tv={4}
+              tv={balanceGridCol}
             >
               <Card>
                 <BalanceTotalDisplay
@@ -539,20 +543,22 @@ class Balance extends Component {
                   disabled={
                     disabled || withdrawal <= ted + MINIMUM_API_VALUE
                   }
+                  isCompanyPaymentLink={isCompanyPaymentLink}
+                  paymentLinkDisclaimer={t('pages.balance.payment_link_withdraw')}
                   title={t('pages.balance.withdrawal_title')}
                 />
               </Card>
             </Col>
             <Col
-              desk={4}
+              desk={balanceGridCol}
               palm={12}
               tablet={6}
-              tv={4}
+              tv={balanceGridCol}
             >
               <Card>
                 <BalanceTotalDisplay
                   action={
-                    isNil(onAnticipationClick)
+                    isNil(onAnticipationClick) || isCompanyPaymentLink
                       ? null
                       : anticipationAction
                   }
@@ -568,7 +574,7 @@ class Balance extends Component {
                   //   || anticipationError
                   //   || available < MINIMUM_API_VALUE
                   // }
-                  detail={(
+                  detail={!isCompanyPaymentLink && (
                     <span>
                       {t('pages.balance.anticipation_call')}
                     </span>
@@ -578,26 +584,28 @@ class Balance extends Component {
                 />
               </Card>
             </Col>
-            <Col
-              desk={4}
-              palm={12}
-              tablet={6}
-              tv={4}
-            >
-              <Card>
-                <PendingAnticipations
-                  emptyMessage={t('pages.balance.pending_anticipations_empty_message')}
-                  loading={disabled}
-                  onCancel={
-                    isNil(onCancelRequestClick)
-                      ? null
-                      : this.handleRequestCancelClick
-                  }
-                  requests={this.getPendingAnticipations()}
-                  title={t('pages.balance.pending_anticipations_title')}
-                />
-              </Card>
-            </Col>
+            {!isCompanyPaymentLink && (
+              <Col
+                desk={4}
+                palm={12}
+                tablet={6}
+                tv={4}
+              >
+                <Card>
+                  <PendingAnticipations
+                    emptyMessage={t('pages.balance.pending_anticipations_empty_message')}
+                    loading={disabled}
+                    onCancel={
+                      isNil(onCancelRequestClick)
+                        ? null
+                        : this.handleRequestCancelClick
+                    }
+                    requests={this.getPendingAnticipations()}
+                    title={t('pages.balance.pending_anticipations_title')}
+                  />
+                </Card>
+              </Col>
+            )}
           </Row>
           <Row>
             <Col

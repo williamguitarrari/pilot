@@ -13,6 +13,7 @@ const SidebarSections = ({
         action,
         actionTitle,
         disabled,
+        showButton,
         title,
         value,
       }) => (
@@ -22,7 +23,7 @@ const SidebarSections = ({
         >
           <span className={style.title}>{title}</span>
           <div className={style.value}>{value}</div>
-          {actionTitle
+          {showButton && actionTitle
             && (
               <Button
                 className={style.action}
@@ -45,6 +46,7 @@ SidebarSections.propTypes = {
     action: PropTypes.func,
     actionTitle: PropTypes.string,
     disabled: PropTypes.bool,
+    showButton: PropTypes.bool,
     title: PropTypes.string.isRequired,
     value: PropTypes.element.isRequired,
   })).isRequired,

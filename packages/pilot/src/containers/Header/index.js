@@ -30,6 +30,7 @@ import environment, {
 } from '../../environment'
 
 import style from './style.css'
+import isPaymentLink from '../../validation/isPaymentLink'
 
 const getEnvironmentUrl = () => (
   environment === 'test'
@@ -49,17 +50,17 @@ const renderTestEnviromentNav = t => (
   </div>
 )
 
-const renderLiveEnvironmentButton = ({
+const renderEnvironmentButton = ({
   t,
 }) => (
   <Popover
     content={(
       <PopoverContent>
         <small>
-          {t('header.environment.text_live')}&nbsp;
+          {t(`header.environment.text_${environment}`)}&nbsp;
           <a href={getEnvironmentUrl()}>
-            {t('header.environment.text_action_live')}
-          </a>
+            {t('header.environment.text_action')}
+          </a>.
         </small>
       </PopoverContent>
     )}
@@ -73,6 +74,7 @@ const renderLiveEnvironmentButton = ({
 )
 
 const HeaderContainer = ({
+  companyType,
   onBack,
   onLogout,
   onSettings,
@@ -124,7 +126,11 @@ const HeaderContainer = ({
           </>
         )}
 
-        {environment === 'live' && renderLiveEnvironmentButton({ t })}
+        {
+          companyType
+            && !isPaymentLink(companyType)
+            && renderEnvironmentButton({ t })
+        }
 
         <Spacing size="small" />
 
@@ -156,11 +162,12 @@ const HeaderContainer = ({
   </>
 )
 
-renderLiveEnvironmentButton.propTypes = {
+renderEnvironmentButton.propTypes = {
   t: PropTypes.func.isRequired,
 }
 
 HeaderContainer.propTypes = {
+  companyType: PropTypes.string,
   onBack: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
   onSettings: PropTypes.func.isRequired,
@@ -177,6 +184,10 @@ HeaderContainer.propTypes = {
     email: PropTypes.string,
     name: PropTypes.string,
   }).isRequired,
+}
+
+HeaderContainer.defaultProps = {
+  companyType: '',
 }
 
 export default HeaderContainer

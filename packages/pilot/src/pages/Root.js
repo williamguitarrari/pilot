@@ -19,6 +19,8 @@ import {
 import { requestLogin as requestLoginAction } from './Account/actions/actions'
 import { inactiveCompanyLogin } from '../vendor/googleTagManager'
 
+import isPaymentLink from '../validation/isPaymentLink'
+
 import Account from './Account'
 import ChooseDashboard from './ChooseDashboard'
 import LoggedArea from './LoggedArea'
@@ -136,7 +138,7 @@ class Root extends Component {
       return null
     }
 
-    if (!user && !company) {
+    if (!user || !company) {
       return null
     }
 
@@ -144,7 +146,11 @@ class Root extends Component {
       return <Route path="/choose-dashboard" component={ChooseDashboard} />
     }
 
-    if (user && shouldSelectDashboard()) {
+    if (
+      !isPaymentLink(company)
+      && user
+      && shouldSelectDashboard()
+    ) {
       history.replace('/choose-dashboard')
       return null
     }

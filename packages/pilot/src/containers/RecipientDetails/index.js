@@ -118,7 +118,7 @@ class RecipientDetails extends Component {
 
 /* eslint-disable react/forbid-foreign-prop-types */
 const infoProps = omit(['t'], Information.propTypes)
-const configProps = omit(['t'], Configuration.propTypes)
+const configProps = omit(['capabilities', 't'], Configuration.propTypes)
 const balanceProps = omit(['t'], Balance.propTypes)
 /* eslint-enable react/forbid-foreign-prop-types */
 

@@ -606,9 +606,14 @@ class Balance extends Component {
   }
 
   requestData (id, searchQuery) {
-    const { client, onRequestBalance } = this.props
+    const { client, company, onRequestBalance } = this.props
+    const shouldRequestBulkAnticipation = pathEq(['capabilities', 'allow_transaction_anticipation'], false, company)
     onRequestBalance({ searchQuery })
-    const dataPromise = client.balance.data(id, searchQuery)
+    const dataPromise = client.balance.data(
+      id,
+      shouldRequestBulkAnticipation,
+      searchQuery
+    )
     const totalPromise = client.balance.total(id, searchQuery)
     const operationsPromise = client.balance
       .operations({ recipientId: id, ...searchQuery })

@@ -30,6 +30,7 @@ import SidebarSections from '../../components/SidebarSections'
 import SidebarSummary from '../../components/SidebarSummary'
 import formatDecimalCurrency from '../../formatters/decimalCurrency'
 import environment from '../../environment'
+import isPaymentLink from '../../validation/isPaymentLink'
 
 const MINIMUM_API_VALUE = 100
 
@@ -63,6 +64,7 @@ class SidebarContainer extends React.Component {
       // More details in issue #1159
       // anticipationLimit,
       balance,
+      companyType,
       onWithdraw,
       t,
       transfersPricing,
@@ -72,6 +74,7 @@ class SidebarContainer extends React.Component {
     const available = getFrombalance('available')
 
     const minimumWithdrawalValue = transfersPricing.ted + MINIMUM_API_VALUE
+    const isCompanyNotPaymentLink = !!companyType && !isPaymentLink(companyType)
 
     return (
       <SidebarSections
@@ -80,6 +83,7 @@ class SidebarContainer extends React.Component {
             action: onWithdraw,
             actionTitle: t('pages.sidebar.withdraw'),
             disabled: available <= minimumWithdrawalValue,
+            showButton: isCompanyNotPaymentLink,
             title: t('pages.sidebar.available'),
             value: <span><small>{t('pages.sidebar.currency_symbol')}</small> {formatDecimalCurrency(available)}</span>,
           },
@@ -95,6 +99,7 @@ class SidebarContainer extends React.Component {
     } = this.state
     const {
       companyName,
+      companyType,
       links,
       logo: Logo,
       onLinkClick,
@@ -183,7 +188,7 @@ class SidebarContainer extends React.Component {
             />
           ))}
         </SidebarLinks>
-        {!collapsed
+        {!collapsed && !isPaymentLink(companyType)
           && (
             <Flexbox
               className={style.backToOldVersion}
@@ -221,6 +226,7 @@ SidebarContainer.propTypes = {
     waitingFunds: PropTypes.number,
   }).isRequired,
   companyName: PropTypes.string,
+  companyType: PropTypes.string,
   links: PropTypes.arrayOf(PropTypes.shape({
     active: PropTypes.bool,
     component: isValidElement,
@@ -245,6 +251,7 @@ SidebarContainer.defaultProps = {
   // More details in issue #1159
   // anticipationLimit: null,
   companyName: '',
+  companyType: '',
   onWithdraw: null,
   sessionId: '',
   transfersPricing: {},

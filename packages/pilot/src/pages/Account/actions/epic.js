@@ -44,7 +44,13 @@ import store from '../../../configureStore'
 
 import { WITHDRAW_RECEIVE } from '../../Withdraw/actions'
 import { receiveError } from '../../ErrorBoundary'
-import { activeCompanyLogin, inactiveCompanyLogin } from '../../../vendor/googleTagManager'
+import {
+  activeCompanyLogin,
+  paymentLinkCompanyLogin,
+  inactiveCompanyLogin,
+} from '../../../vendor/googleTagManager'
+
+import isPaymentLink from '../../../validation/isPaymentLink'
 
 const isActiveCompany = propEq('status', 'active')
 const isSelfRegister = propEq('type', 'self_register')
@@ -59,7 +65,6 @@ const hasDashboardAccess = ifElse(
   path(['client', 'authentication', 'allow_dashboard_login']),
   allPass([
     pathNotEq(['company', 'type'], 'mei'),
-    pathNotEq(['company', 'type'], 'payment_link_app'),
   ])
 )
 
@@ -147,22 +152,6 @@ const accountEpic = action$ => action$
     })
   )
 
-const verifyEnvironmentPermission = (company) => {
-  if (
-    env === 'live'
-    && isSelfRegister(company)
-    && isPendingRiskAnalysis(company)
-  ) {
-    throw new Error('Pending risk analysis')
-  }
-
-  if (env === 'live' && !isActiveCompany(company)) {
-    throw new Error('Unauthorized environment')
-  }
-
-  return company
-}
-
 const companyEpic = (action$, state$) => action$.pipe(
   ofType(ACCOUNT_RECEIVE),
   mergeMap(({ error, payload }) => {
@@ -174,7 +163,6 @@ const companyEpic = (action$, state$) => action$.pipe(
     }
 
     return client.company.current()
-      .then(verifyEnvironmentPermission)
       .catch(errorPayload => ({
         error: true,
         payload: errorPayload,
@@ -246,7 +234,11 @@ const companyEpic = (action$, state$) => action$.pipe(
     ])
 
     if (status === 'active') {
-      activeCompanyLogin()
+      if (isPaymentLink(type)) {
+        paymentLinkCompanyLogin()
+      } else {
+        activeCompanyLogin()
+      }
     } else {
       inactiveCompanyLogin()
     }
@@ -277,6 +269,43 @@ const recipientBalanceEpic = (action$, state$) => action$.pipe(
   map(receiveRecipientBalance)
 )
 
+const verifyEnvironmentPermission = (company) => {
+  if (
+    env === 'live'
+    && isSelfRegister(company)
+    && isPendingRiskAnalysis(company)
+  ) {
+    throw new Error('Pending risk analysis')
+  }
+
+  if (env === 'live' && !isActiveCompany(company)) {
+    throw new Error('Unauthorized environment')
+  }
+
+  return company
+}
+
+const onCompanyReceive = action$ => action$.pipe(
+  ofType(COMPANY_RECEIVE),
+  mergeMap(({ payload }) => {
+    try {
+      return rxOf(verifyEnvironmentPermission(payload))
+    } catch (error) {
+      return rxOf({
+        error: true,
+        payload: error,
+      })
+    }
+  }),
+  mergeMap((action) => {
+    if (action.error) {
+      return rxOf(receiveError(action.payload))
+    }
+
+    return rxOf(action)
+  })
+)
+
 const logoutEpic = (action$, state$) => action$.pipe(
   ofType(LOGOUT_REQUEST),
   mergeMap(() => {
@@ -301,5 +330,6 @@ export default combineEpics(
   accountEpic,
   companyEpic,
   recipientBalanceEpic,
+  onCompanyReceive,
   logoutEpic
 )

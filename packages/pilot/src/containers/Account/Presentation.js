@@ -4,11 +4,8 @@ import classNames from 'classnames'
 
 import {
   Button,
-  Spacing,
 } from 'former-kit'
 
-import IconGithub from 'emblematic-icons/svg/Github20.svg'
-import IconTest from 'emblematic-icons/svg/TestAmbientOn24.svg'
 import IconBack from 'emblematic-icons/svg/ChevronBack32.svg'
 
 import styles from './style.css'
@@ -79,25 +76,6 @@ const PresentationContainer = ({
         )
       }
 
-      {!shouldShowCopyright && environment === 'live'
-        && (
-          <div>
-            <a
-              href={environmentUrl}
-              className={classNames(styles.goToTest, styles.uppercase)}
-            >
-              <IconTest height={60} width={60} />
-              <Spacing size="small" />
-              {t('landing.live.back_link')}
-              &nbsp;
-              <strong>
-                {t('landing.live.back_link_emphasis')}
-              </strong>
-            </a>
-          </div>
-        )
-      }
-
       {!shouldShowCopyright && environment === 'test'
         && (
           <div>
@@ -112,12 +90,6 @@ const PresentationContainer = ({
           </div>
         )
       }
-
-      <div>
-        <a href="https://github.com/pagarme/pilot" className={styles.githubLink}>
-          <IconGithub height={24} width={21} />
-        </a>
-      </div>
     </div>
   </div>
 )
