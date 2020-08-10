@@ -1,20 +1,13 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import Form from 'react-vanilla-form'
-import { Button } from 'former-kit'
-import styled from 'styled-components'
+import { Alert, Button, FormInput } from 'former-kit'
+import IconError from 'emblematic-icons/svg/CloseCircle32.svg'
 
 import required from '../../../validation/required'
 import PasswordInput from '../../../components/PasswordInput'
-import Alert from '../ui/Alert'
-import Input from '../ui/Input'
 import styles from '../style.css'
-
-const ActionsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-top: 18px;
-`
 
 const PasswordRecoveryReset = ({
   errors,
@@ -53,23 +46,24 @@ const PasswordRecoveryReset = ({
             t={t}
             validations={validations}
           />
-          <div className={styles.passwordBox}>
-            <Input
-              disabled={loading}
-              label={t('password_confirm')}
-              type="password"
-              id="passwordConfirm"
-              name="passwordConfirm"
-              placeholder="•••••••••••••"
-            />
-          </div>
+          <FormInput
+            disabled={loading}
+            label={t('password_confirm')}
+            type="password"
+            id="passwordConfirm"
+            name="passwordConfirm"
+            placeholder="•••••••••••••"
+          />
         </div>
         {errors && errors.api && (
-        <Alert severity="error">
+        <Alert
+          type="error"
+          icon={<IconError height={16} width={16} />}
+        >
           {errors.api}
         </Alert>
         )}
-        <ActionsContainer>
+        <div className={styles.confirmButton}>
           <Button
             disabled={loading}
             loading={loading}
@@ -78,11 +72,11 @@ const PasswordRecoveryReset = ({
           >
             {t('pages.password_reset.reset_action')}
           </Button>
-        </ActionsContainer>
+        </div>
         <div className={styles.bottomMessage}>
-          <a className={styles.link} href="#/account/login">
+          <Link className={styles.link} to="/account/login">
             {t('back_login_action')}
-          </a>
+          </Link>
         </div>
       </Form>
     </>

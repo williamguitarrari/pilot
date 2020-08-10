@@ -19,6 +19,7 @@ const Confirmation = ({
     </span>
     <div className={styles.hugeButton}>
       <Button
+        fullWidth
         onClick={onBackToLogin}
         size="huge"
       >

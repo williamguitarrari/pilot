@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { MemoryRouter } from 'react-router-dom'
 import { validate } from 'p4g4rm3'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
@@ -79,6 +80,7 @@ const LivePresentation = (
 
 storiesOf('Pages|Login', module)
   .addDecorator(withA11y)
+  .addDecorator(getStory => <MemoryRouter>{getStory()}</MemoryRouter>)
   .add('Login Live', () => (
     <Account
       logo={Placeholder}

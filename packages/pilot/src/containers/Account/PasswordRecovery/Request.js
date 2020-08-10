@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import Form from 'react-vanilla-form'
-import { Button } from 'former-kit'
-import Input from '../ui/Input'
+import { Button, FormInput } from 'former-kit'
 
 import isEmail from '../../../validation/email'
 
@@ -26,10 +26,10 @@ const PasswordRecoveryRequest = ({
       }}
     >
       <div className={styles.formContent}>
-        <Input
+        <FormInput
           disabled={loading}
-          placeholder="seuemail@provedor.com.br"
-          label="Email"
+          placeholder={t('email_placeholder')}
+          label={t('email')}
           id="name"
           name="email"
           type="email"
@@ -40,15 +40,16 @@ const PasswordRecoveryRequest = ({
           disabled={loading}
           size="huge"
           type="submit"
+          fullWidth
         >
           {t('pages.password_recovery.recovery_action')}
         </Button>
       </div>
     </Form>
     <div className={styles.bottomMessage}>
-      <a className={styles.link} href="#/account/login">
+      <Link className={styles.link} to="/account/login">
         {t('back_login_action')}
-      </a>
+      </Link>
     </div>
   </>
 )

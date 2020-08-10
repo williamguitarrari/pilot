@@ -31,7 +31,7 @@ import {
 import { translate } from 'react-i18next'
 import moment from 'moment-timezone'
 import { Alert } from 'former-kit'
-import IconInfo from 'emblematic-icons/svg/Info32.svg'
+import IconInfo from 'emblematic-icons/svg/InfoCircle32.svg'
 import {
   destroyAnticipation as destroyAnticipationAction,
   requestLimits,

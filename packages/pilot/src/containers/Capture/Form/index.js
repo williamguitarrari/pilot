@@ -15,7 +15,7 @@ import {
 } from 'former-kit'
 import { equals } from 'ramda'
 import Form from 'react-vanilla-form'
-import WarningIcon from 'emblematic-icons/svg/Warning32.svg'
+import WarningIcon from 'emblematic-icons/svg/ExclamationCircle32.svg'
 
 import Property from '../../../components/Property'
 import currency from '../../../formatters/currency'

@@ -8,7 +8,7 @@ import {
   Alert,
   Snackbar,
 } from 'former-kit'
-import IconInfo from 'emblematic-icons/svg/Info32.svg'
+import IconInfo from 'emblematic-icons/svg/InfoCircle32.svg'
 import IconClose from 'emblematic-icons/svg/ClearClose32.svg'
 
 import {

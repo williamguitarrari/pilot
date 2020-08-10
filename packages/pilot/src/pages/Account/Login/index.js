@@ -50,10 +50,6 @@ const enhanced = compose(
   withRouter
 )
 
-const handleChangeEnvironment = () => {
-  window.location.href = oppositeEnvironmentUrl
-}
-
 class LoginPage extends PureComponent {
   constructor () {
     super()
@@ -81,7 +77,7 @@ class LoginPage extends PureComponent {
         loading={loading}
         onLogin={onLogin}
         onPasswordRecovery={this.handlePasswordRecovery}
-        onChangeEnvironment={handleChangeEnvironment}
+        oppositeEnvironmentUrl={oppositeEnvironmentUrl}
         t={t}
       />
     )

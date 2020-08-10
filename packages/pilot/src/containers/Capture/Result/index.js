@@ -11,7 +11,7 @@ import {
   Spacing,
   Truncate,
 } from 'former-kit'
-import IconError from 'emblematic-icons/svg/ClearClose32.svg'
+import IconError from 'emblematic-icons/svg/CloseCircle32.svg'
 import SuccessIllustration from './success.svg'
 import Property from '../../../components/Property'
 import currency from '../../../formatters/currency'

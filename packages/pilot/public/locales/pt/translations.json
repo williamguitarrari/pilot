@@ -55,6 +55,7 @@
     "today": "Hoje"
   },
   "email": "E-mail",
+  "email_placeholder": "seuemail@provedor.com.br",
   "empty_password": "Senha não informada",
   "enter_password": "Digite sua senha",
   "error": "Erro",
@@ -176,7 +177,7 @@
     "logo": "FormerKit",
     "live": {
       "about_title": "Conheça a nova dashboard do Pagar.me!",
-      "about_dashboard": "A nova dashboard chegou para facilitar ainda mais a sua vida, com elavocê visualiza métricas da sua operação, exporta relatórios, cria links de pagamento e muito mais.",
+      "about_dashboard": "A nova dashboard chegou para facilitar ainda mais a sua vida, com ela você visualiza métricas da sua operação, exporta relatórios, cria links de pagamento e muito mais.",
       "back_button": "Acessar ambiente de testes"
     },
     "login_call": "Faça login para acessar sua conta",
@@ -1255,7 +1256,7 @@
       "wrong_pass": "Senha inválida"
     },
     "password_recovery": {
-      "confirmation": "Em alguns instantes você receberá um emailcom as instruções para redefinir sua senha.",
+      "confirmation": "Em alguns instantes você receberá um email com as instruções para redefinir sua senha.",
       "confirmation_emphasis": "Prontinho!",
       "recovery_call": "Informe o endereço de email utilizado no cadastro, vamos te encaminhar um email de redefinição de senha",
       "recovery_action": "Enviar"

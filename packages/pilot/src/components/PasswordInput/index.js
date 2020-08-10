@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import { contains } from 'ramda'
 import {
+  FormInput,
   Popover,
   PopoverContent,
 } from 'former-kit'
 
-import Input from '../../containers/Account/ui/Input'
 import style from './style.css'
 
 const getStrengthClassnames = ({ isValid, score }) => classnames({
@@ -48,6 +48,7 @@ const renderPopoverContent = (t, validations) => {
 }
 
 const PasswordInput = ({
+  base,
   disabled,
   error,
   label,
@@ -55,7 +56,6 @@ const PasswordInput = ({
   onBlur,
   onChange,
   onFocus,
-  placeholder,
   placement,
   showPopover,
   t,
@@ -64,6 +64,7 @@ const PasswordInput = ({
 }) => (
   <div className={style.container}>
     <Popover
+      base={base}
       content={renderPopoverContent(t, validations)}
       closeWhenClickOutside={false}
       onClick={onFocus}
@@ -71,15 +72,16 @@ const PasswordInput = ({
       placement={placement}
       visible={showPopover}
     >
-      <Input
+      <FormInput
+        base={base}
         disabled={disabled}
         error={error}
         label={label}
         name={name}
-        id={name}
+        onBlur={onBlur}
         onChange={onChange}
+        onFocus={onFocus}
         type="password"
-        placeholder={placeholder}
         value={value}
       />
     </Popover>
@@ -87,6 +89,9 @@ const PasswordInput = ({
 )
 
 PasswordInput.propTypes = {
+  base: PropTypes.oneOf([
+    'dark', 'light',
+  ]),
   disabled: PropTypes.bool,
   error: PropTypes.string,
   label: PropTypes.string.isRequired,
@@ -94,7 +99,6 @@ PasswordInput.propTypes = {
   onBlur: PropTypes.func.isRequired,
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
-  placeholder: PropTypes.string.isRequired,
   placement: PropTypes.string,
   showPopover: PropTypes.bool,
   t: PropTypes.func.isRequired,
@@ -109,6 +113,7 @@ PasswordInput.propTypes = {
 }
 
 PasswordInput.defaultProps = {
+  base: null,
   disabled: false,
   error: '',
   name: '',

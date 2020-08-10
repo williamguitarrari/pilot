@@ -7,7 +7,7 @@ import {
   Col,
   Row,
 } from 'former-kit'
-import IconInfo from 'emblematic-icons/svg/Info32.svg'
+import IconInfo from 'emblematic-icons/svg/InfoCircle32.svg'
 import style from './style.css'
 
 import getRefuseLabel from '../../../models/refuseLabels'

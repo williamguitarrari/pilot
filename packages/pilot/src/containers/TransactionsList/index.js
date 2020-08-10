@@ -4,7 +4,7 @@ import moment from 'moment-timezone'
 
 import IconChart from 'emblematic-icons/svg/TrendingUp32.svg'
 import IconTable from 'emblematic-icons/svg/Menu32.svg'
-import IconWarning from 'emblematic-icons/svg/Warning32.svg'
+import IconWarning from 'emblematic-icons/svg/ExclamationCircle32.svg'
 import Search32 from 'emblematic-icons/svg/Search32.svg'
 import Calendar32 from 'emblematic-icons/svg/Calendar32.svg'
 import Download32 from 'emblematic-icons/svg/Download32.svg'

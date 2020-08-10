@@ -11,8 +11,8 @@ import {
   ModalActions,
   RadioGroup,
 } from 'former-kit'
-import IconWarning from 'emblematic-icons/svg/Warning32.svg'
-import IconInfo from 'emblematic-icons/svg/Info32.svg'
+import IconWarning from 'emblematic-icons/svg/ExclamationCircle32.svg'
+import IconInfo from 'emblematic-icons/svg/InfoCircle32.svg'
 import Close from 'emblematic-icons/svg/ClearClose32.svg'
 
 import emailValidation from '../../../../../validation/email'

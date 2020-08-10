@@ -12,7 +12,7 @@ import {
   Grid,
   Row,
 } from 'former-kit'
-import IconChecked from 'emblematic-icons/svg/Check32.svg'
+import IconChecked from 'emblematic-icons/svg/CheckCircle32.svg'
 import IconExtract from 'emblematic-icons/svg/Extract24.svg'
 
 import DataDisplay from '../../../components/DataDisplay'

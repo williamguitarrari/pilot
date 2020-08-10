@@ -1,31 +1,15 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import Form from 'react-vanilla-form'
-import styled from 'styled-components'
-import { Button } from 'former-kit'
-import Alert from '../ui/Alert'
-import Input from '../ui/Input'
+import { Alert, Button, FormInput } from 'former-kit'
+import IconError from 'emblematic-icons/svg/CloseCircle32.svg'
 
 import PasswordInput from '../../../components/PasswordInput'
 import required from '../../../validation/required'
 
+import styles from '../style.css'
+
 const isRequired = t => required(t('sign_up.required'))
-
-const SignupFormContainer = styled.div`
-  & > div {
-    margin-bottom: 36px;
-  }
-
-  & > div:last-of-type {
-    margin-bottom: 18px;
-  }
-`
-
-const ActionsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-top: 18px;
-`
 
 const SignUpInvite = ({
   email,
@@ -50,14 +34,14 @@ const SignUpInvite = ({
       onSubmit={onSubmit}
       data={{ email }}
     >
-      <SignupFormContainer>
-        <Input
+      <div className={styles.formContent}>
+        <FormInput
           disabled
           label={t('email')}
           name="email"
           type="email"
         />
-        <Input
+        <FormInput
           disabled={loading}
           label={t('sign_up.name')}
           name="name"
@@ -73,19 +57,22 @@ const SignUpInvite = ({
           t={t}
           validations={passwordValidations}
         />
-        <Input
+        <FormInput
           disabled={loading}
           label={t('password_confirm')}
           name="passwordConfirm"
           type="password"
         />
-      </SignupFormContainer>
+      </div>
       { errors && errors.api && (
-      <Alert severity="error">
+      <Alert
+        type="error"
+        icon={<IconError height={16} width={16} />}
+      >
         {errors.api}
       </Alert>
       )}
-      <ActionsContainer>
+      <div className={styles.confirmButton}>
         <Button
           disabled={loading}
           type="submit"
@@ -93,7 +80,7 @@ const SignUpInvite = ({
         >
           {t('sign_up.sign_up_action')}
         </Button>
-      </ActionsContainer>
+      </div>
     </Form>
   )
 }

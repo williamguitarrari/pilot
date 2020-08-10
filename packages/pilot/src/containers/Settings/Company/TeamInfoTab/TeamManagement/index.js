@@ -11,8 +11,8 @@ import {
 
 import IconTeam from 'emblematic-icons/svg/Sellers32.svg'
 import IconAdd from 'emblematic-icons/svg/Add24.svg'
-import IconWarning from 'emblematic-icons/svg/Warning32.svg'
-import IconInfo from 'emblematic-icons/svg/Info32.svg'
+import IconWarning from 'emblematic-icons/svg/ExclamationCircle32.svg'
+import IconInfo from 'emblematic-icons/svg/InfoCircle32.svg'
 import AddNewUserModal from './AddNewUserModal'
 import UserTable from './UserTable'
 

@@ -36,32 +36,32 @@ const AccountArea = ({ t }) => (
       >
         <Switch>
           <Route
+            component={Login}
             path="/account/login"
-            render={() => <Login />}
           />
           <Route
+            component={PasswordRecoveryConfirmation}
             path="/account/password/recovery/confirmation"
-            render={() => <PasswordRecoveryConfirmation />}
           />
           <Route
+            component={PasswordRecovery}
             path="/account/password/recovery"
-            render={() => <PasswordRecovery />}
           />
           <Route
+            component={PasswordResetConfirmation}
             path="/account/password/reset/confirmation"
-            render={() => <PasswordResetConfirmation />}
           />
           <Route
+            component={PasswordReset}
             path="/account/password/reset/:token"
-            render={() => <PasswordReset />}
           />
           <Route
+            component={UserSignUpConfirmation}
             path="/account/signup/invite/confirmation"
-            render={() => <UserSignUpConfirmation />}
           />
           <Route
+            component={UserSignUp}
             path="/account/signup/invite"
-            render={() => <UserSignUp />}
           />
           <Redirect to="/account/login" />
         </Switch>

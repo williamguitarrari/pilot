@@ -2,19 +2,32 @@
 @import "former-kit-skin-pagarme/dist/styles/spacing.css";
 @import "former-kit-skin-pagarme/dist/styles/typography.css";
 
+.confirmButton {
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--spacing-small);
+}
+
+.forgotPassword {
+  align-self: flex-end;
+  font-size: 14px;
+  margin-top: var(--spacing-tiny);
+}
+
 .formContent {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  padding-bottom: var(--spacing-small);
+
+  & > div:not(:last-child) {
+    padding-bottom: var(--spacing-large);
+  }
 }
 
 .hugeButton {
   flex: 1;
   margin-top: var(--spacing-large);
-}
-
-.hugeButton button {
-  width: 100%;
 }
 
 .link {
@@ -63,7 +76,7 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  width: 361px;
+  width: 360px;
 
   @media (max-width: 400px) {
     width: 90%;
@@ -80,15 +93,12 @@
   font-size: 14px;
 }
 
-.changeEnvButton button {
-  width: 100%;
+.changeEnvButton {
   margin-top: 104px;
 }
 
-.passwordBox {
-  position: relative;
-  margin-top: 36px;
-  margin-bottom: 18px;
+.changeEnvButton:hover {
+  text-decoration: none;
 }
 
 .confirmationMessage,
