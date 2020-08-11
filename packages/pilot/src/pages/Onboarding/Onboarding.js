@@ -28,9 +28,6 @@ import {
   postOnboardingAnswer as postOnboardingAnswerAction,
   destroyOnboardingAnswer as destroyOnboardingAnswerAction,
 } from './actions'
-import {
-  resetOnboardingAnswers as resetOnboardingAnswersAction,
-} from '../EmptyState/actions'
 import FakeLoader from '../../components/FakeLoader'
 
 const getUserFirstName = pipe(prop('name'), split(' '), head)
@@ -68,7 +65,6 @@ const mapDispatchToProps = {
   destroyOnboardingAnswer: destroyOnboardingAnswerAction,
   postOnboardingAnswer: postOnboardingAnswerAction,
   requestOnboardingQuestion: requestOnboardingQuestionAction,
-  resetOnboardingAnswers: resetOnboardingAnswersAction,
 }
 
 const enhanced = compose(
@@ -93,12 +89,11 @@ const Onboarding = ({
   postOnboardingAnswer,
   question,
   requestOnboardingQuestion,
-  resetOnboardingAnswers,
   t,
   userId,
   userName,
 }) => {
-  const [showFakeLoader, setShowFakeLoader] = useState(false)
+  const [lastAnswerSubmited, setLastAnswerSubmited] = useState(null)
 
   const machineContext = machineContextFactory(onboardingAnswers)
   const onboardingMachine = onboardingMachineFactory(machineContext)
@@ -126,8 +121,8 @@ const Onboarding = ({
       questionId,
     } = settingsByQuestion[currentQuestion]
 
-    if (!deadEnd) {
-      postOnboardingAnswer({
+    if (finalStep) {
+      return setLastAnswerSubmited({
         answer,
         others,
         question_id: questionId,
@@ -135,9 +130,13 @@ const Onboarding = ({
       })
     }
 
-    if (finalStep) {
-      resetOnboardingAnswers()
-      return setShowFakeLoader(true)
+    if (!deadEnd) {
+      postOnboardingAnswer({
+        answer,
+        others,
+        question_id: questionId,
+        user_id: userId,
+      })
     }
 
     return sendEvent('NEXT', { answer })
@@ -162,14 +161,16 @@ const Onboarding = ({
   const shouldRedirectToHome = isNil(onboardingAnswers)
     || onboardingAlreadyFinished
 
-  if (shouldRedirectToHome && !showFakeLoader) {
+  if (shouldRedirectToHome && !lastAnswerSubmited) {
     return <Redirect to="/home" />
   }
 
-  if (showFakeLoader) {
+  if (lastAnswerSubmited) {
     return (
       <FakeLoader
-        runAfterLoader={() => push('/home')}
+        runAfterLoader={() => {
+          postOnboardingAnswer(lastAnswerSubmited)
+        }}
         t={t}
       />
     )
@@ -201,7 +202,6 @@ Onboarding.propTypes = {
   postOnboardingAnswer: PropTypes.func.isRequired,
   question: PropTypes.shape(),
   requestOnboardingQuestion: PropTypes.func.isRequired,
-  resetOnboardingAnswers: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
   userId: PropTypes.string,
   userName: PropTypes.string,

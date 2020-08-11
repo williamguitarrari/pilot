@@ -25,9 +25,11 @@ import Account from './Account'
 import ChooseDashboard from './ChooseDashboard'
 import LoggedArea from './LoggedArea'
 import Onboarding from './Onboarding/Onboarding'
+import Loader from '../components/Loader'
 
 import environment from '../environment'
 import { page as appcuesPage } from '../vendor/appcues'
+import { shouldSkipOnboarding } from './EmptyState/reducer'
 
 const mapStateToProps = ({
   account: {
@@ -36,10 +38,13 @@ const mapStateToProps = ({
     sessionId,
     user,
   },
+  welcome,
 }) => ({
   client,
   company,
+  loadingOnboardingAnswers: welcome.loading,
   sessionId,
+  skipOnboarding: shouldSkipOnboarding({ company, welcome }),
   user,
 })
 
@@ -64,7 +69,6 @@ const shouldSelectDashboard = () => {
   const choiceExpiresAt = localStorage.getItem('dashboardChoiceExpiresAt')
   return moment(choiceExpiresAt).isBefore(moment())
 }
-
 class Root extends Component {
   componentDidMount () {
     const {
@@ -107,11 +111,13 @@ class Root extends Component {
       client,
       company,
       history,
+      loadingOnboardingAnswers,
       location: {
         pathname: path,
         search: queryString,
       },
       sessionId,
+      skipOnboarding,
       user,
     } = this.props
 
@@ -138,8 +144,14 @@ class Root extends Component {
       return null
     }
 
-    if (!user || !company) {
-      return null
+    if (!user || !company || loadingOnboardingAnswers) {
+      return (
+        <Loader
+          opaqueBackground
+          position="absolute"
+          visible
+        />
+      )
     }
 
     if (user && startsWith('/choose-dashboard', path)) {
@@ -159,8 +171,8 @@ class Root extends Component {
       return window.open(`https://dashboard.pagar.me/#login?session_id=${sessionId}&redirect_to=dashboard.home&environment=${environment}`, '_self')
     }
 
-    if (user && startsWith('/onboarding', path)) {
-      return <Route path="/onboarding" component={Onboarding} />
+    if (!skipOnboarding) {
+      return <Onboarding />
     }
 
     return <LoggedArea />
@@ -174,12 +186,14 @@ Root.propTypes = {
     listen: PropTypes.func,
     replace: PropTypes.func,
   }).isRequired,
+  loadingOnboardingAnswers: PropTypes.bool.isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string,
     search: PropTypes.string,
   }).isRequired,
   requestLogin: PropTypes.func.isRequired,
   sessionId: PropTypes.string,
+  skipOnboarding: PropTypes.bool.isRequired,
   user: PropTypes.object, // eslint-disable-line
 }
 

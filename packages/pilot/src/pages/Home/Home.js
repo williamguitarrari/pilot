@@ -62,8 +62,8 @@ import HomeContainer from '../../containers/Home'
 import icons from '../../models/icons'
 import IndicatorTooltip from '../../components/HomeIndicatorTooltip'
 import statusLegends from '../../models/statusLegends'
-import isRecentlyCreatedUser from '../../validation/recentCreatedUser'
 import isCompanyPaymentLink from '../../validation/isPaymentLink'
+import isRecentlyCreatedCompany from '../../validation/recentCreatedCompany'
 
 import {
   Message,
@@ -509,7 +509,7 @@ const Home = ({
   useEffect(() => {
     if (!isNilOrEmpty(company)
       && !isCompanyPaymentLink(company)
-      && isRecentlyCreatedUser({ company, user })
+      && isRecentlyCreatedCompany({ company })
       && userNotHidEmptyState()
     ) {
       replace('/welcome')

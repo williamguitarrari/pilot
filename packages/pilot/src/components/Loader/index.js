@@ -5,24 +5,25 @@ import style from './style.css'
 import Transition from '../Transition'
 import Spinner from '../Spinner'
 
-const createOverlayStyle = position => classNames(
-  style.highZIndex,
+const createOverlayStyle = (opaqueBackground, position) => classNames(
   style.overlay,
-  style[position]
+  style[position],
+  { [style.opaqueBackground]: opaqueBackground }
 )
 
 const Loader = ({
+  opaqueBackground,
   position,
   visible,
 }) => (
   <Transition
     atActive={{
       opacity: 1,
-      zIndex: 10,
+      zIndex: 100,
     }}
     atEnter={{
       opacity: 0.3,
-      zIndex: 10,
+      zIndex: 100,
     }}
     atLeave={{
       opacity: 0,
@@ -38,7 +39,9 @@ const Loader = ({
     {visible
       && (
         <div
-          className={classNames(createOverlayStyle(position), style.spinner)}
+          className={classNames(createOverlayStyle(
+            opaqueBackground, position
+          ), style.spinner)}
           key="overlay"
         >
           <Spinner />
@@ -49,11 +52,13 @@ const Loader = ({
 )
 
 Loader.propTypes = {
+  opaqueBackground: PropTypes.bool,
   position: PropTypes.oneOf(['fixed', 'absolute', 'relative']),
   visible: PropTypes.bool,
 }
 
 Loader.defaultProps = {
+  opaqueBackground: false,
   position: 'fixed',
   visible: false,
 }
