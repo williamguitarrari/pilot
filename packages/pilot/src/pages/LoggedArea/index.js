@@ -11,7 +11,11 @@ import { translate } from 'react-i18next'
 import {
   applySpec,
   compose,
+  find,
   path,
+  pipe,
+  prop,
+  propEq,
   values,
 } from 'ramda'
 import { Layout } from 'former-kit'
@@ -55,6 +59,12 @@ const enhanced = compose(
   connect(mapStateToProps)
 )
 
+const getDefaultRoutePath = pipe(
+  values,
+  find(propEq('defaultRoute', true)),
+  prop('path')
+)
+
 const LoggedArea = ({
   // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
   // It was commented on to remove the anticipation limits call on Balance page
@@ -74,6 +84,8 @@ const LoggedArea = ({
     environment,
     user,
   })
+
+  const defaultRoute = getDefaultRoutePath(routes)
 
   return (
     <Layout
@@ -119,7 +131,7 @@ const LoggedArea = ({
                 component={component}
               />
             ))}
-            <Redirect to="/home" />
+            <Redirect to={defaultRoute} />
           </Switch>
         </Suspense>
       </ErrorBoundary>
