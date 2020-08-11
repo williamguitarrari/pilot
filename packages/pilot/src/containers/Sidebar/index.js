@@ -4,6 +4,8 @@ import {
   always,
   equals,
   ifElse,
+  prop,
+  sortBy,
 } from 'ramda'
 
 import {
@@ -127,7 +129,7 @@ const SidebarContainer = ({
       }
 
       <SidebarLinks>
-        {links.map(({
+        {sortBy(prop('relevance'), links).map(({
           active,
           exact,
           icon: Icon,
