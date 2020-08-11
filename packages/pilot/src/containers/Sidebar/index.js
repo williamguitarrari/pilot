@@ -40,6 +40,7 @@ const SidebarContainer = ({
   logo: Logo,
   onLinkClick,
   onWithdraw,
+  showBalance,
   t,
   transfersPricing,
 }) => {
@@ -90,15 +91,19 @@ const SidebarContainer = ({
           <SidebarSummary
             collapsed={summaryCollapsed}
             onClick={handleToggleSummary}
-            subtitle={summarySubtitle}
+            subtitle={
+              showBalance
+                ? summarySubtitle
+                : ''
+            }
             title={companyName}
           >
-            {renderSections()}
+            {showBalance && renderSections()}
           </SidebarSummary>
         )
       }
 
-      {collapsed
+      {showBalance && collapsed
         && (
           <Popover
             base="dark"
@@ -164,6 +169,7 @@ SidebarContainer.propTypes = {
   logo: PropTypes.func.isRequired,
   onLinkClick: PropTypes.func.isRequired,
   onWithdraw: PropTypes.func,
+  showBalance: PropTypes.bool,
   t: PropTypes.func.isRequired,
   transfersPricing: PropTypes.shape({
     ted: PropTypes.number,
@@ -179,6 +185,7 @@ SidebarContainer.defaultProps = {
   companyName: '',
   companyType: '',
   onWithdraw: null,
+  showBalance: false,
   transfersPricing: {},
 }
 
