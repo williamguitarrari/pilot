@@ -42,6 +42,7 @@ const sidebarRoutes = {
     exact: true,
     icon: Home32,
     path: '/home',
+    relevance: 0,
     title: 'pages.home.title',
   },
   balance: {
@@ -49,6 +50,7 @@ const sidebarRoutes = {
     exact: true,
     icon: HeartRate32,
     path: '/balance/:id?',
+    relevance: 1,
     title: 'pages.balance.title',
   },
   transactions: {
@@ -56,6 +58,7 @@ const sidebarRoutes = {
     exact: true,
     icon: Checkout32,
     path: '/transactions',
+    relevance: 2,
     title: 'pages.transactions.title',
   },
   paymentLinks: {
@@ -63,6 +66,7 @@ const sidebarRoutes = {
     exact: true,
     hidden: false,
     path: '/payment-links',
+    relevance: 3,
     title: 'pages.payment_links.title',
     icon: Link32,
   },
@@ -71,6 +75,7 @@ const sidebarRoutes = {
     exact: true,
     icon: Wrench32,
     path: '/settings',
+    relevance: 5,
     title: 'pages.settings.company.menu',
   },
 }
@@ -127,6 +132,7 @@ const recipientsRoutes = {
     hidden: false,
     icon: Anticipation32,
     path: '/recipients',
+    relevance: 4,
     title: 'pages.recipients.title',
   },
   recipientsAdd: {
