@@ -19,14 +19,15 @@ const SidebarSummary = ({
       [style.expanded]: !collapsed,
     })}
   >
+    <span className={style.title}>
+      {title}
+    </span>
     <button
-      className={style.title}
+      className={style.button}
       onClick={onClick}
       role="link"
       type="button"
     >
-      {title}
-
       {subtitle
         && (
           <span className={style.subtitle}>
