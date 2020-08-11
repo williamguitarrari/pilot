@@ -11,7 +11,6 @@ import {
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
-import routes from './routes'
 import { requestLogout } from '../Account/actions/actions'
 import isCompanyPaymentLink from '../../validation/isPaymentLink'
 import isNilOrEmpty from '../../validation/isNilOrEmpty'
@@ -48,6 +47,7 @@ const Header = ({
     pathname,
   },
   onLogout,
+  routes,
   sessionId,
   t,
   user,
@@ -90,6 +90,14 @@ Header.propTypes = {
     pathname: PropTypes.string.isRequired,
   }).isRequired,
   onLogout: PropTypes.func.isRequired,
+  routes: PropTypes.shape({
+    accountSettings: PropTypes.shape({
+      path: PropTypes.string,
+    }),
+    emptyState: PropTypes.shape({
+      path: PropTypes.string,
+    }),
+  }).isRequired,
   sessionId: PropTypes.string,
   t: PropTypes.func.isRequired,
   user: PropTypes.shape({

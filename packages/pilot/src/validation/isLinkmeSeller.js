@@ -3,6 +3,7 @@ import {
   complement,
   pipe,
   prop,
+  propOr,
   propEq,
 } from 'ramda'
 
@@ -12,7 +13,7 @@ const isAdmin = propEq('permission', 'admin')
 
 const isLinkmeSeller = both(
   pipe(prop('company'), isPaymentLink),
-  pipe(prop('user'), complement(isAdmin))
+  pipe(propOr({}, 'user'), complement(isAdmin))
 )
 
 export default isLinkmeSeller

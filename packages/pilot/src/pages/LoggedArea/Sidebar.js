@@ -6,7 +6,6 @@ import {
   isNil,
   pipe,
   split,
-  values,
 } from 'ramda'
 
 import {
@@ -15,10 +14,9 @@ import {
 } from 'react-router-dom'
 
 import SidebarContainer from '../../containers/Sidebar'
-
-import routes from './routes'
-
 import Logo from '../../components/Logo'
+
+import isLinkmeSeller from '../../validation/isLinkmeSeller'
 
 const removeRouteParams = pipe(
   split(':'),
@@ -40,28 +38,29 @@ const Sidebar = ({
   // More details in issue #1159
   // anticipationLimit,
   balance,
-  companyCanCreateRecipient,
   companyName,
   companyType,
   history,
   location: { pathname },
   recipientId,
+  routes,
   sessionId,
   t,
   transfersPricing,
+  user,
 }) => (
   <SidebarContainer
     balance={balance}
     companyName={companyName}
     companyType={companyType}
-    links={values(routes)
-      .filter(({ hidden, validateVisibility }) => {
-        if (validateVisibility) {
-          return validateVisibility(companyCanCreateRecipient, companyType)
-        }
-
-        return !hidden
-      })
+    showBalance={!isLinkmeSeller({
+      company: {
+        type: companyType,
+      },
+      user,
+    })}
+    links={routes
+      .filter(({ hidden }) => !hidden)
       .map(route => ({
         ...route,
         active: pathname.includes(removeRouteParams(route.path)),
@@ -90,7 +89,6 @@ Sidebar.propTypes = {
   balance: PropTypes.shape({
     available: PropTypes.number,
   }).isRequired,
-  companyCanCreateRecipient: PropTypes.bool,
   companyName: PropTypes.string,
   companyType: PropTypes.string,
   history: PropTypes.shape({
@@ -100,10 +98,19 @@ Sidebar.propTypes = {
     pathname: PropTypes.string,
   }).isRequired,
   recipientId: PropTypes.string,
+  routes: PropTypes.arrayOf(
+    PropTypes.shape({
+      hidden: PropTypes.bool,
+      path: PropTypes.string,
+    })
+  ).isRequired,
   sessionId: PropTypes.string,
   t: PropTypes.func.isRequired,
   transfersPricing: PropTypes.shape({
     ted: PropTypes.number,
+  }),
+  user: PropTypes.shape({
+    permission: PropTypes.string,
   }),
 }
 
@@ -113,12 +120,12 @@ Sidebar.defaultProps = {
   // This code will be used again in the future when ATLAS project implements the anticipation flow
   // More details in issue #1159
   // anticipationLimit: null,
-  companyCanCreateRecipient: false,
   companyName: '',
   companyType: '',
   recipientId: null,
   sessionId: '',
   transfersPricing: {},
+  user: {},
 }
 
 export default withRouter(Sidebar)

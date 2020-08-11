@@ -12,6 +12,7 @@ import {
   applySpec,
   compose,
   path,
+  values,
 } from 'ramda'
 import { Layout } from 'former-kit'
 
@@ -19,19 +20,18 @@ import { ErrorBoundary } from '../ErrorBoundary'
 import Sidebar from './Sidebar'
 import Header from './Header'
 import Loader from '../../components/Loader'
-import env from '../../environment'
-import routes from './routes'
+import environment from '../../environment'
+import buildRoutes from './routes'
 
 // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
 // It was commented on to remove the anticipation limits call on Balance page
 // This code will be used again in the future when ATLAS project implements the anticipation flow
 // More details in issue #1159
 // const getAnticipationLimit = path(['anticipation', 'limits', 'max'])
-const getRecipientId = path(['account', 'company', 'default_recipient_id', env])
+const getRecipientId = path(['account', 'company', 'default_recipient_id', environment])
 const getBalance = path(['account', 'balance'])
-const getCompanyCanCreateRecipient = path(['account', 'company', 'marketplace', env, 'can_create_recipient'])
-const getCompanyName = path(['account', 'company', 'name'])
-const getCompanyType = path(['account', 'company', 'type'])
+const getCompany = path(['account', 'company'])
+const getAuthenticatedUser = path(['account', 'user'])
 const getAccountSessionId = path(['account', 'sessionId'])
 const getTransfersPricing = path(['account', 'company', 'pricing', 'transfers'])
 
@@ -42,12 +42,11 @@ const mapStateToProps = applySpec({
   // More details in issue #1159
   // anticipationLimit: getAnticipationLimit,
   balance: getBalance,
-  companyCanCreateRecipient: getCompanyCanCreateRecipient,
-  companyName: getCompanyName,
-  companyType: getCompanyType,
+  company: getCompany,
   recipientId: getRecipientId,
   sessionId: getAccountSessionId,
   transfersPricing: getTransfersPricing,
+  user: getAuthenticatedUser,
 })
 
 const enhanced = compose(
@@ -63,61 +62,70 @@ const LoggedArea = ({
   // More details in issue #1159
   // anticipationLimit,
   balance,
-  companyCanCreateRecipient,
-  companyName,
-  companyType,
+  company,
   recipientId,
   sessionId,
   t,
   transfersPricing,
-}) => (
-  <Layout
-    sidebar={(
-      <Sidebar
-        // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
-        // It was commented on to remove the anticipation limits call on Balance page
-        // This code will be used again in the future when ATLAS project implements the anticipation flow
-        // More details in issue #1159
-        // anticipationLimit={anticipationLimit}
-        companyCanCreateRecipient={companyCanCreateRecipient}
-        companyName={companyName}
-        companyType={companyType}
-        balance={balance}
-        recipientId={recipientId}
-        t={t}
-        transfersPricing={transfersPricing}
-      />
-    )}
-    header={(
-      <Header
-        t={t}
-        sessionId={sessionId}
-      />
-    )}
-  >
-    <ErrorBoundary>
-      <Suspense
-        fallback={(
-          <Loader
-            position="relative"
-            visible
-          />
-        )}
-      >
-        <Switch>
-          {Object.values(routes).map(({ component, path: pathURI }) => (
-            <Route
-              key={pathURI}
-              path={pathURI}
-              component={component}
+  user,
+}) => {
+  const routes = buildRoutes({
+    company,
+    environment,
+    user,
+  })
+
+  return (
+    <Layout
+      sidebar={(
+        <Sidebar
+          // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
+          // It was commented on to remove the anticipation limits call on Balance page
+          // This code will be used again in the future when ATLAS project implements the anticipation flow
+          // More details in issue #1159
+          // anticipationLimit={anticipationLimit}
+          companyName={prop('name', company)}
+          companyType={prop('type', company)}
+          balance={balance}
+          recipientId={recipientId}
+          t={t}
+          transfersPricing={transfersPricing}
+          user={user}
+          routes={values(routes)}
+        />
+      )}
+      header={(
+        <Header
+          t={t}
+          routes={routes}
+          sessionId={sessionId}
+        />
+      )}
+    >
+      <ErrorBoundary>
+        <Suspense
+          fallback={(
+            <Loader
+              position="relative"
+              visible
             />
-          ))}
-          <Redirect to="/home" />
-        </Switch>
-      </Suspense>
-    </ErrorBoundary>
-  </Layout>
-)
+          )}
+        >
+          <Switch>
+            {values(routes).map(({ component, path: pathURI }) => (
+              <Route
+                key={pathURI}
+                path={pathURI}
+                component={component}
+              />
+            ))}
+            <Redirect to="/home" />
+          </Switch>
+        </Suspense>
+      </ErrorBoundary>
+    </Layout>
+  )
+}
 
 LoggedArea.propTypes = {
   // This block of code is commented because of issue #1159 (https://github.com/pagarme/pilot/issues/1159)
@@ -128,14 +136,18 @@ LoggedArea.propTypes = {
   balance: PropTypes.shape({
     available: PropTypes.number,
   }),
-  companyCanCreateRecipient: PropTypes.bool,
-  companyName: PropTypes.string,
-  companyType: PropTypes.string,
+  company: PropTypes.shape({
+    name: PropTypes.string,
+    type: PropTypes.string,
+  }),
   recipientId: PropTypes.string,
   sessionId: PropTypes.string,
   t: PropTypes.func.isRequired,
   transfersPricing: PropTypes.shape({
     ted: PropTypes.number,
+  }),
+  user: PropTypes.shape({
+    permission: PropTypes.string,
   }),
 }
 
@@ -146,12 +158,11 @@ LoggedArea.defaultProps = {
   // More details in issue #1159
   // anticipationLimit: null,
   balance: {},
-  companyCanCreateRecipient: false,
-  companyName: '',
-  companyType: '',
+  company: {},
   recipientId: null,
   sessionId: '',
   transfersPricing: {},
+  user: {},
 }
 
 export default enhanced(LoggedArea)
