@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { MemoryRouter } from 'react-router-dom'
 import { validate } from 'p4g4rm3'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
@@ -6,14 +7,9 @@ import { withA11y } from '@storybook/addon-a11y'
 
 import Account from '../../../src/containers/Account'
 import LoginForm from '../../../src/containers/Account/LoginForm'
-import {
-  PasswordRecoveryForm,
-  PasswordRecoveryConfirmation,
-} from '../../../src/containers/Account/PasswordRecovery/Request'
-import {
-  PasswordResetForm,
-  PasswordResetConfirmation,
-} from '../../../src/containers/Account/PasswordRecovery/Reset'
+import PasswordRecoveryRequest from '../../../src/containers/Account/PasswordRecovery/Request'
+import Confirmation from '../../../src/containers/Account/Confirmation'
+import PasswordRecoveryReset from '../../../src/containers/Account/PasswordRecovery/Reset'
 import {
   UserSignUpForm,
   UserSignUpConfirmation,
@@ -40,8 +36,6 @@ const Placeholder = props => (
 const TestPresentation = (
   <Presentation
     environment="test"
-    environmentUrl=""
-    redirectToRegister={action('register click')}
     t={t}
   />
 )
@@ -80,23 +74,23 @@ const UserSignUp = () => {
 const LivePresentation = (
   <Presentation
     environment="live"
-    environmentUrl=""
-    redirectToRegister={action('register click')}
     t={t}
   />
 )
 
 storiesOf('Pages|Login', module)
   .addDecorator(withA11y)
+  .addDecorator(getStory => <MemoryRouter>{getStory()}</MemoryRouter>)
   .add('Login Live', () => (
     <Account
-      base="light"
       logo={Placeholder}
       primaryContent={(
         <LoginForm
-          base="light"
+          environment="live"
           onLogin={action('login')}
           onPasswordRecovery={action('recover password')}
+          onChangeEnvironment={action('change environment')}
+          recaptchaKey="not_a_real_key"
           t={t}
         />
       )}
@@ -106,13 +100,14 @@ storiesOf('Pages|Login', module)
   ))
   .add('Login Test', () => (
     <Account
-      base="dark"
       logo={Placeholder}
       primaryContent={(
         <LoginForm
-          base="dark"
+          environment="live"
           onLogin={action('login')}
           onPasswordRecovery={action('recover password')}
+          onChangeEnvironment={action('change environment')}
+          recaptchaKey="not_a_real_key"
           t={t}
         />
       )}
@@ -122,13 +117,9 @@ storiesOf('Pages|Login', module)
   ))
   .add('Password Recovery Form', () => (
     <Account
-      // eslint-disable-next-line
       logo={Placeholder}
       primaryContent={(
-        <PasswordRecoveryForm
-          base="dark"
-          onPasswordRecovery={action('recover password')}
-          onBackToLogin={action('back to login')}
+        <PasswordRecoveryRequest
           onSubmit={action('submit')}
           t={t}
         />
@@ -139,13 +130,15 @@ storiesOf('Pages|Login', module)
   ))
   .add('Password Recovery Confirmation', () => (
     <Account
-      // eslint-disable-next-line
       logo={Placeholder}
       primaryContent={(
-        <PasswordRecoveryConfirmation
-          onBackToLogin={action('back to login')}
-          onPasswordRecovery={action('recover password')}
-          t={t}
+        <Confirmation
+          labels={{
+            backToLogin: t('back_login_action'),
+            confirmation: t('pages.password_recovery.confirmation'),
+            confirmationEmphasis: t('pages.password_recovery.confirmation_emphasis'),
+          }}
+          onBackToLogin={action('onBackToLogin')}
         />
       )}
       secondaryContent={TestPresentation}
@@ -156,8 +149,7 @@ storiesOf('Pages|Login', module)
     <Account
       logo={Placeholder}
       primaryContent={(
-        <PasswordResetForm
-          base="dark"
+        <PasswordRecoveryReset
           onChange={action('change')}
           onSubmit={action('submit')}
           t={t}
@@ -174,10 +166,13 @@ storiesOf('Pages|Login', module)
     <Account
       logo={Placeholder}
       primaryContent={(
-        <PasswordResetConfirmation
-          base="dark"
-          onBackToLogin={action('back to login')}
-          t={t}
+        <Confirmation
+          labels={{
+            backToLogin: t('back_login_action'),
+            confirmation: t('pages.password_reset.confirmation'),
+            confirmationEmphasis: t('pages.password_reset.confirmation_emphasis'),
+          }}
+          onBackToLogin={action('onBackToLogin')}
         />
       )}
       secondaryContent={TestPresentation}

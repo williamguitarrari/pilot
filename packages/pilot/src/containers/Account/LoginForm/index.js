@@ -3,22 +3,20 @@ import PropTypes from 'prop-types'
 import ReCAPTCHA from 'react-google-recaptcha'
 import isEmail from 'validator/lib/isEmail'
 import isEmpty from 'validator/lib/isEmpty'
-import IconError from 'emblematic-icons/svg/ClearClose32.svg'
-import {
-  Button,
-  FormInput,
-  Alert,
-} from 'former-kit'
-import { recaptchaKey } from '../../../environment'
+import IconCode from 'emblematic-icons/svg/Code24.svg'
+import IconError from 'emblematic-icons/svg/CloseCircle32.svg'
+import { Alert, FormInput, Button } from 'former-kit'
 
 import styles from '../style.css'
 
-const LoginContainer = ({
-  base,
+const LoginForm = ({
+  environment,
   errors,
   loading,
   onLogin,
   onPasswordRecovery,
+  oppositeEnvironmentUrl,
+  recaptchaKey,
   t,
 }) => {
   const [email, setEmail] = useState('')
@@ -28,6 +26,8 @@ const LoginContainer = ({
     password: null,
   })
   const recaptchaRef = useRef()
+
+  const isLive = environment === 'live'
 
   const recaptchaOnChange = (recaptchaToken) => {
     if (!recaptchaToken) {
@@ -71,81 +71,100 @@ const LoginContainer = ({
   }
 
   return (
-    <form
-      onSubmit={handleLoginActionOnClick}
-    >
-      <div className={styles.formContent}>
-        <FormInput
-          base={base}
-          disabled={loading}
-          label={t('email')}
-          name="email"
-          type="email"
-          value={email}
-          onChange={v => setEmail(v.target.value)}
-          error={formErrors.email}
-        />
-        <FormInput
-          base={base}
-          disabled={loading}
-          type="password"
-          label={t('password')}
-          name="password"
-          value={password}
-          onChange={v => setPassword(v.target.value)}
-          error={formErrors.password}
-        />
-      </div>
-      <ReCAPTCHA
-        badge="bottomleft"
-        ref={recaptchaRef}
-        sitekey={recaptchaKey}
-        size="invisible"
-        onChange={recaptchaOnChange}
-      />
-      {errors
-        && (
-          <div className={styles.errorAlert}>
-            <Alert
-              base={base}
-              type="error"
-              icon={<IconError height={16} width={16} />}
-            >
-              <span>
+    <>
+      <form
+        onSubmit={handleLoginActionOnClick}
+      >
+        <div className={styles.formContent}>
+          <FormInput
+            disabled={loading}
+            placeholder={t('email_placeholder')}
+            label={t('email')}
+            id="name"
+            name="email"
+            type="email"
+            value={email}
+            onChange={v => setEmail(v.target.value)}
+            error={formErrors.email}
+          />
+          <FormInput
+            disabled={loading}
+            placeholder="•••••••••••••"
+            label={t('password')}
+            id="password"
+            name="password"
+            type="password"
+            value={password}
+            onChange={v => setPassword(v.target.value)}
+            error={formErrors.password}
+          />
+        </div>
+        {errors
+            && (
+              <Alert
+                type="error"
+                icon={<IconError height={16} width={16} />}
+              >
                 {errors.null
                   ? errors.null
                   : t('login.network_error')
               }
-              </span>
-            </Alert>
-          </div>
-        )
-      }
-      <div className={styles.actions}>
-        <div className={styles.hugeButton}>
+              </Alert>
+            )
+          }
+        <ReCAPTCHA
+          badge="bottomleft"
+          ref={recaptchaRef}
+          sitekey={recaptchaKey}
+          size="invisible"
+          onChange={recaptchaOnChange}
+        />
+        <div className={styles.confirmButton}>
           <Button
             type="submit"
             disabled={loading}
             size="huge"
+            relevance={isLive ? 'normal' : 'high'}
           >
             {t('login.login_action')}
           </Button>
+          <button
+            className={styles.forgotPassword}
+            role="link"
+            disabled={loading}
+            onClick={onPasswordRecovery}
+            type="button"
+          >
+            {t('login.forgot_password')}
+          </button>
         </div>
-        <button
-          role="link"
-          disabled={loading}
-          onClick={onPasswordRecovery}
-          type="button"
-        >
-          {t('login.password_recovery_action')}
-        </button>
+      </form>
+      <div className={styles.bottomMessage}>
+        <span>{t('landing.signup_call')}</span>
+        <a className={styles.link} href="https://pagar.me/precos">
+          {t('landing.signup_action')}
+        </a>
       </div>
-    </form>
+      <a
+        className={styles.changeEnvButton}
+        href={oppositeEnvironmentUrl}
+      >
+        <Button
+          icon={isLive ? <IconCode /> : null}
+          disabled={loading}
+          size="huge"
+          fill="outline"
+          fullWidth
+        >
+          {t(`landing.${environment}.back_button`)}
+        </Button>
+      </a>
+    </>
   )
 }
 
-LoginContainer.propTypes = {
-  base: PropTypes.oneOf(['dark', 'light']).isRequired,
+LoginForm.propTypes = {
+  environment: PropTypes.oneOf(['live', 'test']).isRequired,
   errors: PropTypes.oneOfType([
     PropTypes.shape({
       email: PropTypes.string,
@@ -156,12 +175,14 @@ LoginContainer.propTypes = {
   loading: PropTypes.bool,
   onLogin: PropTypes.func.isRequired,
   onPasswordRecovery: PropTypes.func.isRequired,
+  oppositeEnvironmentUrl: PropTypes.string.isRequired,
+  recaptchaKey: PropTypes.string.isRequired,
   t: PropTypes.func.isRequired,
 }
 
-LoginContainer.defaultProps = {
+LoginForm.defaultProps = {
   errors: null,
   loading: false,
 }
 
-export default LoginContainer
+export default LoginForm

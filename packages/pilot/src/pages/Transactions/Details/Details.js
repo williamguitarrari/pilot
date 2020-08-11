@@ -28,7 +28,7 @@ import {
 } from 'ramda'
 import moment from 'moment-timezone'
 import qs from 'qs'
-import IconInfo from 'emblematic-icons/svg/Info32.svg'
+import IconInfo from 'emblematic-icons/svg/InfoCircle32.svg'
 import { Alert } from 'former-kit'
 
 import {

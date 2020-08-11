@@ -39,7 +39,7 @@ import {
   Row,
   Truncate,
 } from 'former-kit'
-import IconInfo from 'emblematic-icons/svg/Info32.svg'
+import IconInfo from 'emblematic-icons/svg/InfoCircle32.svg'
 import IconCheck from 'emblematic-icons/svg/Check24.svg'
 import IconClearClose from 'emblematic-icons/svg/ClearClose24.svg'
 import DownloadIcon from 'emblematic-icons/svg/Download24.svg'

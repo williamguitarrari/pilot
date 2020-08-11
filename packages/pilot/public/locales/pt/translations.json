@@ -55,6 +55,7 @@
     "today": "Hoje"
   },
   "email": "E-mail",
+  "email_placeholder": "seuemail@provedor.com.br",
   "empty_password": "Senha não informada",
   "enter_password": "Digite sua senha",
   "error": "Erro",
@@ -174,30 +175,25 @@
   },
   "landing": {
     "logo": "FormerKit",
-    "title": "Seja bem-vindo",
     "live": {
-      "about_dashboard": "A Dashboard Pagar.me é o painel de controle da sua operação. Através dela você tem acesso a diversos dados relevantes para seu dia a dia de trabalho, e também pode realizar diferentes ações cotidianas com facilidade, como estornos, consulta de saldo e mais.",
-      "back_link": "Ir para área de",
-      "back_link_emphasis": "teste",
-      "subtitle": "À dashboard Pagar.me"
+      "about_title": "Conheça a nova dashboard do Pagar.me!",
+      "about_dashboard": "A nova dashboard chegou para facilitar ainda mais a sua vida, com ela você visualiza métricas da sua operação, exporta relatórios, cria links de pagamento e muito mais.",
+      "back_button": "Acessar ambiente de testes"
     },
     "login_call": "Faça login para acessar sua conta",
     "register_url": "https://pagar.me/quero-usar",
-    "signup_call": "Ainda não tem uma conta?",
-    "signup_action": "Cadastre-se!",
+    "signup_call": "Ainda não possui conta no Pagar.me?",
+    "signup_action": "Cadastre-se agora",
     "test": {
-      "about_dashboard": "Aqui você pode criar dados fictícios, alterar configurações e usar novas funcionalidades para testar e verificar a sua operação.",
-      "sandbox_disclaimer": "Nada do que é feito aqui altera seu saldo.",
-      "back_button": "Voltar para o login Live",
-      "subtitle": "À dashboard de",
-      "subtitle_company": "Pagar.me",
-      "subtitle_emphasis": "teste"
+      "about_title": "Bem-vindo ao Ambiente de Testes do Pagar.me!",
+      "about_dashboard": "Utilize este ambiente para testar sua integração conosco, lembre-se de que qualquer tipo de operação neste ambiente não gera pagamentos reais, é importante ressaltar que a chave de API de testes é diferente do ambiente live.",
+      "back_button": "Voltar para o ambiente live"
     }
   },
   "login": {
     "token": "Token",
     "login_action": "Entrar",
-    "password_recovery_action": "Redefinir senha",
+    "forgot_password": "Esqueci minha senha",
     "network_error": "Falha de comunicação com o Pagar.me. Verifique seu acesso a internet."
   },
   "validations": {
@@ -1260,9 +1256,9 @@
       "wrong_pass": "Senha inválida"
     },
     "password_recovery": {
-      "confirmation": "Em instantes você receberá um e-mail com as instruções para a redefinição de sua senha.",
-      "confirmation_emphasis": "Pronto!",
-      "recovery_call": "Digite o e-mail cadastrado para recuperar sua senha.",
+      "confirmation": "Em alguns instantes você receberá um email com as instruções para redefinir sua senha.",
+      "confirmation_emphasis": "Prontinho!",
+      "recovery_call": "Informe o endereço de email utilizado no cadastro, vamos te encaminhar um email de redefinição de senha",
       "recovery_action": "Enviar"
     },
     "password_reset": {
@@ -1275,7 +1271,7 @@
         "weak_password": "Senha muito fraca"
       },
       "reset_action": "Enviar",
-      "reset_call": "Digite sua nova senha para concluir a redefinição."
+      "reset_call": "Escolha uma nova senha para acessar o seu painel, cuidado para não esquecer ela de novo. 😅"
     },
     "settings": {
       "user": {

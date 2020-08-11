@@ -1,0 +1,75 @@
+@import "former-kit-skin-pagarme/dist/styles/colors/light.css";
+@import "former-kit-skin-pagarme/dist/styles/spacing.css";
+
+.mosaic {
+  height: 50vh;
+}
+
+.presentationSide {
+  width: 65%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-squanchy-gray-20);
+
+  @media (max-width: 1170px) {
+    display: none;
+  }
+}
+
+.presentationSideTest {
+  background-color: var(--color-barney-purple-100);
+}
+
+.presentationSideContent {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  height: 600px;
+  justify-content: space-between;
+}
+
+.content {
+  position: absolute;
+  align-self: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.content > img {
+  width: 498px;
+
+  @media (min-width: 1440px) {
+    width: 700px;
+  }
+}
+
+.content > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 570px;
+  text-align: center;
+}
+
+.content h1 {
+  color: var(--color-birdperson-gray-500);
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
+.content p {
+  color: var(--color-squanchy-gray-200);
+  line-height: var(--spacing-medium);
+  margin-top: 10px;
+}
+
+.contentTest h1 {
+  color: var(--color-white);
+}
+
+.contentTest p {
+  color: var(--color-white);
+}

@@ -1,59 +1,30 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import {
-  Landing,
-  LandingPrimarySection,
-  LandingSecondarySection,
-} from 'former-kit'
-
 import styles from './style.css'
 
-const DARK_BASE = 'dark'
-const LIGHT_BASE = 'light'
-
-const getSecondaryBase = base => (
-  base === DARK_BASE
-    ? LIGHT_BASE
-    : DARK_BASE
-)
-
 const Account = ({
-  base,
-  logo: Logo,
+  logo,
   primaryContent,
   secondaryContent,
-  t,
 }) => (
-  <Landing className={styles.container}>
-    <LandingPrimarySection base={base}>
-      <div className={styles.columnContainer}>
-        <div className={styles.primaryContent}>
-          <div className={styles.logo}>
-            <Logo alt={t('landing.logo')} base={base} />
-          </div>
-          {primaryContent}
+  <div className={styles.twoSidesView}>
+    <div className={styles.interactionSide}>
+      <div className={styles.interactionSideContent}>
+        <div className={styles.logo}>
+          {logo}
         </div>
+        {primaryContent}
       </div>
-    </LandingPrimarySection>
-    <LandingSecondarySection base={getSecondaryBase(base)}>
-      <div className={styles.columnContainer}>
-        {secondaryContent}
-      </div>
-    </LandingSecondarySection>
-  </Landing>
+    </div>
+    {secondaryContent}
+  </div>
 )
 
 Account.propTypes = {
-  base: PropTypes.oneOf([DARK_BASE, LIGHT_BASE]),
-  logo: PropTypes.func.isRequired,
+  logo: PropTypes.node.isRequired,
   primaryContent: PropTypes.node.isRequired,
   secondaryContent: PropTypes.node.isRequired,
-  t: PropTypes.func.isRequired,
-}
-
-Account.defaultProps = {
-  base: DARK_BASE,
 }
 
 export default Account

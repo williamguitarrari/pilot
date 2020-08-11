@@ -1,37 +1,26 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { translate } from 'react-i18next'
-import {
-  compose,
-} from 'ramda'
+import Confirmation from '../../../../containers/Account/Confirmation'
 
-import {
-  PasswordResetConfirmation,
-} from '../../../../containers/Account/PasswordRecovery/Reset'
+const PasswordRecoveryResetConfirmationPage = ({ t }) => {
+  const history = useHistory()
 
-const enhance = compose(
-  translate(),
-  withRouter
-)
+  return (
+    <Confirmation
+      labels={{
+        backToLogin: t('back_login_action'),
+        confirmation: t('pages.password_reset.confirmation'),
+        confirmationEmphasis: t('pages.password_reset.confirmation_emphasis'),
+      }}
+      onBackToLogin={() => history.push('/account/login')}
+    />
+  )
+}
 
-const Confirmation = ({
-  history: {
-    replace,
-  },
-  t,
-}) => (
-  <PasswordResetConfirmation
-    onBackToLogin={() => replace('/account/login')}
-    t={t}
-  />
-)
-
-Confirmation.propTypes = {
-  history: PropTypes.shape({
-    replace: PropTypes.func.isRequired,
-  }).isRequired,
+PasswordRecoveryResetConfirmationPage.propTypes = {
   t: PropTypes.func.isRequired,
 }
 
-export default enhance(Confirmation)
+export default translate()(PasswordRecoveryResetConfirmationPage)

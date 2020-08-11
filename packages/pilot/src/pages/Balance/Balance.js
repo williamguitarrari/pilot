@@ -34,7 +34,7 @@ import {
   when,
   whereEq,
 } from 'ramda'
-import IconInfo from 'emblematic-icons/svg/Info32.svg'
+import IconInfo from 'emblematic-icons/svg/InfoCircle32.svg'
 import { connect } from 'react-redux'
 import { translate } from 'react-i18next'
 import { withRouter } from 'react-router-dom'

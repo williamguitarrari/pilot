@@ -8,8 +8,8 @@ import {
   Truncate,
 } from 'former-kit'
 
-import IconError from 'emblematic-icons/svg/ClearClose32.svg'
-import IconSuccess from 'emblematic-icons/svg/Check32.svg'
+import IconError from 'emblematic-icons/svg/CloseCircle32.svg'
+import IconSuccess from 'emblematic-icons/svg/CheckCircle32.svg'
 
 import CreditCardRefundDetails from '../../../components/CreditCardRefundDetails'
 

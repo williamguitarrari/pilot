@@ -1,44 +1,26 @@
-import React, { PureComponent } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { translate } from 'react-i18next'
-import { compose } from 'ramda'
-import { PasswordRecoveryConfirmation } from '../../../../containers/Account/PasswordRecovery/Request'
+import Confirmation from '../../../../containers/Account/Confirmation'
 
-const enhanced = compose(
-  translate(),
-  withRouter
-)
+const PasswordRecoveryRequestConfirmationPage = ({ t }) => {
+  const history = useHistory()
 
-class PasswordRecoveryConfirmationPage extends PureComponent {
-  constructor (props) {
-    super(props)
-    this.handleBackToLogin = this.handleBackToLogin.bind(this)
-  }
-
-  handleBackToLogin () {
-    const { history } = this.props
-    history.replace('/account/login')
-  }
-
-  render () {
-    const { t } = this.props
-
-    return (
-      <PasswordRecoveryConfirmation
-        onBackToLogin={this.handleBackToLogin}
-        t={t}
-      />
-    )
-  }
+  return (
+    <Confirmation
+      labels={{
+        backToLogin: t('back_login_action'),
+        confirmation: t('pages.password_recovery.confirmation'),
+        confirmationEmphasis: t('pages.password_recovery.confirmation_emphasis'),
+      }}
+      onBackToLogin={() => history.push('/account/login')}
+    />
+  )
 }
 
-PasswordRecoveryConfirmationPage.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func,
-    replace: PropTypes.func,
-  }).isRequired,
+PasswordRecoveryRequestConfirmationPage.propTypes = {
   t: PropTypes.func.isRequired,
 }
 
-export default enhanced(PasswordRecoveryConfirmationPage)
+export default translate()(PasswordRecoveryRequestConfirmationPage)

@@ -1,8 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
 import { Button } from 'former-kit'
-
 import styles from './style.css'
 
 const Confirmation = ({
@@ -13,29 +11,22 @@ const Confirmation = ({
   },
   onBackToLogin,
 }) => (
-  <div
-    className={classNames(
-      styles.primaryContent,
-      styles.confirmationContent
-    )}
-  >
-    <p className={classNames(styles.uppercase, styles.paragraph)}>
+  <>
+    <span className={styles.confirmationMessage}>
       <b>{confirmationEmphasis}</b>
       {' '}
       <span>{confirmation}</span>
-    </p>
-    <div className={styles.actions}>
-      <div className={styles.hugeButton}>
-        <Button
-          type="button"
-          size="huge"
-          onClick={onBackToLogin}
-        >
-          {backToLogin}
-        </Button>
-      </div>
+    </span>
+    <div className={styles.hugeButton}>
+      <Button
+        fullWidth
+        onClick={onBackToLogin}
+        size="huge"
+      >
+        {backToLogin}
+      </Button>
     </div>
-  </div>
+  </>
 )
 
 Confirmation.propTypes = {
