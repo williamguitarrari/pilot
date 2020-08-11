@@ -28,12 +28,14 @@ exports[`should not show recipient tab when companyCanCreateRecipient is false 1
     <div
       class="summary expanded"
     >
-      <button
+      <span
         class="title"
+      />
+      <button
+        class="button"
         role="link"
         type="button"
       >
-        
         <span
           class="subtitle"
         >
@@ -178,6 +180,129 @@ exports[`should not show recipient tab when companyCanCreateRecipient is false 1
 </div>
 `;
 
+exports[`should not show recipient tab when companyType is paymentLink 1`] = `
+<div>
+  <aside
+    class="undefined"
+  >
+    <header>
+      <svg
+        data-file-name="SvgLogoLive"
+        width="140"
+      />
+      <button
+        class=""
+        type="button"
+      >
+        <svg
+          class="sidebarIcon"
+          data-file-name="SvgMenuNotCollapsed24"
+          height="24"
+          width="24"
+        />
+        <span
+          style="height: 0px; left: 0px; top: 0px; width: 0px;"
+        />
+      </button>
+    </header>
+    <div
+      class="summary expanded"
+    >
+      <span
+        class="title"
+      />
+      <button
+        class="button"
+        role="link"
+        type="button"
+      >
+        <span
+          class="subtitle"
+        >
+          pages.sidebar.hide_balance
+          <div
+            class="undefined"
+          />
+          <svg
+            data-file-name="SvgChevronUp32"
+            height="16"
+            width="16"
+          />
+        </span>
+      </button>
+      <div
+        class="sections"
+      >
+        <ul>
+          <li
+            class="item"
+          >
+            <span
+              class="title"
+            >
+              pages.sidebar.available
+            </span>
+            <div
+              class="value"
+            >
+              <span>
+                <small>
+                  pages.sidebar.currency_symbol
+                </small>
+                 
+                0,10
+              </span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <nav>
+      <ul>
+        <li
+          class=""
+        >
+          <button
+            role="link"
+            type="button"
+          >
+            <div>
+              <span>
+                <svg
+                  data-file-name="SvgCheckout32"
+                  height="16"
+                  width="16"
+                />
+              </span>
+              pages.transactions.title
+            </div>
+          </button>
+        </li>
+        <li
+          class=""
+        >
+          <button
+            role="link"
+            type="button"
+          >
+            <div>
+              <span>
+                <svg
+                  data-file-name="SvgLink32"
+                  height="16"
+                  width="16"
+                />
+              </span>
+              pages.payment_links.title
+            </div>
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+</div>
+`;
+
 exports[`should show recipient tab when companyCanCreateRecipient is true 1`] = `
 <div>
   <aside
@@ -206,12 +331,14 @@ exports[`should show recipient tab when companyCanCreateRecipient is true 1`] = 
     <div
       class="summary expanded"
     >
-      <button
+      <span
         class="title"
+      />
+      <button
+        class="button"
         role="link"
         type="button"
       >
-        
         <span
           class="subtitle"
         >
@@ -347,184 +474,6 @@ exports[`should show recipient tab when companyCanCreateRecipient is true 1`] = 
                 />
               </span>
               pages.recipients.title
-            </div>
-          </button>
-        </li>
-        <li
-          class=""
-        >
-          <button
-            role="link"
-            type="button"
-          >
-            <div>
-              <span>
-                <svg
-                  data-file-name="SvgWrench32"
-                  height="16"
-                  width="16"
-                />
-              </span>
-              pages.settings.company.menu
-            </div>
-          </button>
-        </li>
-      </ul>
-    </nav>
-  </aside>
-</div>
-`;
-
-exports[`should show recipient tab when companyType is paymentLink 1`] = `
-<div>
-  <aside
-    class="undefined"
-  >
-    <header>
-      <svg
-        data-file-name="SvgLogoLive"
-        width="140"
-      />
-      <button
-        class=""
-        type="button"
-      >
-        <svg
-          class="sidebarIcon"
-          data-file-name="SvgMenuNotCollapsed24"
-          height="24"
-          width="24"
-        />
-        <span
-          style="height: 0px; left: 0px; top: 0px; width: 0px;"
-        />
-      </button>
-    </header>
-    <div
-      class="summary expanded"
-    >
-      <button
-        class="title"
-        role="link"
-        type="button"
-      >
-        
-        <span
-          class="subtitle"
-        >
-          pages.sidebar.hide_balance
-          <div
-            class="undefined"
-          />
-          <svg
-            data-file-name="SvgChevronUp32"
-            height="16"
-            width="16"
-          />
-        </span>
-      </button>
-      <div
-        class="sections"
-      >
-        <ul>
-          <li
-            class="item"
-          >
-            <span
-              class="title"
-            >
-              pages.sidebar.available
-            </span>
-            <div
-              class="value"
-            >
-              <span>
-                <small>
-                  pages.sidebar.currency_symbol
-                </small>
-                 
-                0,10
-              </span>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <nav>
-      <ul>
-        <li
-          class=""
-        >
-          <button
-            role="link"
-            type="button"
-          >
-            <div>
-              <span>
-                <svg
-                  data-file-name="SvgHome32"
-                  height="16"
-                  width="16"
-                />
-              </span>
-              pages.home.title
-            </div>
-          </button>
-        </li>
-        <li
-          class=""
-        >
-          <button
-            role="link"
-            type="button"
-          >
-            <div>
-              <span>
-                <svg
-                  data-file-name="SvgHeartRate32"
-                  height="16"
-                  width="16"
-                />
-              </span>
-              pages.balance.title
-            </div>
-          </button>
-        </li>
-        <li
-          class=""
-        >
-          <button
-            role="link"
-            type="button"
-          >
-            <div>
-              <span>
-                <svg
-                  data-file-name="SvgCheckout32"
-                  height="16"
-                  width="16"
-                />
-              </span>
-              pages.transactions.title
-            </div>
-          </button>
-        </li>
-        <li
-          class=""
-        >
-          <button
-            role="link"
-            type="button"
-          >
-            <div>
-              <span>
-                <svg
-                  data-file-name="SvgLink32"
-                  height="16"
-                  width="16"
-                />
-              </span>
-              pages.payment_links.title
             </div>
           </button>
         </li>
