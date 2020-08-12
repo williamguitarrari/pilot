@@ -53,6 +53,8 @@ const LoginForm = ({
   const handleLoginActionOnClick = (e) => {
     e.preventDefault()
 
+    recaptchaRef.current.reset()
+
     const result = validate()
     if (result) {
       setFormErrors(result)
