@@ -11,8 +11,8 @@ commands:
       - checkout
       - restore_cache:
           keys:
-          - dependencies-{{ checksum "yarn.lock" }}
-          - dependencies-
+            - dependencies-{{ checksum "yarn.lock" }}
+            - dependencies-
       - run: yarn install --no-audit --prefer-offline
       - save_cache:
           paths:
@@ -44,6 +44,13 @@ jobs:
       - checkout-and-install
       - run: |
           cd packages/cockpit && yarn test
+      - persist_to_workspace:
+          root: .
+          paths:
+            - packages/cockpit/src
+            - packages/cockpit/coverage
+            - sonar-project.properties
+            - package.json
 
   pilot-lint:
     executor: node/default
@@ -58,6 +65,20 @@ jobs:
       - checkout-and-install
       - run: |
           cd packages/pilot && yarn test
+      - persist_to_workspace:
+          root: .
+          paths:
+            - packages/pilot/src
+            - packages/pilot/coverage
+
+  run-sonar-analysis:
+    machine: true
+    steps:
+      - attach_workspace:
+          at: .
+      - run: echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
+      - run: docker pull pagarme/sonar-scanner
+      - run: docker run -ti -v $(pwd):/usr/src pagarme/sonar-scanner -Dsonar.branch.name=${CIRCLE_BRANCH}
 
   percy:
     docker:
@@ -163,6 +184,12 @@ workflows:
           filters:
             tags:
               ignore: /.*/
+
+      - run-sonar-analysis:
+          context: dockerhub
+          requires:
+            - cockpit-test
+            - pilot-test
 
       # STAGING
       ## versions
