@@ -29,13 +29,6 @@ const LoginForm = ({
 
   const isLive = environment === 'live'
 
-  const recaptchaOnChange = (recaptchaToken) => {
-    if (!recaptchaToken) {
-      return
-    }
-    onLogin({ email, password, recaptchaToken })
-  }
-
   const validate = () => {
     const validationErrors = {}
     if (!isEmail(email)) {
@@ -50,26 +43,21 @@ const LoginForm = ({
     return null
   }
 
-  const handleLoginActionOnClick = (e) => {
+  const handleLoginActionOnClick = async (e) => {
     e.preventDefault()
 
     recaptchaRef.current.reset()
 
     const result = validate()
     if (result) {
-      setFormErrors(result)
-      return
+      return setFormErrors(result)
     }
 
     setFormErrors({ email: null, password: null })
 
-    const recaptchaToken = recaptchaRef.current.getValue()
-    if (!recaptchaToken) {
-      recaptchaRef.current.execute()
-      return
-    }
+    const recaptchaToken = await recaptchaRef.current.executeAsync()
 
-    onLogin({ email, password, recaptchaToken })
+    return onLogin({ email, password, recaptchaToken })
   }
 
   return (
@@ -119,7 +107,6 @@ const LoginForm = ({
           ref={recaptchaRef}
           sitekey={recaptchaKey}
           size="invisible"
-          onChange={recaptchaOnChange}
         />
         <div className={styles.confirmButton}>
           <Button
