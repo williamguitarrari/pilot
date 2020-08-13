@@ -71,7 +71,7 @@ const hasDashboardAccess = ifElse(
 const getRecipientId = pathOr(null, ['account', 'company', 'default_recipient_id', env])
 
 const getAnticipationType = cond([
-  [propEq('seller_id', '5ecd6e8a124d4259991313ae'), always('MDRZAO')],
+  [pathEq(['capabilities', 'allow_transaction_anticipation'], true), always('MDRZAO')],
   [T, always('DEFAULT')],
 ])
 
