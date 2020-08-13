@@ -57,9 +57,9 @@ const renderEnvironmentButton = ({
     content={(
       <PopoverContent>
         <small>
-          {t(`header.environment.text_${environment}`)}&nbsp;
+          {t('header.environment.text_live')}&nbsp;
           <a href={getEnvironmentUrl()}>
-            {t('header.environment.text_action')}
+            {t('header.environment.text_action_live')}
           </a>.
         </small>
       </PopoverContent>
@@ -128,6 +128,7 @@ const HeaderContainer = ({
 
         {
           companyType
+            && environment === 'live'
             && !isPaymentLink(companyType)
             && renderEnvironmentButton({ t })
         }

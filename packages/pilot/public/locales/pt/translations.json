@@ -161,9 +161,9 @@
       "logout": "Encerrar sessão"
     },
     "environment": {
-      "text_action_live": "clique aqui",
+      "text_action_live": "ambiente de testes",
       "text_action_test": "Mudar para live",
-      "text_live": "Você está no ambiente Live. Para ir para o ambiente Test",
+      "text_live": "Você está no ambiente live. Para testar sua integração, faça isso no",
       "text_test_1": "Você está no ambiente de testes, operações realizadas neste ambiente",
       "text_test_2": "não geram pagamentos reais."
     },
