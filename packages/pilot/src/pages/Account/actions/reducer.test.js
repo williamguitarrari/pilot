@@ -1,30 +1,29 @@
 import { selectCompanyFees } from './reducer'
 
-/* eslint-disable sort-keys */
 const companyFactory = mdrs => ({
   pricing: {
     gateway: {
       test: {
-        transaction_cost: {
-          credit_card: 50,
-          debit_card: 50,
-          boleto: 0,
-        },
-        transaction_spread: {
-          credit_card: 0,
-          debit_card: 1.5,
-          boleto: 0,
-        },
-        minimum_monthly_payment: 0,
         antifraud_cost: [
           {
-            name: 'pagarme',
             cost: 70,
+            name: 'pagarme',
           },
         ],
         boletos: {
           payment_fixed_fee: 380,
           payment_spread_fee: 0,
+        },
+        minimum_monthly_payment: 0,
+        transaction_cost: {
+          boleto: 0,
+          credit_card: 50,
+          debit_card: 50,
+        },
+        transaction_spread: {
+          boleto: 0,
+          credit_card: 0,
+          debit_card: 1.5,
         },
       },
     },
@@ -36,81 +35,137 @@ const companyFactory = mdrs => ({
     },
     transfers: {
       credito_em_conta: 0,
-      ted: 367,
       doc: 367,
       inter_recipient: 0,
+      ted: 367,
     },
   },
 })
-/* eslint-enable sort-keys */
 
-describe('Account Reducer', () => {
-  describe('selectCompanyFees', () => {
-    describe('when company has 1, 2 and 7 installments', () => {
-      const company = companyFactory([{
+describe('selectCompanyFees', () => {
+  describe('when company has 1, 2 and 7 installments', () => {
+    const company = companyFactory([{
+      installments: [
+        { installment: 1, mdr: 3.79 },
+        { installment: 2, mdr: 4.19 },
+        { installment: 7, mdr: 4.59 },
+      ],
+      payment_method: 'credit_card',
+    }])
+
+    const fees = selectCompanyFees(company)
+
+    it('should return the correct response', () => {
+      expect(fees).toEqual({
+        anticipation: 3.14,
+        antifraud: 70,
+        boleto: 380,
+        gateway: 50,
+        installments: [
+          {
+            installment: 1,
+            mdr: 3.79,
+          },
+          {
+            installment: 2,
+            mdr: 4.19,
+          },
+          {
+            installment: 7,
+            mdr: 4.59,
+          },
+        ],
+        transfer: 367,
+      })
+    })
+  })
+
+  describe('when company has 1 installments', () => {
+    const company = companyFactory([{
+      installments: [{ installment: 1, mdr: 3.79 }],
+      payment_method: 'credit_card',
+    }])
+
+    const fees = selectCompanyFees(company)
+
+    it('should return the correct response', () => {
+      expect(fees).toEqual({
+        anticipation: 3.14,
+        antifraud: 70,
+        boleto: 380,
+        gateway: 50,
+        installments: [
+          {
+            installment: 1,
+            mdr: 3.79,
+          },
+        ],
+        transfer: 367,
+      })
+    })
+  })
+
+  describe('when company has 1, 2 and 7 installments and payment_method is null', () => {
+    const company = companyFactory([
+      {
+        installments: [],
+        payment_method: 'debit_card',
+      }, {
         installments: [
           { installment: 1, mdr: 3.79 },
           { installment: 2, mdr: 4.19 },
           { installment: 7, mdr: 4.59 },
         ],
-        payment_method: 'credit_card',
+        payment_method: null,
       }])
 
-      const fees = selectCompanyFees(company)
+    const fees = selectCompanyFees(company)
 
-      it('should return the correct response', () => {
-        expect(fees).toMatchSnapshot()
-      })
-    })
-
-    describe('when company has 1 installments', () => {
-      const company = companyFactory([{
-        installments: [{ installment: 1, mdr: 3.79 }],
-        payment_method: 'credit_card',
-      }])
-
-      const fees = selectCompanyFees(company)
-
-      it('should return the correct response', () => {
-        expect(fees).toMatchSnapshot()
-      })
-    })
-
-    describe('when company has 1, 2 and 7 installments and payment_method is null', () => {
-      const company = companyFactory([
-        {
-          installments: [],
-          payment_method: 'debit_card',
-        }, {
-          installments: [
-            { installment: 1, mdr: 3.79 },
-            { installment: 2, mdr: 4.19 },
-            { installment: 7, mdr: 4.59 },
-          ],
-          payment_method: null,
-        }])
-
-      const fees = selectCompanyFees(company)
-
-      it('should return the correct response', () => {
-        expect(fees).toMatchSnapshot()
-      })
-    })
-
-    describe('when company has other installments types', () => {
-      const company = companyFactory([{
+    it('should return the correct response', () => {
+      expect(fees).toEqual({
+        anticipation: 3.14,
+        antifraud: 70,
+        boleto: 380,
+        gateway: 50,
         installments: [
-          { installment: 1, mdr: 3.79 },
-          { installment: 4, mdr: 4.19 },
-          { installment: 8, mdr: 4.59 },
+          {
+            installment: 1,
+            mdr: 3.79,
+          },
+          {
+            installment: 2,
+            mdr: 4.19,
+          },
+          {
+            installment: 7,
+            mdr: 4.59,
+          },
         ],
-        payment_method: 'credit_card',
-      }])
+        transfer: 367,
+      })
+    })
+  })
 
-      const fees = selectCompanyFees(company)
+  describe('when company has other installments types', () => {
+    const company = companyFactory([{
+      installments: [
+        { installment: 1, mdr: 3.79 },
+        { installment: 4, mdr: 4.19 },
+        { installment: 8, mdr: 4.59 },
+      ],
+      payment_method: 'credit_card',
+    }])
 
-      it('should return the correct response', () => {
-        expect(fees).toMatchSnapshot()
+    const fees = selectCompanyFees(company)
+
+    it('should return the correct response', () => {
+      expect(fees).toEqual({
+        anticipation: 3.14,
+        antifraud: 70,
+        boleto: 380,
+        gateway: 50,
+        installments: [],
+        transfer: 367,
       })
     })
   })
