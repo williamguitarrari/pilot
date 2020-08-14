@@ -62,18 +62,9 @@ describe('selectCompanyFees', () => {
         boleto: 380,
         gateway: 50,
         installments: [
-          {
-            installment: 1,
-            mdr: 3.79,
-          },
-          {
-            installment: 2,
-            mdr: 4.19,
-          },
-          {
-            installment: 7,
-            mdr: 4.59,
-          },
+          { installment: 1, mdr: 3.79 },
+          { installment: 2, mdr: 4.19 },
+          { installment: 7, mdr: 4.59 },
         ],
         transfer: 367,
       })
@@ -94,12 +85,7 @@ describe('selectCompanyFees', () => {
         antifraud: 70,
         boleto: 380,
         gateway: 50,
-        installments: [
-          {
-            installment: 1,
-            mdr: 3.79,
-          },
-        ],
+        installments: [{ installment: 1, mdr: 3.79 }],
         transfer: 367,
       })
     })
@@ -128,18 +114,9 @@ describe('selectCompanyFees', () => {
         boleto: 380,
         gateway: 50,
         installments: [
-          {
-            installment: 1,
-            mdr: 3.79,
-          },
-          {
-            installment: 2,
-            mdr: 4.19,
-          },
-          {
-            installment: 7,
-            mdr: 4.59,
-          },
+          { installment: 1, mdr: 3.79 },
+          { installment: 2, mdr: 4.19 },
+          { installment: 7, mdr: 4.59 },
         ],
         transfer: 367,
       })
@@ -165,6 +142,38 @@ describe('selectCompanyFees', () => {
         boleto: 380,
         gateway: 50,
         installments: [],
+        transfer: 367,
+      })
+    })
+  })
+
+  describe('when company has two credit_card installments types', () => {
+    const company = companyFactory([
+      {
+        installments: [
+          { installment: 1, mdr: 4.99 },
+        ],
+        payment_method: 'credit_card',
+      },
+      {
+        installments: [
+          { installment: 1, mdr: 3.79 },
+          { installment: 2, mdr: 4.19 },
+          { installment: 7, mdr: 4.59 },
+        ],
+        payment_method: 'credit_card',
+      },
+    ])
+
+    const fees = selectCompanyFees(company)
+
+    it('should return the correct response', () => {
+      expect(fees).toEqual({
+        anticipation: 3.14,
+        antifraud: 70,
+        boleto: 380,
+        gateway: 50,
+        installments: [{ installment: 1, mdr: 4.99 }],
         transfer: 367,
       })
     })
