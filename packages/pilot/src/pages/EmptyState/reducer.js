@@ -70,6 +70,7 @@ export default function welcomeReducer (state = makeInitialState(), action) {
 
 const isOnboardingSkipped = () => localStorage.getItem('skip-onboarding')
 const isPaymentLinkUser = ({ company }) => company && isPaymentLink(company)
+const isDefaultUser = ({ company }) => company && company.type === 'default'
 const isFetchOnboardingAnswersFailed = ({ welcome }) => !!welcome.error
 const hasCompletedOnboarding = ({
   welcome,
@@ -79,6 +80,7 @@ const isNotRecentlyCreatedCompany = ({
 }) => company && !isRecentlyCreatedCompany({ company })
 
 export const shouldSkipOnboarding = ({ company, welcome }) => anyPass([
+  isDefaultUser,
   isPaymentLinkUser,
   isOnboardingSkipped,
   isNotRecentlyCreatedCompany,
