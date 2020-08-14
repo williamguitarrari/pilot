@@ -1,6 +1,6 @@
 import moment from 'moment-timezone'
 import {
-  anyPass,
+  allPass,
   complement,
   pathOr,
 } from 'ramda'
@@ -12,7 +12,7 @@ const userCreatedLessThan30DaysAgo = ({ company }) => {
 
 const companyNotTransacted = complement(pathOr(true, ['company', 'alreadyTransacted']))
 
-const isRecentlyCreatedCompany = anyPass([
+const isRecentlyCreatedCompany = allPass([
   companyNotTransacted,
   userCreatedLessThan30DaysAgo,
 ])
