@@ -52,6 +52,13 @@ jobs:
       - run: |
           cd packages/pilot && yarn lint
 
+  pilot-test:
+    executor: node/default
+    steps:
+      - checkout-and-install
+      - run: |
+          cd packages/pilot && yarn test
+
   percy:
     docker:
       - image: "circleci/node:12.18.2-browsers"
@@ -145,6 +152,10 @@ workflows:
             tags:
               only: /.*/
       - pilot-lint:
+          filters:
+            tags:
+              only: /.*/
+      - pilot-test:
           filters:
             tags:
               only: /.*/
@@ -309,6 +320,7 @@ workflows:
             - cockpit-lint
             - cockpit-test
             - pilot-lint
+            - pilot-test
           filters:
             branches:
               ignore: /.*/

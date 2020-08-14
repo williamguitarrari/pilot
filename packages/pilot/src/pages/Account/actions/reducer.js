@@ -117,9 +117,14 @@ const notDefaultInstallments = pipe(
   not
 )
 
+const CREDIT_CARD_MDRS_TYPES = [null, 'credit_card']
+const findCreditCardMDR = mdrs => mdrs.find(({
+  payment_method: paymentMethod,
+}) => CREDIT_CARD_MDRS_TYPES.includes(paymentMethod))
+
 const getInstallmentsFee = pipe(
   pathOr([], ['psp', environment, 'mdrs']),
-  find(propEq('payment_method', 'credit_card')),
+  findCreditCardMDR,
   pathOr([], ['installments']),
   when(notDefaultInstallments, always([]))
 )
