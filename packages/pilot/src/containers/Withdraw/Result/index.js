@@ -205,9 +205,6 @@ class WithdrawResult extends Component {
                             tv={12}
                           >
                             <div className={style.head}>
-                              <div className={style.advise}>
-                                {t('pages.withdraw.result_advise')}
-                              </div>
                               <div className={style.headActions}>
                                 <Button
                                   fill="outline"
