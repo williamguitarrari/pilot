@@ -4,11 +4,10 @@
 .head {
   align-items: center;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   width: 100%;
 }
 
-.advise,
 .information {
   color: var(--color-squanchy-gray-400);
 }

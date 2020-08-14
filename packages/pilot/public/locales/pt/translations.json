@@ -1238,7 +1238,6 @@
       "requested_value_greater_max": "Valor maior que o permitido",
       "required": "Campo obrigatório",
       "result": "Resultado",
-      "result_advise": "O dinheiro será depositado no próximo dia útil a partir das 16h, em sua conta bancária",
       "result_error": "Desculpe, ocorreu um erro inesperado e não podemos prosseguir. Por favor, tente novamente.",
       "result_information": "Em caso de dúvidas, consulte as perguntas frequentes na FAQ. Você também pode entrar em contato conosco através do email relacionamento@pagar.me, ou ligando para 4004-1330 (capitais e regioes metropolitanas) / (11) 2129-3170 (demais localidades).",
       "return": "Voltar",
@@ -1251,7 +1250,7 @@
       "value_to_transfer": "Valor a ser transferido",
       "view_statement": "Visualizar no extrato",
       "withdraw_error": "Erro ao tentar sacar",
-      "withdraw_success": "Saque realizado com sucesso!",
+      "withdraw_success": "Seu saque será encaminhado ao banco até o final do dia caso tenha sido feito até às 15h, no horário de Brasília. Após isso, ele será encaminhado somente no próximo dia útil.",
       "withdraw_value": "Valor do saque (R$)",
       "wrong_pass": "Senha inválida"
     },
