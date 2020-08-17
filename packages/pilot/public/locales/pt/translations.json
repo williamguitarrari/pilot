@@ -633,7 +633,6 @@
       "advance_step": "Avançar",
       "last_step": "Finalizar",
       "skip": "Pular introdução",
-      "welcome": "Boas-vindas, {{userName}}!",
       "placeholders": {
         "platform": "Digite ou escolha na lista",
         "payment_method": "Digite ou escolha na lista",
@@ -648,6 +647,18 @@
           "button_link": "https://docs.pagar.me/page/plataformas-de-e-commerce-parceiras",
           "skip_to_dashboard": "Avançar para a dashboard"
         }
+      },
+      "welcome": {
+        "advance": "Vamos lá",
+        "description": "Mas antes precisamos conhecer melhor o seu negócio, para isso vamos te fazer algumas perguntas, ao respondê-las você terá acesso a uma série de vantagens no Pagar.me: ",
+        "header": "Boas-vindas, {{userName}}!",
+        "title": "Vamos te ajudar a começar suas vendas com o Pagar.me!",
+        "documentation": "Documentação personalizada",
+        "documentation_description": "Vamos te apresentar a documentação ideal para o que você pretende fazer com o Pagar.me",
+        "antifraud": "Antifraude mais assertivo",
+        "antifraud_description": "Podemos usar essas informações para melhorar a precisão do antifraude para a sua empresa",
+        "monitoring": "Monitoramento da sua jornada",
+        "monitoring_description": "Estaremos acompanhando a evolução do seu negócio com a gente, assim podemos no futuro oferecer melhores ofertas."
       }
     },
     "recipient_detail": {

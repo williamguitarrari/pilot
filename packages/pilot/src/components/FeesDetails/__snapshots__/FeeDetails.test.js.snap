@@ -1,0 +1,357 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render 1 installments with all fees and isMDRzao enabled 1`] = `
+<div>
+  <div>
+    <div>
+      <p
+        class="title"
+      >
+        pages.empty_state.fees.credit_card
+      </p>
+      <div
+        class="feeValuesWrapper"
+      >
+        <div>
+          <p>
+            pages.empty_state.fees.mdrzao_installment
+          </p>
+          <p>
+            <strong>
+              3,79%
+               
+              pages.empty_state.fees.per_transaction
+            </strong>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      class="marginRight"
+    >
+      <div>
+        <p
+          class="title"
+        >
+          pages.empty_state.fees.boleto
+        </p>
+        <div
+          class="feeValuesWrapper"
+        >
+          <div>
+            <p>
+              pages.empty_state.fees.paid
+            </p>
+            <p>
+              <strong>
+                R$ 3,80
+                 
+              </strong>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p
+          class="title"
+        >
+          pages.empty_state.fees.anticipation
+        </p>
+        <div
+          class="feeValuesWrapper"
+        >
+          <div>
+            <p>
+              pages.empty_state.fees.tax
+            </p>
+            <p>
+              <strong>
+                3,14%
+                 
+                pages.empty_state.fees.per_installment
+              </strong>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p
+          class="title"
+        >
+          pages.empty_state.fees.transfers
+        </p>
+        <div
+          class="feeValuesWrapper"
+        >
+          <div>
+            <p>
+              pages.empty_state.fees.doc_ted
+            </p>
+            <p>
+              <strong>
+                R$ 3,67
+                 
+              </strong>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`render 1, 2 and 7 installments with all fees 1`] = `
+<div>
+  <div>
+    <div>
+      <p
+        class="title"
+      >
+        pages.empty_state.fees.credit_card
+      </p>
+      <div
+        class="feeValuesWrapper"
+      >
+        <div>
+          <p>
+            pages.empty_state.fees.one_installment
+          </p>
+          <p>
+            <strong>
+              3,79%
+               
+            </strong>
+          </p>
+        </div>
+        <div>
+          <p>
+            pages.empty_state.fees.two_to_six_installments
+          </p>
+          <p>
+            <strong>
+              4,19%
+               
+            </strong>
+          </p>
+        </div>
+        <div>
+          <p>
+            pages.empty_state.fees.seven_or_more_installments
+          </p>
+          <p>
+            <strong>
+              4,59%
+               
+            </strong>
+          </p>
+        </div>
+        <div>
+          <p>
+            pages.empty_state.fees.processing
+          </p>
+          <p>
+            <strong>
+              R$ 0,50
+               
+            </strong>
+          </p>
+        </div>
+        <div>
+          <p>
+            pages.empty_state.fees.antifraud
+          </p>
+          <p>
+            <strong>
+              R$ 0,70
+               
+            </strong>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      class="marginRight"
+    >
+      <div>
+        <p
+          class="title"
+        >
+          pages.empty_state.fees.boleto
+        </p>
+        <div
+          class="feeValuesWrapper"
+        >
+          <div>
+            <p>
+              pages.empty_state.fees.paid
+            </p>
+            <p>
+              <strong>
+                R$ 3,80
+                 
+              </strong>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p
+          class="title"
+        >
+          pages.empty_state.fees.anticipation
+        </p>
+        <div
+          class="feeValuesWrapper"
+        >
+          <div>
+            <p>
+              pages.empty_state.fees.tax
+            </p>
+            <p>
+              <strong>
+                3,14%
+                 
+                
+              </strong>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p
+          class="title"
+        >
+          pages.empty_state.fees.transfers
+        </p>
+        <div
+          class="feeValuesWrapper"
+        >
+          <div>
+            <p>
+              pages.empty_state.fees.doc_ted
+            </p>
+            <p>
+              <strong>
+                R$ 3,67
+                 
+              </strong>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`render no installments are provided 1`] = `
+<div>
+  <div>
+    <div>
+      <p
+        class="title"
+      >
+        pages.empty_state.fees.credit_card
+      </p>
+      <div
+        class="feeValuesWrapper"
+      >
+        <div>
+          <p>
+            pages.empty_state.fees.processing
+          </p>
+          <p>
+            <strong>
+              R$ 0,50
+               
+            </strong>
+          </p>
+        </div>
+        <div>
+          <p>
+            pages.empty_state.fees.antifraud
+          </p>
+          <p>
+            <strong>
+              R$ 0,70
+               
+            </strong>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      class="marginRight"
+    >
+      <div>
+        <p
+          class="title"
+        >
+          pages.empty_state.fees.boleto
+        </p>
+        <div
+          class="feeValuesWrapper"
+        >
+          <div>
+            <p>
+              pages.empty_state.fees.paid
+            </p>
+            <p>
+              <strong>
+                R$ 3,80
+                 
+              </strong>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p
+          class="title"
+        >
+          pages.empty_state.fees.anticipation
+        </p>
+        <div
+          class="feeValuesWrapper"
+        >
+          <div>
+            <p>
+              pages.empty_state.fees.tax
+            </p>
+            <p>
+              <strong>
+                3,14%
+                 
+                
+              </strong>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p
+          class="title"
+        >
+          pages.empty_state.fees.transfers
+        </p>
+        <div
+          class="feeValuesWrapper"
+        >
+          <div>
+            <p>
+              pages.empty_state.fees.doc_ted
+            </p>
+            <p>
+              <strong>
+                R$ 3,67
+                 
+              </strong>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

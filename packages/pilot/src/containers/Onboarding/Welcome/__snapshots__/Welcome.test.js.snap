@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Welcome should render 1`] = `
+<div>
+  <div
+    class="onboardingWelcome"
+  >
+    <p
+      class="welcome"
+    >
+      pages.onboarding.welcome.header
+    </p>
+    <h3
+      class="welcomeTitle"
+    >
+      pages.onboarding.welcome.title
+    </h3>
+    <p
+      class="welcomeText"
+    >
+      pages.onboarding.welcome.description
+    </p>
+    <div
+      class="welcomeContent"
+    >
+      <div
+        class="welcomeDescriptionTitle"
+      >
+        <svg
+          data-file-name="SvgTarget32"
+        />
+        <p>
+          pages.onboarding.welcome.documentation
+        </p>
+      </div>
+      <p
+        class="welcomeDescription"
+      >
+        pages.onboarding.welcome.documentation_description
+      </p>
+      <div
+        class="welcomeDescriptionTitle"
+      >
+        <svg
+          data-file-name="SvgShield32"
+        />
+        <p>
+          pages.onboarding.welcome.antifraud
+        </p>
+      </div>
+      <p
+        class="welcomeDescription"
+      >
+        pages.onboarding.welcome.antifraud_description
+      </p>
+      <div
+        class="welcomeDescriptionTitle"
+      >
+        <svg
+          data-file-name="SvgHeartRate32"
+        />
+        <p>
+          pages.onboarding.welcome.monitoring
+        </p>
+      </div>
+      <p
+        class="welcomeDescription"
+      >
+        pages.onboarding.welcome.monitoring_description
+      </p>
+    </div>
+    <button
+      class="undefined"
+      type="button"
+    >
+      <span>
+        pages.onboarding.welcome.advance
+      </span>
+      <span
+        style="height: 0px; left: 0px; top: 0px; width: 0px;"
+      />
+    </button>
+  </div>
+</div>
+`;

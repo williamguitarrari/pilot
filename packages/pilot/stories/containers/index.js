@@ -134,6 +134,9 @@ storiesOf('Containers|Onboarding')
   .add('When DeadEnd', () => (
     <Onboarding.WhenDeadEnd />
   ))
+  .add('Welcome', () => (
+    <Onboarding.Welcome />
+  ))
 
 storiesOf('Containers|Page containers', module)
   .addDecorator(withA11y)

@@ -2,8 +2,17 @@ import BoxIcon from './box.svg'
 import SampleDeadEnd from './SampleDeadEnd'
 
 export default {
+  welcome: {
+    loading: false,
+    onboardingStarted: false,
+    question: {},
+    questionSettings: {},
+    status: 'starting',
+    userName: 'Eduardo',
+  },
   whenDeadEnd: {
     loading: false,
+    onboardingStarted: true,
     question: {},
     questionSettings: {
       deadEnd: SampleDeadEnd,
@@ -20,6 +29,7 @@ export default {
   },
   withCardIconAndSubtitle: {
     loading: false,
+    onboardingStarted: true,
     question: {
       label: 'integration',
       options: [
@@ -53,6 +63,7 @@ export default {
   },
   withCardIconAndWithoutSubtitle: {
     loading: false,
+    onboardingStarted: true,
     question: {
       label: 'already_selling',
       options: [
@@ -83,6 +94,7 @@ export default {
   },
   withCardWithoutIconAndSubtitle: {
     loading: false,
+    onboardingStarted: true,
     question: {
       label: 'is_site_ready',
       options: [
@@ -117,6 +129,7 @@ export default {
   },
   withDropdown: {
     loading: false,
+    onboardingStarted: true,
     question: {
       label: 'plataform',
       options: [
