@@ -25,6 +25,7 @@
 }
 
 .children {
+  display: flex;
   padding: 70px 20px 70px 50px;
   width: 400px;
 }
