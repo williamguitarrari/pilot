@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Button } from 'former-kit'
+import HeartRate from 'emblematic-icons/svg/HeartRate32.svg'
+import Shield from 'emblematic-icons/svg/Shield32.svg'
+import Target from 'emblematic-icons/svg/Target32.svg'
 import CardOptions from './CardOptions'
 import DropdownOptions from './DropownOptions'
 import OtherOptions from './OtherOptions'
@@ -23,6 +26,7 @@ const OnboardingContainer = ({
   userName,
 }) => {
   const [others, setOthers] = useState({})
+  const [onboardingStarted, startOnboarding] = useState(false)
 
   useEffect(() => setOthers({}), [question])
 
@@ -38,6 +42,41 @@ const OnboardingContainer = ({
       <OnboardingBackground>
         <div className={styles.loading}>
           <Spinner />
+        </div>
+      </OnboardingBackground>
+    )
+  }
+
+  if (!onboardingStarted) {
+    return (
+      <OnboardingBackground>
+        <div className={styles.onboardingQuestions}>
+          <p className={styles.welcome}>{t('pages.onboarding.welcome.header', { userName })}</p>
+          <h3 className={styles.welcomeTitle}>{t('pages.onboarding.welcome.title')}</h3>
+          <p className={styles.welcomeText}>{t('pages.onboarding.welcome.description')}</p>
+          <div className={styles.welcomeContent}>
+            <div className={styles.welcomeDescriptionTitle}>
+              <Target />
+              <p>{t('pages.onboarding.welcome.documentation')}</p>
+            </div>
+            <p className={styles.welcomeDescription}>{t('pages.onboarding.welcome.documentation_description')}</p>
+            <div className={styles.welcomeDescriptionTitle}>
+              <Shield />
+              <p>{t('pages.onboarding.welcome.antifraud')}</p>
+            </div>
+            <p className={styles.welcomeDescription}>{t('pages.onboarding.welcome.antifraud_description')}</p>
+            <div className={styles.welcomeDescriptionTitle}>
+              <HeartRate />
+              <p>{t('pages.onboarding.welcome.monitoring')}</p>
+            </div>
+            <p className={styles.welcomeDescription}>{t('pages.onboarding.welcome.monitoring_description')}</p>
+          </div>
+          <Button
+            onClick={() => startOnboarding(true)}
+            size="huge"
+          >
+            {t('pages.onboarding.welcome.advance')}
+          </Button>
         </div>
       </OnboardingBackground>
     )
