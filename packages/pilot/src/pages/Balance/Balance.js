@@ -28,7 +28,6 @@ import {
   propEq,
   propOr,
   tail,
-  test,
   uncurryN,
   unless,
   when,
@@ -168,7 +167,8 @@ const parseQueryUrl = pipe(
   mergeAll
 )
 
-const isRecipientId = test(/^re_/)
+const recipientRegex = /^re_/
+const isRecipientId = value => recipientRegex.test(value)
 
 const isNotRecipientId = complement(isRecipientId)
 
