@@ -42,7 +42,7 @@ const buildPayablesQuery = ({
     `>=${moment(start).startOf('day').valueOf()}`,
     `<=${moment(end).endOf('day').valueOf()}`,
   ],
-  status: ['waiting_funds', 'prepaid'],
+  status: 'waiting_funds',
 })
 
 const buildPayablesRequest = curry((client, query) => {
