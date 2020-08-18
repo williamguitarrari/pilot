@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OnboardingBackground should render 1`] = `
+<div>
+  <div
+    class="onboardingBackground"
+  >
+    <div
+      class="logoAndImage"
+    >
+      <svg
+        data-file-name="SvgLogo"
+      />
+      <div
+        class="centerImage"
+      >
+        <svg
+          data-file-name="SvgWomanInBalance"
+        />
+      </div>
+    </div>
+    <div
+      class="children"
+    >
+      <p>
+        Indiana Jones
+      </p>
+    </div>
+  </div>
+</div>
+`;

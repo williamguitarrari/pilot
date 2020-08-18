@@ -1,6 +1,6 @@
-@import "former-kit-skin-pagarme/dist/styles/colors/light.css";
+@import "former-kit-skin-pagarme/dist/styles/colors.css";
 @import "former-kit-skin-pagarme/dist/styles/typography.css";
-@import "former-kit-skin-pagarme/dist/styles/webfonts/roboto/index.css";
+@import "former-kit-skin-pagarme/dist/styles/webfonts/poppins/index.css";
 
 .fakeLoader {
   background-color: var(--color-squanchy-gray-20);
@@ -12,13 +12,9 @@
     width: 110px;
   }
 
-  & h1,
-  & span {
-    font-family: "Roboto", sans-serif;
-  }
-
   & h1 {
     color: var(--color-birdperson-gray-600);
+    font-family: "Poppins", sans-serif;
     font-weight: bold;
     margin-bottom: 5px;
   }

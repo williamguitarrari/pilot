@@ -3,16 +3,15 @@ import PropTypes from 'prop-types'
 import styles from './styles.css'
 
 import Logo from './logo.svg'
-import VerticalCurves from './vertical-curves.svg'
+import WomanInBalance from '../../assets/woman-in-balance.svg'
 
 const OnboardingBackground = ({ children }) => (
   <div className={styles.onboardingBackground}>
     <div className={styles.logoAndImage}>
       <Logo />
-    </div>
-
-    <div className={styles.verticalCurves}>
-      <VerticalCurves />
+      <div className={styles.centerImage}>
+        <WomanInBalance />
+      </div>
     </div>
 
     <div className={styles.children}>
