@@ -44,7 +44,15 @@ const WithDropdown = () => (
   />
 )
 
+const Welcome = () => (
+  <OnboardingContainer
+    {...mocks.welcome}
+    t={t => t}
+  />
+)
+
 export default {
+  Welcome,
   WhenDeadEnd,
   WhenLoading,
   WithCardIconAndSubtitle,

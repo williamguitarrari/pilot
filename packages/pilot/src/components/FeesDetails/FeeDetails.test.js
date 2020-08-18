@@ -22,6 +22,7 @@ test('render 1, 2 and 7 installments with all fees', () => {
   }
 
   const {
+    container,
     getByText,
     queryByText,
   } = render(<FeesDetails fees={fees} t={identity} />)
@@ -30,6 +31,7 @@ test('render 1, 2 and 7 installments with all fees', () => {
   getByText(/fees.two_to_six_installments/)
   getByText(/fees.seven_or_more_installments/)
   expect(queryByText(/fees.per_transaction/)).toBe(null)
+  expect(container).toMatchSnapshot()
 })
 
 test('render 1 installments with all fees and isMDRzao enabled', () => {
@@ -41,11 +43,14 @@ test('render 1 installments with all fees and isMDRzao enabled', () => {
   }
 
   const {
+    container,
     getByText,
   } = render(<FeesDetails fees={fees} t={identity} isMDRzao />)
 
   getByText(/fees.mdrzao_installment/)
   getByText(/fees.per_transaction/)
+
+  expect(container).toMatchSnapshot()
 })
 
 test('render no installments are provided', () => {
@@ -55,6 +60,7 @@ test('render no installments are provided', () => {
   }
 
   const {
+    container,
     queryByText,
   } = render(<FeesDetails fees={fees} t={identity} />)
 
@@ -62,4 +68,5 @@ test('render no installments are provided', () => {
   expect(queryByText(/fees.two_to_six_installments/)).toBe(null)
   expect(queryByText(/fees.seven_or_more_installments/)).toBe(null)
   expect(queryByText(/fees.per_transaction/)).toBe(null)
+  expect(container).toMatchSnapshot()
 })

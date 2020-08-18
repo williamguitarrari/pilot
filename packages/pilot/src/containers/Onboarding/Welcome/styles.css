@@ -1,0 +1,56 @@
+@import "former-kit-skin-pagarme/dist/styles/webfonts/poppins/index.css";
+@import "former-kit-skin-pagarme/dist/styles/colors.css";
+@import "former-kit-skin-pagarme/dist/styles/spacing.css";
+
+.onboardingWelcome {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+}
+
+.welcome {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.welcomeText {
+  font-size: 14px;
+  line-height: 20px;
+  margin: 0 0 var(--spacing-tiny) 0;
+}
+
+.welcomeDescription {
+  font-size: 14px;
+  line-height: 20px;
+  margin: 0 0 0 48px;
+}
+
+.welcomeTitle {
+  color: var(--color-birdperson-gray-600);
+  font-family: "Poppins", sans-serif;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 46px;
+  margin-bottom: var(--spacing-tiny);
+}
+
+.welcomeDescriptionTitle {
+  display: flex;
+  align-items: center;
+  margin-top: var(--spacing-medium);
+
+  & p {
+    margin: 0 0 0 var(--spacing-small);
+    font-weight: bold;
+  }
+
+  & svg {
+    color: var(--color-barney-purple-100);
+  }
+}
+
+.welcomeContent {
+  margin-bottom: 42px;
+}

@@ -5,6 +5,7 @@ import CardOptions from './CardOptions'
 import DropdownOptions from './DropownOptions'
 import OtherOptions from './OtherOptions'
 import ProgressBar from './ProgressBar'
+import Welcome from './Welcome'
 import OnboardingBackground from '../../components/OnboardingBackground'
 import Spinner from '../../components/Spinner'
 import styles from './styles.css'
@@ -12,10 +13,12 @@ import styles from './styles.css'
 import ArrowBack from './arrow-back.svg'
 
 const OnboardingContainer = ({
+  handleStartOnboarding,
   loading,
   onReturn,
   onSkipOnboarding,
   onSubmit,
+  onboardingStarted,
   question,
   questionSettings,
   status,
@@ -39,6 +42,18 @@ const OnboardingContainer = ({
         <div className={styles.loading}>
           <Spinner />
         </div>
+      </OnboardingBackground>
+    )
+  }
+
+  if (!onboardingStarted) {
+    return (
+      <OnboardingBackground>
+        <Welcome
+          t={t}
+          userName={userName}
+          handleStartOnboarding={handleStartOnboarding}
+        />
       </OnboardingBackground>
     )
   }
@@ -102,7 +117,9 @@ const OnboardingContainer = ({
 }
 
 OnboardingContainer.propTypes = {
+  handleStartOnboarding: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
+  onboardingStarted: PropTypes.bool.isRequired,
   onReturn: PropTypes.func,
   onSkipOnboarding: PropTypes.func,
   onSubmit: PropTypes.func,

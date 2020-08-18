@@ -94,6 +94,7 @@ const Onboarding = ({
   userName,
 }) => {
   const [lastAnswerSubmited, setLastAnswerSubmited] = useState(null)
+  const [onboardingStarted, startOnboarding] = useState(false)
 
   const machineContext = machineContextFactory(onboardingAnswers)
   const onboardingMachine = onboardingMachineFactory(machineContext)
@@ -113,6 +114,10 @@ const Onboarding = ({
       requestOnboardingQuestion(questionId)
     }
   }, [currentQuestion, requestOnboardingQuestion])
+
+  const handleStartOnboarding = () => {
+    startOnboarding(true)
+  }
 
   const onSubmit = (answer, others) => {
     const {
@@ -178,7 +183,9 @@ const Onboarding = ({
 
   return (
     <OnboardingContainer
+      handleStartOnboarding={handleStartOnboarding}
       loading={loading}
+      onboardingStarted={onboardingStarted}
       onReturn={onReturn}
       onSkipOnboarding={skipOnboarding(push)}
       onSubmit={onSubmit}
