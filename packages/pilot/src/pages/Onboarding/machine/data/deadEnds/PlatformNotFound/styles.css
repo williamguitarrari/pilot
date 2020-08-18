@@ -1,7 +1,7 @@
-@import "former-kit-skin-pagarme/dist/styles/webfonts/roboto/index.css";
+@import "former-kit-skin-pagarme/dist/styles/webfonts/poppins/index.css";
 @import "former-kit-skin-pagarme/dist/styles/spacing.css";
 @import "former-kit-skin-pagarme/dist/styles/typography.css";
-@import "former-kit-skin-pagarme/dist/styles/colors/light.css";
+@import "former-kit-skin-pagarme/dist/styles/colors.css";
 
 .platformNotFound button {
   margin-top: var(--spacing-medium);
@@ -10,13 +10,12 @@
 
 .platformNotFound > .skipToDashboard {
   color: var(--color-picklerick-green-100);
-  font-family: "Roboto", sans-serif;
   font-size: var(--body-font-size);
   font-weight: 500;
 }
 
 .title {
-  font-family: "Roboto", sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: var(--headline-font-size);
   font-weight: bold;
   line-height: 41px;
@@ -24,6 +23,5 @@
 }
 
 .description {
-  font-family: "Roboto", sans-serif;
   font-size: var(--body-font-size);
 }

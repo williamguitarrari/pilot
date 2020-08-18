@@ -1,4 +1,5 @@
-@import "former-kit-skin-pagarme/dist/styles/webfonts/roboto/index.css";
+@import "former-kit-skin-pagarme/dist/styles/webfonts/poppins/index.css";
+@import "former-kit-skin-pagarme/dist/styles/colors.css";
 
 .loading {
   display: flex;
@@ -15,7 +16,7 @@
   flex-direction: column;
   height: 100%;
   justify-content: space-between;
-  width: 400px;
+  width: 100%;
 }
 
 .welcome {
@@ -23,10 +24,10 @@
 }
 
 .title {
-  font-family: "Roboto", sans-serif;
-  font-size: 30px;
-  font-weight: bold;
-  line-height: 41px;
+  color: var(--color-birdperson-gray-600);
+  font-family: "Poppins", sans-serif;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 46px;
   margin-bottom: 50px;
-  margin-top: 8px;
 }

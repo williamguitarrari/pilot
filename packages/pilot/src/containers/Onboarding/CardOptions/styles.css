@@ -1,9 +1,8 @@
 @import "former-kit-skin-pagarme/dist/styles/spacing.css";
-@import "former-kit-skin-pagarme/dist/styles/colors/light.css";
-@import "former-kit-skin-pagarme/dist/styles/webfonts/roboto/index.css";
+@import "former-kit-skin-pagarme/dist/styles/colors.css";
 
 .cardOptionsContainer > div {
-  margin-bottom: 20px;
+  margin-bottom: var(--spacing-large);
 }
 
 .content {
@@ -21,7 +20,7 @@
 }
 
 .cardIcon {
-  margin-right: 25px;
+  margin-right: var(--spacing-medium);
 }
 
 .cardIcon:empty {
@@ -30,11 +29,10 @@
 
 .cardText {
   color: var(--color-birdperson-gray-600);
-  font-family: "Roboto", sans-serif;
 
   & p {
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 600;
     margin: 0;
   }
 
