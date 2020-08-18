@@ -1,6 +1,7 @@
 {
-  "extends": "pagarme-react",
+  "extends": ["pagarme-react", "plugin:jest/recommended"],
   "parser": "babel-eslint",
+  "plugins": ["jest"],
   "rules": {
     "import/no-named-as-default-member": 0,
     "import/no-named-as-default": 0
