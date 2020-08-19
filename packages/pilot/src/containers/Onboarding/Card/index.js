@@ -1,14 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import { is } from 'ramda'
 import { Card as FormerCard } from 'former-kit'
 import styles from './styles.css'
 
 const isFunction = is(Function)
 
-const Card = ({ children, onSubmit }) => {
+const Card = ({ children, className, onSubmit }) => {
   const card = (
-    <FormerCard className={styles.card}>
+    <FormerCard className={classNames(styles.card, className)}>
       {children}
     </FormerCard>
   )
@@ -32,10 +33,12 @@ const Card = ({ children, onSubmit }) => {
 
 Card.propTypes = {
   children: PropTypes.element.isRequired,
+  className: PropTypes.string,
   onSubmit: PropTypes.func,
 }
 
 Card.defaultProps = {
+  className: '',
   onSubmit: null,
 }
 

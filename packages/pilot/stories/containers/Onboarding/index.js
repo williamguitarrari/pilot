@@ -51,6 +51,13 @@ const Welcome = () => (
   />
 )
 
+const WithSegments = () => (
+  <OnboardingContainer
+    {...mocks.withSegments}
+    t={t => t}
+  />
+)
+
 export default {
   Welcome,
   WhenDeadEnd,
@@ -59,4 +66,5 @@ export default {
   WithCardIconAndWithoutSubtitle,
   WithCardWithoutIconAndSubtitle,
   WithDropdown,
+  WithSegments,
 }
