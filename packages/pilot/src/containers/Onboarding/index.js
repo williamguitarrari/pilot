@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Button } from 'former-kit'
 import CardOptions from './CardOptions'
+import SegmentOptions from './SegmentOptions'
 import DropdownOptions from './DropownOptions'
 import OtherOptions from './OtherOptions'
 import ProgressBar from './ProgressBar'
@@ -81,25 +82,36 @@ const OnboardingContainer = ({
           {header}
           <h1 className={styles.title}>{question.title}</h1>
           {
-            questionSettings.type === 'card'
-              ? (
-                <CardOptions
-                  handleSubmit={handleSubmit}
-                  images={questionSettings.images}
-                  options={question.options}
-                />
-              )
-              : (
-                <DropdownOptions
-                  handleSubmit={handleSubmit}
-                  isLastQuestion={status === 'finishing'}
-                  options={question.options}
-                  placeholderPath={questionSettings.placeholder}
-                  t={t}
-                />
-              )
+            questionSettings.type === 'card' && (
+            <CardOptions
+              handleSubmit={handleSubmit}
+              images={questionSettings.images}
+              options={question.options}
+            />
+            )
           }
-
+          {
+            questionSettings.type === 'drop-down' && (
+            <DropdownOptions
+              handleSubmit={handleSubmit}
+              isLastQuestion={status === 'finishing'}
+              options={question.options}
+              placeholderPath={questionSettings.placeholder}
+              t={t}
+            />
+            )
+          }
+          {
+            questionSettings.type === 'segments' && (
+              <SegmentOptions
+                handleSubmit={handleSubmit}
+                images={questionSettings.images}
+                options={question.options}
+                notFoundText={questionSettings.notFoundText}
+                t={t}
+              />
+            )
+          }
           <OtherOptions
             options={question.others}
             others={others}
@@ -117,7 +129,7 @@ const OnboardingContainer = ({
 }
 
 OnboardingContainer.propTypes = {
-  handleStartOnboarding: PropTypes.func.isRequired,
+  handleStartOnboarding: PropTypes.func,
   loading: PropTypes.bool.isRequired,
   onboardingStarted: PropTypes.bool.isRequired,
   onReturn: PropTypes.func,
@@ -144,9 +156,10 @@ OnboardingContainer.propTypes = {
   questionSettings: PropTypes.shape({
     deadEnd: PropTypes.func,
     images: PropTypes.arrayOf(PropTypes.func),
+    notFoundText: PropTypes.string,
     placeholder: PropTypes.string,
     progressPercent: PropTypes.number,
-    type: PropTypes.oneOf(['card', 'drop-down']),
+    type: PropTypes.oneOf(['card', 'drop-down', 'segments']),
   }),
   status: PropTypes.oneOf(['starting', 'boarding', 'finishing']).isRequired,
   t: PropTypes.func.isRequired,
@@ -154,6 +167,7 @@ OnboardingContainer.propTypes = {
 }
 
 OnboardingContainer.defaultProps = {
+  handleStartOnboarding: () => {},
   onReturn: () => {},
   onSkipOnboarding: () => {},
   onSubmit: () => {},

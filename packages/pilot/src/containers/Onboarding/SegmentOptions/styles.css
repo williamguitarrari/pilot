@@ -1,0 +1,43 @@
+@import "former-kit-skin-pagarme/dist/styles/colors.css";
+@import "former-kit-skin-pagarme/dist/styles/spacing.css";
+
+.cards {
+  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: var(--spacing-medium);
+  justify-content: center;
+}
+
+.cardContent {
+  align-items: center;
+  color: var(--color-picklerick-green-100);
+  display: flex;
+  flex-direction: column;
+  min-width: 144px;
+  padding: var(--spacing-large) 0 var(--spacing-medium);
+  justify-content: center;
+}
+
+.cardLabel {
+  font-size: 14px;
+  line-height: 18px;
+  text-align: center;
+  color: var(--color-birdperson-gray-600);
+}
+
+.lastCard {
+  background-color: var(--color-squanchy-gray-20);
+  border: 1px solid var(--color-squanchy-gray-50);
+  box-shadow: unset;
+}
+
+.notFound {
+  justify-content: center;
+  display: flex;
+  padding-top: var(--spacing-large);
+
+  & [role="link"] {
+    color: var(--color-squanchy-gray-300);
+  }
+}

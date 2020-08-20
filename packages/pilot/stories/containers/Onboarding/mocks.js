@@ -1,5 +1,14 @@
-import BoxIcon from './box.svg'
+import FoodIcon from 'emblematic-icons/svg/Food32.svg'
+import WatchIcon from 'emblematic-icons/svg/Watch32.svg'
+import HomeIcon from 'emblematic-icons/svg/Home32.svg'
+import PhoneIcon from 'emblematic-icons/svg/Phone32.svg'
+import WrenchIcon from 'emblematic-icons/svg/Wrench32.svg'
+import PlusIcon from 'emblematic-icons/svg/Plus32.svg'
+import ShortsIcon from 'emblematic-icons/svg/Shorts32.svg'
+import CalendarIcon from 'emblematic-icons/svg/Calendar32.svg'
+import MedalIcon from 'emblematic-icons/svg/Medal32.svg'
 import SampleDeadEnd from './SampleDeadEnd'
+import BoxIcon from './box.svg'
 
 export default {
   welcome: {
@@ -151,6 +160,70 @@ export default {
       type: 'drop-down',
     },
     status: 'finishing',
+    userName: 'Eduardo',
+  },
+  withSegments: {
+    loading: false,
+    onboardingStarted: true,
+    question: {
+      label: 'antifraud',
+      options: [
+        {
+          category: 'food',
+          label: 'Alimentos',
+        },
+        {
+          category: 'cosmetics',
+          label: 'Beleza e acessórios',
+        },
+        {
+          category: 'house',
+          label: 'Casa e escritório',
+        },
+        {
+          category: 'games',
+          label: 'Eletrônicos e jogos',
+        },
+        {
+          category: 'tools',
+          label: 'Equipamentos',
+        },
+        {
+          category: 'shorts',
+          label: 'Roupas e calçados',
+        },
+        {
+          category: 'travel',
+          label: 'Turismo e eventos',
+        },
+        {
+          category: 'services',
+          label: 'Serviços e cursos',
+        },
+        {
+          category: 'others',
+          label: 'Outros',
+        },
+      ],
+      others: [],
+      title: 'Qual é o ramo de atuação do seu negócio?',
+    },
+    questionSettings: {
+      images: [
+        FoodIcon,
+        WatchIcon,
+        HomeIcon,
+        PhoneIcon,
+        WrenchIcon,
+        ShortsIcon,
+        CalendarIcon,
+        MedalIcon,
+        PlusIcon,
+      ],
+      progressPercent: 70,
+      type: 'segments',
+    },
+    status: 'boarding',
     userName: 'Eduardo',
   },
 }

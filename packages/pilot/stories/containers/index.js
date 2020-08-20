@@ -134,6 +134,9 @@ storiesOf('Containers|Onboarding')
   .add('When DeadEnd', () => (
     <Onboarding.WhenDeadEnd />
   ))
+  .add('When Segments', () => (
+    <Onboarding.WithSegments />
+  ))
   .add('Welcome', () => (
     <Onboarding.Welcome />
   ))
