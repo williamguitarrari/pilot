@@ -29,7 +29,7 @@ import routes from './routes'
 // const getAnticipationLimit = path(['anticipation', 'limits', 'max'])
 const getRecipientId = path(['account', 'company', 'default_recipient_id', env])
 const getBalance = path(['account', 'balance'])
-const getCompanyCapabilities = path(['account', 'company', 'capabilities'])
+const getCompanyCanCreateRecipient = path(['account', 'company', 'marketplace', env, 'can_create_recipient'])
 const getCompanyName = path(['account', 'company', 'name'])
 const getCompanyType = path(['account', 'company', 'type'])
 const getAccountSessionId = path(['account', 'sessionId'])
@@ -42,7 +42,7 @@ const mapStateToProps = applySpec({
   // More details in issue #1159
   // anticipationLimit: getAnticipationLimit,
   balance: getBalance,
-  companyCapabilities: getCompanyCapabilities,
+  companyCanCreateRecipient: getCompanyCanCreateRecipient,
   companyName: getCompanyName,
   companyType: getCompanyType,
   recipientId: getRecipientId,
@@ -63,7 +63,7 @@ const LoggedArea = ({
   // More details in issue #1159
   // anticipationLimit,
   balance,
-  companyCapabilities,
+  companyCanCreateRecipient,
   companyName,
   companyType,
   recipientId,
@@ -79,7 +79,7 @@ const LoggedArea = ({
         // This code will be used again in the future when ATLAS project implements the anticipation flow
         // More details in issue #1159
         // anticipationLimit={anticipationLimit}
-        companyCapabilities={companyCapabilities}
+        companyCanCreateRecipient={companyCanCreateRecipient}
         companyName={companyName}
         companyType={companyType}
         balance={balance}
@@ -124,9 +124,7 @@ LoggedArea.propTypes = {
   balance: PropTypes.shape({
     available: PropTypes.number,
   }),
-  companyCapabilities: PropTypes.shape({
-    allow_manage_recipient: PropTypes.bool,
-  }),
+  companyCanCreateRecipient: PropTypes.bool,
   companyName: PropTypes.string,
   companyType: PropTypes.string,
   recipientId: PropTypes.string,
@@ -144,7 +142,7 @@ LoggedArea.defaultProps = {
   // More details in issue #1159
   // anticipationLimit: null,
   balance: {},
-  companyCapabilities: {},
+  companyCanCreateRecipient: false,
   companyName: '',
   companyType: '',
   recipientId: null,

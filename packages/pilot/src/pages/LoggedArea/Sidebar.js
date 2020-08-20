@@ -40,7 +40,7 @@ const Sidebar = ({
   // More details in issue #1159
   // anticipationLimit,
   balance,
-  companyCapabilities,
+  companyCanCreateRecipient,
   companyName,
   companyType,
   history,
@@ -57,7 +57,7 @@ const Sidebar = ({
     links={values(routes)
       .filter(({ hidden, validateVisibility }) => {
         if (validateVisibility) {
-          return validateVisibility(companyCapabilities)
+          return validateVisibility(companyCanCreateRecipient, companyType)
         }
 
         return !hidden
@@ -90,9 +90,7 @@ Sidebar.propTypes = {
   balance: PropTypes.shape({
     available: PropTypes.number,
   }).isRequired,
-  companyCapabilities: PropTypes.shape({
-    allow_manage_recipient: PropTypes.bool,
-  }),
+  companyCanCreateRecipient: PropTypes.bool,
   companyName: PropTypes.string,
   companyType: PropTypes.string,
   history: PropTypes.shape({
@@ -115,7 +113,7 @@ Sidebar.defaultProps = {
   // This code will be used again in the future when ATLAS project implements the anticipation flow
   // More details in issue #1159
   // anticipationLimit: null,
-  companyCapabilities: {},
+  companyCanCreateRecipient: false,
   companyName: '',
   companyType: '',
   recipientId: null,
