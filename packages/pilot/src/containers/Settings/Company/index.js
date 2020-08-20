@@ -83,10 +83,7 @@ class CompanySettings extends Component {
           >
             <TabItem text={t('pages.settings.company.tab.general')} />
             <TabItem text={t('pages.settings.company.tab.products')} />
-            {!isPaymentLink(company)
-              ? <TabItem text={t('pages.settings.company.tab.team')} />
-              : <></>
-            }
+            <TabItem text={t('pages.settings.company.tab.team')} />
             <TabItem text={t('pages.settings.company.tab.register')} />
           </TabBar>
         </CardContent>
