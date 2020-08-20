@@ -87,9 +87,7 @@ export default {
     title: 'pages.withdraw.title',
   },
   recipients: {
-    validateVisibility: ({
-      allow_manage_recipient: allowManageRecipient,
-    }) => !!allowManageRecipient,
+    validateVisibility: (companyCanCreateRecipient, companyType) => companyCanCreateRecipient && companyType !== 'payment_link_app',
     hidden: false,
     title: 'pages.recipients.title',
     path: '/recipients',
