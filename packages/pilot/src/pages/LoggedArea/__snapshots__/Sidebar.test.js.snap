@@ -174,21 +174,6 @@ exports[`should not show recipient tab when companyCanCreateRecipient is false 1
         </li>
       </ul>
     </nav>
-    <div
-      class="backToOldVersion"
-    >
-      <button
-        class=""
-        type="button"
-      >
-        <span>
-          pages.sidebar.back_to_old_version
-        </span>
-        <span
-          style="height: 0px; left: 0px; top: 0px; width: 0px;"
-        />
-      </button>
-    </div>
   </aside>
 </div>
 `;
@@ -386,21 +371,6 @@ exports[`should show recipient tab when companyCanCreateRecipient is true 1`] = 
         </li>
       </ul>
     </nav>
-    <div
-      class="backToOldVersion"
-    >
-      <button
-        class=""
-        type="button"
-      >
-        <span>
-          pages.sidebar.back_to_old_version
-        </span>
-        <span
-          style="height: 0px; left: 0px; top: 0px; width: 0px;"
-        />
-      </button>
-    </div>
   </aside>
 </div>
 `;

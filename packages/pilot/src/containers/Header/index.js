@@ -76,6 +76,7 @@ const renderEnvironmentButton = ({
 const HeaderContainer = ({
   companyType,
   onBack,
+  onBackToOldVersion,
   onLogout,
   onSettings,
   onWelcome,
@@ -83,85 +84,95 @@ const HeaderContainer = ({
   showWelcomeButton,
   t,
   user,
-}) => (
-  <>
-    { environment === 'test' && renderTestEnviromentNav(t) }
-    <Header>
-      <HashRouter>
-        <Switch>
-          {routes.map(({
-            exact,
-            icon: Icon,
-            path,
-            title,
-          }) => (
-            <Route
-              exact={exact}
-              key={path}
-              path={path}
-              render={() => (
-                <Fragment>
-                  {!Icon && <HeaderBackButton onClick={onBack} />}
-                  {Icon && <Icon width={16} height={16} />}
-                  <HeaderTitle>{t(title)}</HeaderTitle>
-                </Fragment>
-              )}
-            />
-          ))}
-        </Switch>
-      </HashRouter>
-      <HeaderContent>
-        {showWelcomeButton && (
-          <>
-            <Button
-              icon={<IconRocket />}
-              onClick={onWelcome}
-            >
-              <span className={style.welcome}>
-                {t('header.welcome')}
-              </span>
-            </Button>
+}) => {
+  const items = isPaymentLink(companyType)
+    ? [
+      { action: onSettings, title: t('header.account.settings') },
+      { action: onLogout, title: t('header.account.logout') },
+    ]
+    : [
+      { action: onSettings, title: t('header.account.settings') },
+      { action: onBackToOldVersion, title: t('header.back_to_old_version') },
+      { action: onLogout, title: t('header.account.logout') },
+    ]
 
-            <Spacing size="small" />
-          </>
-        )}
+  return (
+    <>
+      { environment === 'test' && renderTestEnviromentNav(t) }
+      <Header>
+        <HashRouter>
+          <Switch>
+            {routes.map(({
+              exact,
+              icon: Icon,
+              path,
+              title,
+            }) => (
+              <Route
+                exact={exact}
+                key={path}
+                path={path}
+                render={() => (
+                  <Fragment>
+                    {!Icon && <HeaderBackButton onClick={onBack} />}
+                    {Icon && <Icon width={16} height={16} />}
+                    <HeaderTitle>{t(title)}</HeaderTitle>
+                  </Fragment>
+                )}
+              />
+            ))}
+          </Switch>
+        </HashRouter>
+        <HeaderContent>
+          {showWelcomeButton && (
+            <>
+              <Button
+                icon={<IconRocket />}
+                onClick={onWelcome}
+              >
+                <span className={style.welcome}>
+                  {t('header.welcome')}
+                </span>
+              </Button>
 
-        {
-          companyType
-            && environment === 'live'
-            && !isPaymentLink(companyType)
-            && renderEnvironmentButton({ t })
-        }
-
-        <Spacing size="small" />
-
-        <HeaderMenu
-          title={(
-            <Fragment>
-              <Avatar alt={user.name} />
-              <span>{user.name}</span>
-            </Fragment>
+              <Spacing size="small" />
+            </>
           )}
-        >
-          <PopoverContent>
-            <strong>
-              {user.name}
-            </strong>
-            <small>
-              {t(`models.user.permission.${user.permission}`)}
-            </small>
-          </PopoverContent>
-          <PopoverMenu
-            items={[
-              { action: onSettings, title: t('header.account.settings') },
-              { action: onLogout, title: t('header.account.logout') },
-            ]}
-          />
-        </HeaderMenu>
-      </HeaderContent>
-    </Header>
-  </>
-)
+
+          {
+            companyType
+              && environment === 'live'
+              && !isPaymentLink(companyType)
+              && renderEnvironmentButton({ t })
+          }
+
+          <Spacing size="small" />
+
+          <HeaderMenu
+            title={(
+              <Fragment>
+                <Avatar alt={user.name} />
+                <span>{user.name}</span>
+              </Fragment>
+            )}
+          >
+            <PopoverContent>
+              <strong>
+                {user.name}
+              </strong>
+              <small>
+                {t(`models.user.permission.${user.permission}`)}
+              </small>
+            </PopoverContent>
+            <PopoverMenu
+              items={items}
+            />
+          </HeaderMenu>
+        </HeaderContent>
+      </Header>
+    </>
+  )
+}
 
 renderEnvironmentButton.propTypes = {
   t: PropTypes.func.isRequired,
@@ -170,6 +181,7 @@ renderEnvironmentButton.propTypes = {
 HeaderContainer.propTypes = {
   companyType: PropTypes.string,
   onBack: PropTypes.func.isRequired,
+  onBackToOldVersion: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
   onSettings: PropTypes.func.isRequired,
   onWelcome: PropTypes.func.isRequired,

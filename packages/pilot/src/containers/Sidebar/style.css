@@ -1,11 +1,6 @@
 @import "former-kit-skin-pagarme/dist/styles/colors/light.css";
 @import "former-kit-skin-pagarme/dist/styles/spacing.css";
 
-.backToOldVersion {
-  bottom: var(--spacing-large);
-  position: absolute;
-}
-
 .sidebarIcon {
   fill: var(--color-squanchy-gray-100);
 }

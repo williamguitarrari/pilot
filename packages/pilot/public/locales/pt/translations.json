@@ -171,7 +171,8 @@
     "alerts": "Notificações",
     "messages": "Mensagens",
     "exit": "Sair",
-    "welcome": "Boas-vindas!"
+    "welcome": "Boas-vindas!",
+    "back_to_old_version": "Voltar para a dashboard legada"
   },
   "landing": {
     "logo": "FormerKit",
@@ -1216,7 +1217,6 @@
     "sidebar": {
       "available": "Disponível para saque",
       "balance": "Saldo",
-      "back_to_old_version": "Voltar para a dashboard legada",
       "currency_symbol": "R$",
       "hide_balance": "Ocultar saldo",
       "show_balance": "Mostrar saldo",
