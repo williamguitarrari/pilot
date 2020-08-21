@@ -16,6 +16,7 @@ import IconInfo from 'emblematic-icons/svg/InfoCircle32.svg'
 import Close from 'emblematic-icons/svg/ClearClose32.svg'
 
 import emailValidation from '../../../../../validation/email'
+import isPaymentLink from '../../../../../validation/isPaymentLink'
 
 const isEmail = t => emailValidation(t('validations.isEmail'))
 const required = t => value => (
@@ -23,20 +24,37 @@ const required = t => value => (
     ? null
     : t('pages.settings.user.card.access.field_required')
 )
-const permissions = [
-  {
-    name: 'Administrador',
-    value: 'admin',
-  },
-  {
-    name: 'Apenas leitura',
-    value: 'read_only',
-  },
-  {
-    name: 'Leitura e escrita',
-    value: 'read_write',
-  },
-]
+const getPermissionList = (company) => {
+  const permissionsList = [
+    'admin',
+    'read_only',
+  ]
+  const newArrayValue = isPaymentLink(company)
+    ? 'seller'
+    : 'read_write'
+
+  return [
+    ...permissionsList,
+    newArrayValue,
+  ]
+}
+
+const getValue = (value) => {
+  if (value === 'seller') {
+    return 'read_write'
+  }
+
+  return value
+}
+
+const getPermissionValues = (permissionsList, t) => (
+  permissionsList.map(item => (
+    {
+      name: t(`models.user.permission.${item}`),
+      value: getValue(item),
+    }
+  ))
+)
 
 class AddNewUserModal extends React.Component {
   constructor (props) {
@@ -63,6 +81,14 @@ class AddNewUserModal extends React.Component {
         },
       })
     }
+  }
+
+  getPermissions () {
+    const { company, t } = this.props
+    const permissionsList = getPermissionList(company)
+    const permissionsValues = getPermissionValues(permissionsList, t)
+
+    return permissionsValues
   }
 
   handleFormSubmit (data, errors) {
@@ -138,7 +164,7 @@ class AddNewUserModal extends React.Component {
             </p>
 
             <RadioGroup
-              options={permissions}
+              options={this.getPermissions()}
               name="permission"
             />
 
@@ -192,6 +218,9 @@ class AddNewUserModal extends React.Component {
 }
 
 AddNewUserModal.propTypes = {
+  company: PropTypes.shape({
+    type: PropTypes.string.isRequired,
+  }).isRequired,
   handleCloseModal: PropTypes.func.isRequired,
   handleCreateUser: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,

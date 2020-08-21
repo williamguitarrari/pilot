@@ -122,6 +122,7 @@ class CompanySettings extends Component {
         {selectedIndex === 2
           && (
             <TeamInfoTab
+              company={company}
               createUserStatus={createUserStatus}
               deleteUserStatus={deleteUserStatus}
               handleCreateUser={handleCreateUser}

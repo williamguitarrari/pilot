@@ -54,6 +54,7 @@ class MenagementTeam extends React.Component {
 
   renderContent () {
     const {
+      company,
       createUserStatus,
       deleteUserStatus,
       handleCreateUser,
@@ -69,6 +70,7 @@ class MenagementTeam extends React.Component {
     return (
       <Fragment>
         <AddNewUserModal
+          company={company}
           isOpen={isModalOpened}
           handleCloseModal={this.handleCloseModal}
           handleCreateUser={handleCreateUser}
@@ -116,6 +118,7 @@ class MenagementTeam extends React.Component {
         )}
         <CardContent>
           <UserTable
+            company={company}
             handleDeleteUser={handleDeleteUser}
             t={t}
             team={team}
@@ -153,6 +156,9 @@ class MenagementTeam extends React.Component {
 }
 
 MenagementTeam.propTypes = {
+  company: PropTypes.shape({
+    type: PropTypes.string.isRequired,
+  }).isRequired,
   createUserStatus: PropTypes.shape({
     error: PropTypes.string,
     loading: PropTypes.bool,
