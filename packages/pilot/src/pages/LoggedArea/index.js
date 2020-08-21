@@ -84,12 +84,16 @@ const LoggedArea = ({
         companyType={companyType}
         balance={balance}
         recipientId={recipientId}
-        sessionId={sessionId}
         t={t}
         transfersPricing={transfersPricing}
       />
     )}
-    header={<Header t={t} />}
+    header={(
+      <Header
+        t={t}
+        sessionId={sessionId}
+      />
+    )}
   >
     <ErrorBoundary>
       <Suspense

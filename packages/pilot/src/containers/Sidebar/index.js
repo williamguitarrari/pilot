@@ -10,7 +10,6 @@ import {
 
 import {
   Button,
-  Flexbox,
   Popover,
   PopoverContent,
   Sidebar,
@@ -29,7 +28,6 @@ import style from './style.css'
 import SidebarSections from '../../components/SidebarSections'
 import SidebarSummary from '../../components/SidebarSummary'
 import formatDecimalCurrency from '../../formatters/decimalCurrency'
-import environment from '../../environment'
 import isPaymentLink from '../../validation/isPaymentLink'
 
 const MINIMUM_API_VALUE = 100
@@ -99,11 +97,9 @@ class SidebarContainer extends React.Component {
     } = this.state
     const {
       companyName,
-      companyType,
       links,
       logo: Logo,
       onLinkClick,
-      sessionId,
       t,
     } = this.props
 
@@ -188,28 +184,6 @@ class SidebarContainer extends React.Component {
             />
           ))}
         </SidebarLinks>
-        {!collapsed && !isPaymentLink(companyType)
-          && (
-            <Flexbox
-              className={style.backToOldVersion}
-              justifyContent="center"
-            >
-              <Button
-                onClick={
-                  () => {
-                    localStorage.setItem('dashboardChoice', 'legacy')
-                    return window.open(`https://dashboard.pagar.me/#login?session_id=${sessionId}&redirect_to=dashboard.home&environment=${environment}`)
-                  }
-                }
-                fill="outline"
-                size="tiny"
-                relevance="low"
-              >
-                {t('pages.sidebar.back_to_old_version')}
-              </Button>
-            </Flexbox>
-          )
-        }
       </Sidebar>
     )
   }
@@ -237,7 +211,6 @@ SidebarContainer.propTypes = {
   logo: PropTypes.func.isRequired,
   onLinkClick: PropTypes.func.isRequired,
   onWithdraw: PropTypes.func,
-  sessionId: PropTypes.string,
   t: PropTypes.func.isRequired,
   transfersPricing: PropTypes.shape({
     ted: PropTypes.number,
@@ -253,7 +226,6 @@ SidebarContainer.defaultProps = {
   companyName: '',
   companyType: '',
   onWithdraw: null,
-  sessionId: '',
   transfersPricing: {},
 }
 

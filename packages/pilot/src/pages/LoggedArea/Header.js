@@ -16,6 +16,7 @@ import { requestLogout } from '../Account/actions/actions'
 import isCompanyPaymentLink from '../../validation/isPaymentLink'
 import isNilOrEmpty from '../../validation/isNilOrEmpty'
 import isRecentlyCreatedCompany from '../../validation/recentCreatedCompany'
+import environment from '../../environment'
 
 import HeaderContainer from '../../containers/Header'
 
@@ -47,6 +48,7 @@ const Header = ({
     pathname,
   },
   onLogout,
+  sessionId,
   t,
   user,
 }) => {
@@ -62,6 +64,12 @@ const Header = ({
       onLogout={onLogout}
       onSettings={() => push(routes.accountSettings.path)}
       onWelcome={() => push(routes.emptyState.path)}
+      onBackToOldVersion={
+        () => {
+          localStorage.setItem('dashboardChoice', 'legacy')
+          return window.open(`https://dashboard.pagar.me/#login?session_id=${sessionId}&redirect_to=dashboard.home&environment=${environment}`)
+        }
+      }
       routes={values(routes)}
       showWelcomeButton={showWelcomeButton}
       t={t}
@@ -82,6 +90,7 @@ Header.propTypes = {
     pathname: PropTypes.string.isRequired,
   }).isRequired,
   onLogout: PropTypes.func.isRequired,
+  sessionId: PropTypes.string,
   t: PropTypes.func.isRequired,
   user: PropTypes.shape({
     date_created: PropTypes.string,
@@ -92,6 +101,7 @@ Header.propTypes = {
 
 Header.defaultProps = {
   company: {},
+  sessionId: '',
 }
 
 export default enhance(Header)
