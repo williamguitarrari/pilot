@@ -633,6 +633,7 @@
         "admin": "Administrador",
         "read_only": "Somente leitura",
         "read_write": "Leitura e escrita",
+        "seller": "Vendedor",
         "errors": {
           "insufficient_permission": {
             "message": "Permissão insuficiente para realizar esta operação",
