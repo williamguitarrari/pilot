@@ -19,6 +19,7 @@ import {
 
 import IconAdd from 'emblematic-icons/svg/Trash24.svg'
 import RemoveUserModal from './RemoveUserModal'
+import isPaymentLink from '../../../../../validation/isPaymentLink'
 
 const isAscending = equals('ascending')
 
@@ -70,9 +71,17 @@ class UserTable extends React.Component {
     }
   }
 
-  getColumns () {
-    const { t } = this.props
+  getPermission (userRole) {
+    const { company, t } = this.props
 
+    if (userRole === 'read_write' && isPaymentLink(company)) {
+      return t('models.user.permission.seller')
+    }
+
+    return t(`models.user.permission.${userRole}`)
+  }
+
+  getColumns () {
     return [
       {
         accessor: ['name'],
@@ -97,7 +106,7 @@ class UserTable extends React.Component {
       {
         accessor: ['role'],
         orderable: true,
-        renderer: user => t(`models.user.permission.${user.role}`),
+        renderer: user => this.getPermission(user.role),
         title: 'Permissão',
       },
       { accessor: ['date_created'], orderable: true, title: 'Data de Criação' },
@@ -183,6 +192,9 @@ class UserTable extends React.Component {
 }
 
 UserTable.propTypes = {
+  company: PropTypes.shape({
+    type: PropTypes.string.isRequired,
+  }).isRequired,
   handleDeleteUser: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
   team: PropTypes.arrayOf(PropTypes.shape({
