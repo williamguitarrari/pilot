@@ -31,6 +31,7 @@ import environment, {
 
 import style from './style.css'
 import isPaymentLink from '../../validation/isPaymentLink'
+import getPermission from '../../utils/helpers/getPermission'
 
 const getEnvironmentUrl = () => (
   environment === 'test'
@@ -74,7 +75,7 @@ const renderEnvironmentButton = ({
 )
 
 const HeaderContainer = ({
-  companyType,
+  company,
   onBack,
   onBackToOldVersion,
   onLogout,
@@ -85,6 +86,8 @@ const HeaderContainer = ({
   t,
   user,
 }) => {
+  const companyType = company.type
+
   const items = isPaymentLink(companyType)
     ? [
       { action: onSettings, title: t('header.account.settings') },
@@ -161,7 +164,7 @@ const HeaderContainer = ({
                 {user.name}
               </strong>
               <small>
-                {t(`models.user.permission.${user.permission}`)}
+                { getPermission(user.permission, company, t) }
               </small>
             </PopoverContent>
             <PopoverMenu
@@ -179,7 +182,9 @@ renderEnvironmentButton.propTypes = {
 }
 
 HeaderContainer.propTypes = {
-  companyType: PropTypes.string,
+  company: PropTypes.shape({
+    type: PropTypes.string,
+  }),
   onBack: PropTypes.func.isRequired,
   onBackToOldVersion: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
@@ -200,7 +205,7 @@ HeaderContainer.propTypes = {
 }
 
 HeaderContainer.defaultProps = {
-  companyType: '',
+  company: {},
 }
 
 export default HeaderContainer
