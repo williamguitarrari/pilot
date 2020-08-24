@@ -41,6 +41,7 @@ const aggregations = {
       field: 'date_created',
       interval: 'day',
       format: 'MM/dd/yyyy',
+      time_zone: '-03:00',
     },
     aggregations: {
       per_status: {
