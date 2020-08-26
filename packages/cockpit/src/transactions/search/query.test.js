@@ -1,3 +1,4 @@
+import moment from 'moment-timezone'
 import {
   assocPath,
   assoc,
@@ -41,7 +42,7 @@ const aggregations = {
       field: 'date_created',
       interval: 'day',
       format: 'MM/dd/yyyy',
-      time_zone: '-03:00',
+      time_zone: moment.tz.guess(),
     },
     aggregations: {
       per_status: {
@@ -764,5 +765,13 @@ describe('Transactions from filter', () => {
 
     expect(buildQuery(dashQueryOrderNull)).toEqual(expectedFinalQuery)
     expect(buildQuery(dashQueryFieldNull)).toEqual(expectedFinalQuery)
+  })
+
+  it('should have a valid time zone', () => {
+    const query = buildQuery(dashboard)
+    const {
+      time_zone: timeZone,
+    } = query.aggregations.total_per_day.date_histogram
+    expect(moment.tz.zone(timeZone)).not.toBeNull()
   })
 })
