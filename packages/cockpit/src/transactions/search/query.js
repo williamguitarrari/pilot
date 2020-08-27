@@ -1,3 +1,4 @@
+import moment from 'moment-timezone'
 import {
   __,
   T,
@@ -101,7 +102,7 @@ const aggregations = {
       field: 'date_created',
       interval: 'day',
       format: 'MM/dd/yyyy',
-      time_zone: '-03:00',
+      time_zone: moment.tz.guess(),
     },
     aggregations: {
       per_status: {
