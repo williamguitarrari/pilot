@@ -89,19 +89,18 @@ const LoginForm = ({
             error={formErrors.password}
           />
         </div>
-        {errors
-            && (
-              <Alert
-                type="error"
-                icon={<IconError height={16} width={16} />}
-              >
-                {errors.null
-                  ? errors.null
-                  : t('login.network_error')
-              }
-              </Alert>
-            )
-          }
+        { errors && errors.map(error => (
+          <Alert
+            type="error"
+            icon={<IconError height={16} width={16} />}
+          >
+            {error.message
+              ? error.message
+              : t('login.network_error')
+            }
+          </Alert>
+        ))
+        }
         <ReCAPTCHA
           badge="bottomleft"
           ref={recaptchaRef}
