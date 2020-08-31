@@ -96,7 +96,7 @@
       "capture_timeout": "Acesse os detalhes da transação e tente reprocessá-la.",
       "checkout_cvv": "Oriente o portador a certificar-se que foi realizado o envio do CVV no fechamento do checkout.",
       "contact_acquirer": "Você pode orientar o portador a entrar em contato com o banco emissor do cartão.",
-      "credit_limit": "Você poder orientar o portador a entrar em contato com o banco emissor do cartão para aumento do limite.",
+      "credit_limit": "Você pode orientar o portador a entrar em contato com o banco emissor do cartão para aumento do limite.",
       "duplicated_payment": "É possível que o cliente já tenha realizado a compra com sucesso e está erroneamente enviando o pagamento uma segunda vez.",
       "imsg_error_1": "Maiores orientações no artigo: ",
       "imsg_error_2": "O que significa o Erro Interno IMSG?",
