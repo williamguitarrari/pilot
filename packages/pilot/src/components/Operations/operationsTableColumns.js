@@ -23,6 +23,7 @@ import {
   Flexbox,
   Spacing,
   Tooltip,
+  Truncate,
 } from 'former-kit'
 import IconAnticipation from 'emblematic-icons/svg/Undo24.svg'
 import HelpInfo from 'emblematic-icons/svg/Help32.svg'
@@ -152,7 +153,7 @@ const renderCreditTransferStatus = (
 const renderFeeCollection = (type, description) => {
   if (type === 'fee_collection' && description) {
     return (
-      <span>{description}</span>
+      <Truncate text={description} />
     )
   }
 
