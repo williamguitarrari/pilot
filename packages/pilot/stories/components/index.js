@@ -46,6 +46,7 @@ import WithLoader from './withLoader'
 import WithSpinner from './withSpinner'
 import WelcomeMessage from './WelcomeMessage'
 import FeesDetails from './FeesDetails'
+import Alert from './Alert'
 
 storiesOf('Components|Custom components', module)
   .addDecorator(withA11y)
@@ -102,3 +103,13 @@ storiesOf('Components|Custom components/FeesDetails', module)
   .addDecorator(withA11y)
   .add('Default', () => <FeesDetails.FeesDetailsDefault />)
   .add('MDRzao', () => <FeesDetails.FeesDetailsMDRzao />)
+
+storiesOf('Components|Custom components/Alert', module)
+  .add('Inactive Status', () => <Alert.InactiveStatus />)
+  .add('Pending Analysis Status', () => <Alert.PendingAnalysisStatus />)
+  .add('Pending Confirmation Status', () => <Alert.PendingConfirmationStatus />)
+  .add('Pending Confirmation Status Request Success',
+    () => <Alert.PendingConfirmationStatusRequestSuccess />)
+  .add('Pending Confirmation Status Request Failed',
+    () => <Alert.PendingConfirmationStatusRequestFailed />)
+  .add('Unknown Status', () => <Alert.UnknownStatus />)
