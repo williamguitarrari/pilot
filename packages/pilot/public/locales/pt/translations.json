@@ -195,7 +195,33 @@
     "token": "Token",
     "login_action": "Entrar",
     "forgot_password": "Esqueci minha senha",
-    "network_error": "Falha de comunicação com o Pagar.me. Verifique seu acesso a internet."
+    "network_error": "Falha de comunicação com o Pagar.me. Verifique seu acesso a internet.",
+    "alert": {
+      "inactive": {
+        "message": "A conta associada à este email está inativa",
+        "content": "Entre em contato com o time de relacionamento para saber mais detalhes."
+      },
+      "pending_analysis": {
+        "message": "Sua conta está sendo analisada pelo nosso time",
+        "content": "Em alguns dias entraremos em contato com a liberação do seu acesso à dashboard, até lá você pode testar sua integração no",
+        "content_link": "ambiente de testes."
+      },
+      "pending_confirmation": {
+        "initial": {
+          "message": "Confirme o seu email para acessar a dashboard",
+          "content": "Enviamos um email para o endereço cadastrado com as instruções de confirmação da conta, verifique a sua caixa de entrada, lixeira e a caixa de spam.",
+          "content_link": "Não recebi o email."
+        },
+        "error": {
+          "message": "Não foi possível reenviar o email de confirmação",
+          "content": "Tente novamente mais tarde ou entre em contato com o nosso time de atendimento através do chat."
+        },
+        "success": {
+          "message": "Email de confirmação reenviado com sucesso",
+          "content": "Verifique a sua caixa de entrada, lixeira e a caixa de spam. Caso o problema persista entre em contato com o nosso time de atendimento através do chat."
+        }
+      }
+    }
   },
   "validations": {
     "isEmail": "Não é um e-mail válido"
