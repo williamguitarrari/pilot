@@ -73,17 +73,17 @@ const firstStepDefaultData = {
 }
 
 const boletoInputDefaultValues = {
-  boleto_expires_in: undefined,
+  boleto_expires_in: 7,
 }
 
 const creditCardInputDefaultValues = {
-  free_installments: undefined,
-  interest_rate: '0',
-  max_installments: undefined,
+  free_installments: 1,
+  interest_rate: '2',
+  max_installments: 12,
 }
 
 const makeDefaulLinkData = () => ({
-  boleto: false,
+  boleto: true,
   credit_card: true,
   ...firstStepDefaultData,
   ...boletoInputDefaultValues,

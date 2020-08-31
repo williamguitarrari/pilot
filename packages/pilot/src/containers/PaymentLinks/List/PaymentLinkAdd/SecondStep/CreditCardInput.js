@@ -27,16 +27,7 @@ const buildInstallmentsValues = (t) => {
 const buildInterestFeesOptions = (
   installments, t
 ) => {
-  const interestFreeOption = {
-    name: t('pages.payment_links.add_link.second_step.without_fee_options'),
-    value: '0',
-  }
-
-  if (installments <= 1) {
-    return [interestFreeOption]
-  }
-
-  const withInterestOptionsRange = range(1, Number(installments))
+  const withInterestOptionsRange = range(1, Number(installments) + 1)
   const withInterestOptions = withInterestOptionsRange.map((value) => {
     const translationPath = value === 1
       ? 'installment_options_singular'
@@ -49,7 +40,6 @@ const buildInterestFeesOptions = (
   })
 
   return [
-    interestFreeOption,
     ...withInterestOptions,
   ]
 }
