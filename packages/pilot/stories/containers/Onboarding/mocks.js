@@ -11,6 +11,21 @@ import SampleDeadEnd from './SampleDeadEnd'
 import BoxIcon from './box.svg'
 
 export default {
+  macroSegmentOptions: {
+    images: [
+      FoodIcon,
+      PlusIcon,
+    ],
+    options: [
+      {
+        category: 'food',
+        label: 'Alimentos',
+      }, {
+        category: 'others',
+        label: 'Outros',
+      },
+    ],
+  },
   segmentOptions: [
     { label: 'Gráficas', value: 'graficas' },
     { label: 'Consultoria', value: 'consultoria' },

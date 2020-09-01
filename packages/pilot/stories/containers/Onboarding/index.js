@@ -3,6 +3,7 @@ import { action } from '@storybook/addon-actions'
 import Section from '../../Section'
 import OnboardingContainer from '../../../src/containers/Onboarding'
 import Segments from '../../../src/containers/Onboarding/SegmentOptions/Segments'
+import MacroSegments from '../../../src/containers/Onboarding/SegmentOptions/MacroSegments'
 import mocks from './mocks'
 
 const WhenDeadEnd = () => (
@@ -74,7 +75,21 @@ const SegmentOptions = () => (
   </Section>
 )
 
+const MacroSegmentsOptions = () => (
+  <Section>
+    <div style={{ width: '374px' }}>
+      <MacroSegments
+        handleSubmit={action('handleSubmit')}
+        notFoundText="Não encontrei o segmento do meu negócio"
+        images={mocks.macroSegmentOptions.images}
+        options={mocks.macroSegmentOptions.options}
+      />
+    </div>
+  </Section>
+)
+
 export default {
+  MacroSegmentsOptions,
   SegmentOptions,
   Welcome,
   WhenDeadEnd,

@@ -140,6 +140,9 @@ storiesOf('Containers|Onboarding')
   .add('Segment Options', () => (
     <Onboarding.SegmentOptions />
   ))
+  .add('Macrosegment Options', () => (
+    <Onboarding.MacroSegmentsOptions />
+  ))
   .add('When Segments', () => (
     <Onboarding.WithSegments />
   ))
