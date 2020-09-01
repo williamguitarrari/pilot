@@ -7,7 +7,6 @@ import {
   applySpec,
   anyPass,
   both,
-  complement,
   contains,
   either,
   equals,
@@ -271,7 +270,6 @@ class TransactionDetails extends Component {
     const {
       actionLabels,
       headerLabels,
-      isPaymentLink,
       loading: {
         reprocess,
       },
@@ -338,22 +336,29 @@ class TransactionDetails extends Component {
       return []
     }
 
-    const isNotPaymentLink = complement(() => isPaymentLink)
-
     const detailsHeadActions = pipe(
       juxt([
         ifElse(
-          propEq('capturable', true),
+          both(
+            propEq('capturable', true),
+            always(permissions.capture)
+          ),
           always(onCaptureAction),
           always(null)
         ),
         ifElse(
-          both(propEq('reprocessable', true), isNotPaymentLink),
+          both(
+            propEq('reprocessable', true),
+            always(permissions.reprocess)
+          ),
           always(onReprocessAction),
           always(null)
         ),
         ifElse(
-          propEq('refundable', true),
+          both(
+            propEq('refundable', true),
+            always(permissions.refund)
+          ),
           always(onRefundAction),
           always(null)
         ),
@@ -830,7 +835,6 @@ TransactionDetails.propTypes = {
     payment_date: PropTypes.instanceOf(moment),
     status: PropTypes.string,
   })).isRequired,
-  isPaymentLink: PropTypes.bool.isRequired,
   loading: PropTypes.shape({
     reprocess: PropTypes.bool,
   }),
@@ -858,6 +862,7 @@ TransactionDetails.propTypes = {
     title: PropTypes.string,
   }).isRequired,
   permissions: PropTypes.shape({
+    capture: PropTypes.bool.isRequired,
     manualReview: PropTypes.bool.isRequired,
     refund: PropTypes.bool.isRequired,
     reprocess: PropTypes.bool.isRequired,
