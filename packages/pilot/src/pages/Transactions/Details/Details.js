@@ -39,6 +39,7 @@ import Reprocess from '../../Reprocess'
 import currencyFormatter from '../../../formatters/decimalCurrency'
 import getColumnFormatter from '../../../formatters/columnTranslator'
 import checkIsPaymentLink from '../../../validation/isPaymentLink'
+import isLinkmeSeller from '../../../validation/isLinkmeSeller'
 import installmentTableColumns from '../../../components/RecipientSection/installmentTableColumns'
 import ManualReview from '../../ManualReview'
 import TransactionDetailsContainer from '../../../containers/TransactionDetails'
@@ -673,7 +674,7 @@ class TransactionDetails extends Component {
     }
 
     const nextTransactionId = transaction.nextId
-    const isPaymentLink = checkIsPaymentLink(company)
+    const isLinkmeCompany = checkIsPaymentLink(company)
 
     return (
       <Fragment>
@@ -685,7 +686,6 @@ class TransactionDetails extends Component {
           expandRecipients={expandRecipients}
           headerLabels={headerLabels}
           installmentColumns={installmentColumns}
-          isPaymentLink={isPaymentLink}
           loading={loading}
           metadataTitle={t('pages.transaction.metadata')}
           nextTransactionId={nextTransactionId}
@@ -705,8 +705,11 @@ class TransactionDetails extends Component {
           permissions={{
             capture: permission !== 'read_only',
             manualReview: permission !== 'read_only',
-            refund: permission !== 'read_only',
-            reprocess: permission !== 'read_only',
+            refund: (
+              permission !== 'read_only'
+              && !isLinkmeSeller({ company, user: { permission } })
+            ),
+            reprocess: permission !== 'read_only' && !isLinkmeCompany,
           }}
           recipientsLabels={recipientsLabels}
           riskLevelsLabels={riskLevelsLabels}
