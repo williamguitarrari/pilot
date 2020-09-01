@@ -41,3 +41,25 @@
     color: var(--color-squanchy-gray-300);
   }
 }
+
+.segmentReturn {
+  align-items: center;
+  color: var(--color-squanchy-gray-200);
+  display: flex;
+
+  & span {
+    padding-left: var(--spacing-tiny);
+  }
+}
+
+.segmentCardsWrapper {
+  column-gap: var(--spacing-medium);
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.segmentCardContent {
+  color: var(--color-birdperson-gray-600);
+  margin-bottom: 0;
+  padding: var(--spacing-medium);
+}

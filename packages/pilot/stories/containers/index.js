@@ -134,11 +134,14 @@ storiesOf('Containers|Onboarding')
   .add('When DeadEnd', () => (
     <Onboarding.WhenDeadEnd />
   ))
-  .add('When Segments', () => (
-    <Onboarding.WithSegments />
-  ))
   .add('Welcome', () => (
     <Onboarding.Welcome />
+  ))
+  .add('Segment Options', () => (
+    <Onboarding.SegmentOptions />
+  ))
+  .add('When Segments', () => (
+    <Onboarding.WithSegments />
   ))
 
 storiesOf('Containers|Page containers', module)

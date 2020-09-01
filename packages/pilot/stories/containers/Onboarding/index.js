@@ -1,5 +1,8 @@
 import React from 'react'
+import { action } from '@storybook/addon-actions'
+import Section from '../../Section'
 import OnboardingContainer from '../../../src/containers/Onboarding'
+import Segments from '../../../src/containers/Onboarding/SegmentOptions/Segments'
 import mocks from './mocks'
 
 const WhenDeadEnd = () => (
@@ -58,7 +61,21 @@ const WithSegments = () => (
   />
 )
 
+const SegmentOptions = () => (
+  <Section>
+    <div style={{ width: '374px' }}>
+      <Segments
+        handleReturn={action('handleReturn')}
+        handleSubmit={action('handleSubmit')}
+        subtitle="Serviços e cursos"
+        options={mocks.segmentOptions}
+      />
+    </div>
+  </Section>
+)
+
 export default {
+  SegmentOptions,
   Welcome,
   WhenDeadEnd,
   WhenLoading,

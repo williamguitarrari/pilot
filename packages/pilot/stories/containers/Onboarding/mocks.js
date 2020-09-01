@@ -11,6 +11,17 @@ import SampleDeadEnd from './SampleDeadEnd'
 import BoxIcon from './box.svg'
 
 export default {
+  segmentOptions: [
+    { label: 'Gráficas', value: 'graficas' },
+    { label: 'Consultoria', value: 'consultoria' },
+    { label: 'Educação', value: 'educacao' },
+    { label: 'Transporte', value: 'transporte' },
+    { label: 'Software', value: 'software' },
+    { label: 'Certificados', value: 'certificados' },
+    { label: 'Plataforma ERP', value: 'plataforma_erp' },
+    { label: 'Telefonia', value: 'telefonia' },
+    { label: 'Saúde', value: 'saude' },
+  ],
   welcome: {
     loading: false,
     onboardingStarted: false,
