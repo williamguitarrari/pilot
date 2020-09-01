@@ -24,7 +24,7 @@ const SecondStep = ({
   renderBulletSteps,
   t,
 }) => {
-  const [isPaymentMethodEnabled, setIsPaymentMethodEnabled] = useState(false)
+  const [isPaymentMethodEnabled, setIsPaymentMethodEnabled] = useState(true)
 
   const internalOnChange = (newData) => {
     setIsPaymentMethodEnabled(newData.boleto || newData.credit_card)

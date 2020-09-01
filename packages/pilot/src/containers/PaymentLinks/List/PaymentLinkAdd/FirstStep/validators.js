@@ -32,7 +32,7 @@ const createMinAllowedHours = (timeUnit, getTranslation) => (
 const createMaxAllowedDays = (timeUnit, getTranslation) => (timeAmount) => {
   const durationInMinutes = getDateDurationInMinutes(timeAmount, timeUnit)
 
-  const maxAllowedDays = 186
+  const maxAllowedDays = 180
   const maxAllowedMinutes = maxAllowedDays * 24 * 60
   return durationInMinutes > maxAllowedMinutes && getTranslation('max_allowed_days_error', { days: maxAllowedDays })
 }
