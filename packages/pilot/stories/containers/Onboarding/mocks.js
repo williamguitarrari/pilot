@@ -195,40 +195,90 @@ export default {
       label: 'antifraud',
       options: [
         {
-          category: 'food',
           label: 'Alimentos',
+          value: [
+            { label: 'Bebidas', value: 'beverages' },
+            { label: 'Comidas', value: 'food' },
+            { label: 'Suplementos alimentares', value: 'supplements' },
+          ],
         },
         {
-          category: 'cosmetics',
           label: 'Beleza e acessórios',
+          value: [
+            { label: 'Óticas', value: 'eyewear' },
+            { label: 'Acessórios', value: 'accessories' },
+            { label: 'Jóias', value: 'jewelries' },
+            { label: 'Cosméticos', value: 'cosmetics' },
+          ],
         },
         {
-          category: 'house',
           label: 'Casa e escritório',
+          value: [
+            { label: 'Móveis', value: 'furnitures' },
+            { label: 'Petshop', value: 'petshot' },
+            { label: 'Utensílios domésticos', value: 'housewares' },
+            { label: 'Papelaria e livros', value: 'books_office_supplies' },
+            { label: 'Floricultura', value: 'flowers' },
+            { label: 'Loja de departamentos', value: 'wholesale' },
+          ],
         },
         {
-          category: 'games',
           label: 'Eletrônicos e jogos',
+          value: [
+            { label: 'Eletrônicos', value: 'eletronics' },
+            { label: 'Videogames', value: 'videogames' },
+            { label: 'Brinquedos', value: 'toys' },
+          ],
         },
         {
-          category: 'tools',
           label: 'Equipamentos',
+          value: [
+            { label: 'Equipamentos e máquinas', value: 'equipment_and_machinery' },
+            { label: 'Material de construção', value: 'construction_material' },
+            { label: 'Peças automotivas', value: 'automobile_autoparts' },
+          ],
         },
         {
-          category: 'shorts',
           label: 'Roupas e calçados',
+          value: [
+            { label: 'Calçados', value: 'footwear' },
+            { label: 'Esportes', value: 'sports' },
+            { label: 'Vestuário', value: 'clothing_apparel' },
+            { label: 'Roupas em atacado', value: 'Vestuario_Alto_Risco' },
+            { label: 'Sexshop', value: 'sexshop' },
+          ],
         },
         {
-          category: 'travel',
           label: 'Turismo e eventos',
+          value: [
+            { label: 'Ingressos', value: 'tickets' },
+            { label: 'Desconto coletivo', value: 'collective_discount' },
+            { label: 'Eventos', value: 'events' },
+            { label: 'Turismo', value: 'tourism' },
+          ],
         },
         {
-          category: 'services',
           label: 'Serviços e cursos',
+          value: [
+            { label: 'Gráficas', value: 'graphic_printing' },
+            { label: 'Consultoria', value: 'consulting' },
+            { label: 'Educação', value: 'courses' },
+            { label: 'Software', value: 'software' },
+            { label: 'Plataforma ERP', value: 'erp_agency' },
+            { label: 'Certificados', value: 'certificates' },
+            { label: 'Transporte', value: 'transport' },
+            { label: 'Saúde', value: 'health' },
+            { label: 'Telefonia', value: 'telephony' },
+          ],
         },
         {
-          category: 'others',
           label: 'Outros',
+          value: [
+            { label: 'Tabacaria', value: 'tobacco_products' },
+            { label: 'Artigos religiosos', value: 'religious_products' },
+            { label: 'Instrumentos musicais', value: 'musical_instruments' },
+            { label: 'Doações', value: 'donations' },
+          ],
         },
       ],
       others: [],
@@ -246,6 +296,7 @@ export default {
         MedalIcon,
         PlusIcon,
       ],
+      notFoundText: 'Não encontrei o segmento do meu negócio',
       progressPercent: 70,
       type: 'segments',
     },

@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SegmentOptions should render 1`] = `
+<div>
+  <div>
+    <div
+      class="cards"
+    >
+      <div
+        class="clickableCard"
+        role="button"
+        tabindex="0"
+      >
+        <div
+          class="card"
+        >
+          <div
+            class="cardContent"
+          >
+            <svg />
+            <p
+              class="cardLabel"
+            >
+              Alimentos
+            </p>
+          </div>
+        </div>
+      </div>
+      <div
+        class="clickableCard"
+        role="button"
+        tabindex="0"
+      >
+        <div
+          class="card lastCard"
+        >
+          <div
+            class="cardContent"
+          >
+            <svg />
+            <p
+              class="cardLabel"
+            >
+              Outros
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="notFound"
+    >
+      <button
+        role="link"
+        type="button"
+      >
+        Não encontrei o segmento do meu negócio
+      </button>
+    </div>
+  </div>
+</div>
+`;

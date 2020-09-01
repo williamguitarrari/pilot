@@ -24,7 +24,7 @@ const Segments = ({
       {options.map(option => (
         <Card
           key={option.value}
-          onSubmit={() => handleSubmit(option.category)}
+          onSubmit={() => handleSubmit(option.value)}
         >
           <p className={styles.segmentCardContent}>
             {option.label}
