@@ -10,6 +10,7 @@ const MacroSegments = ({
   images,
   notFoundText,
   options,
+  t,
 }) => (
   <div>
     <div className={styles.cards}>
@@ -42,7 +43,7 @@ const MacroSegments = ({
         role="link"
         type="button"
       >
-        {notFoundText}
+        {t(notFoundText)}
       </button>
     </div>
   </div>
@@ -54,6 +55,7 @@ MacroSegments.propTypes = {
   images: PropTypes.arrayOf(PropTypes.func),
   notFoundText: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  t: PropTypes.func.isRequired,
 }
 
 MacroSegments.defaultProps = {

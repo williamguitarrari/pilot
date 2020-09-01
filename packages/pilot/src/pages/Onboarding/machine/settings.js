@@ -1,4 +1,13 @@
 /* eslint-disable sort-keys */
+import FoodIcon from 'emblematic-icons/svg/Food32.svg'
+import WatchIcon from 'emblematic-icons/svg/Watch32.svg'
+import HomeIcon from 'emblematic-icons/svg/Home32.svg'
+import PhoneIcon from 'emblematic-icons/svg/Phone32.svg'
+import WrenchIcon from 'emblematic-icons/svg/Wrench32.svg'
+import PlusIcon from 'emblematic-icons/svg/Plus32.svg'
+import ShortsIcon from 'emblematic-icons/svg/Shorts32.svg'
+import CalendarIcon from 'emblematic-icons/svg/Calendar32.svg'
+import MedalIcon from 'emblematic-icons/svg/Medal32.svg'
 import PlatformNotFound from './data/deadEnds/PlatformNotFound'
 
 import env from '../../../environment'
@@ -81,11 +90,22 @@ const settingsByQuestion = {
     nextByAnswer: () => 'segment',
   },
   segment: {
-    placeholder: 'pages.onboarding.placeholders.segment',
-    progressPercent: 80,
-    questionId: isDevelopmentStage ? 'oq_ck9e7wf6s00190mqltx5csvqw' : 'oq_ck9d8hb6500b30mqro60yudiq',
-    type: 'drop-down',
+    notFoundText: 'pages.onboarding.not_found_segment',
+    progressPercent: 70,
+    questionId: isDevelopmentStage ? 'oq_ckelpwkst00010hlocwlx5621' : 'oq_ckelqie4400000gpd0gjf9gvw',
+    type: 'segments',
     nextByAnswer: () => 'expectedRevenue',
+    images: [
+      FoodIcon,
+      WatchIcon,
+      HomeIcon,
+      PhoneIcon,
+      WrenchIcon,
+      ShortsIcon,
+      CalendarIcon,
+      MedalIcon,
+      PlusIcon,
+    ],
   },
   expectedRevenue: {
     placeholder: 'pages.onboarding.placeholders.expected_revenue',

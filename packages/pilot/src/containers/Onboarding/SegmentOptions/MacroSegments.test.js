@@ -17,6 +17,7 @@ test('MacroSegments should render', () => {
       options={options}
       handleNotFound={handleNotFound}
       handleSubmit={handleSubmit}
+      t={v => v}
     />
   )
 

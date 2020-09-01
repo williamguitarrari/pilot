@@ -14,6 +14,7 @@ const SegmentOptions = ({
   images,
   notFoundText,
   options,
+  t,
 }) => {
   const [macroSegment, setMacroSegment] = useState(null)
 
@@ -43,6 +44,7 @@ const SegmentOptions = ({
       images={images}
       notFoundText={notFoundText}
       options={options.map(v => v.label)}
+      t={t}
     />
   )
 }
@@ -52,6 +54,7 @@ SegmentOptions.propTypes = {
   images: PropTypes.arrayOf(PropTypes.func).isRequired,
   notFoundText: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.object).isRequired,
+  t: PropTypes.func.isRequired,
 }
 
 export default SegmentOptions
