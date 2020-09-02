@@ -1,0 +1,20 @@
+@import "former-kit-skin-pagarme/dist/styles/spacing.css";
+@import "former-kit-skin-pagarme/dist/styles/colors/light.css";
+
+.alert {
+  display: flex;
+  flex-direction: column;
+  font-weight: normal;
+}
+
+.alertLink {
+  display: inline;
+  font-weight: bold;
+  color: var(--color-beth-pink-100);
+  text-decoration: underline;
+}
+
+.newLine {
+  display: block;
+  margin-top: var(--spacing-small);
+}

@@ -1,11 +1,13 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import ReCAPTCHA from 'react-google-recaptcha'
 import isEmail from 'validator/lib/isEmail'
 import isEmpty from 'validator/lib/isEmpty'
 import IconCode from 'emblematic-icons/svg/Code24.svg'
 import IconError from 'emblematic-icons/svg/CloseCircle32.svg'
-import { Alert, FormInput, Button } from 'former-kit'
+import IconCheck from 'emblematic-icons/svg/CheckCircle32.svg'
+import { FormInput, Button } from 'former-kit'
+import Alert from '../Alert'
 
 import styles from '../style.css'
 
@@ -19,13 +21,40 @@ const LoginForm = ({
   recaptchaKey,
   t,
 }) => {
+  const recaptchaRef = useRef()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [formErrors, setFormErrors] = useState({
     email: null,
     password: null,
   })
-  const recaptchaRef = useRef()
+  const [status, setStatus] = useState('initial')
+
+  const allStatus = {
+    error: {
+      icon: <IconError height={16} width={16} />,
+      name: 'error',
+      type: 'error',
+    },
+    initial: {
+      icon: <IconError height={16} width={16} />,
+      name: 'initial',
+      type: 'error',
+    },
+    success: {
+      icon: <IconCheck height={16} width={16} />,
+      name: 'success',
+      type: 'success',
+    },
+  }
+
+  useEffect(() => {
+    setStatus('initial')
+  }, [errors, setStatus])
+
+  const handleStatus = (newStatus) => {
+    setStatus(newStatus)
+  }
 
   const isLive = environment === 'live'
 
@@ -89,19 +118,18 @@ const LoginForm = ({
             error={formErrors.password}
           />
         </div>
-        {errors
-            && (
-              <Alert
-                type="error"
-                icon={<IconError height={16} width={16} />}
-              >
-                {errors.null
-                  ? errors.null
-                  : t('login.network_error')
-              }
-              </Alert>
-            )
-          }
+        { errors && errors.map((error, index) => (
+          <Alert
+            // eslint-disable-next-line react/no-array-index-key
+            key={index}
+            status={allStatus[status]}
+            email={email}
+            error={error}
+            handleStatus={handleStatus}
+            t={t}
+          />
+        ))
+        }
         <ReCAPTCHA
           badge="bottomleft"
           ref={recaptchaRef}
@@ -155,10 +183,7 @@ const LoginForm = ({
 LoginForm.propTypes = {
   environment: PropTypes.oneOf(['live', 'test']).isRequired,
   errors: PropTypes.oneOfType([
-    PropTypes.shape({
-      email: PropTypes.string,
-      password: PropTypes.string,
-    }),
+    PropTypes.array,
     PropTypes.instanceOf(Error),
   ]),
   loading: PropTypes.bool,
