@@ -15,7 +15,7 @@ const MacroSegments = ({
   <div>
     <div className={styles.cards}>
       {options.map((option, index) => {
-        const Image = images[index]
+        const Image = index < images.length ? images[index] : null
         const isLastCard = index === images.length - 1
 
         return (
@@ -27,7 +27,7 @@ const MacroSegments = ({
             onSubmit={() => handleSubmit(option)}
           >
             <div className={styles.cardContent}>
-              <Image width={32} height={32} />
+              { Image && <Image width={32} height={32} />}
               <p className={styles.cardLabel}>
                 {option}
               </p>
