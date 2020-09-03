@@ -83,6 +83,7 @@ const sumOutgoing = mapSumFunction(cashOutFunctions)
 const sumNetAmount = sumFunctionResults([
   sumOutcoming,
   sumOutgoing,
+  sumFee,
 ])
 
 const getDates = pluck('date')
