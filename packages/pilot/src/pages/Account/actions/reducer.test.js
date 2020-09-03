@@ -3,7 +3,7 @@ import { selectCompanyFees } from './reducer'
 const companyFactory = mdrs => ({
   pricing: {
     gateway: {
-      test: {
+      live: {
         antifraud_cost: [
           {
             cost: 70,
@@ -28,7 +28,7 @@ const companyFactory = mdrs => ({
       },
     },
     psp: {
-      test: {
+      live: {
         anticipation: 3.14,
         mdrs,
       },
