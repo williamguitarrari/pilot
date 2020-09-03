@@ -1,8 +1,8 @@
 import {
   __,
   always,
-  allPass,
   both,
+  complement,
   cond,
   either,
   ifElse,
@@ -13,7 +13,6 @@ import {
   pathOr,
   pathSatisfies,
   pipe,
-  prop,
   propEq,
   reject,
 } from 'ramda'
@@ -132,36 +131,21 @@ export const creditOutgoing = pipe(
   reject(propEq('amount', 0))
 )
 
-export const isGatewayFeeCollection = allPass([
-  propEq('type', 'fee_collection'),
-  pipe(
-    prop('movement_object'),
-    compareMovementTypeTo('gateway')
-  ),
-])
+export const isFeeCollection = propEq('type', 'fee_collection')
 
-export const gatewayFeeCollectionOutgoing = juxt([
-  transformMovementTypePropTo(['movement_object', 'amount'], 'gateway'),
-])
-
-export const isAdjustmentFeeCollection = both(
-  propEq('type', 'fee_collection'),
-  compareMovementTypeTo('fee_adjustment')
-)
-
-export const adjustmentFeeCollectionOutgoing = juxt([
+const feeCollectionOutcoming = juxt([
   ifElse(
-    isNegative('amount'),
-    transformMovementTypePropTo(['amount'], 'fee_adjustment'),
+    complement(isNegative('amount')),
+    transformMovementTypePropTo(['amount'], 'fee_collection'),
     zeroMovementAmount
   ),
 ])
 
-export const adjustmentFeeCollectionOutcoming = juxt([
+const feeCollectionOutgoing = juxt([
   ifElse(
     isNegative('amount'),
-    zeroMovementAmount,
-    transformMovementTypePropTo(['amount'], 'fee_adjustment')
+    transformMovementTypePropTo(['amount'], 'fee_collection'),
+    zeroMovementAmount
   ),
 ])
 
@@ -194,19 +178,12 @@ export const buildOutcoming = cond([
     creditOutcoming,
   ],
   [
-    isGatewayFeeCollection,
-    pipe(
-      zeroMovementAmount,
-      ofRamda
-    ),
-  ],
-  [
-    isAdjustmentFeeCollection,
-    adjustmentFeeCollectionOutcoming,
-  ],
-  [
     isChargebackRefund,
     creditOutcoming,
+  ],
+  [
+    isFeeCollection,
+    feeCollectionOutcoming,
   ],
 ])
 
@@ -243,16 +220,12 @@ export const buildOutgoing = cond([
     creditOutgoing,
   ],
   [
-    isGatewayFeeCollection,
-    gatewayFeeCollectionOutgoing,
-  ],
-  [
-    isAdjustmentFeeCollection,
-    adjustmentFeeCollectionOutgoing,
-  ],
-  [
     isChargebackRefund,
     creditOutgoing,
+  ],
+  [
+    isFeeCollection,
+    feeCollectionOutgoing,
   ],
 ])
 

@@ -11,11 +11,6 @@ import operations, {
   isRefundOrChargeBack,
   isRefundReversal,
   isTedTransfer,
-  isGatewayFeeCollection,
-  isAdjustmentFeeCollection,
-  gatewayFeeCollectionOutgoing,
-  adjustmentFeeCollectionOutgoing,
-  adjustmentFeeCollectionOutcoming,
   refundOrChargeBackOutcoming,
   refundOrChargeBackOutgoing,
   tedTransferOutgoing,
@@ -280,38 +275,6 @@ describe('Operations table data', () => {
       expect(outcoming).toEqual(expected)
     })
 
-    it('should validate if it is a gateway fee collection', () => {
-      const isGateway = isGatewayFeeCollection({
-        type: 'fee_collection',
-        movement_object: {
-          movement_object: {
-            type: 'gateway',
-          },
-        },
-      })
-
-      expect(isGateway).toBe(true)
-    })
-
-    it('should build a correct gateway collection outgoing', () => {
-      const outgoing = gatewayFeeCollectionOutgoing({
-        type: 'fee_collection',
-        movement_object: {
-          amount: -6755,
-          movement_object: {
-            type: 'gateway',
-          },
-        },
-      })
-
-      const expected = [{
-        amount: -6755,
-        type: 'gateway',
-      }]
-
-      expect(outgoing).toEqual(expected)
-    })
-
     it('should validate if it is a refund reversal', () => {
       const result = isRefundReversal({
         type: 'payable',
@@ -321,53 +284,6 @@ describe('Operations table data', () => {
       })
 
       expect(result).toBe(true)
-    })
-
-    it('should validate if it is a fee_adjustment fee collection', () => {
-      const isFeeAdjustment = isAdjustmentFeeCollection({
-        type: 'fee_collection',
-        movement_object: {
-          type: 'fee_adjustment',
-        },
-      })
-
-      expect(isFeeAdjustment).toBe(true)
-    })
-
-    it('should build a correct fee_adjustment outgoing', () => {
-      const outgoing = adjustmentFeeCollectionOutgoing({
-        amount: -10000,
-        type: 'fee_collection',
-        movement_object: {
-          amount: -10000,
-          type: 'fee_adjustment',
-        },
-      })
-
-      const expected = [{
-        amount: -10000,
-        type: 'fee_adjustment',
-      }]
-
-      expect(outgoing).toEqual(expected)
-    })
-
-    it('should build a correct fee_adjument outcoming', () => {
-      const outcoming = adjustmentFeeCollectionOutcoming({
-        amount: 10000,
-        type: 'fee_collection',
-        movement_object: {
-          amount: 10000,
-          type: 'fee_adjustment',
-        },
-      })
-
-      const expected = [{
-        amount: 10000,
-        type: 'fee_adjustment',
-      }]
-
-      expect(outcoming).toEqual(expected)
     })
 
     it('should validate if it is a chargeback_refund', () => {
@@ -417,6 +333,66 @@ describe('Operations table data', () => {
       }]
 
       expect(outgoing).toEqual(expected)
+    })
+
+    describe('When balanceOperation is of type fee_collection', () => {
+      describe('and has negative amount', () => {
+        const movementObject = {
+          amount: -5000,
+          type: 'fee_collection',
+        }
+
+        it('should return zero as outcoming', () => {
+          const outcoming = buildOutcoming(movementObject)
+
+          const expected = [{
+            amount: 0,
+            type: 'payable',
+          }]
+
+          expect(outcoming).toEqual(expected)
+        })
+
+        it('should return the expected outgoing', () => {
+          const outgoing = buildOutgoing(movementObject)
+
+          const expected = [{
+            amount: -5000,
+            type: 'fee_collection',
+          }]
+
+          expect(outgoing).toEqual(expected)
+        })
+      })
+
+      describe('and has positive amount', () => {
+        const movementObject = {
+          amount: 5000,
+          type: 'fee_collection',
+        }
+
+        it('should return zero as outgoing', () => {
+          const outgoing = buildOutgoing(movementObject)
+
+          const expected = [{
+            amount: 0,
+            type: 'payable',
+          }]
+
+          expect(outgoing).toEqual(expected)
+        })
+
+        it('should return the expected outcoming', () => {
+          const outcoming = buildOutcoming(movementObject)
+
+          const expected = [{
+            amount: 5000,
+            type: 'fee_collection',
+          }]
+
+          expect(outcoming).toEqual(expected)
+        })
+      })
     })
   })
 })

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import TeamManagement from './TeamManagement'
 
 const TeamInfoTab = ({
+  company,
   createUserStatus,
   deleteUserStatus,
   handleCreateUser,
@@ -12,6 +13,7 @@ const TeamInfoTab = ({
   team,
 }) => (
   <TeamManagement
+    company={company}
     createUserStatus={createUserStatus}
     deleteUserStatus={deleteUserStatus}
     handleCreateUser={handleCreateUser}
@@ -23,6 +25,9 @@ const TeamInfoTab = ({
 )
 
 TeamInfoTab.propTypes = {
+  company: PropTypes.shape({
+    type: PropTypes.string.isRequired,
+  }).isRequired,
   createUserStatus: PropTypes.shape({
     error: PropTypes.string,
     loading: PropTypes.bool,

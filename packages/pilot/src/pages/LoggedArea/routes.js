@@ -1,3 +1,17 @@
+import {
+  always,
+  assocPath,
+  both,
+  complement,
+  cond,
+  ifElse,
+  mergeRight,
+  pathEq,
+  pick,
+  pipe,
+  T,
+} from 'ramda'
+
 import HeartRate32 from 'emblematic-icons/svg/HeartRate32.svg'
 import Wrench32 from 'emblematic-icons/svg/Wrench32.svg'
 import Home32 from 'emblematic-icons/svg/Home32.svg'
@@ -19,8 +33,55 @@ import {
   PaymentLinks,
 } from './dynamicImports'
 
+import isLinkmeSeller from '../../validation/isLinkmeSeller'
+
 /* eslint-disable sort-keys */
-export default {
+const sidebarRoutes = {
+  home: {
+    component: Home,
+    exact: true,
+    icon: Home32,
+    path: '/home',
+    relevance: 0,
+    title: 'pages.home.title',
+  },
+  balance: {
+    component: Balance,
+    exact: true,
+    icon: HeartRate32,
+    path: '/balance/:id?',
+    relevance: 1,
+    title: 'pages.balance.title',
+  },
+  transactions: {
+    component: Transactions,
+    exact: true,
+    icon: Checkout32,
+    path: '/transactions',
+    relevance: 2,
+    title: 'pages.transactions.title',
+  },
+  paymentLinks: {
+    component: PaymentLinks,
+    exact: true,
+    hidden: false,
+    path: '/payment-links',
+    relevance: 3,
+    title: 'pages.payment_links.title',
+    icon: Link32,
+  },
+  companySettings: {
+    component: CompanySettings,
+    exact: true,
+    icon: Wrench32,
+    path: '/settings',
+    relevance: 5,
+    title: 'pages.settings.company.menu',
+  },
+}
+
+export const defaultRoutes = {
+  ...sidebarRoutes,
   accountSettings: {
     component: UserSettings,
     exact: true,
@@ -36,36 +97,6 @@ export default {
     icon: HeartRate32,
     path: '/anticipation/:id?',
     title: 'pages.anticipation.title',
-  },
-  home: {
-    component: Home,
-    exact: true,
-    dafaultRoute: true,
-    icon: Home32,
-    path: '/home',
-    title: 'pages.home.title',
-  },
-  balance: {
-    component: Balance,
-    exact: true,
-    icon: HeartRate32,
-    path: '/balance/:id?',
-    title: 'pages.balance.title',
-  },
-  transactions: {
-    component: Transactions,
-    exact: true,
-    icon: Checkout32,
-    path: '/transactions',
-    title: 'pages.transactions.title',
-  },
-  paymentLinks: {
-    component: PaymentLinks,
-    exact: true,
-    hidden: false,
-    path: '/payment-links',
-    title: 'pages.payment_links.title',
-    icon: Link32,
   },
   paymentLinksDetails: {
     exact: true,
@@ -86,14 +117,23 @@ export default {
     path: '/withdraw/:id?',
     title: 'pages.withdraw.title',
   },
+  emptyState: {
+    component: EmptyState,
+    hidden: true,
+    path: '/welcome',
+    title: 'pages.empty_state.title',
+  },
+}
+
+const recipientsRoutes = {
   recipients: {
-    validateVisibility: (companyCanCreateRecipient, companyType) => companyCanCreateRecipient && companyType !== 'payment_link_app',
-    hidden: false,
-    title: 'pages.recipients.title',
-    path: '/recipients',
     component: Recipients,
-    icon: Anticipation32,
     exact: true,
+    hidden: false,
+    icon: Anticipation32,
+    path: '/recipients',
+    relevance: 4,
+    title: 'pages.recipients.title',
   },
   recipientsAdd: {
     hidden: true,
@@ -105,19 +145,43 @@ export default {
     path: '/recipients/detail',
     title: 'pages.recipient_detail.title',
   },
-  emptyState: {
-    component: EmptyState,
-    hidden: true,
-    path: '/welcome',
-    title: 'pages.empty_state.title',
-  },
-  companySettings: {
-    component: CompanySettings,
-    exact: true,
-    icon: Wrench32,
-    path: '/settings',
-    title: 'pages.settings.company.menu',
-  },
 }
 
 /* eslint-enable sort-keys */
+
+const setDefaultRoute = routeName => assocPath([
+  routeName, 'defaultRoute',
+], true)
+
+const addRoutesOnCondition = (condition, routesToAdd) => ifElse(
+  condition,
+  always(routesToAdd),
+  always({})
+)
+
+const canCreateRecipients = both(
+  ({ environment, ...obj }) => pathEq(
+    ['company', 'marketplace', environment, 'can_create_recipient'],
+    true,
+    obj
+  ),
+  complement(pathEq(['company', 'type'], 'payment_link_app'))
+)
+
+const buildDefaultRoutes = routes => pipe(
+  addRoutesOnCondition(canCreateRecipients, recipientsRoutes),
+  mergeRight(routes),
+  setDefaultRoute('home')
+)
+
+const buildLinkmeSellerRoutes = routes => pipe(
+  always(pick(['transactions', 'paymentLinks', 'accountSettings'], routes)),
+  setDefaultRoute('paymentLinks')
+)
+
+const buildRoutes = cond([
+  [isLinkmeSeller, buildLinkmeSellerRoutes(defaultRoutes)],
+  [T, buildDefaultRoutes(defaultRoutes)],
+])
+
+export default buildRoutes
