@@ -33,6 +33,11 @@ const defaultColumnSize = {
 }
 
 const mapStateToProps = ({
+  account: {
+    user: {
+      permission,
+    },
+  },
   paymentLinks: {
     filter,
     loadingCreateLink,
@@ -50,6 +55,7 @@ const mapStateToProps = ({
   paymentLinkUrl,
   step,
   totalPaymentLinks,
+  userPermission: permission,
 })
 
 const mapDispatchToProps = {
@@ -138,6 +144,7 @@ const List = ({
   step,
   t,
   totalPaymentLinks,
+  userPermission,
 }) => {
   const [linkFormData, setLinkFormData] = useState(makeDefaulLinkData())
   const [isNewLinkOpen, setIsNewLinkOpen] = useState(false)
@@ -251,14 +258,17 @@ const List = ({
         onPreviousStep={previousStepRequest}
         paymentLink={paymentLinkUrl}
         step={steps[step]}
+        userPermission={userPermission}
         t={t}
       />
       <Grid>
-        <Row>
-          <Col {...defaultColumnSize}>
-            <NewLinksCard onAddPaymentLink={onAddPaymentLink} t={t} />
-          </Col>
-        </Row>
+        {userPermission !== 'read_only' && (
+          <Row>
+            <Col {...defaultColumnSize}>
+              <NewLinksCard onAddPaymentLink={onAddPaymentLink} t={t} />
+            </Col>
+          </Row>
+        )}
         <Row>
           <Col {...defaultColumnSize}>
             <PaymentLinksFilter
@@ -315,6 +325,7 @@ List.propTypes = {
   step: PropTypes.string.isRequired,
   t: PropTypes.func.isRequired,
   totalPaymentLinks: PropTypes.number,
+  userPermission: PropTypes.string.isRequired,
 }
 
 List.defaultProps = {
