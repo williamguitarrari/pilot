@@ -5,15 +5,17 @@ import Card from '../Card'
 import styles from './styles.css'
 
 const MacroSegments = ({
+  handleNotFound,
   handleSubmit,
   images,
   notFoundText,
   options,
+  t,
 }) => (
   <div>
     <div className={styles.cards}>
       {options.map((option, index) => {
-        const Image = images[index]
+        const Image = index < images.length ? images[index] : null
         const isLastCard = index === images.length - 1
 
         return (
@@ -21,13 +23,13 @@ const MacroSegments = ({
             className={classNames({
               [styles.lastCard]: isLastCard,
             })}
-            key={option.category}
-            onSubmit={() => handleSubmit(option.category)}
+            key={option}
+            onSubmit={() => handleSubmit(option)}
           >
             <div className={styles.cardContent}>
-              <Image width={32} height={32} />
+              { Image && <Image width={32} height={32} />}
               <p className={styles.cardLabel}>
-                {option.label}
+                {option}
               </p>
             </div>
           </Card>
@@ -37,26 +39,23 @@ const MacroSegments = ({
 
     <div className={styles.notFound}>
       <button
-        onClick={() => handleSubmit('not_found')}
+        onClick={() => handleNotFound()}
         role="link"
         type="button"
       >
-        {notFoundText}
+        {t(notFoundText)}
       </button>
     </div>
   </div>
 )
 
 MacroSegments.propTypes = {
+  handleNotFound: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   images: PropTypes.arrayOf(PropTypes.func),
   notFoundText: PropTypes.string.isRequired,
-  options: PropTypes.arrayOf(
-    PropTypes.shape({
-      category: PropTypes.string.isRequired,
-      label: PropTypes.string.isRequired,
-    })
-  ).isRequired,
+  options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  t: PropTypes.func.isRequired,
 }
 
 MacroSegments.defaultProps = {

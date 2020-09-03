@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Segments should render 1`] = `
+<div>
+  <div>
+    <div
+      class="segmentReturn"
+    >
+      <button
+        class=""
+        type="button"
+      >
+        <svg
+          data-file-name="SvgArrowBack"
+          height="16"
+          width="16"
+        />
+        <span
+          style="height: 0px; left: 0px; top: 0px; width: 0px;"
+        />
+      </button>
+      <span>
+        Turismo e eventos
+      </span>
+    </div>
+    <div
+      class="segmentCardsWrapper"
+    >
+      <div
+        class="clickableCard"
+        role="button"
+        tabindex="0"
+      >
+        <div
+          class="card"
+        >
+          <p
+            class="segmentCardContent"
+          >
+            Ingressos
+          </p>
+        </div>
+      </div>
+      <div
+        class="clickableCard"
+        role="button"
+        tabindex="0"
+      >
+        <div
+          class="card"
+        >
+          <p
+            class="segmentCardContent"
+          >
+            Desconto coletivo
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -667,6 +667,7 @@
         "expected_revenue": "Escolha uma das opções na lista",
         "segment": "Digite ou escolha na lista"
       },
+      "not_found_segment": "Não encontrei o segmento do meu negócio",
       "not_found_pages": {
         "platform_not_found": {
           "title": "Infelizmente o Pagar.me ainda não possui suporte à sua plataforma",

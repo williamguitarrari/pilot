@@ -11,7 +11,7 @@ import { SecondaryLinearProgress } from 'former-kit'
 import styles from './styles.css'
 
 const setSkipVisibility = cond([
-  [gt(__, 60), always('unset')],
+  [gt(__, 75), always('unset')],
   [T, always('hidden')],
 ])
 

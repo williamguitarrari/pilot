@@ -5,14 +5,9 @@ import MacroSegments from './MacroSegments'
 
 test('MacroSegments should render', () => {
   const notFoundText = 'Não encontrei o segmento do meu negócio'
-  const options = [{
-    category: 'food',
-    label: 'Alimentos',
-  }, {
-    category: 'others',
-    label: 'Outros',
-  }]
+  const options = ['Alimentos', 'Outros']
   const handleSubmit = jest.fn()
+  const handleNotFound = jest.fn()
   const svg = () => <svg />
 
   const { container, getByText } = render(
@@ -20,7 +15,9 @@ test('MacroSegments should render', () => {
       notFoundText={notFoundText}
       images={[svg, svg]}
       options={options}
+      handleNotFound={handleNotFound}
       handleSubmit={handleSubmit}
+      t={v => v}
     />
   )
 
@@ -31,7 +28,7 @@ test('MacroSegments should render', () => {
   expect(handleSubmit).toHaveBeenCalledTimes(2)
 
   userEvent.click(getByText(notFoundText))
-  expect(handleSubmit).toHaveBeenCalledTimes(3)
+  expect(handleNotFound).toHaveBeenCalledTimes(1)
 
   expect(container).toMatchSnapshot()
 })
