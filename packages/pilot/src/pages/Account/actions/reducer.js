@@ -27,8 +27,6 @@ import {
   RECIPIENT_BALANCE_RECEIVE,
 } from './actions'
 
-import environment from '../../../environment'
-
 const getBalance = applySpec({
   available: path(['withdrawal', 'maximum']),
   waitingFunds: path(['balance', 'waiting_funds', 'amount']),
@@ -106,7 +104,7 @@ export default function loginReducer (state = initialState, action) {
 }
 
 const getAntifraudCost = pipe(
-  pathOr([], ['gateway', environment, 'antifraud_cost']),
+  pathOr([], ['gateway', 'live', 'antifraud_cost']),
   find(propEq('name', 'pagarme')),
   prop('cost')
 )
@@ -123,7 +121,7 @@ const findCreditCardMDR = mdrs => mdrs.find(({
 }) => CREDIT_CARD_MDRS_TYPES.includes(paymentMethod))
 
 const getInstallmentsFee = pipe(
-  pathOr([], ['psp', environment, 'mdrs']),
+  pathOr([], ['psp', 'live', 'mdrs']),
   findCreditCardMDR,
   pathOr([], ['installments']),
   when(notDefaultInstallments, always([]))
@@ -132,10 +130,10 @@ const getInstallmentsFee = pipe(
 const getFees = pipe(
   prop('pricing'),
   applySpec({
-    anticipation: path(['psp', environment, 'anticipation']),
+    anticipation: path(['psp', 'live', 'anticipation']),
     antifraud: getAntifraudCost,
-    boleto: path(['gateway', environment, 'boletos', 'payment_fixed_fee']),
-    gateway: path(['gateway', environment, 'transaction_cost', 'credit_card']),
+    boleto: path(['gateway', 'live', 'boletos', 'payment_fixed_fee']),
+    gateway: path(['gateway', 'live', 'transaction_cost', 'credit_card']),
     installments: getInstallmentsFee,
     transfer: path(['transfers', 'ted']),
   })
