@@ -19,8 +19,6 @@ import {
 import { requestLogin as requestLoginAction } from './Account/actions/actions'
 import { inactiveCompanyLogin } from '../vendor/googleTagManager'
 
-import isPaymentLink from '../validation/isPaymentLink'
-
 import Account from './Account'
 import ChooseDashboard from './ChooseDashboard'
 import LoggedArea from './LoggedArea'
@@ -61,14 +59,22 @@ const getSessionId = (props, queryString) => (
   props.sessionId || queryString.session_id
 )
 
-const shouldSelectDashboard = () => {
+const shouldSkipChooseDashboard = (company = {}) => {
+  const typesThatSkipChooseDashboard = ['payment_link_app', 'self_register']
+  return typesThatSkipChooseDashboard.includes(company.type)
+}
+
+const hasValidDashboardChoice = () => {
   if (!localStorage.getItem('dashboardChoice')) {
-    return true
+    return false
   }
 
   const choiceExpiresAt = localStorage.getItem('dashboardChoiceExpiresAt')
-  return moment(choiceExpiresAt).isBefore(moment())
+  const isExpired = moment(choiceExpiresAt).isBefore(moment())
+
+  return !isExpired
 }
+
 class Root extends Component {
   componentDidMount () {
     const {
@@ -159,15 +165,19 @@ class Root extends Component {
     }
 
     if (
-      !isPaymentLink(company)
-      && user
-      && shouldSelectDashboard()
+      user
+      && !shouldSkipChooseDashboard(company)
+      && !hasValidDashboardChoice()
     ) {
       history.replace('/choose-dashboard')
       return null
     }
 
-    if (user && localStorage.getItem('dashboardChoice') === 'legacy') {
+    if (
+      user
+      && !shouldSkipChooseDashboard(company)
+      && localStorage.getItem('dashboardChoice') === 'legacy'
+    ) {
       return window.open(`https://dashboard.pagar.me/#login?session_id=${sessionId}&redirect_to=dashboard.home&environment=${environment}`, '_self')
     }
 
