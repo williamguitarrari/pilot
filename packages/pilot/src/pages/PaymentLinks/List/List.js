@@ -25,6 +25,8 @@ import {
 } from '../../../containers/PaymentLinks/List'
 import { withError } from '../../ErrorBoundary'
 
+import canChargeTransactionFee from '../../../validation/canChargeTransactionFee'
+
 const defaultColumnSize = {
   desk: 12,
   palm: 12,
@@ -34,6 +36,7 @@ const defaultColumnSize = {
 
 const mapStateToProps = ({
   account: {
+    company,
     user: {
       permission,
     },
@@ -48,6 +51,7 @@ const mapStateToProps = ({
     totalPaymentLinks,
   },
 }) => ({
+  company,
   filter,
   loadingCreateLink,
   loadingGetLinks,
@@ -79,13 +83,13 @@ const firstStepDefaultData = {
 }
 
 const boletoInputDefaultValues = {
-  boleto_expires_in: 7,
+  boleto_expires_in: '7',
 }
 
 const creditCardInputDefaultValues = {
-  free_installments: 1,
+  free_installments: '1',
   interest_rate: '2',
-  max_installments: 12,
+  max_installments: '12',
 }
 
 const makeDefaulLinkData = () => ({
@@ -130,6 +134,7 @@ const initialQueryData = {
 }
 
 const List = ({
+  company,
   createLinkRequest,
   filter,
   getLinksRequest,
@@ -149,6 +154,8 @@ const List = ({
   const [linkFormData, setLinkFormData] = useState(makeDefaulLinkData())
   const [isNewLinkOpen, setIsNewLinkOpen] = useState(false)
   const [query, setQuery] = useState(initialQueryData)
+
+  const chargeTransactionFee = canChargeTransactionFee(company)
 
   useEffect(() => {
     getLinksRequest({ ...filter, ...initialQueryData })
@@ -221,7 +228,10 @@ const List = ({
 
   const onAddPaymentLink = () => setIsNewLinkOpen(true)
 
-  const onCreateLinkRequest = () => createLinkRequest(linkFormData)
+  const onCreateLinkRequest = () => createLinkRequest({
+    chargeTransactionFee,
+    ...linkFormData,
+  })
 
   const onClosePaymentLink = () => {
     setLinkFormData(makeDefaulLinkData())
@@ -247,6 +257,7 @@ const List = ({
   return (
     <>
       <PaymentLinkAdd
+        canChargeTransactionFee={chargeTransactionFee}
         formData={linkFormData}
         isOpen={isNewLinkOpen}
         loading={loadingCreateLink}
@@ -304,6 +315,14 @@ const List = ({
 }
 
 List.propTypes = {
+  company: PropTypes.shape({
+    capabilities: PropTypes.shape({
+      allow_transaction_anticipation: PropTypes.bool,
+    }),
+    payment_link: PropTypes.shape({
+      allow_charge_transaction_fee: PropTypes.bool,
+    }),
+  }).isRequired,
   createLinkRequest: PropTypes.func.isRequired,
   filter: PropTypes.shape({
     count: PropTypes.number,

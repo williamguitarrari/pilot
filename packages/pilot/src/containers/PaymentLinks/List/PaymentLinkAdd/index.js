@@ -31,6 +31,7 @@ const renderBulletSteps = (currentStep) => {
 }
 
 const PaymentLinkAdd = ({
+  canChargeTransactionFee,
   formData,
   handleFormChange,
   isOpen,
@@ -65,6 +66,7 @@ const PaymentLinkAdd = ({
     {
         step.name === 'second_step' && (
           <SecondStep
+            canChargeTransactionFee={canChargeTransactionFee}
             formData={formData}
             loading={loading}
             onBack={onPreviousStep}
@@ -96,12 +98,14 @@ const PaymentLinkAdd = ({
 )
 
 PaymentLinkAdd.propTypes = {
+  canChargeTransactionFee: PropTypes.bool.isRequired,
   formData: PropTypes.shape({
     amount: PropTypes.string,
     boleto: PropTypes.bool,
     boleto_expires_in: PropTypes.string,
     credit_card: PropTypes.bool,
     expiration_unit: PropTypes.string,
+    fee_payer: PropTypes.string,
     free_installments: PropTypes.string,
     interest_rate: PropTypes.string,
     max_installments: PropTypes.string,

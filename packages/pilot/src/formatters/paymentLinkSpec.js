@@ -11,6 +11,9 @@ import {
 import moment from 'moment'
 import shortid from 'shortid'
 
+const minInstallments = 0
+const maxInstallments = 12
+
 const parseIntValue = propName => obj => parseInt(obj[propName], 10)
 
 const expiresIn = ({
@@ -21,6 +24,30 @@ const expiresIn = ({
   const expirationDate = date.clone().add(expirationAmount, expirationUnit)
   const duration = moment.duration(expirationDate.diff(date))
   return parseInt(duration.asMinutes(), 10)
+}
+
+const checkFeePayerAndSetFreeInstallments = (object) => {
+  if (object.fee_payer === 'customer') {
+    return minInstallments
+  }
+
+  return parseIntValue('free_installments')(object)
+}
+
+const checkChargeTransactionAndSetMaxInstallments = (object) => {
+  if (object.chargeTransactionFee) {
+    return maxInstallments
+  }
+
+  return parseIntValue('max_installments')(object)
+}
+
+const checkChargeTransactionAndSetInterestRate = (object) => {
+  if (object.chargeTransactionFee) {
+    return 0
+  }
+
+  return parseIntValue('interest_rate')(object) || 0.01
 }
 
 const buildBoleto = applySpec({
@@ -40,16 +67,15 @@ const paymentConfigBoleto = ifElse(
   always(null)
 )
 
-const parserInterestRate = obj => parseFloat(obj.interest_rate, 10) || 0.01
-
 const buildCreditCard = pipe(
   applySpec({
+    charge_transaction_fee: prop('chargeTransactionFee'),
     enabled: prop('credit_card'),
-    free_installments: parseIntValue('free_installments'),
-    interest_rate: parserInterestRate,
-    max_installments: parseIntValue('max_installments'),
+    free_installments: checkFeePayerAndSetFreeInstallments,
+    interest_rate: checkChargeTransactionAndSetInterestRate,
+    max_installments: checkChargeTransactionAndSetMaxInstallments,
   }),
-  when(propEq('free_installments', 0), omit(['free_installments', 'interest_rate']))
+  when(propEq('interest_rate', 0), omit(['interest_rate']))
 )
 
 const paymentConfigCreditCard = ifElse(

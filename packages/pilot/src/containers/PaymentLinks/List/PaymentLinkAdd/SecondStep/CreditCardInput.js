@@ -9,7 +9,18 @@ import Card from 'emblematic-icons/svg/Card32.svg'
 import PaymentMethodToggle from './PaymentMethodToggle'
 import styles from './style.css'
 
-const buildInstallmentsValues = (t) => {
+const feePayerOptions = t => [
+  {
+    name: t('pages.payment_links.add_link.second_step.company_pays_interest_rate_value'),
+    value: 'company',
+  },
+  {
+    name: t('pages.payment_links.add_link.second_step.customer_pays_interest_rate_value'),
+    value: 'customer',
+  },
+]
+
+const buildInstallmentsOptions = (t) => {
   const installmentsRange = range(1, 13)
 
   return installmentsRange.map((value) => {
@@ -44,7 +55,7 @@ const buildInterestFeesOptions = (
   ]
 }
 
-const renderCreditCardInput = (formData, t) => (
+const renderCreditCardInput = (formData, t, canChargeTransaction) => (
   <div className={styles.creditCardContainer}>
     <PaymentMethodToggle
       Icon={Card}
@@ -53,25 +64,58 @@ const renderCreditCardInput = (formData, t) => (
       t={t}
       value={formData.credit_card}
     />
+    {canChargeTransaction && (
+      <p>
+        {t('pages.payment_links.add_link.second_step.charge_transaction_fee_info_1')}
+        <b>{t('pages.payment_links.add_link.second_step.charge_transaction_fee_info_2')}</b>
+        {t('pages.payment_links.add_link.second_step.charge_transaction_fee_info_3')}
+      </p>
+    )}
     <div className={styles.creditCardOptions}>
-      <Dropdown
-        disabled={!formData.credit_card}
-        name="max_installments"
-        placeholder={t('pages.payment_links.add_link.second_step.max_installments_label')}
-        options={buildInstallmentsValues(t)}
-        value={formData.max_installments}
-      />
-      <Dropdown
-        disabled={!formData.credit_card}
-        name="free_installments"
-        placeholder={t('pages.payment_links.add_link.second_step.transfer_fees_label')}
-        options={buildInterestFeesOptions(formData.max_installments, t)}
-      />
-      {formData.free_installments > 0 && formData.credit_card && (
-        <InterestFees
-          name="interest_rate"
-          t={t}
-        />
+      {canChargeTransaction && (
+        <>
+          <Dropdown
+            disabled={!formData.credit_card}
+            name="fee_payer"
+            placeholder={t('pages.payment_links.add_link.second_step.fee_payer_label')}
+            options={feePayerOptions(t)}
+            value={formData.fee_payer}
+          />
+          {formData.fee_payer === 'company'
+            && (
+            <Dropdown
+              disabled={!formData.credit_card}
+              name="free_installments"
+              placeholder={t('pages.payment_links.add_link.second_step.max_free_installments_label')}
+              options={buildInterestFeesOptions(12, t)}
+              value={formData.free_installments}
+            />
+            )
+          }
+        </>
+      )}
+      {!canChargeTransaction && (
+        <>
+          <Dropdown
+            disabled={!formData.credit_card}
+            name="max_installments"
+            placeholder={t('pages.payment_links.add_link.second_step.max_installments_label')}
+            options={buildInstallmentsOptions(t)}
+            value={formData.max_installments}
+          />
+          <Dropdown
+            disabled={!formData.credit_card}
+            name="free_installments"
+            placeholder={t('pages.payment_links.add_link.second_step.transfer_fees_label')}
+            options={buildInterestFeesOptions(formData.max_installments, t)}
+          />
+          {formData.free_installments > 0 && formData.credit_card && (
+            <InterestFees
+              name="interest_rate"
+              t={t}
+            />
+          )}
+        </>
       )}
     </div>
   </div>

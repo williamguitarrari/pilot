@@ -16,6 +16,7 @@ import {
 import styles from './style.css'
 
 const SecondStep = ({
+  canChargeTransactionFee,
   formData,
   loading,
   onBack,
@@ -40,6 +41,7 @@ const SecondStep = ({
         validateOn="blur"
         validation={{
           boleto_expires_in: validateBoletoExpiresIn(formData.boleto, t),
+          fee_payer: validateRequiredField(formData.credit_card, t),
           free_installments: validateRequiredField(formData.credit_card, t),
           interest_rate: validateInterestRate(formData.credit_card, t),
           max_installments: validateRequiredField(formData.credit_card, t),
@@ -47,7 +49,7 @@ const SecondStep = ({
       >
         <ModalContent>
           {renderBoletoInput(formData, t)}
-          {renderCreditCardInput(formData, t)}
+          {renderCreditCardInput(formData, t, canChargeTransactionFee)}
         </ModalContent>
         <PaymentLinkActionsContainer>
           <div className={styles.secondStepActions}>
@@ -71,8 +73,10 @@ const SecondStep = ({
 }
 
 SecondStep.propTypes = {
+  canChargeTransactionFee: PropTypes.bool.isRequired,
   formData: PropTypes.shape({
     boleto_expires_in: PropTypes.string,
+    fee_payer: PropTypes.string,
     free_installments: PropTypes.string,
     interest_rate: PropTypes.string,
     max_installments: PropTypes.string,
