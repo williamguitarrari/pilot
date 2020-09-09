@@ -191,3 +191,11 @@ export const selectHasBlockedWithdraw = pipe(
   pathOr(0, ['transfers', 'blocked_balance_amount']),
   gte(__, BLOCKED_AMOUNT_LIMIT)
 )
+
+export const selectAnticipationType = ({ company, defaultRecipient }) => {
+  if (company.capabilities.allow_transaction_anticipation) {
+    return 'compulsory'
+  }
+
+  return defaultRecipient.automatic_anticipation_type
+}

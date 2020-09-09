@@ -17,7 +17,7 @@ import EmptyStateContainer from '../../containers/EmptyState'
 import { withError } from '../ErrorBoundary'
 import environment from '../../environment'
 
-import { selectCompanyFees } from '../Account/actions/reducer'
+import { selectCompanyFees, selectAnticipationType } from '../Account/actions/reducer'
 
 const getUserName = pipe(prop('name'), split(' '), head)
 
@@ -42,10 +42,10 @@ const mapStateToProps = ({
 }) => ({
   accessKeys: getAccessKeys(company),
   alreadyTransacted: getAlreadyTransacted(company),
+  anticipationType: selectAnticipationType({ company, defaultRecipient }),
   company,
   fees: selectCompanyFees({ company, defaultRecipient }),
   isAdmin: hasAdminPermission(user),
-  isMDRzao: company && propEq('anticipationType', 'MDRZAO', company),
   onboardingAnswers,
   userName: getUserName(user),
 })
@@ -63,12 +63,12 @@ const hideEmptyState = push => () => {
 
 const EmptyState = ({
   accessKeys,
+  anticipationType,
   fees,
   history: {
     push,
   },
   isAdmin,
-  isMDRzao,
   onboardingAnswers,
   t,
   userName,
@@ -79,7 +79,7 @@ const EmptyState = ({
     environment={environment}
     fees={fees}
     isAdmin={isAdmin}
-    isMDRzao={isMDRzao}
+    isMDRzao={anticipationType === 'compulsory'}
     onboardingAnswers={onboardingAnswers}
     onDisableWelcome={hideEmptyState(push)}
     t={t}
@@ -92,6 +92,7 @@ EmptyState.propTypes = {
     apiKey: PropTypes.string,
     encryptionKey: PropTypes.string,
   }),
+  anticipationType: PropTypes.string,
   fees: PropTypes.shape({
     anticipation: PropTypes.number,
     antifraud: PropTypes.number,
@@ -107,7 +108,6 @@ EmptyState.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
   isAdmin: PropTypes.bool.isRequired,
-  isMDRzao: PropTypes.bool,
   onboardingAnswers: PropTypes.shape({}),
   t: PropTypes.func.isRequired,
   userName: PropTypes.string,
@@ -115,8 +115,8 @@ EmptyState.propTypes = {
 
 EmptyState.defaultProps = {
   accessKeys: {},
+  anticipationType: '',
   fees: {},
-  isMDRzao: false,
   onboardingAnswers: undefined,
   userName: '',
 }

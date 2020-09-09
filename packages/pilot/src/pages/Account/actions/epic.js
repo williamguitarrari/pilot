@@ -1,9 +1,7 @@
 import pagarme from 'pagarme'
 import {
   allPass,
-  always,
   complement,
-  cond,
   hasPath,
   identity,
   ifElse,
@@ -12,7 +10,6 @@ import {
   pathEq,
   pathOr,
   propEq,
-  T,
 } from 'ramda'
 import {
   map,
@@ -73,11 +70,6 @@ const hasDashboardAccess = ifElse(
 
 const getRecipientId = pathOr(null, ['account', 'company', 'default_recipient_id', env])
 const getFeePresetId = pathOr(null, ['account', 'defaultRecipient', 'fee_preset_id'])
-
-const getAnticipationType = cond([
-  [pathEq(['capabilities', 'allow_transaction_anticipation'], true), always('MDRZAO')],
-  [T, always('DEFAULT')],
-])
 
 const isNotEmpty = complement(isEmpty)
 
@@ -180,14 +172,12 @@ const companyEpic = (action$, state$) => action$.pipe(
     const { value: state } = state$
     const { account: { client } } = state
 
-    const anticipationType = getAnticipationType(action)
-
     return client
       .transactions
       .all({ count: 1 })
       .then((transactions) => {
         const alreadyTransacted = isNotEmpty(transactions)
-        return { ...action, alreadyTransacted, anticipationType }
+        return { ...action, alreadyTransacted }
       })
       .catch(errorPayload => ({
         error: true,

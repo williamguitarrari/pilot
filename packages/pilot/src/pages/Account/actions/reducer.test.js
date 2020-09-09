@@ -1,4 +1,4 @@
-import { selectCompanyFees } from './reducer'
+import { selectCompanyFees, selectAnticipationType } from './reducer'
 
 const companyFactory = mdrs => ({
   pricing: {
@@ -203,12 +203,44 @@ describe('selectCompanyFees', () => {
 
     it('should return the correct response', () => {
       expect(fees).toEqual({
-        anticipation: 10,
+        anticipation: 3.14,
         antifraud: 70,
         boleto: 380,
         gateway: 50,
         installments: [{ installment: 1, mdr: 2 }],
         transfer: 367,
+      })
+    })
+  })
+
+  describe('selectAnticipationType', () => {
+    describe('when company has compulsory anticipation set at company level', () => {
+      const company = { capabilities: { allow_transaction_anticipation: true } }
+      const defaultRecipient = { automatic_anticipation_type: 'full' }
+
+      const anticipationType = selectAnticipationType({
+        company,
+        defaultRecipient,
+      })
+
+      it('should have anticipation type equal compulsory', () => {
+        expect(anticipationType).toEqual('compulsory')
+      })
+    })
+
+    describe('when company has not compulsory anticipation set at company level', () => {
+      const company = {
+        capabilities: { allow_transaction_anticipation: false },
+      }
+      const defaultRecipient = { automatic_anticipation_type: 'full' }
+
+      const anticipationType = selectAnticipationType({
+        company,
+        defaultRecipient,
+      })
+
+      it('should return the anticipation type set at the recipient', () => {
+        expect(anticipationType).toEqual('full')
       })
     })
   })

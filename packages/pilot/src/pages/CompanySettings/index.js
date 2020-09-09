@@ -27,17 +27,17 @@ import CompanySettings from '../../containers/Settings/Company'
 import environment from '../../environment'
 import isCompanyPaymentLink from '../../validation/isPaymentLink'
 
-import { selectCompanyFees } from '../Account/actions/reducer'
+import { selectCompanyFees, selectAnticipationType } from '../Account/actions/reducer'
 
 const mapStateToProps = ({
   account: {
     client, company, defaultRecipient, user,
   },
 }) => ({
+  anticipationType: selectAnticipationType({ company, defaultRecipient }),
   client,
   company,
   fees: selectCompanyFees({ company, defaultRecipient }),
-  isMDRzao: company && propEq('anticipationType', 'MDRZAO', company),
   user,
 })
 
@@ -582,9 +582,9 @@ class CompanySettingsPage extends React.Component {
 
   render () {
     const {
+      anticipationType,
       company,
       fees,
-      isMDRzao,
       t,
       user,
     } = this.props
@@ -632,7 +632,7 @@ class CompanySettingsPage extends React.Component {
         general={general}
         handleCreateUser={this.handleCreateUser}
         handleDeleteUser={this.handleDeleteUser}
-        isMDRzao={isMDRzao}
+        isMDRzao={anticipationType === 'compulsory'}
         managingPartner={managingPartner}
         onBankAccountCancel={this.handleAccountCancel}
         onBankAccountChange={this.handleAccountChange}
@@ -653,6 +653,7 @@ class CompanySettingsPage extends React.Component {
 }
 
 CompanySettingsPage.propTypes = {
+  anticipationType: PropTypes.string,
   client: PropTypes.shape({
     company: PropTypes.shape({
       info: PropTypes.func.isRequired,
@@ -683,16 +684,15 @@ CompanySettingsPage.propTypes = {
     })),
     transfer: PropTypes.number,
   }),
-  isMDRzao: PropTypes.bool,
   requestLogout: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
   user: PropTypes.shape({}),
 }
 
 CompanySettingsPage.defaultProps = {
+  anticipationType: '',
   company: null,
   fees: {},
-  isMDRzao: false,
   user: null,
 }
 
