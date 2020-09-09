@@ -52,8 +52,9 @@ describe('selectCompanyFees', () => {
       ],
       payment_method: 'credit_card',
     }])
+    const defaultRecipient = {}
 
-    const fees = selectCompanyFees(company)
+    const fees = selectCompanyFees({ company, defaultRecipient })
 
     it('should return the correct response', () => {
       expect(fees).toEqual({
@@ -76,8 +77,9 @@ describe('selectCompanyFees', () => {
       installments: [{ installment: 1, mdr: 3.79 }],
       payment_method: 'credit_card',
     }])
+    const defaultRecipient = {}
 
-    const fees = selectCompanyFees(company)
+    const fees = selectCompanyFees({ company, defaultRecipient })
 
     it('should return the correct response', () => {
       expect(fees).toEqual({
@@ -104,8 +106,9 @@ describe('selectCompanyFees', () => {
         ],
         payment_method: null,
       }])
+    const defaultRecipient = {}
 
-    const fees = selectCompanyFees(company)
+    const fees = selectCompanyFees({ company, defaultRecipient })
 
     it('should return the correct response', () => {
       expect(fees).toEqual({
@@ -132,8 +135,9 @@ describe('selectCompanyFees', () => {
       ],
       payment_method: 'credit_card',
     }])
+    const defaultRecipient = {}
 
-    const fees = selectCompanyFees(company)
+    const fees = selectCompanyFees({ company, defaultRecipient })
 
     it('should return the correct response', () => {
       expect(fees).toEqual({
@@ -164,8 +168,9 @@ describe('selectCompanyFees', () => {
         payment_method: 'credit_card',
       },
     ])
+    const defaultRecipient = {}
 
-    const fees = selectCompanyFees(company)
+    const fees = selectCompanyFees({ company, defaultRecipient })
 
     it('should return the correct response', () => {
       expect(fees).toEqual({
@@ -178,5 +183,33 @@ describe('selectCompanyFees', () => {
       })
     })
   })
-})
 
+  describe('when company has defaultRecipient with feePreset set', () => {
+    const company = companyFactory([])
+    const defaultRecipient = {
+      feePreset: {
+        anticipation_rate: 10,
+        mdrs: [
+          {
+            capture_method: 'ecommerce',
+            installments: [{ installment: 1, mdr: 2 }],
+            payment_method: 'credit_card',
+          },
+        ],
+      },
+    }
+
+    const fees = selectCompanyFees({ company, defaultRecipient })
+
+    it('should return the correct response', () => {
+      expect(fees).toEqual({
+        anticipation: 10,
+        antifraud: 70,
+        boleto: 380,
+        gateway: 50,
+        installments: [{ installment: 1, mdr: 2 }],
+        transfer: 367,
+      })
+    })
+  })
+})

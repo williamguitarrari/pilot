@@ -33,6 +33,7 @@ const getAlreadyTransacted = propOr(true, 'alreadyTransacted')
 const mapStateToProps = ({
   account: {
     company,
+    defaultRecipient,
     user,
   },
   welcome: {
@@ -42,7 +43,7 @@ const mapStateToProps = ({
   accessKeys: getAccessKeys(company),
   alreadyTransacted: getAlreadyTransacted(company),
   company,
-  fees: selectCompanyFees(company),
+  fees: selectCompanyFees({ company, defaultRecipient }),
   isAdmin: hasAdminPermission(user),
   isMDRzao: company && propEq('anticipationType', 'MDRZAO', company),
   onboardingAnswers,

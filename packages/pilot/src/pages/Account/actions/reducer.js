@@ -144,8 +144,7 @@ const findCreditCardMDR = mdrs => mdrs.find(({
   payment_method: paymentMethod,
 }) => CREDIT_CARD_MDRS_TYPES.includes(paymentMethod))
 
-const getInstallmentsFee = pipe(
-  pathOr([], ['psp', 'live', 'mdrs']),
+const getInstallments = pipe(
   findCreditCardMDR,
   pathOr([], ['installments']),
   when(notDefaultInstallments, always([]))
@@ -158,12 +157,30 @@ const getFees = pipe(
     antifraud: getAntifraudCost,
     boleto: path(['gateway', 'live', 'boletos', 'payment_fixed_fee']),
     gateway: path(['gateway', 'live', 'transaction_cost', 'credit_card']),
-    installments: getInstallmentsFee,
+    installments: pipe(
+      pathOr([], ['psp', 'live', 'mdrs']),
+      getInstallments
+    ),
     transfer: path(['transfers', 'ted']),
   })
 )
 
-export const selectCompanyFees = company => getFees(company)
+export const selectCompanyFees = ({ company, defaultRecipient = {} }) => {
+  const companyFees = getFees(company)
+
+  if (!defaultRecipient.feePreset) {
+    return companyFees
+  }
+
+  if (defaultRecipient.anticipation_type === 'compulsory') {
+    companyFees.anticipation = defaultRecipient.feePreset.anticipation_rate
+  }
+
+  return {
+    ...companyFees,
+    installments: getInstallments(defaultRecipient.feePreset.mdrs),
+  }
+}
 
 // The value 1_000_000 is set by the Risk Team on the property
 // `company.transfer.blocked_balance_amount` when the company is

@@ -30,11 +30,13 @@ import isCompanyPaymentLink from '../../validation/isPaymentLink'
 import { selectCompanyFees } from '../Account/actions/reducer'
 
 const mapStateToProps = ({
-  account: { client, company, user },
+  account: {
+    client, company, defaultRecipient, user,
+  },
 }) => ({
   client,
   company,
-  fees: selectCompanyFees(company),
+  fees: selectCompanyFees({ company, defaultRecipient }),
   isMDRzao: company && propEq('anticipationType', 'MDRZAO', company),
   user,
 })
