@@ -13284,10 +13284,10 @@ package-json@^4.0.0:
     registry-url "^3.0.3"
     semver "^5.1.0"
 
-pagarme@4.12.0:
-  version "4.12.0"
-  resolved "https://registry.yarnpkg.com/pagarme/-/pagarme-4.12.0.tgz#651f8644219766298a28ae215df958be6649141e"
-  integrity sha512-YJkEZJHyZAPEMpAolE3T/f7jjGrJ5coFH4oqRe0q6ZG40ucYJRCX13J9z01p0cjgbGV+Ddo0LOq+HDfjItbu0A==
+pagarme@4.13.0:
+  version "4.13.0"
+  resolved "https://registry.yarnpkg.com/pagarme/-/pagarme-4.13.0.tgz#f15cd9186f5df6072acc82ce12834e7fef2f5b0e"
+  integrity sha512-5fOQTyw8pCbJvbqXdjlakKs2IU70vghcyalXZHMFSyO2vPJtzKpWbYnXC5EzAvF/zfNhRhuIIOGZZR4FAO4Vqw==
 
 pako@~1.0.5:
   version "1.0.10"

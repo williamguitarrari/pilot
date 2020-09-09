@@ -20,10 +20,12 @@ import {
 import {
   ACCOUNT_RECEIVE,
   COMPANY_RECEIVE,
+  FEE_PRESET_RECEIVE,
   LOGIN_FAIL,
   LOGIN_RECEIVE,
   LOGIN_REQUEST,
   LOGOUT_RECEIVE,
+  RECIPIENT_RECEIVE,
   RECIPIENT_BALANCE_RECEIVE,
 } from './actions'
 
@@ -33,6 +35,7 @@ const getBalance = applySpec({
 })
 
 const initialState = {
+  defaultRecipient: {},
   loading: false,
   sessionId: null,
 }
@@ -94,6 +97,27 @@ export default function loginReducer (state = initialState, action) {
         state,
         {
           balance: getBalance(action.payload),
+        }
+      )
+    }
+
+    case RECIPIENT_RECEIVE: {
+      return merge(
+        state,
+        {
+          defaultRecipient: action.payload,
+        }
+      )
+    }
+
+    case FEE_PRESET_RECEIVE: {
+      return merge(
+        state,
+        {
+          defaultRecipient: {
+            ...state.defaultRecipient,
+            feePreset: action.payload,
+          },
         }
       )
     }
