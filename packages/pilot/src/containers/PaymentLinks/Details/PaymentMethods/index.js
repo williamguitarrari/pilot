@@ -10,6 +10,7 @@ import styles from './styles.css'
 
 const renderCreditCardMessage = (creditCardConfig, t) => {
   const {
+    charge_transaction_fee: chargeTransactionFee,
     free_installments: freeInstalments,
     interest_rate: interestRate,
     max_installments: maxInstallments,
@@ -21,6 +22,39 @@ const renderCreditCardMessage = (creditCardConfig, t) => {
         {t('pages.payment_link_detail.payment_methods.max_of')}
         <span>{maxInstallments}</span>
         {t('pages.payment_link_detail.payment_methods.no_interest_rate', { count: maxInstallments })}
+      </>
+    )
+  }
+
+  if (chargeTransactionFee) {
+    return (
+      <>
+        {t('pages.payment_link_detail.payment_methods.with_interest_rate_2')}
+        <span>
+          {t('pages.payment_link_detail.payment_methods.to', {
+            from: 1,
+            to: freeInstalments > 0
+              ? freeInstalments
+              : maxInstallments,
+          })}
+        </span>
+        {freeInstalments === 0
+          ? t('pages.payment_link_detail.payment_methods.charge_transaction_fee_interest_rate_2')
+          : t('pages.payment_link_detail.payment_methods.charge_transaction_fee_interest_rate_1')
+          }
+        <br />
+        {freeInstalments > 0 && freeInstalments < 12 && (
+          <>
+            {t('pages.payment_link_detail.payment_methods.with_interest_rate_2')}
+            <span>
+              {t('pages.payment_link_detail.payment_methods.to', {
+                from: freeInstalments + 1,
+                to: maxInstallments,
+              })}
+            </span>
+            {t('pages.payment_link_detail.payment_methods.charge_transaction_fee_interest_rate_1')}
+          </>
+        )}
       </>
     )
   }
@@ -97,6 +131,7 @@ PaymentMethods.propTypes = {
     expires_in: PropTypes.number,
   }),
   creditCardConfig: PropTypes.shape({
+    charge_transaction_fee: PropTypes.bool,
     free_installments: PropTypes.number,
     interest_rate: PropTypes.number,
     max_installments: PropTypes.number,

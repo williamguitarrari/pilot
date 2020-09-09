@@ -3,12 +3,19 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { translate } from 'react-i18next'
-import { compose, path, nth } from 'ramda'
+import {
+  assocPath,
+  compose,
+  nth,
+  path,
+  pipe,
+} from 'ramda'
 import {
   Col,
   Grid,
   Row,
 } from 'former-kit'
+import canChargeTransactionFee from '../../../validation/canChargeTransactionFee'
 import { withError } from '../../ErrorBoundary'
 import {
   getLinkRequest as getLinkRequestAction,
@@ -26,6 +33,9 @@ import Spinner from '../../../components/Spinner'
 import styles from './styles.css'
 
 const mapStateToProps = ({
+  account: {
+    company,
+  },
   paymentLinksDetails: {
     loadingGetLink,
     loadingGetTransactions,
@@ -33,6 +43,7 @@ const mapStateToProps = ({
     transactions,
   },
 }) => ({
+  company,
   loadingGetLink,
   loadingGetTransactions,
   paymentLink,
@@ -61,6 +72,7 @@ const defaultColumnSize = {
 
 const Details = ({
   cancelLinkRequest,
+  company,
   getLinkRequest,
   getTransactionsRequest,
   history,
@@ -72,6 +84,11 @@ const Details = ({
   transactions,
 }) => {
   const [isOpen, setIsOpen] = useState(false)
+
+  const creditCardConfig = pipe(
+    assocPath(['payment_config', 'credit_card', 'charge_transaction_fee'], canChargeTransactionFee(company)),
+    path(['payment_config', 'credit_card'])
+  )(paymentLink)
 
   useEffect(() => {
     getLinkRequest(match.params.id)
@@ -121,7 +138,7 @@ const Details = ({
             <Col desk={6} palm={6} tablet={6} tv={6}>
               <PaymentMethods
                 boletoConfig={path(['payment_config', 'boleto'], paymentLink)}
-                creditCardConfig={path(['payment_config', 'credit_card'], paymentLink)}
+                creditCardConfig={creditCardConfig}
                 t={t}
               />
             </Col>
@@ -148,6 +165,14 @@ const Details = ({
 
 Details.propTypes = {
   cancelLinkRequest: PropTypes.func.isRequired,
+  company: PropTypes.shape({
+    capabilities: PropTypes.shape({
+      allow_transaction_anticipation: PropTypes.bool,
+    }),
+    payment_link: PropTypes.shape({
+      allow_charge_transaction_fee: PropTypes.bool,
+    }),
+  }).isRequired,
   getLinkRequest: PropTypes.func.isRequired,
   getTransactionsRequest: PropTypes.func.isRequired,
   history: PropTypes.shape({
