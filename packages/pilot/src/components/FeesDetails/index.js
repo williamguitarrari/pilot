@@ -42,29 +42,35 @@ const buildCreditCardFees = ({ fees, isMDRzao }) => (
         valueSuffixPath: 'pages.empty_state.fees.per_transaction',
       },
     ]
-    : [
-      ...buildInstallmentsValues('DEFAULT', fees.installments),
-      {
-        translationPath: 'pages.empty_state.fees.processing',
-        type: 'currency',
-        value: fees.gateway,
-      },
-      {
-        translationPath: 'pages.empty_state.fees.antifraud',
-        type: 'currency',
-        value: fees.antifraud,
-      },
-    ])
+    : [...buildInstallmentsValues('DEFAULT', fees.installments)])
+
+const buildProcessingFees = (fees) => {
+  const processingFees = [
+    {
+      translationPath: 'pages.empty_state.fees.processing',
+      type: 'currency',
+      value: fees.gateway,
+    },
+    {
+      translationPath: 'pages.empty_state.fees.antifraud',
+      type: 'currency',
+      value: fees.antifraud,
+    },
+  ]
+
+  return processingFees.filter(v => v.value !== 0)
+}
 
 const FeesDetails = ({ fees, isMDRzao, t }) => {
   const creditCardFees = buildCreditCardFees({ fees, isMDRzao })
+  const processingFees = buildProcessingFees(fees)
 
   return (
     <div>
       <FeeTitleAndValues
         t={t}
         title={t('pages.empty_state.fees.credit_card')}
-        values={creditCardFees}
+        values={[...creditCardFees, ...processingFees]}
       />
       <Flexbox className={styles.marginRight}>
         <FeeTitleAndValues
