@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { path, split } from 'ramda'
 import { action } from '@storybook/addon-actions'
+import { boolean } from '@storybook/addon-knobs'
 import PaymentLinkAdd from '../../../../../src/containers/PaymentLinks/List/PaymentLinkAdd'
 
 import translations from '../../../../../public/locales/pt/translations.json'
@@ -54,6 +55,7 @@ const PaymentLinkAddExample = () => {
 
   return (
     <PaymentLinkAdd
+      canChargeTransactionFee={boolean('canChargeTransactionFee')}
       loading={loading}
       formData={formData}
       handleFormChange={setFormData}
@@ -86,7 +88,11 @@ const PaymentLinkFirstStepExample = () => (
 )
 
 const PaymentLinkSecondStepExample = () => (
-  <PaymentLinkAdd {...baseProps} step={steps.second_step} />
+  <PaymentLinkAdd
+    {...baseProps}
+    canChargeTransactionFee={boolean('canChargeTransactionFee')}
+    step={steps.second_step}
+  />
 )
 
 const PaymentLinkSuccessStepExample = () => (
