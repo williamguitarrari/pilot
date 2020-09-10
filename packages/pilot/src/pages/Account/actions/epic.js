@@ -148,7 +148,10 @@ const accountEpic = action$ => action$
         env
       )
 
-      zopimAddTags([`nível de acesso do usuário: ${permission}`])
+      zopimAddTags([
+        `nível de acesso do usuário: ${permission}`,
+        `email do usuário: ${email}`,
+      ])
     })
   )
 
@@ -203,10 +206,12 @@ const companyEpic = (action$, state$) => action$.pipe(
     }
     const { value: state } = state$
     const {
+      api_version: apiVersion,
       dateCreated,
       id,
       name,
       status,
+      transfers,
       type,
     } = payload
 
@@ -231,6 +236,9 @@ const companyEpic = (action$, state$) => action$.pipe(
       `tipo da company: ${type}`,
       `id da company: ${id}`,
       'Aplicação: dashboard beta',
+      `status da company: ${status}`,
+      `versão de api da company (live): ${apiVersion.live}`,
+      `saldo bloqueado da company: ${transfers.blocked_balance_amount}`,
     ])
 
     if (status === 'active') {
