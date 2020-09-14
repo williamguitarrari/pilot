@@ -16,15 +16,7 @@ export default {
       FoodIcon,
       PlusIcon,
     ],
-    options: [
-      {
-        category: 'food',
-        label: 'Alimentos',
-      }, {
-        category: 'others',
-        label: 'Outros',
-      },
-    ],
+    options: ['Alimentos', 'Outros'],
   },
   segmentOptions: [
     { label: 'Gráficas', value: 'graficas' },

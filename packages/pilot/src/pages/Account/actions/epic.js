@@ -1,9 +1,7 @@
 import pagarme from 'pagarme'
 import {
   allPass,
-  always,
   complement,
-  cond,
   hasPath,
   identity,
   ifElse,
@@ -12,7 +10,6 @@ import {
   pathEq,
   pathOr,
   propEq,
-  T,
 } from 'ramda'
 import {
   map,
@@ -33,11 +30,14 @@ import {
   LOGIN_RECEIVE,
   LOGIN_REQUEST,
   LOGOUT_REQUEST,
+  RECIPIENT_RECEIVE,
   receiveAccount,
   receiveCompany,
   receiveLogin,
   receiveLogout,
   receiveRecipientBalance,
+  receiveRecipient,
+  receiveFeePreset,
 } from './actions'
 
 import store from '../../../configureStore'
@@ -69,11 +69,7 @@ const hasDashboardAccess = ifElse(
 )
 
 const getRecipientId = pathOr(null, ['account', 'company', 'default_recipient_id', env])
-
-const getAnticipationType = cond([
-  [pathEq(['capabilities', 'allow_transaction_anticipation'], true), always('MDRZAO')],
-  [T, always('DEFAULT')],
-])
+const getFeePresetId = pathOr(null, ['account', 'defaultRecipient', 'fee_preset_id'])
 
 const isNotEmpty = complement(isEmpty)
 
@@ -176,14 +172,12 @@ const companyEpic = (action$, state$) => action$.pipe(
     const { value: state } = state$
     const { account: { client } } = state
 
-    const anticipationType = getAnticipationType(action)
-
     return client
       .transactions
       .all({ count: 1 })
       .then((transactions) => {
         const alreadyTransacted = isNotEmpty(transactions)
-        return { ...action, alreadyTransacted, anticipationType }
+        return { ...action, alreadyTransacted }
       })
       .catch(errorPayload => ({
         error: true,
@@ -243,6 +237,34 @@ const companyEpic = (action$, state$) => action$.pipe(
       inactiveCompanyLogin()
     }
   })
+)
+
+const recipientEpic = (action$, state$) => action$.pipe(
+  ofType(COMPANY_RECEIVE),
+  mergeMap(() => {
+    const state = state$.value
+    const recipientId = getRecipientId(state)
+    const { account: { client } } = state
+
+    return client.recipients.find({ id: recipientId })
+  }),
+  map(receiveRecipient)
+)
+
+const feePresetEpic = (action$, state$) => action$.pipe(
+  ofType(RECIPIENT_RECEIVE),
+  mergeMap(() => {
+    const state = state$.value
+    const feePresetId = getFeePresetId(state)
+    const { account: { client } } = state
+
+    if (!feePresetId) {
+      return Promise.resolve(null)
+    }
+
+    return client.feePresets.find({ id: feePresetId })
+  }),
+  map(receiveFeePreset)
 )
 
 const recipientBalanceEpic = (action$, state$) => action$.pipe(
@@ -329,6 +351,8 @@ export default combineEpics(
   loginEpic,
   accountEpic,
   companyEpic,
+  feePresetEpic,
+  recipientEpic,
   recipientBalanceEpic,
   onCompanyReceive,
   logoutEpic

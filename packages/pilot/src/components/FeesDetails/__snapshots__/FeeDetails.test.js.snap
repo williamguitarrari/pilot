@@ -24,6 +24,28 @@ exports[`render 1 installments with all fees and isMDRzao enabled 1`] = `
             </strong>
           </p>
         </div>
+        <div>
+          <p>
+            pages.empty_state.fees.processing
+          </p>
+          <p>
+            <strong>
+              R$ 0,50
+               
+            </strong>
+          </p>
+        </div>
+        <div>
+          <p>
+            pages.empty_state.fees.antifraud
+          </p>
+          <p>
+            <strong>
+              R$ 0,70
+               
+            </strong>
+          </p>
+        </div>
       </div>
     </div>
     <div
